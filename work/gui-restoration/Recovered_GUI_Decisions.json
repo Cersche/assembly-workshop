@@ -1,0 +1,399 @@
+{
+  "source": "Create Claude App Prompt",
+  "thread": "6ad39502-fa44-83e8-a1ce-5a357df4d02e",
+  "scope": "Historical user-authored design choices, recovered 2026-10-18; later constraints take precedence. Not evidence of implementation.",
+  "decisions": [
+    {
+      "turn": "cf0dba05-0b51-4230-a2aa-5b5e1ee4e016",
+      "text": "For Lab Rax Rev 1.0, I choose to approve and freeze the agreed visual GUI design baseline as a specification only, without implementation. Continue displaying the GUI refinement progress indicator and keep overall beta readiness unchanged."
+    },
+    {
+      "turn": "0098d737-785c-45ff-b0c5-f93a8de2b2a2",
+      "text": "For Lab Rax Rev 1.0 Keyboard Shortcuts reference, I choose a centered searchable dialog over a dimmed workspace. Continue visual GUI refinement only, without implementation, keep displaying the GUI refinement progress indicator, and proceed toward the final visual consistency review."
+    },
+    {
+      "turn": "a1f08fd8-de55-4375-84f0-ef3862f9c0ac",
+      "text": "For Lab Rax Rev 1.0 keyboard shortcut discoverability, I choose contextual shortcut hints in tooltips and menus plus a searchable Keyboard Shortcuts reference under Help. Continue visual GUI refinement only, without implementation, and keep displaying the GUI refinement progress indicator."
+    },
+    {
+      "turn": "be847bc5-d5f1-426b-8981-7d4d04201506",
+      "text": "For Lab Rax Rev 1.0 keyboard accessibility, I choose contextual blue keyboard-focus outlines with concise shortcut hints and a minimalist mouse interface. Continue visual GUI refinement only, without implementation, and keep displaying the GUI refinement progress indicator."
+    },
+    {
+      "turn": "51ca0762-66df-4bbc-a58c-c8812b5d62eb",
+      "text": "For Lab Rax Rev 1.0 notification history, I choose current-session notification history within the expandable notification list, while keeping Design Review and save/recovery records authoritative. Continue visual GUI refinement only, without implementation, and keep displaying the GUI refinement progress indicator."
+    },
+    {
+      "turn": "3260a80f-022a-47c9-8970-671769983082",
+      "text": "For Lab Rax Rev 1.0 notifications, I choose a single highest-priority notification with a grouped count and expandable compact notification list. Continue visual GUI refinement only, without implementation, and keep displaying the GUI refinement progress indicator."
+    },
+    {
+      "turn": "f7f8e46d-455c-4249-aae5-f1323720212b",
+      "text": "For Lab Rax Rev 1.0 project save feedback, I choose a subtle persistent header save status, with notifications reserved for errors and significant recovery events. Continue visual GUI refinement only, without implementation, and keep displaying the GUI refinement progress indicator."
+    },
+    {
+      "turn": "16940c85-906d-4f99-8c7a-d4d7153b5ac4",
+      "text": "For Lab Rax Rev 1.0 component Properties editing, I choose balanced feedback: subtle live status changes while typing, with detailed errors on invalid commit or status-icon expansion. Continue visual GUI refinement only, without implementation, and keep displaying the GUI refinement progress indicator."
+    },
+    {
+      "turn": "f25d7926-ef06-4530-8994-4ede24f9995b",
+      "text": "For Lab Rax Rev 1.0 component property verification details, I choose inline status icons with expandable source and verification details beneath each property. Continue visual GUI refinement only, without implementation, and keep displaying the GUI refinement progress indicator."
+    },
+    {
+      "turn": "6ee49a68-5269-428c-9de9-c0baa36efaf8",
+      "text": "For Lab Rax Rev 1.0 component Properties panel, I choose contextual collapsible sections that automatically expand the most relevant properties for the selected component. Continue visual GUI refinement only, without implementation, and keep displaying the GUI refinement progress indicator."
+    },
+    {
+      "turn": "9fc60c94-e9ae-4692-9ab8-8d3383a4ba7d",
+      "text": "For Lab Rax Rev 1.0 Assembly Explorer, I choose inline actions benathe the selected row. Continue visual GUI refinement only, without implementation and provide a progress indicator on the gui refinement process."
+    },
+    {
+      "turn": "8430bf06-b7f4-4d8f-9e72-27163852cd8b",
+      "text": "For Lab Rax Rev 1.0 Assembly Explorer, I choose compact component icons with status indicators and contextual actions on selection. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "9c6330dd-2d02-4a67-9891-c9038f874aa2",
+      "text": "For Lab Rax Rev 1.0 after successful mount generation, I choose automatically switching to Assemble with the new assembly selected, Assembly Explorer open, and a compact success notification. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "267bbf86-ee8f-4586-b0d7-79e06f520616",
+      "text": "For Lab Rax Rev 1.0 Mount Wizard Review step, I choose a readiness summary with expandable severity-ordered issue groups. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "a747614e-9cb7-46b7-81f6-430a5ec418ee",
+      "text": "For Lab Rax Rev 1.0 Mount Wizard Fit step, I choose collapsible Position, Clearances, Attachment, and Advanced Details sections. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "e19025c9-ddc3-424b-8ff8-edbe964201dd",
+      "text": "For Lab Rax Rev 1.0 Create Mount wizard, I choose live, noncommitted 3D previews when selecting a mounting style. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "27322f08-ea82-4814-a5df-b3191d3d3025",
+      "text": "For Lab Rax Rev 1.0 after equipment placement, I choose a contextual Create Mount action in the Properties panel, opening the wizard only when clicked. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "55ef5f82-f616-421c-84fc-ae9141c4b929",
+      "text": "For Lab Rax Rev 1.0 initial equipment placement, I choose an explicit Confirm Position action after previewing equipment placement. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "5a9da614-7ef1-44ef-9102-e7d373da420e",
+      "text": "For Lab Rax Rev 1.0 Equipment Library cards, I choose single-click selection and detail preview, with Add to Rack or drag-and-drop for placement. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "bc3471fd-689a-45fc-bef3-ecb1cd971a0c",
+      "text": "For Lab Rax Rev 1.0 first-run onboarding, I choose dismissible contextual hint cards that appear as the user progresses. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "797d0be9-7361-4d17-924b-62be38426b55",
+      "text": "For Lab Rax Rev 1.0 New Project setup, I choose a centered three-step setup dialog over the dashboard. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "1561e2c8-f4c1-483c-8ce9-9d82642a5c32",
+      "text": "For Lab Rax Rev 1.0 startup dashboard, I choose a balanced dashboard with templates and recent projects side by side. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "984bd2dd-6a48-4e70-9581-848952c21c98",
+      "text": "For Lab Rax Rev 1.0 startup recovery, I choose a smart recovery prompt for unsaved work at risk, with subtle dashboard indicators for routine snapshots. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "74365ec0-430b-4dee-9cff-40f1ed6f5ba0",
+      "text": "For Lab Rax Rev 1.0 project history, I choose manual named checkpoints with automatic recovery snapshots. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "be8d8cb8-caed-4898-a72d-2ad3bbd63c11",
+      "text": "For Lab Rax Rev 1.0 revision comparison, I choose side-by-side 3D previews with synchronized cameras and highlighted changes. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "380035b1-35d8-4c86-9822-61b9ddf6a302",
+      "text": "For Lab Rax Rev 1.0 export completion, I choose keeping the export completion screen open with download and report options. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "7fa002b0-f133-4dfa-9101-0ba8a3db296d",
+      "text": "For Lab Rax Rev 1.0 final export review, I choose a centered review dialog over the Prepare workspace. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "55bca3b3-1fa9-4376-a890-1afd78e3bc0a",
+      "text": "For Lab Rax Rev 1.0 Prepare/Export, I choose a ZIP package by default with optional individual file downloads. Continue GUI visual refinement only, without implementation."
+    },
+    {
+      "turn": "8723d12b-c0ba-4f46-a7bf-7654fcefd916",
+      "text": "For Lab Rax Rev 1.0 Design Review, I choose severity-first warnings with component and assembly filters. Continue GUI visual refinement only, without implementation."
+    },
+    {
+      "turn": "7dfdb782-61ac-4ed2-91c5-77131bd984c0",
+      "text": "For Lab Rax Rev 1.0 inspection overlays, I choose contextual measurement and warning overlays with a Show All option. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "e53d821c-89f1-46b5-81de-680307cef9b3",
+      "text": "For Lab Rax Rev 1.0 inspection tools, I choose hybrid inspection controls with quick actions in the viewport and detailed settings in the right panel. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "1bcaa678-754d-4c45-a8d0-743d47f4db8c",
+      "text": "For Lab Rax Rev 1.0, I choose Equipment Library and Assembly Explorer tabs in the left panel. Continue GUI visual refinement only, without implementation."
+    },
+    {
+      "turn": "080704eb-2717-4fd3-9acd-91cda18044f9",
+      "text": "For Lab Rax Rev 1.0 bracket selection, I choose assembly-first selection with second-click component drill-down and direct assembly-tree selection. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "5270d8f2-0ece-46a3-a43e-34106fb545dd",
+      "text": "For Lab Rax Rev 1.0 Simple mode, I choose contextual editing handles activated through a small action toolbar. Continue visual GUI refinement only, without implementation."
+    },
+    {
+      "turn": "57023576-b64b-4fd4-b6af-c8cee261e5cd",
+      "text": "For Lab Rax Rev 1.0 numerical Properties editing, I choose preview while editing, commit on Enter or field exit after validation, and Escape to cancel. Continue GUI design refinement only, without implementation."
+    },
+    {
+      "turn": "de822dd0-86f0-40eb-a936-e43eef23922c",
+      "text": "For Lab Rax Rev 1.0 equipment editing, I choose live preview with commit on release after validation. Continue GUI refinement only, without implementation."
+    },
+    {
+      "turn": "9f50194d-339e-467f-88d0-2879e1d893bd",
+      "text": "For Lab Rax Rev 1.0 equipment placement, I choose smart snapping with optional manual adjustment. Continue GUI design refinement only, without implementation."
+    },
+    {
+      "turn": "fddd525a-18e6-444f-883c-2f45b816d36c",
+      "text": "For Lab Rax Rev 1.0's Dark Professional GUI, I choose adaptive equipment picture cards that respond to sidebar width. Continue visual refinement only, without implementation."
+    },
+    {
+      "turn": "c18ec72b-f4fa-4498-9b95-13f1b1922195",
+      "text": "For the Lab Rax Rev 1.0 GUI, I choose Dark Professional as the default theme. Continue visual design refinement only; do not implement."
+    },
+    {
+      "turn": "a015e6e2-882d-4783-b38e-86c6a5fdaec6",
+      "text": "For Lab Rax Rev 1.0 startup behavior, I choose a visual project dashboard. Consolidate the GUI specification and continue design review only, without implementation."
+    },
+    {
+      "turn": "bc145a02-4884-4024-8273-01ae7ecb8b8c",
+      "text": "For Lab Rax Rev 1.0 Prepare/Export, I choose experimental exports with explicit warnings and acknowledgment, while blocking technically invalid outputs. Continue refining the GUI design without implementation."
+    },
+    {
+      "turn": "da3eba3d-f881-437d-88d6-62ba7037e963",
+      "text": "For Lab Rax Rev 1.0, I choose an equipment library with picture cards, categories, search, favorites, and a compact list view. Continue refining the GUI design without implementation."
+    },
+    {
+      "turn": "428f04f5-3fad-42d3-a596-fc3d2eac571e",
+      "text": "For Lab Rax bracket editing, I choose hybrid direct 3D editing with synchronized numerical properties. Continue refining the GUI design without implementation."
+    },
+    {
+      "turn": "21119e72-cd90-4035-a997-482b82dc43ab",
+      "text": "For the Lab Rax bracket creation wizard, I choose A: right-side wizard replacing Properties. Continue refining the GUI without implementing it yet."
+    },
+    {
+      "turn": "5d6f3119-bc92-4d5f-ac4f-edd2aaaabd6d",
+      "text": "For Lab Rax Rev 1.0 bracket creation, I choose guided visual setup with three short steps. Continue refining the GUI design."
+    },
+    {
+      "turn": "d5b1ce6c-13aa-4d77-909b-c2ad9e6db96f",
+      "text": "For Lab Rax Rev 1.0's 3D viewport, I choose Simple and Advanced interaction modes. Continue refining the GUI design."
+    },
+    {
+      "turn": "9fabe5e3-86a6-4024-b9f5-4ca31fb9de07",
+      "text": "For Lab Rax Rev 1.0 equipment placement, I choose both drag-and-drop and click-to-add. Continue refining the GUI design."
+    },
+    {
+      "turn": "25d04b3c-b17b-4d99-b780-17ab99ef6200",
+      "text": "For the Lab Rax GUI, I choose layout A: three-panel workspace. Let's refine the interface from there."
+    },
+    {
+      "turn": "ac46cc66-f643-40bf-8c21-e826aed501fd",
+      "text": "For the Lab Rax GUI redesign, I choose the recommended Shapr3D + Tinkercad + Bambu Studio hybrid. Let's explore this direction and refine the layout before implementation."
+    },
+    {
+      "turn": "dafab2ad-b996-464a-9bc3-4512b3ab9c82",
+      "text": "keep going until you're satisfied with your results, chat.  we will talk GUI when you're ready."
+    },
+    {
+      "turn": "be227321-8f01-457e-8a1e-504c4df0374c",
+      "text": "ok.  please proceed as your were and let me know when you'd like to brainstorm the gui"
+    },
+    {
+      "turn": "b21ba008-4bd0-4bcd-b80d-569fbe52697a",
+      "text": "please answer this question, then proceed. do not take any actions after this question, just simply answer it:  we are going to overhaul the gui at some point.  When is the best time to do this without breaking things?\n\nYou may now proceed with your regularly scheduled programming"
+    },
+    {
+      "turn": "8e9ea5f4-108b-4b0c-9cf6-cacde654f6be",
+      "text": "For Lab Rax Assembler Rev 1.0 Phase 3 detailed technical design, select a unified guided end-to-end workflow with independent equipment readiness, design approval, manufacturing approval, inspection, and physical reconciliation gates. Continue with workflow state orchestration, contextual UI panels, navigation and recovery, approval boundaries, cross-module state synchronization, error handling, and acceptance tests. Preserve all five frozen Rev 1.0 specifications and previously approved architecture decisions. Remain strictly planning-only; do not implement or modify files."
+    },
+    {
+      "turn": "bbb9e18a-4d6f-431c-95d6-a0bb492b39ce",
+      "text": "For Lab Rax Assembler Rev 1.0 Phase 3 detailed technical design, select guided staged bracket generation with editable faceplate-and-tray proposals, confirmed equipment and rack interfaces, parametric and direct 3D editing, regeneration, validation, and final approval. Continue with bracket proposal stages, faceplate/tray interface contracts, mounting strategy selection, joint geometry, equipment keepouts, reinforcement, printability, validation, and acceptance tests. Preserve all five frozen Rev 1.0 specifications and previously approved architecture decisions. Remain strictly planning-only; do not implement or modify files."
+    },
+    {
+      "turn": "a39a5208-858a-4718-8b8e-e2544cf689b1",
+      "text": "For Lab Rax Assembler Rev 1.0 Phase 3 detailed technical design, select isolated recovery workspaces with guided promotion to a new project or atomic reconciliation into the original. Continue with recovery workspace isolation, project identity handling, conflict resolution, atomic promotion, rollback, and restoration acceptance tests. Preserve all five frozen Rev 1.0 specifications and approved architecture decisions. Remain strictly planning-only; do not implement or modify files."
+    },
+    {
+      "turn": "07b67e7e-e833-47bf-bcd0-4b3fee549753",
+      "text": "Lab Rax Assembler main workspace policy: Use a unified interactive 3D rack workspace with contextual panels for equipment, brackets, properties, validation, and manufacturing. Keep the complete rack assembly visible and expose relevant controls based on the selected object or task. Preserve all four frozen Rev 1.0 specifications: Master Faceplate, Equipment Mounting Tray, Bracket Assembly Integration, and Equipment Model Management. Continue requirements qualification one major decision at a time, prioritizing completion over minor feature questions. Do not implement."
+    },
+    {
+      "turn": "5eb8fa0f-4a29-47fb-a58f-b603e5f88a0a",
+      "text": "Lab Rax Equipment Model Management identity and variant policy: Use distinct equipment definitions and independent revision histories for physically or functionally different variants. Allow grouping into product families, but never assume variant compatibility. Analyze compatibility and propose guided, explicitly approved replacements or conversions for existing rack instances. Preserve all seven approved Equipment Model Management policies and frozen Master Faceplate Rev 1.0, Equipment Mounting Tray Rev 1.0, and Bracket Assembly Integration Rev 1.0. Continue requirements discovery by resolving the remaining context-dependent readiness policy, then assess readiness to freeze Equipment Model Management Rev 1.0. Do not implement."
+    },
+    {
+      "turn": "27892218-be66-4886-8589-b3c7384a19f2",
+      "text": "Lab Rax Equipment Model Management model readiness policy: Use risk-based equipment model readiness levels. Permit incomplete models for rack layout and preliminary bracket design, clearly identify uncertain or missing information, and require all information essential to safe fit, mounting, and functionality before final design approval. Provide guided corrective actions. Preserve all approved Equipment Model Management requirements, including guided parametric model creation, and frozen Master Faceplate Rev 1.0, Equipment Mounting Tray Rev 1.0, and Bracket Assembly Integration Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "766ea97a-a130-43b7-90c2-75f0daa98c8f",
+      "text": "Lab Rax Equipment Model Management no-CAD model creation policy: Support guided parametric equipment modeling from measurements, basic geometry, and optional reference images or manufacturer drawings. Allow direct 3D definition of mounting features, connectors, vents, and keep-out zones. Track source reliability and measurement uncertainty. Permit later refinement or replacement through controlled equipment revisions without losing library identity. Preserve all approved Equipment Model Management requirements, including guided structured equipment profiles, and frozen Master Faceplate Rev 1.0, Equipment Mounting Tray Rev 1.0, and Bracket Assembly Integration Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "d615dfb9-cf67-4204-be00-75a40ad6797c",
+      "text": "Lab Rax Equipment Model Management equipment requirements profile policy: Use guided structured equipment requirements profiles containing available weight/center-of-mass information, connectors, ventilation, keep-out zones, orientation restrictions, and service access. Extract or suggest data from supported sources where feasible, allow direct 3D editing, distinguish verified, user-confirmed, and estimated values, and require missing safety-critical information before final design approval. Preserve all approved Equipment Model Management requirements and frozen Master Faceplate Rev 1.0, Equipment Mounting Tray Rev 1.0, and Bracket Assembly Integration Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "8d04ab02-37f4-42dc-9213-bc92e610a88b",
+      "text": "Lab Rax Equipment Model Management revision policy: Use versioned equipment definitions with guided impact analysis. Preserve historical versions, compare geometry, mounting features, dimensions, and metadata, identify affected rack instances and brackets, preview coordinated updates, and require explicit approval before application. Preserve the approved central equipment library, guided multi-format import, guided automatic mounting-feature detection with direct 3D confirmation, and frozen Master Faceplate Rev 1.0, Equipment Mounting Tray Rev 1.0, and Bracket Assembly Integration Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "86389d7b-9275-4914-b7e4-533ed4b62b29",
+      "text": "Lab Rax Equipment Model Management mounting-feature identification policy: Use guided automatic detection with direct 3D confirmation. Analyze imported geometry to suggest mounting holes, slots, attachment surfaces, and related features. Allow users to confirm, correct, add, or reject suggestions on the 3D model, and preserve confirmed features as reusable equipment metadata. Preserve approved guided multi-format import, central reusable equipment library with linked independent project instances, and frozen Master Faceplate Rev 1.0, Equipment Mounting Tray Rev 1.0, and Bracket Assembly Integration Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "ccf50ac6-388a-4344-b6ae-adba0c6495cb",
+      "text": "Lab Rax Equipment Model Management import policy: Use guided multi-format import for common CAD and mesh formats where feasible. Preserve original source geometry and files, identify units and orientation, analyze dimensions and potential mounting features, and require user confirmation for uncertain interpretations. Preserve the approved central equipment library architecture with linked independent project instances, and frozen Master Faceplate Rev 1.0, Equipment Mounting Tray Rev 1.0, and Bracket Assembly Integration Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "87d2f2d8-8700-4147-96df-da9839f24f76",
+      "text": "Lab Rax project compatibility and migration policy: Use non-destructive guided migration. Preserve the original project and specification versions, assess compatibility, explain conversions, create a migrated copy only after explicit approval, retain immutable historical manufacturing releases, and validate the migrated configuration. Preserve self-contained project portability and recovery, guided physical-to-digital reconciliation, physical build tracking, immutable manufacturing releases, coordinated manufacturing packages, rack-wide installation documentation, dependency-aware lifecycle management, rack-wide revision history, atomic change sets, dependency tracking, guided conflict resolution, rack-context-first creation, and frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "d5a58240-84bb-4429-a41b-d5347c999918",
+      "text": "Lab Rax bracket assembly project portability and recovery policy: Support complete self-contained project backup, transfer, import, and restoration, preserving rack geometry references, equipment models, bracket designs, dependencies, printer profiles, configuration revisions, manufacturing release records, and physical build status. Validate integrity and compatibility during import or restoration. Preserve guided physical-to-digital reconciliation, integrated physical build tracking, immutable manufacturing releases, coordinated manufacturing packages, rack-wide installation documentation, dependency-aware lifecycle management, rack-wide revision history, atomic change sets, automatic dependency tracking, guided conflict resolution, rack-context-first creation, and frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "604478a3-b066-416d-b370-b92eaa9c87c6",
+      "text": "Lab Rax physical-to-digital rack reconciliation policy: Use guided reconciliation. Record user-confirmed physical installation details, compare them against the approved digital rack configuration, identify discrepancies, propose updating the digital design or correcting the physical installation, and require validation and explicit approval for design changes. Preserve immutable releases and historical records. Preserve integrated physical build tracking, immutable manufacturing releases, coordinated manufacturing packages, rack-wide installation documentation, dependency-aware lifecycle management, rack-wide revision history, atomic change sets, dependency tracking, guided conflict resolution, rack-context-first creation, and frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "b2f63a69-0334-40d5-ab12-0337c9510002",
+      "text": "Lab Rax physical build tracking policy: Track component status as planned, printed, inspected, or installed; associate physical components with manufacturing releases; identify reusable parts during revisions; and flag differences between the designed rack and recorded physical installation. Preserve immutable manufacturing release revision control, coordinated manufacturing packages, rack-wide installation documentation, dependency-aware equipment lifecycle management, rack-wide revision history, atomic change sets, dependency tracking, guided conflict resolution, rack-context-first creation, and frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "a566a252-1ac8-4a27-9aed-2b84eb85cf8a",
+      "text": "Lab Rax manufacturing release revision-control policy: Preserve released manufacturing packages as immutable revision records. When the rack configuration changes, compare against the released revision, identify affected components and documentation, distinguish reusable parts from components requiring reprinting, and create a new manufacturing release only after validation and explicit approval. Preserve coordinated rack-wide manufacturing packages, installation documentation, dependency-aware removal and replacement, rack-wide revision history, atomic change sets, automatic dependency tracking, guided conflict resolution, rack-context-first creation, and frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "fdf058cc-ac7c-4be8-add7-5cbb649c738d",
+      "text": "Lab Rax bracket assembly rack-wide manufacturing export policy: Generate a coordinated, revision-specific manufacturing package containing all required printable components, quantities, assigned printer and material profiles, compatible export files, consolidated hardware inventory, and installation documentation. Identify identical repeated parts and validate the complete package before release. Preserve dependency-aware rack-wide installation documentation, equipment removal and replacement, revision history, atomic change sets, automatic dependency tracking, guided conflict resolution, rack-context-first creation, and frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "0060c300-4a08-4785-b84f-6a468e8bce2e",
+      "text": "Lab Rax bracket assembly installation and maintenance documentation policy: Generate dependency-aware rack-wide installation and removal sequences, including shared supports, hardware access, cable routing, equipment and hardware inventory, interactive 3D steps, and printable instructions. Validate the sequence and flag unresolved access or assembly conflicts. Preserve dependency-aware removal and replacement, rack-wide revision history, atomic change sets, automatic dependency tracking, guided conflict resolution, rack-context-first creation, and frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "44c37380-f7a6-4a81-aa17-d7e3ad6d0c4d",
+      "text": "Lab Rax bracket assembly removal and replacement policy: Use dependency-aware removal and replacement. Analyze affected assemblies and shared features, offer removal, replacement, or relocation, preserve compatible reusable components, propose coordinated changes, validate the result, and apply approved changes atomically. Preserve automatic rack-wide revision snapshots, validated restoration, coordinated atomic change sets, dependency tracking, guided conflict resolution, rack-context-first creation, and frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "ff2883ec-8588-4538-ad4c-219296207243",
+      "text": "Lab Rax bracket assembly rack-wide configuration history policy: Automatically save a consistent rack-wide revision after each approved coordinated change. Support undo/redo, named configuration milestones, revision comparisons, and validated restoration of complete rack configurations. Preserve coordinated atomic change sets, automatic dependency tracking, guided conflict resolution, rack-context-first creation, and frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "c6bb3212-4c4a-4ab5-b86e-ad5e6a748689",
+      "text": "Lab Rax bracket assembly coordinated change approval policy: Present dependent assembly changes as one reviewable coordinated change set. Allow adjustments, validate the complete proposed result, require explicit approval, and apply all approved changes atomically; preserve the original state if a critical operation fails. Preserve automatic assembly dependency tracking, guided conflict resolution, rack-context-first creation, and frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "4201de15-6a4f-4893-9606-50f10dbf8844",
+      "text": "Lab Rax bracket assembly dependency management policy: Automatically track relationships between installed assemblies, including shared supports, occupied space, ventilation, and cable clearances. When an assembly changes, identify affected assemblies, propose coordinated updates, and require explicit approval before modifying them. Preserve guided installation conflict resolution, rack-context-first creation, frozen Master Faceplate Rev 1.0, and frozen Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "1b7e27e3-650e-44e3-a083-59b871d9323a",
+      "text": "Lab Rax bracket assembly installation conflict policy: Use guided conflict resolution. Detect collisions and clearance violations, propose alternative positions, rack-unit allocations, or rearrangements, preview effects on existing assemblies, and require explicit approval before changing any existing placement. Preserve rack-context-first assembly creation and frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "72392e91-8479-42d0-9b47-28b7f8a16238",
+      "text": "Lab Rax bracket assembly integration workflow: Use rack-context-first placement. Select equipment, choose its intended position in the existing Lab Rax 3D assembly, and generate the faceplate and tray using surrounding rack geometry and occupied space. Preserve frozen Master Faceplate Rev 1.0 and Equipment Mounting Tray Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "5ebc4363-1d6e-4585-ae1f-b0c4fedb0ed9",
+      "text": "Lab Rax equipment mounting tray structural verification policy: Use risk-based structural verification. Evaluate available loads, conservative engineering estimates, and printer/material information; require additional measurements or physical testing when essential safety or functionality cannot be established; distinguish estimated from physically verified performance. Preserve all approved tray requirements, primary tray interface architecture, supplemental rack support policy, risk-based validation, and frozen Master Faceplate Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "3dacf5e4-0f3a-482d-a9b8-c1cadaad1b9d",
+      "text": "Lab Rax equipment mounting tray design optimization policy: Use balanced optimization. Treat structural safety, fit, and required function as mandatory constraints; among valid designs balance printability, material efficiency, serviceability, and compactness; explain tradeoffs and allow user-adjustable priorities. Preserve load-driven reinforcement, guided load assessment, saved printer profiles, adaptive print-aware manufacturing, linked layouts, multi-equipment support, thermal and cable management, serviceability, guided placement, equipment-driven geometry, adaptive retention and structural support, all approved bracket-module requirements, and frozen Master Faceplate Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "b098dfd8-972b-4a43-96ee-05c6f318f5f4",
+      "text": "Lab Rax equipment mounting tray reinforcement policy: Use load-driven reinforcement. Analyze loads, geometry, and print orientation; propose ribs, gussets, increased thickness, or additional supports as needed; balance strength, printability, material usage, and clearances; require explicit approval. Preserve guided structural load assessment, saved printer profiles, adaptive print-aware manufacturing, adaptive linked layouts, multi-equipment support, thermal and cable management, serviceability, guided placement, equipment-driven geometry, adaptive retention and structural support, all approved requirements, and frozen Master Faceplate Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "8a5f731a-f37c-4994-9699-71c01a082753",
+      "text": "Lab Rax equipment mounting tray structural load assessment policy: Use guided load assessment. Prefer known equipment weight and center-of-mass data, allow manual entry, estimate load distribution from geometry where appropriate, distinguish estimates from verified measurements, and require confirmation for safety-critical assumptions. Preserve saved editable printer profiles, adaptive print-aware manufacturing, adaptive linked layouts, multi-equipment support, thermal and cable management, serviceability, guided placement, equipment-driven geometry, adaptive retention and structural support, all prior bracket-module requirements, and frozen Master Faceplate Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "950d4f34-2821-4e4c-b987-77ef43c49f09",
+      "text": "Lab Rax equipment mounting tray printer constraints policy: Use saved, editable printer profiles with build volume and relevant manufacturing capabilities, a selectable default profile, and per-project overrides. Validate tray printability against the selected profile. Preserve adaptive print-aware manufacturing, adaptive linked layouts, multi-equipment support, thermal and cable management, serviceability, guided placement, equipment-driven geometry, adaptive retention and structural support, all prior bracket-module requirements, and frozen Master Faceplate Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "741972fa-db85-4124-9701-694860ca1466",
+      "text": "Lab Rax equipment mounting tray manufacturing policy: Use adaptive print-aware design. Prefer a single-piece tray when practical; propose multi-piece construction when build volume, print orientation, structural strength, or support requirements justify it. Explain joining, assembly, and strength implications and require explicit approval. Preserve adaptive linked layouts, multi-equipment support, thermal and cable management, serviceability, guided placement, equipment-driven geometry, adaptive retention and structural support, all prior requirements, and frozen Master Faceplate Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "03b2e94e-d8c7-437a-a003-4d082c78dc06",
+      "text": "Lab Rax equipment mounting tray multi-equipment policy: Support single-device and multi-device trays. Analyze combined footprints, retention, cable access, thermal requirements, and load distribution; propose layouts with explicit user approval. Preserve equipment-aware thermal management, adaptive cable management, serviceability, guided placement, equipment-driven geometry, adaptive retention and structural support, all approved bracket-module requirements, and frozen Master Faceplate Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "2a6cecf4-a294-4dc9-afdb-4100be66987e",
+      "text": "Lab Rax equipment mounting tray thermal management policy: Use equipment-aware thermal design. Identify ventilation openings, fans, heatsinks, and likely airflow paths; propose tray cutouts, spacing, and clearances as needed; flag uncertain thermal requirements and require explicit user approval. Preserve adaptive cable management, serviceability-aware design, guided placement, equipment-driven geometry, adaptive retention and structural support, all prior bracket-module requirements, and frozen Master Faceplate Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "6b39b55e-0b9c-42cb-a0eb-4e233e629386",
+      "text": "Lab Rax equipment mounting tray cable management policy: Use adaptive integrated cable management. Analyze connector locations and routing space, propose cable passages, tie-down points, strain relief, and routing paths as needed, with editable geometry and explicit approval. Preserve serviceability-aware design, guided equipment placement, equipment-driven tray geometry, adaptive retention and structural support, all prior bracket-module requirements, and frozen Master Faceplate Rev 1.0. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "ad0dc77a-3135-440d-a37e-0873e52bc207",
+      "text": "Lab Rax equipment mounting tray serviceability policy: Use serviceability-aware design. Analyze connector, fastener, cover, and maintenance access; prefer equipment removal without dismantling unrelated assemblies; explain unavoidable limitations and require approval. Preserve guided automatic placement, equipment-driven geometry, adaptive retention and structural support, all approved bracket-module requirements, and frozen Master Faceplate Rev 1.0. Continue requirements discovery with one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "40ddd3eb-d97a-463f-95c5-12bebf2d9f54",
+      "text": "Lab Rax equipment mounting tray placement policy: Use guided automatic equipment placement and orientation based on faceplate alignment, connector access, ventilation, weight distribution, and rack collisions. Allow direct 3D adjustment and require explicit user approval. Preserve equipment-driven tray geometry, adaptive retention, adaptive structural support, all approved bracket-module requirements, and the frozen Master Faceplate Rev 1.0 baseline. Continue requirements discovery one meaningful decision at a time. Do not implement."
+    },
+    {
+      "turn": "76274943-6ca3-49ea-9d96-5eafd3d25961",
+      "text": "Lab Rax master faceplate editable design export standard: Preserve complete editability in the native Lab Rax project and support compatible parametric CAD export where feasible. Preserve all approved faceplate geometry, guided validation, risk-based severity, height adjustment, fastening, alignment, customization, and reuse standards. Continue consolidated faceplate requirements discovery only; do not implement."
+    },
+    {
+      "turn": "43272860-9c36-4f19-83b6-c143ed10a556",
+      "text": "Lab Rax master faceplate validation severity policy: Use risk-based severity: confirmed fit, assembly, structural, and manufacturing failures are critical; cosmetic issues and manageable uncertainties are warnings; uncertainties that prevent establishing safe fit or function are critical. Preserve guided corrections, critical-failure export blocking, acknowledged noncritical warnings, approved height-overflow handling, Y-axis positioning, and all consolidated faceplate standards. Continue requirements discovery only; do not implement."
+    },
+    {
+      "turn": "63a8b286-ed4b-4bbd-b810-b2922bba987a",
+      "text": "Lab Rax master faceplate final approval workflow: Use one unified assembly review panel showing geometry, validation, proposed changes, and export readiness, with explicit final approval. Preserve the approved guided validation policy and all consolidated faceplate standards. Continue requirements discovery only; do not implement."
+    },
+    {
+      "turn": "b204845f-f6b5-46c0-8218-59afecfdab3c",
+      "text": "Lab Rax master faceplate validation policy: Use guided corrections with user approval, block final approval and manufacturing export for unresolved critical failures, and allow acknowledged noncritical warnings. Preserve all approved master faceplate geometry, guided template adaptation, library saving, graphics, cutouts, ventilation, fastening, and alignment standards. Continue consolidated faceplate standards discovery only; do not implement."
+    },
+    {
+      "turn": "a2e018d6-0175-42e5-aeb5-979a4ec0c88e",
+      "text": "Lab Rax master faceplate template reuse behavior: Use guided adaptation: compare the template with new equipment, propose changes, and require approval before applying them. Preserve all approved master faceplate, assembly saving, reusable library, geometry, graphics, cutout, ventilation, fastening, and alignment standards. Continue consolidated faceplate standards discovery only; do not implement."
+    },
+    {
+      "turn": "3b4efc46-cd5f-4a0a-a612-8364c59a15bc",
+      "text": "Lab Rax master faceplate ventilation standard: Use equipment-aware ventilation suggestions with user review, maintaining airflow paths and structural support. Preserve all approved master faceplate geometry, flat-front default, optional recessed styling, guided cutouts, adaptive connections, fastening, and alignment standards. Use sensible defaults for minor details. Continue consolidated faceplate standards discovery only; do not implement."
+    },
+    {
+      "turn": "20bba0e6-ffa0-4929-9a76-a9f757da0645",
+      "text": "Lab Rax master faceplate recessed-equipment styling: Keep a flat faceplate front by default, with optional recessed bezels or shaped transitions where useful, subject to user review. Preserve all approved faceplate geometry, guided cutout generation, functional styling, adaptive connections, fastening, and alignment standards. Use sensible mechanical defaults. Continue consolidated faceplate standards discovery only; do not implement."
+    },
+    {
+      "turn": "14362292-b284-43b8-a8fb-1087d821501b",
+      "text": "Lab Rax master faceplate cutout styling: Preserve functional equipment clearances while applying consistent corner treatments, spacing, and visual alignment where practical, with editable proposed openings. Preserve all approved master faceplate, guided cutout, fastening, connection, and alignment standards. Use sensible defaults for minor dimensions. Continue consolidated faceplate standards discovery only; do not implement."
+    },
+    {
+      "turn": "be8cbe52-8a8e-4631-84b6-41514939e542",
+      "text": "Bracket module requirements — manufacturing and mechanical fit:\nMaterial strategy: PETG-focused initial defaults.\nThickness/reinforcement: Configurable thickness plus optional/suggested ribs and gussets.\nPrint orientation: Recommend orientation and flag printability/strength concerns.\nClearance: Configurable hole and fit clearances.\nStrength validation: Geometry checks plus optional load estimates and reinforcement guidance.\nContinue requirements discovery only; do not implement yet."
+    },
+    {
+      "turn": "79abc43f-acc6-41d3-a9a1-1e7afe3a2875",
+      "text": "Bracket module requirements — initial decisions:\nStarting workflow: Equipment-first.\nAutomation: Guided generation with review and adjustment.\nMounting scope: Both rack-to-equipment and equipment-to-equipment.\nLet's continue requirements discovery before building anything."
+    },
+    {
+      "turn": "105a4ee6-0fb9-4746-8ef9-0d88f2a179db",
+      "text": "i need to create a prompt for an html app i wrote in claude that help me create mounting brackets for equipment placed in a labrax enclosure."
+    }
+  ]
+}

@@ -21,3 +21,8 @@ The app delivers STL files. Do not require or build integration for the end user
 ## Confirmed specimen and parked research — 2026-10-18
 
 Brian confirms positive physical fit of the earlier supplied tray/faceplate specimen; preserve that report/photos/provenance without repeatedly asking him to identify already recovered files. This is specimen-specific qualitative evidence, not general strength/installation approval or a physical test of the later digital build. Remaining niche insert research is parked at Brian's direction; do not resume by default. Phase7 is closed with limitations; do not silently mark every physical UNKNOWN passed. Further printing/testing remains separately authorized.
+
+
+## Recovered rack-first purpose and GUI — 2026-10-18
+
+Assembly Workshop is intended to design equipment assemblies in a Lab Rax rack context. Brian confirmed configure rack → select slot → create the assembly. Preserve the recovered dark three-panel GUI direction and decisions at work/gui-restoration/Recovered_GUI_Decisions.json. Later scope restrictions still supersede historical specifications. Current rack building is layout planning only: schematic posts/rails and slot allocations, no rack-frame STL adapter or physical approval. Pi4 remains the only geometry adapter and hardware pins remain shared. See work/gui-restoration/Restoration_Report.md for implemented versus missing capabilities; do not confuse historical planning, recreated GUI and recovered implementation. Rack layout data/history are user data and must be preserved alongside library.sqlite3 and revisions/.

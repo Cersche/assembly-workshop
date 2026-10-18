@@ -1,0 +1,8 @@
+{
+  "static_and_api_gets": "PASS",
+  "rack_save_reload": "PASS",
+  "stale_save_blocked": "PASS",
+  "invalid_token_blocked": "PASS",
+  "hardware_rows_and_project_unchanged": "PASS",
+  "renders": 0
+}

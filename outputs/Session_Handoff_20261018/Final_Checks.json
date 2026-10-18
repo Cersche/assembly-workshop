@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-18",
+  "prior_data_hashes_match": {
+    "data\\normal-use\\library.sqlite3": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\library.sqlite3": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": true
+  },
+  "sqlite_integrity": "ok",
+  "hardware_revision_count": 6,
+  "saved_projects": [
+    {
+      "id": "pi4-beta",
+      "name": "Lab Rax \u00b7 Pi4 beta",
+      "units": "mm",
+      "selections": {
+        "screw": {
+          "id": "accu-sscf-m3-8-a2",
+          "revision": 1,
+          "name": "Accu M3 \u00d7 8 socket cap \u00b7 A2",
+          "kind": "screw",
+          "manufacturer": "Accu",
+          "part_number": "SSCF-M3-8-A2",
+          "diameter": 3,
+          "pitch": 0.5,
+          "length": 8,
+          "threaded_length": 8,
+          "length_convention": "under_head",
+          "head_diameter": 5.5,
+          "head_height": 3,
+          "drive": "2.5 mm hex",
+          "material": "A2 stainless steel",
+          "finish": "Natural",
+          "verification": "documented",
+          "source": "https://www.accu.co.uk/metric-cap-head-screws/3818-SSCF-M3-8-A2",
+          "retrieved": "2026-10-17",
+          "availability": "Not checked",
+          "cad_status": "Supplier CAD link only; no model downloaded",
+          "notes": "Nominal dimensions; head diameter tolerance +0/-0.18 mm, height +0/-0.14 mm. Full-thread specification from supplier."
+        },
+        "heatset": {
+          "id": "mcmaster-94459a140",
+          "revision": 1,
+          "name": "McMaster M3 heat-set \u00b7 5.7 mm",
+          "kind": "heatset",
+          "part_number": "94459A140",
+          "diameter": 3,
+          "pitch": 0.5,
+          "length": 5.7,
+          "hole_max_diameter": 4,
+          "hole_profile": "straight",
+          "end_type": "open",
+          "material": "Brass",
+          "verification": "partial",
+          "source": "https://www.mcmaster.com/products/94459a170/",
+          "retrieved": "2026-10-17",
+          "availability": "Not checked",
+          "cad_status": "No CAD downloaded",
+          "notes": "Catalog standard-profile brass row. 4 mm is For Max. Hole Dia., not an exact installation target. Outside diameter, usable thread depth and minimum wall remain unverified."
+        }
+      },
+      "inputs": {
+        "stack": 3.3,
+        "pocket": 8,
+        "boss_diameter": 9,
+        "pilot": 4,
+        "minimum_engagement": 3,
+        "bottom_allowance": 0.5
+      },
+      "notes": "Clearance v2 baseline. Insert pilot is provisional. Physical testing pending."
+    }
+  ],
+  "protected_geometry_hashes": {
+    "pi4_baseline.scad": "1136215f33e87d8e943ab62f4cb627010123a8d37dae423e478696a9f9437de4",
+    "assembly.json": "ef1050c5e535e0616f50d8b2c34a22ce1b94c7954050d2f9c30096306f485436",
+    "pi_reference.json": "b6be2c03dcefb198afb711fa27003f23bbb5148acdf5b912681a08021a005c66",
+    "faceplate_mounting.py": "6e4412e1fe3b28a699391bf6ad328e7845b0098fad1832c27e6d79cd6e79d00c"
+  },
+  "rack_layout_exists_now": false,
+  "scope": "Read-only final preservation checks; no tests/rendering/data initialization."
+}

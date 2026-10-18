@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-18",
+  "protected_data_file_hashes_unchanged": true,
+  "baseline_reference_mounting_unchanged": true,
+  "normal_use_rack_document_not_initialized": true,
+  "rack_unit_tests_passed": 7,
+  "existing_app_tests_passed": 12,
+  "mounting_specific_test": "Deferred; remains tabled",
+  "node_checks": [
+    "catalog workflow",
+    "phase7 frontend handlers",
+    "viewer behavior",
+    "pixel depth occlusion",
+    "workspace syntax",
+    "inline frontend syntax"
+  ],
+  "http_checks": "HTTP_Checks.json",
+  "browser_acceptance": {
+    "disposable_data": "work/gui-restoration/acceptance-data",
+    "create_rack": "PASS",
+    "select_slot_and_create_pi4_allocation": "PASS",
+    "save_reload": "PASS",
+    "overlap_rejection": "PASS",
+    "shrink_occupied_rack_rejection": "PASS",
+    "equipment_library_selection": "PASS",
+    "assembly_view": "PASS",
+    "review_and_prepare_navigation": "PASS",
+    "searchable_shortcuts": "PASS",
+    "console_errors": []
+  },
+  "normal_use_dashboard": "Verified after restarting identified earlier launcher process",
+  "builds": 0,
+  "packs_imported_into_normal_data": 0,
+  "remaining": [
+    "Original HTML app and rack-frame generator not recovered",
+    "Rack solids schematic; no rack STL export or physical fit validation",
+    "Only Pi4 adapter; hardware project shared across slot references",
+    "Drag-and-drop, arbitrary equipment/CAD editing and remaining historical GUI features not implemented"
+  ]
+}
