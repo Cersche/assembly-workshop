@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-18",
+  "checks": [
+    {
+      "check": "catalog_handlers",
+      "exit_code": 0
+    },
+    {
+      "check": "phase7_handlers",
+      "exit_code": 0
+    },
+    {
+      "check": "extract_frontend",
+      "exit_code": 0
+    },
+    {
+      "check": "frontend_syntax",
+      "exit_code": 0
+    },
+    {
+      "check": "app_cli",
+      "exit_code": 0
+    }
+  ],
+  "inline_js_unchanged": true,
+  "changed_since_acceptance": [
+    "outputs/Mechanical_Design_App/index.html",
+    "outputs/Mechanical_Design_App/README.md"
+  ],
+  "change_scope": "Static phase/closeout text only",
+  "protected_assets": "5 hashes PASS",
+  "full_python_suite": "Prior46 PASS retained; no implementation changed; not repeated",
+  "fresh_render": false,
+  "desktop": false,
+  "physical_test": false,
+  "release_packaged": false
+}

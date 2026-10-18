@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-18",
+  "source": "C:\\Users\\brian\\Documents\\Codex\\2026-10-17\\Assembly Workshop",
+  "snapshot": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\yaml-continue-assembly-workshop-from-c\\outputs\\Phase7_Final_Preservation_20261018",
+  "files": 441,
+  "bytes": 70679029,
+  "all_source_copy_hashes_match": true,
+  "external_test_stls": [
+    {
+      "source": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\continue-assembly-workshop-from-c-users\\outputs\\Pi4_Test_Fit_Parts\\Pi4_Tray_Clearance_v2_TEST_FIT.stl",
+      "copy": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\yaml-continue-assembly-workshop-from-c\\outputs\\Phase7_Final_Preservation_20261018\\earlier_test_fit_stls\\1\\Pi4_Tray_Clearance_v2_TEST_FIT.stl",
+      "sha256": "ce578db0b9917532f1fdba01be1e8726cd0c97579f57ed6730fa938660d5c815"
+    },
+    {
+      "source": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\continue-assembly-workshop-from-c-users\\outputs\\Pi4_Test_Fit_Parts\\Pi4_Faceplate_Pilot4mm_TRIAL.stl",
+      "copy": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\yaml-continue-assembly-workshop-from-c\\outputs\\Phase7_Final_Preservation_20261018\\earlier_test_fit_stls\\2\\Pi4_Faceplate_Pilot4mm_TRIAL.stl",
+      "sha256": "139eb870d725aef9863c964de4f9ec47401b87282101dd98a8eb79f3d521d877"
+    },
+    {
+      "source": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\continue-assembly-workshop-from-c-users\\outputs\\Pi4_Four_Corner_Test_Fit\\Pi4_Tray_Clearance_v2_TEST_FIT.stl",
+      "copy": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\yaml-continue-assembly-workshop-from-c\\outputs\\Phase7_Final_Preservation_20261018\\earlier_test_fit_stls\\3\\Pi4_Tray_Clearance_v2_TEST_FIT.stl",
+      "sha256": "7b92efd6f3066e066defe67700aa7b25902d31a6aae06f8f05da4885469a3f5d"
+    },
+    {
+      "source": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\continue-assembly-workshop-from-c-users\\outputs\\Pi4_Four_Corner_Test_Fit\\Pi4_Faceplate_FOUR_CORNER_Pilot4mm_TRIAL.stl",
+      "copy": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\yaml-continue-assembly-workshop-from-c\\outputs\\Phase7_Final_Preservation_20261018\\earlier_test_fit_stls\\4\\Pi4_Faceplate_FOUR_CORNER_Pilot4mm_TRIAL.stl",
+      "sha256": "5cba45a7a4e5607fc22a044ba8d2dfbfb35d8dc3a9a554d4901bd1ab4db37af8"
+    }
+  ],
+  "includes": "Entire project at snapshot time, including .git, untracked app/work/outputs/evidence, photos and any workspace data",
+  "scope": "Local raw preservation copy; not a release package or off-machine backup",
+  "git_timing": "Snapshot .git precedes the final handoff commit; latest working docs/source are included. The local handoff commit is separate and contains guidance only.",
+  "manifest": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\yaml-continue-assembly-workshop-from-c\\outputs\\Phase7_Final_Preservation_20261018\\Snapshot_Manifest.json"
+}

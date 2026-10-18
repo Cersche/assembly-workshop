@@ -1,60 +1,35 @@
-# Assembly Workshop — CURRENT handoff (2026-10-18)
+# Assembly Workshop — current handoff (2026-10-18)
 
-This concise summary replaces the historical handoff. Read it before inspecting relevant files.
+Read AGENTS.md and PROJECT.md, then only referenced relevant files. Canonical project home: C:/Users/brian/Documents/Codex/2026-10-17/Assembly Workshop. The earlier generated folder was successfully renamed; previous copy and all assets retained.
 
-## Goal — current
-Build a local mechanical-design app that selects traceable hardware, generates matching joints, and checks assemblies before printing. The Lab Rax Raspberry Pi4 tray/faceplate is the first beta project; the M1–M8 catalog supports later designs without inventing dimensions or physical validation.
+## Goal and status
 
-## Done — current
-- Phases1–6 COMPLETE; Phases5/6 closed WITH LIMITATIONS. Phase7 NOT STARTED.
-- App: outputs/Mechanical_Design_App/. app.py: stdlib HTTP/SQLite, atomic imports, immutable records/pins, joint rules/exports. index.html/catalog.js: filters, source inspection, explicit pack import and replacement differences. viewer.js/mesh_revision.py: baseline/reference/proposal viewing and immutable matching OpenSCAD builds.
-- Phase5: pi_validation.py, pi_reference_manifest.json, pi_reference.json, joint_validation.json. Original baseline9PASS/0FAIL/4UNKNOWN; selected4mm trial7PASS/0FAIL/6UNKNOWN. Digital screening is not physical/whole-solid approval. Preserve pi4_baseline.scad/assembly.json and outputs/Lab_Rax_Pi4_Assembly_Beta_Clearance_v2/.
-- Phase6: catalog-packs/phase6-batch1.json through phase6-batch7.json plus manifests; catalog_packs.py checks hashes; catalog_evidence.py audits fields offline and validates axial-segment METADATA. Seven packs+starter yield34identities/38revisions,16screws/18inserts,14/14 screw and12/14 insert families. M4.5/M7 inserts remain awaiting_source, not unavailable.
-- PEM batch7 r2 resolves PROJECT source policy: visually inspected SI-9 drawing A=length,E=after-knurlOD,C=pilotmax. Catalog+0.05/-0 intervals equal overlap with product-page+/-0.05:1.75–1.80mm(M1/M1.2),2.15–2.20mm(M1.4/M1.6). Source disagreement/hash retained in installation_evidence_resolution; no manufacturer erratum claimed. r1/pins preserved; usable-depth/generic min_wall/process/physical approval remain UNKNOWN.
-- Latest report: app catalog-packs/phase6-closeout.md. Full evidence: C:/Users/brian/Documents/Codex/2026-10-18/continue-assembly-workshop-from-c-users-2/outputs/Phase6_Closeout/ (Closeout_Report.md,PEM_Resolution.json,evidence.json,audit,snapshot,batch7/manifest). Older reports/ZIPs are historical, not Phase6 releases.
-- Last verification39PythonPASS; catalog/frontend import-handler checks/JS syntaxPASS;7manifest hashes/3protected baseline-reference hashesPASS. Approved six-pack browser review passed imports27->32->34/source inspection/replacement evidence/pin preservation. Batch7 and static phase text have automated acceptance, no fresh batch7 visual claim.
+Local Python-standard-library/SQLite + HTML/JavaScript mechanical design app. Traceable hardware, constrained Pi4 M3 joint proposals, viewer and matching STLs. Printer/slicer integration is OUT OF SCOPE. Phases1–6 closed with limitations. Phase7 CLOSED WITH LIMITATIONS at Brian's explicit direction. Digital points2–6 accepted; Brian confirms positive qualitative physical fit for the earlier supplied printed tray/faceplate. All seven milestones complete within their stated scopes. See outputs/Phase7_Closeout/Closeout_Report.md.
 
-## In progress — current exact state
-No unfinished implementation or running acceptance server. Phase6 closed at Brian's explicit instruction; next is Phase7 planning. Active8765/8766 app/data were not updated or inspected during closeout; do not assert current running state. New packs are NOT auto-imported into active data. Disposable accepted trial pins were AccuSSCF-M3-8-A2r1/McMaster94459A140r1, pilot4/stack3.3/pocket8/boss9/minengagement3/bottomallowance0.5mm; not a live-user-state claim.
+## Current evidence
 
-## Next steps — current
-1. Read latest closeout/app README, then only relevant hardware-records.md/catalog evidence/tests. Root AGENTS.md absent; check again. No repo scan.
-2. Start Phase7 readiness plan: actual material/process/hardware, tool/access envelopes, measurements and fit/retention/torque criteria; do not invent loads/temperatures/print compensation.
-3. Resolve selected Pi4 M3 usable-depth/wall/process/access evidence before physical approval. Small PEM parts are not automatic M3 replacements.
-4. Prepare reviewable coupon/prototype procedure/artifacts as needed. **Physical test fitting is LATE Phase7 per Brian. Do not test fit or print now.**
-5. Conduct late-Phase7 testing when Brian directs, record observations/failures, then evaluate sign-off. Printing needs separate approval; release packaging not authorized.
+- App: outputs/Mechanical_Design_App/. Digital acceptance: outputs/Phase7_Digital_Acceptance/Report.md (46PythonPASS; one mounting-specific test deferred; JS behavior/syntax and9localhost endpointsPASS). New pi4-mesh-v2-triangulation1 cache uses strict mesh checks, bounded exact-collinear export retriangulation and per-artifact integrity manifests. Old caches stay untouched; legacy downloads lacking manifests require explicit new generation.
+- Physical: outputs/Phase7_Physical_Observations/2026-10-18/. Brian: “Fitment is fantastic”;3photos, recovered prior chat/file provenance, User_Confirmation.json. Earlier replacement build bbbe12450805205dfcb2be26f02d707bd53c3030e21970631539be2d3cd27937. Do not claim the later digital build was physically tested. No precise photo/ruler measurements inferred.
+- Hardware:7packs+starter,34identities/38revisions.14/14screw and12/14insert families; M4.5/M7 inserts awaiting_source. Phase6 closeout: app catalog-packs/phase6-closeout.md. Full prior evidence remains at C:/Users/brian/Documents/Codex/2026-10-18/continue-assembly-workshop-from-c-users-2/outputs/Phase6_Closeout/.
+- McMaster94459A140 drawing reference evidence: outputs/Phase7_Hardware_Evidence/94459A140_Drawing_Review.json. Brian parked further niche insert research. Keep missing tolerances/usable-depth/wall and installation claims UNKNOWN; do not infer dimensions or revise pins.
+- Protected pi4_baseline.scad, assembly.json, pi_reference.json and mounting files unchanged. Rechecked evidence/photo/earlier-STL/protected hashes in outputs/Phase7_Closeout/Evidence_Check.json. Prior handoff saved there as before_HANDOFF.md.
 
-## Decisions — current
-- Preserve user data/, immutable revisions/cache, project pins and mechanical baseline. Explicit import does not repin; draft does not save. Failed checks block proposed export; UNKNOWNs remain explicit.
-- Pi4 adapter remains M3x0.5, pilot3–4.2mm, fixed stack3.3/pocket8/boss9. Catalog breadth does not expand geometry support. Axial-segment descriptions are metadata only; non-straight generation/comparison unsupported.
-- Conditional manufacturer wall guidance is not generic FDM minwall. OD is nominal after-knurl, not maximum. PEM policy is an explicit project decision, not a corrected supplier publication. Research PDF/render in current-chat work/pem-resolution/, not bundled.
-- Supplier CAD/drawings link-only; offline metadata works, integrated offline asset store/viewer unsupported. Do not redistribute supplier/Pi reference assets with unresolved rights.
-- **Four-corner mounting matter TABLED until Brian raises it.** Existing faceplate_mounting.py/.json describe proposal default; do not revisit/implement/test it. Historical baseline unchanged.
-- Fresh desktop sessions require separate Brian approval; read computer-use skill/required docs first. No purchasing, printing, uploads, release packaging or subagents unless authorized.
+## Next steps
 
-## Known issues — current
-No known failing tests. Whole-Pi non-manifold CGAL/containment/global clearance, actual tool/install/insertion/cable/rack access, physical fit/strength and upstream Pi provenance remain UNKNOWN. Remaining insert gaps, representative variant breadth, offline CAD/drawing viewer and arbitrary installation geometry are documented beta limits. Old scripts may overwrite evidence or misread CGAL failures; do not rerun blindly. Sky snapshots can lag; rediscover handles. Final dirty-reload warning cancelled, not completed reload. OpenSCAD.exe works; .com launcher broken. Use UTF-8 explicitly; corrected test encoding issue/full rerun PASS.
+1. Phase7 is closed; do not reopen it or start a new numbered phase by default. Read outputs/Phase7_Closeout/Next_Chat_Prompt.md. Establish the intended normal-use app/data directory next; current/Beta0.8/Beta0.7 default database paths were absent on read-only inspection.
+2. Preserve existing user data and pins; do not mistake disposable acceptance data for the user's library. Do not create a new default database as a substitute for locating existing work.
+3. Fresh desktop sessions require Brian's permission. Any later workflow review, release preparation or further physical work is separately scoped. No print/purchase/release package/publish/deploy/push authorized.
 
-## Run/test/build — current
-PowerShell from repo root. Do not run server against active data for acceptance. These commands are verification guidance, not permission to print/package:
+## Decisions and limitations
 
-```powershell
-$py='C:/Program Files/Python310/python.exe'
-$node='C:/Users/brian/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe'
-& $py outputs/Mechanical_Design_App/app.py --port 8767 --data work/phase7-sandbox
-# NEW disposable folder only; approved browser http://127.0.0.1:8767; Ctrl+C stops.
-# Checks in another shell:
-& $py -m unittest discover -s outputs/Mechanical_Design_App -v
-& $node outputs/Mechanical_Design_App/test_catalog_workflow.cjs
-& $node --check outputs/Mechanical_Design_App/catalog.js
-& $node --check outputs/Mechanical_Design_App/viewer.js
-& $py work/extract_frontend.py
-& $node --check work/app_frontend_check.js
-& $node work/test_viewer_v08.cjs
-& $py -c "import sys; sys.path.insert(0,'outputs/Mechanical_Design_App'); import catalog_packs; p=catalog_packs.inventory()['packs']; assert len(p)==7 and all(x['available'] for x in p); print('7 packs verified')"
-```
-Build only when justified: renderer C:/Program Files/OpenSCAD/openscad.exe; app Generate & show proposal renders matching meshes into chosen data directory's immutable revisions cache. Desktop approval required. No automatic builds/printing/packages to resume. CLI flags: python app.py --help.
+Preserve all outputs/,work/,user data,immutable hardware revisions/cache and project pins. Most app/evidence assets are untracked; Git alone is not a backup. Draft does not save; explicit imports do not repin; failures block proposed export; UNKNOWNs remain explicit. M3x0.5 adapter/pilot3–4.2/fixed stack3.3,pocket8,boss9 retained. Four-corner mounting matter remains TABLED until Brian raises it; supplied-photo/file identification is not reopening it. Strength/retention/torque, installation approval, Pi-board/rack/cable/tool access and whole-Pi containment/global clearance remain UNKNOWN or unestablished. Supplier/Pi reference rights unresolved; no redistribution. Exact supplier/project source policy stays distinct from manufacturer corrections. No subagents unless authorized.
 
-Git identity roci <roci@example.invalid>. Handoff commit contains ONLY HANDOFF.md; outputs/,work/,result.json are untracked local assets, not committed app backups. Do not git clean or assume a clone contains them. Git executable: C:/Users/brian/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/git/cmd/git.exe.
+## Run/check
 
----
+From canonical project root, Python C:/Program Files/Python310/python.exe; Node C:/Users/brian/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe. App command: `& 'C:/Program Files/Python310/python.exe' outputs/Mechanical_Design_App/app.py --port 8767 --data work/NEW-disposable-folder` (the data directory must be NEW for acceptance). Ctrl+C stops it. Normal default launcher uses app-relative data/ and port8765; intended active data location is not yet established. No running acceptance server remains from digital tests.
+
+Routine Python discovery includes the tabled mounting-specific test; for current acceptance scope use work/phase7-digital/accept.py filtering and inspect its fresh-data behavior before running. It renders and uses disposable data, so don't rerun by default. Existing Node tests: app test_catalog_workflow.cjs, test_phase7_workflow.cjs; work/test_viewer_v08.cjs; JS syntax checks and work/extract_frontend.py. OpenSCAD.exe C:/Program Files/OpenSCAD/openscad.exe (not broken .com launcher). User-authorized rendering only. No automatic builds or historical evidence regeneration.
+
+## Final preservation and next-chat preparation
+
+See outputs/Phase7_Closeout/Preservation_Report.json for the complete local safety copy and manifest. App/assets/work remain largely untracked: the handoff commit is not an app backup. Prepared next-chat prompt: outputs/Phase7_Closeout/Next_Chat_Prompt.md. No release packaging, printing, desktop control, publishing, deployment or push occurred during closeout. Static app roadmap/README now reflect Phase7 closed with limitations; final targeted checks recorded beside the closeout.
