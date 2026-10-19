@@ -1,71 +1,34 @@
 # Assembly Workshop — current handoff
 
-Updated 2026-10-18. Read AGENTS.md, this file and PROJECT.md first. Canonical home: `C:/Users/brian/Documents/Codex/2026-10-17/Assembly Workshop`.
+Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), then this handoff. AGENTS was deliberately not edited: its stale four-corner/Pi4-only/no-rack-export clauses are listed in [AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md). Brian's current decisions below supersede those clauses. Preserve every other boundary.
 
-## Purpose and current state
+## Current state and Brian's confirmed direction
 
-Design equipment assemblies inside a Lab Rax rack context: **configure rack → select slot → create equipment/tray/faceplate/bracket**. Pi4 is the first supported geometry adapter, not the whole product. Recovered user decisions from the original ChatGPT chat restore the dark three-panel GUI direction.
+- Rack-first local studio: configure Lab Rax rack → select slot → create an equipment/tray/faceplate assembly. STL delivery; no printer/slicer integration. Source meshes remain the rack preview; independent slot assemblies keep their own hardware snapshots, inputs and revisions. M3 x 0.5 Pi4 limits and immutable mechanical baseline remain intact.
+- **C1 confirmed:** every faceplate U gets four rack holes, two per side. Corner radius is limited to 2.5 mm. Fit/strength of this four-hole design remains UNKNOWN. Brian's earlier positive fit applies to the old two-hole, 3 mm, square-corner specimen only and does not transfer.
+- **C1b confirmed:** each support extension occupies its own 1U between stacked posts; post U plus extension U equals rack height. Joints are movable. This supersedes the earlier zero-height joint model; it does not certify physical fit.
+- **C2 confirmed:** generic equipment_tray.scad and the hardware import wizard are in scope as a second adapter beside Pi4: dimensions, STL, SCAD and STEP via local FreeCAD. Keep the Pi4 path untouched. Snap tabs, clips, pegs, straps, keystones, single-piece joints, rear support and multi-U spacing are unprinted; fit/strength UNKNOWN.
+- **C3 confirmed:** PRINT THE RACK and /api/rack-stl are in scope. Creator parts remain local under Brian's BY-NC-SA/personal-use direction; never redistribute them. Rack fit/strength UNKNOWN. This housekeeping did not run any export.
+- Selected GUI remains **1C/2C/3A/4A/5A/6A/7A/8A**: collapsible inspector and left groups; select then ellipsis/right-click actions; Setup/Hardware/Appearance tabs; one explicit atomic Save; presets/custom colors; artwork fit/center/size/position/remove. **2C remains provisional pending Brian's review.** Artwork/colors are preview-only; image-to-STL work is deferred. Draft does not save; checks/exports must not silently save.
+- Phase 6 and Phase 7 are **CLOSED WITH LIMITATIONS**. Digital checks and the earlier qualitative specimen report are recorded evidence, not blanket physical certification. Niche insert research remains parked. No printing or new physical testing is authorized here.
 
-Phase7 remains **CLOSED WITH LIMITATIONS**. The earlier specimen has Brian's positive qualitative fit report; it is not physical validation of the later digital build or general strength/installation approval. No new numbered phase has started.
+## Data locations — C4 SETTLED (Brian, 2026-10-18)
 
-## What works
+**data/normal-use is the official user data.** The server was restarted 2026-10-18 with start.bat's arguments (`--existing-library --data …\data\normal-use`) and serves My Lab Rax with 2 allocations. Never start bare `python app.py`; that falls back to outputs/Mechanical_Design_App/data, which is now a preserved historical copy (older 1-allocation rack saved 14:49; wizard cache 20:59). Do not delete or merge it. [Data_Locations](docs/housekeeping/Data_Locations.md) records file hashes and database-copy inspection: both DBs have six parts/one project but different hashes; saved rack documents contain two versus one allocations. These are disk snapshots, not evidence of current active process or unsaved browser state.
 
-- Current app: `outputs/Mechanical_Design_App/`, Python3.10 standard library/SQLite + local HTML/JS. Offline local resources; STL delivery, no printer integration.
-- Dark studio with dashboard, Rack/Assemble/Review/Prepare, Equipment Library/Assembly Explorer, contextual Properties, searchable shortcuts. `workspace.js`, `workspace.css` wrap the existing controls.
-- Multiple named rack layouts, optional user-supplied dimensions, orbitable schematic, selectable slots and explicit Pi4 slot allocations. Overlap/out-of-range allocations and shrinking past occupied slots are blocked.
-- Rack persistence: `rack_workspace.py`, separate `rack-workspace.json` beside the chosen hardware DB, explicit Save layout, stale-writer protection, atomic replacement and prior JSON snapshots in `rack-history/`.
-- Hardware imports/revisions/pins, Pi4 checks, generation/export safeguards retained. Viewer per-pixel depth testing fixes false overlap at the join and full-view framing fits the model.
+The launcher outputs/Mechanical_Design_App/start.bat:3 explicitly selects data/normal-use with --existing-library. app.py's --data default selects its own data directory (outputs/Mechanical_Design_App/app.py:897). Historical reports record both folders in use at different times. No process/browser/listener was inspected or started in housekeeping. Never rely on an old PID or refresh a tab casually; preserve unsaved drafts.
 
-## Exact app/data location and running state
+## Next steps and open limits
 
-- App: `outputs/Mechanical_Design_App/`.
-- **Normal-use data: `data/normal-use/`**, copied in full from `outputs/Mechanical_Design_App_Beta_0_8/Mechanical_Design_App/data/` at Brian's direction. Original remains untouched. Six hardware revisions, M3x8/94459A140 r1 pins, pilot4, fixed stack3.3/pocket8/boss9. One legacy cached revision retained.
-- Normal-use startup: `outputs/Mechanical_Design_App/start.bat`. It supplies `--existing-library` and an absolute resolved data path, skips starter imports and refuses to create a missing replacement DB. Direct app.py without the flag retains historical automatic-start behavior: use the configured launcher.
-- Server left running at `http://127.0.0.1:8765/` with the real new dashboard; session9610 was still running during handoff checks. Do not blindly start a second server. A previous user-launched server had to be identified/restarted because it served old route handlers with new disk assets.
-- No real rack layout has been saved yet at final inspection; no `data/normal-use/rack-workspace.json` exists. Do not confuse the five-slot disposable acceptance rack with user data.
-- Browser tests used `work/gui-restoration/acceptance-data/`, port8767; test server stopped and test tab closed. Fresh browser/desktop sessions require Brian's approval.
+1. Done: AGENTS.md updated with C1/C1b/C2/C3/C4 (see its "Confirmed scope expansion" section).
+2. C4 settled (above). Library-built equipment cached only in the app-local folder may need re-saving from the wizard. Preserve databases, any journal/WAL/SHM, revisions, rack documents/history, equipment caches and artwork together. A scratch DB copy is not a consistent live backup guarantee.
+3. Await Brian's 2C grouping review. Other recorded gaps include recent colors, history/recovery UI, complete per-instance component editing and verified installed-equipment clearance. These are backlog, not an instruction to implement.
+4. Keep unsupported dimensions, usable thread depth, generic wall/process guidance, load/strength/retention, installation, service access and new-feature fit UNKNOWN. [Open_Unknowns](docs/housekeeping/Open_Unknowns.md) retains source-specific limits. No evidence regeneration or physical work by default.
 
-## Critical limitations — do not lose these again
+## Where things live and what was checked
 
-**Rack building is currently layout planning only.** Rack posts/rails/allocation shelves are schematic primitives, never STL geometry. Original uploaded `index.html` / `lab-rax-assembler-code-only.html` and the old rack-frame generator have not been recovered. Do not claim the historical app was fully restored. Verified rack profiles/interfaces/usable clearances and physical rack fit remain missing/UNKNOWN.
-
-Only the existing Pi4 geometry adapter works. Slot allocations reference a **shared Pi4 hardware project**, not independent per-slot pins or revisions. Current exports retain documented Pi4 assembly coordinates; they do not include rack frames or slot transforms. Drag-and-drop, arbitrary equipment/CAD editing, synchronized revision comparison and many older specification features are unimplemented.
-
-Legacy cache lacks an integrity manifest: preserved, but matching downloads are blocked until separately authorized regeneration. No mesh builds were generated during GUI work. No automatic pack imports. Unsupported dimensions, usable depth, loads, wall/process guidance, strength and installation remain UNKNOWN. M3x0.5/pilot3–4.2/fixed stack3.3/pocket8/boss9 limits unchanged.
-
-Four-corner mounting stays TABLED; niche insert research stays parked. No printer/slicer integration. No printing, purchases, uploads, release packaging, publishing, deployment or pushes authorized by handoff work. Supplier/Pi assets with unresolved rights stay local.
-
-## Evidence and recovery
-
-- `work/gui-restoration/Recovered_GUI_Decisions.json`:98 recovered user-authored decisions with turn IDs. Original ChatGPT chat `Create Claude App Prompt`, ID `6ad39502-fa44-83e8-a1ce-5a357df4d02e`, began October17 08:32 Pacific. Older pagination became accessible; many assistant messages remain placeholders. Recovered historical plans do not override later scope constraints.
-- `work/gui-restoration/Restoration_Report.md`, `Verification.json`, `HTTP_Checks.json`, `Rack_Workspace.png`, `Normal_Use_Dashboard.png`.
-- Before-GUI app safety copy: `work/gui-restoration/before-app/`. Do not restore it wholesale over current user data.
-- Data identification/copy evidence: `outputs/Normal_Use_Location_Review/`.
-- Phase7 evidence: `outputs/Phase7_Closeout/Closeout_Report.md`, digital acceptance report, physical observation/provenance and prior preservation reports. Keep historical assets intact.
-- Current closeout: `outputs/Session_Handoff_20261018/`; prior HANDOFF/PROJECT/AGENTS archived there, along with final checks, next-chat prompt and preservation report once complete. Current working app/assets/data remain mostly untracked: **Git alone is not a backup**.
-
-## Verification actually completed
-
-GUI work:7 rack-document tests and12 existing app tests PASS (mounting-specific test intentionally excluded). Node catalog and Phase7 handlers, viewer controls, depth pixel tests and syntax PASS. HTTP checks exercised asset/API delivery, save/reload, stale writes and session token enforcement in disposable data. Authorized browser checks passed creation, selected-slot Pi4 allocation, persistence after reload, overlap/shrink rejection, equipment card flow, assembly inspection, review/prepare navigation and shortcut search; no console errors. No renderer/export/import buttons clicked.
-
-Handoff: read-only SQLite integrity `ok`; all12 original+normal-use data file hashes still match the pre-GUI manifest. Protected SCAD/assembly/Pi reference/mounting files unchanged. See final checks. No need to rerun rendering or historical acceptance for unchanged code.
-
-## Next steps
-
-1. Read the recovery report and recovered decisions; keep the rack-first product purpose central.
-2. Recover original HTML/source and creator rack component assets from the earlier chat or supplied files. Existing references include Lab Rax posts/panels, 5U rack, extensions and blank plates; attachments can require fresh retrieval. Inspect relevant provenance/rights and actual surviving capabilities. Do not assume they implement the generator.
-3. Identify a supported path from layout to exact rack geometry. Compare recovered source with current app before proposing integration; keep unsupported geometry/fit UNKNOWN. Ask only for genuinely missing source/decisions.
-4. Preserve the functioning UI, normal-use data, pins, immutable caches and baseline. Use fresh disposable data for checks, and request permission before browser control or any new render. Do not reopen Phase7 or the parked mounting/research matters.
-
-## Run and targeted checks
-
-From the canonical root in PowerShell. Normal use only if port8765 is not already occupied:
-
-```powershell
-& 'C:/Program Files/Python310/python.exe' outputs/Mechanical_Design_App/app.py --existing-library --data data/normal-use --port 8765
-# or use outputs/Mechanical_Design_App/start.bat
-& 'C:/Program Files/Python310/python.exe' -B -m unittest discover -s outputs/Mechanical_Design_App -p test_rack_workspace.py -v
-& 'C:/Users/brian/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe' --check outputs/Mechanical_Design_App/workspace.js
-```
-
-Rack tests use new temporary data; atomic replacement and localhost checks may require sandbox escalation. Additional existing Node checks: app `test_catalog_workflow.cjs`, `test_phase7_workflow.cjs`; work `test_viewer_v08.cjs`, `test_viewer_depth.cjs`. `work/gui-restoration/check_http.py` uses fresh temporary data, no render; inspect before running. For other acceptance choose a NEW data path under work/, never active data. OpenSCAD.exe is the documented renderer, not the broken .com launcher; no render is needed for handoff.
+- Runnable source: outputs/Mechanical_Design_App; [Code_Map](docs/housekeeping/Code_Map.md) maps source files and HTTP routes by static reading only.
+- Current selected-GUI evidence: work/gui-refinement/Report.md and Decisions.json; renderer/repair/startup reports are linked in the [archive index](docs/archive/README.md). Read only relevant reports; older reports describe earlier snapshots.
+- Acceptance/specimen provenance: outputs/Phase7_Closeout/Closeout_Report.md and outputs/Phase7_Physical_Observations. Readiness plans stay in docs/phase7-readiness as historical planning; they are not software-completion gates.
+- The [decision log](docs/housekeeping/Decision_Log.md) distinguishes explicit Brian directions, superseded intent and unestablished chronology. [Changes](docs/housekeeping/Changes.md) lists exact operations and reversals; the [manifest summary](docs/housekeeping/Backup_Manifest_Summary.md) inventories assets without creating a backup.
+- Full pre-housekeeping handoff is preserved in [the archive](docs/archive/handoffs/HANDOFF_pre_housekeeping_20261018.md). Protected outputs/work/data were read only. No tests, app, geometry, render/export, restart, commit, push, upload or install was run. Earlier acceptance claims were not rerun. Most assets remain untracked; Git alone is not a backup.
