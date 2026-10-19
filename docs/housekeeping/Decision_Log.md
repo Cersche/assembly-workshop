@@ -158,13 +158,21 @@ No exact dates were inferred from file modification times. Archived options and 
 
 | Date | Decision | Source file:line | Status |
 | --- | --- | --- | --- |
+| 2026-10-19 | Library rebuild creates a NEW item (placements unchanged); automatic " (current template copy)" suffix, editable later; "Matches current source; build process unknown" items still offer the rebuild. Rack BOM keeps four-post topology and 3 holes/U as a labeled allowance; extension fasteners UNKNOWN. | chat; work/codex-tasks/07, 08 | current — library/BOM |
 | 2026-10-18, latest | Four rack holes per faceplate U, two per side; corner radius limit 2.5 mm. Four-hole fit/strength UNKNOWN; earlier specimen is old two-hole/3 mm/square-corner. | HANDOFF.md:8 | current — C1 |
 | 2026-10-18, latest | Extension occupies its own 1U between posts; post U + extension U = rack height; joints movable. | HANDOFF.md:9 | current — C1b |
 | 2026-10-18, latest | Generic equipment_tray.scad and dimensions/STL/SCAD/STEP via local FreeCAD wizard are in scope as second adapter; Pi4 untouched; new features unprinted. | HANDOFF.md:10 | current — C2 |
 | 2026-10-18, latest | PRINT THE RACK /api/rack-stl in scope; local BY-NC-SA/personal use only, never redistribute; fit/strength UNKNOWN; do not run export. | HANDOFF.md:11 | current — C3 |
-| 2026-10-18, latest | Leave both data locations unresolved for Claude; do not merge or switch. | HANDOFF.md:15 | current — C4 |
-| 2026-10-18, latest | Left grouping 2C remains provisional; no UNKNOWN promoted. | HANDOFF.md:12 | current — GUI |
+| 2026-10-18, latest | Leave both data locations unresolved for Claude; do not merge or switch. | HANDOFF.md:15 | superseded 2026-10-18 by C4 settled (next row) |
+| 2026-10-18, settled | data/normal-use is the official user data; start only via start.bat; app-local data is a preserved historical copy, not deleted or merged. | AGENTS.md "Confirmed scope expansion"; HANDOFF.md:15 | current — C4 |
+| 2026-10-19 | Equipment section: stale "not yet supported" box removed; MY EQUIPMENT list with empty/error states and Fit UNKNOWN. | work/equipment-list/Report.md | current — GUI |
+| 2026-10-19 | This PC is the single project home; laptop/phone use Remote Control only, no synced working copies. | chat | current — devices |
+| 2026-10-18, latest | Left grouping 2C remains provisional; no UNKNOWN promoted. | HANDOFF.md:12 | superseded 2026-10-19 (next row) |
+| 2026-10-19 | Clearance screening (option A) in Review; wizard width/depth issues are non-blocking warnings ("people do things for goofy reasons"). Fit stays UNKNOWN. | chat; work/clearance-screening/Report.md | current — screening |
+| 2026-10-19 | Left grouping 2C confirmed FINAL after Equipment/Hardware library cleanup. | chat; AGENTS.md | current — GUI |
+| 2026-10-19 | Keystone v1 opening (14.5 × 16) printed too narrow; use Brian's reference keystone frame (MakerWorld remix, BY-NC-SA, local only) as the dimension source. Snap-fit faceplate-to-tray joint RETIRED: printed coupon too brittle to carry the tray; screw joint stays; snap removed from the wizard, SCAD code and coupons kept as history. Snap-fit continues only for equipment retention (clips mount); clips coupon made, unprinted. | chat; outputs/Physical_Test_Coupons_2026-10-19_clips/README.md | current — joints |
 | 2026-10-18, latest | Approve audit items 1,3,4,5,6,7,8; not item 2. Add Part B; no protected edits/app/tests/exports/servers/commits/subagents. | HANDOFF.md:3 | current — HK |
 
 The direct human message in this chat is the authority for the latest rows; HANDOFF is its durable transcription. It explicitly supersedes C1/C2/C3 clauses in unedited AGENTS and Phase 1 Audit. Earlier direction remains below for provenance.
+
 

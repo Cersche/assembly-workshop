@@ -20,6 +20,8 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [01-run-checks-baseline](01-run-checks-baseline.md) | done, reviewed by Claude |
 | [02-readme-refresh](02-readme-refresh.md) | done, reviewed by Claude |
 | [03-page-logic-tests](03-page-logic-tests.md) | done, reviewed by Claude (52 Py + 47 JS pass) |
-| [04-bom-follows-segments](04-bom-follows-segments.md) | done (plan; awaiting Claude review) |
-| [05-library-resave-proposal](05-library-resave-proposal.md) | done (proposal; 3 questions for Brian) |
+| [04-bom-follows-segments](04-bom-follows-segments.md) | done (plan reviewed and approved by Claude) |
+| [05-library-resave-proposal](05-library-resave-proposal.md) | done (Brian chose recommendations 2026-10-19) |
 | [06-checks-command-docs](06-checks-command-docs.md) | done, checked by Claude |
+| [07-bom-implementation](07-bom-implementation.md) | done, reviewed by Claude (hashes match; note: workspace.js converted to CRLF) |
+| [08-library-rebuild-copy](08-library-rebuild-copy.md) | done, reviewed by Claude (67 Py + 72 JS pass; equipment-wizard.js converted to CRLF) |
