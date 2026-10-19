@@ -17,6 +17,9 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 
 | Task | Status |
 | --- | --- |
-| [01-run-checks-baseline](01-run-checks-baseline.md) | ready |
-| [02-readme-refresh](02-readme-refresh.md) | ready |
-| [03-page-logic-tests](03-page-logic-tests.md) | ready (after 01) |
+| [01-run-checks-baseline](01-run-checks-baseline.md) | done, reviewed by Claude |
+| [02-readme-refresh](02-readme-refresh.md) | done, reviewed by Claude |
+| [03-page-logic-tests](03-page-logic-tests.md) | done, reviewed by Claude (52 Py + 47 JS pass) |
+| [04-bom-follows-segments](04-bom-follows-segments.md) | ready (plan only) |
+| [05-library-resave-proposal](05-library-resave-proposal.md) | ready (proposal only) |
+| [06-checks-command-docs](06-checks-command-docs.md) | ready |
