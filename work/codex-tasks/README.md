@@ -20,6 +20,6 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [01-run-checks-baseline](01-run-checks-baseline.md) | done, reviewed by Claude |
 | [02-readme-refresh](02-readme-refresh.md) | done, reviewed by Claude |
 | [03-page-logic-tests](03-page-logic-tests.md) | done, reviewed by Claude (52 Py + 47 JS pass) |
-| [04-bom-follows-segments](04-bom-follows-segments.md) | ready (plan only) |
-| [05-library-resave-proposal](05-library-resave-proposal.md) | ready (proposal only) |
-| [06-checks-command-docs](06-checks-command-docs.md) | ready |
+| [04-bom-follows-segments](04-bom-follows-segments.md) | done (plan; awaiting Claude review) |
+| [05-library-resave-proposal](05-library-resave-proposal.md) | done (proposal; 3 questions for Brian) |
+| [06-checks-command-docs](06-checks-command-docs.md) | done, checked by Claude |
