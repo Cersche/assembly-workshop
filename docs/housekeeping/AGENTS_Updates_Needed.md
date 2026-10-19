@@ -1,4 +1,4 @@
-# AGENTS updates needed — for Claude, not applied
+# AGENTS updates needed — APPLIED by Claude 2026-10-18 (historical record; C4 also settled: data/normal-use official)
 
 Brian's explicit 2026-10-18 housekeeping directions supersede the stale clauses below. **AGENTS.md remains byte-for-byte unchanged.** Preserve its other rules and immutable Pi4/M3 baseline. These are future documentation edits, not permission to alter geometry, run exports or test physical parts.
 

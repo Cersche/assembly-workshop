@@ -18,6 +18,10 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 
 The launcher outputs/Mechanical_Design_App/start.bat:3 explicitly selects data/normal-use with --existing-library. app.py's --data default selects its own data directory (outputs/Mechanical_Design_App/app.py:897). Historical reports record both folders in use at different times. No process/browser/listener was inspected or started in housekeeping. Never rely on an old PID or refresh a tab casually; preserve unsaved drafts.
 
+## Backups (Brian, 2026-10-18)
+
+Destinations: `D:\Backups\Assembly Workshop` (local) and `C:\Users\brian\OneDrive\Backups\Assembly Workshop` (private OneDrive; Brian authorized this personal online copy). One timestamped subfolder per backup; never overwrite. Keep the OneDrive copy unshared (creator parts BY-NC-SA personal use; Pi/supplier rights unresolved).
+
 ## Next steps and open limits
 
 1. Done: AGENTS.md updated with C1/C1b/C2/C3/C4 (see its "Confirmed scope expansion" section).
