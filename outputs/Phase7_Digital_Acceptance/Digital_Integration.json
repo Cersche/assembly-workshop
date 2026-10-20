@@ -1,0 +1,124 @@
+{
+  "build_id": "7c639ef2c4594d8157ef4839b23b01a9d8b8dfa09de8f5c9a0fa73795925c2db",
+  "renderer": "C:\\Program Files\\OpenSCAD\\openscad.exe",
+  "renderer_version": "OpenSCAD version 2021.01",
+  "cache_path": "C:\\Users\\brian\\Documents\\Codex\\2026-10-17\\Assembly Workshop\\work\\phase7-digital\\acceptance-data-a68b15c6\\revisions\\7c639ef2c4594d8157ef4839b23b01a9d8b8dfa09de8f5c9a0fa73795925c2db",
+  "source_sha256": "2d3db7e8a20e5b6a063eff6f253cf46a1b2db1ec70633e95668bd96c7825ec47",
+  "measurements": [
+    {
+      "part": "tray",
+      "triangles": 10340,
+      "bounds_mm": [
+        [
+          -56.0,
+          0.0,
+          7.0
+        ],
+        [
+          56.0,
+          82.0,
+          29.0
+        ]
+      ],
+      "extent_mm": [
+        112.0,
+        82.0,
+        22.0
+      ],
+      "signed_volume_mm3": 28419.3348321083,
+      "stl_sha256": "964a5d62057d9336276e9fecf22eb5462099d996e6c54b8060ffa0778eb91947",
+      "units": "mm by source/project convention; STL has no encoded unit",
+      "orientation": "Untransformed assembly coordinates; no print-bed orientation prescribed"
+    },
+    {
+      "part": "faceplate",
+      "triangles": 1628,
+      "bounds_mm": [
+        [
+          -126.0,
+          -3.0,
+          0.0
+        ],
+        [
+          126.0,
+          8.0,
+          42.0
+        ]
+      ],
+      "extent_mm": [
+        252.0,
+        11.0,
+        42.0
+      ],
+      "signed_volume_mm3": 32355.487456096802,
+      "stl_sha256": "ef09baf051fac0d3fa7a06e9e10b8c1447c0108a14a0cb84aeebaf46e13a4c92",
+      "units": "mm by source/project convention; STL has no encoded unit",
+      "orientation": "Untransformed assembly coordinates; no print-bed orientation prescribed"
+    }
+  ],
+  "cache_reuse": "PASS",
+  "in_memory_export": "PASS",
+  "corrupt_cache_rejection": "PASS",
+  "http": [
+    {
+      "route": "/",
+      "status": 200,
+      "bytes": 28129
+    },
+    {
+      "route": "/api/state",
+      "status": 200,
+      "bytes": 81098
+    },
+    {
+      "route": "/api/project",
+      "status": 200,
+      "bytes": 2481
+    },
+    {
+      "route": "/api/catalog-packs",
+      "status": 200,
+      "bytes": 82300
+    },
+    {
+      "route": "/api/assembly",
+      "status": 200,
+      "bytes": 362121
+    },
+    {
+      "route": "/catalog.js",
+      "status": 200,
+      "bytes": 3123
+    },
+    {
+      "route": "/viewer.js",
+      "status": 200,
+      "bytes": 6469
+    },
+    {
+      "route": "/api/build",
+      "status": 200,
+      "cached": true
+    },
+    {
+      "route": "/api/build-bundle",
+      "status": 200,
+      "in_memory_only": true
+    }
+  ],
+  "http_server_stopped": true,
+  "store_pins_preserved": true,
+  "old_cache_files_preserved": 35,
+  "protected_hashes": {
+    "pi4_baseline.scad": "1136215f33e87d8e943ab62f4cb627010123a8d37dae423e478696a9f9437de4",
+    "assembly.json": "ef1050c5e535e0616f50d8b2c34a22ce1b94c7954050d2f9c30096306f485436",
+    "pi_reference.json": "b6be2c03dcefb198afb711fa27003f23bbb5148acdf5b912681a08021a005c66",
+    "faceplate_mounting.py": "6e4412e1fe3b28a699391bf6ad328e7845b0098fad1832c27e6d79cd6e79d00c",
+    "faceplate_mounting.json": "9d056b5e459a81f6375417d02ee4b50996b4edfe3de6d389a05ecda37adb56fb"
+  },
+  "physical_fit": "UNKNOWN",
+  "strength": "UNKNOWN",
+  "mounting_layout": "TABLED; no new layout assertions or mechanical changes",
+  "desktop_session": false,
+  "release_packaged": false
+}

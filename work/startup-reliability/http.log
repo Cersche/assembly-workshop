@@ -1,0 +1,2588 @@
+2026-10-18T23:32:18.972274+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:32:18.992498+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:32:18.992498+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:32:18.994185+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:32:18.994583+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:32:18.996400+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:32:19.017952+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:32:19.022184+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:32:19.023305+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:32:19.148005+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.149307+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:32:19.150308+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:32:19.158081+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:32:19.203762+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:32:19.209050+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:32:19.328208+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:32:19.331360+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.333355+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.333355+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.334353+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.334353+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.334353+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.335350+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.344148+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.345367+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.346391+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.347899+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.347899+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.348995+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.350026+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.351095+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.351095+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.353151+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.353151+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:32:19.356453+00:00 "GET /favicon.ico HTTP/1.1" 404 -
+2026-10-18T23:32:19.584374+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:32:22.600346+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:32:22.935295+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:32:22.961039+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:32:22.962148+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:32:22.963159+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:32:22.964393+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:32:22.965390+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:32:22.966388+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:32:22.966388+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:32:22.979344+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:32:23.080132+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.081148+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:32:23.083385+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:32:23.083385+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:32:23.099118+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:32:23.106991+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.112416+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.112416+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:32:23.215992+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.217044+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:32:23.217044+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.219629+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.221337+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.221337+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.221337+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.221337+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.221337+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.221337+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.221337+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.221337+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.229050+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.229050+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.229050+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.231216+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.231216+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:32:23.449517+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:32:23.582809+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:32:39.969220+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:32:39.987202+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:32:39.995974+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:32:39.997037+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:32:39.997037+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:32:39.997037+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:32:39.997037+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:32:39.997037+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:32:39.998538+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:32:40.011828+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:32:40.116553+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:32:40.118061+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.136443+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:32:40.137953+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:32:40.138971+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:32:40.146099+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.147107+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.253468+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:32:40.254688+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.254688+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:32:40.255703+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.257133+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.259095+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.260930+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.260930+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.262530+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.262530+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.264532+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.267073+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.267073+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.267073+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.268075+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.269586+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.269586+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.272610+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:32:40.510136+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:32:40.510136+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:32:40.630512+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:32:40.630512+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:32:40.634827+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:32:40.634827+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:32:40.636252+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:32:40.641220+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:32:41.242624+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:32:42.239785+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:32:43.466397+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:32:43.467903+00:00 "GET /api/assembly-checks HTTP/1.1" 400 -
+2026-10-18T23:32:43.491311+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 718, in get_request
+    return self.send(pi_validation.validate())
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:13.774733+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:33:13.788213+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:33:13.790188+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:33:13.796435+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:13.796435+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:13.796435+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:33:13.797959+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:33:13.797959+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:33:13.797959+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:33:13.811773+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:33:13.918188+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:33:13.918188+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:33:13.938309+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:33:13.940525+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:33:13.940525+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:33:13.950251+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:33:13.951752+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.051711+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.052835+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:33:14.053896+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.054925+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.054925+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.057982+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.058774+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.059263+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:33:14.059263+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.060772+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.060772+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.060772+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.060772+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.065638+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.066989+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.067997+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.068506+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.068506+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.282343+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:33:14.283348+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:33:14.336376+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.338170+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.338170+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.338170+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.338170+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.338170+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.340489+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.340489+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.361420+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:33:14.468157+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:33:14.469176+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.469176+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:33:14.470685+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:33:14.491692+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:33:14.496505+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.501123+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.609860+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.610888+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:33:14.611918+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.611918+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.611918+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.612990+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:33:14.615452+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.615452+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.616663+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.619176+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.619176+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.620176+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.621401+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.622706+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.622706+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.623704+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.623704+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:33:14.843121+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:33:14.851632+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:33:14.891594+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.895525+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.895525+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.895525+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.895525+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.895525+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.895525+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.896523+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:33:14.908335+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:33:15.031066+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:33:15.031579+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.033642+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:33:15.034078+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:33:15.057984+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:33:15.064548+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.068892+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:33:15.173440+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.173440+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.174231+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:33:15.174231+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.175329+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.176334+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.177842+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.177842+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.180362+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.181368+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.181368+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.182689+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.184771+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.184771+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.186147+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.187654+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.188164+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.191133+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:33:15.191133+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.413528+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:33:15.414748+00:00 "GET /api/pi-reference HTTP/1.1" 400 -
+2026-10-18T23:33:15.415744+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:33:15.415744+00:00 "GET /api/pi-reference HTTP/1.1" 400 -
+2026-10-18T23:33:15.419257+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:15.420314+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:33:15.420314+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:33:15.421320+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:15.421320+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:33:15.541243+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:33:15.542249+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:33:15.544257+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 710, in get_request
+    return self.send(dict(part, reference=manifest))
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 714, in get_request
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:15.552174+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:33:15.797236+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:33:15.921102+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:33:15.930562+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:33:15.975341+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:33:16.101632+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:33:16.254740+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:33:16.275401+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:33:16.282333+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:33:16.664845+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:33:16.664845+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:33:16.694205+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:33:16.694205+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 409 -
+2026-10-18T23:33:16.713134+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:33:16.713134+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:33:16.727883+00:00 "POST /api/preview HTTP/1.1" 400 -
+2026-10-18T23:33:16.734345+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 409 -
+2026-10-18T23:33:16.734345+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:16.747886+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 400 -
+2026-10-18T23:33:16.769161+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:33:16.803842+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 409 -
+2026-10-18T23:33:16.810769+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 409 -
+2026-10-18T23:33:16.831297+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 409 -
+2026-10-18T23:33:16.873068+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 789, in do_POST
+    return self.send(joint_geometry(self.selected_store().draft(payload)))
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 839, in do_POST
+    return self.send({'error': str(e)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:16.873068+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 400 -
+2026-10-18T23:33:16.879919+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 400 -
+2026-10-18T23:33:16.879919+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 400 -
+2026-10-18T23:33:16.879919+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:33:16.898211+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 400 -
+2026-10-18T23:33:16.913460+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:16.930602+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 409 -
+2026-10-18T23:33:16.930602+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:33:16.949371+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 409 -
+2026-10-18T23:33:16.964325+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 400 -
+2026-10-18T23:33:16.964325+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 400 -
+2026-10-18T23:33:16.970302+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:16.984163+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:17.026965+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:17.033140+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:33:17.058001+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:33:17.058001+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:17.074945+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:17.081392+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:33:17.096244+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:17.109261+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:17.144048+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:33:17.144048+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:17.144048+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:33:17.373195+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:33:17.408536+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:33:17.442801+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:33:17.449718+00:00 "GET /api/catalog-packs HTTP/1.1" 400 -
+2026-10-18T23:33:17.505373+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:33:17.512287+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:33:17.533458+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:33:17.623521+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:33:17.624205+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 691, in get_request
+    return self.send(catalog_packs.inventory())
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:17.706810+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:33:17.772153+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:33:17.773661+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 409 -
+2026-10-18T23:33:17.774674+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 400 -
+2026-10-18T23:33:17.832269+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:33:17.880576+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 409 -
+2026-10-18T23:33:17.888241+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.040396+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.047395+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:33:18.082343+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 400 -
+2026-10-18T23:33:18.089118+00:00 "POST /api/preview HTTP/1.1" 400 -
+2026-10-18T23:33:18.158288+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 409 -
+2026-10-18T23:33:18.158288+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.165858+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.172417+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.242376+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 409 -
+2026-10-18T23:33:18.249163+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.249163+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 409 -
+2026-10-18T23:33:18.249163+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 789, in do_POST
+    return self.send(joint_geometry(self.selected_store().draft(payload)))
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 839, in do_POST
+    return self.send({'error': str(e)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.305889+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 400 -
+2026-10-18T23:33:18.305889+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 400 -
+2026-10-18T23:33:18.340481+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.360110+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.360110+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 400 -
+2026-10-18T23:33:18.360110+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 409 -
+2026-10-18T23:33:18.375976+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:33:18.391810+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 409 -
+2026-10-18T23:33:18.415627+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:18.415627+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 400 -
+2026-10-18T23:33:18.422780+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:33:18.438381+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 400 -
+2026-10-18T23:33:18.438381+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.473267+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 409 -
+2026-10-18T23:33:18.519851+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:18.527011+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.579699+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 409 -
+2026-10-18T23:33:18.589337+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 400 -
+2026-10-18T23:33:18.626092+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.638277+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.651880+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.702232+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:33:18.707469+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:33:18.714502+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:33:18.749241+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.749241+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:33:18.772750+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 400 -
+2026-10-18T23:33:18.785602+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.794834+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:33:18.794834+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:33:18.794834+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 681, in get_request
+    return self.send(reference[0], mime=reference[1])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 683, in get_request
+    return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.794834+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:33:18.794834+00:00 "GET /api/assembly-checks HTTP/1.1" 400 -
+2026-10-18T23:33:18.795956+00:00 "GET /api/catalog-packs HTTP/1.1" 400 -
+2026-10-18T23:33:18.795956+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 718, in get_request
+    return self.send(pi_validation.validate())
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.795956+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 691, in get_request
+    return self.send(catalog_packs.inventory())
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:18.874788+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:33:18.874788+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.875789+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:33:18.876521+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:33:18.900337+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:33:18.905896+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.909588+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.909588+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.909588+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:33:18.911160+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.000830+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:33:19.008351+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:33:19.008351+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.008351+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.008351+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.013282+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.014475+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.015555+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.017817+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.018838+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.018838+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.020331+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.020331+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.021374+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.023790+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.247203+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:33:19.248198+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:33:19.372961+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.374461+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.374999+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.378358+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.378358+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.378358+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.379546+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.379546+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.381559+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:33:19.382619+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:33:19.383659+00:00 "GET /api/assembly-checks HTTP/1.1" 400 -
+2026-10-18T23:33:19.384656+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 718, in get_request
+    return self.send(pi_validation.validate())
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:19.496283+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:33:19.497789+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.498857+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:33:19.498857+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:33:19.514540+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:33:19.524053+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:33:19.525155+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.527606+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.527606+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.528135+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.628069+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.628069+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:33:19.630386+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.630386+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.631822+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.634022+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.634022+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.636169+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.637166+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.638165+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.638165+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.639259+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.640766+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.641396+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.642546+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:33:19.881845+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:33:19.882449+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:33:19.921879+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.928401+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.928401+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.928401+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.930626+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.930626+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.931650+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:33:19.945116+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:33:20.054062+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:33:20.055082+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.072301+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:33:20.072301+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:33:20.072301+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:33:20.081420+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.083521+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.085603+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.085603+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.183728+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:33:20.185484+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.186089+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.189351+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:33:20.190434+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.192551+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.193579+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.194635+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.195836+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.195836+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.197036+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.197036+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.199543+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.199543+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.199543+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.201613+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.207891+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:33:20.417215+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:33:20.418241+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:33:20.418241+00:00 "GET /api/pi-reference HTTP/1.1" 400 -
+2026-10-18T23:33:20.418241+00:00 "GET /api/pi-reference HTTP/1.1" 400 -
+2026-10-18T23:33:20.421780+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:33:20.422585+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:20.423702+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:20.423702+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:33:20.424716+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:33:20.549252+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 710, in get_request
+    return self.send(dict(part, reference=manifest))
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 714, in get_request
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:20.549252+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:33:20.558559+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:33:20.562907+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:33:20.563941+00:00 "GET /api/assembly-checks HTTP/1.1" 400 -
+2026-10-18T23:33:20.564938+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 718, in get_request
+    return self.send(pi_validation.validate())
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:20.667855+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:33:20.667855+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.669943+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:33:20.669943+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:33:20.687980+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:33:20.694866+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:33:20.796397+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:33:20.800095+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.801284+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.801284+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.802409+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.802409+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.803486+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.804500+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.804500+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.805982+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.808169+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.809273+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.809273+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.811645+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.812845+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.812845+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.813842+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.815222+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:20.816306+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.033609+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:33:21.034773+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:33:21.148417+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:33:21.148417+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:21.151565+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:33:21.152493+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:33:21.153532+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:33:21.153532+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:33:21.154425+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:33:21.155895+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:33:21.156711+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:33:21.158236+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:33:21.158236+00:00 "GET /api/assembly-checks HTTP/1.1" 400 -
+2026-10-18T23:33:21.159629+00:00 Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 640, in do_GET
+    return self.get_request()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 718, in get_request
+    return self.send(pi_validation.validate())
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 615, in send
+    self.wfile.write(data)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Program Files\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Program Files\Python310\lib\http\server.py", line 425, in handle
+    self.handle_one_request()
+  File "C:\Program Files\Python310\lib\http\server.py", line 413, in handle_one_request
+    method()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 642, in do_GET
+    return self.send({'error': str(exc)}, 400)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\startup-reliability\diagnostic_server.py", line 50, in send
+    return super().send(value, status, mime)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\app.py", line 613, in send
+    self.end_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 527, in end_headers
+    self.flush_headers()
+  File "C:\Program Files\Python310\lib\http\server.py", line 531, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Program Files\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+2026-10-18T23:33:21.270237+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:33:21.270237+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.272635+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:33:21.272635+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:33:21.291748+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:33:21.297867+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:33:21.397143+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:33:21.398139+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.400209+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.400209+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.400209+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.400209+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.402786+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.405164+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.405164+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.406321+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.407990+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.407990+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.409428+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.412578+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.412578+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.413833+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.415342+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.415342+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.416367+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:33:21.622011+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:33:21.758004+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:37:04.119398+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:04.137779+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.139879+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.143735+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.144744+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.146253+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.147261+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.147261+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.148258+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.162415+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:04.283479+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:04.284797+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.304597+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:04.304597+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:04.304597+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:04.427063+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.427063+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.428060+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:04.429127+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:04.429127+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.430635+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.430635+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+
+2026-10-18T23:37:04.430635+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.433718+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.433718+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.433718+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.437576+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.438572+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.440690+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.440690+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.443115+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.443115+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.443115+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.444561+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:04.659907+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:04.667242+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:04.786331+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.797155+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.797966+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.797966+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.797966+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.799264+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.799264+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.800670+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:04.803946+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:05.068901+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:05.172973+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:05.201234+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:05.235647+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:05.310232+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:05.494281+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:05.610883+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:05.638682+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:05.660238+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:05.812417+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:05.833670+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:05.955847+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:06.062569+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:06.132425+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:06.165949+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:06.181748+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:06.218269+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:06.334402+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:06.508884+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:06.508884+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:06.535403+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:06.554608+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:06.619678+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:06.764496+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:06.861649+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:06.903387+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:07.001372+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:07.026181+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:07.058392+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:07.084083+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:07.404104+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:07.469934+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:07.564968+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:07.611967+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:07.638118+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:07.779298+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:07.779298+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:07.792887+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:07.863541+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:07.959752+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:07.987529+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:07.991809+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:07.993014+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.001410+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.002662+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.003472+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.010471+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.010471+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.010471+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:37:08.013052+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:08.013052+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:08.127527+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:08.128592+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.128592+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:08.129644+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:08.146548+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:08.152469+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:08.154186+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.251486+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.251486+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.252992+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.252992+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:08.256944+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.256944+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.256944+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.256944+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.258362+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.259611+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.260608+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.262116+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.264648+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.264648+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.264648+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.267174+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.268339+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.485848+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:08.485848+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:08.523754+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.527634+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.531823+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.531823+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.531823+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.531823+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.534327+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.534327+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:08.552325+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:08.662868+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:08.662868+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.682821+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:08.682821+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:08.682821+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:08.692908+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.787129+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.787129+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:08.787129+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:08.792756+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.793612+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.793612+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.794707+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.796214+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.797214+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.797214+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.798607+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.800567+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.801055+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.801055+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.806112+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.806112+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.807427+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.808427+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:08.809808+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.037294+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:09.038329+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:09.152031+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.153539+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.154549+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.156057+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.157064+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.157064+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.157064+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.159601+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.160888+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:37:09.162210+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:09.275142+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:09.275142+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.276643+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:09.277803+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:09.296443+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:09.304823+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.307187+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.307187+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.307869+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.409367+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:09.411952+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:09.411952+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.412324+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.413339+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.413339+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.414337+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.415589+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.416153+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.418196+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.419983+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.419983+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.420980+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.422172+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.423169+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.423672+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.533683+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:09.648586+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:09.770197+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.772319+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.773699+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.774764+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.774764+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.774764+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.776271+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.777281+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:09.779278+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:37:09.780276+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:09.888257+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:09.890066+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:09.890066+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:09.891152+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:09.910028+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:09.916432+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:10.017801+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:10.021237+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.023176+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.024183+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.025685+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.028044+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.030401+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.032639+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.032639+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.032639+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.032639+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.035893+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.037238+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.038656+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.038656+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.040165+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.040165+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.041257+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.041257+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.265943+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:10.273267+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:10.308808+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.313473+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.314709+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.314709+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.315300+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.315963+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.316978+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.316978+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.330416+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:10.457630+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:10.457630+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.458706+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:10.458706+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:10.486143+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:10.492843+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.492843+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.492843+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.498976+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.500971+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.603400+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:10.604753+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:10.606255+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.606255+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.608677+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.608677+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.611409+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.611409+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.613505+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.613505+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.613505+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.616131+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.616131+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.618244+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:10.621209+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:10.841033+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:10.848458+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.849470+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.850625+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.850625+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.852637+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.852637+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.954679+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.961388+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:10.964198+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:10.968633+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:37:11.069306+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:11.070303+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.071300+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:11.072373+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:11.097223+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:11.103656+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.103656+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.104908+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.107854+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.201337+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:11.207131+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:11.207131+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.210550+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.210550+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.211314+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.211679+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.211679+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.212737+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.214244+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.214244+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.216415+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.216415+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.216415+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.218666+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.221248+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.427150+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:11.427150+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:11.469978+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:11.478010+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:11.478010+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:11.478010+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:11.479028+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:11.479028+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:11.480032+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:11.480032+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:11.493005+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:11.605085+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:11.606080+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.624682+00:00 "GET /api/project HTTP/1.1" 200 -
+
+2026-10-18T23:37:11.624682+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:11.631758+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.635665+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.637400+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.637400+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.734647+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:11.736154+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.740678+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.740678+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:11.741678+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.742675+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.745797+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.746806+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.746806+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.746806+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.747807+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.747807+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.749801+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.753807+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.757051+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.757051+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:11.965826+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:11.966833+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:12.007671+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.010811+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.010811+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.010811+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.010811+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.010811+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.010811+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.015749+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.029022+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:12.171935+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:12.171935+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.173930+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:12.173930+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:12.197036+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:12.201683+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.202749+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.202749+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.206252+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:12.306093+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:12.309013+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.309013+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.312058+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.313065+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.313065+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.313065+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.314308+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.316713+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.318021+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.318021+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.319408+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.319408+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.320542+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.321575+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.323623+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.537289+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:12.544940+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:12.581302+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.581302+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.585992+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.585992+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.585992+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.585992+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.587695+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.588200+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:12.600428+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:12.704217+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:12.705214+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.706714+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:12.706714+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:12.726617+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:12.731104+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.731104+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.733193+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.733193+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.735188+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.736690+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.737961+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.836025+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.836528+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:12.837983+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.840067+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.841154+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.843550+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:12.843550+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.844664+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.844664+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.846295+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.847347+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:12.848371+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.076027+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:13.077294+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:13.195849+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.197360+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.199460+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.202007+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.202007+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.203241+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.203241+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.203241+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.205236+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:37:13.206245+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:13.319848+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.319848+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:13.322309+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:13.322309+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:13.347906+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:13.356216+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:13.360224+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.459497+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:13.459497+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.460502+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.460502+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.461594+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.461594+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.463275+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.463618+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.463618+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.463618+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.466521+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.467530+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.470536+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.470536+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.470536+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.470536+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.472043+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.474199+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:13.683859+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:13.808964+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:13.813934+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:37:13.921183+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.928775+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.928775+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.929849+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.929849+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.929849+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.929849+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.930879+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:13.942453+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:14.053688+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:14.053688+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.053688+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:14.053688+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:14.077301+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:14.083323+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.183670+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.184861+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:14.184861+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.185857+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.185857+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.188022+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:14.189025+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.190269+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.191367+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.191367+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.192404+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.193402+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.194904+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.197234+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.199051+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.199051+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.200051+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.201258+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.202255+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.429034+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:14.429589+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:14.472552+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.474594+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.474594+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.474594+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.476166+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.476166+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.477167+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.484773+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.497768+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:14.603763+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.604778+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:14.607328+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:14.607328+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:14.632559+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:14.639068+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.639068+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.640065+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.642061+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.644055+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.645052+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.744192+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.745195+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:14.746193+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.747833+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.747833+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.750226+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:14.751245+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.752242+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.754237+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.758323+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.758827+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.759827+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:14.765109+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:14.984464+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:14.989968+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.991924+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.991924+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.993738+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.996183+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.996183+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:14.996183+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:15.081113+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:15.088742+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:15.094042+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:37:15.113939+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:15.114958+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.114958+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:15.115957+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:15.139767+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:15.145870+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.145870+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.145870+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.146882+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.149159+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.151908+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.241042+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.242259+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:15.243712+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.245792+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:15.245792+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.245792+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.247535+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.249803+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.249803+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.253463+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.253463+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.256009+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.256009+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.257224+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.481279+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:15.488292+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:15.528770+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:15.529961+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:15.529961+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:15.529961+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:15.529961+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:15.531057+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:15.532114+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:15.533131+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:15.544621+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:15.654434+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:15.655942+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.656975+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:15.656975+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:15.682546+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:15.689015+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:15.789857+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:15.792038+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.792038+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.794895+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.794895+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.795893+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.798607+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.799766+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.799766+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.800766+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.800766+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.802762+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.807386+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.810889+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.811887+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.811887+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.811887+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.814051+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:15.814051+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.028154+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:16.028154+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:16.074736+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.074736+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.076045+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.077674+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.078751+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.079838+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.079838+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.079838+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.090899+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:16.201465+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:16.202972+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.220254+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:16.221252+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:16.322591+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:16.327215+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:16.330628+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.330628+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.330628+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.330628+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.333208+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.334206+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.335203+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.336200+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.337815+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.337815+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.340115+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.342112+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.342112+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.346968+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.346968+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.348209+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.349210+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.572683+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:16.579001+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:16.626211+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.626211+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.626211+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.626211+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.630523+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.630523+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.630523+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.630523+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:16.641992+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:16.763894+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:16.765000+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.765996+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:16.765996+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:16.787123+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:16.793640+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.796376+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:16.796376+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.905858+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.905858+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:16.905858+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.906863+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.907860+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.907860+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.910331+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.910331+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.911367+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.912670+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.913667+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.913667+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.914761+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.914761+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.916269+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.917403+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:16.920522+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.146084+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:17.147211+00:00 "GET / HTTP/1.1" 200 -
+2026-10-18T23:37:17.263545+00:00 "GET /rack-references/rack-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:17.264883+00:00 "GET /catalog.js HTTP/1.1" 200 -
+2026-10-18T23:37:17.265890+00:00 "GET /rack-references/rack-scene.js HTTP/1.1" 200 -
+2026-10-18T23:37:17.266903+00:00 "GET /workspace.js HTTP/1.1" 200 -
+2026-10-18T23:37:17.266903+00:00 "GET /rack-references/assembly-studio.js HTTP/1.1" 200 -
+2026-10-18T23:37:17.266903+00:00 "GET /rack-references/rack-layout.js HTTP/1.1" 200 -
+2026-10-18T23:37:17.266903+00:00 "GET /rack-reference.js HTTP/1.1" 200 -
+2026-10-18T23:37:17.269359+00:00 "GET /viewer.js HTTP/1.1" 200 -
+2026-10-18T23:37:17.270356+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -
+2026-10-18T23:37:17.273261+00:00 "GET /api/state HTTP/1.1" 200 -
+2026-10-18T23:37:17.376076+00:00 "GET /api/workspace-capabilities HTTP/1.1" 200 -
+2026-10-18T23:37:17.376076+00:00 "GET /rack-references/catalog.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.377102+00:00 "GET /api/project HTTP/1.1" 200 -
+2026-10-18T23:37:17.377102+00:00 "GET /api/rack-workspace HTTP/1.1" 200 -
+2026-10-18T23:37:17.403276+00:00 "GET /api/assembly HTTP/1.1" 200 -
+2026-10-18T23:37:17.410497+00:00 "GET /rack-references/component_0_1.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.411492+00:00 "GET /rack-references/component_0_17.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.414364+00:00 "GET /rack-references/component_0_9.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.417121+00:00 "GET /rack-references/component_0_24.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.417121+00:00 "GET /rack-references/component_0_31.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.417121+00:00 "GET /rack-references/component_0_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.517259+00:00 "POST /api/preview HTTP/1.1" 200 -
+2026-10-18T23:37:17.518256+00:00 "GET /rack-references/component_0_14.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.521322+00:00 "GET /api/catalog-packs HTTP/1.1" 200 -
+2026-10-18T23:37:17.521322+00:00 "GET /rack-references/component_0_22.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.521322+00:00 "GET /rack-references/component_0_29.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.523895+00:00 "GET /rack-references/component_0_36.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.525151+00:00 "GET /rack-references/component_1_20.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.525757+00:00 "GET /rack-references/component_1_23.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.526774+00:00 "GET /rack-references/component_1_28.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.527769+00:00 "GET /rack-references/component_1_18.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.528273+00:00 "GET /rack-references/component_1_13.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.529495+00:00 "GET /rack-references/component_1_11.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.529495+00:00 "GET /rack-references/component_1_6.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.530309+00:00 "GET /rack-references/component_1_25.json HTTP/1.1" 200 -
+2026-10-18T23:37:17.771811+00:00 "GET /api/pi-reference HTTP/1.1" 200 -
+2026-10-18T23:37:17.911747+00:00 "GET /api/assembly-checks HTTP/1.1" 200 -

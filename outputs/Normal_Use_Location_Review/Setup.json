@@ -1,0 +1,32 @@
+{
+  "source": "C:\\Users\\brian\\Documents\\Codex\\2026-10-17\\Assembly Workshop\\outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data",
+  "normal_use": "C:\\Users\\brian\\Documents\\Codex\\2026-10-17\\Assembly Workshop\\data\\normal-use",
+  "source_hashes": {
+    "library.sqlite3": "fdc694c09c2eaf099a3f2262bd03360b42746ecbf30571d263c6351319dc3bfd",
+    "revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": "7c1eab70129e10a7cfdfd5fad23054b4ae2d8db340268ed38e7381c632fba3b1",
+    "revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": "1c1512d35979ad8821f07851c5a15ef8306f5f4800d6efb39ce6eb52a64e9906",
+    "revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": "e673df53fd2d33ccb5f19494a6ff6f9965e2c05389ad8d606cc33787921cab50",
+    "revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": "96b123d39c86b0a646544270984a1fa6886f47bea410e2b069c709cc53958fb3",
+    "revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": "6ca66dca84d4abd4f1b9f5f56dca152b84dabc581dbb5f38d4a577e0ce875d04"
+  },
+  "initial_copy_exact": true,
+  "sqlite_integrity": "ok",
+  "current_app_store_and_state": "PASS",
+  "localhost_get_checks": {
+    "/": 200,
+    "/api/state": 200,
+    "/api/project": 200
+  },
+  "all_database_rows_and_pins_unchanged": true,
+  "all_source_and_copy_file_hashes_unchanged": true,
+  "legacy_caches": [
+    {
+      "id": "ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78",
+      "status": "Preserved; download blocked because legacy integrity manifest is absent.",
+      "detail": "Revision integrity check failed; preserve this entry and generate a new revision. Legacy entries without integrity manifests are preserved but cannot be downloaded. [Errno 2] No such file or directory: 'C:\\\\Users\\\\brian\\\\Documents\\\\Codex\\\\2026-10-17\\\\Assembly Workshop\\\\data\\\\normal-use\\\\revisions\\\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\\\integrity.json'"
+    }
+  ],
+  "missing_library_startup_guard": "PASS: exit 2; no directory created",
+  "automatic_imports": false,
+  "builds_regenerated": false
+}

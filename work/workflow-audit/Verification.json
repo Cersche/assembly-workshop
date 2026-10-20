@@ -1,0 +1,33 @@
+{
+  "time_utc": "2026-10-18T16:57:51.826539+00:00",
+  "normal_use_files_unchanged": {
+    "data\\normal-use\\library.sqlite3": true,
+    "data\\normal-use\\rack-workspace.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": true
+  },
+  "browser_checks": [
+    "allocate and inspect",
+    "occupied-slot shrink blocked",
+    "overlap blocked",
+    "move and invalid-range edit",
+    "release and undo",
+    "save/reload persistence",
+    "second8U rack preserved",
+    "Review/Prepare limits visible without export",
+    "shortcut search and Escape",
+    "draft status feedback"
+  ],
+  "browser_console_warnings_errors": [],
+  "automated_checks": {
+    "new_layout_action_and_actual_save_handler": "PASS",
+    "rack_document_tests": 7,
+    "source_reference_tests": 3,
+    "scene_catalog_phase7_reference_handlers": "PASS"
+  },
+  "normal_tab": "Open slot5 wizard preserved; no refresh/save/cancel.",
+  "manufacturing_builds_exports": 0
+}

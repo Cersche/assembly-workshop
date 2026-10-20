@@ -1,0 +1,7 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const root='outputs/Mechanical_Design_App/';let fills=0;
+const ctx={setTransform(){},fillRect(){},fillText(){},beginPath(){},moveTo(x,y){assert(Number.isFinite(x)&&Number.isFinite(y))},lineTo(x,y){assert(Number.isFinite(x)&&Number.isFinite(y))},closePath(){},fill(){fills++}};
+const elements={};for(const id of ['assemblyCanvas','assemblyStatus','assemblyZoom','assemblyReset','assemblyTop','assemblyJoint','show-tray','show-faceplate'])elements[id]={checked:true,value:1,clientWidth:900,getContext:()=>ctx,setPointerCapture(){}};
+const sandbox={document:{getElementById:id=>elements[id]},fetch:async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(root+'assembly.json','utf8'))}),window:{devicePixelRatio:1},requestAnimationFrame:fn=>fn(),ResizeObserver:class{constructor(fn){this.fn=fn}observe(){this.fn()}}};
+vm.createContext(sandbox);vm.runInContext(fs.readFileSync(root+'viewer.js','utf8'),sandbox);
+setTimeout(()=>{assert(fills>=11560);elements.assemblyJoint.onclick();assert(elements.assemblyStatus.textContent.includes('Right joint'));elements['show-faceplate'].checked=false;elements['show-faceplate'].onchange();assert(elements.assemblyStatus.textContent.includes('10,340'));elements.assemblyTop.onclick();elements.assemblyReset.onclick();console.log('Viewer logic passed: initial draw, finite coordinates, joint focus, visibility, top and reset.');},10);

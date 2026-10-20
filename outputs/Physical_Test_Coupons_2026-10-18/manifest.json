@@ -1,0 +1,38 @@
+{
+  "status": "PROPOSED - UNVALIDATED test coupons",
+  "files": [
+    {
+      "file": "1_Keystone_and_corner_holes__faceplate.stl",
+      "purpose": "Right-hand end of a 1U faceplate: keystone opening with rear pocket + the 2 rack holes on that end (of 4)",
+      "size_mm": [
+        48.0,
+        4.0,
+        42.0
+      ],
+      "sha256": "b4a0a829574b4da0d95ffbd8617a4ae3c137a2c0e732ba5c4a185a2c32e586d0",
+      "nudge_mm": 0
+    },
+    {
+      "file": "2_Snap_joint__faceplate.stl",
+      "purpose": "One snap-fit arm on a faceplate strip + the matching tray corner with its window",
+      "size_mm": [
+        24.0,
+        20.0,
+        42.0
+      ],
+      "sha256": "e75cbc97a8f2e4d60f5fc134a0b2206c18639021acd832fc0bec62ef4dd00244",
+      "nudge_mm": 0
+    },
+    {
+      "file": "2_Snap_joint__tray.stl",
+      "purpose": "One snap-fit arm on a faceplate strip + the matching tray corner with its window",
+      "size_mm": [
+        24.0,
+        30.0,
+        3.0
+      ],
+      "sha256": "da8ebf94bcf911eceb6e748e1b714002aa8eff33682bff8d249f27280771f23f",
+      "nudge_mm": 0
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "tray": {
+    "code": 0,
+    "log": "Geometries in cache: 77\nGeometry cache size in bytes: 422968\nCGAL Polyhedrons in cache: 12\nCGAL cache size in bytes: 14349888\nTotal rendering time: 0:00:20.623\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     5076\n   Halfedges:   15228\n   Edges:        7614\n   Halffacets:   5094\n   Facets:       2547\n   Volumes:         2\n"
+  },
+  "faceplate": {
+    "code": 0,
+    "log": "Geometries in cache: 21\nGeometry cache size in bytes: 120632\nCGAL Polyhedrons in cache: 6\nCGAL cache size in bytes: 1922208\nTotal rendering time: 0:00:01.503\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      608\n   Halfedges:    1824\n   Edges:         912\n   Halffacets:    624\n   Facets:        312\n   Volumes:         2\n"
+  },
+  "v2_usb_clearance_05": {
+    "code": 1,
+    "empty": true,
+    "log": "Geometries in cache: 8\nGeometry cache size in bytes: 2096128\nCGAL Polyhedrons in cache: 1\nCGAL cache size in bytes: 0\nTotal rendering time: 0:00:03.836\nCurrent top level object is empty.\n"
+  },
+  "v2_joint": {
+    "code": 1,
+    "empty": true,
+    "log": "Geometries in cache: 98\nGeometry cache size in bytes: 543600\nCGAL Polyhedrons in cache: 20\nCGAL cache size in bytes: 17091632\nTotal rendering time: 0:00:23.999\nCurrent top level object is empty.\n"
+  },
+  "v2_pcb": {
+    "code": 1,
+    "empty": true,
+    "log": "Geometries in cache: 79\nGeometry cache size in bytes: 424424\nCGAL Polyhedrons in cache: 13\nCGAL cache size in bytes: 14349888\nTotal rendering time: 0:00:22.014\nCurrent top level object is empty.\n"
+  },
+  "v2_full_pi": {
+    "code": 1,
+    "empty": true,
+    "log": "ERROR: The given mesh is not closed! Unable to convert to CGAL_Nef_Polyhedron.\nGeometries in cache: 80\nGeometry cache size in bytes: 18016328\nCGAL Polyhedrons in cache: 12\nCGAL cache size in bytes: 14349888\nTotal rendering time: 0:00:21.865\nCurrent top level object is empty.\n"
+  }
+}

@@ -1,0 +1,1 @@
+intersection(){import("usb_candidate.stl"); translate([33,0,0]) hull(){translate([0,9,9.7])cube([2,2,0.5]);translate([0,9,16])cube([2,2,0.5]);translate([0,20,9.7])cube([2,2,0.5]);}}

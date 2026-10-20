@@ -1,0 +1,51 @@
+{
+  "protected_data_files": {
+    "data\\normal-use\\library.sqlite3": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\library.sqlite3": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": true
+  },
+  "matches_prior_GUI_data_hashes": {
+    "data\\normal-use\\library.sqlite3": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\library.sqlite3": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": true,
+    "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": true
+  },
+  "protected_baseline_files": {
+    "outputs\\Mechanical_Design_App\\assembly.json": true,
+    "outputs\\Mechanical_Design_App\\faceplate_mounting.py": true,
+    "outputs\\Mechanical_Design_App\\pi4_baseline.scad": true
+  },
+  "sqlite_read_only_integrity": "ok",
+  "normal_rack_document_exists": false,
+  "original_script_hashes": {
+    "original_index_script_2.js": "722ca95d6385957bbef17dc10ca91e80e82c62619b3394886a5d54d4233f7ff3",
+    "original_lab-rax-assembler-code-only_script_2.js": "722ca95d6385957bbef17dc10ca91e80e82c62619b3394886a5d54d4233f7ff3"
+  },
+  "live_server": "UNVERIFIED: loopback request denied by sandbox; listener query returned no accessible result. No server started or stopped.",
+  "checks": {
+    "source_reference_tests": "3 PASS",
+    "rack_workspace_tests": "7 PASS in new workspace temporary directory; default OS temp initially denied atomic replacement",
+    "reference_UI_handler_test": "PASS all 21 components, 101184 finite projection starts, integrity retry, stale selection, GET only; no real browser",
+    "catalog_and_phase7_frontend_handlers": "PASS",
+    "JavaScript_syntax": "PASS recovered complete original script and new reference viewer"
+  },
+  "no_render_or_manufacturing_export": true,
+  "no_desktop_session": true
+}

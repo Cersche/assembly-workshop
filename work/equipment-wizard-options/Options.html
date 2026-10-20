@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Add Equipment Options</title>
+<style>
+:root{color-scheme:dark;font:13px/1.5 'Segoe UI',system-ui,sans-serif;color:#dbe4f0;background:#111720;--accent:#67a8ff;--line:#2a3544;--muted:#91a1b6;--panel:#161e29;--ok:#6fbf8f;--warn:#e0b25c}
+body{margin:0;padding:16px;background:#111720}
+h1{font-size:20px;margin:0 0 4px}h2{font-size:16px;margin:28px 0 6px;color:var(--accent)}h3{font-size:13px;margin:0 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+p,li{max-width:900px}.note{color:var(--muted)}
+.win{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#0d131b;margin:10px 0}
+.bar{background:#1b2431;padding:6px 10px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:200px 1fr 250px;min-height:330px}
+.grid.two{grid-template-columns:1fr 280px}
+.pane{padding:10px;border-right:1px solid var(--line);background:var(--panel)}.pane:last-child{border-right:0}
+.view{position:relative;background:radial-gradient(#1c2635,#0b1017);display:flex;align-items:center;justify-content:center;padding:10px}
+.chip{display:inline-block;background:#2b2f37;border:1px solid #4a4f59;border-radius:14px;padding:2px 9px;margin:2px;font-size:12px}
+.chip.on{background:#3d6b52;border-color:var(--ok)}
+.btn{display:inline-block;background:#24476f;border:1px solid var(--accent);border-radius:5px;padding:3px 10px;font-size:12px}
+.btn.g{background:#2b2f37;border-color:#4a4f59}
+.f{display:flex;justify-content:space-between;gap:6px;margin:3px 0}.f span:last-child{background:#0d131b;border:1px solid var(--line);padding:0 6px;border-radius:3px;min-width:50px;text-align:right}
+.item{padding:4px 6px;border-radius:4px;margin:2px 0;border:1px solid transparent}.item.sel{border-color:var(--accent);background:#1d2b3d}
+.unk{color:var(--warn);font-size:12px}
+table{border-collapse:collapse;width:100%;max-width:1000px;margin-top:8px}td,th{border:1px solid var(--line);padding:6px 8px;vertical-align:top;text-align:left}th{background:#1b2431}
+svg text{fill:#91a1b6;font-size:10px}
+@media(max-width:760px){.grid,.grid.two{grid-template-columns:1fr}.pane{border-right:0;border-bottom:1px solid var(--line)}}
+</style></head><body>
+<h1>Adding equipment and placing it on a tray — 3 options</h1>
+<p class="note">Static mockups for Brian to compare. Nothing here is built. Fit, retention and strength of every mounting method stay UNKNOWN; drafts still only save on Save. Device shown is a generic box, not a Pi.</p>
+
+<h2>What the current code does (why the options look like this)</h2>
+<ul>
+<li>The wizard (<code>equipment-wizard.js</code>) is one 5-step dialog: <b>Device → Mounting → Ports → Faceplate → Generate</b>. It mixes facts about the equipment (size, holes, ports) with choices about the tray (mounting method, standoff, keystones, rear support).</li>
+<li>Placing on a tray today is "select an empty slot, click a library card". There is no move step: <code>equipment_tray.scad</code> always centres the device left-right and puts it a fixed 12 mm (<code>front_gap</code>) behind the faceplate.</li>
+<li>So any placement window needs three new tray settings: <b>left/right offset, front/back offset, and rotation</b> (0/90/180/270). Screw positions already follow from the device's hole list, so showing them is a preview of existing data.</li>
+<li>Suggested split for all options: <b>library entry = facts about the equipment</b> (name, size, model file, holes, ports). <b>Tray placement = choices</b> (position, rotation, mounting method, standoff, faceplate/keystones). One library item can then go on many trays different ways.</li>
+</ul>
+
+<!-- OPTION 1 -->
+<h2>Option 1 — Short library wizard + separate "Place on tray" window</h2>
+<p>Wizard shrinks to 3 steps (Device → Holes → Ports). Dropping a library item on a slot opens a big placement window.</p>
+<div class="win"><div class="bar"><b>Add equipment to library</b><span class="chip on">1. Device</span><span class="chip">2. Holes</span><span class="chip">3. Ports</span><span style="flex:1"></span><span class="btn g">Back</span><span class="btn">Next</span></div>
+<div class="grid two"><div class="pane"><div class="f"><span>Name</span><span>Mini switch</span></div><div class="f"><span>Import model</span><span>switch.step</span></div><div class="f"><span>Width</span><span>140</span></div><div class="f"><span>Depth</span><span>95</span></div><div class="f"><span>Height</span><span>28</span></div><p class="note">No mounting method, faceplate or tray choices here — just what the equipment is.</p></div>
+<div class="view"><svg viewBox="0 0 200 120" width="100%" height="160"><rect x="40" y="30" width="120" height="60" fill="#2a3d55" stroke="#67a8ff"/><text x="70" y="64">imported model</text></svg></div></div></div>
+
+<div class="win"><div class="bar"><b>Place "Mini switch" — Rack A, slot U3</b><span style="flex:1"></span><span class="btn g">Cancel</span><span class="btn">Apply to draft</span></div>
+<div class="grid"><div class="pane"><h3>Position</h3><div class="f"><span>Left/right</span><span>0 mm</span></div><div class="f"><span>Front gap</span><span>12 mm</span></div><div class="f"><span>Rotate</span><span>0°</span></div><span class="chip">Centre</span><span class="chip">Snap 1 mm</span><h3 style="margin-top:12px">Mounting</h3><span class="chip on">Screws + inserts</span><span class="chip">Pegs</span><span class="chip">Clips</span><span class="chip">Strap</span><div class="f"><span>Standoff</span><span>6 mm</span></div></div>
+<div class="view"><svg viewBox="0 0 260 200" width="100%" height="300"><rect x="20" y="20" width="220" height="12" fill="#3b4656"/><text x="24" y="15">faceplate</text><rect x="45" y="32" width="170" height="150" fill="#1d2735" stroke="#4a5568"/><text x="50" y="176">tray (top view)</text><rect x="70" y="50" width="120" height="80" fill="#2a3d55" stroke="#67a8ff" stroke-dasharray="4 2"/><text x="100" y="94">drag to move</text><g fill="none" stroke="#6fbf8f" stroke-width="2"><circle cx="78" cy="58" r="4"/><circle cx="182" cy="58" r="4"/><circle cx="78" cy="122" r="4"/><circle cx="182" cy="122" r="4"/></g><text x="150" y="196">◎ = screw positions</text></svg></div>
+<div class="pane"><h3>Live 3D preview</h3><svg viewBox="0 0 200 120" width="100%" height="120"><polygon points="20,80 120,100 180,70 80,50" fill="#1d2735" stroke="#4a5568"/><polygon points="60,62 120,74 150,58 90,47" fill="#2a3d55" stroke="#67a8ff"/><polygon points="20,80 20,40 80,10 80,50" fill="#3b4656"/></svg><h3>Faceplate</h3><span class="chip">Keystones…</span><span class="chip">Rear support</span><p class="unk">Fit, retention, strength: UNKNOWN</p></div></div></div>
+<p><b>Steps:</b> wizard 3 steps (once per equipment) → drop on slot → move/rotate, pick mounting, check screws → Apply → Save.</p>
+
+<!-- OPTION 2 -->
+<h2>Option 2 — One screen: 3D view in the middle, step panels on the side</h2>
+<p>Replaces the dialog with a full workspace mode. Same steps as today, but the 3D tray preview is always visible and you can drag the device in it at any step.</p>
+<div class="win"><div class="bar"><b>Equipment studio — Mini switch</b><span class="chip">Device ✓</span><span class="chip">Holes ✓</span><span class="chip on">Place &amp; mount</span><span class="chip">Ports</span><span class="chip">Faceplate</span><span style="flex:1"></span><span class="btn">Save to library + slot</span></div>
+<div class="grid"><div class="pane"><h3>Steps</h3><div class="item">1 Device ✓</div><div class="item">2 Holes ✓</div><div class="item sel">3 Place &amp; mount</div><div class="item">4 Ports</div><div class="item">5 Faceplate</div><div class="item">6 Check</div></div>
+<div class="view"><svg viewBox="0 0 260 200" width="100%" height="300"><polygon points="30,140 160,175 240,120 110,90" fill="#1d2735" stroke="#4a5568"/><polygon points="30,140 30,60 110,15 110,90" fill="#3b4656"/><polygon points="80,128 160,148 205,118 125,100" fill="#2a3d55" stroke="#67a8ff"/><polygon points="80,128 80,115 160,135 160,148" fill="#22324a"/><g fill="#6fbf8f"><circle cx="90" cy="126" r="3"/><circle cx="155" cy="143" r="3"/><circle cx="195" cy="119" r="3"/><circle cx="130" cy="103" r="3"/></g><text x="150" y="195">drag in 3D · orbit · top view</text></svg></div>
+<div class="pane"><h3>Place &amp; mount</h3><div class="f"><span>Left/right</span><span>0</span></div><div class="f"><span>Front gap</span><span>12</span></div><div class="f"><span>Rotate</span><span>0°</span></div><span class="chip on">Screws</span><span class="chip">Pegs</span><span class="chip">Clips</span><span class="chip">Strap</span><p class="unk">Fit, retention, strength: UNKNOWN</p></div></div></div>
+<p><b>Steps:</b> open studio → walk 6 panels (any order) with live 3D → Save. Library item and tray placement are made together.</p>
+
+<!-- OPTION 3 -->
+<h2>Option 3 — Quick add (dimensions only), finish on the tray</h2>
+<p>Library entry is a tiny form: name + size (or drop a model file). Everything else is decided when you drop it on a slot, in the same placement window as Option 1 with Holes and Ports tabs added.</p>
+<div class="win"><div class="bar"><b>Quick add equipment</b><span style="flex:1"></span><span class="btn">Add to library</span></div>
+<div class="grid two"><div class="pane"><div class="f"><span>Name</span><span>Mini switch</span></div><div class="f"><span>W × D × H</span><span>140 × 95 × 28</span></div><div class="f"><span>or drop model</span><span>STL/SCAD/STEP</span></div><p class="note">Holes and ports optional — "not set yet" until placed.</p></div><div class="view"><span class="note">box preview</span></div></div></div>
+<div class="win"><div class="bar"><b>Place "Mini switch" — slot U3</b><span class="chip on">Position</span><span class="chip">Holes</span><span class="chip">Mounting</span><span class="chip">Ports</span><span class="chip">Faceplate</span><span style="flex:1"></span><span class="btn">Apply to draft</span></div>
+<div class="grid two"><div class="view"><svg viewBox="0 0 260 160" width="100%" height="220"><rect x="20" y="15" width="220" height="10" fill="#3b4656"/><rect x="45" y="25" width="170" height="125" fill="#1d2735" stroke="#4a5568"/><rect x="70" y="40" width="120" height="75" fill="#2a3d55" stroke="#67a8ff" stroke-dasharray="4 2"/><text x="96" y="82">holes not set yet</text></svg></div><div class="pane"><p>Holes found in the model / typed here are saved back to the library item so the next tray reuses them.</p><p class="unk">Fit, retention, strength: UNKNOWN</p></div></div></div>
+<p><b>Steps:</b> quick add (1 screen) → drop on slot → tabs: position, holes, mounting, ports, faceplate → Apply → Save.</p>
+
+<h2>Comparison</h2>
+<table><tr><th></th><th>1 · Wizard + place window</th><th>2 · One-screen studio</th><th>3 · Quick add, finish on tray</th></tr>
+<tr><td>Library entry</td><td>3 steps</td><td>part of studio (6 panels)</td><td>1 screen</td></tr>
+<tr><td>Placing</td><td>dedicated window, drag in top view + 3D</td><td>same screen, drag in 3D</td><td>dedicated window with 5 tabs</td></tr>
+<tr><td>Pros</td><td>Clear split: what it is vs. how it mounts. Reuse one item on many trays. Reuses most existing wizard code.</td><td>Always see the result. Fewest window switches. Most "CAD-like".</td><td>Fastest to get something in the library. Good for a future NetBox import (size only).</td></tr>
+<tr><td>Cons</td><td>Two places to learn. Ports/faceplate split needs care.</td><td>Biggest rebuild; 3D dragging is harder to make precise; mixes library and tray again.</td><td>Placement window gets busy; incomplete items in library; holes edited in two places.</td></tr>
+<tr><td>Rough build size</td><td><b>Medium</b> — trim wizard, new window, 3 new SCAD settings, top-view drag</td><td><b>Large</b> — new workspace mode, 3D picking/drag, rework save flow</td><td><b>Medium+</b> — Option 1's window plus moving holes/ports into it</td></tr></table>
+<p><b>Chosen 2026-10-19:</b> Brian picked Option 1 ("number 1 is great"). Not built yet; app code waits for his go-ahead.</p>
+<p><b>Recommendation:</b> Option 1. It matches how the code already separates library items from slot placements, keeps drag-and-drop in a precise top view, and Option 3's quick add could later be a shortcut on its Device step.</p>
+</body></html>

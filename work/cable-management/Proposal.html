@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lab Rax Cable Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600&display=swap">
+<style>
+/* Layout: one reading column of proposal text, with the wiring diagram breaking out wide as the centerpiece. Dark only, matching the app's Dark CAD Studio. */
+:root{
+  --bg:#0b1119; --panel:#121b27; --line:#24334a; --fg:#dbe4ee; --muted:#8a9bb0;
+  --accent:#a6e22e;            /* Lab Rax lime, from the frame logo */
+  --data:#4ea3ff; --power:#f2a93b; --video:#c48cff; --usb:#43d2c0;
+  --frame:#2a2f36; --device:#1a2433; --device-edge:#33445e;
+  --display:"IBM Plex Sans Condensed","Arial Narrow",sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 64px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;gap:40px}
+.col{max-width:68ch}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:2.1rem;line-height:1.15}
+h2{font-size:1.35rem;margin-bottom:12px}
+h3{font-size:1.02rem;margin-bottom:6px}
+p{margin:0 0 10px}
+.eyebrow{font:500 .75rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.lede{color:var(--muted);font-size:1.05rem}
+.status{display:inline-block;font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--power);color:var(--power);padding:2px 8px;border-radius:3px}
+section{display:grid;gap:8px}
+ul{margin:0;padding-left:1.2em;display:grid;gap:6px}
+code,.mono{font-family:var(--mono);font-size:.88em}
+.figure{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px;display:grid;gap:14px}
+.figure header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;align-items:baseline}
+.svgbox{overflow-x:auto}
+.svgbox svg{display:block;min-width:720px;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font:.8rem var(--mono);color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:18px;height:3px;border-radius:2px;display:inline-block}
+.tablebox{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.86rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.grid2>div{min-width:0}
+.phases{display:grid;gap:0;border-top:1px solid var(--line)}
+.phase{display:grid;grid-template-columns:72px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.phase .n{font:500 .8rem var(--mono);color:var(--accent);padding-top:3px}
+.phase p{color:var(--muted);margin:0}
+.ask{border-left:3px solid var(--accent);padding:4px 0 4px 16px;display:grid;gap:12px}
+.ask div{display:grid;gap:2px}
+.ask b{font-weight:600}
+.ask span{color:var(--muted)}
+.small{font-size:.84rem;color:var(--muted)}
+@media (max-width:520px){h1{font-size:1.7rem}.phase{grid-template-columns:1fr;gap:4px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="col" style="display:grid;gap:12px">
+  <div class="eyebrow">Assembly Workshop · exploration · 2026-10-19</div>
+  <h1>Lab Rax Cable Plan</h1>
+  <p class="lede">A proposal for cable management in the rack studio: open front and rear views, every port and keystone selectable, cable guides on the posts, cables that enter and leave the cabinet, routing suggestions, and a clean wiring diagram you can follow while wiring the real rack.</p>
+  <div><span class="status">Proposal · nothing built yet</span></div>
+</header>
+
+<!-- ============ DIAGRAM ============ -->
+<div class="figure">
+  <header>
+    <h2 style="margin:0">Example wiring diagram</h2>
+    <span class="small mono">EXAMPLE DATA · 5U rack · not your saved rack</span>
+  </header>
+  <div class="svgbox">
+  <svg viewBox="0 0 760 420" role="img" aria-labelledby="dgT" font-family="IBM Plex Mono, Consolas, monospace">
+    <title id="dgT">Front and rear elevations of a 5U Lab Rax with three cable guides, eight cables and three cables leaving the cabinet</title>
+    <defs>
+      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <marker id="arr" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#8a9bb0"/></marker>
+    </defs>
+
+    <!-- headings -->
+    <text x="185" y="34" fill="#dbe4ee" font-size="12" text-anchor="middle" font-weight="500">FRONT</text>
+    <text x="565" y="34" fill="#dbe4ee" font-size="12" text-anchor="middle" font-weight="500">REAR · viewed from behind</text>
+    <text x="429" y="50" fill="#8a9bb0" font-size="9" text-anchor="middle">RR post</text>
+    <text x="701" y="50" fill="#8a9bb0" font-size="9" text-anchor="middle">RL post</text>
+
+    <!-- U labels -->
+    <g fill="#8a9bb0" font-size="10" text-anchor="end">
+      <text x="34" y="92">U1</text><text x="34" y="148">U2</text><text x="34" y="204">U3</text><text x="34" y="260">U4</text><text x="34" y="316">U5</text>
+    </g>
+
+    <!-- ===== FRONT frame ===== -->
+    <rect x="40" y="56" width="290" height="288" fill="none" stroke="#24334a"/>
+    <rect x="40" y="56" width="18" height="288" fill="#2a2f36"/>
+    <rect x="312" y="56" width="18" height="288" fill="#2a2f36"/>
+    <g fill="#0b1119"><circle cx="49" cy="70" r="2"/><circle cx="49" cy="102" r="2"/><circle cx="49" cy="126" r="2"/><circle cx="49" cy="158" r="2"/><circle cx="49" cy="182" r="2"/><circle cx="49" cy="214" r="2"/><circle cx="49" cy="238" r="2"/><circle cx="49" cy="270" r="2"/><circle cx="49" cy="294" r="2"/><circle cx="49" cy="326" r="2"/>
+      <circle cx="321" cy="70" r="2"/><circle cx="321" cy="102" r="2"/><circle cx="321" cy="126" r="2"/><circle cx="321" cy="158" r="2"/><circle cx="321" cy="182" r="2"/><circle cx="321" cy="214" r="2"/><circle cx="321" cy="238" r="2"/><circle cx="321" cy="270" r="2"/><circle cx="321" cy="294" r="2"/><circle cx="321" cy="326" r="2"/></g>
+
+    <!-- front devices -->
+    <g stroke="#33445e" fill="#1a2433">
+      <rect x="62" y="64" width="246" height="48" rx="3"/>
+      <rect x="62" y="120" width="246" height="48" rx="3"/>
+      <rect x="62" y="176" width="246" height="48" rx="3"/>
+      <rect x="62" y="232" width="246" height="48" rx="3"/>
+      <rect x="62" y="288" width="246" height="48" rx="3"/>
+    </g>
+    <g fill="#8a9bb0" font-size="9">
+      <text x="70" y="78">Raspberry Pi 4 tray</text>
+      <text x="70" y="134">8-port switch</text>
+      <text x="70" y="190">Keystone panel</text>
+      <text x="70" y="246">Mini PC</text>
+      <text x="70" y="302">USB-C power hub</text>
+    </g>
+    <!-- Pi faceplate cutouts -->
+    <g fill="#0b1119" stroke="#33445e"><rect x="200" y="84" width="20" height="14" rx="2"/><rect x="226" y="84" width="20" height="14" rx="2"/><rect x="252" y="84" width="34" height="14" rx="2"/></g>
+    <!-- switch ports -->
+    <g fill="#0b1119" stroke="#4a5d78">
+      <rect x="154" y="140" width="12" height="12"/><rect x="174" y="140" width="12" height="12"/><rect x="194" y="140" width="12" height="12"/><rect x="214" y="140" width="12" height="12"/>
+      <rect x="234" y="140" width="12" height="12"/><rect x="254" y="140" width="12" height="12"/><rect x="274" y="140" width="12" height="12"/><rect x="294" y="140" width="12" height="12"/>
+    </g>
+    <!-- keystones front -->
+    <g fill="#0b1119" stroke="#4a5d78"><rect x="92" y="192" width="14" height="16" rx="2"/><rect x="126" y="192" width="14" height="16" rx="2"/><rect x="160" y="192" width="14" height="16" rx="2"/><rect x="194" y="192" width="14" height="16" rx="2"/><rect x="228" y="192" width="14" height="16" rx="2"/><rect x="262" y="192" width="14" height="16" rx="2"/></g>
+    <g fill="#8a9bb0" font-size="7" text-anchor="middle"><text x="99" y="217">K1</text><text x="133" y="217">K2</text><text x="167" y="217">K3</text><text x="201" y="217">K4</text><text x="235" y="217">K5</text><text x="269" y="217">K6</text></g>
+    <!-- mini PC front: USB ports + power button -->
+    <g fill="#0b1119" stroke="#4a5d78"><rect x="240" y="252" width="14" height="7"/><rect x="260" y="252" width="14" height="7"/><circle cx="290" cy="256" r="5"/></g>
+
+    <!-- front patch cables (data) -->
+    <g fill="none" stroke="#4ea3ff" stroke-width="2.2" stroke-linecap="round">
+      <path d="M99,192 C99,170 160,174 160,152"/>
+      <path d="M133,192 C133,176 180,176 180,152"/>
+      <path d="M167,192 C167,180 200,178 200,152"/>
+    </g>
+    <!-- selected port highlight -->
+    <rect x="152" y="138" width="16" height="16" fill="none" stroke="#a6e22e" stroke-width="2" filter="url(#glow)"/>
+    <g>
+      <rect x="176" y="100" width="128" height="34" rx="3" fill="#0b1119" stroke="#a6e22e"/>
+      <text x="183" y="113" fill="#a6e22e" font-size="8.5">SWITCH · PORT 1 · RJ45</text>
+      <text x="183" y="126" fill="#dbe4ee" font-size="8.5">C7 · K1 → modem (WAN)</text>
+    </g>
+
+    <!-- ===== REAR frame ===== -->
+    <rect x="420" y="56" width="290" height="288" fill="none" stroke="#24334a"/>
+    <rect x="420" y="56" width="18" height="288" fill="#2a2f36"/>
+    <rect x="692" y="56" width="18" height="288" fill="#2a2f36"/>
+    <g stroke="#33445e" fill="#1a2433">
+      <rect x="442" y="64" width="246" height="48" rx="3"/>
+      <rect x="442" y="120" width="246" height="48" rx="3"/>
+      <rect x="442" y="176" width="246" height="48" rx="3"/>
+      <rect x="442" y="232" width="246" height="48" rx="3"/>
+      <rect x="442" y="288" width="246" height="48" rx="3"/>
+    </g>
+    <!-- rear ports -->
+    <g fill="#0b1119" stroke="#4a5d78">
+      <rect x="464" y="84" width="12" height="8" rx="2"/>          <!-- Pi USB-C power -->
+      <rect x="633" y="82" width="14" height="12"/>                <!-- Pi RJ45 -->
+      <circle cx="470" cy="144" r="5"/>                             <!-- switch DC -->
+      <rect x="644" y="192" width="14" height="16" rx="2"/><rect x="610" y="192" width="14" height="16" rx="2"/><rect x="576" y="192" width="14" height="16" rx="2"/>
+      <rect x="542" y="192" width="14" height="16" rx="2"/><rect x="508" y="192" width="14" height="16" rx="2"/><rect x="474" y="192" width="14" height="16" rx="2"/>
+      <rect x="464" y="252" width="12" height="8" rx="2"/>          <!-- mini PC DC -->
+      <rect x="551" y="250" width="18" height="10" rx="2"/>         <!-- mini PC HDMI -->
+      <rect x="613" y="249" width="14" height="12"/>                <!-- mini PC RJ45 -->
+      <rect x="462" y="304" width="16" height="16" rx="2"/>         <!-- hub AC inlet -->
+      <rect x="504" y="300" width="12" height="7" rx="2"/><rect x="524" y="300" width="12" height="7" rx="2"/><rect x="544" y="300" width="12" height="7" rx="2"/><rect x="564" y="300" width="12" height="7" rx="2"/>
+    </g>
+    <g fill="#8a9bb0" font-size="7" text-anchor="middle"><text x="640" y="204" text-anchor="end">K1</text><text x="606" y="204" text-anchor="end">K2</text><text x="572" y="204" text-anchor="end">K3</text>
+      <text x="510" y="328">OUT1</text><text x="530" y="318">2</text><text x="550" y="318">3</text><text x="490" y="331">AC</text></g>
+
+    <!-- bottom-rear cable exit -->
+    <rect x="452" y="346" width="248" height="8" rx="4" fill="#0b1119" stroke="#a6e22e" stroke-dasharray="3 3"/>
+    <text x="530" y="370" fill="#a6e22e" font-size="8" text-anchor="middle">bottom-rear exit</text>
+
+    <!-- power cables (RR post side) -->
+    <g fill="none" stroke="#f2a93b" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M510,300 V287 H448 V88 H464"/>          <!-- C1 hub OUT1 → Pi power -->
+      <path d="M530,300 V284 H452 V144 H465"/>         <!-- C2 hub OUT2 → switch DC -->
+      <path d="M550,300 V281 H456 V256 H464"/>         <!-- C3 hub OUT3 → mini PC DC -->
+      <path d="M470,320 V350 V384" marker-end="url(#arr)"/> <!-- C4 AC → wall -->
+    </g>
+    <!-- data / video cables (RL post side) -->
+    <g fill="none" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M640,82 V72 H682 V186 H617 V192" stroke="#4ea3ff"/>     <!-- C5 Pi eth → K2 rear -->
+      <path d="M620,261 V270 H600 V222 H583 V208" stroke="#4ea3ff"/>   <!-- C6 mini PC eth → K3 rear -->
+      <path d="M686,384 V214 H651 V208" stroke="#4ea3ff" marker-start="url(#arr)"/> <!-- C7 modem → K1 rear -->
+      <path d="M560,260 V284 H678 V362 H610 V384" stroke="#c48cff" marker-end="url(#arr)"/> <!-- C8 HDMI → monitor -->
+    </g>
+
+    <!-- cable guides (Lab Rax Cable Guide, 1U each) -->
+    <g fill="#a6e22e" fill-opacity=".18" stroke="#a6e22e" stroke-width="1.4">
+      <rect x="440" y="184" width="22" height="32" rx="4"/>
+      <rect x="668" y="128" width="24" height="32" rx="4"/>
+      <rect x="668" y="240" width="24" height="32" rx="4"/>
+    </g>
+    <g fill="#a6e22e" font-size="8" font-weight="500"><text x="404" y="203">G1</text><text x="716" y="147">G2</text><text x="716" y="259">G3</text></g>
+
+    <!-- cable number tags -->
+    <g font-size="7.5" text-anchor="middle" fill="#0b1119" font-weight="500">
+      <g><circle cx="448" cy="120" r="6.5" fill="#f2a93b"/><text x="448" y="123">1</text></g>
+      <g><circle cx="452" cy="232" r="6.5" fill="#f2a93b"/><text x="452" y="235">2</text></g>
+      <g><circle cx="456" cy="268" r="6.5" fill="#f2a93b"/><text x="456" y="271" >3</text></g>
+      <g><circle cx="470" cy="340" r="6.5" fill="#f2a93b"/><text x="470" y="343">4</text></g>
+      <g><circle cx="682" cy="100" r="6.5" fill="#4ea3ff"/><text x="682" y="103">5</text></g>
+      <g><circle cx="600" cy="236" r="6.5" fill="#4ea3ff"/><text x="600" y="239">6</text></g>
+      <g><circle cx="686" cy="300" r="6.5" fill="#4ea3ff"/><text x="686" y="303">7</text></g>
+      <g><circle cx="630" cy="284" r="6.5" fill="#c48cff"/><text x="630" y="287">8</text></g>
+      <g><circle cx="130" cy="171" r="6.5" fill="#4ea3ff"/><text x="130" y="174">7</text></g>
+    </g>
+
+    <!-- external endpoints -->
+    <g font-size="9" text-anchor="middle">
+      <rect x="430" y="388" width="80" height="22" rx="11" fill="#121b27" stroke="#f2a93b"/><text x="470" y="402" fill="#dbe4ee">Wall outlet</text>
+      <rect x="566" y="388" width="88" height="22" rx="11" fill="#121b27" stroke="#c48cff"/><text x="610" y="402" fill="#dbe4ee">Desk monitor</text>
+      <rect x="660" y="388" width="80" height="22" rx="11" fill="#121b27" stroke="#4ea3ff"/><text x="700" y="402" fill="#dbe4ee">Modem / ONT</text>
+    </g>
+    <text x="185" y="372" fill="#8a9bb0" font-size="8.5" text-anchor="middle">Front: short patch cords from keystones to switch.</text>
+    <text x="185" y="386" fill="#8a9bb0" font-size="8.5" text-anchor="middle">Rear: power on RR post, data on RL post.</text>
+  </svg>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--data)"></i>Ethernet</span>
+    <span><i style="background:var(--power)"></i>Power</span>
+    <span><i style="background:var(--video)"></i>Video</span>
+    <span><i style="background:var(--usb)"></i>USB</span>
+    <span><i style="background:var(--accent);height:10px;width:12px;opacity:.5"></i>Cable guide (1U)</span>
+    <span>● Cable number, matches the schedule</span>
+  </div>
+
+  <div class="tablebox">
+  <table>
+    <thead><tr><th>#</th><th>From</th><th>To</th><th>Type</th><th>Route</th><th>Length (nominal)</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>USB-C hub · OUT1 (U5 rear)</td><td>Pi 4 · USB-C power (U1 rear)</td><td><span class="sw" style="background:var(--power)"></span>USB-C power</td><td>RR post · G1</td><td>≈ 0.35 m</td></tr>
+      <tr><td>2</td><td>USB-C hub · OUT2</td><td>Switch · DC in (U2 rear)</td><td><span class="sw" style="background:var(--power)"></span>DC barrel</td><td>RR post · G1</td><td>≈ 0.30 m</td></tr>
+      <tr><td>3</td><td>USB-C hub · OUT3</td><td>Mini PC · DC in (U4 rear)</td><td><span class="sw" style="background:var(--power)"></span>DC barrel</td><td>RR post</td><td>≈ 0.20 m</td></tr>
+      <tr><td>4</td><td>USB-C hub · AC inlet</td><td>Wall outlet (outside)</td><td><span class="sw" style="background:var(--power)"></span>IEC C7</td><td>Bottom-rear exit</td><td>leaves cabinet</td></tr>
+      <tr><td>5</td><td>Pi 4 · Ethernet (U1 rear)</td><td>Keystone K2 · rear</td><td><span class="sw" style="background:var(--data)"></span>Cat6</td><td>RL post · G2</td><td>≈ 0.30 m</td></tr>
+      <tr><td>6</td><td>Mini PC · Ethernet (U4 rear)</td><td>Keystone K3 · rear</td><td><span class="sw" style="background:var(--data)"></span>Cat6</td><td>direct, under 1U</td><td>≈ 0.15 m</td></tr>
+      <tr><td>7</td><td>Modem / ONT (outside)</td><td>Keystone K1 rear, then front patch to switch port 1</td><td><span class="sw" style="background:var(--data)"></span>Cat6</td><td>Bottom-rear exit · RL post · G3</td><td>enters cabinet</td></tr>
+      <tr><td>8</td><td>Mini PC · HDMI (U4 rear)</td><td>Desk monitor (outside)</td><td><span class="sw" style="background:var(--video)"></span>HDMI</td><td>RL post · G3 · bottom-rear exit</td><td>leaves cabinet</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small">Front patch cords K1→SW1, K2→SW2 and K3→SW3 are listed with the cable they continue. Lengths are route length plus a service loop, as planning numbers only.</p>
+</div>
+
+<!-- ============ PROPOSAL BODY ============ -->
+<section class="col">
+  <h2>What already exists</h2>
+  <ul>
+    <li>The rack viewport renders the real source meshes with shadows, ambient occlusion and per-triangle picking (<code>rack-studio.js</code>). Picking currently resolves to a <em>slot</em>, not to anything smaller.</li>
+    <li>Slot equipment in the rack view is the shared studio tray and plate shape, not each device's own mesh, so nothing on it is individually addressable yet.</li>
+    <li>Port data is thin. Wizard equipment stores front faceplate cutouts (<code>label, x, z, w, h</code>) and keystone X positions. Nothing records rear ports or connector types, and Pi 4 ports are only cutouts in <code>pi4_baseline.scad</code>.</li>
+    <li>The camera offers Front and Perspective. There is no rear view, and the top fan panel and side panels always draw when enabled.</li>
+  </ul>
+</section>
+
+<section class="col">
+  <h2>The cable guide you supplied</h2>
+  <p><b>Lab Rax Cable Guide</b> by mklements (Bambu Studio 3MF, 708 triangles, 28 × 28 × 44 mm). It takes 1U on a vertical post and fixes with two M6 × 10 mm screws into the post's existing holes. Its own description says it is meant for the rear posts. It becomes the default guide: placed on RL, RR, FL or FR at any U, snapped to that U's hole pair.</p>
+  <p class="small">Its license is <b>MakerWorld Exclusive</b>, which is stricter than the creator parts' BY-NC-SA. I propose treating it like them: a local preview mesh only, never redistributed, and kept out of PRINT THE RACK unless you say otherwise. I left the file in Downloads and copied nothing into the project.</p>
+</section>
+
+<div class="grid2">
+  <section>
+    <h3>Unrestricted views</h3>
+    <ul>
+      <li>Front, Rear and Perspective presets, plus orbit all the way round.</li>
+      <li>A <b>Cables</b> view mode that hides the side panels, top fan panel and bottom panel and ghosts the frame at low opacity, so cables and ports read clearly from either side.</li>
+      <li>Optional depth cut: a slider that slices the rack front-to-back to see a tray's interior.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Everything selectable</h3>
+    <ul>
+      <li>Each port, keystone (front and rear face), cable guide, cable and entry/exit point is its own pick target with a stable ID, for example <code>slot2/rear/dc</code>.</li>
+      <li>Click selects; hover shows a chip like the one in the diagram. The inspector gets a <b>Port</b>, <b>Cable</b> and <b>Guide</b> panel; right-click and the ellipsis menu carry Connect, Route, Remove.</li>
+      <li>Selecting a cable lights its whole run, both ends and any front patch it continues through.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>Rendered nicely</h3>
+    <ul>
+      <li>Cables as smooth tubes with slight sag between guides, bundled side by side through each guide instead of overlapping.</li>
+      <li>Connector-shaped port markers (RJ45, USB-C, HDMI, barrel, IEC) with a soft glow on hover and the lime selection outline used elsewhere.</li>
+      <li>Type colors you can override per cable; the existing shadow and AO passes apply to cables too.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>In and out of the cabinet</h3>
+    <ul>
+      <li><b>Exit points</b> placed at bottom-rear, top-rear or either side, drawn as a grommet marker.</li>
+      <li><b>Outside endpoints</b> with a name and kind: wall outlet, UPS, modem, wall jack, desk, another rack.</li>
+      <li>A cable may end at an outside endpoint and must then pass through an exit point; the diagram draws it as an arrow off the frame.</li>
+    </ul>
+  </section>
+</div>
+
+<section class="col">
+  <h2>Routing suggestions</h2>
+  <p>A suggestions list in the Review tab, each one with a <em>Show me</em> that highlights the cables involved and, where it is safe, an <em>Apply</em> that only changes the unsaved draft:</p>
+  <ul>
+    <li>Keep power on one rear post and data on the other; flag cables that cross between them.</li>
+    <li>Add a guide where a vertical run goes more than 2U without one, at the U it suggests.</li>
+    <li>Send cables that leave the cabinet through one exit point, and keep the top fan panel clear.</li>
+    <li>Use a keystone pass-through for connections you unplug often, so the rear run stays put.</li>
+    <li>Leave a short service loop at each device; runs under 1U need no guide.</li>
+    <li>Flag tight turns using generic published bend-radius guidance (for example 4 × cable diameter for Cat6), shown as guidance, not as a check of your cables.</li>
+    <li>Warn when a guide is crowded past a set number of cables. The guide's real capacity is UNKNOWN, so this threshold is a setting.</li>
+    <li>Find ports with nothing plugged in and cables with only one end.</li>
+  </ul>
+</section>
+
+<section class="col">
+  <h2>The wiring diagram output</h2>
+  <ul>
+    <li><b>Wiring sheet:</b> front and rear elevations side by side, cable numbers, guides, exit points and outside endpoints, in the style above, exported as SVG and as a single printable page.</li>
+    <li><b>Cable schedule:</b> the table above as CSV, sorted by cable number.</li>
+    <li><b>Labels:</b> optional sheet of wrap labels, one per cable end (<code>C7 · K1 → Modem</code>).</li>
+    <li>Generated from saved data only, like the other exports. It never saves the draft and never touches STL output.</li>
+  </ul>
+</section>
+
+<section class="col">
+  <h2>Data model</h2>
+  <p>A new <code>cabling</code> block in the rack document, saved through the existing atomic Save and kept in rack history:</p>
+  <ul>
+    <li><code>ports</code> per equipment item: id, label, connector type, face (front or rear), position. Wizard equipment gets a Ports step that adds type and face to today's cutouts; Pi 4 gets a fixed preset. Keystones become pass-through ports with a front and a rear face.</li>
+    <li><code>guides</code>: id, kind (default Lab Rax Cable Guide), post, U.</li>
+    <li><code>exits</code> and <code>endpoints</code>: placed openings and named outside devices.</li>
+    <li><code>cables</code>: id, number, type, color, from, to, route (ordered guide and exit IDs), service loop, note.</li>
+  </ul>
+  <p class="small">This adds no hardware pins, no geometry and no STL changes. Racks saved without a <code>cabling</code> block load unchanged.</p>
+</section>
+
+<section class="col">
+  <h2>Suggested order</h2>
+  <div class="phases">
+    <div class="phase"><span class="n">Step 1</span><div><h3>Views and guides</h3><p>Rear preset and Cables view mode; load the guide mesh locally; place, move and remove guides on posts.</p></div></div>
+    <div class="phase"><span class="n">Step 2</span><div><h3>Ports</h3><p>Port data model, Pi 4 preset, wizard Ports step, keystone pass-through; selectable port markers and the Port panel.</p></div></div>
+    <div class="phase"><span class="n">Step 3</span><div><h3>Cables, exits and endpoints</h3><p>Connect mode (port to port, or port to outside endpoint), automatic routing through the nearest guides, tube rendering.</p></div></div>
+    <div class="phase"><span class="n">Step 4</span><div><h3>Suggestions</h3><p>The rule list above in Review, with Show me and Apply to draft.</p></div></div>
+    <div class="phase"><span class="n">Step 5</span><div><h3>Wiring sheet</h3><p>SVG and printable sheet, CSV schedule, labels.</p></div></div>
+  </div>
+</section>
+
+<section class="col">
+  <h2>Limits that stay visible</h2>
+  <ul>
+    <li>Cable guide fit, strength, retention and capacity: UNKNOWN. M6 hole compatibility is the creator's statement, not checked here.</li>
+    <li>Cable lengths are planning estimates from the route plus slack; real cable OD, stiffness and connector depth are UNKNOWN, so rear clearance behind equipment is not checked.</li>
+    <li>Port positions for wizard equipment are what you enter; Pi 4 rear-port positions depend on tray orientation and need confirming against the Pi reference.</li>
+    <li>No printing, purchases or physical fitting is part of this.</li>
+  </ul>
+</section>
+
+<section class="col">
+  <h2>Brian's decisions · 2026-10-19</h2>
+  <div class="ask">
+    <div><b>Guide mesh license</b><span>Local preview mesh only, like the creator parts. Never redistributed and left out of PRINT THE RACK.</span></div>
+    <div><b>Where ports come from</b><span>Both: a Pi 4 preset and a wizard Ports step, then fine-tuning by clicking on the device mesh.</span></div>
+    <div><b>Where to start</b><span>Step 1, views and guides.</span></div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

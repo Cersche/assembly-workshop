@@ -1,0 +1,134 @@
+{
+  "status": "PROPOSED \u2014 UNVALIDATED",
+  "baseline": "Pi4 clearance v2",
+  "changed_parameter": {
+    "insert_pilot": 4
+  },
+  "hardware": {
+    "screw": {
+      "id": "accu-sscf-m3-8-a2",
+      "revision": 1,
+      "name": "Accu M3 \u00d7 8 socket cap \u00b7 A2",
+      "kind": "screw",
+      "manufacturer": "Accu",
+      "part_number": "SSCF-M3-8-A2",
+      "diameter": 3,
+      "pitch": 0.5,
+      "length": 8,
+      "threaded_length": 8,
+      "length_convention": "under_head",
+      "head_diameter": 5.5,
+      "head_height": 3,
+      "drive": "2.5 mm hex",
+      "material": "A2 stainless steel",
+      "finish": "Natural",
+      "verification": "documented",
+      "source": "https://www.accu.co.uk/metric-cap-head-screws/3818-SSCF-M3-8-A2",
+      "retrieved": "2026-10-17",
+      "availability": "Not checked",
+      "cad_status": "Supplier CAD link only; no model downloaded",
+      "notes": "Nominal dimensions; head diameter tolerance +0/-0.18 mm, height +0/-0.14 mm. Full-thread specification from supplier."
+    },
+    "heatset": {
+      "id": "mcmaster-94459a140",
+      "revision": 1,
+      "name": "McMaster M3 heat-set \u00b7 5.7 mm",
+      "kind": "heatset",
+      "part_number": "94459A140",
+      "diameter": 3,
+      "pitch": 0.5,
+      "length": 5.7,
+      "hole_max_diameter": 4,
+      "hole_profile": "straight",
+      "end_type": "open",
+      "material": "Brass",
+      "verification": "partial",
+      "source": "https://www.mcmaster.com/products/94459a170/",
+      "retrieved": "2026-10-17",
+      "availability": "Not checked",
+      "cad_status": "No CAD downloaded",
+      "notes": "Catalog standard-profile brass row. 4 mm is For Max. Hole Dia., not an exact installation target. Outside diameter, usable thread depth and minimum wall remain unverified."
+    }
+  },
+  "checks": {
+    "status": "incomplete",
+    "checks": [
+      {
+        "name": "Thread compatibility",
+        "status": "pass",
+        "detail": "Screw M3 \u00d7 0.5; insert M3 \u00d7 0.5."
+      },
+      {
+        "name": "Screw reach",
+        "status": "pass",
+        "detail": "Reach 4.700 mm; project minimum 3.000 mm (user target, not a strength rating)."
+      },
+      {
+        "name": "Usable thread engagement",
+        "status": "unknown",
+        "detail": "Insert usable thread depth has not been documented."
+      },
+      {
+        "name": "Threaded shank",
+        "status": "pass",
+        "detail": "Conservative check: the entire protruding section must be threaded."
+      },
+      {
+        "name": "Open insert bore envelope",
+        "status": "pass",
+        "detail": "3.300 mm from screw tip to the modeled bore end. Assumes the entered pocket is continuous screw-clear space; verify actual geometry."
+      },
+      {
+        "name": "Bottom clearance",
+        "status": "unknown",
+        "detail": "The modeled bore check does not establish the actual insert exit, installation residue or printed clearance."
+      },
+      {
+        "name": "Insert pocket depth",
+        "status": "pass",
+        "detail": "Pocket 8 mm; insert 5.7 mm. Melt allowance is still material dependent."
+      },
+      {
+        "name": "Maximum installation hole",
+        "status": "pass",
+        "detail": "Pilot 4 mm; supplier maximum 4 mm. Being below the maximum alone does not establish printed fit."
+      },
+      {
+        "name": "Installation hole",
+        "status": "unknown",
+        "detail": "Missing insert hole_diameter."
+      },
+      {
+        "name": "Boss wall",
+        "status": "unknown",
+        "detail": "Insert outside diameter and sourced minimum wall are required."
+      },
+      {
+        "name": "Source completeness",
+        "status": "unknown",
+        "detail": "A selected part is custom or partially documented."
+      },
+      {
+        "name": "Physical and spatial checks",
+        "status": "unknown",
+        "detail": "Head/driver access, component clearance, material, strength and printed fit require geometry or physical checks."
+      }
+    ]
+  },
+  "limitations": [
+    "Insert outside diameter and usable thread depth may remain unknown.",
+    "Supplier maximum hole diameter is not an exact installation target.",
+    "Re-render, check component clearances and print a fit coupon before use.",
+    "This package contains the generated proposal; the viewer can switch between it and baseline v2."
+  ],
+  "mesh_build": {
+    "id": "ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78",
+    "compiler": "C:\\Program Files\\OpenSCAD\\openscad.exe",
+    "checks": "Both STL meshes have exactly two triangles at every edge.",
+    "logs": {
+      "tray": "Geometries in cache: 77\nGeometry cache size in bytes: 422968\nCGAL Polyhedrons in cache: 12\nCGAL cache size in bytes: 14349888\nTotal rendering time: 0:00:21.759\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     5076\n   Halfedges:   15228\n   Edges:        7614\n   Halffacets:   5094\n   Facets:       2547\n   Volumes:         2\n",
+      "faceplate": "Geometries in cache: 21\nGeometry cache size in bytes: 120632\nCGAL Polyhedrons in cache: 6\nCGAL cache size in bytes: 1922208\nTotal rendering time: 0:00:01.604\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      608\n   Halfedges:    1824\n   Edges:         912\n   Halffacets:    624\n   Facets:        312\n   Volumes:         2\n"
+    }
+  },
+  "mesh_limits": "Mesh closure and successful rendering are not collision, strength or physical fit validation."
+}

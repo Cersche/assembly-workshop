@@ -1,0 +1,10 @@
+from pathlib import Path
+p=Path('outputs/Mechanical_Design_App/index.html');s=p.read_text(encoding='utf-8').replace('LOCAL BETA 0.3','LOCAL BETA 0.4')
+s=s.replace('<main class="shell">','''<main class="shell"><section class="card" aria-label="Beta roadmap"><span class="pill">PHASE 4 OF 7 · IN PROGRESS</span><h2 style="margin-top:12px">Geometry integration</h2><p class="muted">3 of 7 phases complete. Phase numbers describe milestones, not percentage of effort.</p><details><summary>View roadmap</summary><ol><li>Complete — App foundation</li><li>Complete — Starter hardware library</li><li>Complete — Project selections, joint rules and exports</li><li><strong>In progress — Geometry previews and design integration</strong></li><li>Pending — Full Pi4 assembly validation in the app</li><li>Pending — Expand sourced M1–M8 hardware coverage</li><li>Pending — Physical testing and working beta sign-off</li></ol></details></section>''')
+s=s.replace("const token='__TOKEN__';let state;let dirty=false;", "const token='__TOKEN__';let state;let dirty=false;let previewTimer;let previewRevision=0;")
+s=s.replace("$('geometryText').textContent='Save and check to refresh the preview.'}","$('geometryText').textContent='Updating draft preview…';previewRevision++;clearTimeout(previewTimer);previewTimer=setTimeout(()=>preview().catch(e=>{$('geometryText').textContent=e.message}),180)}")
+s=s.replace('}renderParts()}','}renderParts();preview().catch(e=>{$(\'geometryText\').textContent=e.message})}')
+s=s.replace("async function preview(){const g=await api('geometry');", "async function preview(){const revision=++previewRevision;const g=await api('preview',payload());if(revision!==previewRevision)return;")
+s=s.replace("'Select an under-head-length screw to calculate reach.'", "'Select an under-head-length screw to calculate reach. Preview uses current inputs; save to persist them.'")
+s=s.replace('mm.`}', 'mm. ${dirty?\'Draft preview — unsaved changes.\':\'Saved project dimensions.\'}`}')
+p.write_text(s,encoding='utf-8')

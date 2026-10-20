@@ -1,0 +1,117 @@
+{
+  "version": 2,
+  "racks": [
+    {
+      "id": "4e9aa4f8-57a4-446d-97a4-6f8257abb8f3",
+      "name": "My Lab Rax",
+      "slots": 5,
+      "appearance": {
+        "color": "#c313bd",
+        "components": {
+          "post2": "#1319c3",
+          "side_rail": "#1319c3",
+          "post5": "#bba5ba",
+          "beam_bottom": "#3e283d",
+          "post4": "#341d33"
+        }
+      },
+      "width_mm": null,
+      "depth_mm": null,
+      "pitch_mm": null,
+      "placements": [
+        {
+          "assembly": {
+            "id": "asm-230d63a82a95f44dd9621f9642429cad",
+            "name": "Raspberry Pi 4",
+            "revision": 1,
+            "project": {
+              "selections": {
+                "screw": {
+                  "id": "accu-sscf-m3-8-a2",
+                  "revision": 1,
+                  "name": "Accu M3 × 8 socket cap · A2",
+                  "kind": "screw",
+                  "manufacturer": "Accu",
+                  "part_number": "SSCF-M3-8-A2",
+                  "diameter": 3,
+                  "pitch": 0.5,
+                  "length": 8,
+                  "threaded_length": 8,
+                  "length_convention": "under_head",
+                  "head_diameter": 5.5,
+                  "head_height": 3,
+                  "drive": "2.5 mm hex",
+                  "material": "A2 stainless steel",
+                  "finish": "Natural",
+                  "verification": "documented",
+                  "source": "https://www.accu.co.uk/metric-cap-head-screws/3818-SSCF-M3-8-A2",
+                  "retrieved": "2026-10-17",
+                  "availability": "Not checked",
+                  "cad_status": "Supplier CAD link only; no model downloaded",
+                  "notes": "Nominal dimensions; head diameter tolerance +0/-0.18 mm, height +0/-0.14 mm. Full-thread specification from supplier."
+                },
+                "heatset": {
+                  "id": "mcmaster-94459a140",
+                  "revision": 1,
+                  "name": "McMaster M3 heat-set · 5.7 mm",
+                  "kind": "heatset",
+                  "part_number": "94459A140",
+                  "diameter": 3,
+                  "pitch": 0.5,
+                  "length": 5.7,
+                  "hole_max_diameter": 4,
+                  "hole_profile": "straight",
+                  "end_type": "open",
+                  "material": "Brass",
+                  "verification": "partial",
+                  "source": "https://www.mcmaster.com/products/94459a170/",
+                  "retrieved": "2026-10-17",
+                  "availability": "Not checked",
+                  "cad_status": "No CAD downloaded",
+                  "notes": "Catalog standard-profile brass row. 4 mm is For Max. Hole Dia., not an exact installation target. Outside diameter, usable thread depth and minimum wall remain unverified."
+                }
+              },
+              "inputs": {
+                "stack": 3.3,
+                "pocket": 8,
+                "boss_diameter": 9,
+                "pilot": 4,
+                "minimum_engagement": 3,
+                "bottom_allowance": 0.5
+              },
+              "notes": "Clearance v2 baseline. Insert pilot is provisional. Physical testing pending.",
+              "reference": {
+                "schema": 1,
+                "units": "mm",
+                "role": "reference-only",
+                "asset": "pi_reference.json",
+                "sha256": "b6be2c03dcefb198afb711fa27003f23bbb5148acdf5b912681a08021a005c66",
+                "package_sha256": "cd8dd4b6d7e8f85fd60120e6f9950ee78c02fbbbe8256cd5598339bcd7118d48",
+                "package": "Pi4_fit_REFERENCE_ONLY.3mf",
+                "source_to_assembly": "(x,y,z) -> (x-44,69-z,y+13.900009155273438)",
+                "asset_transform": "identity; coordinates already transformed",
+                "upstream_provenance": "unknown",
+                "redistribution_license": "unknown; local inspection only",
+                "solid_conversion": "inconclusive: reference has non-manifold edges",
+                "baseline_source_sha256": "1136215f33e87d8e943ab62f4cb627010123a8d37dae423e478696a9f9437de4",
+                "baseline_assembly_sha256": "ef1050c5e535e0616f50d8b2c34a22ce1b94c7954050d2f9c30096306f485436"
+              },
+              "id": "asm-230d63a82a95f44dd9621f9642429cad",
+              "name": "Raspberry Pi 4",
+              "units": "mm"
+            },
+            "appearance": {},
+            "fit": "UNKNOWN"
+          },
+          "id": "89952b91-c8ba-4893-877d-ab0d3342020d",
+          "equipment": "pi4",
+          "slot": 1,
+          "span": 1,
+          "geometry": "pi4-clearance-v2-reference",
+          "fit": "UNKNOWN"
+        }
+      ]
+    }
+  ],
+  "generation": "aa3ff3ef-24b3-4c78-8b4d-2c39ba12aa34"
+}

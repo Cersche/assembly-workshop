@@ -1,0 +1,64 @@
+[
+  {
+    "port": 8765,
+    "route": "/workspace.css?v=4",
+    "status": 200,
+    "mime": "text/css; charset=utf-8",
+    "bytes": 18205,
+    "sha256": "503613ca7b6575b4bad8decf7251e8fb76dca8d3707c3afbd8de50d3dc23f604"
+  },
+  {
+    "port": 8765,
+    "route": "/workspace.css",
+    "status": 200,
+    "mime": "text/css; charset=utf-8",
+    "bytes": 18205,
+    "sha256": "503613ca7b6575b4bad8decf7251e8fb76dca8d3707c3afbd8de50d3dc23f604"
+  },
+  {
+    "port": 8765,
+    "route": "/api/workspace-capabilities",
+    "status": 200,
+    "mime": "application/json; charset=utf-8",
+    "bytes": 119,
+    "sha256": "1dd64c9b6560a3162cea9eacbfebf765925c5e3e03a048be8f0d53263608d5f7",
+    "capabilities": {
+      "version": 2,
+      "independent_assemblies": true,
+      "studio_save_version": 1,
+      "appearance": true,
+      "artwork": "preview-only"
+    }
+  },
+  {
+    "port": 8767,
+    "route": "/workspace.css?v=4",
+    "status": 200,
+    "mime": "text/css; charset=utf-8",
+    "bytes": 18205,
+    "sha256": "503613ca7b6575b4bad8decf7251e8fb76dca8d3707c3afbd8de50d3dc23f604"
+  },
+  {
+    "port": 8767,
+    "route": "/workspace.css",
+    "status": 200,
+    "mime": "text/css; charset=utf-8",
+    "bytes": 18205,
+    "sha256": "503613ca7b6575b4bad8decf7251e8fb76dca8d3707c3afbd8de50d3dc23f604"
+  },
+  {
+    "port": 8767,
+    "route": "/api/workspace-capabilities",
+    "status": 200,
+    "mime": "application/json; charset=utf-8",
+    "bytes": 119,
+    "sha256": "1dd64c9b6560a3162cea9eacbfebf765925c5e3e03a048be8f0d53263608d5f7",
+    "capabilities": {
+      "version": 2,
+      "independent_assemblies": true,
+      "studio_save_version": 1,
+      "appearance": true,
+      "artwork": "preview-only"
+    }
+  }
+]

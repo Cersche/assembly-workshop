@@ -1,0 +1,67 @@
+{
+  "time_utc": "2026-10-18T18:20:12.554710+00:00",
+  "user_choices": "1C 2C 3A 4A 5A 6A 7A 8A",
+  "hardware_cache_unchanged": {
+    "data\\normal-use\\library.sqlite3": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": true
+  },
+  "all_files_match_authorized_save": {
+    "data\\normal-use\\library.sqlite3": true,
+    "data\\normal-use\\rack-workspace.json": true,
+    "data\\normal-use\\rack-history\\ea0d424f-ce11-4f7e-8a10-c676f31e859e.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": true
+  },
+  "protected_baseline_unchanged": {
+    "pi4_baseline.scad": true,
+    "assembly.json": true,
+    "pi_reference.json": true,
+    "faceplate_mounting.py": true
+  },
+  "sqlite_integrity": "ok",
+  "python_tests": 37,
+  "node_suites": [
+    "atomic Save serialization and newer-draft retention, including invalid newer input",
+    "viewer appearance initialization replay",
+    "existing viewer controls",
+    "catalog handlers",
+    "Phase7 handlers",
+    "project context and depth-tested artwork"
+  ],
+  "browser_checks": [
+    "collapsible inspector restores contextual actions",
+    "collapsible rack/equipment/hardware sections",
+    "Setup/Hardware/Appearance tabs",
+    "header Save commits hardware and colors together",
+    "new allocation requires explicit Save before opening",
+    "saved instance isolation after second allocation",
+    "local image fit/center and front preview",
+    "immediate post-reload artwork restores correctly",
+    "desktop layout and no console warnings/errors"
+  ],
+  "normal_activation": {
+    "user_authorization": "1, followed by explicit Save current draft and refresh reply",
+    "saved_user_draft": true,
+    "rack": "My Lab Rax, 5 slots, 0 allocations",
+    "pid": 25160,
+    "port": 8765,
+    "starter_imports": 0,
+    "data": "data/normal-use",
+    "actual_source_mesh_colors": "retained from user draft"
+  },
+  "manufacturing_builds_exports": 0,
+  "limits": [
+    "preview-only colors/artwork",
+    "Pi4-only geometry adapter",
+    "rack planning/source preview, no rack STL generator",
+    "physical fit/strength/clearances UNKNOWN",
+    "Phase7 closed with limitations; mounting and niche research parked"
+  ]
+}

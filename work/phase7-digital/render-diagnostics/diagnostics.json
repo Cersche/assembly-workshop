@@ -1,0 +1,37 @@
+{
+  "renders": [
+    {
+      "format": "asciistl",
+      "exit_code": 0,
+      "bytes": 1709434
+    },
+    {
+      "format": "binstl",
+      "exit_code": 0,
+      "bytes": 517084
+    }
+  ],
+  "ascii_degenerate_triangles": 1,
+  "examples": [
+    {
+      "triangle": 4499,
+      "vertices": [
+        [
+          -39.5,
+          34.0,
+          7.0
+        ],
+        [
+          -39.5,
+          56.0,
+          7.0
+        ],
+        [
+          -39.5,
+          45.0,
+          7.0
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+PASS exact submitted inspection triangle count
+PASS inspection source objects used directly
+PASS assembly draw-order independence (0 seam pixels)
+PASS orthographic frontmost faceplate picking
+PASS hidden faceplate is not pickable
+PASS detailed Pi reference uses its exact source mesh
+PASS WebGL passes have no state errors
+PASS studio shadows and ambient occlusion active
+PASS source coordinates and indices unchanged
+ALL 9 ASSEMBLY GPU CHECKS PASSED

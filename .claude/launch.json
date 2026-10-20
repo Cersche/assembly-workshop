@@ -1,0 +1,229 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "disposable-8767",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8767",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\1d487df7-04ab-4eaa-8646-d4e4d4ecfd2f\\scratchpad\\disposable-data"
+      ],
+      "port": 8767
+    },
+    {
+      "name": "disposable-wizard-art-8769",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8769",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\57e99b58-600a-44c2-85e9-50bcd0a91fc6\\scratchpad\\wizard-art-data"
+      ],
+      "port": 8769,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-cables-8771",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8771",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\a17ed06a-c694-4e03-8d22-3785175fac06\\scratchpad\\cable-data"
+      ],
+      "port": 8771,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-ports-8773",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8773",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\eb61c524-8692-4e2f-a56b-ecaaab72a445\\scratchpad\\ports-data"
+      ],
+      "port": 8773,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-cables3-8775",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8775",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\996348ac-eb7a-4d13-b473-e3d1d6d99c1d\\scratchpad\\cables3-data"
+      ],
+      "port": 8775,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-cables4-8777",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8777",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\b151aa18-e722-416c-b95e-443eaf2c05d2\\scratchpad\\cables4-data"
+      ],
+      "port": 8777,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-cables5-8779",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8779",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\3857553a-3de2-46e3-9c55-90dad768a8da\\scratchpad\\cables5-data"
+      ],
+      "port": 8779,
+      "autoPort": false
+    },
+    {
+      "name": "sheet-preview-8780",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8780",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\3857553a-3de2-46e3-9c55-90dad768a8da\\scratchpad\\sheet"
+      ],
+      "port": 8780,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-finalcheck-8781",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8781",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\33067ca4-ec80-4594-91b6-bca88c6f6b82\\scratchpad\\final-check-data"
+      ],
+      "port": 8781,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-traywindow-8783",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8783",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\5e59be40-9643-4f23-b829-7f53da07678b\\scratchpad\\tray-window-data"
+      ],
+      "port": 8783,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-consumers-8785",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8785",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\b1f8c656-2468-410e-a530-ab3af102879b\\scratchpad\\consumers-data"
+      ],
+      "port": 8785,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-parts-8787",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8787",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\9ba8c102-590d-42bc-9e50-802045b9e1fc\\scratchpad\\parts-data"
+      ],
+      "port": 8787,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-rackview-8789",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8789",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\2a2bba7d-8e14-4379-9b38-4a75e89970b8\\scratchpad\\rackview-data"
+      ],
+      "port": 8789,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-e2e-8791",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8791",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\7bd8a78d-f464-4c05-b8c3-9a569b8b9d88\\scratchpad\\e2e-data"
+      ],
+      "port": 8791,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-picks-8793",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8793",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\05dfb2fe-a898-4b53-b922-04dd4a5b5595\\scratchpad\\picks-data"
+      ],
+      "port": 8793,
+      "autoPort": false
+    },
+    {
+      "name": "disposable-piclean-8795",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8795",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\187f975b-d529-48dc-975c-9be138a20de6\\scratchpad\\piclean-data"
+      ],
+      "port": 8795,
+      "autoPort": false
+    }
+  ]
+}

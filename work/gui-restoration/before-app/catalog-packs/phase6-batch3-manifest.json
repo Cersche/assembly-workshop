@@ -1,0 +1,22 @@
+{
+  "id": "phase6-batch3",
+  "revision": 1,
+  "retrieved": "2026-10-18",
+  "units": "mm",
+  "file": "phase6-batch3.json",
+  "sha256": "915cec97aba2fc8566c496b52f03ab07480ef14e4e902f6c74c9caef145dcdbc",
+  "records": 7,
+  "scope": "M1.4/M1.6/M3.5 cap screws and Series19 M2/M3.5/M4/M8 straight-hole inserts",
+  "loading": "Explicit import; no automatic active-data update",
+  "requires": "Phase6 batch2 range-aware hole evaluation",
+  "rights": "No supplier CAD/images/drawings/documents bundled; asset redistribution rights unknown",
+  "sources": [
+    "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150420",
+    "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150421",
+    "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150424",
+    "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150949",
+    "https://www.accu.co.uk/metric-cap-head-screws/3784-SSCF-M1-6-8-A2",
+    "https://www.accu.co.uk/metric-cap-head-screws/3831-SSCF-M3-5-16-A2",
+    "https://www.accu.co.uk/metric-cap-head-screws/3937-SSCF-M1-4-6-A4"
+  ]
+}

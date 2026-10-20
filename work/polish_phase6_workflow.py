@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path(r'C:/Users/brian/Documents/Codex/2026-10-17/referenced-chatgpt-conversation-this-is-an/outputs/Mechanical_Design_App/index.html');s=p.read_text(encoding='utf-8');s=s.replace('</style>','#replacementChanges table{table-layout:fixed}#replacementChanges td{overflow-wrap:anywhere}#sourceGaps{overflow-wrap:anywhere}\n</style>',1);s=s.replace("$('sourceGaps').textContent=(data.gaps.gaps||[])","$('sourceGaps').textContent=data.gaps.error?'Gap evidence unavailable: '+data.gaps.error:(data.gaps.gaps||[])");p.write_text(s,encoding='utf-8')

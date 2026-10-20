@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "racks": [
+    {
+      "id": "4e9aa4f8-57a4-446d-97a4-6f8257abb8f3",
+      "name": "My Lab Rax",
+      "slots": 5,
+      "appearance": {
+        "color": "#c313bd",
+        "components": {
+          "post2": "#1319c3",
+          "side_rail": "#1319c3",
+          "post5": "#bba5ba",
+          "beam_bottom": "#3e283d",
+          "post4": "#341d33"
+        }
+      },
+      "width_mm": null,
+      "depth_mm": null,
+      "pitch_mm": null,
+      "placements": []
+    }
+  ],
+  "generation": "7eb64862-d443-436f-95c7-6875b041606d"
+}

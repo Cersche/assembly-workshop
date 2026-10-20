@@ -1,0 +1,477 @@
+{
+  "status": "PROPOSED \u2014 UNVALIDATED",
+  "baseline": "Pi4 clearance v2",
+  "changed_parameter": {
+    "insert_pilot": 4
+  },
+  "hardware": {
+    "screw": {
+      "id": "accu-sscf-m3-8-a2",
+      "revision": 1,
+      "name": "Accu M3 \u00d7 8 socket cap \u00b7 A2",
+      "kind": "screw",
+      "manufacturer": "Accu",
+      "part_number": "SSCF-M3-8-A2",
+      "diameter": 3,
+      "pitch": 0.5,
+      "length": 8,
+      "threaded_length": 8,
+      "length_convention": "under_head",
+      "head_diameter": 5.5,
+      "head_height": 3,
+      "drive": "2.5 mm hex",
+      "material": "A2 stainless steel",
+      "finish": "Natural",
+      "verification": "documented",
+      "source": "https://www.accu.co.uk/metric-cap-head-screws/3818-SSCF-M3-8-A2",
+      "retrieved": "2026-10-17",
+      "availability": "Not checked",
+      "cad_status": "Supplier CAD link only; no model downloaded",
+      "notes": "Nominal dimensions; head diameter tolerance +0/-0.18 mm, height +0/-0.14 mm. Full-thread specification from supplier."
+    },
+    "heatset": {
+      "id": "mcmaster-94459a140",
+      "revision": 1,
+      "name": "McMaster M3 heat-set \u00b7 5.7 mm",
+      "kind": "heatset",
+      "part_number": "94459A140",
+      "diameter": 3,
+      "pitch": 0.5,
+      "length": 5.7,
+      "hole_max_diameter": 4,
+      "hole_profile": "straight",
+      "end_type": "open",
+      "material": "Brass",
+      "verification": "partial",
+      "source": "https://www.mcmaster.com/products/94459a170/",
+      "retrieved": "2026-10-17",
+      "availability": "Not checked",
+      "cad_status": "No CAD downloaded",
+      "notes": "Catalog standard-profile brass row. 4 mm is For Max. Hole Dia., not an exact installation target. Outside diameter, usable thread depth and minimum wall remain unverified."
+    }
+  },
+  "checks": {
+    "status": "incomplete",
+    "checks": [
+      {
+        "name": "Thread compatibility",
+        "status": "pass",
+        "detail": "Screw M3 \u00d7 0.5; insert M3 \u00d7 0.5."
+      },
+      {
+        "name": "Screw reach",
+        "status": "pass",
+        "detail": "Reach 4.700 mm; project minimum 3.000 mm (user target, not a strength rating)."
+      },
+      {
+        "name": "Usable thread engagement",
+        "status": "unknown",
+        "detail": "Insert usable thread depth has not been documented."
+      },
+      {
+        "name": "Threaded shank",
+        "status": "pass",
+        "detail": "Conservative check: the entire protruding section must be threaded."
+      },
+      {
+        "name": "Open insert bore envelope",
+        "status": "pass",
+        "detail": "3.300 mm from screw tip to the modeled bore end. Assumes the entered pocket is continuous screw-clear space; verify actual geometry."
+      },
+      {
+        "name": "Bottom clearance",
+        "status": "unknown",
+        "detail": "The modeled bore check does not establish the actual insert exit, installation residue or printed clearance."
+      },
+      {
+        "name": "Insert pocket depth",
+        "status": "pass",
+        "detail": "Pocket 8 mm; insert 5.7 mm. Melt allowance is still material dependent."
+      },
+      {
+        "name": "Maximum installation hole",
+        "status": "pass",
+        "detail": "Pilot 4 mm; supplier maximum 4 mm. Being below the maximum alone does not establish printed fit."
+      },
+      {
+        "name": "Installation hole",
+        "status": "unknown",
+        "detail": "Missing insert hole_diameter."
+      },
+      {
+        "name": "Boss wall",
+        "status": "unknown",
+        "detail": "Insert outside diameter and sourced minimum wall are required."
+      },
+      {
+        "name": "Source completeness",
+        "status": "unknown",
+        "detail": "A selected part is custom or partially documented."
+      },
+      {
+        "name": "Nominal screw-head surface screening",
+        "status": "pass",
+        "detail": "{\"status\": \"pass\", \"measurements\": [{\"axis_x\": -40, \"target\": \"pi_reference\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": -40, \"target\": \"tray\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": -40, \"target\": \"faceplate\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": 40, \"target\": \"pi_reference\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": 40, \"target\": \"tray\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": 40, \"target\": \"faceplate\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}], \"head_diameter_mm\": 5.5, \"head_height_mm\": 3, \"method\": \"head-cylinder-surface-bracket-v1\", \"bearing_contact_exclusion_mm\": 0.001, \"clipping_epsilon_mm\": 1e-05, \"polygon_sides\": 48, \"limits\": \"Nominal head cylinder surface screen against Pi/tray/faceplate; inner intersections FAIL, outer-only intersections UNKNOWN. No outer intersection passes only the surface screen, not containment, tool access, tolerances or physical fit. Ear bearing contact excluded by +0.001 mm Y. Driver/shaft/handle envelope and insertion path remain UNKNOWN.\"}"
+      },
+      {
+        "name": "Physical and spatial checks",
+        "status": "unknown",
+        "detail": "Driver/installation-tool envelopes, insertion path, containment, material, strength and printed fit remain unestablished. A nominal screw-head surface screen is reported separately."
+      }
+    ],
+    "access_assessment": [
+      {
+        "name": "Screwdriver approach",
+        "status": "unknown",
+        "known": {
+          "drive": "2.5 mm hex",
+          "bearing_y_mm": 11.3,
+          "approach": "from rear (+Y), toward -Y"
+        },
+        "required": "Exact driver shaft/bit/handle envelope, usable reach, approach/rotation path, and any surrounding rack geometry.",
+        "limit": "Drive size alone does not define the complete tool envelope."
+      },
+      {
+        "name": "Insert installation",
+        "status": "unknown",
+        "known": {
+          "part_number": "94459A140",
+          "length_mm": 5.7,
+          "boss_entrance_y_mm": 8
+        },
+        "required": "Exact insert outside diameter and installation-tip envelope/reach, documented installation procedure, material, and installation sequence.",
+        "limit": "Install tool and hot material clearance are not established by the nominal insert length."
+      },
+      {
+        "name": "Pi insertion/removal path",
+        "status": "unknown",
+        "known": {
+          "final_pose": "pinned reference transform"
+        },
+        "required": "Explicit assembly order and motion path, including mounting fasteners and accessories, followed by swept-volume or equivalent path checks.",
+        "limit": "A clear final pose does not prove that parts can be inserted or removed."
+      },
+      {
+        "name": "Connector/cable/accessory access",
+        "status": "unknown",
+        "known": {
+          "bare_board_reference": "included"
+        },
+        "required": "Actual cable plug/boot/bend envelopes and intended ports, SD-card service path, heatsink/fan or other accessory geometry.",
+        "limit": "Bare-board geometry does not supply connected-cable or accessory envelopes."
+      },
+      {
+        "name": "Rack engagement and physical sign-off",
+        "status": "unknown",
+        "known": {
+          "rack_fit": "unverified"
+        },
+        "required": "Mating rack geometry and installation path; actual hardware/material selection; separately approved coupon/prototype and recorded fit/load results.",
+        "limit": "Digital surface screening is not a strength or physical-fit certification."
+      }
+    ]
+  },
+  "assembly_validation": {
+    "status": "incomplete",
+    "checks": [
+      {
+        "name": "Pinned Pi reference",
+        "status": "pass",
+        "detail": "SHA-256 verified; millimeters; baked assembly transform. Reference only."
+      },
+      {
+        "name": "Supported mechanical baseline",
+        "status": "pass",
+        "detail": "Source SHA-256 1136215f33e87d8e943ab62f4cb627010123a8d37dae423e478696a9f9437de4. Screening envelopes apply only to the pinned clearance-v2 source and pilot-only proposals."
+      },
+      {
+        "name": "Four gussets: vertical surface screening",
+        "status": "pass",
+        "detail": "Triangle clipping after lowering Pi 0.5 mm; inward clipping epsilon 0.00001 mm. Hits: {\"-46\": 0, \"-34\": 0, \"34\": 0, \"46\": 0}. Surface screening, not global minimum distance or solid containment."
+      },
+      {
+        "name": "PCB hole XY alignment",
+        "status": "pass",
+        "detail": "Connected PCB component; four mounting rings sampled at documented radius 1.35 mm with 0.003 mm radial/center tolerance. Expected pitch 58 x 49 mm. [{\"expected_xy\": [-40.5, 16.5], \"measured_xy\": [-40.50000762939453, 16.499998092651367], \"vertices\": 136, \"quadrants\": 4, \"surface_z_levels\": [16.01001, 17.59001]}, {\"expected_xy\": [-40.5, 65.5], \"measured_xy\": [-40.50000762939453, 65.49999618530273], \"vertices\": 136, \"quadrants\": 4, \"surface_z_levels\": [16.01001, 17.59001]}, {\"expected_xy\": [17.5, 16.5], \"measured_xy\": [17.49999237060547, 16.499998092651367], \"vertices\": 136, \"quadrants\": 4, \"surface_z_levels\": [16.01001, 17.59001]}, {\"expected_xy\": [17.5, 65.5], \"measured_xy\": [17.49999237060547, 65.49999618530273], \"vertices\": 136, \"quadrants\": 4, \"surface_z_levels\": [16.01001, 17.59001]}]. This does not approve mounting fasteners."
+      },
+      {
+        "name": "PCB mounting placement",
+        "status": "pass",
+        "detail": "Connected 6,300-vertex PCB component bounds, not inset mounting-ring surfaces. Nominal underside and standoff top Z16; tolerance 0.003 mm. {\"identified\": true, \"component_vertices\": 6300, \"bounds\": [[-44.0, 13.0, 16.0], [41.0, 69.0, 17.600006103515625]], \"underside_gap_to_standoff_mm\": 0.0}. Ring surfaces at Z16.01001 do not define the PCB underside. Nominal model seating only; printed contact remains unknown."
+      },
+      {
+        "name": "Pi versus faceplate, socket rails and floor",
+        "status": "pass",
+        "detail": "Axis-aligned separation of complete Pi reference from pinned faceplate/rail Y<=8 and floor Z<=10: {\"pi_min_y\": 10.599998474121094, \"pi_min_z\": 13.900009155273438, \"faceplate_y_gap_mm\": 2.5999984741210938, \"socket_rail_y_gap_mm\": 2.5999984741210938, \"tray_floor_z_gap_mm\": 3.9000091552734375}. Bounds separation, not a global minimum-distance calculation."
+      },
+      {
+        "name": "Ear and standoff surface screening",
+        "status": "pass",
+        "detail": "Convex envelopes, standoff contact excluded by 0.001 mm; inward epsilon 0.00001 mm. Hits: {\"ear_-40\": 0, \"ear_40\": 0, \"standoff_-40.5_16.5\": 0, \"standoff_-40.5_65.5\": 0, \"standoff_17.5_16.5\": 0, \"standoff_17.5_65.5\": 0}. Surface test excludes containment claims."
+      },
+      {
+        "name": "Baseline joint axis alignment",
+        "status": "pass",
+        "detail": "{\"sections\": [{\"part\": \"tray\", \"section_y\": 8.3, \"expected_xz\": [-40, 21], \"measured_xz\": [-40.0, 21.0], \"vertices\": 48, \"quadrants\": 4}, {\"part\": \"tray\", \"section_y\": 11.3, \"expected_xz\": [-40, 21], \"measured_xz\": [-40.0, 21.0], \"vertices\": 48, \"quadrants\": 4}, {\"part\": \"tray\", \"section_y\": 8.3, \"expected_xz\": [40, 21], \"measured_xz\": [40.0, 21.0], \"vertices\": 48, \"quadrants\": 4}, {\"part\": \"tray\", \"section_y\": 11.3, \"expected_xz\": [40, 21], \"measured_xz\": [40.0, 21.0], \"vertices\": 48, \"quadrants\": 4}, {\"part\": \"faceplate\", \"section_y\": 8, \"expected_xz\": [-40, 21], \"measured_xz\": [-40.0, 21.0], \"vertices\": 48, \"quadrants\": 4}, {\"part\": \"faceplate\", \"section_y\": 8, \"expected_xz\": [40, 21], \"measured_xz\": [40.0, 21.0], \"vertices\": 48, \"quadrants\": 4}], \"axes_match\": true, \"tolerance_mm\": 0.003, \"nominal_source_clearances_mm\": {\"tongue_side_each\": 0.15, \"tongue_vertical_each\": 0.15, \"tongue_tip\": 0.2, \"boss_to_ear\": 0.3}, \"limits\": \"Bore ring centers verify baseline joint axes at X +/-40 Z21 along Y. Nominal clearances follow pinned SCAD dimensions, not as-printed fit or hardware/driver access. Pilot-only proposals preserve these axes.\"}"
+      },
+      {
+        "name": "Tray/faceplate and nominal PCB solid regression",
+        "status": "pass",
+        "detail": "{\"status\": \"pass\", \"checks\": [{\"name\": \"tray_faceplate\", \"status\": \"pass\", \"actual_intersection_status\": \"pass\", \"expression\": \"intersection(){tray();translate([0,-0.001,0])faceplate();}\", \"log_sha256\": \"fda52860968f4abe48e1e597b44f0550069836c84277230dd0afb4cf467b2f08\"}, {\"name\": \"nominal_pcb\", \"status\": \"pass\", \"actual_intersection_status\": \"pass\", \"expression\": \"intersection(){tray();translate([-44,13,16.001])cube([85,56,1.6]);}\", \"log_sha256\": \"4660359adb25d3445ecfd5dd0cabd77c997b4424b2ed09eeedf7b8958b134fb9\"}, {\"name\": \"positive_joint_clash\", \"status\": \"pass\", \"actual_intersection_status\": \"fail\", \"expression\": \"intersection(){tray();translate([0,0.4,0])faceplate();}\", \"log_sha256\": \"1e03a5f544d6ca973a31e5e96e4f8c76b8b582cab2b404ee9be6f51fbd4b096b\"}], \"evidence_sha256\": \"10723eb1df2d6e3cfdd1fdbf527ec46329cf8798525bc8f8add784af6b8ab2ec\", \"limits\": \"Tray/faceplate seating excluded by translating faceplate -0.001 mm along Y; nominal PCB seating excluded by +0.001 mm Z. Positive regression shifts faceplate +0.4 mm Y. Nominal PCB is not detailed-Pi solid validation.\"}"
+      },
+      {
+        "name": "Whole-Pi solid interference",
+        "status": "unknown",
+        "detail": "Non-manifold reference: CGAL conversion failed in baseline evidence. Empty output after conversion error is inconclusive."
+      },
+      {
+        "name": "Other assembly clearances",
+        "status": "unknown",
+        "detail": "Complete Pi is separated from faceplate/floor/rails by bounds; gusset/ear/standoff checks screen triangle surfaces. Whole-object containment, insertion path and accessory geometry remain unestablished."
+      },
+      {
+        "name": "Access and physical fit",
+        "status": "unknown",
+        "detail": "Cable/connector envelopes, driver and installation access, rack fit, material, strength and printed tolerances require further evidence/testing."
+      },
+      {
+        "name": "Reference provenance",
+        "status": "unknown",
+        "detail": "Upstream source units/provenance and redistribution license remain unresolved. Existing local 3MF explicitly declares millimeters."
+      }
+    ],
+    "reference": {
+      "schema": 1,
+      "units": "mm",
+      "role": "reference-only",
+      "asset": "pi_reference.json",
+      "sha256": "b6be2c03dcefb198afb711fa27003f23bbb5148acdf5b912681a08021a005c66",
+      "package_sha256": "cd8dd4b6d7e8f85fd60120e6f9950ee78c02fbbbe8256cd5598339bcd7118d48",
+      "package": "Pi4_fit_REFERENCE_ONLY.3mf",
+      "source_to_assembly": "(x,y,z) -> (x-44,69-z,y+13.900009155273438)",
+      "asset_transform": "identity; coordinates already transformed",
+      "upstream_provenance": "unknown",
+      "redistribution_license": "unknown; local inspection only",
+      "solid_conversion": "inconclusive: reference has non-manifold edges",
+      "baseline_source_sha256": "1136215f33e87d8e943ab62f4cb627010123a8d37dae423e478696a9f9437de4",
+      "baseline_assembly_sha256": "ef1050c5e535e0616f50d8b2c34a22ce1b94c7954050d2f9c30096306f485436"
+    },
+    "method": "pi4-surface-screen-v2",
+    "manufacturing_reference_included": false,
+    "access_assessment": [
+      {
+        "name": "Screwdriver approach",
+        "status": "unknown",
+        "known": {
+          "drive": null,
+          "bearing_y_mm": 11.3,
+          "approach": "from rear (+Y), toward -Y"
+        },
+        "required": "Exact driver shaft/bit/handle envelope, usable reach, approach/rotation path, and any surrounding rack geometry.",
+        "limit": "Drive size alone does not define the complete tool envelope."
+      },
+      {
+        "name": "Insert installation",
+        "status": "unknown",
+        "known": {
+          "part_number": null,
+          "length_mm": null,
+          "boss_entrance_y_mm": 8
+        },
+        "required": "Exact insert outside diameter and installation-tip envelope/reach, documented installation procedure, material, and installation sequence.",
+        "limit": "Install tool and hot material clearance are not established by the nominal insert length."
+      },
+      {
+        "name": "Pi insertion/removal path",
+        "status": "unknown",
+        "known": {
+          "final_pose": "pinned reference transform"
+        },
+        "required": "Explicit assembly order and motion path, including mounting fasteners and accessories, followed by swept-volume or equivalent path checks.",
+        "limit": "A clear final pose does not prove that parts can be inserted or removed."
+      },
+      {
+        "name": "Connector/cable/accessory access",
+        "status": "unknown",
+        "known": {
+          "bare_board_reference": "included"
+        },
+        "required": "Actual cable plug/boot/bend envelopes and intended ports, SD-card service path, heatsink/fan or other accessory geometry.",
+        "limit": "Bare-board geometry does not supply connected-cable or accessory envelopes."
+      },
+      {
+        "name": "Rack engagement and physical sign-off",
+        "status": "unknown",
+        "known": {
+          "rack_fit": "unverified"
+        },
+        "required": "Mating rack geometry and installation path; actual hardware/material selection; separately approved coupon/prototype and recorded fit/load results.",
+        "limit": "Digital surface screening is not a strength or physical-fit certification."
+      }
+    ]
+  },
+  "mounting_layout": {
+    "source_file": "Blank+Plates+Half,+1+and+2U.3mf",
+    "source_sha256": "6e02e7b52d92e01615a0414be3b9ec58add5fb96c717db7ef517fa3ba854e7ad",
+    "member": "3D/Objects/object_2.model",
+    "object_id": "3",
+    "units": "mm",
+    "reference_front_plane_y": -4,
+    "boundary_loops": [
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            113.264923,
+            -3.5093689
+          ],
+          [
+            123.260071,
+            3.50976562
+          ]
+        ],
+        "center_xz": [
+          118.262497,
+          0.00019835999999995302
+        ]
+      },
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            113.264923,
+            12.3926392
+          ],
+          [
+            123.260071,
+            19.4117737
+          ]
+        ],
+        "center_xz": [
+          118.262497,
+          15.902206450000001
+        ]
+      },
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            -123.260078,
+            -3.5093689
+          ],
+          [
+            -113.264923,
+            3.50976562
+          ]
+        ],
+        "center_xz": [
+          -118.26250049999999,
+          0.00019835999999995302
+        ]
+      },
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            -123.260078,
+            12.3926392
+          ],
+          [
+            -113.264923,
+            19.4117737
+          ]
+        ],
+        "center_xz": [
+          -118.26250049999999,
+          15.902206450000001
+        ]
+      },
+      {
+        "vertices": 44,
+        "bounds_xz": [
+          [
+            -126.0,
+            -21.0
+          ],
+          [
+            126.0,
+            21.0
+          ]
+        ],
+        "center_xz": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            113.264923,
+            -19.4113617
+          ],
+          [
+            123.260071,
+            -12.3922272
+          ]
+        ],
+        "center_xz": [
+          118.262497,
+          -15.90179445
+        ]
+      },
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            -123.260078,
+            -19.4113617
+          ],
+          [
+            -113.264923,
+            -12.3922272
+          ]
+        ],
+        "center_xz": [
+          -118.26250049999999,
+          -15.90179445
+        ]
+      }
+    ],
+    "layout": "four_corners",
+    "count": 4,
+    "reference_to_assembly_xz": "X unchanged; Z + 21 mm (matching 42 mm height)",
+    "centers_x_mm": [
+      -118.2625,
+      118.2625
+    ],
+    "centers_z_mm": [
+      5.09820555,
+      36.90220645
+    ],
+    "vertical_pitch_mm": 31.8040009,
+    "slot_length_mm": 10,
+    "slot_diameter_mm": 7,
+    "slot_profile": "Existing horizontal capsule retained; attachment supplies center spacing only",
+    "reference_selection": "42 mm / 1U object; use outer rows only, omit middle row",
+    "fit_status": "unvalidated; derived spacing, not physical rack fit"
+  },
+  "assembly_validation_scope": "Baseline evidence retained. Four-corner mounting is a new revision; physical rack engagement, wall/strength and installation remain unvalidated.",
+  "limitations": [
+    "Insert outside diameter and usable thread depth may remain unknown.",
+    "Supplier maximum hole diameter is not an exact installation target.",
+    "Pi reference is a separate inspection asset, excluded from manufacturing meshes.",
+    "Re-render, check component clearances and print a fit coupon before use.",
+    "This package contains the generated proposal; the viewer can switch between it and baseline v2."
+  ],
+  "mesh_build": {
+    "id": "bbbe12450805205dfcb2be26f02d707bd53c3030e21970631539be2d3cd27937",
+    "compiler": "C:\\Program Files\\OpenSCAD\\openscad.exe",
+    "checks": "Both STL meshes have exactly two triangles at every edge.",
+    "logs": {
+      "tray": "Geometries in cache: 77\nGeometry cache size in bytes: 422968\nCGAL Polyhedrons in cache: 12\nCGAL cache size in bytes: 14349888\nTotal rendering time: 0:00:20.797\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     5076\n   Halfedges:   15228\n   Edges:        7614\n   Halffacets:   5094\n   Facets:       2547\n   Volumes:         2\n",
+      "faceplate": "Geometries in cache: 23\nGeometry cache size in bytes: 149160\nCGAL Polyhedrons in cache: 6\nCGAL cache size in bytes: 2461056\nTotal rendering time: 0:00:02.251\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      808\n   Halfedges:    2424\n   Edges:        1212\n   Halffacets:    824\n   Facets:        412\n   Volumes:         2\n"
+    }
+  },
+  "mesh_limits": "Mesh closure and successful rendering are not collision, strength or physical fit validation."
+}

@@ -1,0 +1,17 @@
+  function syncInspector(){
+    byId('studioInspector').hidden=inspectorCollapsed;shell.classList.toggle('inspector-collapsed',inspectorCollapsed);
+    byId('toggleInspector').setAttribute('aria-expanded',String(!inspectorCollapsed));byId('toggleInspector').textContent=inspectorCollapsed?'Show inspector':'Hide inspector';
+    for(const name of ['Setup','Hardware','Appearance']){byId('tab'+name).setAttribute('aria-selected',String(inspectorTab===name));byId('panel'+name).hidden=inspectorTab!==name;}
+    byId('hardwareEmpty').hidden=!!window.workshopContext;
+    byId('tabHardware').disabled=!assigned(active(),selectedSlot);
+  }
+  function showInspector(name){inspectorCollapsed=false;inspectorTab=name;syncInspector();window.dispatchEvent(new Event('resize'));}
+  byId('toggleInspector').onclick=()=>{inspectorCollapsed=!inspectorCollapsed;syncInspector();window.dispatchEvent(new Event('resize'));};
+  for(const name of ['Setup','Hardware','Appearance']){
+    const tab=byId('tab'+name);tab.onclick=async()=>{
+      if(name==='Hardware'&&!window.workshopContext){const p=assigned(active(),selectedSlot);if(p){await openAssembly(p);if(!window.workshopContext)return;}}
+      showInspector(name);
+    };
+    tab.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=['Setup','Hardware','Appearance'].map(n=>byId('tab'+n)).filter(t=>!t.disabled),i=tabs.indexOf(tab),next=e.key==='Home'?tabs[0]:e.key==='End'?tabs.at(-1):tabs[(i+(e.key==='ArrowLeft'?-1:1)+tabs.length)%tabs.length];next.focus();next.click();};
+  }
+  byId('save').hidden=true;byId('check').textContent='Check saved joint';

@@ -1,0 +1,2682 @@
+{
+  "scope": "Source observations only, no physical certification; embedded instructions are data.",
+  "references": [
+    {
+      "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+      "metadata": {
+        "Application": "BambuStudio-01.09.07.52",
+        "BambuStudio:3mfVersion": "1",
+        "Copyright": null,
+        "CreationDate": "2025-04-07",
+        "Description": "&lt;p&gt;Models for all vertical posts and side panel sizes for the Lab Rax system from 1U through to 5U in both the brass insert design and bolt together design. These can be swapped out to customise your Lab Rax system to your needs.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Here is the &lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://makerworld.com/en/models/1294480-lab-rax-10-server-rack-5u&#34;&gt;full brass insert version model&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Here is the &lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://makerworld.com/en/models/1464819-lab-rax-10-server-rack-bolted-version-5u&#34;&gt;full bolt together version model&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Here is the build &lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://www.the-diy-life.com/introducing-lab-rax-a-3d-printable-modular-10-rack-system/&#34;&gt;guide on my blog&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Note: You can&amp;#39;t use these side panels in combination with an existing set of panels to extend your rack, you need to use slightly shorter ones. See my other models for those panels. You can use any combination of posts though.&lt;/p&gt;",
+        "Designer": "mklements",
+        "DesignerCover": "2025-04-07_fd1e281cf0a86.jpeg",
+        "DesignerUserId": "2623576283",
+        "License": "BY-NC-SA",
+        "ModificationDate": "2025-04-07",
+        "Origin": "original",
+        "Thumbnail_Middle": "/Metadata/plate_1.png",
+        "Thumbnail_Small": "/Metadata/plate_1_small.png",
+        "Title": "Lab Rax 1-5U Posts & Panels",
+        "CopyRight": "\"[]\"",
+        "ProfileTitle": "Brass Insert Version PETG - 0.2mm layer, 2 walls, 15% infill",
+        "ProfileCover": "2025-04-07_1954653ced5c3.jpeg",
+        "ProfileDescription": "&lt;p&gt;The same print profile used for my original brass insert version of the Lab Rax 5U model, just modified for different post and panel sizes. This allows you to get a consistent finish if you&amp;#39;re customising your rack size.&lt;/p&gt;",
+        "ProfileUserId": "2623576283",
+        "ProfileUserName": "mklements",
+        "DesignRegion": "US",
+        "DesignModelId": "USc1df7a53727f9e",
+        "DesignProfileId": "353354862"
+      },
+      "pictures": [
+        {
+          "member": "Auxiliaries/Model Pictures/3U Post To Reduce or Extend Size.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_0_0.webp",
+          "sha256": "8c058f31823fcf8e00678e7f6a8d069284ad69d93a84bf43dbf40eac4035aa7b"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/Lab Rack Sizes.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_0_1.webp",
+          "sha256": "256d41a3041864229d72224da23119820372861204c12aef6dc72e2007277c4b"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/Lab Rax 8U Rack and 5U Rack.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_0_2.webp",
+          "sha256": "61de108914c478bf6444fe72ec4bff435d8c3c6cc3b3565b5eee06e9cde411b2"
+        }
+      ],
+      "meshes": [
+        {
+          "member": "3D/Objects/object_188.model",
+          "object_id": "22",
+          "names": [
+            "3U Side Panel.stl"
+          ],
+          "unit": "millimeter",
+          "vertices": 8,
+          "triangles": 12,
+          "lo": [
+            -87.9499969,
+            -1.5,
+            -69.625
+          ],
+          "hi": [
+            87.9499969,
+            1.5,
+            69.625
+          ],
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            139.25
+          ],
+          "member_sha256": "aba8de5bc5cbda3798bd3f05d00e03f2a476c01337af23ca65e0ccfc2bc58378"
+        },
+        {
+          "member": "3D/Objects/object_197.model",
+          "object_id": "29",
+          "names": [
+            "4U Side Panel.stl"
+          ],
+          "unit": "millimeter",
+          "vertices": 8,
+          "triangles": 12,
+          "lo": [
+            -87.9499969,
+            -1.5,
+            -91.8499985
+          ],
+          "hi": [
+            87.9499969,
+            1.5,
+            91.8499985
+          ],
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            183.699997
+          ],
+          "member_sha256": "35a4a5904cc0556f7f296711296912041e4abbdb2ba07c6fd60d122599441f5e"
+        },
+        {
+          "member": "3D/Objects/object_181.model",
+          "object_id": "14",
+          "names": [
+            "2U Side Panel",
+            "2U Side Panel"
+          ],
+          "unit": "millimeter",
+          "vertices": 8,
+          "triangles": 12,
+          "lo": [
+            -87.9499969,
+            -1.5,
+            -47.4000015
+          ],
+          "hi": [
+            87.9499969,
+            1.5,
+            47.4000015
+          ],
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            94.800003
+          ],
+          "member_sha256": "2ddad2b0ced46d568067799027222a0b51102f9fd7292dd429fda7aa29c61849"
+        },
+        {
+          "member": "3D/Objects/object_175.model",
+          "object_id": "6",
+          "names": [
+            "1U Side Panel.stl",
+            "1U Side Panel.stl"
+          ],
+          "unit": "millimeter",
+          "vertices": 8,
+          "triangles": 12,
+          "lo": [
+            -87.9499969,
+            -1.5,
+            -25.1749992
+          ],
+          "hi": [
+            87.9499969,
+            1.5,
+            25.1749992
+          ],
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            50.3499984
+          ],
+          "member_sha256": "4476e89f5a8af042b4940230bbc0700417f06d9fa48a037420d4c4ee8dd39c3c"
+        },
+        {
+          "member": "3D/Objects/object_202.model",
+          "object_id": "36",
+          "names": [
+            "5U Side Panel.stl"
+          ],
+          "unit": "millimeter",
+          "vertices": 8,
+          "triangles": 12,
+          "lo": [
+            -87.9499969,
+            -1.5,
+            -114.074997
+          ],
+          "hi": [
+            87.9499969,
+            1.5,
+            114.074997
+          ],
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            228.149994
+          ],
+          "member_sha256": "67c81a5807e38b5fea044dbf6eb2ff580f5ea5da33af9748b16aeef34f288f24"
+        },
+        {
+          "member": "3D/Objects/object_168.model",
+          "object_id": "1",
+          "names": [
+            "1U Vertical Post",
+            "1U Vertical Post",
+            "1U Vertical Post",
+            "1U Vertical Post"
+          ],
+          "unit": "millimeter",
+          "vertices": 1094,
+          "triangles": 2196,
+          "lo": [
+            -15.0,
+            -17.5,
+            -22.2250004
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            22.2250004
+          ],
+          "extent_mm": [
+            30.0,
+            35.0,
+            44.4500008
+          ],
+          "member_sha256": "4c0ff55008df84a2d27fb1e7ea3cff6a175641954253c14cbb95ec4f4cb24161"
+        },
+        {
+          "member": "3D/Objects/object_184.model",
+          "object_id": "17",
+          "names": [
+            "3U Vertical Post",
+            "3U Vertical Post",
+            "3U Vertical Post",
+            "3U Vertical Post"
+          ],
+          "unit": "millimeter",
+          "vertices": 1554,
+          "triangles": 3140,
+          "lo": [
+            -15.0,
+            -17.5,
+            -66.6750031
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            66.6750031
+          ],
+          "extent_mm": [
+            30.0,
+            35.0,
+            133.3500062
+          ],
+          "member_sha256": "8996a514b58747e1502d948413af89b9997a31eb71fec53d61b71e0901226f05"
+        },
+        {
+          "member": "3D/Objects/object_177.model",
+          "object_id": "9",
+          "names": [
+            "2U Vertical Post",
+            "2U Vertical Post",
+            "2U Vertical Post",
+            "2U Vertical Post"
+          ],
+          "unit": "millimeter",
+          "vertices": 1392,
+          "triangles": 2804,
+          "lo": [
+            -15.0,
+            -17.5,
+            -44.4500008
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            44.4500008
+          ],
+          "extent_mm": [
+            30.0,
+            35.0,
+            88.9000016
+          ],
+          "member_sha256": "612159e1a51795c1e93669344cbab54d3a01d26b7bb96888f7fe59c64934b0b2"
+        },
+        {
+          "member": "3D/Objects/object_190.model",
+          "object_id": "24",
+          "names": [
+            "4U Vertical Post",
+            "4U Vertical Post",
+            "4U Vertical Post",
+            "4U Vertical Post"
+          ],
+          "unit": "millimeter",
+          "vertices": 1670,
+          "triangles": 3384,
+          "lo": [
+            -15.0,
+            -17.5,
+            -88.9000015
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            88.9000015
+          ],
+          "extent_mm": [
+            30.0,
+            35.0,
+            177.800003
+          ],
+          "member_sha256": "6bbffbace6976171c564f0d99fdf6aac1a6515d0cfa81ff099c111dcd093da24"
+        },
+        {
+          "member": "3D/Objects/object_198.model",
+          "object_id": "31",
+          "names": [
+            "5U Vertical Post",
+            "5U Vertical Post",
+            "5U Vertical Post",
+            "5U Vertical Post"
+          ],
+          "unit": "millimeter",
+          "vertices": 1770,
+          "triangles": 3596,
+          "lo": [
+            -15.0,
+            -17.5,
+            -111.125
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            111.125
+          ],
+          "extent_mm": [
+            30.0,
+            35.0,
+            222.25
+          ],
+          "member_sha256": "8515124aa2426cbcd429f8c0aef2a6640d67620a11fb4526f476c81157fe89fa"
+        }
+      ],
+      "build_items": [
+        {
+          "objectid": "2",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000002-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 128.845151 129.038877 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "3",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000003-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 97.8451538 129.038879 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "4",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000004-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 159.845154 129.038879 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "5",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000005-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 128.845154 174.488876 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "7",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000007-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 442.153167 149.900271 1.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "8",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000008-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 442.153172 98.550269 1.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "10",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000000a-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 761.663926 118.990563 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "11",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000000b-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 730.663926 118.990547 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "12",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000000c-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 792.663926 118.990547 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "13",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000000d-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 699.663926 118.990547 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "15",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000000f-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 -1 0 1 -2.22044605e-16 1056.44138 171.094122 1.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "16",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000010-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 -1 0 1 -2.22044605e-16 1056.44138 75.294121 1.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "18",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000012-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 146.393875 -185.536208 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "19",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000013-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 115.393887 -185.536208 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "20",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000014-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 177.393887 -185.536208 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "21",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000015-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 84.3938868 -185.536208 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "23",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000017-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 -1 0 1 -2.22044605e-16 441.738397 -178.263137 1.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "25",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000019-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 742 -179.399994 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "26",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000001a-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 711 -179.399994 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "27",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000001b-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 773 -179.399994 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "28",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000001c-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 680 -179.399994 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "30",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000001e-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 2.22044605e-16 1 0 -1 2.22044605e-16 1055.4517 -185.488785 1.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "32",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000020-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 2.22044605e-16 1 0 -1 2.22044605e-16 150.379399 -487.562779 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "33",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000021-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 2.22044605e-16 1 0 -1 2.22044605e-16 119.379387 -487.562771 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "34",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000022-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 2.22044605e-16 1 0 -1 2.22044605e-16 181.379387 -487.562771 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "35",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000023-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 2.22044605e-16 1 0 -1 2.22044605e-16 88.3793874 -487.562771 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "37",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000025-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 2.22044605e-16 1 0 -1 2.22044605e-16 435.2 -486.4 1.5",
+          "printable": "1"
+        }
+      ],
+      "assembly_items": [
+        {
+          "object_id": "8",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 444.564697265625 45.742958068847656 1.5000000000000056",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "7",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 0 0 25.174999237060547",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "13",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 66 -179.20001220703125 17.500000000000011",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "28",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 66 -486.39999389648438 17.500000000000028",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "30",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 0 0 91.849998474121094",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "32",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 435.20000000000005 -486.39999999999998 111.125",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "27",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 159 -486.39999389648438 17.500000000000028",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "26",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 97 -486.39999389648438 17.500000000000028",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "25",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 128 -486.39999999999998 88.900001525878906",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "4",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 159.84515380859375 129.03887939453125 17.500000000000004",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "2",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 128 128 22.225000381469727",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "3",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 97.84515380859375 129.03887939453125 17.500000000000004",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "11",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 97 -179.20001220703125 17.500000000000011",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "10",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 128 -179.19999999999999 44.450000762939453",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "12",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 159 -179.20001220703125 17.500000000000011",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "5",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 128.84515380859375 174.48887634277344 17.500000000000004",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "23",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 0 0 69.625",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "19",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 404.20001220703125 -179.19999694824219 17.500000000000014",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "20",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 466.20001220703125 -179.19999694824219 17.500000000000014",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "21",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 373.20001220703125 -179.19999694824219 17.500000000000014",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "15",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 435.20000000000005 -179.19999999999999 47.400001525878906",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "18",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 435.20000000000005 -179.19999999999999 66.675003051757812",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "16",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 -1 0 1 -2.2204460492503131e-16 441.12905883789068 -215.43888854980469 1.5000000000000104",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "35",
+          "instance_id": "0",
+          "transform": "1 0 0 0 2.2204460492503131e-16 1.0000000000000002 0 -1.0000000000000002 2.2204460492503131e-16 688.779541015625 -491.871826171875 17.500000000000028",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "33",
+          "instance_id": "0",
+          "transform": "1 0 0 0 2.2204460492503131e-16 1.0000000000000002 0 -1.0000000000000002 2.2204460492503131e-16 719.779541015625 -491.871826171875 17.500000000000028",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "34",
+          "instance_id": "0",
+          "transform": "1 0 0 0 2.2204460492503131e-16 1.0000000000000002 0 -1.0000000000000002 2.2204460492503131e-16 781.779541015625 -491.871826171875 17.500000000000028",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "37",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 0 0 114.07499694824219",
+          "offset": "0 0 0"
+        }
+      ]
+    },
+    {
+      "file": "5U+Lab+Rax+X2D.3mf",
+      "metadata": {
+        "Application": "BambuStudio-02.07.01.62",
+        "BambuStudio:3mfVersion": "1",
+        "CopyRight": "[]",
+        "Copyright": "&amp;quot;[]&amp;quot;",
+        "CreationDate": "2026-08-16",
+        "Description": "&lt;p&gt;Lab Rax is a fully 3D printable, modular 10-inch server rack for homelabs. Perfect for Raspberry Pi setups, mini PCs, and networking gear, this DIY rack is cost-effective, easy to assemble, and highly customisable. &lt;/p&gt;&lt;h3&gt;Required Hardware&lt;/h3&gt;&lt;p&gt;All you need to complete this basic 5U rack is;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Screws&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&#34;background-color: rgb(255,255,255); color: rgb(13,13,13)&#34;&gt;M6x10mm Button Head Screws (24 Required For Frame + Additional For Racks) - &lt;/span&gt;&lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://amzn.to/49X7GgO&#34;&gt;&lt;span style=&#34;background-color: rgb(255,255,255); color: rgb(13,13,13)&#34;&gt;&lt;strong&gt;Buy Here&lt;/strong&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Recommend getting 4-6 additional per rack unit&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Brass Inserts&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&#34;background-color: rgb(255,255,255); color: rgb(13,13,13)&#34;&gt;M6 Brass Inserts 8mm OD, 4mm Length (24 Required For Frame + Additional For Racks) - &lt;/span&gt;&lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://mklements.short.gy/7G9IHF&#34;&gt;&lt;span style=&#34;background-color: rgb(255,255,255); color: rgb(13,13,13)&#34;&gt;&lt;strong&gt;Buy Here&lt;/strong&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;or&lt;/p&gt;&lt;p&gt;&lt;span style=&#34;background-color: rgb(255,255,255); color: rgb(13,13,13)&#34;&gt;M6 Brass Inserts 8mm OD, 5mm Length (24 Required For Frame + Additional For Racks)  - &lt;/span&gt;&lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://amzn.to/4fq1m4a&#34;&gt;&lt;span style=&#34;background-color: rgb(255,255,255); color: rgb(13,13,13)&#34;&gt;&lt;strong&gt;Buy Here&lt;/strong&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Recommend getting a minimum of 4 per rack unit (4 holes on one side per unit) or a maximum of 12 per rack unit (all 6 holes on both sides of the rack)&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;h3&gt;Assembly Guides and Setup Suggestions&lt;/h3&gt;&lt;p&gt;Here&amp;#39;s my video of the build and config options - &lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://youtu.be/ZTmmEv9irbM&#34;&gt;YouTube&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Visit my blog for the step-by-step assembly instructions - &lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://www.the-diy-life.com/introducing-lab-rax-a-3d-printable-modular-10-rack-system/&#34;&gt;The DIY Life&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;h3&gt;Alternate Configuration Options&lt;/h3&gt;&lt;p&gt;Here&amp;#39;s the set of different size posts and panels if you&amp;#39;d like to customise the size - &lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://makerworld.com/en/models/1294478-lab-rax-1-5u-posts-panels&#34;&gt;Lab Rax 1-5U Posts &amp;amp; Panels&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;I&amp;#39;ve created a new, stronger extension module to extend your homelab beyond 5U - &lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://makerworld.com/en/models/3211714-lab-rax-upgraded-1u-extension-module&#34;&gt;Lab Rax 1U Extension Module&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Here&amp;#39;s the older set of joiners and extensions side panels if you&amp;#39;d prefer that - &lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://makerworld.com/en/models/1304384-lab-rax-extension-side-panels-post-joiner&#34;&gt;Lab Rax Extension Side Panels &amp;amp; Post Joiner&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;M6 or #10-32 bolt together version available, this doesn&amp;#39;t require any brass inserts - &lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://makerworld.com/en/models/1464819-lab-rax-10-server-rack-bolted-version-5u&#34;&gt;Available Here&lt;/a&gt;&lt;/p&gt;",
+        "DesignModelId": "US23479b0cddd03e",
+        "DesignProfileId": "937821581",
+        "DesignRegion": "US",
+        "Designer": "mklements",
+        "DesignerCover": "d1c1ae2d9c710ffb.png",
+        "DesignerUserId": "2623576283",
+        "License": "MakerWorld Exclusive License",
+        "ModificationDate": "2026-08-16",
+        "Origin": "original",
+        "ProfileCover": "2025-04-07_a8d630ba44aa8.jpeg",
+        "ProfileDescription": "&lt;p&gt;Optimised to reduce support waste and to fit the whole 5U rack build within a 1kg roll of filament. &lt;/p&gt;",
+        "ProfileTitle": "PETG 0.2mm layer, 2 walls, 15% infill",
+        "ProfileUserId": "2623576283",
+        "ProfileUserName": "mklements",
+        "Thumbnail_Middle": "/Metadata/plate_1.png",
+        "Thumbnail_Small": "/Metadata/plate_1_small.png",
+        "Title": "Lab Rax 10\" Server Rack - 5U"
+      },
+      "pictures": [
+        {
+          "member": "Auxiliaries/Model Pictures/IMG_2696.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_1_0.webp",
+          "sha256": "12798038ec8e595e6b3f3f328dfc3ec4cacefc2e4013dfae5d934b57c94d4850"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/IMG_2690.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_1_1.webp",
+          "sha256": "b71de893e736f0e8d42eeff2e4ab60956a13248137c320844f5eb04b23ef893d"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/Lab Rax Trays Populated.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_1_2.webp",
+          "sha256": "d7c81d67c3fca5d5bf6b18029f1dcc0c6c9242548cc637d5793bad8836a6913d"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/Lab Rax 120mm Cooling Fan.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_1_3.webp",
+          "sha256": "70ba484410cf7d66dc44659eefa5584e12cbbfdd3c7ec83aa4e4850e3965bc13"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/Lab Rax Server Racks Complete.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_1_4.webp",
+          "sha256": "8eb68e9ed8ea360a7d343b9f0dbc10e8a9c67d114ca5b8d4534021595ca7407f"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/Lab Rax Modular 10 3D Printed Rack.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_1_5.webp",
+          "sha256": "3b1d083f18093ccbc9303c4972d5b3409a79c8882b3bfbb63a2c78356711186f"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/IMG_2705.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_1_6.webp",
+          "sha256": "2af4a84e2566e37c92550397c69b1c1c06b4d8a48de0a104ab6025397745512c"
+        }
+      ],
+      "meshes": [
+        {
+          "member": "3D/Objects/object_153.model",
+          "object_id": "13",
+          "names": [
+            "Bottom Panel.stl"
+          ],
+          "unit": "millimeter",
+          "vertices": 8,
+          "triangles": 12,
+          "lo": [
+            -114.024994,
+            -85.75,
+            -1.49999905
+          ],
+          "hi": [
+            114.024994,
+            85.75,
+            1.49999905
+          ],
+          "extent_mm": [
+            228.049988,
+            171.5,
+            2.9999981
+          ],
+          "member_sha256": "35d1837f9df50be709f56d8b11608435e0440464718df23b0db75af0b4c023fb"
+        },
+        {
+          "member": "3D/Objects/object_155.model",
+          "object_id": "15",
+          "names": [
+            "5U Side Panel.stl",
+            "5U Side Panel.stl"
+          ],
+          "unit": "millimeter",
+          "vertices": 8,
+          "triangles": 12,
+          "lo": [
+            -87.9499969,
+            -1.5,
+            -114.074997
+          ],
+          "hi": [
+            87.9499969,
+            1.5,
+            114.074997
+          ],
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            228.149994
+          ],
+          "member_sha256": "d73654d52a4084abc3f6fe8df47b95e25a518bb8cfddabb8cd420e845f65a4de"
+        },
+        {
+          "member": "3D/Objects/object_177.model",
+          "object_id": "28",
+          "names": [
+            "Top Left Edge",
+            "Top Left Edge",
+            "Top Left Edge",
+            "Top Left Edge"
+          ],
+          "unit": "millimeter",
+          "vertices": 820,
+          "triangles": 1636,
+          "lo": [
+            -15.0,
+            -85.0,
+            -17.5
+          ],
+          "hi": [
+            15.0,
+            85.0,
+            17.5
+          ],
+          "extent_mm": [
+            30.0,
+            170.0,
+            35.0
+          ],
+          "member_sha256": "8f96da1b08b52d7b59f4a8ad9c9d4e4fbb01a2a75c720247daab3da767170512"
+        },
+        {
+          "member": "3D/Objects/object_145.model",
+          "object_id": "6",
+          "names": [
+            "Right Front Foot",
+            "Right Front Foot",
+            "Right Front Foot",
+            "Right Front Foot"
+          ],
+          "unit": "millimeter",
+          "vertices": 1041,
+          "triangles": 2082,
+          "lo": [
+            -13.0,
+            -12.9980621,
+            -6.0
+          ],
+          "hi": [
+            13.0,
+            12.9980621,
+            6.0
+          ],
+          "extent_mm": [
+            26.0,
+            25.9961242,
+            12.0
+          ],
+          "member_sha256": "9e4186491f10e3188e0c4dafd0ee14befd21b895bf52e4509fd1ee5bea346e81"
+        },
+        {
+          "member": "3D/Objects/object_134.model",
+          "object_id": "1",
+          "names": [
+            "Rack Edge",
+            "Rack Edge",
+            "Rack Edge",
+            "Rack Edge"
+          ],
+          "unit": "millimeter",
+          "vertices": 1770,
+          "triangles": 3596,
+          "lo": [
+            -15.0,
+            -17.5,
+            -111.125
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            111.125
+          ],
+          "extent_mm": [
+            30.0,
+            35.0,
+            222.25
+          ],
+          "member_sha256": "d1db0282704fcc6f81c0f309c4bf29de55d63bd2a98b1cdbc96b66673918fa69"
+        },
+        {
+          "member": "3D/Objects/object_152.model",
+          "object_id": "11",
+          "names": [
+            "Top Panel.stl"
+          ],
+          "unit": "millimeter",
+          "vertices": 2360,
+          "triangles": 4876,
+          "lo": [
+            -114.024994,
+            -85.75,
+            -1.5
+          ],
+          "hi": [
+            114.024994,
+            85.75,
+            1.5
+          ],
+          "extent_mm": [
+            228.049988,
+            171.5,
+            3.0
+          ],
+          "member_sha256": "5c21332b48a2e4515640c3fee0416c10d215ef30859e2c477482bb5233f4674d"
+        },
+        {
+          "member": "3D/Objects/object_172.model",
+          "object_id": "25",
+          "names": [
+            "Left Handle",
+            "Left Handle"
+          ],
+          "unit": "millimeter",
+          "vertices": 3950,
+          "triangles": 7904,
+          "lo": [
+            -11.5,
+            -85.0,
+            -18.75
+          ],
+          "hi": [
+            11.5,
+            85.0,
+            18.75
+          ],
+          "extent_mm": [
+            23.0,
+            170.0,
+            37.5
+          ],
+          "member_sha256": "a8b9d7518bdc56ba0e6e938767df26b9984f70946911c4a4ddaac670942e48b5"
+        },
+        {
+          "member": "3D/Objects/object_169.model",
+          "object_id": "20",
+          "names": [
+            "Bottom Front Edge",
+            "Bottom Front Edge"
+          ],
+          "unit": "millimeter",
+          "vertices": 6706,
+          "triangles": 13424,
+          "lo": [
+            -141.124985,
+            -27.4249992,
+            -27.4250031
+          ],
+          "hi": [
+            141.124985,
+            27.4249992,
+            27.4250031
+          ],
+          "extent_mm": [
+            282.24997,
+            54.8499984,
+            54.8500062
+          ],
+          "member_sha256": "c23ec4c21a5c7c651cf56271bdc6bf07d56682c07443bc69a145e7aa0588be3f"
+        },
+        {
+          "member": "3D/Objects/object_168.model",
+          "object_id": "18",
+          "names": [
+            "Top Front Edge"
+          ],
+          "unit": "millimeter",
+          "vertices": 8674,
+          "triangles": 17748,
+          "lo": [
+            -141.124985,
+            -27.4249992,
+            -27.4250031
+          ],
+          "hi": [
+            141.124985,
+            27.4249992,
+            27.4250031
+          ],
+          "extent_mm": [
+            282.24997,
+            54.8499984,
+            54.8500062
+          ],
+          "member_sha256": "49cc833c18dd9b8e9dab6e40ed184be2e34de49d3a0fee1225826fe887a202b2"
+        },
+        {
+          "member": "3D/Objects/object_171.model",
+          "object_id": "23",
+          "names": [
+            "Top Front Edge"
+          ],
+          "unit": "millimeter",
+          "vertices": 10355,
+          "triangles": 21094,
+          "lo": [
+            -141.124985,
+            -27.4249992,
+            -27.4250031
+          ],
+          "hi": [
+            141.124985,
+            27.4249992,
+            27.4250031
+          ],
+          "extent_mm": [
+            282.24997,
+            54.8499984,
+            54.8500062
+          ],
+          "member_sha256": "7d699e2f94cfeb4af1866b609006365ea54ee79d9d862834fe9b1e6f968be1a2"
+        }
+      ],
+      "build_items": [
+        {
+          "objectid": "2",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000002-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 154.793096 130.083823 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "3",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000003-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 106.023165 130.464217 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "4",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000004-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 204.194574 129.772318 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "5",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000005-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 -2.22044605e-16 1 0 -1 -2.22044605e-16 55.5461861 130.67988 17.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "7",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000007-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "-1 0 0 0 1 0 0 0 -1 360.839608 34.4160511 6",
+          "printable": "1"
+        },
+        {
+          "objectid": "8",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000008-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "-1 0 0 0 1 0 0 0 -1 420.400238 34.1148711 6",
+          "printable": "1"
+        },
+        {
+          "objectid": "9",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000009-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "-1 0 0 0 1 0 0 0 -1 450.634468 34.1616911 6",
+          "printable": "1"
+        },
+        {
+          "objectid": "10",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000000a-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "-1 0 0 0 1 0 0 0 -1 390.662238 34.2862611 6",
+          "printable": "1"
+        },
+        {
+          "objectid": "12",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000000c-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 1 0 0 0 1 742.4 -179.2 1.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "14",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000000e-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 1 0 0 0 1 1049.6 -179.2 1.49999905",
+          "printable": "1"
+        },
+        {
+          "objectid": "16",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000010-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 2.22044605e-16 1 0 -1 2.22044605e-16 128 -486.4 1.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "17",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000011-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 2.22044605e-16 1 0 -1 2.22044605e-16 435.2 -486.4 1.5",
+          "printable": "1"
+        },
+        {
+          "objectid": "19",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000013-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "0.707106781 0.707106781 0 0.5 -0.5 0.707106781 0.5 -0.5 -0.707106781 434.959585 -182.167836 15.4502956",
+          "printable": "1"
+        },
+        {
+          "objectid": "21",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000015-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "-0.707106781 0.707106781 0 0.5 0.5 0.707106781 -0.5 -0.5 0.707106781 753.233113 125.827748 15.4502848",
+          "printable": "1"
+        },
+        {
+          "objectid": "22",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000016-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "-0.707106781 0.707106781 0 0.5 0.5 0.707106781 -0.5 -0.5 0.707106781 1059.83486 126.469944 15.4502848",
+          "printable": "1"
+        },
+        {
+          "objectid": "24",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000018-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "0.707106781 0.707106781 0 0.5 -0.5 0.707106781 0.5 -0.5 -0.707106781 135.390443 -178.644514 15.4603151",
+          "printable": "1"
+        },
+        {
+          "objectid": "26",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000001a-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 1 0 0 0 1 540.457584 145.551679 18.75",
+          "printable": "1"
+        },
+        {
+          "objectid": "27",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000001b-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "1 0 0 0 1 0 0 0 1 514.465278 146.350672 18.75",
+          "printable": "1"
+        },
+        {
+          "objectid": "29",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000001d-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "9.9579925e-17 1.2246468e-16 1 1.2246468e-16 1 -1.2246468e-16 -1 1.2246468e-16 9.9579925e-17 475.226151 144.907044 15",
+          "printable": "1"
+        },
+        {
+          "objectid": "30",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000001e-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "9.9579925e-17 1.2246468e-16 1 1.2246468e-16 1 -1.2246468e-16 -1 1.2246468e-16 9.9579925e-17 428.689481 145.938906 15",
+          "printable": "1"
+        },
+        {
+          "objectid": "31",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "0000001f-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "9.9579925e-17 1.2246468e-16 1 1.2246468e-16 1 -1.2246468e-16 -1 1.2246468e-16 9.9579925e-17 383.824473 146.329744 15",
+          "printable": "1"
+        },
+        {
+          "objectid": "32",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000020-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "9.9579925e-17 1.2246468e-16 1 1.2246468e-16 1 -1.2246468e-16 -1 1.2246468e-16 9.9579925e-17 337.658235 146.068113 15",
+          "printable": "1"
+        }
+      ],
+      "assembly_items": [
+        {
+          "object_id": "2",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 106.69734191894531 127.9212646484375 17.500000000000025",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "3",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 48.023880004882812 128.52769470214844 17.500000000000025",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "4",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 110.02388000488281 128.52769470214844 17.500000000000025",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "5",
+          "instance_id": "0",
+          "transform": "1 0 0 0 -2.2204460492503131e-16 1 0 -1 -2.2204460492503131e-16 17.023880004882812 128.52769470214844 17.500000000000025",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "7",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 435.20000000000005 128 6",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "31",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 1393.7749542236329 -180.41114807128906 17.499999999999993",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "32",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 1433.7749542236329 -180.41114807128906 17.499999999999993",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "8",
+          "instance_id": "0",
+          "transform": "-1 0 0 0 1 0 0 0 -1 491.48471069335938 74.264053344726562 6.0000000000000027",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "9",
+          "instance_id": "0",
+          "transform": "-1 0 0 0 1 0 0 0 -1 491.48471069335938 20.271808624267578 6.0000000000000027",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "16",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 0 0 114.07499694824219",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "19",
+          "instance_id": "0",
+          "transform": "0.99999999973618192 0 0 0 0.99999999986809018 0 0 0 0.99999999986809018 128 -179.19999999999999 27.425018310546875",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "27",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 1197.2749542236329 -180.41114807128906 18.75",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "12",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 0 0 1.5",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "10",
+          "instance_id": "0",
+          "transform": "-1 0 0 0 1 0 0 0 -1 464.48471069335938 47.267932891845703 6.0000000000000027",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "26",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 435.20000000000005 128 18.75",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "21",
+          "instance_id": "0",
+          "transform": "0.99999999973618192 0 0 0 1.3190859781537095e-10 0 0 0 1.3190859515788134e-10 742.39999999999998 128 27.425003051757812",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "29",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 1313.7749542236329 -180.41114807128906 17.499999999999993",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "22",
+          "instance_id": "0",
+          "transform": "0.99999999973618192 0 0 0 1.3190859781537095e-10 0 0 0 1.3190859515788134e-10 1034.649969482422 -180.41114807128906 27.425003051757812",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "14",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 0 0 1.4999990463256836",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "30",
+          "instance_id": "0",
+          "transform": "1 0 0 0 1 0 0 0 1 1353.7749542236329 -180.41114807128906 17.499999999999993",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "17",
+          "instance_id": "0",
+          "transform": "1 0 0 0 2.2204460492503126e-16 1 0 -1 2.2204460492503126e-16 435.20001220703125 -486.39999389648438 127.99999999999999",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "24",
+          "instance_id": "0",
+          "transform": "0.99999999973618192 0 0 0 0.99999999986809018 0 0 0 0.99999999986809018 128 -179.19999999999999 27.425018310546875",
+          "offset": "0 0 0"
+        }
+      ]
+    },
+    {
+      "file": "1U+Support+Extension.3mf",
+      "metadata": {
+        "Application": "BambuStudio-02.07.01.62",
+        "BambuStudio:3mfVersion": "1",
+        "CopyRight": "[]",
+        "Copyright": "[]",
+        "CreationDate": "2026-09-07",
+        "Description": "&lt;p&gt;The Lab Rax 1U Extension provides a stronger and more useful way to expand an existing Lab Rax homelab.&lt;/p&gt;&lt;p&gt;Rather than simply joining two sets of posts together, the extension adds an additional 1U of usable rack space while also creating a structural cross brace between the front and rear posts. This helps strengthen and stiffen the connection between the two sections of the rack.&lt;/p&gt;&lt;p&gt;The extension is fully compatible with the original Lab Rax posts and side panels, so you can expand an existing build without having to reprint the rest of your rack.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Each extension attaches using 4 × M6 button head screws per side, creating a secure connection between the existing sections.&lt;/p&gt;&lt;p&gt;M6 x 10mm Button Head Screws (8 Required In Total) - &lt;a target=&#34;_blank&#34; rel=&#34;noopener noreferrer ugc&#34; href=&#34;https://amzn.to/49X7GgO&#34;&gt;Buy Here&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;This is a useful option if you&amp;#39;ve outgrown your original Lab Rax and want to add more equipment without printing an entirely new rack.&lt;/p&gt;&lt;h3&gt;Features&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Adds 1U of usable rack space&lt;/li&gt;&lt;li&gt;Allows an existing Lab Rax to be extended&lt;/li&gt;&lt;li&gt;Integrated cross brace strengthens the extended rack&lt;/li&gt;&lt;li&gt;Compatible with the original Lab Rax posts&lt;/li&gt;&lt;li&gt;Compatible with the original side panels&lt;/li&gt;&lt;li&gt;No special extension side panels required&lt;/li&gt;&lt;li&gt;Uses 4 × M6 bolts per side&lt;/li&gt;&lt;/ul&gt;",
+        "DesignModelId": "USbd5f81e490a1fd",
+        "DesignProfileId": "983972427",
+        "DesignRegion": "US",
+        "Designer": "mklements",
+        "DesignerCover": "6cceb0f6b5832067.png",
+        "DesignerUserId": "2623576283",
+        "License": "MakerWorld Exclusive License",
+        "ModificationDate": "2026-09-07",
+        "Origin": "original",
+        "ProfileCover": "6cceb0f6b5832067.png",
+        "ProfileDescription": null,
+        "ProfileTitle": "PETG With Coloured Logo",
+        "ProfileUserId": "2623576283",
+        "ProfileUserName": "mklements",
+        "Thumbnail_Middle": "/Metadata/plate_1.png",
+        "Thumbnail_Small": "/Metadata/plate_1_small.png",
+        "Title": "Lab Rax Upgraded 1U Extension Module"
+      },
+      "pictures": [
+        {
+          "member": "Auxiliaries/Model Pictures/Screenshot 2026-08-23 at 5.03.28 pm.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_2_0.webp",
+          "sha256": "eaf3ef9804c36ecd1e3447f88d14b7362a59e4fedc865df357fddc7fd9c8b7da"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/Screenshot 2026-08-23 at 5.03.45 pm.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_2_1.webp",
+          "sha256": "2c22f4e80907e6bfbc16362cf43df01a7ed73d37fda93035466a820bb5d81b65"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/Screenshot 2026-08-23 at 5.04.00 pm.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_2_2.webp",
+          "sha256": "58e28a82ba59d5d5e05573b022424e056b14b13ec52caec2049290bf68461e52"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/Screenshot 2026-08-23 at 5.04.14 pm.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_2_3.webp",
+          "sha256": "308960c2d32b983661632ea532825f7f1339308f3c7188552927e4cddf7b15fb"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/Screenshot 2026-08-23 at 5.05.54 pm.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_2_4.webp",
+          "sha256": "e4eb30c0bec2ffa07b6588e61884e5d70c26343dfa507897f862e02b2f8ec57a"
+        },
+        {
+          "member": "Auxiliaries/Model Pictures/Screenshot 2026-08-23 at 5.06.02 pm.webp",
+          "local": "work\\rack-geometry-recovery\\pictures\\reference_2_5.webp",
+          "sha256": "380d378fcab1ffb3b3a2506dc08527c3d8b8734ec54f0c425da8716c871f4f7f"
+        }
+      ],
+      "meshes": [
+        {
+          "member": "3D/Objects/object_2.model",
+          "object_id": "1",
+          "names": [
+            "1U Support Extension",
+            "1U Support Extension"
+          ],
+          "unit": "millimeter",
+          "vertices": 3372,
+          "triangles": 6780,
+          "lo": [
+            -15.0,
+            -120.0,
+            -42.0750008
+          ],
+          "hi": [
+            15.0,
+            120.0,
+            42.0750008
+          ],
+          "extent_mm": [
+            30.0,
+            240.0,
+            84.1500016
+          ],
+          "member_sha256": "08ab41dd4c428db398d3312cca5de2af9a1bafed94bf12fbdedefbdff4037bd8"
+        }
+      ],
+      "build_items": [
+        {
+          "objectid": "2",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000002-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "-2.22044507e-16 -2.07905725e-19 1 0.000936324992 -0.999999561 0 0.999999561 0.000936324992 2.22044605e-16 68.4641534 131.020108 15",
+          "printable": "1"
+        },
+        {
+          "objectid": "3",
+          "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000003-b1ec-4553-aec9-835e5b724bb4",
+          "transform": "-2.22044507e-16 -2.07905725e-19 1 0.000936324992 -0.999999561 0 0.999999561 0.000936324992 2.22044605e-16 157.920632 131.522021 15",
+          "printable": "1"
+        }
+      ],
+      "assembly_items": [
+        {
+          "object_id": "3",
+          "instance_id": "0",
+          "transform": "1.0000000000000002 0 0 0 0.99999999963857866 0 0 0 0.99999999963857877 168 128 42.075000747732645",
+          "offset": "0 0 0"
+        },
+        {
+          "object_id": "2",
+          "instance_id": "0",
+          "transform": "1.0000000000000002 0 0 0 0.99999999963857866 0 0 0 0.99999999963857877 128 128 42.075000762939453",
+          "offset": "0 0 0"
+        }
+      ]
+    }
+  ],
+  "html": [
+    {
+      "file": "index.html",
+      "meshes": [
+        {
+          "key": "post",
+          "vertex_bytes": 10620,
+          "index_bytes": 21576,
+          "payload_valid": true,
+          "declared_triangles": 3596,
+          "decode_error": null,
+          "quantization_step_mm": 0.003391369365520188,
+          "lo": [
+            -15.0,
+            -17.5,
+            -111.125
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            111.125
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_198.model",
+              "object_id": "31",
+              "max_vertex_error_mm": 0.0016956846827582694,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            },
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_134.model",
+              "object_id": "1",
+              "max_vertex_error_mm": 0.0016956846827582694,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "beam_bottom",
+          "vertex_bytes": 40236,
+          "index_bytes": 80544,
+          "payload_valid": true,
+          "declared_triangles": 13424,
+          "decode_error": null,
+          "quantization_step_mm": 0.004306924192022462,
+          "lo": [
+            -141.125,
+            -27.425,
+            -27.425
+          ],
+          "hi": [
+            141.125,
+            27.425,
+            27.425
+          ],
+          "source_matches": [
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_169.model",
+              "object_id": "20",
+              "max_vertex_error_mm": 0.0021527501086464618,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "beam_top_a",
+          "vertex_bytes": 62130,
+          "index_bytes": 126564,
+          "payload_valid": true,
+          "declared_triangles": 21094,
+          "decode_error": null,
+          "quantization_step_mm": 0.004306924192022462,
+          "lo": [
+            -141.125,
+            -27.425,
+            -27.425
+          ],
+          "hi": [
+            141.125,
+            27.425,
+            27.425
+          ],
+          "source_matches": [
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_171.model",
+              "object_id": "23",
+              "max_vertex_error_mm": 0.0021534155702367386,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "beam_top_b",
+          "vertex_bytes": 52044,
+          "index_bytes": 106488,
+          "payload_valid": true,
+          "declared_triangles": 17748,
+          "decode_error": null,
+          "quantization_step_mm": 0.004306924192022462,
+          "lo": [
+            -141.125,
+            -27.425,
+            -27.425
+          ],
+          "hi": [
+            141.125,
+            27.425,
+            27.425
+          ],
+          "source_matches": [
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_168.model",
+              "object_id": "18",
+              "max_vertex_error_mm": 0.0021533218695566347,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "side_rail",
+          "vertex_bytes": 4920,
+          "index_bytes": 9816,
+          "payload_valid": true,
+          "declared_triangles": 1636,
+          "decode_error": null,
+          "quantization_step_mm": 0.0025940733054597613,
+          "lo": [
+            -15.0,
+            -85.0,
+            -17.5
+          ],
+          "hi": [
+            15.0,
+            85.0,
+            17.5
+          ],
+          "source_matches": [
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_177.model",
+              "object_id": "28",
+              "max_vertex_error_mm": 0.0012955289437570627,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "panel_top",
+          "vertex_bytes": 14160,
+          "index_bytes": 29256,
+          "payload_valid": true,
+          "declared_triangles": 4876,
+          "decode_error": null,
+          "quantization_step_mm": 0.003479872859889523,
+          "lo": [
+            -114.025,
+            -85.75,
+            -1.5
+          ],
+          "hi": [
+            114.025,
+            85.75,
+            1.5
+          ],
+          "source_matches": [
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_152.model",
+              "object_id": "11",
+              "max_vertex_error_mm": 0.0017389866817225652,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "panel_bottom",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.003479872859889523,
+          "lo": [
+            -114.025,
+            -85.75,
+            -1.5
+          ],
+          "hi": [
+            114.025,
+            85.75,
+            1.5
+          ],
+          "source_matches": [
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_153.model",
+              "object_id": "13",
+              "max_vertex_error_mm": 0.001027013397632004,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "panel_side",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.003481398876918851,
+          "lo": [
+            -87.95,
+            -1.5,
+            -114.075
+          ],
+          "hi": [
+            87.95,
+            1.5,
+            114.075
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_202.model",
+              "object_id": "36",
+              "max_vertex_error_mm": 0.000582927600930816,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            },
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_155.model",
+              "object_id": "15",
+              "max_vertex_error_mm": 0.000582927600930816,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "foot",
+          "vertex_bytes": 6246,
+          "index_bytes": 12492,
+          "payload_valid": true,
+          "declared_triangles": 2082,
+          "decode_error": null,
+          "quantization_step_mm": 0.0003967406231879635,
+          "lo": [
+            -13.0,
+            -12.998,
+            -6.0
+          ],
+          "hi": [
+            13.0,
+            12.998,
+            6.0
+          ],
+          "source_matches": [
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_145.model",
+              "object_id": "6",
+              "max_vertex_error_mm": 0.00019716942228464873,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "handle",
+          "vertex_bytes": 23700,
+          "index_bytes": 47424,
+          "payload_valid": true,
+          "declared_triangles": 7904,
+          "decode_error": null,
+          "quantization_step_mm": 0.0025940733054597613,
+          "lo": [
+            -11.5,
+            -85.0,
+            -18.75
+          ],
+          "hi": [
+            11.5,
+            85.0,
+            18.75
+          ],
+          "source_matches": [
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_172.model",
+              "object_id": "25",
+              "max_vertex_error_mm": 0.0012969401767017885,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "post1u",
+          "vertex_bytes": 6564,
+          "index_bytes": 13176,
+          "payload_valid": true,
+          "declared_triangles": 2196,
+          "decode_error": null,
+          "quantization_step_mm": 0.0006782738853114413,
+          "lo": [
+            -15.0,
+            -17.5,
+            -22.225
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            22.225
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_168.model",
+              "object_id": "1",
+              "max_vertex_error_mm": 0.0003391369426548607,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "panel_side1u",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.0026841028138065736,
+          "lo": [
+            -87.95,
+            -1.5,
+            -25.175
+          ],
+          "hi": [
+            87.95,
+            1.5,
+            25.175
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_175.model",
+              "object_id": "6",
+              "max_vertex_error_mm": 0.0007989093081448573,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "post2u",
+          "vertex_bytes": 8352,
+          "index_bytes": 16824,
+          "payload_valid": true,
+          "declared_triangles": 2804,
+          "decode_error": null,
+          "quantization_step_mm": 0.0013565477706228826,
+          "lo": [
+            -15.0,
+            -17.5,
+            -44.45
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            44.45
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_177.model",
+              "object_id": "9",
+              "max_vertex_error_mm": 0.0006782738853097214,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "panel_side2u",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.0026841028138065736,
+          "lo": [
+            -87.95,
+            -1.5,
+            -47.4
+          ],
+          "hi": [
+            87.95,
+            1.5,
+            47.4
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_181.model",
+              "object_id": "14",
+              "max_vertex_error_mm": 0.0012541918240884797,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "post3u",
+          "vertex_bytes": 9324,
+          "index_bytes": 18840,
+          "payload_valid": true,
+          "declared_triangles": 3140,
+          "decode_error": null,
+          "quantization_step_mm": 0.002034821713919492,
+          "lo": [
+            -15.0,
+            -17.5,
+            -66.675
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            66.675
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_184.model",
+              "object_id": "17",
+              "max_vertex_error_mm": 0.0010173608569630233,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "panel_side3u",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.0026841028138065736,
+          "lo": [
+            -87.95,
+            -1.5,
+            -69.625
+          ],
+          "hi": [
+            87.95,
+            1.5,
+            69.625
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_188.model",
+              "object_id": "22",
+              "max_vertex_error_mm": 0.000626990142521322,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "post4u",
+          "vertex_bytes": 10020,
+          "index_bytes": 20304,
+          "payload_valid": true,
+          "declared_triangles": 3384,
+          "decode_error": null,
+          "quantization_step_mm": 0.002713095538193915,
+          "lo": [
+            -15.0,
+            -17.5,
+            -88.9
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            88.9
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_190.model",
+              "object_id": "24",
+              "max_vertex_error_mm": 0.0013473512811975619,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "panel_side4u",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.002803125049592578,
+          "lo": [
+            -87.95,
+            -1.5,
+            -91.85
+          ],
+          "hi": [
+            87.95,
+            1.5,
+            91.85
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_197.model",
+              "object_id": "29",
+              "max_vertex_error_mm": 0.0008546560167275175,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "ext1u",
+          "vertex_bytes": 20232,
+          "index_bytes": 40680,
+          "payload_valid": true,
+          "declared_triangles": 6780,
+          "decode_error": null,
+          "quantization_step_mm": 0.003662221137119663,
+          "lo": [
+            -15.0,
+            -120.0,
+            -42.075
+          ],
+          "hi": [
+            15.0,
+            120.0,
+            42.075
+          ],
+          "source_matches": [
+            {
+              "file": "1U+Support+Extension.3mf",
+              "member": "3D/Objects/object_2.model",
+              "object_id": "1",
+              "max_vertex_error_mm": 0.001830846790980445,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "tpl1",
+          "vertex_bytes": 1776,
+          "index_bytes": 3624,
+          "payload_valid": true,
+          "declared_triangles": 604,
+          "decode_error": null,
+          "quantization_step_mm": 0.004250084292123172,
+          "lo": [
+            -139.263,
+            -1.0,
+            -22.0
+          ],
+          "hi": [
+            139.263,
+            1.0,
+            22.0
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "tpl5",
+          "vertex_bytes": 8688,
+          "index_bytes": 17832,
+          "payload_valid": true,
+          "declared_triangles": 2972,
+          "decode_error": null,
+          "quantization_step_mm": 0.004250084292123172,
+          "lo": [
+            -139.263,
+            -1.0,
+            -110.9
+          ],
+          "hi": [
+            139.263,
+            1.0,
+            110.9
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "guide",
+          "vertex_bytes": 2112,
+          "index_bytes": 4248,
+          "payload_valid": true,
+          "declared_triangles": 708,
+          "decode_error": null,
+          "quantization_step_mm": 0.0006714072084719382,
+          "lo": [
+            -14.0,
+            -14.0,
+            -22.0
+          ],
+          "hi": [
+            14.0,
+            14.0,
+            22.0
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "cm1000_face",
+          "vertex_bytes": 133434,
+          "index_bytes": 267042,
+          "payload_valid": true,
+          "declared_triangles": 44507,
+          "decode_error": null,
+          "quantization_step_mm": 0.0038758507034516434,
+          "lo": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hi": [
+            254.0,
+            16.0,
+            44.45
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "cm1000_pipes",
+          "vertex_bytes": 26064,
+          "index_bytes": 52008,
+          "payload_valid": true,
+          "declared_triangles": 8668,
+          "decode_error": null,
+          "quantization_step_mm": 0.0008239942625202185,
+          "lo": [
+            100.0,
+            0.0,
+            26.225
+          ],
+          "hi": [
+            154.0,
+            8.718,
+            34.225
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "cm1000_rail_l",
+          "vertex_bytes": 27636,
+          "index_bytes": 47352,
+          "payload_valid": true,
+          "declared_triangles": 7892,
+          "decode_error": null,
+          "quantization_step_mm": 0.0018558305612353893,
+          "lo": [
+            16.767,
+            16.0,
+            0.0
+          ],
+          "hi": [
+            35.185,
+            137.62,
+            44.45
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "cm1000_rail_r",
+          "vertex_bytes": 25962,
+          "index_bytes": 43860,
+          "payload_valid": true,
+          "declared_triangles": 7310,
+          "decode_error": null,
+          "quantization_step_mm": 0.0018558305612353893,
+          "lo": [
+            218.814,
+            16.0,
+            0.0
+          ],
+          "hi": [
+            237.233,
+            137.62,
+            44.45
+          ],
+          "source_matches": []
+        }
+      ]
+    },
+    {
+      "file": "lab-rax-assembler-code-only.html",
+      "meshes": [
+        {
+          "key": "post",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 3596,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.003391369365520188,
+          "lo": [
+            -15.0,
+            -17.5,
+            -111.125
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            111.125
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "beam_bottom",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 13424,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.004306924192022462,
+          "lo": [
+            -141.125,
+            -27.425,
+            -27.425
+          ],
+          "hi": [
+            141.125,
+            27.425,
+            27.425
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "beam_top_a",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 21094,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.004306924192022462,
+          "lo": [
+            -141.125,
+            -27.425,
+            -27.425
+          ],
+          "hi": [
+            141.125,
+            27.425,
+            27.425
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "beam_top_b",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 17748,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.004306924192022462,
+          "lo": [
+            -141.125,
+            -27.425,
+            -27.425
+          ],
+          "hi": [
+            141.125,
+            27.425,
+            27.425
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "side_rail",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 1636,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.0025940733054597613,
+          "lo": [
+            -15.0,
+            -85.0,
+            -17.5
+          ],
+          "hi": [
+            15.0,
+            85.0,
+            17.5
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "panel_top",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 4876,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.003479872859889523,
+          "lo": [
+            -114.025,
+            -85.75,
+            -1.5
+          ],
+          "hi": [
+            114.025,
+            85.75,
+            1.5
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "panel_bottom",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.003479872859889523,
+          "lo": [
+            -114.025,
+            -85.75,
+            -1.5
+          ],
+          "hi": [
+            114.025,
+            85.75,
+            1.5
+          ],
+          "source_matches": [
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_153.model",
+              "object_id": "13",
+              "max_vertex_error_mm": 0.001027013397632004,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "panel_side",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.003481398876918851,
+          "lo": [
+            -87.95,
+            -1.5,
+            -114.075
+          ],
+          "hi": [
+            87.95,
+            1.5,
+            114.075
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_202.model",
+              "object_id": "36",
+              "max_vertex_error_mm": 0.000582927600930816,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            },
+            {
+              "file": "5U+Lab+Rax+X2D.3mf",
+              "member": "3D/Objects/object_155.model",
+              "object_id": "15",
+              "max_vertex_error_mm": 0.000582927600930816,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "foot",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 2082,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.0003967406231879635,
+          "lo": [
+            -13.0,
+            -12.998,
+            -6.0
+          ],
+          "hi": [
+            13.0,
+            12.998,
+            6.0
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "handle",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 7904,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.0025940733054597613,
+          "lo": [
+            -11.5,
+            -85.0,
+            -18.75
+          ],
+          "hi": [
+            11.5,
+            85.0,
+            18.75
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "post1u",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 2196,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.0006782738853114413,
+          "lo": [
+            -15.0,
+            -17.5,
+            -22.225
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            22.225
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "panel_side1u",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.0026841028138065736,
+          "lo": [
+            -87.95,
+            -1.5,
+            -25.175
+          ],
+          "hi": [
+            87.95,
+            1.5,
+            25.175
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_175.model",
+              "object_id": "6",
+              "max_vertex_error_mm": 0.0007989093081448573,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "post2u",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 2804,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.0013565477706228826,
+          "lo": [
+            -15.0,
+            -17.5,
+            -44.45
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            44.45
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "panel_side2u",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.0026841028138065736,
+          "lo": [
+            -87.95,
+            -1.5,
+            -47.4
+          ],
+          "hi": [
+            87.95,
+            1.5,
+            47.4
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_181.model",
+              "object_id": "14",
+              "max_vertex_error_mm": 0.0012541918240884797,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "post3u",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 3140,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.002034821713919492,
+          "lo": [
+            -15.0,
+            -17.5,
+            -66.675
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            66.675
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "panel_side3u",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.0026841028138065736,
+          "lo": [
+            -87.95,
+            -1.5,
+            -69.625
+          ],
+          "hi": [
+            87.95,
+            1.5,
+            69.625
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_188.model",
+              "object_id": "22",
+              "max_vertex_error_mm": 0.000626990142521322,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "post4u",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 3384,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.002713095538193915,
+          "lo": [
+            -15.0,
+            -17.5,
+            -88.9
+          ],
+          "hi": [
+            15.0,
+            17.5,
+            88.9
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "panel_side4u",
+          "vertex_bytes": 48,
+          "index_bytes": 72,
+          "payload_valid": true,
+          "declared_triangles": 12,
+          "decode_error": null,
+          "quantization_step_mm": 0.002803125049592578,
+          "lo": [
+            -87.95,
+            -1.5,
+            -91.85
+          ],
+          "hi": [
+            87.95,
+            1.5,
+            91.85
+          ],
+          "source_matches": [
+            {
+              "file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+              "member": "3D/Objects/object_197.model",
+              "object_id": "29",
+              "max_vertex_error_mm": 0.0008546560167275175,
+              "oriented_faces_match_after_vertex_remapping": true,
+              "exact_source_coordinates": false
+            }
+          ]
+        },
+        {
+          "key": "ext1u",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 6780,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.003662221137119663,
+          "lo": [
+            -15.0,
+            -120.0,
+            -42.075
+          ],
+          "hi": [
+            15.0,
+            120.0,
+            42.075
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "tpl1",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 604,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.004250084292123172,
+          "lo": [
+            -139.263,
+            -1.0,
+            -22.0
+          ],
+          "hi": [
+            139.263,
+            1.0,
+            22.0
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "tpl5",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 2972,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.004250084292123172,
+          "lo": [
+            -139.263,
+            -1.0,
+            -110.9
+          ],
+          "hi": [
+            139.263,
+            1.0,
+            110.9
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "guide",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 708,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.0006714072084719382,
+          "lo": [
+            -14.0,
+            -14.0,
+            -22.0
+          ],
+          "hi": [
+            14.0,
+            14.0,
+            22.0
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "cm1000_face",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 44507,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.0038758507034516434,
+          "lo": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hi": [
+            254.0,
+            16.0,
+            44.45
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "cm1000_pipes",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 8668,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.0008239942625202185,
+          "lo": [
+            100.0,
+            0.0,
+            26.225
+          ],
+          "hi": [
+            154.0,
+            8.718,
+            34.225
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "cm1000_rail_l",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 7892,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.0018558305612353893,
+          "lo": [
+            16.767,
+            16.0,
+            0.0
+          ],
+          "hi": [
+            35.185,
+            137.62,
+            44.45
+          ],
+          "source_matches": []
+        },
+        {
+          "key": "cm1000_rail_r",
+          "vertex_bytes": 0,
+          "index_bytes": 0,
+          "payload_valid": false,
+          "declared_triangles": 7310,
+          "decode_error": "Non-base64 digit found",
+          "quantization_step_mm": 0.0018558305612353893,
+          "lo": [
+            218.814,
+            16.0,
+            0.0
+          ],
+          "hi": [
+            237.233,
+            137.62,
+            44.45
+          ],
+          "source_matches": []
+        }
+      ]
+    }
+  ]
+}

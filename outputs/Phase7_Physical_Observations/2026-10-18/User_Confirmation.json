@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-18",
+  "specimen_id": "BRIAN-20261018-01",
+  "user_confirmation": "we've now got physical confirmation that your hard work translates well into the real world",
+  "reported_fit": "CONFIRMED_BY_BRIAN_FOR_EARLIER_TEST_FIT_SPECIMEN",
+  "basis": [
+    "Original statement: Fitment is fantastic",
+    "Three supplied photographs",
+    "Earlier supplied test-fit files and subsequent replacement recovered and hash-verified",
+    "Brian acknowledged recovered provenance and physical confirmation"
+  ],
+  "linkage": "User-confirmed context and recovered delivery history; not a forensic hash of a printed object",
+  "physical_result_scope": "Qualitative fit of the earlier supplied printed tray/faceplate specimen",
+  "excluded_claims": [
+    "Generalized fit across printers/materials",
+    "Later Phase7 integrity build physically tested",
+    "Pi electronics/board fit unless separately reported",
+    "Screw/insert installation, torque, retention or strength",
+    "Rack/cable/tool access approval",
+    "Reopening the tabled mounting matter"
+  ],
+  "new_physical_work_authorized": false
+}

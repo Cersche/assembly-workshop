@@ -1,0 +1,66 @@
+{
+  "version": 2,
+  "racks": [
+    {
+      "id": "brand-test",
+      "name": "Rack branding · disposable",
+      "slots": 5,
+      "appearance": {
+        "logo_color": "#43b5cf",
+        "post_labels": true
+      },
+      "width_mm": null,
+      "depth_mm": null,
+      "pitch_mm": null,
+      "placements": [
+        {
+          "assembly": {
+            "id": "asm-f83eac93-7bb0-4732-8154-615d3ba84f83",
+            "name": "Raspberry Pi 4",
+            "revision": 1,
+            "project": {
+              "selections": {},
+              "inputs": {
+                "stack": 3.3,
+                "pocket": 8,
+                "boss_diameter": 9,
+                "pilot": 4.2,
+                "minimum_engagement": 3,
+                "bottom_allowance": 0.5
+              },
+              "notes": "Clearance v2 baseline. Insert pilot is provisional. Physical testing pending.",
+              "reference": {
+                "schema": 1,
+                "units": "mm",
+                "role": "reference-only",
+                "asset": "pi_reference.json",
+                "sha256": "b6be2c03dcefb198afb711fa27003f23bbb5148acdf5b912681a08021a005c66",
+                "package_sha256": "cd8dd4b6d7e8f85fd60120e6f9950ee78c02fbbbe8256cd5598339bcd7118d48",
+                "package": "Pi4_fit_REFERENCE_ONLY.3mf",
+                "source_to_assembly": "(x,y,z) -> (x-44,69-z,y+13.900009155273438)",
+                "asset_transform": "identity; coordinates already transformed",
+                "upstream_provenance": "unknown",
+                "redistribution_license": "unknown; local inspection only",
+                "solid_conversion": "inconclusive: reference has non-manifold edges",
+                "baseline_source_sha256": "1136215f33e87d8e943ab62f4cb627010123a8d37dae423e478696a9f9437de4",
+                "baseline_assembly_sha256": "ef1050c5e535e0616f50d8b2c34a22ce1b94c7954050d2f9c30096306f485436"
+              },
+              "id": "asm-f83eac93-7bb0-4732-8154-615d3ba84f83",
+              "name": "Raspberry Pi 4",
+              "units": "mm"
+            },
+            "appearance": {},
+            "fit": "UNKNOWN"
+          },
+          "id": "8b8d4b8b-9957-41c2-b14d-f77db47b2f19",
+          "equipment": "pi4",
+          "slot": 1,
+          "span": 1,
+          "geometry": "pi4-clearance-v2-reference",
+          "fit": "UNKNOWN"
+        }
+      ]
+    }
+  ],
+  "generation": "9ce6ed29-2ac0-4b05-a03e-630dbb47d04f"
+}

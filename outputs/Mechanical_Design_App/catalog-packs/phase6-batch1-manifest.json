@@ -1,0 +1,20 @@
+{
+  "id": "phase6-batch1",
+  "revision": 1,
+  "retrieved": "2026-10-18",
+  "units": "mm",
+  "file": "phase6-batch1.json",
+  "sha256": "e08de0573470b718b820153a883f1b905ee6c88ddf5fe70b937ef955f332efb9",
+  "records": 6,
+  "scope": "M2/M4/M8 representative screw and tapered-insert records; not complete M1-M8 coverage",
+  "loading": "Explicit import via existing JSON importer; never auto-update active data",
+  "rights": "No supplier models, drawings, images, PDFs or substantial descriptions bundled. Asset redistribution rights unresolved.",
+  "sources": [
+    "https://shop.spirol.com/item/series-24-25-heat-ultrasonic-tapered-insert-metric/series-24-heat-ultrasonic-tapered-insert-metric/151313",
+    "https://shop.spirol.com/item/series-24-25-heat-ultrasonic-tapered-insert-metric/series-24-heat-ultrasonic-tapered-insert-metric/151317",
+    "https://shop.spirol.com/item/series-24-25-heat-ultrasonic-tapered-insert-metric/series-24-heat-ultrasonic-tapered-insert-metric/151320",
+    "https://www.accu.co.uk/metric-cap-head-screws/3793-SSCF-M2-8-A2",
+    "https://www.accu.co.uk/metric-cap-head-screws/3837-SSCF-M4-8-A2",
+    "https://www.accu.co.uk/metric-cap-head-screws/3885-SSCF-M8-16-A2"
+  ]
+}

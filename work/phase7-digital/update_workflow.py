@@ -1,0 +1,13 @@
+from pathlib import Path
+p=Path('outputs/Mechanical_Design_App/test_mesh_integrity.py')
+s=p.read_text(encoding='utf-8').replace("self.assertEqual(first['assembly'],second['assembly'])","self.assertEqual(json.loads(json.dumps(first['assembly'])),second['assembly'])")
+p.write_text(s,encoding='utf-8')
+p=Path('outputs/Mechanical_Design_App/index.html')
+s=p.read_text(encoding='utf-8')
+s=s.replace('PHASE 6 OF 7 · COMPLETE WITH LIMITATIONS','PHASE 7 OF 7 · DIGITAL VALIDATION')
+s=s.replace('Sourced hardware library expansion</h2>','STL integrity and working beta validation</h2>')
+s=s.replace('6 of 7 phases complete. Phase numbers','6 of 7 phases complete; Phase 7 is in progress. Phase numbers')
+s=s.replace('Pending — Physical testing and working beta sign-off','In progress — Digital STL/export acceptance; optional physical validation later with separate authorization')
+s=s.replace('Both meshes are checked for closed edges; component clearance and physical fit remain unvalidated.','Meshes are checked for finite coordinates, valid triangles, closed edges, consistent winding and positive signed volume. Cached and downloaded artifacts must match their integrity manifest; physical fit remains unvalidated. STL coordinates are millimeters in assembly orientation; STL itself does not encode units. Keep that scale when importing. Printer and slicer configuration is outside this app’s scope. Legacy cached builds remain preserved; generate again to obtain the new integrity-checked revision.')
+s=s.replace('Both meshes passed edge-closure checks. Physical fit remains unvalidated.','Both meshes passed STL integrity checks. Scale: millimeters. Physical fit remains unvalidated.')
+p.write_text(s,encoding='utf-8')

@@ -1,0 +1,37 @@
+  async function saveWorkshop(){
+    if(!capable)throw Error('Restart the local app server to enable this version of Save.');
+    if(openingAssembly||savingLayout)throw Error('Wait for the current operation to finish.');
+    if(artworkPending)throw Error('Wait for the image preview to finish preparing, then Save.');
+    if(!byId('mountWizard').hidden||byId('rackDialog').open)throw Error('Apply or cancel the open rack or allocation editor before saving.');
+    savingLayout=true;updateSaveStatus();
+    const snapshot=JSON.stringify(documentState),identity=window.workshopContext?.id,hardware=identity?payload():null;
+    try{
+      const saved=await api('studio-save',{workspace:documentState,assembly:hardware?{...hardware,id:identity}:null});
+      const newerLayout=JSON.stringify(documentState)!==snapshot,newerHardware=hardware&&JSON.stringify(payload())!==JSON.stringify(hardware);
+      if(!newerLayout){documentState=saved;layoutDirty=false;}
+      else{
+        documentState.generation=saved.generation;
+        for(const local of documentState.racks.flatMap(r=>r.placements)){
+          const committed=saved.racks.flatMap(r=>r.placements).find(p=>p.assembly.id===local.assembly.id);
+          if(committed){local.assembly.project=committed.assembly.project;local.assembly.revision=committed.assembly.revision;}
+        }
+        layoutDirty=true;
+      }
+      persistedAssemblyIds=new Set(saved.racks.flatMap(r=>r.placements.map(p=>p.assembly.id)));
+      if(identity&&window.workshopContext?.id===identity){
+        const record=saved.racks.flatMap(r=>r.placements).find(p=>p.assembly.id===identity)?.assembly;
+        if(!record)throw Error('The current assembly was removed; reload before editing it.');
+        if(record.revision!==state.project.instance_revision)clearBuild();
+        state.project={...record.project,instance_id:record.id,instance_revision:record.revision,workspace_generation:saved.generation};
+        window.workshopContext.generation=saved.generation;dirty=!!newerHardware;
+        byId('assemblyProjectName').textContent=record.name+' · revision '+record.revision;
+        byId('dirty').textContent=dirty?'Saved earlier hardware inputs; newer edits remain unsaved.':'Saved locally · independent hardware pins retained.';
+        renderReplacement();
+      }
+      render();notify(layoutDirty||dirty?'Saved the submitted changes. Newer edits remain unsaved.':'Saved rack, hardware and appearance locally.');
+      return saved;
+    }finally{savingLayout=false;updateSaveStatus();}
+  }
+  window.saveWorkshop=saveWorkshop;
+  window.assertWorkshopSaved=()=>{if(layoutDirty||dirty||savingLayout||artworkPending)throw Error('Use Save to keep pending changes before checking or exporting.');};
+  byId('saveLayout').onclick=async()=>{try{await saveWorkshop();}catch(e){notify(e.message,true);}};

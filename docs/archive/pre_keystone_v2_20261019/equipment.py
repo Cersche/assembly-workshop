@@ -1,0 +1,298 @@
+"""Equipment wizard (phase 1): dimensions -> tray + faceplate STL via OpenSCAD.
+
+Generated parts are PROPOSED and UNVALIDATED; printed fit, strength and rack
+clearance remain UNKNOWN. The Pi4 adapter (pi4_baseline.scad) is untouched.
+"""
+
+import hashlib
+import io
+import json
+import math
+import os
+from pathlib import Path
+import re
+import secrets
+import subprocess
+import tempfile
+import threading
+import zipfile
+
+import cable_ports
+import mesh_revision
+
+ROOT = Path(__file__).resolve().parent
+TEMPLATE = ROOT / 'equipment_tray.scad'
+MOUNTS = ('inserts', 'pegs', 'clips', 'straps')
+JOINTS = ('screw', 'snap', 'single')
+PLATE_HALF = 126
+LOCK = threading.Lock()
+LIMITS = ['PROPOSED — UNVALIDATED. Printed fit, strength, rack clearance and keystone retention are UNKNOWN.',
+          'Mesh closure and successful rendering are not physical approval.']
+
+
+def num(value, name, lo, hi):
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        raise ValueError(name + ' must be a number.')
+    if not math.isfinite(v) or v < lo or v > hi:
+        raise ValueError(f'{name} must be between {lo} and {hi} mm.')
+    return round(v, 3)
+
+
+def _port_id(port, face, index):
+    """Stable cable-planning id for a wizard port; older specs without one fall back to their position."""
+    ident = port.get('id')
+    if isinstance(ident, str) and cable_ports.PORT_ID.fullmatch(ident) and not ident.startswith('ks-'):
+        return ident
+    return f'{face}-{index + 1}'
+
+
+def clean(spec):
+    if not isinstance(spec, dict):
+        raise ValueError('Equipment spec must be an object.')
+    name = str(spec.get('name') or 'Equipment').strip()[:60] or 'Equipment'
+    s = {'name': name,
+         'dev_w': num(spec.get('dev_w'), 'Width', 5, 230),
+         'dev_d': num(spec.get('dev_d'), 'Depth', 5, 220),
+         'dev_h': num(spec.get('dev_h'), 'Height', 1, 300),
+         'hole_d': num(spec.get('hole_d', 2.7), 'Hole diameter', 1.5, 8),
+         'standoff': num(spec.get('standoff', 6), 'Standoff', 0, 30),
+         'insert_pilot': num(spec.get('insert_pilot', 3.2), 'Insert pilot', 1.5, 8),
+         'board_t': num(spec.get('board_t', 1.6), 'Board thickness', 0.5, 6),
+         'u': int(num(spec.get('u', 1), 'Rack units', 1, 5))}
+    s['device_mount'] = spec.get('device_mount') if spec.get('device_mount') in MOUNTS else None
+    s['joint'] = spec.get('joint') if spec.get('joint') in JOINTS else None
+    if not s['device_mount'] or not s['joint']:
+        raise ValueError('Choose a device mounting option and a tray joint.')
+    s['rear_support'] = spec.get('rear_support') is True
+    if s['rear_support']:
+        if s['joint'] == 'single':
+            raise ValueError('Rear-post support needs the screw or snap joint (a 240 mm single print is not offered).')
+        if s['dev_d'] > 200:
+            raise ValueError('With rear-post support the device can be at most 200 mm deep.')
+    s['coupon'] = []
+    c = spec.get('coupon')
+    if c:
+        s['coupon'] = [num(c[0], 'Coupon X0', -130, 130), num(c[1], 'Coupon X1', -130, 130), num(c[2], 'Coupon depth', 5, 250)]
+    if s['dev_h'] + s['standoff'] + 10 > s['u'] * 44.45:
+        raise ValueError('Device is taller than %dU allows; pick more rack units.' % s['u'])
+    s['holes'] = [[num(x, 'Hole X', 0, s['dev_w']), num(y, 'Hole Y', 0, s['dev_d'])]
+                  for x, y in (spec.get('holes') or [])][:16]
+    if s['device_mount'] in ('inserts', 'pegs') and not s['holes']:
+        raise ValueError('Add at least one mounting hole for inserts or pegs.')
+    plate_h = s['u'] * 44.45 - 2.45
+    s['keystones'] = [num(x, 'Keystone X', -PLATE_HALF + 20, PLATE_HALF - 20) for x in (spec.get('keystones') or [])][:12]
+    xs = sorted(s['keystones'])
+    if any(b - a < 17 for a, b in zip(xs, xs[1:])):
+        raise ValueError('Keystones must be at least 17 mm apart.')
+    if s['joint'] == 'screw':
+        jx = min(40, (s['dev_w'] + 16) / 2 - 12)
+        if any(abs(abs(x) - jx) < 16 for x in s['keystones']):
+            raise ValueError(f'A keystone overlaps the tray screw joint at X = ±{jx:g} mm; move it at least 16 mm away.')
+    s['ports'] = []
+    for p in (spec.get('ports') or [])[:20]:
+        w, h = num(p.get('w'), 'Port width', 1, 200), num(p.get('h'), 'Port height', 1, plate_h - 4)
+        s['ports'].append({'label': str(p.get('label') or '')[:30],
+                           'x': num(p.get('x'), 'Port X', -PLATE_HALF + w / 2, PLATE_HALF - w / 2),
+                           'z': num(p.get('z'), 'Port Z', h / 2 + 2, plate_h - h / 2 - 2),
+                           'w': w, 'h': h, 'r': num(p.get('r', 0), 'Corner radius', 0, 50),
+                           # Connector type is cable-planning data only; source() never passes it to OpenSCAD.
+                           'type': cable_ports.port_type(p.get('type')), 'id': _port_id(p, 'front', len(s['ports']))})
+    # Rear ports: planning data only (no cut-outs). X from the plate centre, Z from the plate bottom, as for front ports;
+    # they sit on the device's rear face. Positions are what the user enters; connector fit and cable access UNKNOWN.
+    s['rear_ports'] = []
+    for p in (spec.get('rear_ports') or [])[:20]:
+        if not isinstance(p, dict):
+            raise ValueError('Each rear port must be an object.')
+        s['rear_ports'].append({'id': _port_id(p, 'rear', len(s['rear_ports'])),
+                                'label': str(p.get('label') or '')[:30], 'type': cable_ports.port_type(p.get('type')),
+                                'x': num(p.get('x'), 'Rear port X', -PLATE_HALF, PLATE_HALF),
+                                'z': num(p.get('z'), 'Rear port Z', 0, s['u'] * 44.45)})
+    ids = [p['id'] for p in s['ports'] + s['rear_ports']]
+    if len(ids) != len(set(ids)):
+        raise ValueError('Each port needs its own id.')
+    return s
+
+
+def source(s):
+    def lit(v):
+        return json.dumps(v)
+    over = {k: s[k] for k in ('dev_w', 'dev_d', 'dev_h', 'hole_d', 'standoff', 'insert_pilot', 'board_t', 'u',
+                              'holes', 'keystones', 'device_mount', 'joint', 'rear_support', 'coupon')}
+    over['ports'] = [[p['x'], p['z'], p['w'], p['h'], p['r']] for p in s['ports']]
+    lines = ['', '// ---- wizard overrides: ' + re.sub(r'[\r\n]', ' ', s['name'])] + [f'{k}={lit(v)};' for k, v in over.items()]
+    return TEMPLATE.read_text(encoding='utf-8') + '\n'.join(lines) + '\n'
+
+
+def library(data_dir):
+    path = Path(data_dir) / 'equipment-library.json'
+    return json.loads(path.read_text(encoding='utf-8')) if path.exists() else []
+
+
+def save_item(spec, data_dir):
+    """Build (or reuse) the meshes, then add/replace the item in the library."""
+    s = clean(spec)
+    zipped = build(s, data_dir)
+    with zipfile.ZipFile(io.BytesIO(zipped)) as z:
+        report = json.loads(z.read('revision.json'))
+    items = library(data_dir)
+    ident = spec.get('id') if isinstance(spec.get('id'), str) and re.fullmatch('eq-[0-9a-f]{12}', spec.get('id') or '') else 'eq-' + secrets.token_hex(6)
+    item = {'id': ident, 'name': s['name'], 'span': s['u'], 'spec': s, 'build': report['id'], 'parts': report['parts'],
+            'status': 'PROPOSED — UNVALIDATED'}
+    items = [i for i in items if i['id'] != ident] + [item]
+    path = Path(data_dir) / 'equipment-library.json'
+    tmp = path.with_suffix('.tmp')
+    tmp.write_text(json.dumps(items, indent=2), encoding='utf-8')
+    tmp.replace(path)
+    return item
+
+
+def delete_item(ident, data_dir, in_use):
+    """Remove a library entry; rendered meshes stay in equipment-revisions/ (immutable cache)."""
+    if ident in in_use:
+        raise ValueError('This equipment is placed in a saved rack slot. Release that slot and Save first.')
+    items = library(data_dir)
+    if not any(i['id'] == ident for i in items):
+        raise ValueError('Equipment not found.')
+    path = Path(data_dir) / 'equipment-library.json'
+    tmp = path.with_suffix('.tmp')
+    tmp.write_text(json.dumps([i for i in items if i['id'] != ident], indent=2), encoding='utf-8')
+    tmp.replace(path)
+    return {'deleted': ident}
+
+
+def mesh_file(data_dir, identity, part):
+    if not re.fullmatch('[0-9a-f]{64}', identity or '') or part not in ('tray', 'faceplate', 'combined', 'rear_bracket'):
+        raise ValueError('Invalid equipment mesh request.')
+    return (Path(data_dir) / 'equipment-revisions' / identity / (part + '.stl')).read_bytes()
+
+
+def scad_to_stl(payload):
+    """Render an uploaded equipment .scad to ASCII STL for the wizard's import step (nothing is stored)."""
+    text = payload.get('source') if isinstance(payload, dict) else None
+    if not isinstance(text, str) or not text.strip():
+        raise ValueError('The SCAD file is empty.')
+    if len(text) > 2_000_000:
+        raise ValueError('SCAD file is too large (2 MB limit).')
+    with tempfile.TemporaryDirectory(prefix='scad-import-') as temp:
+        src, out = Path(temp) / 'model.scad', Path(temp) / 'model.stl'
+        src.write_text(text, encoding='utf-8', newline='\n')
+        try:
+            r = subprocess.run([mesh_revision.compiler(), '--export-format', 'asciistl', '-o', str(out), str(src)],
+                               capture_output=True, text=True, timeout=180,
+                               creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            raise ValueError('OpenSCAD failed or timed out: ' + str(exc)) from exc
+        if r.returncode or 'ERROR:' in r.stderr or not out.exists():
+            hint = ' (Files it includes/uses were not uploaded; paste them into one file.)' if re.search(r'\b(include|use)\s*<', text) else ''
+            raise ValueError('OpenSCAD could not render this file' + hint + ': ' + r.stderr[-800:])
+        return out.read_bytes()
+
+
+FREECAD_SCRIPT = '''import os, Part, MeshPart
+shape = Part.read(os.environ["EW_STEP_IN"])
+mesh = MeshPart.meshFromShape(Shape=shape, LinearDeflection=0.1, AngularDeflection=0.35)
+mesh.write(os.environ["EW_STL_OUT"])
+'''
+
+
+def freecad():
+    for base in sorted(Path('C:/Program Files').glob('FreeCAD*'), reverse=True):
+        exe = base / 'bin' / 'freecadcmd.exe'
+        if exe.exists():
+            return str(exe)
+    raise ValueError('FreeCAD is not installed, so STEP files cannot be read. Install FreeCAD or import an STL.')
+
+
+def step_to_stl(payload):
+    """Convert an uploaded STEP model to STL via FreeCAD's command-line tool (nothing is stored)."""
+    text = payload.get('source') if isinstance(payload, dict) else None
+    if not isinstance(text, str) or 'ISO-10303' not in text[:200]:
+        raise ValueError('That does not look like a STEP file.')
+    if len(text) > 60_000_000:
+        raise ValueError('STEP file is too large (60 MB limit).')
+    with tempfile.TemporaryDirectory(prefix='step-import-') as temp:
+        folder = Path(temp)
+        (folder / 'model.step').write_text(text, encoding='utf-8', newline='\n')
+        (folder / 'convert.py').write_text(FREECAD_SCRIPT, encoding='utf-8')
+        env = dict(os.environ, EW_STEP_IN=str(folder / 'model.step'), EW_STL_OUT=str(folder / 'model.stl'))
+        try:
+            r = subprocess.run([freecad(), str(folder / 'convert.py')], capture_output=True, text=True, timeout=300, env=env,
+                               creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            raise ValueError('FreeCAD failed or timed out: ' + str(exc)) from exc
+        out = folder / 'model.stl'
+        if not out.exists() or out.stat().st_size < 100:
+            raise ValueError('FreeCAD could not convert this STEP file: ' + (r.stderr or r.stdout)[-800:])
+        return out.read_bytes()
+
+
+def build(spec, data_dir):
+    final = render(spec, data_dir)
+    stream = io.BytesIO()
+    with zipfile.ZipFile(stream, 'w', zipfile.ZIP_DEFLATED) as z:
+        for f in sorted(final.iterdir()):
+            z.write(f, f.name)
+    return stream.getvalue()
+
+
+def preview(spec, data_dir):
+    """Render (or reuse) the parts and return ids so the wizard can fetch meshes for its 3D view."""
+    final = render(spec, data_dir)
+    report = json.loads((final / 'revision.json').read_text(encoding='utf-8'))
+    return {'id': report['id'], 'parts': report['parts']}
+
+
+def render(spec, data_dir):
+    s = clean(spec)
+    src = source(s)
+    parts = ['combined'] if s['joint'] == 'single' else ['tray', 'faceplate'] + (['rear_bracket'] if s['rear_support'] else [])
+    identity = hashlib.sha256(src.encode('utf-8')).hexdigest()
+    final = Path(data_dir) / 'equipment-revisions' / identity
+    with LOCK:
+        if not final.exists():
+            final.parent.mkdir(parents=True, exist_ok=True)
+            exe = mesh_revision.compiler()
+            with tempfile.TemporaryDirectory(dir=final.parent, prefix='render-') as temp:
+                folder = Path(temp)
+                logs, nudges = {}, {}
+                for name in parts:
+                    # OpenSCAD 2021 sometimes emits a zero-area sliver; retry with the faceplate's
+                    # pocket/corner sizes nudged by a few hundredths of a mm (recorded in the report).
+                    for nudge in (0, 0.011, 0.023, 0.037, 0.051):
+                        text = src + (f'nudge={nudge};\n' if nudge else '')
+                        (folder / 'equipment.scad').write_text(text, encoding='utf-8', newline='\n')
+                        try:
+                            r = subprocess.run([exe, '-o', str(folder / (name + '.stl')), '-D', f'part="{name}"', str(folder / 'equipment.scad')],
+                                               capture_output=True, text=True, timeout=180,
+                                               creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+                        except (OSError, subprocess.TimeoutExpired) as exc:
+                            raise ValueError('Mesh rendering failed or timed out: ' + str(exc)) from exc
+                        logs[name] = r.stderr
+                        if s['coupon'] and 'top level object is empty' in r.stderr:
+                            break  # test coupon slice doesn't touch this part
+                        if r.returncode or 'ERROR:' in r.stderr:
+                            raise ValueError('OpenSCAD failed for ' + name + ': ' + r.stderr[-1200:])
+                        try:
+                            mesh_revision.normalize_collinear_faces(folder / (name + '.stl'))
+                        except ValueError:
+                            pass  # optional tidy-up; read_mesh below still enforces a closed, valid mesh
+                        try:
+                            mesh_revision.read_mesh(folder / (name + '.stl'), name)
+                            break
+                        except ValueError:
+                            if nudge == 0.051:
+                                raise
+                    nudges[name] = nudge
+                    if nudge:
+                        (folder / (name + '.scad')).write_text(text, encoding='utf-8', newline='\n')
+                (folder / 'equipment.scad').write_text(src, encoding='utf-8', newline='\n')
+                parts = [n for n in parts if (folder / (n + '.stl')).exists()]
+                report = {'nudge_mm': nudges,'status': 'PROPOSED — UNVALIDATED', 'spec': s, 'parts': parts, 'id': identity,
+                          'template': 'equipment_tray.scad (faceplate from Pi4 baseline)', 'limitations': LIMITS,
+                          'sha256': {n + '.stl': hashlib.sha256((folder / (n + '.stl')).read_bytes()).hexdigest() for n in parts},
+                          'logs': logs}
+                (folder / 'revision.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
+                folder.rename(final)
+    return final

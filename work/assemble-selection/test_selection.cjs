@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const source=fs.readFileSync('outputs/Mechanical_Design_App/viewer.js','utf8').split('async function initAssemblyViewer')[0];
+const c={};vm.createContext(c);vm.runInContext(source,c);
+const triangle=(depth,color,pickId)=>({points:[[-4,-4,depth[0]],[4,-4,depth[1]],[0,4,depth[2]]],color,pickId});
+const back=triangle([0,0,0],[255,0,0],1),front=triangle([-2,2,0],[0,0,255],2);
+const pixels={data:new Uint8ClampedArray(12*12*4)},ids=new Uint16Array(12*12);
+c.rasterizeAssemblyFaces([back,front],12,12,1,pixels,ids);
+assert.equal(ids[8*12+4],1);assert.equal(ids[8*12+7],2);
+const before=pixels.data.slice();c.highlightAssemblySelection(pixels,ids,1,12,12,1);
+assert.notDeepEqual(Array.from(pixels.data.slice((8*12+4)*4,(8*12+4)*4+3)),Array.from(before.slice((8*12+4)*4,(8*12+4)*4+3)));
+for(let i=0;i<ids.length;i++)if(ids[i]!==1)assert.deepEqual(pixels.data.slice(i*4,i*4+4),before.slice(i*4,i*4+4),'Highlight must not paint over foreground parts or background');
+const untouched=pixels.data.slice();c.highlightAssemblySelection(pixels,ids,0,12,12,1);assert.deepEqual(pixels.data,untouched);
+console.log('PASS assembly selection uses nearest visible pixels, leaves occluding surfaces/background untouched, and clears without altering appearance.');

@@ -1,0 +1,89 @@
+{
+  "protected_files": [
+    {
+      "file": "pi4_baseline.scad",
+      "sha256": "1136215f33e87d8e943ab62f4cb627010123a8d37dae423e478696a9f9437de4",
+      "status": "PASS"
+    },
+    {
+      "file": "assembly.json",
+      "sha256": "ef1050c5e535e0616f50d8b2c34a22ce1b94c7954050d2f9c30096306f485436",
+      "status": "PASS"
+    },
+    {
+      "file": "pi_reference.json",
+      "sha256": "b6be2c03dcefb198afb711fa27003f23bbb5148acdf5b912681a08021a005c66",
+      "status": "PASS"
+    }
+  ],
+  "pack_hashes": "7 PASS",
+  "candidate_rule_status": "incomplete",
+  "candidate_checks": [
+    {
+      "name": "Thread compatibility",
+      "status": "pass",
+      "detail": "Screw M3 \u00d7 0.5; insert M3 \u00d7 0.5."
+    },
+    {
+      "name": "Screw reach",
+      "status": "pass",
+      "detail": "Reach 4.700 mm; project minimum 3.000 mm (user target, not a strength rating)."
+    },
+    {
+      "name": "Usable thread engagement",
+      "status": "unknown",
+      "detail": "Insert usable thread depth has not been documented."
+    },
+    {
+      "name": "Threaded shank",
+      "status": "pass",
+      "detail": "Conservative check: the entire protruding section must be threaded."
+    },
+    {
+      "name": "Open insert bore envelope",
+      "status": "pass",
+      "detail": "3.300 mm from screw tip to the modeled bore end. Assumes the entered pocket is continuous screw-clear space; verify actual geometry."
+    },
+    {
+      "name": "Bottom clearance",
+      "status": "unknown",
+      "detail": "The modeled bore check does not establish the actual insert exit, installation residue or printed clearance."
+    },
+    {
+      "name": "Insert pocket depth",
+      "status": "pass",
+      "detail": "Pocket 8 mm; insert 5.7 mm. Melt allowance is still material dependent."
+    },
+    {
+      "name": "Maximum installation hole",
+      "status": "pass",
+      "detail": "Pilot 4 mm; supplier maximum 4 mm. Being below the maximum alone does not establish printed fit."
+    },
+    {
+      "name": "Installation hole",
+      "status": "unknown",
+      "detail": "Missing insert hole_diameter."
+    },
+    {
+      "name": "Boss wall",
+      "status": "unknown",
+      "detail": "Insert outside diameter and sourced minimum wall are required."
+    },
+    {
+      "name": "Source completeness",
+      "status": "unknown",
+      "detail": "A selected part is custom or partially documented."
+    },
+    {
+      "name": "Nominal screw-head surface screening",
+      "status": "pass",
+      "detail": "{\"status\": \"pass\", \"measurements\": [{\"axis_x\": -40, \"target\": \"pi_reference\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": -40, \"target\": \"tray\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": -40, \"target\": \"faceplate\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": 40, \"target\": \"pi_reference\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": 40, \"target\": \"tray\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": 40, \"target\": \"faceplate\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}], \"head_diameter_mm\": 5.5, \"head_height_mm\": 3, \"method\": \"head-cylinder-surface-bracket-v1\", \"bearing_contact_exclusion_mm\": 0.001, \"clipping_epsilon_mm\": 1e-05, \"polygon_sides\": 48, \"limits\": \"Nominal head cylinder surface screen against Pi/tray/faceplate; inner intersections FAIL, outer-only intersections UNKNOWN. No outer intersection passes only the surface screen, not containment, tool access, tolerances or physical fit. Ear bearing contact excluded by +0.001 mm Y. Driver/shaft/handle envelope and insertion path remain UNKNOWN.\"}"
+    },
+    {
+      "name": "Physical and spatial checks",
+      "status": "unknown",
+      "detail": "Driver/installation-tool envelopes, insertion path, containment, material, strength and printed fit remain unestablished. A nominal screw-head surface screen is reported separately."
+    }
+  ],
+  "limits": "No physical validation or fresh browser/build claim"
+}

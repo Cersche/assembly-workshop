@@ -1,0 +1,88 @@
+[
+  {
+    "revision": 1,
+    "kind": "screw",
+    "units": "mm",
+    "verification": "partial",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; live stock not verified",
+    "cad_status": "Source link only; no supplier assets bundled",
+    "redistribution_status": "Supplier asset rights unresolved; concise factual metadata only",
+    "id": "ideal-m4.5-.75x8mm-fh-tx-al-sp",
+    "name": "Ideal Fasteners M4.5 x 0.75 x 8 TORX flat screw",
+    "manufacturer": "Ideal Fasteners / MW Components",
+    "part_number": "M4.5-.75X8MM_FH_TX_AL_SP",
+    "supplier_sku": "M4.5-.75X8MM_FH_TX_AL_SP",
+    "diameter": 4.5,
+    "pitch": 0.75,
+    "length": 8,
+    "head_style": "flat",
+    "drive": "TORX; size unknown",
+    "material": "Steel",
+    "finish": "None",
+    "source": "https://www.mwcomponents.com/shop/m4-5-75x8mm-fh-tx-al-sp",
+    "source_document": "https://www.mwcomponents.com/shop/m4-5-75x8mm-fh-tx-al-sp",
+    "unknown_fields": [
+      "length_convention",
+      "threaded_length",
+      "head_diameter",
+      "head_height",
+      "countersunk_angle_degrees",
+      "strength_class",
+      "dimensional_tolerances"
+    ],
+    "field_sources": {
+      "diameter,pitch,length,head_style,drive,material,finish": {
+        "url": "https://www.mwcomponents.com/shop/m4-5-75x8mm-fh-tx-al-sp",
+        "section": "Specs (in metric)"
+      }
+    },
+    "notes": "Supplier says Flat; bearing/length convention and countersink geometry not established. No under-head reach assumption or Pi4 adapter approval."
+  },
+  {
+    "revision": 1,
+    "kind": "screw",
+    "units": "mm",
+    "verification": "partial",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; live stock not verified",
+    "cad_status": "Source link only; no supplier assets bundled",
+    "redistribution_status": "Supplier asset rights unresolved; concise factual metadata only",
+    "id": "mtp-9129007025",
+    "name": "MTP M7 x 1.0 x 25 socket head cap screw - class 12.9",
+    "manufacturer": "unknown; supplier Metric Threaded Products",
+    "part_number": "9129007025",
+    "supplier_sku": "9129007025",
+    "diameter": 7,
+    "pitch": 1,
+    "length": 25,
+    "threaded_length": 25,
+    "length_convention": "under_head",
+    "head_style": "socket cap",
+    "head_diameter": 12,
+    "head_height": 6,
+    "drive": "6 mm internal hex",
+    "material": "Alloy steel",
+    "finish": "Thermal Black Oxide",
+    "strength_class": "12.9",
+    "manufacturing_standard": "Supplier lists DIN 912 / ISO 4762; dimensional conformity not independently verified",
+    "source": "https://metric-threaded.com/details/item?itemID=9129007025",
+    "source_document": "https://metric-threaded.com/details/item?itemID=9129007025",
+    "unknown_fields": [
+      "manufacturer_identity",
+      "shank_diameter",
+      "dimensional_tolerances"
+    ],
+    "field_sources": {
+      "supplier_dimensions,material,finish,strength_class": {
+        "url": "https://metric-threaded.com/details/item?itemID=9129007025",
+        "section": "Product Specifications; full thread explicitly stated"
+      },
+      "length_convention": {
+        "url": "https://metric-threaded.com/details/item?itemID=9129007025",
+        "basis": "Non-countersunk socket cap bearing convention"
+      }
+    },
+    "notes": "Head width12mm and height6mm retained exactly as supplier lists; no extrapolation from neighboring standard sizes. Source completeness remains partial; not a certified dimensional conformity statement or Pi4 adapter approval."
+  }
+]

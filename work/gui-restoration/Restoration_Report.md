@@ -43,3 +43,12 @@ Normal app remains at http://127.0.0.1:8765 using `data/normal-use` with `--exis
 ## Next development
 
 Recover and inspect the original HTML application and creator rack component sources, including rights/provenance, before claiming the old rack generator is restored. Use recovered source or a separately verified component adapter for exact rack geometry. Keep current layout planning distinct from physical/export support. Continue the existing STL-only scope; no new numbered phase or mounting work is implied.
+
+## Subsequent recovery — 2026-10-18 automation
+
+The original HTML files and all three newly supplied3MF sources were subsequently recovered from Downloads. See `work/rack-geometry-recovery/Recovery_Report.md` for superseding source findings, provenance and implemented local reference viewer. The original source is a component assembly/import planner, not a located manufacturing rack-frame STL writer. Current rack layouts remain schematic; all21 full-coordinate individual source components and creator photos are now available through the new Lab Rax references control after server restart. This addition has source/handler checks, not fresh browser visual acceptance. The GUI decisions and earlier browser evidence above are preserved.
+
+
+## Subsequent independent-instance and appearance work — 2026-10-18
+
+The earlier shared-project limitation is superseded: saved Pi4 allocations now own independent hardware/inputs/revisions, with legacy project preserved. Actual source-mesh rack previews, preview colors/local faceplate artwork and slot context menus are implemented. Brian chose preview-only artwork for now. See `../assembly-instances/Report.md` for scope, verified checks and two proposed GUI directions awaiting refinement. This does not implement arbitrary equipment/CAD, installed rack clearance, image geometry in STL or a rack-frame generator. Earlier restoration/recovery notes remain historical evidence.

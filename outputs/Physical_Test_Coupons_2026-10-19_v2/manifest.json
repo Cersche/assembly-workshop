@@ -1,0 +1,37 @@
+{
+  "status": "PROPOSED - UNVALIDATED test coupons",
+  "supersedes": "../Physical_Test_Coupons_2026-10-18",
+  "keystone_reference": "Brian-supplied Keystone+for+use+in+other+projects.3mf (EODelf remix of JC58, BY-NC-SA) - measured only; no reference geometry copied or redistributed",
+  "files": [
+    {
+      "file": "1_Keystone_and_corner_holes__faceplate.stl",
+      "purpose": "Keystone v2 opening + rear collar + 2 of 4 rack holes",
+      "size_mm": [
+        48,
+        10.4,
+        42
+      ],
+      "sha256": "cc2f01e02fb852a33ef60a390b4195b8a67982cd15c82ce64a2de70c2c2fa318"
+    },
+    {
+      "file": "2_Snap_joint__faceplate.stl",
+      "purpose": "Snap arm with flipped (v2) barb",
+      "size_mm": [
+        24,
+        20,
+        42
+      ],
+      "sha256": "f26798a51bb1b7a3751c5ffb68500c5fbdad128dab07d4448fbb853bb21e4474"
+    },
+    {
+      "file": "2_Snap_joint__tray.stl",
+      "purpose": "Tray corner with v2 window (3.2 mm long)",
+      "size_mm": [
+        24,
+        30,
+        3
+      ],
+      "sha256": "f698b39c9850b38b94677dbe01a0dd9d3e734271fe44670065f707d360ec30cc"
+    }
+  ]
+}

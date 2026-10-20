@@ -1,0 +1,54 @@
+{
+  "http_checks": [
+    {
+      "route": "/",
+      "status": 200,
+      "bytes": 29632,
+      "current_studio_template": true
+    },
+    {
+      "route": "/workspace.js",
+      "status": 200,
+      "bytes": 28040
+    },
+    {
+      "route": "/workspace.css",
+      "status": 200,
+      "bytes": 14442
+    },
+    {
+      "route": "/rack-reference.js",
+      "status": 200,
+      "bytes": 7348
+    },
+    {
+      "route": "/rack-references/catalog.json",
+      "status": 200,
+      "bytes": 10227
+    },
+    {
+      "route": "/api/rack-workspace",
+      "status": 200,
+      "bytes": 47
+    },
+    {
+      "route": "/api/state",
+      "status": 200,
+      "bytes": 6445,
+      "hardware_revisions": 6
+    },
+    {
+      "route": "/api/assembly",
+      "status": 200,
+      "bytes": 362121
+    }
+  ],
+  "normal_use_files_unchanged": 6,
+  "normal_rack_saved": false,
+  "server_pid": 28892,
+  "browser_visual_check": false,
+  "time_utc": "2026-10-18T15:58:48.760057+00:00",
+  "direct_file_guard_test": "PASS file URL help / HTTP unchanged",
+  "existing_frontend_handler_tests": "PASS catalog, Phase7 and all21 reference components",
+  "live_url": "http://127.0.0.1:8765/"
+}

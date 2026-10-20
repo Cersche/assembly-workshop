@@ -1,0 +1,98 @@
+  function newAssembly(){
+    if(!capable||!legacyTemplate)throw Error('Wait for the independent assembly workspace to load.');
+    const id='asm-'+uid(),name='Raspberry Pi 4',project=JSON.parse(JSON.stringify(legacyTemplate));
+    project.id=id;project.name=name;
+    return {id,name,revision:1,project,appearance:{},fit:'UNKNOWN'};
+  }
+  function clearBuild(){
+    previewRevision++;clearTimeout(previewTimer);generatedBuild=null;
+    byId('viewProposal').disabled=byId('downloadBuild').disabled=true;
+    byId('buildStatus').textContent='No generated mesh selected for this assembly.';
+    byId('checks').replaceChildren();byId('resultSummary').textContent='Run checks for this saved assembly.';
+    window.dispatchEvent(new CustomEvent('assembly-model',{detail:null}));
+  }
+  function leaveAssembly(){
+    if(openingAssembly||savingLayout){notify('Wait for the current operation to finish.',true);return false;}
+    if(window.workshopContext&&dirty){notify('Save the current assembly hardware draft before changing selection.',true);return false;}
+    window.workshopContext=null;clearBuild();
+    byId('jointProperties').hidden=true;byId('exportTools').hidden=true;byId('jointReview').hidden=true;
+    return true;
+  }
+  async function openAssembly(placement){
+    if(!capable||openingAssembly)return;
+    if(window.workshopContext?.id===placement.assembly.id){setStage('assemble');return;}
+    if(!leaveAssembly())return;
+    if(!persistedAssemblyIds.has(placement.assembly.id)){
+      await byId('saveLayout').onclick();
+      if(!persistedAssemblyIds.has(placement.assembly.id))return;
+    }
+    openingAssembly=true;byId('jointControls').inert=true;
+    window.workshopContext={id:placement.assembly.id,generation:documentState.generation};
+    try{clearBuild();await refresh();dirty=false;byId('dirty').textContent='Saved independent assembly · hardware pins retained.';setStage('assemble');renderProperties();applyAssemblyAppearance(placement);}
+    catch(e){window.workshopContext=null;setStage('rack');notify(e.message,true);}
+    finally{openingAssembly=false;byId('jointControls').inert=false;}
+  }
+  window.addEventListener('assembly-project-saved',e=>{
+    const project=e.detail;
+    for(const rack of documentState.racks)for(const p of rack.placements)if(p.assembly.id===project.instance_id){
+      const clean=JSON.parse(JSON.stringify(project));delete clean.instance_id;delete clean.instance_revision;delete clean.workspace_generation;
+      p.assembly.project=clean;p.assembly.revision=project.instance_revision;
+    }
+    documentState.generation=project.workspace_generation;
+    if(window.workshopContext?.id===project.instance_id)window.workshopContext.generation=project.workspace_generation;
+    renderTree();renderProperties();
+  });
+  function releasePlacement(placement){
+    if(!leaveAssembly())return;
+    lastReleased=RackLayout.release(active(),placement.id);selectedSlot=placement.slot;
+    byId('mountWizard').hidden=true;markChanged();setStage('rack');render();
+    notify('Allocation released in the draft. Undo restores its independent hardware and appearance. Save layout to keep the release; prior saved records remain in local history.');
+  }
+  const slotMenu=document.createElement('div');slotMenu.id='slotMenu';slotMenu.hidden=true;slotMenu.setAttribute('role','menu');shell.append(slotMenu);
+  function closeSlotMenu(){slotMenu.hidden=true;}
+  function showSlotMenu(slot,anchor){
+    if(selectedSlot!==slot)return;
+    const p=assigned(active(),slot);slotMenu.replaceChildren();
+    const action=(label,fn)=>{const b=button(label,()=>{closeSlotMenu();fn();});b.setAttribute('role','menuitem');slotMenu.append(b);};
+    if(p){action('Open assembly',()=>openAssembly(p));action('Edit slot allocation',()=>editAllocation(p));action('Colors & faceplate image',()=>{byId('appearanceProperties').scrollIntoView({block:'nearest'});byId('assemblyAppearance').open=true;});action('Release slots',()=>releasePlacement(p));}
+    else action('Create assembly',startWizard);
+    action('Rack colors',()=>{byId('rackAppearance').open=true;byId('rackAppearance').scrollIntoView({block:'nearest'});});
+    const box=anchor.getBoundingClientRect();slotMenu.style.left=Math.max(8,Math.min(innerWidth-238,box.right))+'px';slotMenu.style.top=Math.max(8,Math.min(innerHeight-240,box.top))+'px';slotMenu.hidden=false;slotMenu.querySelector('button')?.focus();
+  }
+  document.addEventListener('pointerdown',e=>{if(!slotMenu.contains(e.target)&&!e.target.closest('.slot-more'))closeSlotMenu();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSlotMenu();});
+  function applyAssemblyAppearance(p){window.dispatchEvent(new CustomEvent('assembly-appearance',{detail:p?.assembly.appearance||{}}));}
+  function colorField(host,label,value,onChange){
+    const wrap=document.createElement('label');wrap.className='color-field';wrap.append(document.createTextNode(label));
+    const input=document.createElement('input');input.type='color';input.value=value;input.setAttribute('aria-label',label);
+    input.oninput=()=>onChange(input.value);wrap.append(input);host.append(wrap);
+  }
+  function renderAppearance(){
+    const host=byId('appearanceProperties'),rack=active();if(!host)return;host.replaceChildren();if(!rack||!capable)return;
+    rack.appearance ||= {};
+    const details=document.createElement('details');details.id='rackAppearance';const summary=document.createElement('summary');summary.textContent='Rack colors';details.append(summary);
+    colorField(details,'Whole rack',rack.appearance.color||'#7a8799',v=>{rack.appearance.color=v;markChanged();drawSoon();});
+    const label=document.createElement('label');label.textContent='Component override';label.htmlFor='rackColorComponent';const select=document.createElement('select');select.id='rackColorComponent';
+    for(const [key,title] of [['post1','1U posts'],['post2','2U posts'],['post3','3U posts'],['post4','4U posts'],['post5','5U posts'],['beam_bottom','Bottom beams'],['beam_top_front','Top front beam'],['beam_top_rear','Top rear beam'],['side_rail','Side rails'],['panel_top','Top panel'],['panel_bottom','Bottom panel'],['panel1','1U side panels'],['panel2','2U side panels'],['panel3','3U side panels'],['panel4','4U side panels'],['panel5','5U side panels'],['foot','Feet'],['handle','Handles']])select.append(new Option(title,key));
+    const component=document.createElement('div');const update=()=>{component.replaceChildren();colorField(component,'Component color',rack.appearance.components?.[select.value]||rack.appearance.color||'#7a8799',v=>{rack.appearance.components ||= {};rack.appearance.components[select.value]=v;markChanged();drawSoon();});};select.onchange=update;details.append(label,select,component);update();
+    details.append(button('Reset rack colors',()=>{rack.appearance={};markChanged();renderAppearance();drawSoon();},'secondary'));host.append(details);
+    const p=assigned(rack,selectedSlot);if(!p)return;p.assembly.appearance ||= {};
+    const artDetails=document.createElement('details');artDetails.id='assemblyAppearance';const sum=document.createElement('summary');sum.textContent='Equipment colors & faceplate image';artDetails.append(sum);
+    for(const [key,title,defaultColor] of [['equipment','Equipment','#5b8545'],['tray','Tray','#4d8e6e'],['faceplate','Faceplate','#4e75a3']])colorField(artDetails,title,p.assembly.appearance[key]||defaultColor,v=>{p.assembly.appearance[key]=v;markChanged();applyAssemblyAppearance(p);});
+    const fileLabel=document.createElement('label');fileLabel.textContent='Local faceplate image';fileLabel.htmlFor='faceplateImage';const file=document.createElement('input');file.id='faceplateImage';file.type='file';file.accept='image/png,image/jpeg,image/webp';file.onchange=()=>loadArtwork(file,p);artDetails.append(fileLabel,file);
+    const art=p.assembly.appearance.artwork;
+    if(art){artDetails.append(paragraph(art.name+' · preview only'));for(const [key,title,min,max] of [['x','Image horizontal position',0,1],['y','Image vertical position',0,1],['scale','Image size',.05,1]]){const label=document.createElement('label');label.textContent=title;const input=document.createElement('input');input.type='range';input.min=min;input.max=max;input.step=.01;input.value=art[key];input.setAttribute('aria-label',title);input.oninput=()=>{art[key]=Number(input.value);markChanged();applyAssemblyAppearance(p);};label.append(input);artDetails.append(label);}artDetails.append(button('Remove image',()=>{delete p.assembly.appearance.artwork;markChanged();applyAssemblyAppearance(p);renderAppearance();byId('assemblyAppearance').open=true;},'secondary'));}
+    artDetails.append(button('View faceplate front',async()=>{await openAssembly(p);if(window.workshopContext?.id===p.assembly.id)window.dispatchEvent(new Event('assembly-faceplate-front'));},'secondary'),paragraph('Colors and images are visual previews. Save layout to keep them. STL files have no color or artwork.','notice'));host.append(artDetails);
+  }
+  async function loadArtwork(input,p){
+    const file=input.files[0];if(!file)return;input.disabled=true;
+    try{
+      if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>10*1024*1024)throw Error('Choose a PNG, JPEG or WebP up to 10 MB.');
+      const bitmap=await createImageBitmap(file);if(bitmap.width*bitmap.height>40_000_000){bitmap.close();throw Error('Choose an image up to 40 megapixels.');}
+      const canvas=document.createElement('canvas');let url;
+      for(const limit of [512,256]){const ratio=Math.min(1,limit/Math.max(bitmap.width,bitmap.height));canvas.width=Math.max(1,Math.round(bitmap.width*ratio));canvas.height=Math.max(1,Math.round(bitmap.height*ratio));canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);url=canvas.toDataURL('image/png');if(url.length<690000)break;}bitmap.close();
+      const asset=await api('artwork',{data_url:url});
+      if(!documentState.racks.some(r=>r.placements.some(item=>item.assembly.id===p.assembly.id)))throw Error('The allocation was released. Choose an existing assembly.');
+      p.assembly.appearance.artwork={sha256:asset.sha256,name:file.name.slice(0,120),mode:'preview-only',x:.5,y:.5,scale:.65};markChanged();applyAssemblyAppearance(p);renderAppearance();byId('assemblyAppearance').open=true;notify('Local faceplate preview image prepared. Save layout to keep its placement. STL geometry is unchanged.');
+    }catch(e){notify(e.message,true);}finally{input.disabled=false;}
+  }

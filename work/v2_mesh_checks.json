@@ -1,0 +1,34 @@
+{
+  "tray": {
+    "triangles": 10340,
+    "closed_edges": true,
+    "bounds": [
+      [
+        -56.0,
+        0.0,
+        7.0
+      ],
+      [
+        56.0,
+        82.0,
+        29.0
+      ]
+    ]
+  },
+  "faceplate": {
+    "triangles": 1220,
+    "closed_edges": true,
+    "bounds": [
+      [
+        -126.0,
+        -3.0,
+        0.0
+      ],
+      [
+        126.0,
+        8.0,
+        42.0
+      ]
+    ]
+  }
+}

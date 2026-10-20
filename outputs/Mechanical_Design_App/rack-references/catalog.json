@@ -1,0 +1,353 @@
+{
+  "version": 1,
+  "scope": "Local source reference only; rack layout remains schematic.",
+  "manufacturing_geometry_supported": false,
+  "m6_note": "Brian supplied: M6 heat inserts can be placed in the rack post mounting holes. Insert selection, bore dimensions, installation, fit and strength remain UNKNOWN.",
+  "references": [
+    {
+      "id": "0",
+      "title": "Lab Rax 1-5U Posts & Panels",
+      "designer": "mklements",
+      "license_metadata": "BY-NC-SA",
+      "source_file": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+      "source_sha256": "64e4eb982ce70d426777f55b133988a8d94eccbe9b067f9ceaef9b490afb01aa",
+      "geometry_status": "Full source coordinates for individual components; assembled placement and fit UNKNOWN.",
+      "pictures": [
+        {
+          "url": "/rack-references/reference_0.webp",
+          "source_member": "Auxiliaries/Model Pictures/Lab Rack Sizes.webp"
+        }
+      ],
+      "components": [
+        {
+          "id": "22",
+          "name": "3U Side Panel.stl",
+          "source_member": "3D/Objects/object_188.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            139.25
+          ],
+          "vertices": 8,
+          "triangles": 12,
+          "url": "/rack-references/component_0_22.json"
+        },
+        {
+          "id": "29",
+          "name": "4U Side Panel.stl",
+          "source_member": "3D/Objects/object_197.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            183.699997
+          ],
+          "vertices": 8,
+          "triangles": 12,
+          "url": "/rack-references/component_0_29.json"
+        },
+        {
+          "id": "14",
+          "name": "2U Side Panel",
+          "source_member": "3D/Objects/object_181.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            94.800003
+          ],
+          "vertices": 8,
+          "triangles": 12,
+          "url": "/rack-references/component_0_14.json"
+        },
+        {
+          "id": "6",
+          "name": "1U Side Panel.stl",
+          "source_member": "3D/Objects/object_175.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            50.3499984
+          ],
+          "vertices": 8,
+          "triangles": 12,
+          "url": "/rack-references/component_0_6.json"
+        },
+        {
+          "id": "36",
+          "name": "5U Side Panel.stl",
+          "source_member": "3D/Objects/object_202.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            228.149994
+          ],
+          "vertices": 8,
+          "triangles": 12,
+          "url": "/rack-references/component_0_36.json"
+        },
+        {
+          "id": "1",
+          "name": "1U Vertical Post",
+          "source_member": "3D/Objects/object_168.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            30.0,
+            35.0,
+            44.4500008
+          ],
+          "vertices": 1094,
+          "triangles": 2196,
+          "url": "/rack-references/component_0_1.json"
+        },
+        {
+          "id": "17",
+          "name": "3U Vertical Post",
+          "source_member": "3D/Objects/object_184.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            30.0,
+            35.0,
+            133.3500062
+          ],
+          "vertices": 1554,
+          "triangles": 3140,
+          "url": "/rack-references/component_0_17.json"
+        },
+        {
+          "id": "9",
+          "name": "2U Vertical Post",
+          "source_member": "3D/Objects/object_177.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            30.0,
+            35.0,
+            88.9000016
+          ],
+          "vertices": 1392,
+          "triangles": 2804,
+          "url": "/rack-references/component_0_9.json"
+        },
+        {
+          "id": "24",
+          "name": "4U Vertical Post",
+          "source_member": "3D/Objects/object_190.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            30.0,
+            35.0,
+            177.800003
+          ],
+          "vertices": 1670,
+          "triangles": 3384,
+          "url": "/rack-references/component_0_24.json"
+        },
+        {
+          "id": "31",
+          "name": "5U Vertical Post",
+          "source_member": "3D/Objects/object_198.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            30.0,
+            35.0,
+            222.25
+          ],
+          "vertices": 1770,
+          "triangles": 3596,
+          "url": "/rack-references/component_0_31.json"
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "title": "Lab Rax 10\" Server Rack - 5U",
+      "designer": "mklements",
+      "license_metadata": "MakerWorld Exclusive License",
+      "source_file": "5U+Lab+Rax+X2D.3mf",
+      "source_sha256": "0372934444785bd36a6edd3f265fdd8a9c9cb27fd125df8eae49d7840d459ef6",
+      "geometry_status": "Full source coordinates for individual components; assembled placement and fit UNKNOWN.",
+      "pictures": [
+        {
+          "url": "/rack-references/reference_1.webp",
+          "source_member": "Auxiliaries/Model Pictures/IMG_2696.webp"
+        }
+      ],
+      "components": [
+        {
+          "id": "13",
+          "name": "Bottom Panel.stl",
+          "source_member": "3D/Objects/object_153.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            228.049988,
+            171.5,
+            2.9999981
+          ],
+          "vertices": 8,
+          "triangles": 12,
+          "url": "/rack-references/component_1_13.json"
+        },
+        {
+          "id": "15",
+          "name": "5U Side Panel.stl",
+          "source_member": "3D/Objects/object_155.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            175.8999938,
+            3.0,
+            228.149994
+          ],
+          "vertices": 8,
+          "triangles": 12,
+          "url": "/rack-references/component_1_15.json"
+        },
+        {
+          "id": "28",
+          "name": "Top Left Edge",
+          "source_member": "3D/Objects/object_177.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            30.0,
+            170.0,
+            35.0
+          ],
+          "vertices": 820,
+          "triangles": 1636,
+          "url": "/rack-references/component_1_28.json"
+        },
+        {
+          "id": "6",
+          "name": "Right Front Foot",
+          "source_member": "3D/Objects/object_145.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            26.0,
+            25.9961242,
+            12.0
+          ],
+          "vertices": 1041,
+          "triangles": 2082,
+          "url": "/rack-references/component_1_6.json"
+        },
+        {
+          "id": "1",
+          "name": "Rack Edge",
+          "source_member": "3D/Objects/object_134.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            30.0,
+            35.0,
+            222.25
+          ],
+          "vertices": 1770,
+          "triangles": 3596,
+          "url": "/rack-references/component_1_1.json"
+        },
+        {
+          "id": "11",
+          "name": "Top Panel.stl",
+          "source_member": "3D/Objects/object_152.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            228.049988,
+            171.5,
+            3.0
+          ],
+          "vertices": 2360,
+          "triangles": 4876,
+          "url": "/rack-references/component_1_11.json"
+        },
+        {
+          "id": "25",
+          "name": "Left Handle",
+          "source_member": "3D/Objects/object_172.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            23.0,
+            170.0,
+            37.5
+          ],
+          "vertices": 3950,
+          "triangles": 7904,
+          "url": "/rack-references/component_1_25.json"
+        },
+        {
+          "id": "20",
+          "name": "Bottom Front Edge",
+          "source_member": "3D/Objects/object_169.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            282.24997,
+            54.8499984,
+            54.8500062
+          ],
+          "vertices": 6706,
+          "triangles": 13424,
+          "url": "/rack-references/component_1_20.json"
+        },
+        {
+          "id": "18",
+          "name": "Top Front Edge",
+          "source_member": "3D/Objects/object_168.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            282.24997,
+            54.8499984,
+            54.8500062
+          ],
+          "vertices": 8674,
+          "triangles": 17748,
+          "url": "/rack-references/component_1_18.json"
+        },
+        {
+          "id": "23",
+          "name": "Top Front Edge",
+          "source_member": "3D/Objects/object_171.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            282.24997,
+            54.8499984,
+            54.8500062
+          ],
+          "vertices": 10355,
+          "triangles": 21094,
+          "url": "/rack-references/component_1_23.json"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Lab Rax Upgraded 1U Extension Module",
+      "designer": "mklements",
+      "license_metadata": "MakerWorld Exclusive License",
+      "source_file": "1U+Support+Extension.3mf",
+      "source_sha256": "26a9e3321e951f319c77450b79cfa5fd946abadaaf041fbc9343b37adcc756a8",
+      "geometry_status": "Full source coordinates for individual components; assembled placement and fit UNKNOWN.",
+      "pictures": [
+        {
+          "url": "/rack-references/reference_2.webp",
+          "source_member": "Auxiliaries/Model Pictures/Screenshot 2026-08-23 at 5.03.28 pm.webp"
+        }
+      ],
+      "components": [
+        {
+          "id": "1",
+          "name": "1U Support Extension",
+          "source_member": "3D/Objects/object_2.model",
+          "unit": "millimeter",
+          "extent_mm": [
+            30.0,
+            240.0,
+            84.1500016
+          ],
+          "vertices": 3372,
+          "triangles": 6780,
+          "url": "/rack-references/component_2_1.json"
+        }
+      ]
+    }
+  ]
+}

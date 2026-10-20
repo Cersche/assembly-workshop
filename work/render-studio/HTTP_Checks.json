@@ -1,0 +1,56 @@
+[
+  {
+    "port": 8765,
+    "route": "/",
+    "status": 200,
+    "sha256": "53e31487dd3d5ee46bf5ac4647e65f426fe64314cb19448347fad41c71ff6840"
+  },
+  {
+    "port": 8765,
+    "route": "/rack-references/rack-scene.js",
+    "status": 200,
+    "sha256": "414214bcbf3f1f40ff7a6be0791741ec721cb3d9585cc4d148b1c68f7ff1c7d2",
+    "matches_disk": true
+  },
+  {
+    "port": 8765,
+    "route": "/rack-references/rack-studio.js",
+    "status": 200,
+    "sha256": "500f329c1bf1cf77155424a845055a2b8497ac9d0aba88867b0e6fd0c53f5816",
+    "matches_disk": true
+  },
+  {
+    "port": 8765,
+    "route": "/workspace.js",
+    "status": 200,
+    "sha256": "e04e4e2d6241d11423ec464124a00d180246eb498f2177a4447bc22bc06acb8c",
+    "matches_disk": true
+  },
+  {
+    "port": 8767,
+    "route": "/",
+    "status": 200,
+    "sha256": "ea04c23e91c496ee4ca1b5837b27316a4485c1590ea47f1fdb2393e3d03bc7b6"
+  },
+  {
+    "port": 8767,
+    "route": "/rack-references/rack-scene.js",
+    "status": 200,
+    "sha256": "414214bcbf3f1f40ff7a6be0791741ec721cb3d9585cc4d148b1c68f7ff1c7d2",
+    "matches_disk": true
+  },
+  {
+    "port": 8767,
+    "route": "/rack-references/rack-studio.js",
+    "status": 200,
+    "sha256": "500f329c1bf1cf77155424a845055a2b8497ac9d0aba88867b0e6fd0c53f5816",
+    "matches_disk": true
+  },
+  {
+    "port": 8767,
+    "route": "/workspace.js",
+    "status": 200,
+    "sha256": "e04e4e2d6241d11423ec464124a00d180246eb498f2177a4447bc22bc06acb8c",
+    "matches_disk": true
+  }
+]

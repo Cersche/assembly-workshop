@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "racks": [
+    {
+      "id": "brand-test",
+      "name": "Rack branding · disposable",
+      "slots": 5,
+      "appearance": {
+        "logo_color": "#d09b55",
+        "post_labels": false
+      },
+      "width_mm": null,
+      "depth_mm": null,
+      "pitch_mm": null,
+      "placements": []
+    }
+  ],
+  "generation": "4d274e74-5d5c-46fb-82a0-023f1b2cc9ea"
+}

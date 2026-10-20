@@ -1,0 +1,16 @@
+PASS opaque draw order does not change occlusion
+PASS upright hides tray at crossing pixel
+PASS source rack order invariance 0/0 (0 seam pixels)
+PASS WebGL state 0/0
+PASS source rack order invariance -0.7/0.4 (0 seam pixels)
+PASS WebGL state -0.7/0.4
+PASS source rack order invariance 0.8/0.5 (1 seam pixels)
+PASS WebGL state 0.8/0.5
+PASS source rack order invariance 1.45/0.9 (0 seam pixels)
+PASS WebGL state 1.45/0.9
+PASS source rack order invariance 2.8/0.3 (0 seam pixels)
+PASS WebGL state 2.8/0.3
+PASS source rack order invariance -0.5/-0.8 (0 seam pixels)
+PASS WebGL state -0.5/-0.8
+PASS shadow and ambient-occlusion passes
+ALL 15 GPU CHECKS PASSED

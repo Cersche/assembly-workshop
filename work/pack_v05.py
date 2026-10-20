@@ -1,0 +1,9 @@
+from pathlib import Path
+import zipfile
+root=Path('outputs/Mechanical_Design_App')
+p=root/'README.md';s=p.read_text(encoding='utf-8')+'''\n\n## Version 0.5 — actual assembly inspection (Phase 4 of 7)\n\nIncludes an offline, rotatable orthographic canvas view of the actual clearance-v2 tray and faceplate: 10,340 and 1,220 triangles respectively. Controls support drag/arrow-key rotation, zoom, top view, reset, hiding parts and focusing the right joint. Original millimeter coordinates are preserved; assembly.json records source STL SHA-256 hashes and bounds. No external JavaScript libraries, model downloads or network services are needed.\n\nThe assembly view is read-only and independent of the hardware-input axial preview. It excludes the Pi board, screws and inserts. Changes to pilot or hardware selections do not regenerate assembly meshes. The software painter renderer may show ordering artifacts at intersecting surfaces and is not a boolean or collision engine.\n\nValidation: ten Python tests pass, both JavaScript files pass Node syntax checks, and a mocked-canvas runtime check exercises finite projection coordinates, initial rendering, visibility, joint focus, top and reset. These do not replace browser visual QA, which remains pending. No desktop access or printing occurred.\n\nUpdate by stopping the server, copying all application files (including assembly.json and viewer.js) into the existing app folder while keeping data/, restarting start.bat and refreshing the browser.\n''';p.write_text(s,encoding='utf-8')
+with zipfile.ZipFile('outputs/Mechanical_Design_App_Beta_0_5.zip','w',zipfile.ZIP_DEFLATED) as z:
+ for p in root.iterdir():
+  if p.is_file():z.write(p,Path(root.name)/p.name)
+with zipfile.ZipFile('outputs/Mechanical_Design_App_Beta_0_5.zip') as z:assert z.testzip() is None
+print('Beta 0.5 archive validated.')

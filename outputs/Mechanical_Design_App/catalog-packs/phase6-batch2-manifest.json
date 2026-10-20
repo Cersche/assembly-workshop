@@ -1,0 +1,22 @@
+{
+  "id": "phase6-batch2",
+  "revision": 1,
+  "retrieved": "2026-10-18",
+  "units": "mm",
+  "file": "phase6-batch2.json",
+  "sha256": "c274bada546a21369eda64162beec03444f6bc0e341f1f31f0322dcee7c4daf4",
+  "records": 7,
+  "scope": "M2.5/M5/M6 screws plus Series19 straight-hole inserts at M2.5/M3/M5/M6",
+  "loading": "Explicit import; no automatic active-data update",
+  "requires": "Range-aware hole evaluation added in Phase6 batch2; older versions compare nominal only",
+  "rights": "No supplier CAD/images/drawings/documents bundled; asset redistribution rights unknown",
+  "sources": [
+    "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150419",
+    "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150422",
+    "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150423",
+    "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150989",
+    "https://www.accu.co.uk/metric-cap-head-screws/3805-SSCF-M2-5-8-A2",
+    "https://www.accu.co.uk/metric-cap-head-screws/3849-SSCF-M5-10-A2",
+    "https://www.accu.co.uk/metric-cap-head-screws/3865-SSCF-M6-12-A2"
+  ]
+}

@@ -1,0 +1,393 @@
+[
+  {
+    "id": "accu-sscf-m2.5-8-a2",
+    "revision": 1,
+    "name": "Accu M2.5 x 8 socket cap - A2",
+    "kind": "screw",
+    "manufacturer": "Accu",
+    "part_number": "SSCF-M2.5-8-A2",
+    "supplier_sku": "SSCF-M2.5-8-A2",
+    "units": "mm",
+    "diameter": 2.5,
+    "pitch": 0.45,
+    "length": 8,
+    "threaded_length": 8,
+    "length_convention": "under_head",
+    "head_diameter": 4.5,
+    "head_height": 2.5,
+    "head_style": "socket cap",
+    "drive": "2 mm hex",
+    "material": "A2 stainless steel",
+    "finish": "Natural",
+    "verification": "documented",
+    "source": "https://www.accu.co.uk/metric-cap-head-screws/3805-SSCF-M2-5-8-A2",
+    "source_document": "https://www.accu.co.uk/metric-cap-head-screws/3805-SSCF-M2-5-8-A2",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; static page contains multiple availability states; live stock not established",
+    "cad_status": "Link only; no CAD/drawing downloaded or bundled",
+    "redistribution_status": "unknown for supplier CAD/images/documents; local factual metadata only",
+    "field_sources": {
+      "diameter,pitch,length,threaded_length,head_diameter,head_height,drive,material,finish": {
+        "url": "https://www.accu.co.uk/metric-cap-head-screws/3805-SSCF-M2-5-8-A2",
+        "section": "Technical Specification; Full Thread Yes",
+        "basis": "threaded_length equals stated full-thread under-head length"
+      },
+      "length_convention": {
+        "url": "https://www.accu.co.uk/metric-cap-head-screws/3805-SSCF-M2-5-8-A2",
+        "section": "DIN 912 / ISO 4762 socket cap type",
+        "basis": "under-head measurement convention for this non-countersunk type"
+      }
+    },
+    "dimensional_tolerances": {
+      "head_diameter_mm": {
+        "plus": 0,
+        "minus": 0.18
+      },
+      "head_height_mm": {
+        "plus": 0,
+        "minus": 0.14
+      }
+    },
+    "unknown_fields": [
+      "strength_class",
+      "shank_diameter",
+      "length_tolerance",
+      "thread_tolerance"
+    ],
+    "notes": "Catalog dimensions only. No printed-fit, strength, stock or Pi4 adapter compatibility approval."
+  },
+  {
+    "id": "accu-sscf-m5-10-a2",
+    "revision": 1,
+    "name": "Accu M5 x 10 socket cap - A2",
+    "kind": "screw",
+    "manufacturer": "Accu",
+    "part_number": "SSCF-M5-10-A2",
+    "supplier_sku": "SSCF-M5-10-A2",
+    "units": "mm",
+    "diameter": 5,
+    "pitch": 0.8,
+    "length": 10,
+    "threaded_length": 10,
+    "length_convention": "under_head",
+    "head_diameter": 8.5,
+    "head_height": 5,
+    "head_style": "socket cap",
+    "drive": "4 mm hex",
+    "material": "A2 stainless steel",
+    "finish": "Natural",
+    "verification": "documented",
+    "source": "https://www.accu.co.uk/metric-cap-head-screws/3849-SSCF-M5-10-A2",
+    "source_document": "https://www.accu.co.uk/metric-cap-head-screws/3849-SSCF-M5-10-A2",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; static page contains multiple availability states; live stock not established",
+    "cad_status": "Link only; no CAD/drawing downloaded or bundled",
+    "redistribution_status": "unknown for supplier CAD/images/documents; local factual metadata only",
+    "field_sources": {
+      "diameter,pitch,length,threaded_length,head_diameter,head_height,drive,material,finish": {
+        "url": "https://www.accu.co.uk/metric-cap-head-screws/3849-SSCF-M5-10-A2",
+        "section": "Technical Specification; Full Thread Yes",
+        "basis": "threaded_length equals stated full-thread under-head length"
+      },
+      "length_convention": {
+        "url": "https://www.accu.co.uk/metric-cap-head-screws/3849-SSCF-M5-10-A2",
+        "section": "DIN 912 / ISO 4762 socket cap type",
+        "basis": "under-head measurement convention for this non-countersunk type"
+      }
+    },
+    "dimensional_tolerances": {
+      "head_diameter_mm": {
+        "plus": 0,
+        "minus": 0.22
+      },
+      "head_height_mm": {
+        "plus": 0,
+        "minus": 0.18
+      }
+    },
+    "unknown_fields": [
+      "strength_class",
+      "shank_diameter",
+      "length_tolerance",
+      "thread_tolerance"
+    ],
+    "notes": "Catalog dimensions only. No printed-fit, strength, stock or Pi4 adapter compatibility approval."
+  },
+  {
+    "id": "accu-sscf-m6-12-a2",
+    "revision": 1,
+    "name": "Accu M6 x 12 socket cap - A2",
+    "kind": "screw",
+    "manufacturer": "Accu",
+    "part_number": "SSCF-M6-12-A2",
+    "supplier_sku": "SSCF-M6-12-A2",
+    "units": "mm",
+    "diameter": 6,
+    "pitch": 1,
+    "length": 12,
+    "threaded_length": 12,
+    "length_convention": "under_head",
+    "head_diameter": 10,
+    "head_height": 6,
+    "head_style": "socket cap",
+    "drive": "5 mm hex",
+    "material": "A2 stainless steel",
+    "finish": "Natural",
+    "verification": "documented",
+    "source": "https://www.accu.co.uk/metric-cap-head-screws/3865-SSCF-M6-12-A2",
+    "source_document": "https://www.accu.co.uk/metric-cap-head-screws/3865-SSCF-M6-12-A2",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; static page contains multiple availability states; live stock not established",
+    "cad_status": "Link only; no CAD/drawing downloaded or bundled",
+    "redistribution_status": "unknown for supplier CAD/images/documents; local factual metadata only",
+    "field_sources": {
+      "diameter,pitch,length,threaded_length,head_diameter,head_height,drive,material,finish": {
+        "url": "https://www.accu.co.uk/metric-cap-head-screws/3865-SSCF-M6-12-A2",
+        "section": "Technical Specification; Full Thread Yes",
+        "basis": "threaded_length equals stated full-thread under-head length"
+      },
+      "length_convention": {
+        "url": "https://www.accu.co.uk/metric-cap-head-screws/3865-SSCF-M6-12-A2",
+        "section": "DIN 912 / ISO 4762 socket cap type",
+        "basis": "under-head measurement convention for this non-countersunk type"
+      }
+    },
+    "dimensional_tolerances": {
+      "head_diameter_mm": {
+        "plus": 0,
+        "minus": 0.22
+      },
+      "head_height_mm": {
+        "plus": 0,
+        "minus": 0.3
+      }
+    },
+    "unknown_fields": [
+      "strength_class",
+      "shank_diameter",
+      "length_tolerance",
+      "thread_tolerance"
+    ],
+    "notes": "Catalog dimensions only. No printed-fit, strength, stock or Pi4 adapter compatibility approval."
+  },
+  {
+    "id": "spirol-150989",
+    "revision": 1,
+    "name": "SPIROL Series 19 Long M2.5 x 5.74 straight-hole heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "SPIROL",
+    "part_number": "INS 19/M2.5 / .226L EK",
+    "supplier_sku": "150989",
+    "units": "mm",
+    "diameter": 2.5,
+    "pitch": 0.45,
+    "length": 5.74,
+    "outside_diameter": 4.75,
+    "outside_diameter_basis": "Overknurl A reference dimension; not a tolerance-bounded maximum",
+    "pilot_diameter_mm": 3.91,
+    "hole_profile": "straight",
+    "hole_diameter": 3.99,
+    "hole_diameter_tolerance_mm": {
+      "plus": 0.08,
+      "minus": 0
+    },
+    "installation_method": "heat or ultrasonic",
+    "material": "Brass",
+    "material_grade": "ASTM B16; UNS C36000; EN 12164 CW603N CuZn36Pb3",
+    "finish": "Plain",
+    "verification": "partial",
+    "source": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150989",
+    "source_document": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150989",
+    "retrieved": "2026-10-18",
+    "availability": "supplier lists Stocked; current order availability not independently confirmed",
+    "cad_status": "Link only; no CAD/drawing downloaded or bundled",
+    "redistribution_status": "unknown for supplier CAD/images/documents; local factual metadata only",
+    "field_sources": {
+      "diameter,pitch,length,outside_diameter,pilot_diameter_mm,hole_diameter,hole_diameter_tolerance_mm,material,finish,availability": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150989",
+        "section": "Specifications"
+      },
+      "hole_profile": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150989",
+        "section": "Series 19 Long description: slightly tapered insert body designed for straight holes"
+      },
+      "installation_method": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150989",
+        "section": "Heat / Ultrasonic (Straight Hole) product category"
+      }
+    },
+    "unknown_fields": [
+      "usable_depth",
+      "min_wall",
+      "end_type",
+      "installation_temperature",
+      "material_specific_fit"
+    ],
+    "notes": "Straight installation hole despite tapered knurl/body. Sourced hole range is a dimensional comparison only; print compensation and material/process-specific validation remain unknown. Overknurl reference is not a worst-case boss-wall basis. Original part code contains an inch length token, but imported numeric dimensions are supplier-stated mm."
+  },
+  {
+    "id": "spirol-150419",
+    "revision": 1,
+    "name": "SPIROL Series 19 Long M3 x 5.74 straight-hole heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "SPIROL",
+    "part_number": "INS 19/M3 / .226L EK",
+    "supplier_sku": "150419",
+    "units": "mm",
+    "diameter": 3,
+    "pitch": 0.5,
+    "length": 5.74,
+    "outside_diameter": 4.75,
+    "outside_diameter_basis": "Overknurl A reference dimension; not a tolerance-bounded maximum",
+    "pilot_diameter_mm": 3.91,
+    "hole_profile": "straight",
+    "hole_diameter": 3.99,
+    "hole_diameter_tolerance_mm": {
+      "plus": 0.08,
+      "minus": 0
+    },
+    "installation_method": "heat or ultrasonic",
+    "material": "Brass",
+    "material_grade": "ASTM B16; UNS C36000; EN 12164 CW603N CuZn36Pb3",
+    "finish": "Plain",
+    "verification": "partial",
+    "source": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150419",
+    "source_document": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150419",
+    "retrieved": "2026-10-18",
+    "availability": "supplier lists Stocked; current order availability not independently confirmed",
+    "cad_status": "Link only; no CAD/drawing downloaded or bundled",
+    "redistribution_status": "unknown for supplier CAD/images/documents; local factual metadata only",
+    "field_sources": {
+      "diameter,pitch,length,outside_diameter,pilot_diameter_mm,hole_diameter,hole_diameter_tolerance_mm,material,finish,availability": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150419",
+        "section": "Specifications"
+      },
+      "hole_profile": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150419",
+        "section": "Series 19 Long description: slightly tapered insert body designed for straight holes"
+      },
+      "installation_method": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150419",
+        "section": "Heat / Ultrasonic (Straight Hole) product category"
+      }
+    },
+    "unknown_fields": [
+      "usable_depth",
+      "min_wall",
+      "end_type",
+      "installation_temperature",
+      "material_specific_fit"
+    ],
+    "notes": "Straight installation hole despite tapered knurl/body. Sourced hole range is a dimensional comparison only; print compensation and material/process-specific validation remain unknown. Overknurl reference is not a worst-case boss-wall basis. Original part code contains an inch length token, but imported numeric dimensions are supplier-stated mm."
+  },
+  {
+    "id": "spirol-150422",
+    "revision": 1,
+    "name": "SPIROL Series 19 Long M5 x 9.53 straight-hole heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "SPIROL",
+    "part_number": "INS 19/M5 / .375L EK",
+    "supplier_sku": "150422",
+    "units": "mm",
+    "diameter": 5,
+    "pitch": 0.8,
+    "length": 9.53,
+    "outside_diameter": 7.16,
+    "outside_diameter_basis": "Overknurl A reference dimension; not a tolerance-bounded maximum",
+    "pilot_diameter_mm": 6.32,
+    "hole_profile": "straight",
+    "hole_diameter": 6.4,
+    "hole_diameter_tolerance_mm": {
+      "plus": 0.08,
+      "minus": 0
+    },
+    "installation_method": "heat or ultrasonic",
+    "material": "Brass",
+    "material_grade": "ASTM B16; UNS C36000; EN 12164 CW603N CuZn36Pb3",
+    "finish": "Plain",
+    "verification": "partial",
+    "source": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150422",
+    "source_document": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150422",
+    "retrieved": "2026-10-18",
+    "availability": "supplier lists Stocked; current order availability not independently confirmed",
+    "cad_status": "Link only; no CAD/drawing downloaded or bundled",
+    "redistribution_status": "unknown for supplier CAD/images/documents; local factual metadata only",
+    "field_sources": {
+      "diameter,pitch,length,outside_diameter,pilot_diameter_mm,hole_diameter,hole_diameter_tolerance_mm,material,finish,availability": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150422",
+        "section": "Specifications"
+      },
+      "hole_profile": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150422",
+        "section": "Series 19 Long description: slightly tapered insert body designed for straight holes"
+      },
+      "installation_method": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150422",
+        "section": "Heat / Ultrasonic (Straight Hole) product category"
+      }
+    },
+    "unknown_fields": [
+      "usable_depth",
+      "min_wall",
+      "end_type",
+      "installation_temperature",
+      "material_specific_fit"
+    ],
+    "notes": "Straight installation hole despite tapered knurl/body. Sourced hole range is a dimensional comparison only; print compensation and material/process-specific validation remain unknown. Overknurl reference is not a worst-case boss-wall basis. Original part code contains an inch length token, but imported numeric dimensions are supplier-stated mm."
+  },
+  {
+    "id": "spirol-150423",
+    "revision": 1,
+    "name": "SPIROL Series 19 Long M6 x 12.7 straight-hole heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "SPIROL",
+    "part_number": "INS 19/M6 / .500L EK",
+    "supplier_sku": "150423",
+    "units": "mm",
+    "diameter": 6,
+    "pitch": 1,
+    "length": 12.7,
+    "outside_diameter": 8.76,
+    "outside_diameter_basis": "Overknurl A reference dimension; not a tolerance-bounded maximum",
+    "pilot_diameter_mm": 7.92,
+    "hole_profile": "straight",
+    "hole_diameter": 8.0,
+    "hole_diameter_tolerance_mm": {
+      "plus": 0.08,
+      "minus": 0
+    },
+    "installation_method": "heat or ultrasonic",
+    "material": "Brass",
+    "material_grade": "ASTM B16; UNS C36000; EN 12164 CW603N CuZn36Pb3",
+    "finish": "Plain",
+    "verification": "partial",
+    "source": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150423",
+    "source_document": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150423",
+    "retrieved": "2026-10-18",
+    "availability": "supplier lists Stocked; current order availability not independently confirmed",
+    "cad_status": "Link only; no CAD/drawing downloaded or bundled",
+    "redistribution_status": "unknown for supplier CAD/images/documents; local factual metadata only",
+    "field_sources": {
+      "diameter,pitch,length,outside_diameter,pilot_diameter_mm,hole_diameter,hole_diameter_tolerance_mm,material,finish,availability": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150423",
+        "section": "Specifications"
+      },
+      "hole_profile": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150423",
+        "section": "Series 19 Long description: slightly tapered insert body designed for straight holes"
+      },
+      "installation_method": {
+        "url": "https://shop.spirol.com/item/series-19-20-long-heat-ultrasonic-insert-metric/series-19-long-heat-ultrasonic-insert-metric/150423",
+        "section": "Heat / Ultrasonic (Straight Hole) product category"
+      }
+    },
+    "unknown_fields": [
+      "usable_depth",
+      "min_wall",
+      "end_type",
+      "installation_temperature",
+      "material_specific_fit"
+    ],
+    "notes": "Straight installation hole despite tapered knurl/body. Sourced hole range is a dimensional comparison only; print compensation and material/process-specific validation remain unknown. Overknurl reference is not a worst-case boss-wall basis. Original part code contains an inch length token, but imported numeric dimensions are supplier-stated mm."
+  }
+]

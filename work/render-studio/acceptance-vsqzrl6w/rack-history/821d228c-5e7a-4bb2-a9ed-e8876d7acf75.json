@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "racks": [
+    {
+      "id": "render-check",
+      "name": "Render Studio · disposable acceptance",
+      "slots": 5,
+      "appearance": {},
+      "width_mm": null,
+      "depth_mm": null,
+      "pitch_mm": 44.45,
+      "placements": [
+        {
+          "assembly": {
+            "id": "asm-d7d7f374ea62c8bedab1cb3f1952d40f",
+            "name": "Raspberry Pi 4",
+            "revision": 1,
+            "project": {
+              "selections": {},
+              "inputs": {
+                "stack": 3.3,
+                "pocket": 8,
+                "boss_diameter": 9,
+                "pilot": 4.2,
+                "minimum_engagement": 3,
+                "bottom_allowance": 0.5
+              },
+              "notes": "Clearance v2 baseline. Insert pilot is provisional. Physical testing pending.",
+              "id": "asm-d7d7f374ea62c8bedab1cb3f1952d40f",
+              "name": "Raspberry Pi 4",
+              "units": "mm"
+            },
+            "appearance": {},
+            "fit": "UNKNOWN"
+          },
+          "id": "render-pi",
+          "equipment": "pi4",
+          "slot": 3,
+          "span": 1,
+          "geometry": "pi4-clearance-v2-reference",
+          "fit": "UNKNOWN"
+        }
+      ]
+    }
+  ],
+  "generation": "821d228c-5e7a-4bb2-a9ed-e8876d7acf75"
+}

@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "racks": [
+    {
+      "id": "cd96c4c3-e9c9-4337-956e-713745ab5906",
+      "name": "Acceptance rack · disposable",
+      "slots": 5,
+      "width_mm": null,
+      "depth_mm": null,
+      "pitch_mm": null,
+      "placements": [
+        {
+          "id": "31375bd5-e85f-4a22-9af9-394d62f14bd2",
+          "equipment": "pi4",
+          "slot": 2,
+          "span": 1,
+          "geometry": "pi4-clearance-v2-reference",
+          "fit": "UNKNOWN"
+        }
+      ]
+    }
+  ],
+  "generation": "9f91ad62-44ac-4936-b705-8be391f8efa9"
+}

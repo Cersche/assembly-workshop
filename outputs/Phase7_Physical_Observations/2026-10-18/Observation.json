@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-18",
+  "specimen_id": "BRIAN-20261018-01",
+  "evidence_type": "User-reported qualitative fit with photographs",
+  "user_statement": "Fitment is fantastic",
+  "reported_result": "POSITIVE_FIT_REPORT_FOR_SHOWN_SPECIMEN",
+  "visual_observations": [
+    "Separate printed tray and faceplate shown alongside rulers.",
+    "Third photo shows tray and faceplate positioned together at the joint."
+  ],
+  "scope": "Record the reported specimen fit; no universal fit or strength approval.",
+  "exact_stl_revision": "Earlier supplied test-fit pair recovered from chat; later replacement build bbbe12450805205dfcb2be26f02d707bd53c3030e21970631539be2d3cd27937 is the documented replacement. Direct print-file hash not provided.",
+  "hardware_installed": "UNKNOWN",
+  "calibrated_measurements": "NOT PROVIDED; no precise ruler/photo measurements inferred",
+  "pi_board_fit": "NOT ESTABLISHED by these photos",
+  "retention_torque_strength": "UNKNOWN \u2014 no test results supplied",
+  "rack_cable_tool_access": "UNKNOWN",
+  "mounting_matter": "Remains tabled; photos are not authorization to reopen it",
+  "further_physical_work_authorized": false,
+  "photos": [
+    {
+      "file": "outputs\\Phase7_Physical_Observations\\2026-10-18\\photos\\Photo_1.jpg",
+      "sha256": "348148e9c0f2c385a84c3725f710dbd131511a30df1bca9058c313df12e77a74"
+    },
+    {
+      "file": "outputs\\Phase7_Physical_Observations\\2026-10-18\\photos\\Photo_2.jpg",
+      "sha256": "10e23f78b6fed9e8ced5b82e8a3b4d8addaa926c345849cccdd618819b0a251c"
+    },
+    {
+      "file": "outputs\\Phase7_Physical_Observations\\2026-10-18\\photos\\Photo_3.jpg",
+      "sha256": "b2bb5f7e1174ca1f26cffa8ef22b6164f3e5f91f3dc8443741ecda818141b50e"
+    }
+  ],
+  "file_provenance": "Recovered_Test_File_Provenance.json"
+}

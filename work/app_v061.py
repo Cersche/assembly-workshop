@@ -1,0 +1,5 @@
+from pathlib import Path
+p=Path('outputs/Mechanical_Design_App/index.html');s=p.read_text(encoding='utf-8').replace('LOCAL BETA 0.6','LOCAL BETA 0.6.1').replace('>Reset view</button>','>Full assembly</button>').replace('>Focus right joint</button>','>Reveal right joint</button>').replace('The Pi is excluded. No thread, driver-access or collision validation is implied.','Reveal right joint hides the faceplate and restores a useful camera angle. Full assembly restores both parts. The Pi is excluded. No thread, driver-access or collision validation is implied.');p.write_text(s,encoding='utf-8')
+p=Path('work/test_viewer_v06.cjs');s=p.read_text().replace("elements['show-faceplate'].checked=false;elements['show-faceplate'].onchange();", "assert.equal(elements['show-faceplate'].checked,false);assert.equal(elements.assemblyZoom.value,2.5);elements['show-hardware'].checked=false;elements['show-hardware'].onchange();")
+s=s.replace("elements.assemblyReset.onclick();console.log", "elements.assemblyReset.onclick();assert.equal(elements['show-faceplate'].checked,true);assert.equal(elements.assemblyZoom.value,1);console.log")
+Path('work/test_viewer_v061.cjs').write_text(s)

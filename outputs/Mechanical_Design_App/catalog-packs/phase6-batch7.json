@@ -1,0 +1,354 @@
+[
+  {
+    "revision": 2,
+    "units": "mm",
+    "verification": "partial",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; live stock not established",
+    "cad_status": "Links only; no third-party assets bundled",
+    "redistribution_status": "Supplier asset rights unresolved; factual metadata only",
+    "id": "msia-m1-250",
+    "name": "PEM MSIA-M1-250 microPEM heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "PennEngineering",
+    "part_number": "MSIA-M1-250",
+    "diameter": 1,
+    "pitch": 0.25,
+    "material": "Aluminum",
+    "installation_method": "heat / ultrasonic",
+    "end_type": "open",
+    "source": "https://www.pemnet.com/products/product-finder/msia-m1-250/",
+    "source_document": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+    "manufacturer_installation_evidence": {
+      "catalog_page": "SI-9; PDF page 9",
+      "A_mm": 2.5,
+      "A_tolerance_mm": 0.1,
+      "E_after_knurl_mm": 2.1,
+      "E_tolerance_mm": 0.1,
+      "C_max_mm": 1.75,
+      "hole_nominal_mm": 1.75,
+      "minimum_hole_depth_mm": 3.27,
+      "minimum_wall_mm": 0.7,
+      "wall_applicability": "Catalog footnote 6: tested in ABS and polycarbonate; boss interpretation and printed-material applicability unresolved",
+      "hole_tolerance_conflict": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "automation": "Catalog hole range used for nominal dimensional comparison only. Material/process and physical installation remain unvalidated."
+    },
+    "field_sources": {
+      "diameter,pitch,material,manufacturer_installation_evidence": {
+        "url": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+        "section": "SI-9 table and footnote 6"
+      },
+      "identity,installation_method,end_type": {
+        "url": "https://www.pemnet.com/products/product-finder/msia-m1-250/",
+        "section": "Exact product specifications"
+      },
+      "length,outside_diameter,hole_diameter,hole_diameter_tolerance_mm,dimensional_tolerances": {
+        "url": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+        "section": "SI-9 drawing and metric mounting-hole table",
+        "basis": "Visually reviewed; catalog interval also lies within product-page interval"
+      }
+    },
+    "unknown_fields": [
+      "usable_depth",
+      "min_wall",
+      "printed_material_process_fit",
+      "physical_installation_fit",
+      "strength_allowable"
+    ],
+    "notes": "Revision2 resolves project catalog basis with visually inspected manufacturer drawing. Preserve r1 pins. Wall guidance stays conditional; no generic min_wall or usable_depth inference. Source discrepancy retained; no supplier erratum claimed.",
+    "length": 2.5,
+    "outside_diameter": 2.1,
+    "hole_diameter": 1.75,
+    "hole_profile": "straight",
+    "hole_diameter_tolerance_mm": {
+      "plus": 0.05,
+      "minus": 0
+    },
+    "outside_diameter_basis": "After-knurl nominal E +/-0.1 mm; not a maximum envelope",
+    "dimensional_tolerances": {
+      "length_mm": {
+        "plus": 0.1,
+        "minus": 0.1
+      },
+      "outside_diameter_mm": {
+        "plus": 0.1,
+        "minus": 0.1
+      }
+    },
+    "installation_evidence_resolution": {
+      "status": "resolved_project_basis",
+      "decision": "Use published SI-9 catalog hole interval; it is the intersection of the catalog +0.05/-0 and product-page +/-0.05 intervals.",
+      "authority_limit": "Project source-selection policy, not a manufacturer erratum or confirmation that the web page is wrong.",
+      "governing_source": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+      "page": "SI-9 / PDF page9",
+      "document_sha256": "de450ebbf4d9c18a698e479c60e853f2fd5dead720a527dcfd7dfca35e05865d",
+      "drawing_review": "Rendered and visually inspected 2026-10-18: A axial length; E diameter after knurl; C pilot diameter maximum.",
+      "retained_discrepancy": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "physical_approval": false
+    }
+  },
+  {
+    "revision": 2,
+    "units": "mm",
+    "verification": "partial",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; live stock not established",
+    "cad_status": "Links only; no third-party assets bundled",
+    "redistribution_status": "Supplier asset rights unresolved; factual metadata only",
+    "id": "msia-m1.2-250",
+    "name": "PEM MSIA-M1.2-250 microPEM heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "PennEngineering",
+    "part_number": "MSIA-M1.2-250",
+    "diameter": 1.2,
+    "pitch": 0.25,
+    "material": "Aluminum",
+    "installation_method": "heat / ultrasonic",
+    "end_type": "open",
+    "source": "https://www.pemnet.com/products/product-finder/msia-m1-2-250/",
+    "source_document": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+    "manufacturer_installation_evidence": {
+      "catalog_page": "SI-9; PDF page 9",
+      "A_mm": 2.5,
+      "A_tolerance_mm": 0.1,
+      "E_after_knurl_mm": 2.1,
+      "E_tolerance_mm": 0.1,
+      "C_max_mm": 1.75,
+      "hole_nominal_mm": 1.75,
+      "minimum_hole_depth_mm": 3.27,
+      "minimum_wall_mm": 0.7,
+      "wall_applicability": "Catalog footnote 6: tested in ABS and polycarbonate; boss interpretation and printed-material applicability unresolved",
+      "hole_tolerance_conflict": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "automation": "Catalog hole range used for nominal dimensional comparison only. Material/process and physical installation remain unvalidated."
+    },
+    "field_sources": {
+      "diameter,pitch,material,manufacturer_installation_evidence": {
+        "url": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+        "section": "SI-9 table and footnote 6"
+      },
+      "identity,installation_method,end_type": {
+        "url": "https://www.pemnet.com/products/product-finder/msia-m1-2-250/",
+        "section": "Exact product specifications"
+      },
+      "length,outside_diameter,hole_diameter,hole_diameter_tolerance_mm,dimensional_tolerances": {
+        "url": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+        "section": "SI-9 drawing and metric mounting-hole table",
+        "basis": "Visually reviewed; catalog interval also lies within product-page interval"
+      }
+    },
+    "unknown_fields": [
+      "usable_depth",
+      "min_wall",
+      "printed_material_process_fit",
+      "physical_installation_fit",
+      "strength_allowable"
+    ],
+    "notes": "Revision2 resolves project catalog basis with visually inspected manufacturer drawing. Preserve r1 pins. Wall guidance stays conditional; no generic min_wall or usable_depth inference. Source discrepancy retained; no supplier erratum claimed.",
+    "length": 2.5,
+    "outside_diameter": 2.1,
+    "hole_diameter": 1.75,
+    "hole_profile": "straight",
+    "hole_diameter_tolerance_mm": {
+      "plus": 0.05,
+      "minus": 0
+    },
+    "outside_diameter_basis": "After-knurl nominal E +/-0.1 mm; not a maximum envelope",
+    "dimensional_tolerances": {
+      "length_mm": {
+        "plus": 0.1,
+        "minus": 0.1
+      },
+      "outside_diameter_mm": {
+        "plus": 0.1,
+        "minus": 0.1
+      }
+    },
+    "installation_evidence_resolution": {
+      "status": "resolved_project_basis",
+      "decision": "Use published SI-9 catalog hole interval; it is the intersection of the catalog +0.05/-0 and product-page +/-0.05 intervals.",
+      "authority_limit": "Project source-selection policy, not a manufacturer erratum or confirmation that the web page is wrong.",
+      "governing_source": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+      "page": "SI-9 / PDF page9",
+      "document_sha256": "de450ebbf4d9c18a698e479c60e853f2fd5dead720a527dcfd7dfca35e05865d",
+      "drawing_review": "Rendered and visually inspected 2026-10-18: A axial length; E diameter after knurl; C pilot diameter maximum.",
+      "retained_discrepancy": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "physical_approval": false
+    }
+  },
+  {
+    "revision": 2,
+    "units": "mm",
+    "verification": "partial",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; live stock not established",
+    "cad_status": "Links only; no third-party assets bundled",
+    "redistribution_status": "Supplier asset rights unresolved; factual metadata only",
+    "id": "msia-m1.4-300",
+    "name": "PEM MSIA-M1.4-300 microPEM heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "PennEngineering",
+    "part_number": "MSIA-M1.4-300",
+    "diameter": 1.4,
+    "pitch": 0.3,
+    "material": "Aluminum",
+    "installation_method": "heat / ultrasonic",
+    "end_type": "open",
+    "source": "https://www.pemnet.com/products/product-finder/msia-m1-4-300/",
+    "source_document": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+    "manufacturer_installation_evidence": {
+      "catalog_page": "SI-9; PDF page 9",
+      "A_mm": 3,
+      "A_tolerance_mm": 0.1,
+      "E_after_knurl_mm": 2.5,
+      "E_tolerance_mm": 0.1,
+      "C_max_mm": 2.15,
+      "hole_nominal_mm": 2.15,
+      "minimum_hole_depth_mm": 3.77,
+      "minimum_wall_mm": 0.8,
+      "wall_applicability": "Catalog footnote 6: tested in ABS and polycarbonate; boss interpretation and printed-material applicability unresolved",
+      "hole_tolerance_conflict": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "automation": "Catalog hole range used for nominal dimensional comparison only. Material/process and physical installation remain unvalidated."
+    },
+    "field_sources": {
+      "diameter,pitch,material,manufacturer_installation_evidence": {
+        "url": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+        "section": "SI-9 table and footnote 6"
+      },
+      "identity,installation_method,end_type": {
+        "url": "https://www.pemnet.com/products/product-finder/msia-m1-4-300/",
+        "section": "Exact product specifications"
+      },
+      "length,outside_diameter,hole_diameter,hole_diameter_tolerance_mm,dimensional_tolerances": {
+        "url": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+        "section": "SI-9 drawing and metric mounting-hole table",
+        "basis": "Visually reviewed; catalog interval also lies within product-page interval"
+      }
+    },
+    "unknown_fields": [
+      "usable_depth",
+      "min_wall",
+      "printed_material_process_fit",
+      "physical_installation_fit",
+      "strength_allowable"
+    ],
+    "notes": "Revision2 resolves project catalog basis with visually inspected manufacturer drawing. Preserve r1 pins. Wall guidance stays conditional; no generic min_wall or usable_depth inference. Source discrepancy retained; no supplier erratum claimed.",
+    "length": 3,
+    "outside_diameter": 2.5,
+    "hole_diameter": 2.15,
+    "hole_profile": "straight",
+    "hole_diameter_tolerance_mm": {
+      "plus": 0.05,
+      "minus": 0
+    },
+    "outside_diameter_basis": "After-knurl nominal E +/-0.1 mm; not a maximum envelope",
+    "dimensional_tolerances": {
+      "length_mm": {
+        "plus": 0.1,
+        "minus": 0.1
+      },
+      "outside_diameter_mm": {
+        "plus": 0.1,
+        "minus": 0.1
+      }
+    },
+    "installation_evidence_resolution": {
+      "status": "resolved_project_basis",
+      "decision": "Use published SI-9 catalog hole interval; it is the intersection of the catalog +0.05/-0 and product-page +/-0.05 intervals.",
+      "authority_limit": "Project source-selection policy, not a manufacturer erratum or confirmation that the web page is wrong.",
+      "governing_source": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+      "page": "SI-9 / PDF page9",
+      "document_sha256": "de450ebbf4d9c18a698e479c60e853f2fd5dead720a527dcfd7dfca35e05865d",
+      "drawing_review": "Rendered and visually inspected 2026-10-18: A axial length; E diameter after knurl; C pilot diameter maximum.",
+      "retained_discrepancy": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "physical_approval": false
+    }
+  },
+  {
+    "revision": 2,
+    "units": "mm",
+    "verification": "partial",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; live stock not established",
+    "cad_status": "Links only; no third-party assets bundled",
+    "redistribution_status": "Supplier asset rights unresolved; factual metadata only",
+    "id": "msia-m1.6-300",
+    "name": "PEM MSIA-M1.6-300 microPEM heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "PennEngineering",
+    "part_number": "MSIA-M1.6-300",
+    "diameter": 1.6,
+    "pitch": 0.35,
+    "material": "Aluminum",
+    "installation_method": "heat / ultrasonic",
+    "end_type": "open",
+    "source": "https://www.pemnet.com/products/product-finder/msia-m1-6-300/",
+    "source_document": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+    "manufacturer_installation_evidence": {
+      "catalog_page": "SI-9; PDF page 9",
+      "A_mm": 3,
+      "A_tolerance_mm": 0.1,
+      "E_after_knurl_mm": 2.5,
+      "E_tolerance_mm": 0.1,
+      "C_max_mm": 2.15,
+      "hole_nominal_mm": 2.15,
+      "minimum_hole_depth_mm": 3.77,
+      "minimum_wall_mm": 0.8,
+      "wall_applicability": "Catalog footnote 6: tested in ABS and polycarbonate; boss interpretation and printed-material applicability unresolved",
+      "hole_tolerance_conflict": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "automation": "Catalog hole range used for nominal dimensional comparison only. Material/process and physical installation remain unvalidated."
+    },
+    "field_sources": {
+      "diameter,pitch,material,manufacturer_installation_evidence": {
+        "url": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+        "section": "SI-9 table and footnote 6"
+      },
+      "identity,installation_method,end_type": {
+        "url": "https://www.pemnet.com/products/product-finder/msia-m1-6-300/",
+        "section": "Exact product specifications"
+      },
+      "length,outside_diameter,hole_diameter,hole_diameter_tolerance_mm,dimensional_tolerances": {
+        "url": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+        "section": "SI-9 drawing and metric mounting-hole table",
+        "basis": "Visually reviewed; catalog interval also lies within product-page interval"
+      }
+    },
+    "unknown_fields": [
+      "usable_depth",
+      "min_wall",
+      "printed_material_process_fit",
+      "physical_installation_fit",
+      "strength_allowable"
+    ],
+    "notes": "Revision2 resolves project catalog basis with visually inspected manufacturer drawing. Preserve r1 pins. Wall guidance stays conditional; no generic min_wall or usable_depth inference. Source discrepancy retained; no supplier erratum claimed.",
+    "length": 3,
+    "outside_diameter": 2.5,
+    "hole_diameter": 2.15,
+    "hole_profile": "straight",
+    "hole_diameter_tolerance_mm": {
+      "plus": 0.05,
+      "minus": 0
+    },
+    "outside_diameter_basis": "After-knurl nominal E +/-0.1 mm; not a maximum envelope",
+    "dimensional_tolerances": {
+      "length_mm": {
+        "plus": 0.1,
+        "minus": 0.1
+      },
+      "outside_diameter_mm": {
+        "plus": 0.1,
+        "minus": 0.1
+      }
+    },
+    "installation_evidence_resolution": {
+      "status": "resolved_project_basis",
+      "decision": "Use published SI-9 catalog hole interval; it is the intersection of the catalog +0.05/-0 and product-page +/-0.05 intervals.",
+      "authority_limit": "Project source-selection policy, not a manufacturer erratum or confirmation that the web page is wrong.",
+      "governing_source": "https://www.pemnet.com/en-sg/wp-content/uploads/sites/2/2022/06/sidata.pdf",
+      "page": "SI-9 / PDF page9",
+      "document_sha256": "de450ebbf4d9c18a698e479c60e853f2fd5dead720a527dcfd7dfca35e05865d",
+      "drawing_review": "Rendered and visually inspected 2026-10-18: A axial length; E diameter after knurl; C pilot diameter maximum.",
+      "retained_discrepancy": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "physical_approval": false
+    }
+  }
+]

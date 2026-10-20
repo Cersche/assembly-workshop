@@ -1,0 +1,7 @@
+from pathlib import Path
+p=Path('outputs/Mechanical_Design_App/index.html');s=p.read_text(encoding='utf-8').replace('LOCAL BETA 0.5','LOCAL BETA 0.6')
+s=s.replace('<button id="assemblyReset"','<label><input id="show-hardware" type="checkbox" checked style="width:auto"> Selected hardware · copper / gold</label><button id="assemblyReset"')
+s=s.replace('<p class="notice">This viewer shows the existing v2 design. Changing the hardware inputs does not change these meshes. It excludes the Pi, screws and inserts; the axial preview below models selected hardware separately. Triangle display is not a collision check.</p>', '<p id="hardwareStatus" class="muted" role="status">Select hardware to display its reference envelopes.</p><p class="notice">Tray and faceplate stay at clearance v2. Hardware inputs update nominal envelopes at both joint axes, not the manufacturing meshes. Gold dashed axes show insert length when outside diameter is unknown; they are drawn through parts for visibility. The Pi is excluded. No thread, driver-access or collision validation is implied.</p>')
+s=s.replace("function markDirty(){dirty=true;", "function markDirty(){dirty=true;window.assemblyHardware=null;window.dispatchEvent(new CustomEvent('assembly-hardware',{detail:null}));")
+s=s.replace("if(revision!==previewRevision)return;const svg", "if(revision!==previewRevision)return;window.assemblyHardware=g;window.dispatchEvent(new CustomEvent('assembly-hardware',{detail:g}));const svg")
+p.write_text(s,encoding='utf-8')

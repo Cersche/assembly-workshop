@@ -1,0 +1,8 @@
+usage: app.py [-h] [--port PORT] [--data DATA]
+
+Local mechanical design beta. Python standard library only.
+
+options:
+  -h, --help   show this help message and exit
+  --port PORT
+  --data DATA

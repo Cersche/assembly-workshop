@@ -1,0 +1,61 @@
+{
+  "time_utc": "2026-10-18T17:41:21.828871+00:00",
+  "normal_use_files_unchanged": {
+    "data\\normal-use\\library.sqlite3": true,
+    "data\\normal-use\\rack-workspace.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": true
+  },
+  "mechanical_baseline_unchanged": {
+    "pi4_baseline.scad": true,
+    "assembly.json": true,
+    "pi_reference.json": true,
+    "faceplate_mounting.py": true
+  },
+  "sqlite_integrity": "ok",
+  "python_checks": {
+    "rack_documents": 7,
+    "exact_source_reference": 3,
+    "independent_assemblies": 10,
+    "existing_non_mounting_app": 11
+  },
+  "node_checks": [
+    "context headers and stale responses",
+    "save preserves newer hardware drafts",
+    "depth-tested texture coverage",
+    "catalog handlers",
+    "Phase7 handlers",
+    "viewer controls",
+    "viewer depth",
+    "rack scene",
+    "21-component reference UI",
+    "allocation actions and serialized saves"
+  ],
+  "browser_disposable_checks": [
+    "create/save/open two independent assemblies",
+    "slot A pins and pilot do not change slot B",
+    "save/reload retains faceplate colors and image",
+    "front image visible without covering mounting openings",
+    "whole rack color and source-component override survive reload",
+    "right-click and ellipsis slot menu",
+    "unsaved hardware blocks switching slots"
+  ],
+  "normal_use": {
+    "url": "http://127.0.0.1:8765/",
+    "pid": 19424,
+    "existing_library": true,
+    "read_only_inspection": "five slots, zero allocations; normal data not saved or migrated",
+    "previous_tab": "not available in current browser session; no older tab reloaded, saved or cancelled"
+  },
+  "limits": [
+    "GUI options are concepts, not an applied redesign",
+    "Pi4 is the only manufacturing adapter",
+    "image preview only; no STL artwork or colors",
+    "no installed equipment transforms or rack-frame STL",
+    "fit/strength/interfaces remain UNKNOWN"
+  ],
+  "manufacturing_builds_exports": 0
+}

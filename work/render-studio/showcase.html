@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Lab Rax · Render Studio</title><style>
+*{box-sizing:border-box}body{margin:0;background:#090d14;color:#e6edf6;font:14px system-ui}header{position:absolute;z-index:1;top:30px;left:40px;pointer-events:none}small{color:#8aabc1;letter-spacing:3px;font-size:10px}h1{font-weight:450;letter-spacing:-1px;font-size:32px;margin:8px 0}header p{color:#8293a7;font-size:12px}#view{width:100vw;height:100vh;display:block;touch-action:none}nav{position:absolute;bottom:26px;left:40px;display:flex;gap:8px;flex-wrap:wrap}button{border:1px solid #344254;border-radius:7px;background:#15202ddd;color:#c6d4e6;padding:10px 16px;cursor:pointer}button:hover{background:#283e55}button[aria-pressed=true]{border-color:#70c6bd;color:#a7eee4}#status{position:absolute;right:30px;bottom:35px;color:#8aabc1;font:11px monospace}#error{color:#ffb1a8;position:absolute;top:130px;left:40px}
+</style><header><small>ASSEMBLY WORKSHOP / RENDER STUDY</small><h1>Lab Rax, in a new light.</h1><p>Source enclosure meshes · depth-tested equipment · local preview only</p></header><canvas id="view" aria-label="Interactive render study. Drag to orbit and scroll to zoom." tabindex="0"></canvas><nav><button id="hero">Studio</button><button id="front">Front</button><button id="rear">Rear</button><button id="top">Tray detail</button><button id="hardware">Hardware detail</button><button id="panels">Side panels</button><button id="shadows" aria-pressed="true">Shadows</button><button id="copper">Copper</button><button id="slate">Slate</button></nav><div id="status">Loading local meshes…</div><div id="error"></div>
+<script src="/rack-references/rack-scene.js"></script><script src="/rack-references/rack-studio.js"></script><script>
+'use strict';let renderer,meshes,scene,box,yaw=-.48,pitch=.24,zoom=1,panels=false,perspective=true,drag=null,focus=null;
+const canvas=document.getElementById('view'),ctx=canvas.getContext('2d'),status=document.getElementById('status');
+const rack={slots:5,appearance:{color:'#647681'},placements:[{id:'study',slot:3,span:1,assembly:{appearance:{tray:'#bf7886',faceplate:'#c17c51'}}}]};
+function draw(){if(!renderer||!meshes)return;try{const d=Math.min(devicePixelRatio,2),w=innerWidth,h=innerHeight;canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);const v=LabRaxStudio.camera(focus||box,yaw,pitch,w,h,zoom,perspective),t=performance.now();ctx.drawImage(renderer.draw(scene,meshes,v,canvas.width,canvas.height,rack),0,0);status.textContent=renderer.stats.triangles.toLocaleString()+' triangles · '+(performance.now()-t).toFixed(1)+' ms submit · '+(perspective?'perspective':'orthographic');document.getElementById('error').textContent='';}catch(e){document.getElementById('error').textContent=e.stack;}}
+const button=(id,fn)=>document.getElementById(id).onclick=()=>{fn();draw();};
+const ao=document.createElement('button');ao.textContent='Contact shading';ao.id='ao';ao.setAttribute('aria-pressed','true');document.querySelector('nav').append(ao);button('ao',()=>{renderer.ambientOcclusion=!renderer.ambientOcclusion;ao.setAttribute('aria-pressed',renderer.ambientOcclusion);});
+button('hero',()=>{focus=null;yaw=-.48;pitch=.24;zoom=1;perspective=true;});
+button('front',()=>{focus=null;yaw=0;pitch=0;zoom=1;perspective=false;});
+button('rear',()=>{focus=null;yaw=Math.PI-.5;pitch=.3;zoom=1;perspective=true;});
+button('top',()=>{focus={lo:[-140,-25,88],hi:[140,160,137]};yaw=-.55;pitch=.8;zoom=1;perspective=true;});
+button('hardware',()=>{focus={lo:[100,-12,116],hi:[133,25,140]};yaw=-.5;pitch=.22;zoom=1;perspective=true;});
+button('panels',()=>{panels=!panels;scene=LabRaxScene.frame(5,panels);});
+button('shadows',()=>{renderer.shadows=!renderer.shadows;renderer.shadowKey='';document.getElementById('shadows').setAttribute('aria-pressed',renderer.shadows);});
+button('copper',()=>{rack.placements[0].assembly.appearance={tray:'#bf7886',faceplate:'#c17c51'};});
+button('slate',()=>{rack.placements[0].assembly.appearance={tray:'#536c79',faceplate:'#435d70'};});
+canvas.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);};canvas.onpointermove=e=>{if(!drag)return;yaw+=(e.clientX-drag.x)*.006;pitch=Math.max(-1.4,Math.min(1.4,pitch+(e.clientY-drag.y)*.006));drag={x:e.clientX,y:e.clientY};draw();};canvas.onpointerup=canvas.onpointercancel=()=>drag=null;
+canvas.onwheel=e=>{e.preventDefault();zoom=Math.max(.4,Math.min(3,zoom*Math.exp(-e.deltaY*.001)));draw();};onresize=draw;
+(async()=>{try{renderer=new LabRaxStudio.Renderer();renderer.invalidated=draw;meshes=await LabRaxScene.load(fetch);scene=LabRaxScene.frame(5);box=LabRaxScene.bounds(scene,meshes);draw();}catch(e){document.getElementById('error').textContent=e.stack;}})();
+</script></html>
+<script src="/rack-references/assembly-studio.js"></script>
+<script>
+const assemblyCheckButton=document.createElement('button');assemblyCheckButton.textContent='Run assembly GPU checks';document.querySelector('nav').append(assemblyCheckButton);
+assemblyCheckButton.onclick=async()=>{
+  const panel=document.createElement('pre');panel.id='assemblyGpuChecks';panel.style.cssText='position:absolute;right:25px;top:25px;background:#101b27ed;color:#b3e5d6;padding:16px;font:12px monospace;max-width:540px;white-space:pre-wrap';document.getElementById(panel.id)?.remove();document.body.append(panel);
+  let renderer;const results=[],assert=(v,label)=>{if(!v)throw Error(label);results.push('PASS '+label);};
+  try{
+    const model=await (await fetch('/api/assembly')).json(),original=JSON.stringify(model);
+    renderer=new LabRaxAssembly.AssemblyRenderer();
+    const options={parts:model.parts,fullParts:model.parts,yaw:-.55,pitch:.65,zoom:1,focus:[0,39.5,21],frontMode:false,appearance:{},selectedPart:null,width:256,height:256,dpr:1};
+    const pixels=()=>{const data=new Uint8Array(256*256*4);renderer.gl.readPixels(0,0,256,256,renderer.gl.RGBA,renderer.gl.UNSIGNED_BYTE,data);return data;};
+    const first=renderer.render(options),image=pixels();assert(first.triangles===model.parts.reduce((n,p)=>n+p.triangles.length,0),'exact submitted inspection triangle count');
+    assert(renderer.currentObjects.every(o=>model.parts.includes(o.mesh)),'inspection source objects used directly');
+    renderer.render({...options,parts:[...model.parts].reverse()});const reversed=pixels();let changed=0;for(let i=0;i<image.length;i+=4)if(Math.max(...[0,1,2].map(k=>Math.abs(image[i+k]-reversed[i+k])))>3)changed++;assert(changed<256*256*.003,'assembly draw-order independence ('+changed+' seam pixels)');
+    const front=renderer.render({...options,frontMode:true}),point=front.view.project([-80,-3,21]);assert(renderer.pickPart(point[0],point[1])==='faceplate','orthographic frontmost faceplate picking');
+    renderer.render({...options,parts:model.parts.filter(p=>p.id!=='faceplate'),frontMode:true});assert(renderer.pickPart(point[0],point[1])===null,'hidden faceplate is not pickable');
+    const pi=await (await fetch('/api/pi-reference')).json();renderer.render({...options,parts:[...model.parts,pi]});assert(renderer.currentObjects.some(o=>o.mesh===pi),'detailed Pi reference uses its exact source mesh');
+    assert(renderer.gl.getError()===renderer.gl.NO_ERROR,'WebGL passes have no state errors');assert(renderer.stats.shadows&&renderer.stats.ambientOcclusion,'studio shadows and ambient occlusion active');assert(JSON.stringify(model)===original,'source coordinates and indices unchanged');
+    panel.textContent=results.join('\n')+'\nALL '+results.length+' ASSEMBLY GPU CHECKS PASSED';panel.dataset.result='pass';
+  }catch(e){panel.textContent=results.join('\n')+'\nFAIL: '+e.message;panel.dataset.result='fail';}finally{renderer?.dispose();}
+};
+</script>
+<script>
+// Browser-only GPU regressions on disposable render objects. No API writes.
+const verifyButton=document.createElement('button');verifyButton.textContent='Run render checks';document.querySelector('nav').append(verifyButton);
+verifyButton.onclick=async()=>{
+  const output=document.createElement('pre');output.id='gpuChecks';output.style.cssText='position:absolute;right:25px;top:25px;background:#101b27ed;color:#b3e5d6;padding:16px;font:12px monospace;max-width:520px;white-space:pre-wrap';document.getElementById('gpuChecks')?.remove();document.body.append(output);
+  let test;const checks=[];const assert=(v,name)=>{if(!v)throw Error(name);checks.push(name);};
+  const pixels=r=>{const p=new Uint8Array(256*256*4);r.gl.readPixels(0,0,256,256,r.gl.RGBA,r.gl.UNSIGNED_BYTE,p);return p;};
+  const differences=(a,b)=>{let count=0;for(let i=0;i<a.length;i+=4)if(Math.max(Math.abs(a[i]-b[i]),Math.abs(a[i+1]-b[i+1]),Math.abs(a[i+2]-b[i+2]))>3)count++;return count;};
+  try{
+    test=new LabRaxStudio.Renderer();test.shadows=false;test.ambientOcclusion=false;
+    const post=new LabRaxStudio.Mesh(),tray=new LabRaxStudio.Mesh();post.box(8,18,0,17.5,0,50);tray.box(-30,30,12,90,10,35);
+    const R=[1,0,0,0,1,0,0,0,1],obj=(key,mesh,color)=>({key,mesh,R,t:[0,0,0],color,metal:0,rough:.5});
+    const a=obj('occlusion-post',post,[.1,.65,.9]),b=obj('occlusion-tray',tray,[.9,.15,.1]),smallScene={slots:5,parts:[{key:'post',R,t:[0,0,0]}]},smallMeshes={post};
+    const box={lo:[-40,0,0],hi:[40,90,50]},v=LabRaxStudio.camera(box,0,0,256,256,1,false);let objects=[a,b];test.objects=()=>objects;
+    test.draw(smallScene,smallMeshes,v,256,256,{slots:5,placements:[]});const both=pixels(test);objects=[b,a];test.draw(smallScene,smallMeshes,v,256,256,{slots:5,placements:[]});assert(differences(both,pixels(test))===0,'PASS opaque draw order does not change occlusion');
+    objects=[a];test.draw(smallScene,smallMeshes,v,256,256,{slots:5,placements:[]});const alone=pixels(test),point=v.project([13,0,22]),index=((255-Math.floor(point[1]))*256+Math.floor(point[0]))*4;assert([0,1,2].every(i=>both[index+i]===alone[index+i]),'PASS upright hides tray at crossing pixel');
+    delete test.objects;
+    for(const [y,p] of [[0,0],[-.7,.4],[.8,.5],[1.45,.9],[2.8,.3],[-.5,-.8]]){
+      const view=LabRaxStudio.camera(window.box||LabRaxScene.bounds(scene,meshes),y,p,256,256,1,true),normal=test.objects.bind(test);
+      test.draw(scene,meshes,view,256,256,rack);const reference=pixels(test);test.objects=(...args)=>normal(...args).reverse();test.draw(scene,meshes,view,256,256,rack);const changed=differences(reference,pixels(test));delete test.objects;
+      assert(changed<256*256*.003,'PASS source rack order invariance '+y+'/'+p+' ('+changed+' seam pixels)');
+      assert(test.gl.getError()===test.gl.NO_ERROR,'PASS WebGL state '+y+'/'+p);
+    }
+    test.ambientOcclusion=true;test.shadows=test.shadowSupported;test.shadowKey='';const view=LabRaxStudio.camera(LabRaxScene.bounds(scene,meshes),-.48,.24,256,256);test.draw(scene,meshes,view,256,256,rack);assert(test.gl.getError()===test.gl.NO_ERROR&&test.stats.ambientOcclusion,'PASS shadow and ambient-occlusion passes');
+    output.textContent=checks.join('\n')+'\nALL '+checks.length+' GPU CHECKS PASSED';output.dataset.result='pass';
+  }catch(e){output.textContent=checks.join('\n')+'\nFAIL: '+e.message;output.dataset.result='fail';}finally{test?.dispose();draw();}
+};
+</script>

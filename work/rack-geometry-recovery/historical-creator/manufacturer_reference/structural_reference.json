@@ -1,0 +1,1708 @@
+{
+  "schema": "labrax-structural-reference-1",
+  "units": "mm",
+  "coordinate_warning": "3MF scene transforms are print-plate placements, not verified rack assembly transforms.",
+  "clearance_status": "unverified",
+  "mating_status": "unverified",
+  "manufacturing_approved": false,
+  "files": {
+    "rack_5u": {
+      "filename": "5U+Lab+Rax+X2D.3mf",
+      "sha256": "0372934444785bd36a6edd3f265fdd8a9c9cb27fd125df8eae49d7840d459ef6",
+      "geometry_count": 10,
+      "instances": 22,
+      "class_counts": {
+        "other": 16,
+        "side_panel": 2,
+        "post": 4
+      }
+    },
+    "posts_panels_1_to_5u": {
+      "filename": "Lab+Rax+1-5U+Posts+&+Panels.3mf",
+      "sha256": "64e4eb982ce70d426777f55b133988a8d94eccbe9b067f9ceaef9b490afb01aa",
+      "geometry_count": 10,
+      "instances": 27,
+      "class_counts": {
+        "side_panel": 7,
+        "post": 20
+      }
+    },
+    "support_extension_1u": {
+      "filename": "1U+Support+Extension.3mf",
+      "sha256": "26a9e3321e951f319c77450b79cfa5fd946abadaaf041fbc9343b37adcc756a8",
+      "geometry_count": 1,
+      "instances": 2,
+      "class_counts": {
+        "support_extension": 2
+      }
+    },
+    "faceplate_blanks": {
+      "filename": "Blank+Plates+Half,+1+and+2U.3mf",
+      "sha256": "6e02e7b52d92e01615a0414be3b9ec58add5fb96c717db7ef517fa3ba854e7ad",
+      "geometry_count": 3,
+      "instances": 3,
+      "class_counts": {
+        "other": 3
+      }
+    }
+  },
+  "rack_height_table": [
+    {
+      "rack_u": 1,
+      "post_height_mm": 44.45,
+      "panel_height_mm": 50.35,
+      "post_instances": 4,
+      "panel_instances": 2
+    },
+    {
+      "rack_u": 2,
+      "post_height_mm": 88.9,
+      "panel_height_mm": 94.8,
+      "post_instances": 4,
+      "panel_instances": 2
+    },
+    {
+      "rack_u": 3,
+      "post_height_mm": 133.35000000000002,
+      "panel_height_mm": 139.25,
+      "post_instances": 4,
+      "panel_instances": 1
+    },
+    {
+      "rack_u": 4,
+      "post_height_mm": 177.8,
+      "panel_height_mm": 183.7,
+      "post_instances": 4,
+      "panel_instances": 1
+    },
+    {
+      "rack_u": 5,
+      "post_height_mm": 222.25,
+      "panel_height_mm": 228.15,
+      "post_instances": 4,
+      "panel_instances": 1
+    }
+  ],
+  "mesh_instances": [
+    {
+      "source": "rack_5u",
+      "node": "11",
+      "geometry": "11",
+      "class": "other",
+      "local_extents_mm": [
+        228.04999,
+        171.5,
+        3.0
+      ],
+      "local_bounds_mm": [
+        [
+          -114.02499,
+          -85.75,
+          -1.5
+        ],
+        [
+          114.02499,
+          85.75,
+          1.5
+        ]
+      ],
+      "print_plate_translation_mm": [
+        742.4,
+        -179.2,
+        1.5
+      ],
+      "triangles": 4876,
+      "watertight": true
+    },
+    {
+      "source": "rack_5u",
+      "node": "13",
+      "geometry": "13",
+      "class": "other",
+      "local_extents_mm": [
+        228.04999,
+        171.5,
+        3.0
+      ],
+      "local_bounds_mm": [
+        [
+          -114.02499,
+          -85.75,
+          -1.5
+        ],
+        [
+          114.02499,
+          85.75,
+          1.5
+        ]
+      ],
+      "print_plate_translation_mm": [
+        1049.6,
+        -179.2,
+        1.5
+      ],
+      "triangles": 12,
+      "watertight": true
+    },
+    {
+      "source": "rack_5u",
+      "node": "15_1",
+      "geometry": "15_1",
+      "class": "side_panel",
+      "local_extents_mm": [
+        175.89999,
+        3.0,
+        228.14999
+      ],
+      "local_bounds_mm": [
+        [
+          -87.95,
+          -1.5,
+          -114.075
+        ],
+        [
+          87.95,
+          1.5,
+          114.075
+        ]
+      ],
+      "print_plate_translation_mm": [
+        435.2,
+        -486.4,
+        1.5
+      ],
+      "triangles": 24,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "15_2",
+      "geometry": "15_1",
+      "class": "side_panel",
+      "local_extents_mm": [
+        175.89999,
+        3.0,
+        228.14999
+      ],
+      "local_bounds_mm": [
+        [
+          -87.95,
+          -1.5,
+          -114.075
+        ],
+        [
+          87.95,
+          1.5,
+          114.075
+        ]
+      ],
+      "print_plate_translation_mm": [
+        128.0,
+        -486.4,
+        1.5
+      ],
+      "triangles": 24,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "18",
+      "geometry": "18",
+      "class": "other",
+      "local_extents_mm": [
+        282.24997,
+        54.85,
+        54.85001
+      ],
+      "local_bounds_mm": [
+        [
+          -141.12499,
+          -27.425,
+          -27.425
+        ],
+        [
+          141.12499,
+          27.425,
+          27.425
+        ]
+      ],
+      "print_plate_translation_mm": [
+        434.95959,
+        -182.16784,
+        15.4503
+      ],
+      "triangles": 17748,
+      "watertight": true
+    },
+    {
+      "source": "rack_5u",
+      "node": "1_3",
+      "geometry": "1_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        222.25
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -111.125
+        ],
+        [
+          15.0,
+          17.5,
+          111.125
+        ]
+      ],
+      "print_plate_translation_mm": [
+        154.7931,
+        130.08382,
+        17.5
+      ],
+      "triangles": 14384,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "1_4",
+      "geometry": "1_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        222.25
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -111.125
+        ],
+        [
+          15.0,
+          17.5,
+          111.125
+        ]
+      ],
+      "print_plate_translation_mm": [
+        55.54619,
+        130.67988,
+        17.5
+      ],
+      "triangles": 14384,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "1_5",
+      "geometry": "1_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        222.25
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -111.125
+        ],
+        [
+          15.0,
+          17.5,
+          111.125
+        ]
+      ],
+      "print_plate_translation_mm": [
+        204.19457,
+        129.77232,
+        17.5
+      ],
+      "triangles": 14384,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "1_6",
+      "geometry": "1_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        222.25
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -111.125
+        ],
+        [
+          15.0,
+          17.5,
+          111.125
+        ]
+      ],
+      "print_plate_translation_mm": [
+        106.02317,
+        130.46422,
+        17.5
+      ],
+      "triangles": 14384,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "20_1",
+      "geometry": "20_1",
+      "class": "other",
+      "local_extents_mm": [
+        282.24997,
+        54.85,
+        54.85001
+      ],
+      "local_bounds_mm": [
+        [
+          -141.12499,
+          -27.425,
+          -27.425
+        ],
+        [
+          141.12499,
+          27.425,
+          27.425
+        ]
+      ],
+      "print_plate_translation_mm": [
+        1059.83486,
+        126.46994,
+        15.45028
+      ],
+      "triangles": 26848,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "20_2",
+      "geometry": "20_1",
+      "class": "other",
+      "local_extents_mm": [
+        282.24997,
+        54.85,
+        54.85001
+      ],
+      "local_bounds_mm": [
+        [
+          -141.12499,
+          -27.425,
+          -27.425
+        ],
+        [
+          141.12499,
+          27.425,
+          27.425
+        ]
+      ],
+      "print_plate_translation_mm": [
+        753.23311,
+        125.82775,
+        15.45028
+      ],
+      "triangles": 26848,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "23",
+      "geometry": "23",
+      "class": "other",
+      "local_extents_mm": [
+        282.24997,
+        54.85,
+        54.85001
+      ],
+      "local_bounds_mm": [
+        [
+          -141.12499,
+          -27.425,
+          -27.425
+        ],
+        [
+          141.12499,
+          27.425,
+          27.425
+        ]
+      ],
+      "print_plate_translation_mm": [
+        135.39044,
+        -178.64451,
+        15.46032
+      ],
+      "triangles": 21094,
+      "watertight": true
+    },
+    {
+      "source": "rack_5u",
+      "node": "25_1",
+      "geometry": "25_1",
+      "class": "other",
+      "local_extents_mm": [
+        23.0,
+        170.0,
+        37.5
+      ],
+      "local_bounds_mm": [
+        [
+          -11.5,
+          -85.0,
+          -18.75
+        ],
+        [
+          11.5,
+          85.0,
+          18.75
+        ]
+      ],
+      "print_plate_translation_mm": [
+        514.46528,
+        146.35067,
+        18.75
+      ],
+      "triangles": 15808,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "25_2",
+      "geometry": "25_1",
+      "class": "other",
+      "local_extents_mm": [
+        23.0,
+        170.0,
+        37.5
+      ],
+      "local_bounds_mm": [
+        [
+          -11.5,
+          -85.0,
+          -18.75
+        ],
+        [
+          11.5,
+          85.0,
+          18.75
+        ]
+      ],
+      "print_plate_translation_mm": [
+        540.45758,
+        145.55168,
+        18.75
+      ],
+      "triangles": 15808,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "28_3",
+      "geometry": "28_3",
+      "class": "other",
+      "local_extents_mm": [
+        30.0,
+        170.0,
+        35.0
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -85.0,
+          -17.5
+        ],
+        [
+          15.0,
+          85.0,
+          17.5
+        ]
+      ],
+      "print_plate_translation_mm": [
+        337.65823,
+        146.06811,
+        15.0
+      ],
+      "triangles": 6544,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "28_4",
+      "geometry": "28_3",
+      "class": "other",
+      "local_extents_mm": [
+        30.0,
+        170.0,
+        35.0
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -85.0,
+          -17.5
+        ],
+        [
+          15.0,
+          85.0,
+          17.5
+        ]
+      ],
+      "print_plate_translation_mm": [
+        383.82447,
+        146.32974,
+        15.0
+      ],
+      "triangles": 6544,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "28_5",
+      "geometry": "28_3",
+      "class": "other",
+      "local_extents_mm": [
+        30.0,
+        170.0,
+        35.0
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -85.0,
+          -17.5
+        ],
+        [
+          15.0,
+          85.0,
+          17.5
+        ]
+      ],
+      "print_plate_translation_mm": [
+        428.68948,
+        145.93891,
+        15.0
+      ],
+      "triangles": 6544,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "28_6",
+      "geometry": "28_3",
+      "class": "other",
+      "local_extents_mm": [
+        30.0,
+        170.0,
+        35.0
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -85.0,
+          -17.5
+        ],
+        [
+          15.0,
+          85.0,
+          17.5
+        ]
+      ],
+      "print_plate_translation_mm": [
+        475.22615,
+        144.90704,
+        15.0
+      ],
+      "triangles": 6544,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "6_3",
+      "geometry": "6_3",
+      "class": "other",
+      "local_extents_mm": [
+        26.0,
+        25.99612,
+        12.0
+      ],
+      "local_bounds_mm": [
+        [
+          -13.0,
+          -12.99806,
+          -6.0
+        ],
+        [
+          13.0,
+          12.99806,
+          6.0
+        ]
+      ],
+      "print_plate_translation_mm": [
+        390.66224,
+        34.28626,
+        6.0
+      ],
+      "triangles": 8328,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "6_4",
+      "geometry": "6_3",
+      "class": "other",
+      "local_extents_mm": [
+        26.0,
+        25.99612,
+        12.0
+      ],
+      "local_bounds_mm": [
+        [
+          -13.0,
+          -12.99806,
+          -6.0
+        ],
+        [
+          13.0,
+          12.99806,
+          6.0
+        ]
+      ],
+      "print_plate_translation_mm": [
+        450.63447,
+        34.16169,
+        6.0
+      ],
+      "triangles": 8328,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "6_5",
+      "geometry": "6_3",
+      "class": "other",
+      "local_extents_mm": [
+        26.0,
+        25.99612,
+        12.0
+      ],
+      "local_bounds_mm": [
+        [
+          -13.0,
+          -12.99806,
+          -6.0
+        ],
+        [
+          13.0,
+          12.99806,
+          6.0
+        ]
+      ],
+      "print_plate_translation_mm": [
+        420.40024,
+        34.11487,
+        6.0
+      ],
+      "triangles": 8328,
+      "watertight": false
+    },
+    {
+      "source": "rack_5u",
+      "node": "6_6",
+      "geometry": "6_3",
+      "class": "other",
+      "local_extents_mm": [
+        26.0,
+        25.99612,
+        12.0
+      ],
+      "local_bounds_mm": [
+        [
+          -13.0,
+          -12.99806,
+          -6.0
+        ],
+        [
+          13.0,
+          12.99806,
+          6.0
+        ]
+      ],
+      "print_plate_translation_mm": [
+        360.83961,
+        34.41605,
+        6.0
+      ],
+      "triangles": 8328,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "14_1",
+      "geometry": "14_1",
+      "class": "side_panel",
+      "local_extents_mm": [
+        175.89999,
+        3.0,
+        94.8
+      ],
+      "local_bounds_mm": [
+        [
+          -87.95,
+          -1.5,
+          -47.4
+        ],
+        [
+          87.95,
+          1.5,
+          47.4
+        ]
+      ],
+      "print_plate_translation_mm": [
+        1056.44138,
+        75.29412,
+        1.5
+      ],
+      "triangles": 24,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "14_2",
+      "geometry": "14_1",
+      "class": "side_panel",
+      "local_extents_mm": [
+        175.89999,
+        3.0,
+        94.8
+      ],
+      "local_bounds_mm": [
+        [
+          -87.95,
+          -1.5,
+          -47.4
+        ],
+        [
+          87.95,
+          1.5,
+          47.4
+        ]
+      ],
+      "print_plate_translation_mm": [
+        1056.44138,
+        171.09412,
+        1.5
+      ],
+      "triangles": 24,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "17_3",
+      "geometry": "17_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        133.35001
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -66.675
+        ],
+        [
+          15.0,
+          17.5,
+          66.675
+        ]
+      ],
+      "print_plate_translation_mm": [
+        84.39389,
+        -185.53621,
+        17.5
+      ],
+      "triangles": 12560,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "17_4",
+      "geometry": "17_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        133.35001
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -66.675
+        ],
+        [
+          15.0,
+          17.5,
+          66.675
+        ]
+      ],
+      "print_plate_translation_mm": [
+        177.39389,
+        -185.53621,
+        17.5
+      ],
+      "triangles": 12560,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "17_5",
+      "geometry": "17_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        133.35001
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -66.675
+        ],
+        [
+          15.0,
+          17.5,
+          66.675
+        ]
+      ],
+      "print_plate_translation_mm": [
+        115.39389,
+        -185.53621,
+        17.5
+      ],
+      "triangles": 12560,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "17_6",
+      "geometry": "17_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        133.35001
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -66.675
+        ],
+        [
+          15.0,
+          17.5,
+          66.675
+        ]
+      ],
+      "print_plate_translation_mm": [
+        146.39388,
+        -185.53621,
+        17.5
+      ],
+      "triangles": 12560,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "1_3",
+      "geometry": "1_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        44.45
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -22.225
+        ],
+        [
+          15.0,
+          17.5,
+          22.225
+        ]
+      ],
+      "print_plate_translation_mm": [
+        128.84515,
+        129.03888,
+        17.5
+      ],
+      "triangles": 8784,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "1_4",
+      "geometry": "1_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        44.45
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -22.225
+        ],
+        [
+          15.0,
+          17.5,
+          22.225
+        ]
+      ],
+      "print_plate_translation_mm": [
+        128.84515,
+        174.48888,
+        17.5
+      ],
+      "triangles": 8784,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "1_5",
+      "geometry": "1_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        44.45
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -22.225
+        ],
+        [
+          15.0,
+          17.5,
+          22.225
+        ]
+      ],
+      "print_plate_translation_mm": [
+        159.84515,
+        129.03888,
+        17.5
+      ],
+      "triangles": 8784,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "1_6",
+      "geometry": "1_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        44.45
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -22.225
+        ],
+        [
+          15.0,
+          17.5,
+          22.225
+        ]
+      ],
+      "print_plate_translation_mm": [
+        97.84515,
+        129.03888,
+        17.5
+      ],
+      "triangles": 8784,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "22",
+      "geometry": "22",
+      "class": "side_panel",
+      "local_extents_mm": [
+        175.89999,
+        3.0,
+        139.25
+      ],
+      "local_bounds_mm": [
+        [
+          -87.95,
+          -1.5,
+          -69.625
+        ],
+        [
+          87.95,
+          1.5,
+          69.625
+        ]
+      ],
+      "print_plate_translation_mm": [
+        441.7384,
+        -178.26314,
+        1.5
+      ],
+      "triangles": 12,
+      "watertight": true
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "24_3",
+      "geometry": "24_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        177.8
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -88.9
+        ],
+        [
+          15.0,
+          17.5,
+          88.9
+        ]
+      ],
+      "print_plate_translation_mm": [
+        680.0,
+        -179.39999,
+        17.5
+      ],
+      "triangles": 13536,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "24_4",
+      "geometry": "24_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        177.8
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -88.9
+        ],
+        [
+          15.0,
+          17.5,
+          88.9
+        ]
+      ],
+      "print_plate_translation_mm": [
+        773.0,
+        -179.39999,
+        17.5
+      ],
+      "triangles": 13536,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "24_5",
+      "geometry": "24_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        177.8
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -88.9
+        ],
+        [
+          15.0,
+          17.5,
+          88.9
+        ]
+      ],
+      "print_plate_translation_mm": [
+        711.0,
+        -179.39999,
+        17.5
+      ],
+      "triangles": 13536,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "24_6",
+      "geometry": "24_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        177.8
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -88.9
+        ],
+        [
+          15.0,
+          17.5,
+          88.9
+        ]
+      ],
+      "print_plate_translation_mm": [
+        742.0,
+        -179.39999,
+        17.5
+      ],
+      "triangles": 13536,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "29",
+      "geometry": "29",
+      "class": "side_panel",
+      "local_extents_mm": [
+        175.89999,
+        3.0,
+        183.7
+      ],
+      "local_bounds_mm": [
+        [
+          -87.95,
+          -1.5,
+          -91.85
+        ],
+        [
+          87.95,
+          1.5,
+          91.85
+        ]
+      ],
+      "print_plate_translation_mm": [
+        1055.4517,
+        -185.48879,
+        1.5
+      ],
+      "triangles": 12,
+      "watertight": true
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "31_3",
+      "geometry": "31_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        222.25
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -111.125
+        ],
+        [
+          15.0,
+          17.5,
+          111.125
+        ]
+      ],
+      "print_plate_translation_mm": [
+        88.37939,
+        -487.56277,
+        17.5
+      ],
+      "triangles": 14384,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "31_4",
+      "geometry": "31_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        222.25
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -111.125
+        ],
+        [
+          15.0,
+          17.5,
+          111.125
+        ]
+      ],
+      "print_plate_translation_mm": [
+        181.37939,
+        -487.56277,
+        17.5
+      ],
+      "triangles": 14384,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "31_5",
+      "geometry": "31_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        222.25
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -111.125
+        ],
+        [
+          15.0,
+          17.5,
+          111.125
+        ]
+      ],
+      "print_plate_translation_mm": [
+        119.37939,
+        -487.56277,
+        17.5
+      ],
+      "triangles": 14384,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "31_6",
+      "geometry": "31_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        222.25
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -111.125
+        ],
+        [
+          15.0,
+          17.5,
+          111.125
+        ]
+      ],
+      "print_plate_translation_mm": [
+        150.3794,
+        -487.56278,
+        17.5
+      ],
+      "triangles": 14384,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "36",
+      "geometry": "36",
+      "class": "side_panel",
+      "local_extents_mm": [
+        175.89999,
+        3.0,
+        228.14999
+      ],
+      "local_bounds_mm": [
+        [
+          -87.95,
+          -1.5,
+          -114.075
+        ],
+        [
+          87.95,
+          1.5,
+          114.075
+        ]
+      ],
+      "print_plate_translation_mm": [
+        435.2,
+        -486.4,
+        1.5
+      ],
+      "triangles": 12,
+      "watertight": true
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "6_1",
+      "geometry": "6_1",
+      "class": "side_panel",
+      "local_extents_mm": [
+        175.89999,
+        3.0,
+        50.35
+      ],
+      "local_bounds_mm": [
+        [
+          -87.95,
+          -1.5,
+          -25.175
+        ],
+        [
+          87.95,
+          1.5,
+          25.175
+        ]
+      ],
+      "print_plate_translation_mm": [
+        442.15317,
+        98.55027,
+        1.5
+      ],
+      "triangles": 24,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "6_2",
+      "geometry": "6_1",
+      "class": "side_panel",
+      "local_extents_mm": [
+        175.89999,
+        3.0,
+        50.35
+      ],
+      "local_bounds_mm": [
+        [
+          -87.95,
+          -1.5,
+          -25.175
+        ],
+        [
+          87.95,
+          1.5,
+          25.175
+        ]
+      ],
+      "print_plate_translation_mm": [
+        442.15317,
+        149.90027,
+        1.5
+      ],
+      "triangles": 24,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "9_3",
+      "geometry": "9_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        88.9
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -44.45
+        ],
+        [
+          15.0,
+          17.5,
+          44.45
+        ]
+      ],
+      "print_plate_translation_mm": [
+        699.66393,
+        118.99055,
+        17.5
+      ],
+      "triangles": 11216,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "9_4",
+      "geometry": "9_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        88.9
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -44.45
+        ],
+        [
+          15.0,
+          17.5,
+          44.45
+        ]
+      ],
+      "print_plate_translation_mm": [
+        792.66393,
+        118.99055,
+        17.5
+      ],
+      "triangles": 11216,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "9_5",
+      "geometry": "9_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        88.9
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -44.45
+        ],
+        [
+          15.0,
+          17.5,
+          44.45
+        ]
+      ],
+      "print_plate_translation_mm": [
+        730.66393,
+        118.99055,
+        17.5
+      ],
+      "triangles": 11216,
+      "watertight": false
+    },
+    {
+      "source": "posts_panels_1_to_5u",
+      "node": "9_6",
+      "geometry": "9_3",
+      "class": "post",
+      "local_extents_mm": [
+        30.0,
+        35.0,
+        88.9
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -17.5,
+          -44.45
+        ],
+        [
+          15.0,
+          17.5,
+          44.45
+        ]
+      ],
+      "print_plate_translation_mm": [
+        761.66393,
+        118.99056,
+        17.5
+      ],
+      "triangles": 11216,
+      "watertight": false
+    },
+    {
+      "source": "support_extension_1u",
+      "node": "1_1",
+      "geometry": "1_1",
+      "class": "support_extension",
+      "local_extents_mm": [
+        30.0,
+        240.0,
+        84.15
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -120.0,
+          -42.075
+        ],
+        [
+          15.0,
+          120.0,
+          42.075
+        ]
+      ],
+      "print_plate_translation_mm": [
+        68.46415,
+        131.02011,
+        15.0
+      ],
+      "triangles": 13560,
+      "watertight": false
+    },
+    {
+      "source": "support_extension_1u",
+      "node": "1_2",
+      "geometry": "1_1",
+      "class": "support_extension",
+      "local_extents_mm": [
+        30.0,
+        240.0,
+        84.15
+      ],
+      "local_bounds_mm": [
+        [
+          -15.0,
+          -120.0,
+          -42.075
+        ],
+        [
+          15.0,
+          120.0,
+          42.075
+        ]
+      ],
+      "print_plate_translation_mm": [
+        157.92063,
+        131.52202,
+        15.0
+      ],
+      "triangles": 13560,
+      "watertight": false
+    },
+    {
+      "source": "faceplate_blanks",
+      "node": "1",
+      "geometry": "1",
+      "class": "other",
+      "local_extents_mm": [
+        252.0,
+        8.0,
+        21.0
+      ],
+      "local_bounds_mm": [
+        [
+          -126.0,
+          -4.0,
+          -10.5
+        ],
+        [
+          126.0,
+          4.0,
+          10.5
+        ]
+      ],
+      "print_plate_translation_mm": [
+        128.0,
+        128.0,
+        4.0
+      ],
+      "triangles": 532,
+      "watertight": true
+    },
+    {
+      "source": "faceplate_blanks",
+      "node": "3",
+      "geometry": "3",
+      "class": "other",
+      "local_extents_mm": [
+        252.0,
+        8.0,
+        42.0
+      ],
+      "local_bounds_mm": [
+        [
+          -126.0,
+          -4.0,
+          -21.0
+        ],
+        [
+          126.0,
+          4.0,
+          21.0
+        ]
+      ],
+      "print_plate_translation_mm": [
+        435.2,
+        128.0,
+        4.0
+      ],
+      "triangles": 1204,
+      "watertight": true
+    },
+    {
+      "source": "faceplate_blanks",
+      "node": "5",
+      "geometry": "5",
+      "class": "other",
+      "local_extents_mm": [
+        252.0,
+        8.0,
+        86.45
+      ],
+      "local_bounds_mm": [
+        [
+          -126.0,
+          -4.0,
+          -43.225
+        ],
+        [
+          126.0,
+          4.0,
+          43.225
+        ]
+      ],
+      "print_plate_translation_mm": [
+        128.0,
+        -179.20001,
+        4.0
+      ],
+      "triangles": 2380,
+      "watertight": true
+    }
+  ]
+}

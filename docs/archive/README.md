@@ -1,13 +1,13 @@
 # Archive and evidence index
 
-Updated 2026-10-18. This is a map, not a cleanup script. All outputs/work artifacts stay at their original paths. docs/phase7-readiness stays in place (audit item 2 not approved). Brian confirmed C1/C1b/C2/C3; C4 remains unresolved. [Current handoff](../../HANDOFF.md) and [decisions](../housekeeping/Decision_Log.md) take precedence over older snapshots.
+Updated 2026-10-19. This is a map, not a cleanup script. All outputs/work artifacts stay at their original paths. **The numbered-phase plan is retired (Brian, 2026-10-19).** Everything below that mentions phases, milestones or "closed with limitations" is history, not current status. [ROADMAP](../../ROADMAP.md), the [current handoff](../../HANDOFF.md) and [decisions](../housekeeping/Decision_Log.md) take precedence over older snapshots.
 
 | Classification | Location | Why / what supersedes it |
 | --- | --- | --- |
 | Historical planning, kept in place | [Readiness_Plan.md](../phase7-readiness/Readiness_Plan.md) | Later STL-only clarification and Phase7 closeout supersede readiness gating; item 2 was not approved. |
 | Historical checks | [Verification_Report.md](../phase7-readiness/Verification_Report.md) | Earlier workspace/test-count snapshot, not current acceptance. |
 | Historical UNKNOWN register | [Evidence_Register.csv](../phase7-readiness/Evidence_Register.csv) | Keep all original UNKNOWNs; physical results are specimen-specific. |
-| Current milestone disposition | [Closeout_Report.md](../../outputs/Phase7_Closeout/Closeout_Report.md) | CLOSED WITH LIMITATIONS. Old absent-DB/next-setup/mounting statements are historical; Brian now confirms C1–C3. |
+| Retired milestone record | [Closeout_Report.md](../../outputs/Phase7_Closeout/Closeout_Report.md) | Earlier digital acceptance and specimen record. Its phase status and mounting/absent-DB statements are historical; Brian has since confirmed C1–C4. |
 | Historical source recovery | [Recovery_Report.md](../../work/rack-geometry-recovery/Recovery_Report.md) | Originals recovered; no old manufacturing writer found does not deny the later new rack exporter. |
 | Source preview provenance | [Report.md](../../work/rack-scene/Report.md) | Exact components; shared hardware/extension/backlog snapshots superseded later. |
 | Historical workflow snapshot | [Report.md](../../work/workflow-audit/Report.md) | Allocation/save fixes; independent-record/adapter/export backlog partly superseded. |
@@ -43,5 +43,6 @@ These files retain their exact original bytes and original line numbers. Relativ
 | PROJECT.md | [PROJECT_pre_housekeeping_20261018.md](handoffs/PROJECT_pre_housekeeping_20261018.md) | Data/scope/startup wording aligned. |
 | START_HERE.md | [START_HERE_20261018.md](handoffs/START_HERE_20261018.md) | Competing historical entry replaced by pointer. |
 | GEMINI_HANDOFF.md | [GEMINI_HANDOFF_20261018.md](handoffs/GEMINI_HANDOFF_20261018.md) | Competing historical entry replaced by pointer. |
+| AGENTS.md, PROJECT.md, HANDOFF.md, Open_Unknowns.md, this README | [pre_roadmap_20261019/](handoffs/pre_roadmap_20261019/) | Copies taken before phase language was removed and ROADMAP.md was added (2026-10-19). |
 
 Beta folders/ZIPs, mechanical baseline deliveries, before-app/before-guide copies, old next-chat prompts, fixture/log/cache assets and supplier/Pi references remain protected historical material in place. App README mixed status text is documented in Audit.md; its old Pi4-only/shared-project/no-frame-export statements do not override current Brian decisions. See [Changes](../housekeeping/Changes.md) for all operations.

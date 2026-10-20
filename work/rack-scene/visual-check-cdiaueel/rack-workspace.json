@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "racks": [
+    {
+      "id": "visual-check",
+      "name": "Workflow audit · 5U",
+      "slots": 5,
+      "width_mm": null,
+      "depth_mm": null,
+      "pitch_mm": null,
+      "placements": [
+        {
+          "id": "00323e05-4210-4bbb-b76e-b5ab825e540a",
+          "equipment": "pi4",
+          "slot": 4,
+          "span": 2,
+          "geometry": "pi4-clearance-v2-reference",
+          "fit": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "id": "30542fb8-ad30-44f3-a85e-798d40905e4a",
+      "name": "Audit · 8U stack",
+      "slots": 8,
+      "width_mm": null,
+      "depth_mm": null,
+      "pitch_mm": null,
+      "placements": []
+    }
+  ],
+  "generation": "dd858d2e-8bce-4e37-85bb-7738d238b3af"
+}

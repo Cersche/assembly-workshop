@@ -1,0 +1,54 @@
+[
+  {
+    "id": "accu-sfk-m1-2-a2",
+    "revision": 1,
+    "name": "Accu M1 x 2 slotted countersunk - A2",
+    "kind": "screw",
+    "manufacturer": "Accu",
+    "part_number": "SFK-M1-2-A2",
+    "supplier_sku": "SFK-M1-2-A2",
+    "units": "mm",
+    "diameter": 1,
+    "pitch": 0.25,
+    "length": 2,
+    "length_convention": "overall",
+    "head_style": "countersunk",
+    "head_diameter": 1.9,
+    "head_height": 0.6,
+    "drive": "slotted; slot width0.25mm, depth0.3mm",
+    "material": "A2 stainless steel",
+    "finish": "Natural",
+    "manufacturing_standard": "DIN 963",
+    "countersunk_angle_degrees": 90,
+    "dimensional_tolerances": {
+      "head_diameter_mm": {
+        "plus": 0,
+        "minus": 0.14
+      },
+      "countersunk_angle_degrees": {
+        "plus": 2,
+        "minus": 0
+      }
+    },
+    "verification": "partial",
+    "source": "https://www.accu.co.uk/countersunk-flat-head-screws/5914-SFK-M1-2-A2",
+    "source_document": "https://www.accu.co.uk/api/product-datasheet?id=5914",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; static page has multiple availability states",
+    "cad_status": "Links only; no CAD/drawing/PDF bundled",
+    "redistribution_status": "unknown for supplier assets; concise factual metadata only",
+    "field_sources": {
+      "diameter,pitch,length,length_convention,head_diameter,head_height,head_style,drive,material,finish,manufacturing_standard,countersunk_angle_degrees,dimensional_tolerances": {
+        "url": "https://www.accu.co.uk/countersunk-flat-head-screws/5914-SFK-M1-2-A2",
+        "section": "Technical Specification; corroborated by exact-part manufacturer PDF"
+      }
+    },
+    "unknown_fields": [
+      "threaded_length",
+      "shank_diameter",
+      "strength_class",
+      "thread_tolerance"
+    ],
+    "notes": "Supplier page and PDF both explicitly stateM1x0.25. Overall countersunk length must not be treated as under-head length. Current reach/geometry adapter is unsupported and must remain UNKNOWN; not approved for Pi4 joint."
+  }
+]

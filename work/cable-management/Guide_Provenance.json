@@ -1,0 +1,14 @@
+{
+  "asset": "outputs/Mechanical_Design_App/rack-references/cable_guide.json",
+  "asset_sha256": "80a3bf323da36240e9ee0284a64ce245c99a7a1420190759f72e1b870d5d0d01",
+  "source_file": "C:\\Users\\brian\\Downloads\\Frame+Cable+Holder.3mf",
+  "source_sha256": "acac273a550302ed03843782f598637c14f00aaed95b68ca84655295e035307e",
+  "source_member": "3D/Objects/object_1.model",
+  "title": "Lab Rax Cable Guide",
+  "designer": "mklements",
+  "license": "MakerWorld Exclusive License",
+  "use": "Local preview mesh only (Brian, 2026-10-19). Never redistributed; excluded from PRINT THE RACK / /api/rack-stl.",
+  "conversion": "work/cable-management/convert_guide.py; vertices and triangle indices copied exactly (352 / 708).",
+  "creator_installation": "1U on a vertical post, 2 x M6 x 10 mm screws into existing post holes.",
+  "fit_strength_capacity": "UNKNOWN"
+}

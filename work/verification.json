@@ -1,0 +1,37 @@
+{
+  "pcb_collision": {
+    "returncode": 1,
+    "log": "Geometries in cache: 79\nGeometry cache size in bytes: 424424\nCGAL Polyhedrons in cache: 13\nCGAL cache size in bytes: 14349888\nTotal rendering time: 0:00:23.468\nCurrent top level object is empty.\n",
+    "empty": true
+  },
+  "joint_collision": {
+    "returncode": 1,
+    "log": "Geometries in cache: 98\nGeometry cache size in bytes: 543600\nCGAL Polyhedrons in cache: 20\nCGAL cache size in bytes: 17091632\nTotal rendering time: 0:00:28.776\nCurrent top level object is empty.\n",
+    "empty": true
+  },
+  "faceplate_export": {
+    "returncode": 0,
+    "log": "Geometries in cache: 21\nGeometry cache size in bytes: 120632\nCGAL Polyhedrons in cache: 6\nCGAL cache size in bytes: 1922208\nTotal rendering time: 0:00:01.607\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      608\n   Halfedges:    1824\n   Edges:         912\n   Halffacets:    624\n   Facets:        312\n   Volumes:         2\n"
+  },
+  "tray": {
+    "triangles": 10340,
+    "bounds": [
+      [
+        -56.0,
+        0.0,
+        7.0
+      ],
+      [
+        56.0,
+        82.0,
+        29.0
+      ]
+    ],
+    "gusset_vertices": {
+      "-46": 10,
+      "-34": 10,
+      "34": 10,
+      "46": 10
+    }
+  }
+}

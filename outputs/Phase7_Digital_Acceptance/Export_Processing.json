@@ -1,0 +1,36 @@
+{
+  "tray": {
+    "method": "exact-collinear-neighbor-split-v1",
+    "renderer_sha256": "8599f6389cb70d487e032f669218c454f694229bf9722c6596617df64caca7c7",
+    "output_sha256": "964a5d62057d9336276e9fecf22eb5462099d996e6c54b8060ffa0778eb91947",
+    "repairs": [
+      {
+        "long_edge": [
+          [
+            -39.5,
+            34.0,
+            7.0
+          ],
+          [
+            -39.5,
+            56.0,
+            7.0
+          ]
+        ],
+        "existing_middle_vertex": [
+          -39.5,
+          45.0,
+          7.0
+        ]
+      }
+    ],
+    "scope": "Export triangulation only. Existing coordinates and neighboring surface preserved; no dimensions changed."
+  },
+  "faceplate": {
+    "method": "exact-collinear-neighbor-split-v1",
+    "renderer_sha256": "ef09baf051fac0d3fa7a06e9e10b8c1447c0108a14a0cb84aeebaf46e13a4c92",
+    "output_sha256": "ef09baf051fac0d3fa7a06e9e10b8c1447c0108a14a0cb84aeebaf46e13a4c92",
+    "repairs": [],
+    "scope": "Export triangulation only. Existing coordinates and neighboring surface preserved; no dimensions changed."
+  }
+}

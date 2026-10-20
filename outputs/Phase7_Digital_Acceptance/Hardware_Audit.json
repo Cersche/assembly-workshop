@@ -1,0 +1,225 @@
+{
+  "parts": {
+    "screw": {
+      "id": "accu-sscf-m3-8-a2",
+      "revision": 1,
+      "name": "Accu M3 × 8 socket cap · A2",
+      "kind": "screw",
+      "manufacturer": "Accu",
+      "part_number": "SSCF-M3-8-A2",
+      "diameter": 3,
+      "pitch": 0.5,
+      "length": 8,
+      "threaded_length": 8,
+      "length_convention": "under_head",
+      "head_diameter": 5.5,
+      "head_height": 3,
+      "drive": "2.5 mm hex",
+      "material": "A2 stainless steel",
+      "finish": "Natural",
+      "verification": "documented",
+      "source": "https://www.accu.co.uk/metric-cap-head-screws/3818-SSCF-M3-8-A2",
+      "retrieved": "2026-10-17",
+      "availability": "Not checked",
+      "cad_status": "Supplier CAD link only; no model downloaded",
+      "notes": "Nominal dimensions; head diameter tolerance +0/-0.18 mm, height +0/-0.14 mm. Full-thread specification from supplier."
+    },
+    "heatset": {
+      "id": "mcmaster-94459a140",
+      "revision": 1,
+      "name": "McMaster M3 heat-set · 5.7 mm",
+      "kind": "heatset",
+      "part_number": "94459A140",
+      "diameter": 3,
+      "pitch": 0.5,
+      "length": 5.7,
+      "hole_max_diameter": 4,
+      "hole_profile": "straight",
+      "end_type": "open",
+      "material": "Brass",
+      "verification": "partial",
+      "source": "https://www.mcmaster.com/products/94459a170/",
+      "retrieved": "2026-10-17",
+      "availability": "Not checked",
+      "cad_status": "No CAD downloaded",
+      "notes": "Catalog standard-profile brass row. 4 mm is For Max. Hole Dia., not an exact installation target. Outside diameter, usable thread depth and minimum wall remain unverified."
+    }
+  },
+  "offline_audit": [
+    {
+      "id": "accu-sscf-m3-8-a2",
+      "revision": 1,
+      "verification": "documented",
+      "missing_fields": [
+        "units",
+        "redistribution_status",
+        "head_style",
+        "shank_diameter",
+        "dimensional_tolerances"
+      ],
+      "declared_unknowns": [],
+      "source": "https://www.accu.co.uk/metric-cap-head-screws/3818-SSCF-M3-8-A2",
+      "source_document": null,
+      "installation_evidence": {},
+      "installation_resolution": null,
+      "installation_conflicts": [],
+      "geometry_scope": "Existing Pi4 M3 adapter only; catalog coverage does not extend geometry support",
+      "physical_approval": false
+    },
+    {
+      "id": "mcmaster-94459a140",
+      "revision": 1,
+      "verification": "partial",
+      "missing_fields": [
+        "manufacturer",
+        "units",
+        "finish",
+        "redistribution_status",
+        "installation_method",
+        "outside_diameter",
+        "hole_diameter",
+        "usable_depth",
+        "min_wall",
+        "dimensional_tolerances"
+      ],
+      "declared_unknowns": [],
+      "source": "https://www.mcmaster.com/products/94459a170/",
+      "source_document": null,
+      "installation_evidence": {},
+      "installation_resolution": null,
+      "installation_conflicts": [],
+      "geometry_scope": "Existing Pi4 M3 adapter only; catalog coverage does not extend geometry support",
+      "physical_approval": false
+    }
+  ],
+  "rule_report": {
+    "status": "incomplete",
+    "checks": [
+      {
+        "name": "Thread compatibility",
+        "status": "pass",
+        "detail": "Screw M3 × 0.5; insert M3 × 0.5."
+      },
+      {
+        "name": "Screw reach",
+        "status": "pass",
+        "detail": "Reach 4.700 mm; project minimum 3.000 mm (user target, not a strength rating)."
+      },
+      {
+        "name": "Usable thread engagement",
+        "status": "unknown",
+        "detail": "Insert usable thread depth has not been documented."
+      },
+      {
+        "name": "Threaded shank",
+        "status": "pass",
+        "detail": "Conservative check: the entire protruding section must be threaded."
+      },
+      {
+        "name": "Open insert bore envelope",
+        "status": "pass",
+        "detail": "3.300 mm from screw tip to the modeled bore end. Assumes the entered pocket is continuous screw-clear space; verify actual geometry."
+      },
+      {
+        "name": "Bottom clearance",
+        "status": "unknown",
+        "detail": "The modeled bore check does not establish the actual insert exit, installation residue or printed clearance."
+      },
+      {
+        "name": "Insert pocket depth",
+        "status": "pass",
+        "detail": "Pocket 8 mm; insert 5.7 mm. Melt allowance is still material dependent."
+      },
+      {
+        "name": "Maximum installation hole",
+        "status": "pass",
+        "detail": "Pilot 4 mm; supplier maximum 4 mm. Being below the maximum alone does not establish printed fit."
+      },
+      {
+        "name": "Installation hole",
+        "status": "unknown",
+        "detail": "Missing insert hole_diameter."
+      },
+      {
+        "name": "Boss wall",
+        "status": "unknown",
+        "detail": "Insert outside diameter and sourced minimum wall are required."
+      },
+      {
+        "name": "Source completeness",
+        "status": "unknown",
+        "detail": "A selected part is custom or partially documented."
+      },
+      {
+        "name": "Nominal screw-head surface screening",
+        "status": "pass",
+        "detail": "{\"status\": \"pass\", \"measurements\": [{\"axis_x\": -40, \"target\": \"pi_reference\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": -40, \"target\": \"tray\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": -40, \"target\": \"faceplate\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": 40, \"target\": \"pi_reference\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": 40, \"target\": \"tray\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}, {\"axis_x\": 40, \"target\": \"faceplate\", \"inner\": 0, \"outer\": 0, \"status\": \"pass\"}], \"head_diameter_mm\": 5.5, \"head_height_mm\": 3, \"method\": \"head-cylinder-surface-bracket-v1\", \"bearing_contact_exclusion_mm\": 0.001, \"clipping_epsilon_mm\": 1e-05, \"polygon_sides\": 48, \"limits\": \"Nominal head cylinder surface screen against Pi/tray/faceplate; inner intersections FAIL, outer-only intersections UNKNOWN. No outer intersection passes only the surface screen, not containment, tool access, tolerances or physical fit. Ear bearing contact excluded by +0.001 mm Y. Driver/shaft/handle envelope and insertion path remain UNKNOWN.\"}"
+      },
+      {
+        "name": "Physical and spatial checks",
+        "status": "unknown",
+        "detail": "Driver/installation-tool envelopes, insertion path, containment, material, strength and printed fit remain unestablished. A nominal screw-head surface screen is reported separately."
+      }
+    ],
+    "access_assessment": [
+      {
+        "name": "Screwdriver approach",
+        "status": "unknown",
+        "known": {
+          "drive": "2.5 mm hex",
+          "bearing_y_mm": 11.3,
+          "approach": "from rear (+Y), toward -Y"
+        },
+        "required": "Exact driver shaft/bit/handle envelope, usable reach, approach/rotation path, and any surrounding rack geometry.",
+        "limit": "Drive size alone does not define the complete tool envelope."
+      },
+      {
+        "name": "Insert installation",
+        "status": "unknown",
+        "known": {
+          "part_number": "94459A140",
+          "length_mm": 5.7,
+          "boss_entrance_y_mm": 8
+        },
+        "required": "Exact insert outside diameter and installation-tip envelope/reach, documented installation procedure, material, and installation sequence.",
+        "limit": "Install tool and hot material clearance are not established by the nominal insert length."
+      },
+      {
+        "name": "Pi insertion/removal path",
+        "status": "unknown",
+        "known": {
+          "final_pose": "pinned reference transform"
+        },
+        "required": "Explicit assembly order and motion path, including mounting fasteners and accessories, followed by swept-volume or equivalent path checks.",
+        "limit": "A clear final pose does not prove that parts can be inserted or removed."
+      },
+      {
+        "name": "Connector/cable/accessory access",
+        "status": "unknown",
+        "known": {
+          "bare_board_reference": "included"
+        },
+        "required": "Actual cable plug/boot/bend envelopes and intended ports, SD-card service path, heatsink/fan or other accessory geometry.",
+        "limit": "Bare-board geometry does not supply connected-cable or accessory envelopes."
+      },
+      {
+        "name": "Rack engagement and physical sign-off",
+        "status": "unknown",
+        "known": {
+          "rack_fit": "unverified"
+        },
+        "required": "Mating rack geometry and installation path; actual hardware/material selection; separately approved coupon/prototype and recorded fit/load results.",
+        "limit": "Digital surface screening is not a strength or physical-fit certification."
+      }
+    ]
+  },
+  "counts": {
+    "pass": 7,
+    "fail": 0,
+    "unknown": 6
+  },
+  "catalog_identities": 34,
+  "catalog_revisions": 38,
+  "pack_hashes": "7 PASS",
+  "saved_pins_preserved": true
+}

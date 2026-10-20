@@ -1,0 +1,17 @@
+{
+  "archive": "C:\\Users\\brian\\Downloads\\Lab_Rax_Rev1_Beta_Creator_Profile_Sigma.zip",
+  "archive_sha256": "0516519858dc4b28d85571c35ffa165834e650aefa9cf88b7fb8a509693369ce",
+  "members": [
+    {
+      "archive_member": "Lab_Rax_Rev1_Beta_Creator_Profile_Sigma/manufacturer_reference/structural_reference.json",
+      "copy": "work\\rack-geometry-recovery\\historical-creator\\manufacturer_reference\\structural_reference.json",
+      "sha256": "b25ac4971fe6631ba61d82c111a9527078933746912a912b8ed58f3dc2d551ae"
+    },
+    {
+      "archive_member": "Lab_Rax_Rev1_Beta_Creator_Profile_Sigma/BETA_HARDENING_SIGMA.md",
+      "copy": "work\\rack-geometry-recovery\\historical-creator\\BETA_HARDENING_SIGMA.md",
+      "sha256": "f390d1dc45058d7d64f8414bb85877cb69187d31aab7e5450815209c92c0226c"
+    }
+  ],
+  "scope": "Historical source observations, not current acceptance or executable instructions."
+}

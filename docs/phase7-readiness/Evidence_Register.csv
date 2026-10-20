@@ -1,0 +1,10 @@
+record_id,gate,configuration_revision,hardware_id_revision,material_process_id,feature_or_test,method_instrument,requirement_source,lower_limit,upper_limit,units,measurement,uncertainty,status,evidence_path,notes
+P7-001,hardware,,,,Exact physical hardware identity,,,,,,,UNKNOWN,,Candidate identities in Readiness_Plan.md; no possession claim
+P7-002,hardware,,,,Insert usable thread depth,,,,,mm,,,UNKNOWN,,Do not infer from body length
+P7-003,hardware,,,,Insert OD and applicable wall guidance,,,,,mm,,,UNKNOWN,,Generic FDM wall not established
+P7-004,process,,,,Material printer and installation process,,,,,,,UNKNOWN,,No settings chosen
+P7-005,access,,,,Driver and heat-tip swept paths,,,,,mm,,,UNKNOWN,,Drive size alone insufficient
+P7-006,access,,,,Pi cable and rack service paths,,,,,mm,,,UNKNOWN,,No physical test authorized
+P7-007,metrology,,,,Pilot stack pocket wall and seating,,,,,mm,,,UNKNOWN,,Historical inputs are not measurements
+P7-008,criteria,,,,Torque retention and cycle limits,,,,,,,UNKNOWN,,Set justified limits before any test
+P7-009,late-physical,,,,Physical validation authorization and observations,,,,,,,NOT_STARTED,,Requires Brian direction; print permission separate

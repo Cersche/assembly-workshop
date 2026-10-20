@@ -1,0 +1,225 @@
+{
+  "date": "2026-10-18",
+  "scope": "Read-only inspection of app-version databases in canonical workspace; no server launch or Store initialization. work acceptance databases excluded from normal-use candidates.",
+  "candidates": [
+    {
+      "database": "outputs\\Mechanical_Design_App_Beta_0_1\\Mechanical_Design_App\\data\\library.sqlite3",
+      "sha256": "4fb5591aa391ce5a78f268076abfe3d0c5595c03fe02b3175b2bd7a69f0a8706",
+      "hardware_revisions": 0,
+      "projects": [
+        {
+          "id": "pi4-beta",
+          "inputs": {
+            "stack": 3.3,
+            "pocket": 8,
+            "boss_diameter": 9,
+            "pilot": 4.2,
+            "minimum_engagement": 3,
+            "bottom_allowance": 0.5
+          },
+          "pins": {}
+        }
+      ],
+      "revision_files": [],
+      "database_hash_unchanged": true
+    },
+    {
+      "database": "outputs\\Mechanical_Design_App_Beta_0_2\\Mechanical_Design_App\\data\\library.sqlite3",
+      "sha256": "af35f527725b575b474c08322e3b7b9fe466714a20a37bd2e0a6627c28afefbd",
+      "hardware_revisions": 6,
+      "projects": [
+        {
+          "id": "pi4-beta",
+          "inputs": {
+            "stack": 3.3,
+            "pocket": 8,
+            "boss_diameter": 9,
+            "pilot": 4.2,
+            "minimum_engagement": 3,
+            "bottom_allowance": 0.5
+          },
+          "pins": {
+            "screw": {
+              "id": "accu-sscf-m3-10-a2",
+              "revision": 1
+            },
+            "heatset": {
+              "id": "mcmaster-94459a130",
+              "revision": 1
+            }
+          }
+        }
+      ],
+      "revision_files": [],
+      "database_hash_unchanged": true
+    },
+    {
+      "database": "outputs\\Mechanical_Design_App_Beta_0_3\\Mechanical_Design_App\\data\\library.sqlite3",
+      "sha256": "eb22b03775e9b66b3bdbb74e174ddc8e36b4fc8e1edc3e46a3be14963631932e",
+      "hardware_revisions": 6,
+      "projects": [
+        {
+          "id": "pi4-beta",
+          "inputs": {
+            "stack": 3.3,
+            "pocket": 8,
+            "boss_diameter": 9,
+            "pilot": 4.2,
+            "minimum_engagement": 3,
+            "bottom_allowance": 0.5
+          },
+          "pins": {}
+        }
+      ],
+      "revision_files": [],
+      "database_hash_unchanged": true
+    },
+    {
+      "database": "outputs\\Mechanical_Design_App_Beta_0_5\\Mechanical_Design_App\\data\\library.sqlite3",
+      "sha256": "eb22b03775e9b66b3bdbb74e174ddc8e36b4fc8e1edc3e46a3be14963631932e",
+      "hardware_revisions": 6,
+      "projects": [
+        {
+          "id": "pi4-beta",
+          "inputs": {
+            "stack": 3.3,
+            "pocket": 8,
+            "boss_diameter": 9,
+            "pilot": 4.2,
+            "minimum_engagement": 3,
+            "bottom_allowance": 0.5
+          },
+          "pins": {}
+        }
+      ],
+      "revision_files": [],
+      "database_hash_unchanged": true
+    },
+    {
+      "database": "outputs\\Mechanical_Design_App_Beta_0_6\\Mechanical_Design_App\\data\\library.sqlite3",
+      "sha256": "2b55dea895284e45016393c1c979f04b7604c3dfa920f47038f6adebb80f3121",
+      "hardware_revisions": 6,
+      "projects": [
+        {
+          "id": "pi4-beta",
+          "inputs": {
+            "stack": 3.3,
+            "pocket": 8,
+            "boss_diameter": 9,
+            "pilot": 4.2,
+            "minimum_engagement": 3,
+            "bottom_allowance": 0.5
+          },
+          "pins": {
+            "screw": {
+              "id": "accu-sscf-m3-8-a2",
+              "revision": 1
+            },
+            "heatset": {
+              "id": "mcmaster-94459a140",
+              "revision": 1
+            }
+          }
+        }
+      ],
+      "revision_files": [],
+      "database_hash_unchanged": true
+    },
+    {
+      "database": "outputs\\Mechanical_Design_App_Beta_0_6_1\\Mechanical_Design_App\\data\\library.sqlite3",
+      "sha256": "b5c19e3c2fd4fc1552aa0fc0c9dd96c8b996dcf09e58e88f4a432d3d57a01465",
+      "hardware_revisions": 6,
+      "projects": [
+        {
+          "id": "pi4-beta",
+          "inputs": {
+            "stack": 3.3,
+            "pocket": 8,
+            "boss_diameter": 9,
+            "pilot": 4.2,
+            "minimum_engagement": 3,
+            "bottom_allowance": 0.5
+          },
+          "pins": {
+            "screw": {
+              "id": "accu-sscf-m3-8-a2",
+              "revision": 1
+            },
+            "heatset": {
+              "id": "mcmaster-94459a140",
+              "revision": 1
+            }
+          }
+        }
+      ],
+      "revision_files": [],
+      "database_hash_unchanged": true
+    },
+    {
+      "database": "outputs\\Mechanical_Design_App_Beta_0_7\\Mechanical_Design_App\\data\\library.sqlite3",
+      "sha256": "a4e06ab6c5ce80099eecb86daca3050944f8e4a6c6d6e83b469ed4e3d1df940e",
+      "hardware_revisions": 6,
+      "projects": [
+        {
+          "id": "pi4-beta",
+          "inputs": {
+            "stack": 3.3,
+            "pocket": 8,
+            "boss_diameter": 9,
+            "pilot": 4,
+            "minimum_engagement": 3,
+            "bottom_allowance": 0.5
+          },
+          "pins": {
+            "screw": {
+              "id": "accu-sscf-m3-8-a2",
+              "revision": 1
+            },
+            "heatset": {
+              "id": "mcmaster-94459a140",
+              "revision": 1
+            }
+          }
+        }
+      ],
+      "revision_files": [],
+      "database_hash_unchanged": true
+    },
+    {
+      "database": "outputs\\Mechanical_Design_App_Beta_0_8\\Mechanical_Design_App\\data\\library.sqlite3",
+      "sha256": "fdc694c09c2eaf099a3f2262bd03360b42746ecbf30571d263c6351319dc3bfd",
+      "hardware_revisions": 6,
+      "projects": [
+        {
+          "id": "pi4-beta",
+          "inputs": {
+            "stack": 3.3,
+            "pocket": 8,
+            "boss_diameter": 9,
+            "pilot": 4,
+            "minimum_engagement": 3,
+            "bottom_allowance": 0.5
+          },
+          "pins": {
+            "screw": {
+              "id": "accu-sscf-m3-8-a2",
+              "revision": 1
+            },
+            "heatset": {
+              "id": "mcmaster-94459a140",
+              "revision": 1
+            }
+          }
+        }
+      ],
+      "revision_files": [
+        "revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json",
+        "revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl",
+        "revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad",
+        "revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json",
+        "revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl"
+      ],
+      "database_hash_unchanged": true
+    }
+  ]
+}

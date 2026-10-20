@@ -1,0 +1,35 @@
+{
+  "chat_title": "Validate Phase 5 readiness",
+  "chat_id": "01a14dde-e57e-7063-b72b-f9e4a0dbce49",
+  "request_turn": "01a14dff-bfa0-7b81-995c-b07c352effef",
+  "user_request": "Great. We're going to handoff to a new session for phase 6. before we do that, please provide me with the stl that you wanted me to print out and test fit.",
+  "original_delivery": [
+    {
+      "path": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\continue-assembly-workshop-from-c-users\\outputs\\Pi4_Test_Fit_Parts\\Pi4_Tray_Clearance_v2_TEST_FIT.stl",
+      "sha256": "ce578db0b9917532f1fdba01be1e8726cd0c97579f57ed6730fa938660d5c815",
+      "original_manifest_matches": true
+    },
+    {
+      "path": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\continue-assembly-workshop-from-c-users\\outputs\\Pi4_Test_Fit_Parts\\Pi4_Faceplate_Pilot4mm_TRIAL.stl",
+      "sha256": "139eb870d725aef9863c964de4f9ec47401b87282101dd98a8eb79f3d521d877",
+      "original_manifest_matches": true
+    }
+  ],
+  "original_build_id": "1e05abc6db7199a810e98c419632136fbd401586e2b6c7dd60bedda62ecaae29",
+  "later_explicit_replacement": [
+    {
+      "path": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\continue-assembly-workshop-from-c-users\\outputs\\Pi4_Four_Corner_Test_Fit\\Pi4_Tray_Clearance_v2_TEST_FIT.stl",
+      "sha256": "7b92efd6f3066e066defe67700aa7b25902d31a6aae06f8f05da4885469a3f5d",
+      "saved_assembly_hash_matches": true
+    },
+    {
+      "path": "C:\\Users\\brian\\Documents\\Codex\\2026-10-18\\continue-assembly-workshop-from-c-users\\outputs\\Pi4_Four_Corner_Test_Fit\\Pi4_Faceplate_FOUR_CORNER_Pilot4mm_TRIAL.stl",
+      "sha256": "5cba45a7a4e5607fc22a044ba8d2dfbfb35d8dc3a9a554d4901bd1ab4db37af8",
+      "saved_assembly_hash_matches": true
+    }
+  ],
+  "replacement_build_id": "bbbe12450805205dfcb2be26f02d707bd53c3030e21970631539be2d3cd27937",
+  "provenance": "Recovered exact supplied test-fit files and later replacement from earlier chat and verified saved hashes. Full tray, not a separate small coupon.",
+  "photo_link_scope": "User points to these earlier supplied test-fit parts. File delivery is verified; a photo cannot independently recover the printed STL hash. Do not associate this print with the later Phase7 digital acceptance build.",
+  "mounting": "Historical file identification only; matter not reopened or reassessed."
+}

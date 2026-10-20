@@ -1,0 +1,52 @@
+[
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "f74671",
+      "wall_time_seconds": 0.5946077,
+      "exit_code": 0,
+      "original_token_count": 27,
+      "output": "Catalog filters, revision search, unknowns, replacement effects and actual explicit-import handlers PASS.\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "a9fef5",
+      "wall_time_seconds": 0.6114973,
+      "exit_code": 0,
+      "original_token_count": 43,
+      "output": "Phase7 actual frontend handlers PASS: matching build, source labels, invalidation, stale completion, failures, integrity error, units/scope text. No visual browser claim.\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "6d4ce3",
+      "wall_time_seconds": 1.2405552,
+      "exit_code": 0,
+      "original_token_count": 31,
+      "output": "Viewer logic passed: model switching, hardware event rendering, finite coordinates, joint focus, visibility, top and reset.\n"
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "7c9990",
+      "wall_time_seconds": 0.6254798,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "chunk_id": "a589c1",
+      "wall_time_seconds": 0.6229289,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  }
+]

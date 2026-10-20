@@ -1,0 +1,259 @@
+[
+  {
+    "revision": 1,
+    "units": "mm",
+    "verification": "partial",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; live stock not established",
+    "cad_status": "Links only; no third-party assets bundled",
+    "redistribution_status": "Supplier asset rights unresolved; factual metadata only",
+    "id": "accu-sipl-m1.2-1.8-reny",
+    "name": "Accu M1.2 x 1.8 Phillips pan - RENY",
+    "kind": "screw",
+    "manufacturer": "Accu",
+    "part_number": "SIPL-M1.2-1.8-RENY",
+    "diameter": 1.2,
+    "pitch": 0.25,
+    "length": 1.8,
+    "length_convention": "under_head",
+    "head_style": "pan",
+    "head_diameter": 2,
+    "head_height": 0.7,
+    "drive": "PH0",
+    "material": "Glass Fibre Reinforced Nylon MXD6 (RENY)",
+    "finish": "Natural",
+    "source": "https://www.accu.co.uk/phillips-pan-head-screws/655879-SIPL-M1-2-1-8-RENY",
+    "field_sources": {
+      "supplier_dimensions": {
+        "url": "https://www.accu.co.uk/phillips-pan-head-screws/655879-SIPL-M1-2-1-8-RENY",
+        "section": "Technical Specification"
+      },
+      "length_convention": {
+        "url": "https://www.accu.co.uk/phillips-pan-head-screws/655879-SIPL-M1-2-1-8-RENY",
+        "basis": "Non-countersunk pan head bearing convention"
+      }
+    },
+    "unknown_fields": [
+      "threaded_length",
+      "strength_class",
+      "dimensional_tolerances"
+    ],
+    "notes": "Catalog metadata only; plastic screw is not a stainless replacement or Pi4 geometry approval."
+  },
+  {
+    "revision": 1,
+    "units": "mm",
+    "verification": "partial",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; live stock not established",
+    "cad_status": "Links only; no third-party assets bundled",
+    "redistribution_status": "Supplier asset rights unresolved; factual metadata only",
+    "id": "msia-m1-250",
+    "name": "PEM MSIA-M1-250 microPEM heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "PennEngineering",
+    "part_number": "MSIA-M1-250",
+    "diameter": 1,
+    "pitch": 0.25,
+    "material": "Aluminum",
+    "installation_method": "heat / ultrasonic",
+    "end_type": "open",
+    "source": "https://www.pemnet.com/products/product-finder/msia-m1-250/",
+    "source_document": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+    "manufacturer_installation_evidence": {
+      "catalog_page": "SI-9; PDF page 9",
+      "A_mm": 2.5,
+      "A_tolerance_mm": 0.1,
+      "E_after_knurl_mm": 2.1,
+      "E_tolerance_mm": 0.1,
+      "C_max_mm": 1.75,
+      "hole_nominal_mm": 1.75,
+      "minimum_hole_depth_mm": 3.27,
+      "minimum_wall_mm": 0.7,
+      "wall_applicability": "Catalog footnote 6: tested in ABS and polycarbonate; boss interpretation and printed-material applicability unresolved",
+      "hole_tolerance_conflict": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "automation": "Evidence only; not mapped to geometry/rule fields pending drawing and applicability review"
+    },
+    "field_sources": {
+      "diameter,pitch,material,manufacturer_installation_evidence": {
+        "url": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+        "section": "SI-9 table and footnote 6"
+      },
+      "identity,installation_method,end_type": {
+        "url": "https://www.pemnet.com/products/product-finder/msia-m1-250/",
+        "section": "Exact product specifications"
+      }
+    },
+    "unknown_fields": [
+      "length",
+      "outside_diameter",
+      "hole_diameter",
+      "usable_depth",
+      "min_wall",
+      "printed_material_process_fit"
+    ],
+    "notes": "Partial exact-part record. Named drawing dimensions retained as evidence; geometry interpretation pending. Open thread does not establish usable engagement depth. Physical installation and strength unvalidated."
+  },
+  {
+    "revision": 1,
+    "units": "mm",
+    "verification": "partial",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; live stock not established",
+    "cad_status": "Links only; no third-party assets bundled",
+    "redistribution_status": "Supplier asset rights unresolved; factual metadata only",
+    "id": "msia-m1.2-250",
+    "name": "PEM MSIA-M1.2-250 microPEM heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "PennEngineering",
+    "part_number": "MSIA-M1.2-250",
+    "diameter": 1.2,
+    "pitch": 0.25,
+    "material": "Aluminum",
+    "installation_method": "heat / ultrasonic",
+    "end_type": "open",
+    "source": "https://www.pemnet.com/products/product-finder/msia-m1-2-250/",
+    "source_document": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+    "manufacturer_installation_evidence": {
+      "catalog_page": "SI-9; PDF page 9",
+      "A_mm": 2.5,
+      "A_tolerance_mm": 0.1,
+      "E_after_knurl_mm": 2.1,
+      "E_tolerance_mm": 0.1,
+      "C_max_mm": 1.75,
+      "hole_nominal_mm": 1.75,
+      "minimum_hole_depth_mm": 3.27,
+      "minimum_wall_mm": 0.7,
+      "wall_applicability": "Catalog footnote 6: tested in ABS and polycarbonate; boss interpretation and printed-material applicability unresolved",
+      "hole_tolerance_conflict": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "automation": "Evidence only; not mapped to geometry/rule fields pending drawing and applicability review"
+    },
+    "field_sources": {
+      "diameter,pitch,material,manufacturer_installation_evidence": {
+        "url": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+        "section": "SI-9 table and footnote 6"
+      },
+      "identity,installation_method,end_type": {
+        "url": "https://www.pemnet.com/products/product-finder/msia-m1-2-250/",
+        "section": "Exact product specifications"
+      }
+    },
+    "unknown_fields": [
+      "length",
+      "outside_diameter",
+      "hole_diameter",
+      "usable_depth",
+      "min_wall",
+      "printed_material_process_fit"
+    ],
+    "notes": "Partial exact-part record. Named drawing dimensions retained as evidence; geometry interpretation pending. Open thread does not establish usable engagement depth. Physical installation and strength unvalidated."
+  },
+  {
+    "revision": 1,
+    "units": "mm",
+    "verification": "partial",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; live stock not established",
+    "cad_status": "Links only; no third-party assets bundled",
+    "redistribution_status": "Supplier asset rights unresolved; factual metadata only",
+    "id": "msia-m1.4-300",
+    "name": "PEM MSIA-M1.4-300 microPEM heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "PennEngineering",
+    "part_number": "MSIA-M1.4-300",
+    "diameter": 1.4,
+    "pitch": 0.3,
+    "material": "Aluminum",
+    "installation_method": "heat / ultrasonic",
+    "end_type": "open",
+    "source": "https://www.pemnet.com/products/product-finder/msia-m1-4-300/",
+    "source_document": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+    "manufacturer_installation_evidence": {
+      "catalog_page": "SI-9; PDF page 9",
+      "A_mm": 3,
+      "A_tolerance_mm": 0.1,
+      "E_after_knurl_mm": 2.5,
+      "E_tolerance_mm": 0.1,
+      "C_max_mm": 2.15,
+      "hole_nominal_mm": 2.15,
+      "minimum_hole_depth_mm": 3.77,
+      "minimum_wall_mm": 0.8,
+      "wall_applicability": "Catalog footnote 6: tested in ABS and polycarbonate; boss interpretation and printed-material applicability unresolved",
+      "hole_tolerance_conflict": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "automation": "Evidence only; not mapped to geometry/rule fields pending drawing and applicability review"
+    },
+    "field_sources": {
+      "diameter,pitch,material,manufacturer_installation_evidence": {
+        "url": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+        "section": "SI-9 table and footnote 6"
+      },
+      "identity,installation_method,end_type": {
+        "url": "https://www.pemnet.com/products/product-finder/msia-m1-4-300/",
+        "section": "Exact product specifications"
+      }
+    },
+    "unknown_fields": [
+      "length",
+      "outside_diameter",
+      "hole_diameter",
+      "usable_depth",
+      "min_wall",
+      "printed_material_process_fit"
+    ],
+    "notes": "Partial exact-part record. Named drawing dimensions retained as evidence; geometry interpretation pending. Open thread does not establish usable engagement depth. Physical installation and strength unvalidated."
+  },
+  {
+    "revision": 1,
+    "units": "mm",
+    "verification": "partial",
+    "retrieved": "2026-10-18",
+    "availability": "unknown; live stock not established",
+    "cad_status": "Links only; no third-party assets bundled",
+    "redistribution_status": "Supplier asset rights unresolved; factual metadata only",
+    "id": "msia-m1.6-300",
+    "name": "PEM MSIA-M1.6-300 microPEM heat/ultrasonic insert",
+    "kind": "heatset",
+    "manufacturer": "PennEngineering",
+    "part_number": "MSIA-M1.6-300",
+    "diameter": 1.6,
+    "pitch": 0.35,
+    "material": "Aluminum",
+    "installation_method": "heat / ultrasonic",
+    "end_type": "open",
+    "source": "https://www.pemnet.com/products/product-finder/msia-m1-6-300/",
+    "source_document": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+    "manufacturer_installation_evidence": {
+      "catalog_page": "SI-9; PDF page 9",
+      "A_mm": 3,
+      "A_tolerance_mm": 0.1,
+      "E_after_knurl_mm": 2.5,
+      "E_tolerance_mm": 0.1,
+      "C_max_mm": 2.15,
+      "hole_nominal_mm": 2.15,
+      "minimum_hole_depth_mm": 3.77,
+      "minimum_wall_mm": 0.8,
+      "wall_applicability": "Catalog footnote 6: tested in ABS and polycarbonate; boss interpretation and printed-material applicability unresolved",
+      "hole_tolerance_conflict": "Product page labels +/-0.05 mm; catalog labels +0.05 mm. No governing interval selected.",
+      "automation": "Evidence only; not mapped to geometry/rule fields pending drawing and applicability review"
+    },
+    "field_sources": {
+      "diameter,pitch,material,manufacturer_installation_evidence": {
+        "url": "https://www.pemnet.com/wp-content/uploads/sites/9/2023/10/sidata.pdf",
+        "section": "SI-9 table and footnote 6"
+      },
+      "identity,installation_method,end_type": {
+        "url": "https://www.pemnet.com/products/product-finder/msia-m1-6-300/",
+        "section": "Exact product specifications"
+      }
+    },
+    "unknown_fields": [
+      "length",
+      "outside_diameter",
+      "hole_diameter",
+      "usable_depth",
+      "min_wall",
+      "printed_material_process_fit"
+    ],
+    "notes": "Partial exact-part record. Named drawing dimensions retained as evidence; geometry interpretation pending. Open thread does not establish usable engagement depth. Physical installation and strength unvalidated."
+  }
+]

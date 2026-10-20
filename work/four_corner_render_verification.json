@@ -1,0 +1,198 @@
+{
+  "build_id": "bbbe12450805205dfcb2be26f02d707bd53c3030e21970631539be2d3cd27937",
+  "mounting_layout": {
+    "source_file": "Blank+Plates+Half,+1+and+2U.3mf",
+    "source_sha256": "6e02e7b52d92e01615a0414be3b9ec58add5fb96c717db7ef517fa3ba854e7ad",
+    "member": "3D/Objects/object_2.model",
+    "object_id": "3",
+    "units": "mm",
+    "reference_front_plane_y": -4,
+    "boundary_loops": [
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            113.264923,
+            -3.5093689
+          ],
+          [
+            123.260071,
+            3.50976562
+          ]
+        ],
+        "center_xz": [
+          118.262497,
+          0.00019835999999995302
+        ]
+      },
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            113.264923,
+            12.3926392
+          ],
+          [
+            123.260071,
+            19.4117737
+          ]
+        ],
+        "center_xz": [
+          118.262497,
+          15.902206450000001
+        ]
+      },
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            -123.260078,
+            -3.5093689
+          ],
+          [
+            -113.264923,
+            3.50976562
+          ]
+        ],
+        "center_xz": [
+          -118.26250049999999,
+          0.00019835999999995302
+        ]
+      },
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            -123.260078,
+            12.3926392
+          ],
+          [
+            -113.264923,
+            19.4117737
+          ]
+        ],
+        "center_xz": [
+          -118.26250049999999,
+          15.902206450000001
+        ]
+      },
+      {
+        "vertices": 44,
+        "bounds_xz": [
+          [
+            -126.0,
+            -21.0
+          ],
+          [
+            126.0,
+            21.0
+          ]
+        ],
+        "center_xz": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            113.264923,
+            -19.4113617
+          ],
+          [
+            123.260071,
+            -12.3922272
+          ]
+        ],
+        "center_xz": [
+          118.262497,
+          -15.90179445
+        ]
+      },
+      {
+        "vertices": 40,
+        "bounds_xz": [
+          [
+            -123.260078,
+            -19.4113617
+          ],
+          [
+            -113.264923,
+            -12.3922272
+          ]
+        ],
+        "center_xz": [
+          -118.26250049999999,
+          -15.90179445
+        ]
+      }
+    ],
+    "layout": "four_corners",
+    "count": 4,
+    "reference_to_assembly_xz": "X unchanged; Z + 21 mm (matching 42 mm height)",
+    "centers_x_mm": [
+      -118.2625,
+      118.2625
+    ],
+    "centers_z_mm": [
+      5.09820555,
+      36.90220645
+    ],
+    "vertical_pitch_mm": 31.8040009,
+    "slot_length_mm": 10,
+    "slot_diameter_mm": 7,
+    "slot_profile": "Existing horizontal capsule retained; attachment supplies center spacing only",
+    "reference_selection": "42 mm / 1U object; use outer rows only, omit middle row",
+    "fit_status": "unvalidated; derived spacing, not physical rack fit"
+  },
+  "rendered_front_holes": [
+    {
+      "center_xz": [
+        -118.262,
+        36.9022
+      ],
+      "width_height": [
+        10.0,
+        7.0
+      ]
+    },
+    {
+      "center_xz": [
+        118.262,
+        5.0982
+      ],
+      "width_height": [
+        10.0,
+        7.0
+      ]
+    },
+    {
+      "center_xz": [
+        -118.262,
+        5.0982
+      ],
+      "width_height": [
+        10.0,
+        7.0
+      ]
+    },
+    {
+      "center_xz": [
+        118.262,
+        36.9022
+      ],
+      "width_height": [
+        10.0,
+        7.0
+      ]
+    }
+  ],
+  "center_verification_tolerance_mm": 0.003,
+  "front_hole_count": 4,
+  "mesh_closure": "pass for both parts",
+  "tray_source_unchanged": true,
+  "faceplate_envelope_unchanged": true,
+  "physical_rack_fit": "unknown",
+  "prior_phase5_evidence_scope": "Prior two-slot baseline; not physical approval of this revision"
+}

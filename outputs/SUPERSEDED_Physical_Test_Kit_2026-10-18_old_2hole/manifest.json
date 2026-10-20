@@ -1,0 +1,54 @@
+{
+  "status": "PROPOSED \u2014 UNVALIDATED test kit",
+  "files": [
+    {
+      "file": "A_Pi4_inserts_screwjoint_2keystones__tray.stl",
+      "piece": "A_Pi4_inserts_screwjoint_2keystones",
+      "purpose": "Main test: new 4 mm rounded faceplate, screw joint (4.0 mm pilot), heat-set insert bosses, 2 keystone openings",
+      "sha256": "b1e4ebec26a08d779e1474938a1c21d86e00787dd2625465de61b42957f3c9db",
+      "nudge_mm": 0
+    },
+    {
+      "file": "A_Pi4_inserts_screwjoint_2keystones__faceplate.stl",
+      "piece": "A_Pi4_inserts_screwjoint_2keystones",
+      "purpose": "Main test: new 4 mm rounded faceplate, screw joint (4.0 mm pilot), heat-set insert bosses, 2 keystone openings",
+      "sha256": "368a9cdfdfb9f268d1b08712381a4a94f581ed145f521c96cd3aaec8953a3747",
+      "nudge_mm": 0.023
+    },
+    {
+      "file": "B_Pi4_pegs_snapjoint__tray.stl",
+      "piece": "B_Pi4_pegs_snapjoint",
+      "purpose": "Snap-fit tray joint + printed pegs for the Pi",
+      "sha256": "6ad2ce8c79edc7132509785a6ef524d1e7845403ea3699c78426d0a55c33c9eb",
+      "nudge_mm": 0
+    },
+    {
+      "file": "B_Pi4_pegs_snapjoint__faceplate.stl",
+      "piece": "B_Pi4_pegs_snapjoint",
+      "purpose": "Snap-fit tray joint + printed pegs for the Pi",
+      "sha256": "71a03fc0fdeb076075f46129e72836a6554a3e994bd4056aebee1ef0c55f679d",
+      "nudge_mm": 0
+    },
+    {
+      "file": "C_Pi4_clips_singlepiece__combined.stl",
+      "piece": "C_Pi4_clips_singlepiece",
+      "purpose": "Tray and faceplate as one print + snap clips holding the Pi edges",
+      "sha256": "b6598044fc0530c735edc2d6d52aabcd04ccf5494c93ec0e90564c2928ac14fa",
+      "nudge_mm": 0
+    },
+    {
+      "file": "D_Pi4_straps_trayonly__tray.stl",
+      "piece": "D_Pi4_straps_trayonly",
+      "purpose": "Strap / zip-tie slots (tray only; reuse faceplate A)",
+      "sha256": "a9a30553ca9607ec05aace5fa0ad0da20edd84973154d7164558b0b372da44b4",
+      "nudge_mm": 0
+    },
+    {
+      "file": "E_2U_faceplate_slots__faceplate.stl",
+      "piece": "E_2U_faceplate_slots",
+      "purpose": "2U faceplate: rack slot spacing over two units + keystone (faceplate only)",
+      "sha256": "a57d9cb8c92e593fceabc2d7333e3d69e51f0fe6896ea946669fa4b2bcdbcafb",
+      "nudge_mm": 0
+    }
+  ]
+}

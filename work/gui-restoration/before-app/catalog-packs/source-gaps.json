@@ -1,0 +1,76 @@
+{
+  "checked": "2026-10-18",
+  "policy": "No record or pitch inferred to fill coverage. Awaiting source does not mean unavailable.",
+  "gaps": [
+    {
+      "kind": "heatset",
+      "size": 4.5,
+      "state": "awaiting_source",
+      "finding": "No exact importable part with corroborated pitch established in inspected supplier material. Not a supplier-unavailability conclusion."
+    },
+    {
+      "kind": "heatset",
+      "size": 7,
+      "state": "awaiting_source",
+      "finding": "No exact importable part with corroborated pitch established in inspected supplier material. Not a supplier-unavailability conclusion."
+    }
+  ],
+  "resolved": [
+    {
+      "kind": "screw",
+      "size": 1,
+      "state": "sourced_partial",
+      "source": "https://www.accu.co.uk/countersunk-flat-head-screws/5914-SFK-M1-2-A2",
+      "finding": "Exact supplier page and PDF agree on0.25mm pitch; imported as overall-length countersunk record; reach remains unsupported."
+    },
+    {
+      "kind": "screw",
+      "size": 1.2,
+      "state": "sourced_partial",
+      "source": "https://www.accu.co.uk/phillips-pan-head-screws/655879-SIPL-M1-2-1-8-RENY",
+      "finding": "Exact part and pitch sourced in batch5; installation applicability and physical verification remain open."
+    },
+    {
+      "kind": "heatset",
+      "size": 1,
+      "state": "sourced_partial",
+      "source": "https://www.pemnet.com/products/product-finder/msia-m1-250/",
+      "finding": "Exact part and pitch sourced in batch5; installation applicability and physical verification remain open."
+    },
+    {
+      "kind": "heatset",
+      "size": 1.2,
+      "state": "sourced_partial",
+      "source": "https://www.pemnet.com/products/product-finder/msia-m1-2-250/",
+      "finding": "Exact part and pitch sourced in batch5; installation applicability and physical verification remain open."
+    },
+    {
+      "kind": "heatset",
+      "size": 1.4,
+      "state": "sourced_partial",
+      "source": "https://www.pemnet.com/products/product-finder/msia-m1-4-300/",
+      "finding": "Exact part and pitch sourced in batch5; installation applicability and physical verification remain open."
+    },
+    {
+      "kind": "heatset",
+      "size": 1.6,
+      "state": "sourced_partial",
+      "source": "https://www.pemnet.com/products/product-finder/msia-m1-6-300/",
+      "finding": "Exact part and pitch sourced in batch5; installation applicability and physical verification remain open."
+    },
+    {
+      "kind": "screw",
+      "size": 4.5,
+      "state": "sourced_partial",
+      "source": "https://www.mwcomponents.com/shop/m4-5-75x8mm-fh-tx-al-sp",
+      "finding": "Exact part and pitch sourced in batch6; dimensional limitations retained."
+    },
+    {
+      "kind": "screw",
+      "size": 7,
+      "state": "sourced_partial",
+      "source": "https://metric-threaded.com/details/item?itemID=9129007025",
+      "finding": "Exact part and pitch sourced in batch6; dimensional limitations retained."
+    }
+  ]
+}

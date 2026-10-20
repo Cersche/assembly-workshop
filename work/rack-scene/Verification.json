@@ -1,0 +1,27 @@
+{
+  "time_utc": "2026-10-18T16:35:25.639496+00:00",
+  "scene_tests": "PASS source instances, rigid transforms, discrete stacks, front/perspective framing and camera alignment",
+  "source_reference_tests": "3 PASS",
+  "rack_document_tests": "7 PASS using new disposable data",
+  "catalog_phase7_and_reference_handlers": "PASS",
+  "browser": {
+    "explicitly_authorized": true,
+    "data": "new disposable directory, port8767",
+    "source_mesh_scene": "PASS",
+    "front_perspective": "PASS",
+    "side_panels": "PASS 20/22 source instances",
+    "slot3_selection": "PASS",
+    "console_errors_or_warnings": [],
+    "normal_tab": "unsaved5-slot draft preserved; not reloaded or saved",
+    "test_tab_closed": true
+  },
+  "normal_use_files_unchanged": {
+    "data\\normal-use\\library.sqlite3": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\assembly.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\faceplate.stl": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\pi4_proposed.scad": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\revision.json": true,
+    "data\\normal-use\\revisions\\ebd6af3164685923c661c7965badd932d98ed6c1da9bfc51742fe934f6a68a78\\tray.stl": true
+  },
+  "no_manufacturing_build_or_export": true
+}

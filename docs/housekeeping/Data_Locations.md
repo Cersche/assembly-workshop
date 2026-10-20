@@ -1,4 +1,6 @@
-# Data locations — C4 unresolved, facts only
+# Data locations — C4 SETTLED, facts below
+
+**Update 2026-10-18 (Brian):** data/normal-use is the official user data. Start only via outputs/Mechanical_Design_App/start.bat. The app-local outputs/Mechanical_Design_App/data is a preserved historical copy: do not delete or merge it. The inventory below is the original 2026-10-18 fact record, kept unchanged.
 
 2026-10-18 inspection. Files were hashed/read in place; each SQLite file and any existing sidecars were copied to a unique external scratch path. Only copies were opened with sqlite3 mode=ro and query_only=ON. No source database connection, schema/data mutation, app request or live-process inspection occurred. No journal/WAL/SHM sidecars were present at the initial checkpoint. Copies matched source hashes at copying; without a coordinated live snapshot this does not guarantee application-level consistency. Disk JSON does not contain unsaved browser drafts. No merge/switch recommendation is made.
 
@@ -84,4 +86,4 @@ Saved rack JSON (including history; current document explicitly named):
 - outputs/Mechanical_Design_App/app.py:897 defines --data default=ROOT / data; ROOT is defined at app.py:39. This is outputs/Mechanical_Design_App/data.
 - work/gui-style-delivery/Report.md:7 and work/startup-reliability/Report.md:21 record later use of app-local data. They are historical reports, not a current listener check.
 
-Brian explicitly leaves C4 unresolved for Claude. No selection, merge, switch or recommendation is made.
+At inspection time Brian had left C4 unresolved; he later settled it (see top). No merge or switch was made.
