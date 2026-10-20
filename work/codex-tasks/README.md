@@ -32,5 +32,5 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [13-cable-sheet-logic](13-cable-sheet-logic.md) | done, reviewed by Claude (exact API; 73 Py + 137 JS pass after integration) |
 | [14-cable-inventory-logic](14-cable-inventory-logic.md) | done, reviewed by Claude; Review card integrated (defaults PROPOSED, Brian to confirm [Parts_Order_Decisions](../cable-management/Parts_Order_Decisions.md)) |
 | [15-docs-refresh-wizard-placement](15-docs-refresh-wizard-placement.md) | done, reviewed by Claude (95 Py + 152 JS pass) |
-| [16-keystone-render-sweep](16-keystone-render-sweep.md) | queued (investigation only) |
-| [17-docs-rack-view-placement](17-docs-rack-view-placement.md) | queued |
+| [16-keystone-render-sweep](16-keystone-render-sweep.md) | done, reviewed by Claude (22 pass, 2 out-of-range skips, 0 fail) |
+| [17-docs-rack-view-placement](17-docs-rack-view-placement.md) | done, reviewed by Claude |

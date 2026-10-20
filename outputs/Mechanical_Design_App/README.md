@@ -20,7 +20,7 @@ One explicit atomic Save persists the draft. Draft edits, checks and exports do 
 
 The equipment wizard is **Device → Holes → Ports**: record equipment size/model, mounting holes and ports. Tray choices live in **Place on tray**, which opens when placing a library item in a slot or from that slot's button. Choose position, rotation, mounting, standoff, faceplate height, keystones, joint and rear support there. Apply changes only the draft; explicit Save persists `placement.tray`, containing only values that differ from the library item.
 
-Cable ports and clearance screening use each slot's tray settings. The rack view still shows the library mesh and displays **Placement not rendered yet** when slot settings differ. Use Place on tray's exact preview to inspect that placement; the rack preview does not confirm fit.
+Cable ports and clearance screening use each slot's tray settings. With no slot tray settings, the rack shows the library item's build. Otherwise it uses an existing exact render from Place on tray → Render exact preview or Generate; `/api/equipment-placement-mesh` only looks it up, never renders. Without one, it shows a box sketch of plate U height, tray size/offset/rotation, rear bracket and dark blocks for keystone/port openings; the inspector identifies the sketch. Keystone faceplates now pass the mesh check; fit, retention and strength remain UNKNOWN.
 
 Preview quality **Low / Medium / High** is a per-viewer browser preference only. Export quality **Draft / Standard / Fine** sets OpenSCAD `$fn` to **24 / 48 / 96** for `equipment_tray.scad` STLs (`equipment.EXPORT_QUALITY`). It changes curve detail; fit and strength remain UNKNOWN at every level.
 
