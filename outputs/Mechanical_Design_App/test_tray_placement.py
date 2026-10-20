@@ -280,3 +280,65 @@ class FrontOpeningsFollowTheDevice(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class FlatFloorTests(unittest.TestCase):
+    """In-memory geometry budgets and source compatibility; never renders."""
+    def spec(self, **over):
+        return dict(dict(name='Compatibility', dev_w=85, dev_d=56, dev_h=20,
+                         device_mount='inserts', joint='screw', holes=[[3.5, 3.5]], u=1), **over)
+
+    def test_legacy_source_hashes(self):
+        import equipment, hashlib
+        expected = {
+            'inserts': '95522c80edb75fed6a7c80de8f6835fbc0dceecddfa4e2b92677ceee6ac93d39',
+            'pegs': '3c7e9003241f25f10219026d61e78ffcdb3aee94aa66b9333b406a9435d4ce82',
+            'clips': '305a2c4dc3f65da337e85f1ed743a6af8670d4ba4fdca96366d070df08d40550',
+            'straps': 'e976699322108711291a23c6f59f82f602fedc0a3054ec91b89523491d920c82'}
+        for mount, digest in expected.items():
+            text = equipment.source(equipment.clean(self.spec(device_mount=mount)))
+            self.assertEqual(hashlib.sha256(text.encode('utf-8')).hexdigest(), digest)
+
+    def test_height_boundaries_all_mounts(self):
+        import equipment
+        for mount, lift in [('inserts',16),('pegs',16),('clips',16),('straps',10),('flat',3.5)]:
+            s = self.spec(device_mount=mount, dev_h=44.45-lift)
+            self.assertEqual(equipment.device_lift(s), lift)
+            equipment.clean(s)
+            with self.assertRaisesRegex(ValueError, 'taller'):
+                equipment.clean(dict(s, dev_h=44.451-lift))
+
+    def test_optiplex_budget_and_no_holes(self):
+        import equipment
+        s = self.spec(dev_w=182.5,dev_d=194.5,dev_h=38.8,device_mount='flat',holes=[])
+        self.assertEqual(equipment.clean(s)['u'], 1)
+        self.assertAlmostEqual(equipment.needed_height(s),42.3)
+        with self.assertRaisesRegex(ValueError, 'taller'):
+            equipment.clean(dict(s,device_mount='inserts',holes=[[3.5,3.5]]))
+        self.assertEqual(equipment.clean(dict(s,device_mount='inserts',holes=[[3.5,3.5]],u=2))['u'],2)
+        text = equipment.source(equipment.clean(s))
+        self.assertIn('floor_z=device_mount=="flat"?0.5:7', text)
+        self.assertIn('device_mount=="straps"||device_mount=="flat"',text)
+
+    def test_front_openings_follow_floor_both_directions(self):
+        import equipment
+        lib = self.spec(ports=[dict(x=0,z=22,w=8,h=6,r=1)])
+        low = equipment.allocation_spec(lib,dict(device_mount='flat',standoff=30))
+        self.assertEqual(low['ports'][0]['z'],9.5)
+        restored = equipment.allocation_spec(low,dict(device_mount='inserts',standoff=6))
+        self.assertEqual(restored['ports'],lib['ports'])
+        turned = equipment.allocation_spec(lib,dict(device_mount='flat',dev_rot=90))
+        self.assertEqual(turned['ports'],lib['ports'])
+        self.assertEqual(lib['ports'][0]['z'],22)
+
+    def test_flat_joint_clearance(self):
+        import equipment
+        s = self.spec(device_mount='flat',dev_off_y=-1)
+        with self.assertRaisesRegex(ValueError,'front screw joint'):
+            equipment.clean(s)
+        equipment.clean(dict(s,dev_off_y=-0.5))
+        with self.assertRaisesRegex(ValueError,'corner stops'):
+            equipment.clean(dict(s,joint='single',dev_off_y=-6))
+        equipment.clean(dict(s,joint='single',dev_off_y=-5.8))
+        with self.assertRaisesRegex(ValueError,'rear screw joint'):
+            equipment.clean(dict(s,dev_off_y=30,dev_d=190,rear_support=True))

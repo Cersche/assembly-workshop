@@ -36,12 +36,17 @@ plate_w=252; plate_t=4; plate_r=2.5; plate_h=u*44.45-2.45;
 hole_x=118.2625; hole_dz=15.902;   // each U: holes at its centre ±hole_dz (5.098 / 36.902 on a 1U plate)
 rack_depth=240;             // Lab Rax frame depth (front of front posts to back of rear posts)
 nudge=0;                    // render-repair only: tiny size offset applied when OpenSCAD 2021 emits a sliver
-tray_t=3; tray_z=7;
+tray_t=3; floor_z=device_mount=="flat"?0.5:7; tray_z=floor_z; // @flat-floor
 assert(dev_rot==0||dev_rot==90||dev_rot==180||dev_rot==270,"dev_rot must be 0, 90, 180 or 270");
 // Device footprint on the tray after rotation; the tray stays centred and grows to keep the margin.
 fp_w=(dev_rot==90||dev_rot==270)?dev_d:dev_w; fp_d=(dev_rot==90||dev_rot==270)?dev_w:dev_d;
 tray_w=2*(abs(dev_off_x)+fp_w/2+margin); tray_d=rear_support?rack_depth:dev_off_y+fp_d+front_gap+margin;
 tray_x=-tray_w/2; tray_y=0;
+ // @flat-begin
+assert(device_mount!="flat"||front_gap+dev_off_y>=6.2,"Flat corner stops need a front gap of at least 6.2 mm");
+assert(device_mount!="flat"||joint!="screw"||front_gap+dev_off_y>=11.5,"Flat device must clear the front screw joint (front gap >= 11.5 mm)");
+assert(device_mount!="flat"||!rear_support||front_gap+dev_off_y+fp_d<=rack_depth-11.5,"Flat device must clear the rear screw joint (rear gap >= 11.5 mm)");
+ // @flat-end
 dev_x=-fp_w/2+dev_off_x; dev_y=front_gap+dev_off_y; floor_top=tray_z+tray_t;
 assert(tray_w<=230,str("Device moved off the tray: it needs a ",tray_w," mm tray (max 230); reduce dev_off_x"));
 assert(dev_y>=0,str("Device moved into the faceplate: dev_off_y must be at least ",-front_gap));
@@ -144,6 +149,15 @@ module faceplate(){
 module rear_bracket(){to_rear()difference(){union(){plate_layer(-plate_t,plate_t,false,true);plate_joint_add();}plate_joint_cut();}}
 
 module device_features_add(){
+ // @flat-begin
+ if(device_mount=="flat"){
+  // Corner stops outside the footprint, with 0.2 mm nominal clearance. Retention UNKNOWN.
+  for(x=[dev_x-6.2,dev_x+fp_w+0.2],y=[dev_y,dev_y+fp_d-min(6,fp_d)])
+   translate([x,y,floor_top])cube([6,min(6,fp_d),min(6,dev_h)]);
+  for(x=[dev_x,dev_x+fp_w-min(6,fp_w)],y=[dev_y-6.2,dev_y+fp_d+0.2])
+   translate([x,y,floor_top])cube([min(6,fp_w),6,min(6,dev_h)]);
+ }
+ // @flat-end
  if(device_mount=="inserts")for(h=[for(q=holes)dp(q)])translate([dev_x+h[0],dev_y+h[1],floor_top])cylinder(d=max(insert_pilot+3.5,7),h=standoff);
  if(device_mount=="pegs")for(h=[for(q=holes)dp(q)])translate([dev_x+h[0],dev_y+h[1],floor_top]){
   cylinder(d=hole_d+3,h=standoff);
@@ -161,7 +175,7 @@ module device_features_add(){
 }
 module device_features_cut(){
  if(device_mount=="inserts")for(h=[for(q=holes)dp(q)])translate([dev_x+h[0],dev_y+h[1],floor_top+0.01])cylinder(d=insert_pilot,h=standoff+0.1);
- if(device_mount=="straps")for(x=[dev_x-5.5,dev_x+fp_w+2.5],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
+ if(device_mount=="straps"||device_mount=="flat")for(x=[dev_x-5.5,dev_x+fp_w+2.5],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
   translate([x,y-6,tray_z-0.1])cube([3,12,tray_t+0.2]);
 }
 
@@ -172,7 +186,7 @@ module tray_joint_add(){
   for(x=joint_x) for(side=[-1,1]) translate([x+side*6-1,0,0])
     hull(){translate([0,9,tray_z+2.7])cube([2,2,0.5]);
            translate([0,9,tray_z+8])cube([2,2,0.5]);
-           translate([0,20,tray_z+2.7])cube([2,2,0.5]);}
+           translate([0,device_mount=="flat"?9.5:20,tray_z+2.7])cube([2,2,0.5]);}
  }
 }
 module tray_joint_cut(){

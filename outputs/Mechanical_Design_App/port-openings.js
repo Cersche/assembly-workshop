@@ -4,7 +4,18 @@
   const DEFAULT_SIZES={'rj45':{w:17,h:14,r:1},'usb-a':{w:15,h:8,r:1},'usb-c':{w:12,h:7,r:3},hdmi:{w:17,h:8,r:1},'micro-hdmi':{w:11,h:7,r:2},'dc-barrel':{w:11,h:11,r:5.5},iec:{w:28,h:20,r:1},other:{w:15,h:8,r:1}};
   const SIZE_NOTE='Starting size for this connector type: a guess, not a measured size. Edit it to match your device.';
   function defaultSize(type){return {...(Object.prototype.hasOwnProperty.call(DEFAULT_SIZES,type)?DEFAULT_SIZES[type]:DEFAULT_SIZES.other)};}
-  function lift(spec){return spec.device_mount==='straps'?0:+(spec.standoff===undefined?6:spec.standoff);}
+  // Shared height rule for the wizard, placement sketches and cable markers; mirrors equipment.py.
+  const floorZ=spec=>spec.device_mount==='flat'?0.5:7;
+  const usesStandoffs=spec=>!['straps','flat'].includes(spec.device_mount);
+  const deviceLift=spec=>floorZ(spec)+3+(usesStandoffs(spec)?+(spec.standoff===undefined?6:spec.standoff):0);
+  const neededHeight=spec=>deviceLift(spec)+ +spec.dev_h;
+  const autoU=spec=>Math.min(5,Math.max(1,Math.ceil(neededHeight(spec)/44.45)));
+  function flatHint(spec){
+    const flat={...spec,device_mount:'flat'},u=Math.ceil(neededHeight(flat)/44.45);
+    return u>=1&&u<=5&&u<Math.ceil(neededHeight(spec)/44.45)?`Fits ${u}U if it sits flat (no standoffs): ${Math.round(neededHeight(flat)*100)/100} mm needed / ${u*44.45} mm available. Choose 'Sits flat' under Mounting in Place on tray.`:'';
+  }
+  // Historical public lift is relative to the old floor top (10 mm); differences include the new floor.
+  function lift(spec){return deviceLift(spec)-10;}
   function frontOpenings(libSpec,tray){
     const eff={...libSpec};
     for(const k of ['dev_off_x','dev_rot','device_mount','standoff'])if(tray&&k in tray)eff[k]=tray[k];
@@ -50,6 +61,6 @@
     const problem=missing.length?`The ${missing.join(' and ')} tray screw joint${missing.length>1?'s':''} cannot be placed clear of the openings and keystones anywhere on the tray. Move the device or an opening, or choose the single printed piece joint.`:null;
     return {joints,default:def,moved:joints[0]!==-def||joints[1]!==def,problem};
   }
-  const api={DEFAULT_SIZES,SIZE_NOTE,JOINT_HALF,JOINT_TOP,JOINT_CLEAR,jointPositions,defaultSize,lift,frontOpenings,problems};
+  const api={floorZ,usesStandoffs,deviceLift,neededHeight,autoU,flatHint,DEFAULT_SIZES,SIZE_NOTE,JOINT_HALF,JOINT_TOP,JOINT_CLEAR,jointPositions,defaultSize,lift,frontOpenings,problems};
   root.LabRaxPortOpenings=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(globalThis);

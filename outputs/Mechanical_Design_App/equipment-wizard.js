@@ -3,7 +3,7 @@
 // (tray-placement.js). New items keep the template defaults below; older items keep their saved values as defaults.
 (function(){
   const PLATE_W=252,STEPS=['Device','Holes','Ports'];
-  const MOUNTS={inserts:'Heat-set inserts + screws',pegs:'Printed standoffs / pegs',clips:'Snap-fit clips',straps:'Strap / zip-tie slots'};
+  const MOUNTS={inserts:'Heat-set inserts + screws',pegs:'Printed standoffs / pegs',clips:'Snap-fit clips',straps:'Strap / zip-tie slots',flat:'Sits flat on the tray (PCs, boxes)'};
   const JOINTS={screw:'Screw joint',single:'Single printed piece'};
   let spec,step,imported=null,orient=0,turn=0,importMsg='',found=[],foundPorts=[];
   // ---- STL import (phase 2): size from the bounding box, holes from round loops in flat faces.
@@ -73,14 +73,14 @@
   }
   // Device-local port (from its left/bottom) -> faceplate coordinates, with clearance.
   function portOnPlate(p){
-    const lift=10+(spec.device_mount==='straps'?0:(+spec.standoff||0)),clr=1;
+    const lift=window.LabRaxPortOpenings.deviceLift(spec),clr=1;
     return {label:'',x:Math.round((p.cx-spec.dev_w/2)*10)/10,z:Math.round((lift+p.cz)*10)/10,w:p.w+2*clr,h:p.h+2*clr,r:1};
   }
   function applyImport(){
     const v=transformed(),mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];
     for(let i=0;i<v.length;i++){const a=i%3;if(v[i]<mn[a])mn[a]=v[i];if(v[i]>mx[a])mx[a]=v[i];}
     const r1=a=>Math.round(a*10)/10;spec.dev_w=r1(mx[0]-mn[0]);spec.dev_d=r1(mx[1]-mn[1]);spec.dev_h=r1(mx[2]-mn[2]);
-    spec.u=Math.min(5,Math.max(1,Math.ceil((spec.dev_h+spec.standoff+10)/44.45)));
+    spec.u=window.LabRaxPortOpenings.autoU(spec);
     found=findHoles(v,mn[0],mn[1]);foundPorts=findPorts(v,mn,mx);
     importMsg='';
   }
@@ -101,7 +101,7 @@
     const sets=[];
     for(const p of out.parts){const t=await (await fetch(`/api/equipment-mesh/${out.id}/${p}.stl`)).text();sets.push({v:parseStlBuffer(new TextEncoder().encode(t).buffer),color:p==='tray'?[77,142,110]:[78,117,163],alpha:1});}
     // Device ghost: imported model if any, else its bounding box, sitting where the tray holds it.
-    const lift=10+(spec.device_mount==='straps'?0:(+spec.standoff||0)),ox=-spec.dev_w/2,oy=12;let dv=[];
+    const lift=window.LabRaxPortOpenings.deviceLift(spec),ox=-spec.dev_w/2,oy=12;let dv=[];
     if(imported){const v=transformed(),mn=[1e9,1e9,1e9];for(let i=0;i<v.length;i++)mn[i%3]=Math.min(mn[i%3],v[i]);for(let i=0;i<v.length;i+=3)dv.push(v[i]-mn[0]+ox,v[i+1]-mn[1]+oy,v[i+2]-mn[2]+lift);}
     else{const[x0,y0,z0,x1,y1,z1]=[ox,oy,lift,ox+ +spec.dev_w,oy+ +spec.dev_d,lift+ +spec.dev_h],c=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
       for(const f of[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]])for(const i of f)dv.push(...c[i]);}
@@ -224,6 +224,7 @@
         const r=h('button',{type:'button',class:'ew-chip'},'↻ Rotate 90°');r.onclick=()=>{turn=(turn+1)%4;applyImport();render();};
         imp.push(h('div',{class:'ew-row'},'Orientation:',o,r));
         imp.push(h('canvas',{id:'ewModel',class:'ew-model'}),h('p',{class:'ew-note ew-hint'},'Left-drag turns · right-drag moves · scroll zooms at the cursor · Z fits · orange edge = front (faceplate side)'),h('p',{class:'ew-note'},modelNote()));
+        const hint=window.LabRaxPortOpenings.flatHint(spec);if(hint)imp.push(h('p',{class:'ew-note'},hint));
         const warn=modelWarn();if(warn)imp.push(h('p',{class:'ew-note ew-warn'},warn));
       }
       if(importMsg)imp.push(h('p',{class:'ew-note'},importMsg));

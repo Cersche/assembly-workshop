@@ -450,3 +450,5 @@ test('new placements use the chosen library item and omit historical reference m
   assert.equal(p.assembly.name,'Chosen router');assert.equal(p.tray.u,2);assert.equal(p.assembly.project.reference,undefined);
   assert.equal(p.assembly.project.selections.screw.revision,2);
 });
+
+require('./flat-floor.js');

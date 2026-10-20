@@ -30,7 +30,7 @@ def legacy_source(s):
             over[k] = s[k]
     over['ports'] = [[p['x'], p['z'], p['w'], p['h'], p['r']] for p in s['ports']]
     lines = ['', '// ---- wizard overrides: ' + s['name']] + [f'{k}={json.dumps(v)};' for k, v in over.items()]
-    return eq.TEMPLATE.read_text(encoding='utf-8') + '\n'.join(lines) + '\n'
+    return eq.template_source(s) + '\n'.join(lines) + '\n'
 
 
 class ExportQualitySource(unittest.TestCase):

@@ -23,7 +23,7 @@
   // equipment_tray.scad: plate front at Y = −plate_t (4), device front at front_gap (12) + dev_off_y, keystone opening
   // centred on the plate, device base lifted by the standoff (none for straps).
   const WIZ={plateT:4,frontGap:12};
-  const lift=s=>s.device_mount==='straps'?0:(+s.standoff||0);
+  const lift=s=>PO().deviceLift(s);
   // Rear port of the device (X from the device centre, Z from the plate bottom at the library standoff) -> this slot's
   // tray: offset, rotation (equipment_tray.scad dp()) and standoff change. Returns position and pointing direction.
   function rearPort(lib,s,p){

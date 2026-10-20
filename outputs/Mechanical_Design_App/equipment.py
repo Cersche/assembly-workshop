@@ -23,7 +23,7 @@ import mesh_revision
 
 ROOT = Path(__file__).resolve().parent
 TEMPLATE = ROOT / 'equipment_tray.scad'
-MOUNTS = ('inserts', 'pegs', 'clips', 'straps')
+MOUNTS = ('inserts', 'pegs', 'clips', 'straps', 'flat')
 JOINTS = ('screw', 'single')
 # Snap-fit faceplate-to-tray joint retired by Brian 2026-10-19: the printed coupon was too brittle to carry the tray.
 # equipment_tray.scad keeps its geometry as history only; new specs cannot choose it.
@@ -112,6 +112,13 @@ def allocation_spec(item_spec, tray=None):
     # where they were entered (port_openings explains this in Place on tray). Library builds are unchanged.
     if settings and item_spec.get('ports'):
         merged['ports'] = port_openings.front_openings(item_spec, settings)['ports']
+        # port_openings.py retains the historical standoff-only rule; correct its delta here
+        # without changing that out-of-scope module. Rotated openings remain as entered.
+        if float(merged.get('dev_rot') or 0) == 0:
+            old_delta = port_openings.lift(merged) - port_openings.lift(item_spec)
+            correction = device_lift(merged) - device_lift(item_spec) - old_delta
+            for p in merged['ports']:
+                p['z'] = round(p['z'] + correction, 3)
     return merged
 
 
@@ -165,6 +172,29 @@ def check_allocation(data_dir, payload):
 FRONT_GAP, MARGIN = 12, 8  # mirror front_gap / margin in equipment_tray.scad
 
 
+def floor_z(spec):
+    return 0.5 if spec.get('device_mount') == 'flat' else 7
+
+
+def device_lift(spec):
+    return floor_z(spec) + 3 + (0 if spec.get('device_mount') in ('straps', 'flat') else float(spec.get('standoff', 6)))
+
+
+def needed_height(spec):
+    return device_lift(spec) + float(spec['dev_h'])
+
+
+def template_source(spec):
+    text = TEMPLATE.read_text(encoding='utf-8')
+    if spec.get('device_mount') != 'flat':
+        # Preserve historical source hashes/cached meshes, including comments and whitespace.
+        text = text.replace('tray_t=3; floor_z=device_mount=="flat"?0.5:7; tray_z=floor_z; // @flat-floor', 'tray_t=3; tray_z=7;')
+        text = re.sub(r' // @flat-begin\n.*? // @flat-end\n', '', text, flags=re.S)
+        text = text.replace('if(device_mount=="straps"||device_mount=="flat")for', 'if(device_mount=="straps")for')
+        text = text.replace('translate([0,device_mount=="flat"?9.5:20,tray_z+2.7])', 'translate([0,20,tray_z+2.7])')
+    return text
+
+
 def clean(spec):
     if not isinstance(spec, dict):
         raise ValueError('Equipment spec must be an object.')
@@ -211,6 +241,13 @@ def clean(spec):
         raise ValueError('The device is moved off the tray (the tray would be wider than 230 mm); reduce the left/right offset.')
     if s['rear_support'] and FRONT_GAP + s['dev_off_y'] + fp_d + MARGIN > 240:
         raise ValueError('The device is moved past the rear posts; reduce the front/back offset.')
+    if s['device_mount'] == 'flat':
+        if FRONT_GAP + s['dev_off_y'] < 6.2:
+            raise ValueError('Flat corner stops need a front gap of at least 6.2 mm.')
+        if s['joint'] == 'screw' and FRONT_GAP + s['dev_off_y'] < 11.5:
+            raise ValueError('Flat device must clear the front screw joint (front gap >= 11.5 mm).')
+        if s['rear_support'] and FRONT_GAP + s['dev_off_y'] + fp_d > 240 - 11.5:
+            raise ValueError('Flat device must clear the rear screw joint (rear gap >= 11.5 mm).')
     q = spec.get('quality', DEFAULT_QUALITY)
     if q not in EXPORT_QUALITY:
         raise ValueError('Export quality must be draft, standard or fine.')
@@ -220,7 +257,7 @@ def clean(spec):
     c = spec.get('coupon')
     if c:
         s['coupon'] = [num(c[0], 'Coupon X0', -130, 130), num(c[1], 'Coupon X1', -130, 130), num(c[2], 'Coupon depth', 5, 250)]
-    if s['dev_h'] + s['standoff'] + 10 > s['u'] * 44.45:
+    if needed_height(s) > s['u'] * 44.45:
         raise ValueError('Device is taller than %dU allows; pick more rack units.' % s['u'])
     s['holes'] = [[num(x, 'Hole X', 0, s['dev_w']), num(y, 'Hole Y', 0, s['dev_d'])]
                   for x, y in (spec.get('holes') or [])][:16]
@@ -285,7 +322,7 @@ def source(s):
     if s.get('quality', DEFAULT_QUALITY) != DEFAULT_QUALITY:
         over['$fn'] = EXPORT_QUALITY[s['quality']]
     lines = ['', '// ---- wizard overrides: ' + re.sub(r'[\r\n]', ' ', s['name'])] + [f'{k}={lit(v)};' for k, v in over.items()]
-    return TEMPLATE.read_text(encoding='utf-8') + '\n'.join(lines) + '\n'
+    return template_source(s) + '\n'.join(lines) + '\n'
 
 
 def library(data_dir):

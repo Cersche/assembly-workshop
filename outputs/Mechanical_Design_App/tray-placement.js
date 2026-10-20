@@ -7,8 +7,8 @@
   // ---- Pure logic (Node-testable). Mirrors equipment.PLACEMENT_KEYS, clean() and equipment_tray.scad asserts.
   const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','standoff','insert_pilot','board_t','joint','keystones','rear_support','u'];
   const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,u:1};
-  const FRONT_GAP=12,MARGIN=8,MAX_TRAY=230,RACK_DEPTH=240,PITCH=44.45,PLATE_HALF=126,PLATE_T=4,TRAY_Z=7,TRAY_T=3;
-  const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap'};
+  const FRONT_GAP=12,MARGIN=8,MAX_TRAY=230,RACK_DEPTH=240,PITCH=44.45,PLATE_HALF=126,PLATE_T=4,TRAY_T=3;
+  const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap',flat:'Sits flat on the tray (PCs, boxes)'};
   const JOINTS={screw:'Screw joint',single:'Single printed piece'};
   const copy=v=>Array.isArray(v)?v.slice():v;
   // Values shown in the window: the allocation's tray settings win, then the library spec, then template defaults.
@@ -29,7 +29,7 @@
     const fp_w=turned?d:w,fp_d=turned?w:d,tray_w=2*(Math.abs(v.dev_off_x)+fp_w/2+MARGIN);
     const dev_x=-fp_w/2+v.dev_off_x,dev_y=FRONT_GAP+v.dev_off_y;
     const tray_d=v.rear_support?RACK_DEPTH:v.dev_off_y+fp_d+FRONT_GAP+MARGIN;
-    const lift=TRAY_Z+TRAY_T+(v.device_mount==='straps'?0:+v.standoff);
+    const lift=PO().deviceLift(v);
     return {fp_w,fp_d,tray_w,tray_d,dev_x,dev_y,lift,plate_h:v.u*PITCH-2.45,jx:Math.min(40,tray_w/2-12)};
   }
   // equipment_tray.scad dp(): device-frame point (front-left origin) -> footprint offset after rotation.
@@ -65,8 +65,13 @@
       if(+spec.dev_d>200)out.push('With rear-post support the device can be at most 200 mm deep.');
       if(L.dev_y+L.fp_d+MARGIN>RACK_DEPTH)out.push('The device is moved past the rear posts. Reduce the front gap.');
     }
-    if(+spec.dev_h+v.standoff+10>v.u*PITCH)out.push(`The device is taller than ${v.u}U allows. Pick more rack units or a lower standoff.`);
+    if(PO().neededHeight({...spec,...v})>v.u*PITCH)out.push(`The device is taller than ${v.u}U allows. Pick more rack units or a lower standoff.`);
     if((v.device_mount==='inserts'||v.device_mount==='pegs')&&!(spec.holes||[]).length)out.push('Screws and pegs need mounting holes. Add them to the library item (Edit library item), or choose clips or a strap.');
+    if(v.device_mount==='flat'){
+      if(L.dev_y<6.2)out.push('Flat corner stops need a front gap of at least 6.2 mm.');
+      if(v.joint==='screw'&&L.dev_y<11.5)out.push('Flat device must clear the front screw joint (front gap >= 11.5 mm).');
+      if(v.rear_support&&L.dev_y+L.fp_d>RACK_DEPTH-11.5)out.push('Flat device must clear the rear screw joint (rear gap >= 11.5 mm).');
+    }
     const ks=v.keystones||[];
     if(ks.length>12)out.push('At most 12 keystones fit the faceplate.');
     if(ks.some(x=>!fin(x)||Math.abs(x)>PLATE_HALF-24))out.push(`Keystones must sit within ${PLATE_HALF-24} mm of the faceplate centre.`);
@@ -93,9 +98,14 @@
     return v;
   }
   function schematic(spec,v){
-    const L=layout(spec,v),floor=TRAY_Z+TRAY_T,tray=box(-L.tray_w/2,0,TRAY_Z,L.tray_w/2,L.tray_d,floor);
+    const L=layout(spec,v),floor=PO().floorZ(v)+TRAY_T,tray=box(-L.tray_w/2,0,PO().floorZ(v),L.tray_w/2,L.tray_d,floor);
     const posts=[];
     if(v.device_mount==='inserts'||v.device_mount==='pegs')for(const[x,y]of holes(spec,v))posts.push(...box(x-3,y-3,floor,x+3,y+3,floor+ +v.standoff));
+    if(v.device_mount==='flat'){
+      const h=Math.min(6,+spec.dev_h),w=Math.min(6,L.fp_w),d=Math.min(6,L.fp_d);
+      for(const x of [L.dev_x-6.2,L.dev_x+L.fp_w+0.2])for(const y of [L.dev_y,L.dev_y+L.fp_d-d])posts.push(...box(x,y,floor,x+6,y+d,floor+h));
+      for(const x of [L.dev_x,L.dev_x+L.fp_w-w])for(const y of [L.dev_y-6.2,L.dev_y+L.fp_d+0.2])posts.push(...box(x,y,floor,x+w,y+6,floor+h));
+    }
     const plate=box(-PLATE_HALF,-PLATE_T,0,PLATE_HALF,0,L.plate_h),jacks=[];
     for(const x of v.keystones||[])jacks.push(...box(x-7.4,-PLATE_T-0.2,L.plate_h/2-8.3,x+7.4,0.2,L.plate_h/2+8.3));
     const sets=[{v:plate,color:[78,117,163],alpha:1},{v:tray.concat(posts),color:[77,142,110],alpha:1},
@@ -211,7 +221,7 @@
     const spec=state.item.spec,v=state.v,name=state.item.display_name||state.item.name;
     const rot=h('div',{class:'ew-choices',role:'group','aria-label':'Rotation'},...[0,90,180,270].map(r=>{const b=h('button',{type:'button',class:'ew-chip'+(v.dev_rot===r?' on':''),'aria-pressed':String(v.dev_rot===r)},r+'°');b.onclick=()=>{v.dev_rot=r;render();};return b;}));
     const centre=h('button',{type:'button',class:'ew-chip'},'Centre');centre.onclick=()=>{v.dev_off_x=0;syncFields();update();};
-    const mountOpts=[field('Standoff (mm)',()=>v.standoff,x=>v.standoff=x,{step:'0.5',min:'0',max:'30'})];
+    const mountOpts=PO().usesStandoffs(v)?[field('Standoff (mm)',()=>v.standoff,x=>v.standoff=x,{step:'0.5',min:'0',max:'30'})]:[h('p',{class:'ew-note'},v.device_mount==='flat'?'Rests on the low floor with corner stops and optional strap slots. Retention UNKNOWN.':'Rests on the tray floor; no standoffs.')];
     if(v.device_mount==='inserts')mountOpts.push(field('Insert pilot hole (mm)',()=>v.insert_pilot,x=>v.insert_pilot=x,{step:'0.1'}));
     if(v.device_mount==='pegs'||v.device_mount==='clips')mountOpts.push(field(v.device_mount==='pegs'?'Board thickness (mm)':'Edge thickness clipped (mm)',()=>v.board_t,x=>v.board_t=x,{step:'0.1'}));
     const rs=h('input',{type:'checkbox'});rs.checked=!!v.rear_support;rs.onchange=()=>{v.rear_support=rs.checked;render();};
