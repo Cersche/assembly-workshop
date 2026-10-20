@@ -101,6 +101,17 @@ class IntegrityTests(unittest.TestCase):
         self.assertEqual(result['bounds'],[[0,0,0],[1,1,1]])
         before=p.read_bytes();self.assertEqual(m.normalize_collinear_faces(p)['repairs'],[])
         self.assertEqual(p.read_bytes(),before)
+    def test_stacked_collinear_faces_are_repaired_longest_first(self):
+        # 2026-10-19 (moved tray screw joints): two zero-area faces stacked on one edge, inner one first in the file.
+        points=POINTS+[(0,.5,0),(0,.25,0)]
+        faces=[FACES[0],FACES[1],(0,5,4),(0,3,5),(5,3,4),(4,3,2),FACES[3],(0,4,2)]
+        p=self.root/'stacked.stl';p.write_text(stl(faces,points))
+        with self.assertRaisesRegex(ValueError,'Degenerate'):m.read_mesh(p,'fixture')
+        info=m.normalize_collinear_faces(p)
+        result=m.read_mesh(p,'fixture')
+        self.assertEqual(len(info['repairs']),2)
+        self.assertEqual(set(map(tuple,result['vertices'])),set(points))
+        self.assertAlmostEqual(result['signed_volume_mm3'],1/6)
     def test_normalization_refuses_ambiguous_or_repeated_vertex_repair(self):
         p=self.root/'bad.stl'
         for faces,points in [([(0,0,1)],POINTS), ([(0,4,2)],POINTS+[(0,.5,0)])]:

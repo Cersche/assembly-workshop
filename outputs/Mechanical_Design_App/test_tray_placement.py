@@ -192,5 +192,91 @@ class SlotTrayConsumers(unittest.TestCase):
                 self.assertAlmostEqual(a, b, places=6, msg=str(tray))
 
 
+
+class FrontOpeningsFollowTheDevice(unittest.TestCase):
+    """Brian, 2026-10-19: front-port openings move with the left/right offset and standoff in the slot build, the rack
+    sketch and the cable markers; a turned device keeps them as entered and gets a plain warning. Nothing is rendered."""
+    LIB = eq.clean({**SPEC, 'ports': [{'id': 'lan', 'label': 'LAN', 'type': 'rj45', 'x': 0, 'z': 20, 'w': 17, 'h': 14, 'r': 1},
+                                      {'id': 'usb', 'label': 'USB', 'type': 'usb-a', 'x': -80, 'z': 15, 'w': 15, 'h': 8, 'r': 1}]})
+    TRAYS = [{}, {'dev_off_x': 11}, {'dev_off_x': -7, 'standoff': 10}, {'device_mount': 'straps'}, {'dev_rot': 90, 'dev_off_x': 11},
+             {'dev_rot': 180}, {'u': 2, 'standoff': 12}]
+
+    def setUp(self):
+        self.folder = Path(tempfile.mkdtemp(prefix='front-openings-'))
+        (self.folder / 'equipment-library.json').write_text(json.dumps([{**ITEM, 'spec': self.LIB}]), encoding='utf-8')
+
+    def tearDown(self):
+        shutil.rmtree(self.folder, ignore_errors=True)
+
+    def build(self, tray):
+        return eq.allocation_request(self.folder, {'item': ITEM['id'], 'tray': tray})
+
+    def test_slot_source_cuts_moved_openings(self):
+        self.assertEqual(eq.source(self.build({})), eq.source(self.LIB))  # untouched slot: byte-identical source
+        s = self.build({'dev_off_x': 11})
+        self.assertEqual([(p['x'], p['z']) for p in s['ports']], [(11, 20), (-69, 15)])
+        self.assertIn('ports=[[11.0, 20.0, 17.0, 14.0, 1.0], [-69.0, 15.0, 15.0, 8.0, 1.0]];', eq.source(s))
+        self.assertEqual([p['z'] for p in self.build({'standoff': 10})['ports']], [24, 19])
+        self.assertEqual([p['z'] for p in self.build({'device_mount': 'straps'})['ports']], [14, 9])
+        # Turned: openings stay where they were entered (no guessing).
+        self.assertEqual([(p['x'], p['z']) for p in self.build({'dev_rot': 90, 'dev_off_x': 11})['ports']], [(0, 20), (-80, 15)])
+        self.assertEqual(self.LIB['ports'][0]['x'], 0)  # library spec not mutated
+
+    def test_moved_openings_are_still_guarded(self):
+        lib = eq.clean({**SPEC, 'ports': [{'label': 'Edge', 'x': 110, 'z': 30, 'w': 17, 'h': 14}]})
+        (self.folder / 'equipment-library.json').write_text(json.dumps([{**ITEM, 'spec': lib}]), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'Edge opening would run past the faceplate edge'):
+            self.build({'dev_off_x': 20})
+        with self.assertRaisesRegex(ValueError, 'run off the top or bottom'):
+            self.build({'standoff': 10})
+        lib = eq.clean({**SPEC, 'ports': [{'label': 'Near', 'x': -90, 'z': 20, 'w': 10, 'h': 8}]})
+        (self.folder / 'equipment-library.json').write_text(json.dumps([{**ITEM, 'spec': lib}]), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'Near opening would cut into keystone 1'):
+            self.build({'keystones': [-100]})
+        # Brian, 2026-10-19 (option 3): a tray screw joint moves clear of an opening in front of it (task 18: a 1U straps
+        # faceplate whose opening edge sat on the screw hole did not render). 85 mm device: default joints ±38.5 mm.
+        lib = eq.clean({**SPEC, 'ports': [{'label': 'LAN', 'x': -70, 'z': 25, 'w': 16, 'h': 14}]})
+        self.assertNotIn('joint_x', lib)  # default joints already clear: unchanged source
+        self.assertNotIn('joint_x=', eq.source(lib).split('// ---- wizard overrides')[1])
+        (self.folder / 'equipment-library.json').write_text(json.dumps([{**ITEM, 'spec': lib}]), encoding='utf-8')
+        s = self.build({'dev_off_x': 30})  # opening now at X = -40, right where the left joint was
+        self.assertEqual(s['joint_x'], [-58.0, 40.0])  # nearest clear spot: 18 mm from the opening centre
+        self.assertIn(chr(10) + 'joint_x=[-58.0, 40.0];', eq.source(s).split('// ---- wizard overrides')[1])
+        self.assertNotIn('joint_x', self.build({'dev_off_x': 30, 'joint': 'single'}))
+        # An opening the old default joint sat behind now gets a moved joint instead of being blocked.
+        moved = eq.clean({**SPEC, 'ports': [{'label': 'LAN', 'x': -30, 'z': 21, 'w': 16, 'h': 14}]})
+        self.assertEqual(moved['joint_x'], [-12.0, 38.5])  # 101 mm tray: only room inward
+        # No clear spot anywhere on the tray: blocked in plain words.
+        with self.assertRaisesRegex(ValueError, 'The left and right tray screw joints cannot be placed clear of the openings'):
+            eq.clean({**SPEC, 'ports': [{'label': 'Wide', 'x': 0, 'z': 15, 'w': 200, 'h': 14}]})
+
+    def test_js_sketch_markers_and_warnings_agree_with_the_build(self):
+        exe = node()
+        if not exe:
+            self.skipTest('Node.js not found')
+        script = ('const T=require(process.argv[1]),P=require(process.argv[2]);const s=JSON.parse(process.argv[3]);'
+                  'console.log(JSON.stringify(JSON.parse(process.argv[4]).map(t=>({'
+                  'marks:P.wizardPorts(s,t).filter(p=>p.opening).map(p=>[p.x,p.z]),'
+                  'sketch:T.openings(s,T.values(s,t)).ports.map(p=>[p.x,p.z]),'
+                  'warn:T.warnings(s,T.values(s,t)),problems:T.problems(s,T.values(s,t)),'
+                  'joints:(T.joints(s,T.values(s,t))||{}).joints}))));')
+        r = subprocess.run([exe, '-e', script, str(HERE / 'tray-placement.js'), str(HERE / 'cable-ports.js'),
+                            json.dumps(self.LIB), json.dumps(self.TRAYS)], capture_output=True, text=True,
+                           encoding='utf-8', timeout=60)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        for tray, got in zip(self.TRAYS, json.loads(r.stdout)):
+            want = [[p['x'], p['z']] for p in self.build(tray)['ports']]
+            self.assertEqual(got['marks'], want, tray)
+            self.assertEqual(got['sketch'], want, tray)
+            self.assertEqual(got['problems'], [], tray)
+            built = self.build(tray)
+            jx = min(40, (abs(built['dev_off_x']) + (built['dev_d'] if built['dev_rot'] in (90, 270) else built['dev_w']) / 2 + 8) - 12)
+            self.assertEqual(got['joints'], built.get('joint_x', [-jx, jx]), tray)
+            turned = tray.get('dev_rot', 0)
+            self.assertEqual(len(got['warn']), 1 if turned else 0, tray)
+            if turned:
+                self.assertIn('turned %d°' % turned, got['warn'][0])
+                self.assertIn('The faceplate STL keeps the openings where they were entered', got['warn'][0])
+
 if __name__ == '__main__':
     unittest.main()

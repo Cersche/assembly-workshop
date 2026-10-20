@@ -28,6 +28,12 @@
     const port=(ctx.ports.portsFor(rack,placement,item)||[]).find(p=>p.id===end.port);
     return port?{placement,port}:null;
   }
+  function connectorMismatch(rack,cable,ctx){
+    const from=portInfo(rack,cable.from,ctx)?.port.type,to=portInfo(rack,cable.to,ctx)?.port.type;
+    if(!from||!to||[from,to].some(t=>t==='keystone'||t==='other')||from===to)return null;
+    const labelA=ctx.ports.TYPES[from]?.label||from,labelB=ctx.ports.TYPES[to]?.label||to;
+    return {from,to,text:'Needs an adapter cable: '+labelA+' to '+labelB+'.'};
+  }
   function cableColor(cable){return cable.color||(TYPE_STYLE[cable.type]||TYPE_STYLE.other).color;}
   function endAnchor(rack,end,ctx){
     const info=portInfo(rack,end,ctx);if(!info)return null;
@@ -133,8 +139,9 @@
     if(cable.route_changed)out.push('Cable route changed.');
     const busy=new Set(crowded(rack));
     if((cable.route?.guides||[]).some(id=>busy.has(id)))out.push('Guide over the crowding setting; capacity UNKNOWN.');
+    const mismatch=connectorMismatch(rack,cable,ctx);if(mismatch)out.push(mismatch.text);
     return out;
   }
-  const api={EXIT_POSITIONS,ENDPOINT_KINDS,TYPE_STYLE,cableColor,endAnchor,endFace,autoRoute,path,estimate,linkedCable,portInUse,nextNumber,guideLoad,crowded,upkeep,warnings};
+  const api={EXIT_POSITIONS,ENDPOINT_KINDS,TYPE_STYLE,cableColor,endAnchor,endFace,autoRoute,path,estimate,linkedCable,portInUse,nextNumber,guideLoad,crowded,upkeep,warnings,connectorMismatch};
   root.LabRaxCables=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(globalThis);

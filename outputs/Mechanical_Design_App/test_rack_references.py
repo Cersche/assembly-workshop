@@ -63,6 +63,14 @@ class RackReferenceTests(unittest.TestCase):
             self.assertEqual(responses[0][1],expected)
             self.assertTrue(responses[0][0])
 
+    def test_served_page_scripts_match_the_manifest(self):
+        # Editing rack-layout.js / rack-studio.js etc. without updating asset-manifest.json makes the server refuse the
+        # script (409) and the page silently loses it; catch that here instead of in the browser.
+        for entry in json.loads((rack_references.ROOT / 'asset-manifest.json').read_text(encoding='utf-8')):
+            if entry['file'].endswith('.js'):
+                with self.subTest(entry['file']):
+                    self.assertIsNotNone(rack_references.asset(entry['url']))
+
 
 if __name__ == '__main__':
     unittest.main()

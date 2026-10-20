@@ -25,7 +25,12 @@
     checks.push(grade('height',`Height in ${placement.span}U`,lift+(+s.dev_h),placement.span*(rack.pitch_mm||PITCH)));
     checks.push(grade('width','Tray width vs internal width',fpW+TRAY_SIDES+2*Math.abs(+s.dev_off_x||0),rack.width_mm));
     const depth=FACE_OFFSET+(+s.dev_off_y||0)+fpD;
-    checks.push(grade('depth',s.rear_support?'Rear-support tray depth vs usable depth':'Depth behind faceplate vs usable depth',s.rear_support?Math.max(depth,REAR_TRAY):depth,rack.depth_mm));
+    const depthCheck=grade('depth',s.rear_support?'Rear-support tray depth vs usable depth':'Depth behind faceplate vs usable depth',s.rear_support?Math.max(depth,REAR_TRAY):depth,rack.depth_mm);
+    // Brian, 2026-10-19: a rear-support tray reaches the back posts on purpose, so a depth equal to the rack depth is
+    // OK (by design), not TIGHT. A device that pushes the tray past the rack depth is still graded normally.
+    if(s.rear_support&&depthCheck.level==='tight'&&depth<=REAR_TRAY&&Math.abs(depthCheck.available-REAR_TRAY)<0.5)
+      Object.assign(depthCheck,{level:'ok',byDesign:true,text:`Rear-support tray depth: OK (by design). The tray runs to the back posts (${REAR_TRAY.toFixed(1)} of ${depthCheck.available.toFixed(1)} mm nominal).`});
+    checks.push(depthCheck);
     const designed='u' in tray?+tray.u:item.span;
     if(designed&&placement.span<designed)checks.push({name:'span',level:'over',text:`Equipment was designed for ${designed}U but the slot allocation is ${placement.span}U.`});
     const order=['over','tight','unknown','ok'],level=order.find(l=>checks.some(c=>c.level===l))||'ok';

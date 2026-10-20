@@ -89,3 +89,15 @@ test('moving a support refreshes a visible editing BOM; locked layout stays unch
   assert.deepEqual(plain(box.editingRack.post_levels.left),[4,4]);assert.ok(get('rackBom').children.includes('8 × 4U post segment'));
   rack.layout_locked=true;box.move('left',0,-1);assert.deepEqual(plain(rack.post_levels.left),[4,4]);
 });
+test('multi-U plate across a support extension warns (never blocks); 1U and clear spans stay quiet',()=>{
+  const {box}=harness();
+  vm.runInContext(section('  // Slots taken by a 1U support extension','  function guideLabel(').replace(/  window\.extensionJointWarning=.*\n/,'')+'\nglobalThis.jw=jointWarning;',box);
+  // 10U, posts 5U + extension + 4U on both sides: the extension is slot 5.
+  const rack={slots:10,post_levels:{left:[5,4],right:[5,4]}};
+  assert.match(box.jw(rack,4,2),/crosses the 1U support extension at slot 5 \(both sides\).*UNKNOWN.*Warning only/);
+  assert.equal(box.jw(rack,5,1),null);
+  assert.equal(box.jw(rack,6,3),null);
+  assert.equal(box.jw(rack,1,4),null);
+  assert.match(box.jw({slots:10,post_levels:{left:[5,4],right:[4,5]}},5,2),/slot 5 \(left side\) and slot 6 \(right side\)/);
+  assert.equal(box.jw(null,4,2),null);
+});

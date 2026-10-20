@@ -35,7 +35,8 @@ const rack = () => ({ id: 'r1', slots: 5, placements: [
 test('RackLayout.checkRange rejects out-of-range and overlapping ranges', () => {
   const r = rack();
   assert.throws(() => layout.checkRange(r, 0, 1), /whole slot range/);
-  assert.throws(() => layout.checkRange(r, 5, 2), /whole slot range/);
+  assert.throws(() => layout.checkRange(r, 5, 2), /^Error: 2U from slot 5 doesn’t fit; this rack ends at slot 5\.$/);
+  assert.throws(() => layout.checkRange(r, 6, 1), /Slot 6 doesn’t exist; this rack ends at slot 5/);
   assert.throws(() => layout.checkRange(r, 1.5, 1), /whole slot range/);
   assert.throws(() => layout.checkRange(r, 2, 2), /overlaps/);
   assert.doesNotThrow(() => layout.checkRange(r, 2, 1));
@@ -161,6 +162,12 @@ test('WorkshopClearance.screen uses the slot tray placement (offset, rotation, s
   assert.equal(at({ dev_off_y: 175 }).checks[2].level, 'over');
   assert.equal(at({ rear_support: true }).checks[2].needed, 240);
   assert.match(at({ rear_support: true }).checks[2].text, /Rear-support/);
+  // Rear support runs to the back posts by design: 240 of 240 mm reads OK (by design), not TIGHT (Brian, 2026-10-19).
+  assert.equal(at({ rear_support: true }).checks[2].level, 'ok');
+  assert.equal(at({ rear_support: true }).checks[2].byDesign, true);
+  assert.match(at({ rear_support: true }).checks[2].text, /OK \(by design\)/);
+  assert.equal(clearance.screen({ ...nominal, depth_mm: 238 }, { equipment: 'eq-1', span: 1, tray: { rear_support: true } }, eq({})).checks[2].level, 'over');
+  assert.equal(clearance.screen({ ...nominal, depth_mm: 245 }, { equipment: 'eq-1', span: 1, tray: { rear_support: true } }, eq({})).checks[2].level, 'tight');
   // A taller standoff only for this slot.
   assert.equal(at({ standoff: 20 }).checks[0].level, 'over');
   assert.equal(at({ standoff: 20, device_mount: 'straps' }).checks[0].level, 'ok');
@@ -287,7 +294,10 @@ test('LabRaxPorts wizard ports follow the slot tray placement (placement.tray wi
   assert.deepEqual(Object.keys(moved).filter(k => k.startsWith('ks-')), ['ks-1-front', 'ks-1-rear']);
   assert.equal(moved['ks-1-front'].x, 80);
   assert.ok(Math.abs(moved['ks-1-front'].z - (44.45 - 2.45) / 2) < 1e-9);
-  assert.deepEqual([moved['p-lan'].x, moved['p-lan'].y, moved['p-lan'].z], [10, -4, 20]); // faceplate opening: unmoved
+  // Faceplate opening follows the device (Brian, 2026-10-19): +5 offset, standoff 6 -> 4 = 2 mm lower.
+  assert.deepEqual([moved['p-lan'].x, moved['p-lan'].y, moved['p-lan'].z], [15, -4, 18]);
+  // Turned device: the opening stays where it was entered.
+  assert.deepEqual([ids(ports.wizardPorts(spec, { dev_off_x: 5, dev_rot: 90 }))['p-lan'].x, ids(ports.wizardPorts(spec, { dev_off_x: 5, dev_rot: 90 }))['p-lan'].z], [10, 20]);
   // Straps drop the standoff (device sits on the floor).
   assert.equal(ids(ports.wizardPorts(spec, { device_mount: 'straps' }))['p-pwr'].z, 24);
   // Rotation (equipment_tray.scad dp()): rear port 10 mm from the left edge of a 100 x 80 device.

@@ -21,7 +21,8 @@
       const key='cable:'+type+':'+(stock??'custom'),label=ctx.ports.TYPES[type]?.label||type||'Unknown type';
       if(!groups.has(key))groups.set(key,{label,stock,max:estimate.length_m,row:{section:'cables',key,item:'',quantity:0,source:'buy',cables:[],notes:[]}});
       const g=groups.get(key);g.max=Math.max(g.max,estimate.length_m);g.row.quantity++;g.row.cables.push(cable.number);
-      if((estimate.complete===false||!exists(cable.from)||!exists(cable.to))&&!g.row.notes.length)g.row.notes.push('check: incomplete');
+      if((estimate.complete===false||!exists(cable.from)||!exists(cable.to))&&!g.row.notes.includes('check: incomplete'))g.row.notes.unshift('check: incomplete');
+      if(ctx.cables.connectorMismatch(rack,cable,ctx)&&!g.row.notes.includes('needs adapter'))g.row.notes.push('needs adapter');
     }
     const rows=[...groups.values()].sort((a,b)=>a.label.localeCompare(b.label)||(a.stock??Infinity)-(b.stock??Infinity)||a.row.key.localeCompare(b.row.key)).map(g=>{
       g.row.item=g.label+' · '+(g.stock===null?'custom length (≥ '+g.max+' m)':g.stock+' m');return g.row;

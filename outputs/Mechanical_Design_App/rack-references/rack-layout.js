@@ -2,7 +2,10 @@
 (function(root){
   'use strict';
   function checkRange(rack,start,span,ignoreId=null){
-    if(!Number.isInteger(start)||!Number.isInteger(span)||start<1||span<1||start+span-1>rack.slots)throw Error('Choose a whole slot range within the rack.');
+    if(!Number.isInteger(start)||!Number.isInteger(span)||start<1||span<1)throw Error('Choose a whole slot range within the rack.');
+    // Brian, 2026-10-19: say plainly why a range does not fit.
+    if(start>rack.slots)throw Error(`Slot ${start} doesn’t exist; this rack ends at slot ${rack.slots}.`);
+    if(start+span-1>rack.slots)throw Error(`${span}U from slot ${start} doesn’t fit; this rack ends at slot ${rack.slots}.`);
     if(rack.placements.some(p=>p.id!==ignoreId&&start<p.slot+p.span&&p.slot<start+span))throw Error('That allocation overlaps another assembly.');
   }
   function change(rack,id,start,span){

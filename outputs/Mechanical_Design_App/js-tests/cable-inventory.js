@@ -59,3 +59,17 @@ test('CSV quotes every field, guards formulas, BOM, CRLF and trailing notes',()=
   }
   const empty=call('csv',{},ctx);assert.equal(empty.replace(/\r\n/g,'').includes('\n'),false);assert.equal(empty.split('\r\n').length,3);
 });
+
+test('adapter group note is unique and follows incomplete regardless of cable order',()=>{
+  for(const incompleteFirst of [false,true]){
+    const {rack,ctx,cable}=fixture();
+    rack.cabling.ports=[{allocation:'b',port:'usb',type:'rj45'}];
+    const adapter=cable(incompleteFirst?'C2':'C1','usb-c',1,{to:{allocation:'b',port:'usb'}}),loose=cable(incompleteFirst?'C1':'C2','usb-c',1,{to:null});
+    rack.cabling.cables=[adapter,{...adapter,id:'duplicate',number:'C3'},loose];
+    const before=structuredClone(ctx.library),row=call('items',rack,ctx)[0];
+    assert.deepEqual(row.notes,['check: incomplete','needs adapter']);assert.equal(row.quantity,3);
+    assert.ok(call('csv',rack,ctx).includes('check: incomplete; needs adapter'));assert.deepEqual(ctx.library,before);
+    rack.cabling.cables=[adapter,{...adapter,id:'duplicate',number:'C3'}];assert.deepEqual(call('items',rack,ctx)[0].notes,['needs adapter']);
+    rack.cabling.ports[0].type='usb-c';assert.deepEqual(call('items',rack,ctx)[0].notes,[]);
+  }
+});

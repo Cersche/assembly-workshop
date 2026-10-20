@@ -7,7 +7,7 @@
     'one-exit':'Use one exit','top-exit':'Keep the top clear','keystone':'Use a keystone',
     'service-loop':'Leave a service loop','short-run':'Simplify a short run',
     bend:'Tight bend guidance',crowded:'Guide crowding','one-ended':'Connect the other end',
-    'unused-ports':'Unused ports'};
+    'unused-ports':'Unused ports',adapter:'Plan an adapter cable'};
   const BEND_FACTOR={rj45:4,other:10};
   const list=(rack,key)=>rack.cabling?.[key]||[];
   const outside=end=>typeof end?.endpoint==='string';
@@ -68,6 +68,11 @@
     }
     const missing=new Map();
     for(const c of cables){
+      const mismatch=ctx.cables.connectorMismatch(rack,c,ctx);
+      if(mismatch){
+        const labelA=ctx.ports.TYPES[mismatch.from]?.label||mismatch.from,labelB=ctx.ports.TYPES[mismatch.to]?.label||mismatch.to;
+        add('adapter',c.id,c.number+' needs an adapter cable','One end is '+labelA+', the other '+labelB+'. Plan an adapter cable or adapter; its fit is UNKNOWN.',{cables:[c.id],ports:portKeys(c)},null,null,'info');
+      }
       const gs=(c.route?.guides||[]).map(id=>guideMap.get(id)).filter(Boolean),[a,b]=endSlots(rack,c,ctx);
       const involved={cables:[c.id],guides:gs.map(g=>g.id),ports:portKeys(c),exits:c.route?.exit?[c.route.exit]:[]};
       const target=carries(rack,c,ctx)==='power'?powerPost(rack):dataPost(rack);

@@ -20,7 +20,7 @@ function cable(from=port('w1','rear-left'),to=port('w2','rear-left')){
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-9,`${a} != ${b}`);
 
 test('exact API exports and browser load without window/DOM/fetch',()=>{
-  assert.deepEqual(Object.keys(C).sort(),['EXIT_POSITIONS','ENDPOINT_KINDS','TYPE_STYLE','cableColor','endAnchor','endFace','autoRoute','path','estimate','linkedCable','portInUse','nextNumber','guideLoad','crowded','upkeep','warnings'].sort());
+  assert.deepEqual(Object.keys(C).sort(),['EXIT_POSITIONS','ENDPOINT_KINDS','TYPE_STYLE','cableColor','endAnchor','endFace','autoRoute','path','estimate','linkedCable','portInUse','nextNumber','guideLoad','crowded','upkeep','warnings','connectorMismatch'].sort());
   const sandbox={};vm.runInNewContext(fs.readFileSync(require.resolve('../cable-routes.js'),'utf8'),sandbox);
   assert.deepEqual(Object.keys(sandbox),['LabRaxCables']);
   for(const [type,style] of Object.entries(C.TYPE_STYLE))assert.equal(style.color,P.TYPES[type].color);
@@ -156,4 +156,19 @@ test('read-only helpers never modify rack or cable fixtures',()=>{
   const {rack,ctx}=fixture(),c=cable();rack.cabling.cables=[c];const saved=JSON.stringify(rack);
   C.autoRoute(rack,c,ctx);C.path(rack,c,ctx);C.estimate(rack,c,ctx);C.warnings(rack,c,ctx);C.linkedCable(rack,c,ctx);C.guideLoad(rack);
   assert.equal(JSON.stringify(rack),saved);
+});
+
+test('connector mismatches respect saved overrides and never mutate inputs',()=>{
+  const {rack,ctx}=fixture(),c=cable();
+  rack.cabling.ports=[{allocation:'w2',port:'rear-left',type:'usb-a'}];
+  let before=structuredClone({rack,c,library:ctx.library});
+  assert.deepEqual(C.connectorMismatch(rack,c,ctx),{from:'rj45',to:'usb-a',text:'Needs an adapter cable: RJ45 (Ethernet) to USB-A.'});
+  c.route_changed=true;before=structuredClone({rack,c,library:ctx.library});
+  assert.deepEqual(C.warnings(rack,c,ctx),['Cable route changed.','Needs an adapter cable: RJ45 (Ethernet) to USB-A.']);
+  assert.deepEqual({rack,c,library:ctx.library},before);
+  [c.from,c.to]=[c.to,c.from];assert.equal(C.connectorMismatch(rack,c,ctx).text,'Needs an adapter cable: USB-A to RJ45 (Ethernet).');
+  [c.from,c.to]=[c.to,c.from];
+  for(const type of ['rj45','keystone','other']){rack.cabling.ports[0].type=type;assert.equal(C.connectorMismatch(rack,c,ctx),null);}
+  rack.cabling.ports=[];delete ctx.library[0].spec.rear_ports[0].type;assert.equal(C.connectorMismatch(rack,c,ctx),null);
+  for(const end of [null,{endpoint:'desk'},port('w2','gone'),port('removed','rear-left')]){c.to=end;assert.equal(C.connectorMismatch(rack,c,ctx),null);}
 });

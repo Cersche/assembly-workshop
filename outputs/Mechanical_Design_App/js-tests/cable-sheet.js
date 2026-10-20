@@ -130,3 +130,13 @@ test('notes contain each warning in cable order without standing limits',()=>{
     {number:'C10',text:'Cable route changed.'}]);
   assert.deepEqual(call('notes',{},ctx),[]);assert.deepEqual(call('schedule',{},ctx),[]);assert.deepEqual(call('labels',{},ctx),[]);
 });
+
+test('adapter warning flows to schedule, CSV warnings column and notes',()=>{
+  const {rack,ctx}=fixture();rack.cabling.cables=[{id:'adapter',number:'C1',type:'rj45',from:port('w','rear'),to:port('w2','front'),route:{guides:[],exit:null}}];
+  const before=structuredClone(ctx.library),text='Needs an adapter cable: RJ45 (Ethernet) to USB-A.';
+  assert.deepEqual(call('schedule',rack,ctx)[0].warnings,[text]);
+  assert.deepEqual(call('notes',rack,ctx),[{number:'C1',text}]);
+  const csv=call('csv',rack,ctx,{});assert.ok(csv.includes(','+text+',\r\n'));
+  assert.deepEqual(ctx.library,before);
+  rack.cabling.ports=[{allocation:'w2',port:'front',type:'rj45'}];assert.deepEqual(call('notes',rack,ctx),[]);
+});

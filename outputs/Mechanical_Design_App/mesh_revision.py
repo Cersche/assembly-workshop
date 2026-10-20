@@ -71,6 +71,16 @@ def normalize_collinear_faces(path):
     existing middle vertex. No coordinate is added or moved; all surface area
     and winding belong to the same original neighboring triangle.
     """
+    try:
+        return _normalize_collinear_faces(path, longest_first=False)
+    except ValueError:
+        # 2026-10-19: OpenSCAD can stack two zero-area faces on one edge (seen with moved tray screw joints). In file
+        # order the inner one may come first and has no real neighbor; repairing the longest one first resolves the
+        # stack with the same exact split. Only tried when the original order fails, so earlier results are unchanged.
+        return _normalize_collinear_faces(path, longest_first=True)
+
+
+def _normalize_collinear_faces(path, longest_first):
     raw = path.read_bytes()
     vertices = [tuple(map(float, line.split())) for line in
                 re.findall(rb'^\s*vertex\s+([^\r\n]+)', raw, re.M)]
@@ -82,8 +92,10 @@ def normalize_collinear_faces(path):
         return (u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0])
     repairs=[]
     while True:
-        index=next((i for i,f in enumerate(faces) if normal(f)==(0,0,0)),None)
-        if index is None:break
+        empty=[i for i,f in enumerate(faces) if normal(f)==(0,0,0)]
+        if not empty:break
+        span=lambda f:max(sum((f[j][k]-f[i][k])**2 for k in range(3)) for i,j in ((0,1),(1,2),(2,0)))
+        index=max(empty,key=lambda i:span(faces[i])) if longest_first else empty[0]
         face=faces[index]
         if len(set(face))!=3:raise ValueError('Repeated-vertex STL face cannot be normalized safely.')
         a,b=max(((face[i],face[j]) for i,j in ((0,1),(1,2),(2,0))),key=lambda pair:sum((pair[1][k]-pair[0][k])**2 for k in range(3)))

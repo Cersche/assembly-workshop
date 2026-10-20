@@ -28,7 +28,7 @@ function shape(rack){
 }
 test('exact API and standalone browser global without DOM, window or fetch',()=>{
   assert.deepEqual(Object.keys(S).sort(),['RULES','BEND_FACTOR','carries','powerPost','dataPost','suggestions','applySuggestion','ignore','unignore','pruneIgnored'].sort());
-  assert.deepEqual(Object.keys(S.RULES),['power-post','missing-guide','one-exit','top-exit','keystone','service-loop','short-run','bend','crowded','one-ended','unused-ports']);
+  assert.deepEqual(Object.keys(S.RULES),['power-post','missing-guide','one-exit','top-exit','keystone','service-loop','short-run','bend','crowded','one-ended','unused-ports','adapter']);
   assert.deepEqual(S.BEND_FACTOR,{rj45:4,other:10});
   const sandbox={};vm.runInNewContext(fs.readFileSync(require.resolve('../cable-suggest.js'),'utf8'),sandbox);
   assert.deepEqual(Object.keys(sandbox),['LabRaxCableSuggest']);
@@ -222,4 +222,18 @@ test('suggestion shapes, rule/subject sorting, idempotence and no input mutation
     if(i)assert.ok(order.indexOf(a[i-1].rule)<order.indexOf(s.rule)||(a[i-1].rule===s.rule&&a[i-1].id<=s.id));
   }
   assert.deepEqual(S.suggestions({slots:6},ctx),[]);assert.equal(S.applySuggestion(rack,{apply:null},ctx).ok,false);
+});
+
+test('adapter advice is info only, exact, ignorable and pruned when resolved',()=>{
+  const f=fixture(),{rack,ctx,c}=f;
+  rack.cabling.ports=[{allocation:'w2',port:'rear-left',type:'usb-a'}];
+  const before=structuredClone({rack,library:ctx.library}),s=one(f,'adapter');
+  assert.equal(S.RULES.adapter,'Plan an adapter cable');assert.equal(s.title,'C1 needs an adapter cable');
+  assert.equal(s.detail,'One end is RJ45 (Ethernet), the other USB-A. Plan an adapter cable or adapter; its fit is UNKNOWN.');
+  assert.equal(s.level,'info');assert.equal(s.apply,null);assert.equal(s.applyLabel,null);
+  assert.deepEqual(s.involves,{cables:['c1'],guides:[],ports:['w1/rear-left','w2/rear-left'],exits:[]});
+  assert.equal(S.applySuggestion(rack,s,ctx).ok,false);assert.deepEqual({rack,library:ctx.library},before);
+  S.ignore(rack,s);assert.equal(rule(rack,ctx,'adapter').length,0);assert.equal(S.pruneIgnored(rack,ctx),0);
+  rack.cabling.ports[0].type='rj45';assert.equal(S.pruneIgnored(rack,ctx),1);assert.equal(rule(rack,ctx,'adapter').length,0);
+  for(const end of [null,{endpoint:'desk'},port('w2','removed')]){c.to=end;assert.equal(rule(rack,ctx,'adapter').length,0);}
 });

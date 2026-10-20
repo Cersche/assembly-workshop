@@ -10,7 +10,7 @@
   const assemblyCard=byId('assemblyCanvas').closest('.card');
   const reviewCard=byId('checks').closest('.card');
   const axialCard=byId('jointSvg').closest('.card');
-  const roadmap=document.querySelector('[aria-label="Beta roadmap"]');
+  const roadmap=document.querySelector('[aria-label="Project status"]');
   const message=byId('message');
   const shell=document.createElement('div');shell.id='studio';
   shell.innerHTML=`
@@ -424,7 +424,7 @@
     const title=document.createElement('h2');title.textContent=selectedSlot?'Slot '+String(selectedSlot).padStart(2,'0'):rack.name;host.append(title);
     if(!selectedSlot){host.append(paragraph(rack.slots+' slots · '+rack.placements.length+' assigned assemblies'),button('Edit rack settings',()=>openRackDialog(true),'secondary'));appendExtensionControls(host,rack);appendGuideControls(host,rack);appendCableSetup(host,rack);appendRackStlExport(host,rack);appendReleaseUndo(host,rack);return;}
     const placement=assigned(rack,selectedSlot);
-    if(placement){host.append(paragraph((placement.assembly?.name||'Raspberry Pi 4')+' · slots '+placement.slot+'–'+(placement.slot+placement.span-1)),paragraph('Reference allocation. Installed fit, service access and load capacity are UNKNOWN.'),button(String(placement.equipment).startsWith('eq-')?'Place on tray':'Open assembly',()=>openAssembly(placement),'primary'),button('Slot actions ⋯',e=>showSlotMenu(selectedSlot,e.currentTarget),'secondary'));if(traySketch(placement))host.append(paragraph(TRAY_SKETCH,'notice'));}
+    if(placement){host.append(paragraph((placement.assembly?.name||'Raspberry Pi 4')+' · slots '+placement.slot+'–'+(placement.slot+placement.span-1)),paragraph('Reference allocation. Installed fit, service access and load capacity are UNKNOWN.'),button(String(placement.equipment).startsWith('eq-')?'Place on tray':'Open assembly',()=>openAssembly(placement),'primary'),button('Slot actions ⋯',e=>showSlotMenu(selectedSlot,e.currentTarget),'secondary'));if(traySketch(placement))host.append(paragraph(TRAY_SKETCH,'notice'));const jw=jointWarning(rack,placement.slot,placement.span);if(jw)host.append(paragraph('⚠ '+jw,'notice'));}
     else{host.append(paragraph('An open slot in your rack. Choose equipment to begin a guided assembly.'),button('Create assembly',startWizard,'primary'));}
     if(placement&&!String(placement.equipment).startsWith('eq-')&&!persistedAssemblyIds.has(placement.assembly.id)){host.querySelector('button.primary').disabled=true;host.append(paragraph('Use Save to keep this allocation before opening its hardware editor.'));}
     if(placement)appendPortControls(host,rack,placement);
@@ -441,7 +441,7 @@
   window.placeLibraryEquipment=function(item){
     if(!capable){notify('Wait for the updated workspace to load.',true);return false;}
     const rack=active();if(!rack||!selectedSlot){notify('Select an empty rack slot first, then click the equipment.',true);return false;}
-    const span=item.span||1;if(selectedSlot+span-1>rack.slots){notify(item.name+' needs '+span+' slots; not enough room below slot '+selectedSlot+'.',true);return false;}
+    const span=item.span||1;if(selectedSlot+span-1>rack.slots){notify(item.name+': '+span+'U from slot '+selectedSlot+' doesn’t fit; this rack ends at slot '+rack.slots+'.',true);return false;}
     for(let s=selectedSlot;s<selectedSlot+span;s++)if(assigned(rack,s)){notify('That allocation overlaps another assembly.',true);return false;}
     const assembly=newAssembly();assembly.name=item.name;assembly.project.name=item.name;
     const placement={assembly,id:uid(),equipment:item.id,slot:selectedSlot,span,geometry:'equipment-library',fit:'UNKNOWN'};
@@ -476,6 +476,7 @@
       const box=document.createElement('div');box.className='clearance-result clearance-'+r.level;
       const head=document.createElement('strong');head.textContent=labels[r.level]+' · '+where;box.append(head);
       for(const c of r.checks)box.append(paragraph((c.level==='ok'?'✓ ':c.level==='unknown'?'? ':'⚠ ')+c.text,'clearance-check clearance-'+c.level));
+      const jw=jointWarning(rack,p.slot,p.span);if(jw)box.append(paragraph('⚠ '+jw,'clearance-check clearance-tight'));
       box.append(paragraph(r.note));host.append(box);
     }
     appendCableSuggestions(host,rack);appendWiringSheet(host,rack);appendPartsOrder(host,rack);}
@@ -775,6 +776,14 @@
   function setGuides(rack,list){setCablingList(rack,'guides',list);sceneCacheKey='';markChanged();renderProperties();}
   // Slots taken by a 1U support extension on that side; whether the extension has holes there is UNKNOWN.
   function extensionSlots(rack,side){const out=new Set();let z=0;sideLevels(rack,side).forEach((u,i,levels)=>{z+=u;if(i<levels.length-1){out.add(rack.slots-z);z+=1;}});return out;}
+  // Brian, 2026-10-19: a multi-U plate may span a support-extension joint; warn, never block. Rack-hole fit there is UNKNOWN.
+  function jointWarning(rack,slot,span){
+    if(!rack||!(span>1))return null;const hits=new Map();
+    for(const side of['left','right'])for(const s of extensionSlots(rack,side))if(s>=slot&&s<slot+span)hits.set(s,[...(hits.get(s)||[]),side]);
+    if(!hits.size)return null;const where=[...hits].sort((a,b)=>a[0]-b[0]).map(([s,sides])=>'slot '+s+' ('+(sides.length>1?'both sides':sides[0]+' side')+')').join(' and ');
+    return 'This '+span+'U plate crosses the 1U support extension at '+where+'. Its rack holes may land on the extension joint; fit there is UNKNOWN. Warning only: you can still place and save it.';
+  }
+  window.extensionJointWarning=(slot,span)=>jointWarning(active(),slot,span);
   function guideLabel(g){return g.post+' · U'+String(g.slot).padStart(2,'0');}
   function selectGuide(id){
     if(selectedSlot!==null){if(!leaveAssembly())return;selectedSlot=null;byId('mountWizard').hidden=true;setStage('rack');renderTree();}

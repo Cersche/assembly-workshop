@@ -49,10 +49,13 @@
       points:rot===90?'left':rot===180?'front':rot===270?'right':'rear'};
   }
   // spec = library item spec; tray = this slot's placement.tray (its keys win, as equipment.allocation_spec()).
-  // Front openings are cut in the faceplate, so they do not move with the device.
+  // Front openings follow the device's offset and standoff (port-openings.js, Brian 2026-10-19); a turned device keeps
+  // them where they were entered, as its faceplate STL does.
+  function PO(){if(root.LabRaxPortOpenings)return root.LabRaxPortOpenings;
+    if(typeof module!=='undefined'&&typeof require==='function'){try{return require('./port-openings.js');}catch(e){}}return null;}
   function wizardPorts(spec,tray){
-    if(!spec)return [];const s={...spec,...(tray||{})},out=[],plateH=(+s.u||1)*PITCH-2.45;
-    (s.ports||[]).forEach((p,i)=>out.push({id:p.id||'front-'+(i+1),label:p.label||'Port '+(i+1),type:TYPES[p.type]?p.type:'other',face:'front',x:+p.x,y:-WIZ.plateT,z:+p.z,points:'front',opening:true}));
+    if(!spec)return [];const s={...spec,...(tray||{})},out=[],plateH=(+s.u||1)*PITCH-2.45,P=PO();
+    (P&&tray?P.frontOpenings(spec,tray).ports:s.ports||[]).forEach((p,i)=>out.push({id:p.id||'front-'+(i+1),label:p.label||'Port '+(i+1),type:TYPES[p.type]?p.type:'other',face:'front',x:+p.x,y:-WIZ.plateT,z:+p.z,points:'front',opening:true}));
     (s.rear_ports||[]).forEach((p,i)=>out.push({id:p.id||'rear-'+(i+1),label:p.label||'Rear port '+(i+1),type:TYPES[p.type]?p.type:'other',face:'rear',...rearPort(spec,s,p)}));
     // Keystones are pass-through ports: one front face and one rear face, paired by passThrough.
     (s.keystones||[]).forEach((x,i)=>{const id='ks-'+(i+1);

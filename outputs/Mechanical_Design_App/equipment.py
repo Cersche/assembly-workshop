@@ -18,6 +18,7 @@ import threading
 import zipfile
 
 import cable_ports
+import port_openings
 import mesh_revision
 
 ROOT = Path(__file__).resolve().parent
@@ -105,7 +106,12 @@ def allocation_spec(item_spec, tray=None):
     """Spec for one slot allocation: library values are defaults, the allocation's tray settings win.
     With no tray settings this returns the library spec unchanged, so older items build identically."""
     merged = dict(item_spec)
-    merged.update(placement_settings(tray))
+    settings = placement_settings(tray)
+    merged.update(settings)
+    # Brian, 2026-10-19: front openings follow the device (left/right offset, standoff); a turned device keeps them
+    # where they were entered (port_openings explains this in Place on tray). Library builds are unchanged.
+    if settings and item_spec.get('ports'):
+        merged['ports'] = port_openings.front_openings(item_spec, settings)['ports']
     return merged
 
 
@@ -119,6 +125,13 @@ def allocation_request(data_dir, payload):
     if item is None:
         raise ValueError('This equipment is no longer in the library.')
     spec = allocation_spec(item['spec'], payload.get('tray'))
+    # Plain-language opening guards (plate edge, top/bottom, keystone block) before clean()'s generic bounds.
+    try:  # malformed values are left to clean()'s own messages
+        found = port_openings.problems(list(spec.get('ports') or []), int(spec.get('u', 1)), list(spec.get('keystones') or []))
+    except (TypeError, ValueError, AttributeError, KeyError):
+        found = []
+    if found:
+        raise ValueError(found[0])
     if 'quality' in payload:  # export quality is a per-export choice, never a saved tray setting
         spec['quality'] = payload['quality']
     return clean(spec)
@@ -222,10 +235,6 @@ def clean(spec):
     tray_half = abs(s['dev_off_x']) + fp_w / 2 + MARGIN
     if any(abs(x) - 9.9 < tray_half + 0.5 for x in s['keystones']):
         raise ValueError(f'A keystone collar would hit the tray; keep keystones at least {tray_half + 10.4:g} mm from centre.')
-    if s['joint'] == 'screw':
-        jx = min(40, tray_half - 12)
-        if any(abs(abs(x) - jx) < 16 for x in s['keystones']):
-            raise ValueError(f'A keystone overlaps the tray screw joint at X = ±{jx:g} mm; move it at least 16 mm away.')
     s['ports'] = []
     for p in (spec.get('ports') or [])[:20]:
         w, h = num(p.get('w'), 'Port width', 1, 200), num(p.get('h'), 'Port height', 1, plate_h - 4)
@@ -245,6 +254,15 @@ def clean(spec):
                                 'label': str(p.get('label') or '')[:30], 'type': cable_ports.port_type(p.get('type')),
                                 'x': num(p.get('x'), 'Rear port X', -PLATE_HALF, PLATE_HALF),
                                 'z': num(p.get('z'), 'Rear port Z', 0, s['u'] * 44.45)})
+    # Brian, 2026-10-19 (option 3): each tray screw joint sits where it clears the openings (an opening in front of it
+    # would be blocked, and can fail to render) and keystones (16 mm, as before). joint_x is derived, never taken from
+    # input, and kept only when a joint moved, so designs whose default joints were clear build exactly as before.
+    if s['joint'] == 'screw':
+        placed = port_openings.joint_positions(s['ports'], s['keystones'], tray_half)
+        if placed['problem']:
+            raise ValueError(placed['problem'])
+        if placed['moved']:
+            s['joint_x'] = placed['joints']
     ids = [p['id'] for p in s['ports'] + s['rear_ports']]
     if len(ids) != len(set(ids)):
         raise ValueError('Each port needs its own id.')
@@ -257,7 +275,7 @@ def source(s):
     over = {k: s[k] for k in ('dev_w', 'dev_d', 'dev_h', 'hole_d', 'standoff', 'insert_pilot', 'board_t', 'u',
                               'holes', 'keystones', 'device_mount', 'joint', 'rear_support', 'coupon')}
     # Placement keys are written only when moved/rotated, so default sources stay byte-identical to older ones.
-    for k in ('dev_off_x', 'dev_off_y', 'dev_rot'):
+    for k in ('dev_off_x', 'dev_off_y', 'dev_rot', 'joint_x'):
         if s.get(k):
             over[k] = s[k]
     over['ports'] = [[p['x'], p['z'], p['w'], p['h'], p['r']] for p in s['ports']]

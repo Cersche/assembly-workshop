@@ -37,6 +37,11 @@
     return rot===90?[d-p[1],p[0]]:rot===180?[w-p[0],d-p[1]]:rot===270?[p[1],w-p[0]]:[p[0],p[1]];}
   function holes(spec,v){const L=layout(spec,v);return (spec.holes||[]).map(p=>{const q=dp(spec,v.dev_rot,p);return [L.dev_x+q[0],L.dev_y+q[1]];});}
   const fin=x=>typeof x==='number'&&Number.isFinite(x);
+  // port-openings.js (Brian, 2026-10-19): front openings follow the device; loaded as a page script or, under Node, required.
+  function PO(){if(root.LabRaxPortOpenings)return root.LabRaxPortOpenings;
+    if(typeof module!=='undefined'&&typeof require==='function'){try{return require('./port-openings.js');}catch(e){}}return null;}
+  // This slot's front openings: moved with the offset and standoff, or as entered when the device is turned.
+  function openings(spec,v){const P=PO();return P?P.frontOpenings(spec,v):{ports:(spec.ports||[]).map(p=>({...p})),dx:0,dz:0,follows:false,rotation:+v.dev_rot||0,message:null};}
   const mm=x=>Math.round(x*10)/10;
   // Plain-language versions of the SCAD asserts and the build checks. Any message blocks Apply and export.
   function problems(spec,v){
@@ -69,9 +74,16 @@
     if(xs.some((x,i)=>i&&x-xs[i-1]<21))out.push('Keystones must be at least 21 mm apart.');
     const half=L.tray_w/2;
     if(ks.some(x=>Math.abs(x)-9.9<half+0.5))out.push(`A keystone collar would hit the tray; keep keystones at least ${mm(half+10.4)} mm from the centre.`);
-    if(v.joint==='screw'&&ks.some(x=>Math.abs(Math.abs(x)-L.jx)<16))out.push(`A keystone overlaps the tray screw joint at ±${mm(L.jx)} mm; move it at least 16 mm away.`);
+    // Openings moved with the device must stay on the plate and clear of keystones (same limits as equipment.py).
+    const P=PO();if(P){out.push(...P.problems(openings(spec,v).ports,v.u,ks));const j=joints(spec,v);if(j&&j.problem)out.push(j.problem);}
     return out;
   }
+  // Plain-language warnings that never block (Brian, 2026-10-19).
+  // Screw joints placed clear of the openings and keystones (port-openings.js jointPositions); null for the single piece.
+  function joints(spec,v){const P=PO();if(v.joint!=='screw'||!P)return null;return P.jointPositions(openings(spec,v).ports,v.keystones||[],layout(spec,v).tray_w/2);}
+  function warnings(spec,v){const out=[],m=openings(spec,v).message;if(m)out.push(m);const j=joints(spec,v);
+    if(j&&j.moved&&!j.problem)out.push(`The tray screw joints were moved to X = ${j.joints.map(x=>mm(x)).join(' and ')} mm (normally ±${mm(j.default)} mm) to keep them clear of the openings and keystones.`);
+    return out;}
   // Centre: left/right offset back to 0 (front gap unchanged). Snap: whole millimetres.
   const snap=x=>Math.round(x);
   // ---- Live 3D preview: simple boxes for the tray, faceplate, standoffs and device (exact meshes on request).
@@ -98,12 +110,12 @@
     const v=values(spec,tray),L=layout(spec,v),sets=schematic(spec,v),out={faceplate:sets[0].v,tray:sets[1].v};
     const holes=[];
     for(const x of v.keystones||[])if(fin(+x))holes.push(...box(x-7.4,-PLATE_T-0.2,L.plate_h/2-8.3,x+7.4,0.2,L.plate_h/2+8.3));
-    for(const p of spec.ports||[]){const o=[+p.x,+p.z,+p.w,+p.h];if(o.every(fin))holes.push(...box(o[0]-o[2]/2,-PLATE_T-0.2,o[1]-o[3]/2,o[0]+o[2]/2,0.2,o[1]+o[3]/2));}
+    for(const p of openings(spec,v).ports){const o=[+p.x,+p.z,+p.w,+p.h];if(o.every(fin))holes.push(...box(o[0]-o[2]/2,-PLATE_T-0.2,o[1]-o[3]/2,o[0]+o[2]/2,0.2,o[1]+o[3]/2));}
     if(holes.length)out.openings=holes;
     if(v.rear_support)out.rear_bracket=box(-PLATE_HALF,RACK_DEPTH,0,PLATE_HALF,RACK_DEPTH+PLATE_T,L.plate_h); // to_rear(): plate mirrored about mid-depth
     return out;
   }
-  const api={KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,problems,snap,schematic,box,rackSketch};
+  const api={KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,openings,joints,problems,warnings,snap,schematic,box,rackSketch};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.TrayPlacement=api;
   if(typeof document==='undefined')return;
@@ -133,8 +145,10 @@
     const over=L.tray_w>MAX_TRAY;
     s+=`<rect x="${-L.tray_w/2}" y="${-L.tray_d}" width="${L.tray_w}" height="${L.tray_d}" fill="#24382f" stroke="${over?'#e07070':'#4d8e6e'}" stroke-width=".8"/>`;
     s+=`<rect x="-115" y="${-depth+2}" width="230" height="${depth-2}" fill="none" stroke="#666" stroke-width=".4" stroke-dasharray="3 2"/>`;
-    if(v.joint==='screw')for(const x of[-L.jx,L.jx])s+=`<circle cx="${x}" cy="-3.5" r="2" fill="#aab"/>`;
+    if(v.joint==='screw'){const j=joints(spec,v);for(const x of j?j.joints.filter(x=>x!==null):[-L.jx,L.jx])s+=`<circle cx="${x}" cy="-3.5" r="2" fill="#aab"/>`;}
     for(const x of v.keystones||[])s+=`<rect x="${x-9.9}" y="-10.4" width="19.8" height="10.4" fill="#1d1f24" stroke="#888" stroke-width=".4"/>`;
+    // Front-port openings in the faceplate strip (they follow the offset; a turned device leaves them as entered).
+    for(const p of openings(spec,v).ports)if([+p.x,+p.w].every(fin))s+=`<rect x="${+p.x-p.w/2}" y="0.6" width="${+p.w}" height="2.8" fill="#1d1f24" stroke="#ff9f43" stroke-width=".4"><title>${String(p.label||'Port').replace(/[<&"]/g,'')} opening</title></rect>`;
     s+=`<rect id="tpDevice" x="${L.dev_x}" y="${-(L.dev_y+L.fp_d)}" width="${L.fp_w}" height="${L.fp_d}" fill="#e6c35c" fill-opacity=".35" stroke="#e6c35c" stroke-width=".8" style="cursor:grab"/>`;
     const a=dp(spec,v.dev_rot,[0,0]),b=dp(spec,v.dev_rot,[+spec.dev_w,0]);
     s+=`<line x1="${L.dev_x+a[0]}" y1="${-(L.dev_y+a[1])}" x2="${L.dev_x+b[0]}" y2="${-(L.dev_y+b[1])}" stroke="#ff9f43" stroke-width="2" pointer-events="none"/>`;
@@ -165,6 +179,10 @@
     const list=current(),box=document.getElementById('tpProblems');
     box.replaceChildren(...list.map(t=>h('li',{},t)));box.hidden=!list.length;
     for(const id of['tpApply','tpExport'])if(document.getElementById(id))document.getElementById(id).disabled=!!list.length;
+    // Warnings never block Apply or export (Brian, 2026-10-19): turned-device front openings, support-extension joint.
+    const warn=document.getElementById('tpWarnings');
+    if(warn){const ws=warnings(state.item.spec,state.v),jw=window.extensionJointWarning?.(state.slot,state.v.u);if(jw)ws.push(jw);
+      warn.replaceChildren(...ws.map(t=>h('li',{},t)));warn.hidden=!ws.length;}
     const L=layout(state.item.spec,state.v),sum=document.getElementById('tpSummary');
     if(sum)sum.textContent=`Tray ${mm(L.tray_w)} × ${mm(L.tray_d)} mm · device ${mm(L.fp_w)} × ${mm(L.fp_d)} mm on the tray · ${state.v.u}U faceplate.`;
   }
@@ -234,6 +252,7 @@
           h('p',{class:'tp-unknown'},'Fit, retention, strength: UNKNOWN'))),
       h('p',{id:'tpSummary',class:'ew-note'}),
       h('ul',{id:'tpProblems',class:'tp-problems',role:'alert'}),
+      h('ul',{id:'tpWarnings',class:'tp-warnings',role:'status'}),
       h('p',{id:'tpStatus',class:'ew-note',role:'status'},'Changes stay in this window until you press Apply to draft. Apply changes the rack draft only; use Save to keep it.'),
       h('div',{class:'ew-nav'},exp,window.RenderQuality?.exportSlider(()=>draw3D(),'tp-export-quality')||'',cancel,apply));
     const svg=d.querySelector('.tp-pane svg');svg.id='tpTop';svg.setAttribute('class','tp-top');svg.setAttribute('role','img');svg.setAttribute('aria-label','Top view of the tray and faceplate');
@@ -247,7 +266,7 @@
       document.head.append(h('style',{},`.tp-dialog{width:min(1040px,96vw)}.tp-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.tp-head h2{margin:0}
 .tp-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:14px}@media(max-width:760px){.tp-grid{grid-template-columns:1fr}}.tp-pane h3{margin:10px 0 4px;font-size:13px;color:#cfd6df}
 .tp-top{width:100%;height:300px;background:#121418;border-radius:6px;touch-action:none}.tp-view{height:240px}.tp-unknown{color:#e0b56f;font-weight:600;margin-top:10px}
-.tp-problems{color:#ff9a9a;margin:6px 0;padding-left:18px}.tp-problems:empty{display:none}`));}
+.tp-problems{color:#ff9a9a;margin:6px 0;padding-left:18px}.tp-problems:empty{display:none}.tp-warnings{color:#e0b56f;margin:6px 0;padding-left:18px}.tp-warnings:empty{display:none}`));}
     return d;
   }
   // Called by workspace.js when a library item is placed in a slot or its slot placement is edited.
