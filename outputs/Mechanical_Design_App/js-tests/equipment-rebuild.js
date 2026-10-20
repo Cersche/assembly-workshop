@@ -6,7 +6,7 @@ const src=fs.readFileSync(path.join(__dirname,'..','equipment-wizard.js'),'utf8'
 const a=src.indexOf('  let items=[];'),b=src.indexOf('  // Same as rack-studio.js rgb()',a);
 assert.ok(a>=0&&b>a);const librarySource=src.slice(a,b);
 const clone=x=>JSON.parse(JSON.stringify(x));
-function fixture(status='older_source',failure=false){
+function fixture(status='older_source',failure=false,reason=null){
   const initial={id:'eq-0123456789ab',name:'Router',span:1,spec:{name:'Router',dev_w:85,dev_d:56,dev_h:20},build:'a'.repeat(64),parts:['tray','faceplate']};
   const copy={...clone(initial),id:'eq-ffffffffffff',build:'b'.repeat(64),name:'Router (current template copy)',display_name:'Router (current template copy)'};
   let list=[initial],posts=0,pendingResolve=null;
@@ -22,7 +22,7 @@ function fixture(status='older_source',failure=false){
     fetch:async(url,options)=>{
       calls.push({url,options});
       if(url==='/api/equipment-library')return {ok:true,json:async()=>clone(list)};
-      if(url==='/api/equipment-template-status')return {ok:true,json:async()=>Object.fromEntries(list.map(it=>[it.id,{status,reason:status==='needs_review'?'The snap-fit tray joint is retired.':'Fixture reason'}]))};
+      if(url==='/api/equipment-template-status')return {ok:true,json:async()=>Object.fromEntries(list.map(it=>[it.id,{status,reason:reason??(status==='needs_review'?'The snap-fit tray joint is retired.':'Fixture reason')}]))};
       if(url==='/api/equipment-rebuild-copy'){
         posts++;
         if(failure)return {ok:false,json:async()=>({error:'Fixture render failed'})};
@@ -67,11 +67,10 @@ test('equipment list: double click and focus refresh while rebuilding do not dup
   await old.onclick();await h.listeners.focus();assert.equal(h.button().disabled,true);await h.button().onclick();
   assert.equal(h.posts,1);h.release();await first;assert.equal(h.button().disabled,false);
 });
-test('equipment list: source match with unknown process offers low-key rebuild and verified-cache wording',async()=>{
-  const h=fixture('matches_source_unknown_pipeline');h.box.reuse=true;await h.box.load();
-  assert.ok(h.allText().includes('Matches current source; build process unknown'));assert.ok(h.button());
-  assert.equal(h.button().attrs.class,'ew-chip');await h.button().onclick();
-  assert.ok(h.allText().includes('Created a new item using its verified current-template build. Existing placements are unchanged.'));
+test('equipment list: an item built from the current template says so plainly and offers no rebuild (Brian, 2026-10-19)',async()=>{
+  const h=fixture('matches_source_unknown_pipeline',false,'Matches current source; build process unknown');await h.box.load();
+  assert.ok(h.allText().includes('Up to date: built from the current template'));
+  assert.ok(!h.allText().includes('build process unknown'));assert.equal(h.button(),undefined);assert.equal(h.posts,0);
 });
 for(const status of ['needs_review','unknown_evidence','integrity_problem'])test('equipment list: '+status+' has no rebuild and performs no write',async()=>{
   const h=fixture(status);await h.box.load();assert.equal(h.button(),undefined);assert.equal(h.posts,0);

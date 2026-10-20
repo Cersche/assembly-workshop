@@ -139,6 +139,11 @@
   // Cable-planning port id (cable-ports.js): stable while the port is edited or moves between faces.
   const portId=()=>'p-'+Math.random().toString(36).slice(2,10);
   const PORT_TYPES=()=>Object.fromEntries(Object.entries(window.LabRaxPorts?.TYPES||{other:{label:'Other'}}).map(([k,v])=>[k,v.label]));
+  // Starting opening size per connector type (port-openings.js, Brian 2026-10-19): an editable guess, never a measured size.
+  // Only ports added by hand in this window get it, and only until W/H/r is edited; saved and model-found ports keep their sizes.
+  const autoSize=new WeakSet();
+  const startSize=t=>window.LabRaxPortOpenings?.defaultSize(t)||{w:15,h:8,r:1};
+  const SIZE_NOTE=()=>window.LabRaxPortOpenings?.SIZE_NOTE||'Starting size: a guess, not a measured size. Edit it to match your device.';
   function select(options,value,onchange){const s=h('select',{});for(const[v,t]of Object.entries(options)){const o=h('option',{value:v},t);if(v===value)o.selected=true;s.append(o);}s.onchange=()=>onchange(s.value);return s;}
   const h=(tag,attrs={},...kids)=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k.startsWith('on'))e[k]=v;else e.setAttribute(k,v);}e.append(...kids);return e;};
   function field(label,key,obj=spec,extra={}){
@@ -167,6 +172,9 @@
     const tw=Number(spec.dev_w)+16;s+=`<rect x="${-tw/2}" y="${-10}" width="${tw}" height="3" fill="#aab" opacity=".6"/>`;
     svg.innerHTML=s;
   }
+  // Last-step summary; counts front openings and rear ports separately (rear ports get no opening).
+  const count=(n,one)=>n+' '+one+(n===1?'':'s');
+  function summary(spec){return `${spec.name||'Equipment'}: ${spec.dev_w} × ${spec.dev_d} × ${spec.dev_h} mm, ${count(spec.holes.length,'hole')}, ${count(spec.ports.length,'front opening')}, ${count((spec.rear_ports||[]).length,'rear port')}. Tray defaults for new slots: ${spec.u}U, ${MOUNTS[spec.device_mount]}, ${JOINTS[spec.joint]}, ${count(spec.keystones.length,'keystone')}.`;}
   function body(){
     if(step===0){
       const name=h('input',{type:'text',value:spec.display_name??spec.name,placeholder:'e.g. Network switch'});name.oninput=()=>{if(spec.display_name!==undefined)spec.display_name=name.value;else spec.name=name.value;};
@@ -212,15 +220,17 @@
       // Front ports cut a faceplate opening; rear ports are cable-planning only (no opening, so no W/H/r).
       const row=(list,p,i,face)=>{const lab=h('input',{type:'text',value:p.label,placeholder:'USB, HDMI…',style:'width:90px'});lab.oninput=()=>p.label=lab.value;
         if(!p.id)p.id=portId();
-        const type=select(PORT_TYPES(),p.type||'other',v=>{p.type=v;});
+        const type=select(PORT_TYPES(),p.type||'other',v=>{p.type=v;if(face==='front'&&autoSize.has(p)){Object.assign(p,startSize(v));render();}});
         const side=select({front:'Front (opening)',rear:'Rear (no opening)'},face,v=>{list.splice(i,1);
           if(v==='rear')spec.rear_ports.push({id:p.id,label:p.label,type:p.type||'other',x:p.x,z:p.z});
-          else spec.ports.push({id:p.id,label:p.label,type:p.type||'other',x:p.x,z:p.z,w:15,h:8,r:1});render();});
+          else{const q={id:p.id,label:p.label,type:p.type||'other',x:p.x,z:p.z,...startSize(p.type)};autoSize.add(q);spec.ports.push(q);}render();});
         const del=h('button',{type:'button',class:'ew-chip'},'Remove');del.onclick=()=>{list.splice(i,1);render();};
         const dims=face==='front'?[field('W','w',p),field('H','h',p),field('Corner r','r',p)]:[];
+        for(const d of dims)d.querySelector('input').addEventListener('input',()=>autoSize.delete(p));
+        if(face==='front'&&autoSize.has(p))dims.push(h('span',{class:'ew-note ew-size-guess'},SIZE_NOTE()));
         return h('div',{class:'ew-row'},lab,h('label',{class:'ew-field'},'Type',type),h('label',{class:'ew-field'},'Face',side),field('X','x',p),field('Z','z',p),...dims,del);};
       const rows=[...spec.ports.map((p,i)=>row(spec.ports,p,i,'front')),...spec.rear_ports.map((p,i)=>row(spec.rear_ports,p,i,'rear'))];
-      const add=h('button',{type:'button',class:'ew-chip'},'+ Add port opening');add.onclick=()=>{spec.ports.push({id:portId(),label:'',type:'other',x:0,z:Math.round(plateH()/2),w:15,h:8,r:1});render();};
+      const add=h('button',{type:'button',class:'ew-chip'},'+ Add port opening');add.onclick=()=>{const q={id:portId(),label:'',type:'other',x:0,z:Math.round(plateH()/2),...startSize('other')};autoSize.add(q);spec.ports.push(q);render();};
       const sugg=[];
       if(foundPorts.length){
         sugg.push(h('p',{},`The model shows ${foundPorts.length} thing${foundPorts.length>1?'s':''} on its front edge that may need an opening (dashed outlines below). Tick the real ports, then press “Use ticked ports”. 1 mm clearance is added on each side.`));
@@ -232,7 +242,7 @@
       }else if(imported&&!spec.ports.length)sugg.push(h('p',{class:'ew-note'},'Nothing found sticking out at the model’s front. Add openings by hand if needed.'));
       return [h('p',{},'Which ports need an opening in the faceplate? X is from the faceplate centre; Z is height from its bottom edge.'),...sugg,...rows,add,
         h('p',{class:'ew-note'},'Type and Face are cable-planning data for the Cables view. Rear ports get no opening. Keystones become front/rear pass-through port pairs automatically. Connector fit and cable access stay UNKNOWN.'),
-        h('p',{class:'ew-note'},'Suggested heights assume the default '+spec.standoff+' mm standoff. Position, mounting, standoff, faceplate height, keystones and rear support are chosen per slot in the Place on tray window after you place the item.'),...finish()];
+        h('p',{class:'ew-note'},'Heights are for the '+spec.standoff+' mm standoff. In Place on tray, front openings move with the device’s left/right offset and standoff. Position, mounting, standoff, faceplate height, keystones and rear support are chosen per slot in the Place on tray window after you place the item.'),...finish()];
     }
   }
   function finish(){
@@ -257,7 +267,7 @@
         status.textContent='Saved. Close this, select an empty rack slot, then click “'+item.name+'” in the Equipment list to place it; the Place on tray window opens for that slot.';}
       catch(e){status.textContent='Problem: '+e.message;}finally{keep.disabled=false;}};
     setTimeout(fitWarn);
-    return [h('h3',{},'Save'),h('p',{id:'ewFitWarn',class:'ew-note ew-warn',hidden:''}),h('p',{},`${spec.name||'Equipment'}: ${spec.dev_w} × ${spec.dev_d} × ${spec.dev_h} mm, ${spec.holes.length} holes, ${spec.ports.length} ports. Tray defaults for new slots: ${spec.u}U, ${MOUNTS[spec.device_mount]}, ${JOINTS[spec.joint]}, ${spec.keystones.length} keystones.`),h('div',{class:'ew-row'},look,keep,go,window.RenderQuality?.exportSlider()||''),status,h('canvas',{id:'ewView',class:'ew-view',hidden:''}),window.RenderQuality?.previewSlider('wizard',draw3D)||''];
+    return [h('h3',{},'Save'),h('p',{id:'ewFitWarn',class:'ew-note ew-warn',hidden:''}),h('p',{},summary(spec)),h('div',{class:'ew-row'},look,keep,go,window.RenderQuality?.exportSlider()||''),status,h('canvas',{id:'ewView',class:'ew-view',hidden:''}),window.RenderQuality?.previewSlider('wizard',draw3D)||''];
   }
   function render(){
     const d=document.getElementById('equipmentWizard');
@@ -293,10 +303,11 @@
         try{const r=await fetch('/api/equipment-library-delete',{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify({id:it.id})});
           const out=await r.json();if(!r.ok)throw Error(out.error);await loadLibrary();}catch(e){alert(e.message);}};
       const status=statuses?.[it.id]||{status:'unknown_evidence',reason:'Template status unknown — build evidence unavailable.'};
-      const label={older_source:'Older template/source',matches_source_unknown_pipeline:'Matches current source; build process unknown',needs_review:'Needs review',unknown_evidence:'Template status unknown — build evidence unavailable.',integrity_problem:'Build integrity problem'}[status.status]||'Template status unknown — build evidence unavailable.';
-      const badge=h('span',{class:'ew-note'},label),details=h('p',{class:'ew-note'},status.status==='older_source'?'A newer equipment template is available. The saved build is unchanged. Printed fit and strength remain UNKNOWN.':status.reason||'');
+      const label={older_source:'Older template/source',matches_source_unknown_pipeline:'Up to date: built from the current template',needs_review:'Needs review',unknown_evidence:'Template status unknown — build evidence unavailable.',integrity_problem:'Build integrity problem'}[status.status]||'Template status unknown — build evidence unavailable.';
+      const badge=h('span',{class:'ew-note'},label),details=h('p',{class:'ew-note'},status.status==='older_source'?'A newer equipment template is available. The saved build is unchanged. Printed fit and strength remain UNKNOWN.':status.status!=='matches_source_unknown_pipeline'&&status.reason&&status.reason!==label?status.reason:'');
       const extra=[];
-      if(['older_source','matches_source_unknown_pipeline'].includes(status.status)){
+      // Brian, 2026-10-19: only an older template offers a rebuild; an item built from the current template has nothing to rebuild.
+      if(status.status==='older_source'){
         const key=it.id+'/'+it.build,rebuild=h('button',{type:'button',class:'ew-chip'},'Rebuild as new item');
         rebuild.disabled=rebuilding.has(key);
         rebuild.onclick=async()=>{
@@ -343,7 +354,9 @@
   }
   const hasTray=a=>!!a?.tray&&typeof a.tray==='object'&&Object.keys(a.tray).length>0;
   // Library spec with the slot's tray choices on top (equipment.allocation_spec; TrayPlacement.values fills defaults).
-  function effectiveSpec(spec,tray){const T=window.TrayPlacement;return T?{...spec,...T.values(spec,tray)}:{...spec,...tray};}
+  // Front openings follow the device's offset and standoff (port-openings.js), as equipment.allocation_spec() cuts them.
+  function effectiveSpec(spec,tray){const T=window.TrayPlacement,out=T?{...spec,...T.values(spec,tray)}:{...spec,...tray},P=window.LabRaxPortOpenings;
+    if(P&&tray&&spec.ports)out.ports=P.frontOpenings(spec,tray).ports;return out;}
   function lookup(it,a){
     const key=it.build+'|'+JSON.stringify(a.tray);
     if(!placed.has(key)){placed.set(key,null);

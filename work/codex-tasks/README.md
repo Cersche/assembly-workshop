@@ -34,3 +34,6 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [15-docs-refresh-wizard-placement](15-docs-refresh-wizard-placement.md) | done, reviewed by Claude (95 Py + 152 JS pass) |
 | [16-keystone-render-sweep](16-keystone-render-sweep.md) | done, reviewed by Claude (22 pass, 2 out-of-range skips, 0 fail) |
 | [17-docs-rack-view-placement](17-docs-rack-view-placement.md) | done, reviewed by Claude |
+| [18-placement-render-sweep](18-placement-render-sweep.md) | open (investigation only; from the wizard end-to-end run) |
+| [19-front-openings-logic](19-front-openings-logic.md) | open (wizard design picks: openings follow the device, starting sizes) |
+| [20-adapter-cable-warning](20-adapter-cable-warning.md) | open (wizard design picks: mixed-connector warning) |
