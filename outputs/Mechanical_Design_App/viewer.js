@@ -57,12 +57,47 @@ async function initAssemblyViewer(){
 
   window.addEventListener('assembly-model',e=>{model=e.detail||baseline;selectedPart=null;schedule()});
 
-  let yaw=.55,pitch=.65,zoom=1,focus=[0,39.5,21],pending=false,drag=null;
+  let yaw=.55,pitch=.65,zoom=1,focus=[0,39.5,21],pending=false,panX=0,panY=0;
   let frontMode=false,appearance={},texture=null,textureIdentity=null,imageRequest=0;
   let selectedPart=null,pickBuffer=null,pickParts=[],hardwareMeshes=null;
   let studioRenderer=null,studioUnavailable='';
+  // Local adapter because AssemblyRenderer.render has no camera-transform hook.
+  // Retains its geometry/material/cache preparation; only projection gains pan and cursor zoom.
+  function controlledAssemblyRenderer(){
+    const I=[1,0,0,0,1,0,0,0,1];
+    const color=(hex,fallback)=>/^#[0-9a-f]{6}$/i.test(hex||'')?[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255):fallback;
+    return new class extends window.LabRaxAssembly.AssemblyRenderer {
+    render({parts,fullParts,yaw,pitch,zoom,focus,frontMode,appearance,selectedPart,width,height,dpr}){
+      if(this.modelParts!==fullParts){
+        for(const [key,item] of this.buffers)if(key.startsWith('assembly-')||key==='studio-floor'){this.gl.deleteBuffer(item.buffer);this.buffers.delete(key);}
+        this.modelParts=fullParts;this.fullBox=window.LabRaxAssembly.bounds(fullParts);this.shadowKey='';this.depthKey='';
+        const z=this.fullBox.lo[2]-.65,floor=new window.LabRaxStudio.Mesh();floor.box(-900,900,-700,900,z-1,z);this.geometry.floor=floor;
+        const span=Math.max(this.fullBox.hi[0]-this.fullBox.lo[0],this.fullBox.hi[1]-this.fullBox.lo[1],1);this.floorParams=[(this.fullBox.lo[0]+this.fullBox.hi[0])/2,(this.fullBox.lo[1]+this.fullBox.hi[1])/2,span*.2,span*.75];
+      }
+      const scene={slots:0,parts:fullParts.map(mesh=>({key:this.key(mesh),R:I,t:[0,0,0]}))},meshes={};for(const mesh of fullParts)meshes[this.key(mesh)]=mesh;
+      this.currentObjects=parts.map(mesh=>{
+        const id=mesh.id,box=this.box(mesh),brass=id==='insert',steel=id==='screw'||id==='screw_head',plane=id==='tray'?1:0;
+        const rgb=id==='tray'?color(appearance.tray,[77/255,142/255,110/255]):id==='faceplate'?color(appearance.faceplate,[78/255,117/255,163/255]):id==='equipment'?color(appearance.equipment,[91/255,133/255,69/255]):brass?[.78,.60,.27]:[.19,.21,.25];
+        const other=plane?1:2;
+        return {key:this.key(mesh),mesh,box,partId:id,R:I,t:[0,0,0],kind:id,color:rgb,metal:brass?.82:steel?.72:0,rough:brass?.28:steel?.3:.43,selected:id===selectedPart,art:id==='faceplate'?appearance.artwork:null,selectionRect:[(box.lo[0]+box.hi[0])/2,(box.lo[other]+box.hi[other])/2,(box.hi[0]-box.lo[0])/2,(box.hi[other]-box.lo[other])/2],selectionRadius:0,selectionPlane:plane};
+      });
+      const active=new Set([...scene.parts.map(p=>p.key),...this.currentObjects.map(p=>p.key)]);
+      for(const [key,item] of this.buffers)if(key.startsWith('assembly-')&&!active.has(key)){this.gl.deleteBuffer(item.buffer);this.buffers.delete(key);}
+      let box=this.fullBox;
+      if(focus[0]===40){const half=box.lo.map((v,i)=>(box.hi[i]-v)/2);box={lo:focus.map((v,i)=>v-half[i]),hi:focus.map((v,i)=>v+half[i])};}
+      let view=window.LabRaxStudio.camera(box,frontMode?0:yaw,frontMode?0:pitch,width,height,1,!frontMode);
+      if(focus[0]!==40)view=window.LabRaxAssembly.fitInspectionView(view,window.LabRaxStudio.camera(box,frontMode?0:yaw,frontMode?0:pitch,width,height,1,!frontMode),fullParts,width,height);
+      view=window.ViewerControls.camera(view,width,height,{zoom,panX,panY});
+      // The key records visibility too, so hidden parts stop casting shadows immediately.
+      const cacheState={placements:[{id:this.currentObjects.map(o=>o.key).join(','),slot:0}]};
+      const canvas=window.LabRaxStudio.Renderer.prototype.draw.call(this,scene,meshes,view,Math.round(width*dpr),Math.round(height*dpr),cacheState);
+      this.view=view;
+      return {canvas,view,triangles:parts.reduce((sum,p)=>sum+p.triangles.length,0)};
+    }
+    }();
+  }
   function createStudioRenderer(){
-    try{if(window.LabRaxAssembly){studioRenderer=new window.LabRaxAssembly.AssemblyRenderer();studioRenderer.invalidated=schedule;studioUnavailable='';}}
+    try{if(window.LabRaxAssembly){studioRenderer=controlledAssemblyRenderer();studioRenderer.invalidated=schedule;studioUnavailable='';}}
     catch(e){studioUnavailable=e.message;studioRenderer=null;}
   }
   createStudioRenderer();
@@ -82,7 +117,7 @@ async function initAssemblyViewer(){
     catch(e){if(request===imageRequest){textureIdentity=null;status.textContent='Faceplate preview image unavailable: '+e.message;}}
   }
   window.addEventListener('assembly-appearance',e=>updateAppearance(e.detail));
-  window.addEventListener('assembly-faceplate-front',()=>{frontMode=true;focus=[0,0,21];zoom=1;document.getElementById('assemblyZoom').value=1;document.getElementById('show-faceplate').checked=true;schedule();});
+  window.addEventListener('assembly-faceplate-front',()=>{panX=panY=0;frontMode=true;focus=[0,0,21];zoom=1;document.getElementById('assemblyZoom').value=1;document.getElementById('show-faceplate').checked=true;schedule();});
 
   let hardware=window.assemblyHardware||null;
   if(window.assemblyAppearance)updateAppearance(window.assemblyAppearance);
@@ -125,7 +160,7 @@ async function initAssemblyViewer(){
       if(Number.isFinite(minX)){centerX=(minX+maxX)/2;centerY=(minY+maxY)/2;scale=Math.min(w*.88/Math.max(maxX-minX,1),(h-50)*.88/Math.max(maxY-minY,1))*zoom}
     }
     let studioView=null;
-    function transform(v){if(studioView){const p=studioView.project(v);return [p[0]-w/2,h/2-p[1],p[2]];}const p=camera(v);return [p[0]-centerX,p[1]-centerY,p[2]]}
+    function transform(v){if(studioView){const p=studioView.project(v);return [p[0]-w/2,h/2-p[1],p[2]];}const p=camera(v);return [p[0]-centerX+panX/scale,p[1]-centerY-panY/scale,p[2]]}
 
     const faces=[];
 
@@ -188,22 +223,24 @@ async function initAssemblyViewer(){
     canvas.dataset.selectedPart=selectedPart||'none';
     status.textContent=renderedTriangles.toLocaleString()+' visible triangles · '+(frontMode?'Faceplate front':focus[0]===40?'Right joint focus':'Full assembly')+'. '+model.revision+(texture?' · artwork is preview only.':'')+' · Physical fit and strength remain UNKNOWN.';
     status.textContent+=usedStudio?' · Studio lighting / shadows / contact shading.':studioUnavailable?' · Software fallback: '+studioUnavailable+'.':'';
+    if(!window.ViewerControls)status.textContent+=' · Camera controls unavailable: reload the page to load viewer-controls.js.';
     status.textContent+=(selectedPart?' Selected: '+(partNames[selectedPart]||selectedPart)+'.':' Click a part to select it.');
 
     document.getElementById('hardwareStatus').textContent=showHardware&&hardware?`${hardware.hardware_envelopes.length} hardware envelopes; ${hardware.hardware_guides.length} dashed insert axes (outside diameter unknown). Axes are drawn through parts for visibility.`:'Hardware references hidden or no selection.';
 
   }
 
-  canvas.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY,moved:false};canvas.setPointerCapture(e.pointerId)};
-
-  canvas.onpointermove=e=>{if(!drag)return;drag.moved=drag.moved||Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)>4;if(!drag.moved)return;frontMode=false;yaw+=(e.clientX-drag.x)*.008;pitch=Math.max(-1.5,Math.min(1.5,pitch+(e.clientY-drag.y)*.008));drag.x=e.clientX;drag.y=e.clientY;schedule()};
-
-  canvas.onpointerup=e=>{if(drag&&!drag.moved){const rect=canvas.getBoundingClientRect();
+  if(window.ViewerControls)window.ViewerControls.attach(canvas,{
+    getView:()=>({yaw,pitch,zoom,panX,panY}),setView:v=>{({yaw,pitch,zoom,panX,panY}=v);document.getElementById('assemblyZoom').value=zoom;},
+    redraw:schedule,onOrbit:()=>frontMode=false,onPreset:()=>frontMode=false,
+    presets:window.ViewerControls.presets,
+    fit:()=>{focus=[0,39.5,21];zoom=1;panX=panY=0;document.getElementById('assemblyZoom').value=1;schedule();},
+    onClick:e=>{const rect=canvas.getBoundingClientRect();
     if(canvas.dataset.renderer==='webgl')selectedPart=studioRenderer.pickPart((e.clientX-rect.left)*wRatio(rect),(e.clientY-rect.top)*420/rect.height);
     else if(pickBuffer){const x=Math.floor((e.clientX-rect.left)*canvas.width/rect.width),y=Math.floor((e.clientY-rect.top)*canvas.height/rect.height);selectedPart=x>=0&&x<canvas.width&&y>=0&&y<canvas.height?pickParts[pickBuffer[y*canvas.width+x]]||null:null;}
-    schedule();}drag=null};
+    schedule();}
+  });
   function wRatio(rect){return (canvas.clientWidth||800)/rect.width;}
-  canvas.onpointercancel=()=>{drag=null};
 
   canvas.onkeydown=e=>{if(e.key==='Escape'){selectedPart=null;e.preventDefault();schedule();return;}if(e.key==='ArrowLeft')yaw-=.12;else if(e.key==='ArrowRight')yaw+=.12;else if(e.key==='ArrowUp')pitch=Math.min(1.5,pitch+.12);else if(e.key==='ArrowDown')pitch=Math.max(-1.5,pitch-.12);else return;frontMode=false;e.preventDefault();schedule()};
 
@@ -211,11 +248,11 @@ async function initAssemblyViewer(){
   // Preview quality (render-quality.js): drawing resolution and hardware-envelope curve segments; Medium = as before.
   if(window.RenderQuality)document.getElementById('assemblyZoom').after(window.RenderQuality.previewSlider('assembly',()=>{hardwareMeshes=null;schedule();},'rq-assembly'));
 
-  document.getElementById('assemblyReset').onclick=()=>{frontMode=false;yaw=studioRenderer?-.55:.55;pitch=.65;focus=[0,39.5,21];zoom=1;document.getElementById('assemblyZoom').value=1;document.getElementById('show-tray').checked=true;document.getElementById('show-faceplate').checked=true;schedule()};
+  document.getElementById('assemblyReset').onclick=()=>{panX=panY=0;frontMode=false;yaw=studioRenderer?-.55:.55;pitch=.65;focus=[0,39.5,21];zoom=1;document.getElementById('assemblyZoom').value=1;document.getElementById('show-tray').checked=true;document.getElementById('show-faceplate').checked=true;schedule()};
 
-  document.getElementById('assemblyTop').onclick=()=>{frontMode=false;yaw=0;pitch=Math.PI/2;schedule()};
+  document.getElementById('assemblyTop').onclick=()=>{panX=panY=0;frontMode=false;yaw=0;pitch=Math.PI/2;schedule()};
 
-  document.getElementById('assemblyJoint').onclick=()=>{frontMode=false;focus=[40,8,21];yaw=.45;pitch=.45;zoom=2.5;document.getElementById('assemblyZoom').value=2.5;document.getElementById('show-tray').checked=true;document.getElementById('show-faceplate').checked=false;document.getElementById('show-hardware').checked=true;schedule()};
+  document.getElementById('assemblyJoint').onclick=()=>{panX=panY=0;frontMode=false;focus=[40,8,21];yaw=.45;pitch=.45;zoom=2.5;document.getElementById('assemblyZoom').value=2.5;document.getElementById('show-tray').checked=true;document.getElementById('show-faceplate').checked=false;document.getElementById('show-hardware').checked=true;schedule()};
 
   for(const part of model.parts)document.getElementById('show-'+part.id).onchange=schedule;
 

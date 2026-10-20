@@ -38,3 +38,4 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [19-front-openings-logic](19-front-openings-logic.md) | done, reviewed by Claude (integrated; 110 Py + 163 JS pass) |
 | [20-adapter-cable-warning](20-adapter-cable-warning.md) | done, reviewed by Claude (integrated; shown in Review/sheet/parts order) |
 | [21-pi4-deep-clean](21-pi4-deep-clean.md) | done, reviewed by Claude (113 Py + 166 JS pass; 117 → 11 Pi lines) |
+| [22-viewer-controls](22-viewer-controls.md) | done, reviewed by Claude (ran twice in parallel by mistake; Claude reconciled the wizard API, served viewer-controls.js in app.py, fixed hints; checks pass, browser-checked) |

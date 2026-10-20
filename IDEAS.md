@@ -12,7 +12,11 @@ Write any idea here the moment it comes up, one line with the date. Don't judge 
 
 - 2026-10-19 — Paint themes on the rack frame and export the frame STLs: patterns like camo variants, color schemes, etc. Same themes/customizations on faceplates, all flowing together as one look. First find out what's needed (pattern → per-filament-color STLs like Print in color, or relief), how it fits PRINT THE RACK, and the one-theme-for-everything data model. Today only the Pi 4 faceplate has Print in color; extending it needs Brian's direction. Printed result UNKNOWN.
 
-- 2026-10-20 — Start a new session to make every 3D viewer (rack view, equipment wizard model view and 3D preview, Place on tray) use the same controls as Bambu Studio's defaults. Brian: today's controls are "awful". Bambu (as best known; check the current Bambu Studio before building): left-drag orbits, right-drag or middle-drag pans, the scroll wheel zooms toward the cursor, and there are one-click view presets (top, front, iso…) and a "fit view" key. One shared control module instead of per-viewer code. Same session could look at the remaining clipping in the canvas painter (sorted triangles, no depth buffer) without making it slower.
+- 2026-10-20 — Viewer controls done (task 22, Bambu-style, viewer-controls.js). Left over: the remaining clipping in the canvas painter (sorted triangles, no depth buffer), only if it can be fixed without slowing drawing; and the mesh viewer's copied renderer code in viewer.js could become a camera hook in assembly-studio.js.
+
+- 2026-10-20 — When adjusting equipment: (1) pick which face of the 3D model faces the front of the rack (click a face, or choose front/back/left/right/top/bottom). (2) A dialog to draw faceplate cutouts by hand (e.g. rectangles/circles on a 2D faceplate view) for when the automatic cutouts aren't good enough. Manual cutouts should be able to add to or replace the auto ones. Fit stays UNKNOWN until printed.
+
+- 2026-10-20 — Tackle 2026-10-21: while customizing faceplate cutouts, draw the faceplate semi-transparent with the equipment model visible behind it, so the user can clearly see which ports need cutouts. Preview only; the STL is unchanged.
 
 ## After v1 — use the rack (brainstorm once the rack is built)
 

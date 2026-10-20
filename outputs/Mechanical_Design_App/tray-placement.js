@@ -171,7 +171,7 @@
     const key=exactKey();
     view.sets=state.exact&&state.exact.key===key?state.exact.sets.concat(schematic(state.item.spec,state.v).slice(2,3)):schematic(state.item.spec,state.v);
     const note=document.getElementById('tpViewNote');
-    if(note)note.textContent=state.exact&&state.exact.key===key?`Exact OpenSCAD render of these settings at export quality ${exportNote()} (not saved). Translucent box = the device.`:'Live sketch: boxes for the tray, faceplate, standoffs and device (translucent). Drag to turn, scroll to zoom.';
+    if(note)note.textContent=state.exact&&state.exact.key===key?`Exact OpenSCAD render of these settings at export quality ${exportNote()} (not saved). Translucent box = the device.`:'Live sketch: boxes for the tray, faceplate, standoffs and device (translucent). Left-drag turns, right-drag moves, scroll zooms.';
     P.draw(cv,view);
   }
   function update(){

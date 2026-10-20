@@ -1,82 +1,86 @@
 [
-  {
-    "file": "assembly-studio.js",
-    "sha256": "296729e6f1e68c4df1ba5dcb798327a266592beabcd1b6341d8476163aac4c13"
-  },
-  {
-    "file": "cable-inventory.js",
-    "sha256": "e1175a21bc94854914a5d8b0f0ef6bb0e0f3e3e9859b953fdf4db292ef222169"
-  },
-  {
-    "file": "cable-ports.js",
-    "sha256": "43430bfe347f05bedf12a16ec201dd201600efad1fe796fd579c572373ed423f"
-  },
-  {
-    "file": "cable-routes.js",
-    "sha256": "7a8b3482d6b5089ea0ee3d5bc3c38fab8de715716c735a917178c813ea7eb198"
-  },
-  {
-    "file": "cable-sheet-view.js",
-    "sha256": "865ceb9e06acd0497397f6d25a8b4125040484345bcdf6453d1e553d9fb6f744"
-  },
-  {
-    "file": "cable-sheet.js",
-    "sha256": "db377607cc5dfc3225f8a0a2458035a52577516ec2e5a4d79be659011ba70beb"
-  },
-  {
-    "file": "cable-suggest.js",
-    "sha256": "601b11587a61e8de3862ae055be620560487aebd023ef4c3186f10f93f4ad73f"
-  },
-  {
-    "file": "cable-view.js",
-    "sha256": "f26fb4f88c56e762a4c811cc227ac599b06ed915364eed21b667033b9b8435e4"
-  },
-  {
-    "file": "catalog.js",
-    "sha256": "92855b6ec0a7148b5310e5b60a44d4b0815904d786c89ec9324eec65d9979676"
-  },
-  {
-    "file": "clearance.js",
-    "sha256": "2dbf27fa0e6c225d62ab192705a1994d1d35d0284ac48586c13c69e7fdb0fb8f"
-  },
-  {
-    "file": "equipment-wizard.js",
-    "sha256": "dca0332e8651dd54f5d4e03f4e6e9ea56e305bc1d3e70c971e67253cdbfb01ee"
-  },
-  {
-    "file": "index.html",
-    "sha256": "fa8b33406ab66d89541addcfb40d93fbf15b9778c3dab42ed86720bbd61e5ca1"
-  },
-  {
-    "file": "port-openings.js",
-    "sha256": "7e865f7d4861ea8e7f02d0d8c94084f66a6fc07bfe12582f0357a64a693725e7"
-  },
-  {
-    "file": "rack-reference.js",
-    "sha256": "ea00cfe4b2c11b252de7dda4b4003177a4ed37005742010cd31a508b2149d6d8"
-  },
-  {
-    "file": "rack-studio.js",
-    "sha256": "ab296315ab0ae9ce168983187dc06981754608eda5817d094fa32f27c92df74a"
-  },
-  {
-    "file": "render-quality.js",
-    "sha256": "c699143e3fb828222fb05eade597e65e7e3cc66c06ebddac31ed439bb7094e24"
-  },
-  {
-    "file": "tray-placement.js",
-    "sha256": "ab80e027ddcf7539117a342e010d5bdd5826c267a679a3d8d95fd04d08ecdca8"
-  },
-  {
-    "file": "viewer.js",
-    "sha256": "0778667599b39a3ea6761e82a9cd8a54239782f7880213b162ad6eac86f637fb"
-  },
-  {
-    "file": "workspace.css",
-    "sha256": "7ff9844fe8ddd11c3b125376ca80de05f7ffddcd23ffeadc182ba778f21fbec5"
-  },
-  {
-    "file": "workspace.js",
-    "sha256": "b726126399f7f17b8a554b71d171c741ffb36fe26911f70a7734b06283169234"
-  }
+ {
+  "file": "assembly-studio.js",
+  "sha256": "296729e6f1e68c4df1ba5dcb798327a266592beabcd1b6341d8476163aac4c13"
+ },
+ {
+  "file": "cable-inventory.js",
+  "sha256": "e1175a21bc94854914a5d8b0f0ef6bb0e0f3e3e9859b953fdf4db292ef222169"
+ },
+ {
+  "file": "cable-ports.js",
+  "sha256": "43430bfe347f05bedf12a16ec201dd201600efad1fe796fd579c572373ed423f"
+ },
+ {
+  "file": "cable-routes.js",
+  "sha256": "7a8b3482d6b5089ea0ee3d5bc3c38fab8de715716c735a917178c813ea7eb198"
+ },
+ {
+  "file": "cable-sheet-view.js",
+  "sha256": "865ceb9e06acd0497397f6d25a8b4125040484345bcdf6453d1e553d9fb6f744"
+ },
+ {
+  "file": "cable-sheet.js",
+  "sha256": "db377607cc5dfc3225f8a0a2458035a52577516ec2e5a4d79be659011ba70beb"
+ },
+ {
+  "file": "cable-suggest.js",
+  "sha256": "601b11587a61e8de3862ae055be620560487aebd023ef4c3186f10f93f4ad73f"
+ },
+ {
+  "file": "cable-view.js",
+  "sha256": "f26fb4f88c56e762a4c811cc227ac599b06ed915364eed21b667033b9b8435e4"
+ },
+ {
+  "file": "catalog.js",
+  "sha256": "92855b6ec0a7148b5310e5b60a44d4b0815904d786c89ec9324eec65d9979676"
+ },
+ {
+  "file": "clearance.js",
+  "sha256": "2dbf27fa0e6c225d62ab192705a1994d1d35d0284ac48586c13c69e7fdb0fb8f"
+ },
+ {
+  "file": "equipment-wizard.js",
+  "sha256": "8ac0d7cb39850da612f4850387adf87e41e8d2752d6f52a339e282268774b285"
+ },
+ {
+  "file": "index.html",
+  "sha256": "75cb2eb2094e765398387d1d4035bf58b4a44ce407b9b3eaba65a6806a826069"
+ },
+ {
+  "file": "port-openings.js",
+  "sha256": "7e865f7d4861ea8e7f02d0d8c94084f66a6fc07bfe12582f0357a64a693725e7"
+ },
+ {
+  "file": "rack-reference.js",
+  "sha256": "ea00cfe4b2c11b252de7dda4b4003177a4ed37005742010cd31a508b2149d6d8"
+ },
+ {
+  "file": "rack-studio.js",
+  "sha256": "ab296315ab0ae9ce168983187dc06981754608eda5817d094fa32f27c92df74a"
+ },
+ {
+  "file": "render-quality.js",
+  "sha256": "c699143e3fb828222fb05eade597e65e7e3cc66c06ebddac31ed439bb7094e24"
+ },
+ {
+  "file": "tray-placement.js",
+  "sha256": "fc4d85dba575b0e76716316870e05caa54650b6dee78c4a99f98ba4daadfefa3"
+ },
+ {
+  "file": "viewer.js",
+  "sha256": "aae1dfe7bdd022fc68f33166c5c76018ddaf3be32e39db395219c92ec8ff8440"
+ },
+ {
+  "file": "workspace.css",
+  "sha256": "7ff9844fe8ddd11c3b125376ca80de05f7ffddcd23ffeadc182ba778f21fbec5"
+ },
+ {
+  "file": "workspace.js",
+  "sha256": "f33ab426056ef6f7a9242bc5db132eeba9597f760195800e3acd6b0fd322a6ed"
+ },
+ {
+  "file": "viewer-controls.js",
+  "sha256": "5a54ce48c5b0b22f972b65b4990448f90a822c455fbd8003dfa7697a2be067ed"
+ }
 ]

@@ -6,6 +6,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
+require('./viewer-controls.js');
 
 const APP = path.resolve(__dirname, '..');
 const REF = path.join(APP, 'rack-references');

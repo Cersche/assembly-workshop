@@ -93,7 +93,8 @@
     svg.innerHTML=s;
   }
   // ---- 3D preview in the wizard: render via /api/equipment-preview, draw with a small canvas painter.
-  let view={yaw:-0.6,pitch:0.45,zoom:1.9,sets:[],quality:'wizard'};
+  // Seen from behind and above, so the faceplate does not hide the device.
+  let view={yaw:Math.PI+0.6,pitch:0.45,zoom:1.6,sets:[],quality:'wizard'};
   async function show3D(){
     const r=await fetch('/api/equipment-preview',{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify(spec)});
     const out=await r.json();if(!r.ok)throw Error(out.error||'Preview failed');
@@ -116,11 +117,11 @@
     const v=transformed(),mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];
     for(let i=0;i<v.length;i++){const a=i%3;if(v[i]<mn[a])mn[a]=v[i];if(v[i]>mx[a])mx[a]=v[i];}
     const W=mx[0]-mn[0],D=mx[1]-mn[1],H=mx[2]-mn[2],m=8,dv=new Array(v.length);
-    // Turned 180° on the table so the front (lowest y) faces the default camera.
-    for(let i=0;i<v.length;i+=3){dv[i]=W/2-(v[i]-mn[0]);dv[i+1]=mx[1]-v[i+1];dv[i+2]=v[i+2]-mn[2];}
+    // Front (lowest y) faces the default camera, as in the rack view.
+    for(let i=0;i<v.length;i+=3){dv[i]=v[i]-mn[0]-W/2;dv[i+1]=v[i+1]-mn[1];dv[i+2]=v[i+2]-mn[2];}
     const quad=(x0,y0,x1,y1,z)=>[x0,y0,z,x1,y0,z,x1,y1,z,x0,y0,z,x1,y1,z,x0,y1,z];
     modelView.cen=[0,D/2,H/2];modelView.span=Math.max(W,D,H)*1.6+2*m;
-    modelView.sets=[{v:quad(-W/2-m,-m,W/2+m,D+m,-0.5),color:[60,70,84],alpha:1,under:true},{v:quad(-W/2-m,D+m,W/2+m,D+m+6,-0.4),color:[230,140,60],alpha:1,under:true},{v:dv,color:[120,160,210],alpha:1}];
+    modelView.sets=[{v:quad(-W/2-m,-m,W/2+m,D+m,-0.5),color:[60,70,84],alpha:1,under:true},{v:quad(-W/2-m,-m-6,W/2+m,-m,-0.4),color:[230,140,60],alpha:1,under:true},{v:dv,color:[120,160,210],alpha:1}];
     bindView(cv,modelView,()=>paint(cv,modelView));paint(cv,modelView);
   }
   // One line on what the import found, plus orientation warnings only when something looks off.
@@ -134,10 +135,13 @@
     return w.join(' ');
   }
   // Small canvas painter, shared with the Place on tray window (tray-placement.js) as window.EquipmentPainter.
-  function bindView(cv,view,redraw){let drag=null;
-    cv.onpointerdown=e=>{drag=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId);};
-    cv.onpointermove=e=>{if(!drag)return;view.yaw+=(e.clientX-drag[0])*0.01;view.pitch=Math.max(-1.5,Math.min(1.5,view.pitch+(e.clientY-drag[1])*0.01));drag=[e.clientX,e.clientY];redraw();};
-    cv.onpointerup=()=>drag=null;cv.onwheel=e=>{e.preventDefault();view.zoom*=e.deltaY<0?1.1:0.9;redraw();};}
+  function bindView(cv,view,redraw){
+    // Fit and the view buttons go back to the view's starting zoom.
+    const z0=view.z0??=view.zoom;
+    window.ViewerControls.attach(cv,{getView:()=>view,setView:v=>Object.assign(view,v),redraw,
+      fit:()=>{Object.assign(view,{zoom:z0,panX:0,panY:0});redraw();},
+      presets:Object.fromEntries(Object.entries(window.ViewerControls.presets).map(([k,v])=>[k,{...v,zoom:z0}]))});
+  }
   function draw3D(){const cv=document.getElementById('ewView');if(cv&&!cv.hidden)paint(cv,view);}
   // view.quality names the viewer for the preview-quality slider (render-quality.js); Medium draws as before.
   function paint(cv,view){
@@ -146,7 +150,9 @@
     ctx.fillStyle='#121418';ctx.fillRect(0,0,W,H);
     const cy=Math.cos(view.yaw),sy=Math.sin(view.yaw),cp=Math.cos(view.pitch),sp=Math.sin(view.pitch);
     const cen=view.cen||[0,40,25],sc=Math.min(W,H)/(view.span||280)*view.zoom,L=[0.3,-0.5,0.8];
-    const P=(x,y,z)=>{x-=cen[0];y-=cen[1];z-=cen[2];const x1=x*cy-y*sy,y1=x*sy+y*cy;return[W/2+x1*sc,H/2-(z*cp-y1*sp)*sc,y1*cp+z*sp];};
+    // Same camera as the rack view (rack-studio.js camera): yaw 0 looks at the front (lowest y), pitch > 0 looks down.
+    // Returns screen x, y and depth (larger = farther).
+    const P=(x,y,z)=>{x-=cen[0];y-=cen[1];z-=cen[2];return[W/2+(view.panX||0)*dpr+(x*cy-y*sy)*sc,H/2+(view.panY||0)*dpr-(sp*(x*sy+y*cy)+z*cp)*sc,cp*(x*sy+y*cy)-z*sp];};
     const tris=[];
     for(const s of view.sets){const v=cell?RQ.simplify(s.v,cell):s.v;for(let i=0;i<v.length;i+=9){
       const a=P(v[i],v[i+1],v[i+2]),b=P(v[i+3],v[i+4],v[i+5]),c=P(v[i+6],v[i+7],v[i+8]);
@@ -217,7 +223,7 @@
         const o=h('div',{class:'ew-choices'},...['Z is up','Y is up','X is up'].map((t,i)=>{const b=h('button',{type:'button',class:'ew-chip'+(orient===i?' on':'')},t);b.onclick=()=>{orient=i;applyImport();render();};return b;}));
         const r=h('button',{type:'button',class:'ew-chip'},'↻ Turn 90° on the table');r.onclick=()=>{turn=(turn+1)%4;applyImport();render();};
         imp.push(h('div',{class:'ew-row'},'Orientation:',o,r));
-        imp.push(h('canvas',{id:'ewModel',class:'ew-model'}),h('p',{class:'ew-note ew-hint'},'Drag to turn · scroll to zoom · orange edge = front (faceplate side)'),h('p',{class:'ew-note'},modelNote()));
+        imp.push(h('canvas',{id:'ewModel',class:'ew-model'}),h('p',{class:'ew-note ew-hint'},'Left-drag turns · right-drag moves · scroll zooms at the cursor · Z fits · orange edge = front (faceplate side)'),h('p',{class:'ew-note'},modelNote()));
         const warn=modelWarn();if(warn)imp.push(h('p',{class:'ew-note ew-warn'},warn));
       }
       if(importMsg)imp.push(h('p',{class:'ew-note'},importMsg));
@@ -287,7 +293,7 @@
       catch(e){status.textContent='Problem: '+e.message;}finally{go.disabled=false;}};
     const look=h('button',{type:'button'},'Show 3D preview');
     look.onclick=async()=>{look.disabled=true;status.textContent='Rendering preview with OpenSCAD…';
-      try{await show3D();status.textContent='Drag to turn the view; scroll to zoom. Translucent box = the device. Not saved yet.';}
+      try{await show3D();status.textContent='Left-drag turns, right-drag moves, scroll zooms at the cursor, Z fits. Translucent box = the device. Not saved yet.';}
       catch(e){status.textContent='Problem: '+e.message;}finally{look.disabled=false;}};
     const keep=h('button',{type:'button',class:'primary'},'Save to equipment library');
     keep.onclick=async()=>{keep.disabled=true;status.textContent='Rendering and saving… this can take a minute.';
