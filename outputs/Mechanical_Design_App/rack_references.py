@@ -4,6 +4,14 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent / 'rack-references'
+TEXT_MIMES = ('application/json', 'text/javascript')
+
+
+def digest(data, mime):
+    # Text assets hash with LF endings so Windows (CRLF) and Linux (LF) checkouts pass the same check.
+    if mime in TEXT_MIMES:
+        data = data.replace(b'\r\n', b'\n')
+    return hashlib.sha256(data).hexdigest()
 
 
 def asset(url):
@@ -18,6 +26,6 @@ def asset(url):
     if Path(name).name != name or '/' in name or '\\' in name:
         raise ValueError('Invalid local reference manifest.')
     data = (ROOT / name).read_bytes()
-    if hashlib.sha256(data).hexdigest() != entry['sha256']:
+    if digest(data, entry['mime']) != entry['sha256']:
         raise ValueError('Local reference integrity check failed.')
     return data, entry['mime']

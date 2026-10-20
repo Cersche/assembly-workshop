@@ -429,8 +429,9 @@ test('first-run UI has no retired equipment card, wording or implicit allocation
 
 test('root front-end assets match their hashes', () => {
   const crypto=require('node:crypto');
+  // Hashes are of LF-ending text, so Windows (CRLF) and Linux (LF) checkouts agree.
   for(const entry of JSON.parse(fs.readFileSync(path.join(APP,'asset-manifest.json'),'utf8')))
-    assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(APP,entry.file))).digest('hex'),entry.sha256,entry.file);
+    assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(APP,entry.file),'utf8').replace(/\r\n/g,'\n'),'utf8').digest('hex'),entry.sha256,entry.file);
 });
 
 test('new placements use the chosen library item and omit historical reference metadata', () => {
