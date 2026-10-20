@@ -23,7 +23,7 @@ It is one printed piece: a 10-inch panel with a closed 1U **sleeve** behind it. 
 - `optiplex_flush_split.scad` cuts the same STL into a faceplate plus a tray, joined by 6 × M3 screws into heat-set inserts in the 9 mm walls.
 - `optiplex_flush_faceplate.stl` is 4 mm thick, not the 3 mm in that script, so it came from an edited version.
 - The 16-Oct rear parts look like a separate add-on: `rear_stop` (a 206.2 × 45 × 44.4 U-frame), `rear_receiver_L/R` (20 × 43 × 48 blocks) and `rear_support_shoe` (220 × 88 × 44.4).
-- **Question for Brian:** are any of the split or rear parts actually installed, or only the one-piece .3mf?
+- **Answered (Brian, 2026-10-20):** none of the 16-Oct split or rear parts were ever printed. The only printed piece is the one-piece reference bracket (.3mf / Flush Front STL). Treat the others as unprinted ideas.
 
 ## Side by side
 

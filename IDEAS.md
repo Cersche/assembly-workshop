@@ -18,6 +18,10 @@ Write any idea here the moment it comes up, one line with the date. Don't judge 
 
 - 2026-10-20 — Tackle 2026-10-21: while customizing faceplate cutouts, draw the faceplate semi-transparent with the equipment model visible behind it, so the user can clearly see which ports need cutouts. Preview only; the STL is unchanged.
 
+- 2026-10-20 — Gene Simmons success moment: on a successful save/done, show the awkward "Lick It Up" face (Brian's screenshot) as a corner toast, or full screen for big wins, and have Gene randomly say a line each time. Demo and image in work/gene-success/ (geneSuccess(text, big)). Personal use only: the image is his likeness, so keep it out of anything shared.
+
+- 2026-10-20 — Human-friendly pass (anti-slop): every now and then, go over the whole app and make sure it feels made by and for people, not generic AI output. Review copy, layout, defaults and flows with fresh eyes. Revisit after the heavier building work is done.
+
 ## After v1 — use the rack (brainstorm once the rack is built)
 
 - 2026-10-19 — Run the app on the workshop laptop. Options, simplest first: remote access to the PC over the home network (one copy of the data), a portable folder with Python and OpenSCAD bundled, a single .exe, or a real installer. Packaging needs Brian's explicit go-ahead. Keep user data separate from the program. Creator meshes are personal-use only, so leave them out of anything shared.

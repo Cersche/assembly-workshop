@@ -137,7 +137,9 @@
     for(const x of v.keystones||[])jacks.push(...box(x-7.4,-PLATE_T-0.2,v.u*PITCH/2-8.3,x+7.4,0.2,v.u*PITCH/2+8.3));
     const pockets=footPockets(spec,v),pocketSketch=[],pz=PO().floorZ(v)+TRAY_T+0.01,border=0.6;for(const p of pockets){pocketSketch.push(...box(p.x0,p.y0,pz,p.x1,p.y0+border,pz+0.08),...box(p.x0,p.y1-border,pz,p.x1,p.y1,pz+0.08),...box(p.x0,p.y0+border,pz,p.x0+border,p.y1-border,pz+0.08),...box(p.x1-border,p.y0+border,pz,p.x1,p.y1-border,pz+0.08));}
     const sets=[{v:plate,color:[78,117,163],alpha:1},{v:tray.concat(posts),color:[77,142,110],alpha:1},
-      ...(pocketSketch.length?[{v:pocketSketch,color:[28,42,36],alpha:1}]:[]),{v:box(L.dev_x,L.dev_y,L.lift,L.dev_x+L.fp_w,L.dev_y+L.fp_d,L.lift+ +spec.dev_h),color:[230,195,92],alpha:0.55}];
+      ...(pocketSketch.length?[{v:pocketSketch,color:[28,42,36],alpha:1}]:[]),{v:box(L.dev_x,L.dev_y,L.lift,L.dev_x+L.fp_w,L.dev_y+L.fp_d,L.lift+ +spec.dev_h),color:[230,195,92],alpha:0.55,device:true},
+      // Orange = the device's front face (same convention as the wizard's model view).
+      {v:box(L.dev_x,L.dev_y-0.2,L.lift,L.dev_x+L.fp_w,L.dev_y+0.8,L.lift+ +spec.dev_h),color:[230,140,60],alpha:0.9,device:true}];
     if(jacks.length)sets.push({v:jacks,color:[30,32,36],alpha:1});
     return sets;
   }
@@ -207,9 +209,9 @@
   function draw3D(){
     const cv=document.getElementById('tpView'),P=window.EquipmentPainter;if(!cv||!P)return;
     const key=exactKey();
-    view.sets=state.exact&&state.exact.key===key?state.exact.sets.concat(schematic(state.item.spec,state.v).slice(2,3)):schematic(state.item.spec,state.v);
+    view.sets=state.exact&&state.exact.key===key?state.exact.sets.concat(schematic(state.item.spec,state.v).filter(s=>s.device)):schematic(state.item.spec,state.v);
     const note=document.getElementById('tpViewNote');
-    if(note)note.textContent=state.exact&&state.exact.key===key?`Exact OpenSCAD render of these settings at export quality ${exportNote()} (not saved). Translucent box = the device.`:'Live sketch: boxes for the tray, faceplate, standoffs and device (translucent). Left-drag turns, right-drag moves, scroll zooms.';
+    if(note)note.textContent=state.exact&&state.exact.key===key?`Exact OpenSCAD render of these settings at export quality ${exportNote()} (not saved). Translucent box = the device, orange = its front.`:'Live sketch: boxes for the tray, faceplate, standoffs and device (translucent; orange = device front). Left-drag turns, right-drag moves, scroll zooms.';
     P.draw(cv,view);
   }
   function update(){

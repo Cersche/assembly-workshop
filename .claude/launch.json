@@ -212,6 +212,20 @@
       "autoPort": false
     },
     {
+      "name": "aw-beta-8798",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8798",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\aw-beta-data"
+      ],
+      "port": 8798,
+      "autoPort": false
+    },
+    {
       "name": "disposable-piclean-8795",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
