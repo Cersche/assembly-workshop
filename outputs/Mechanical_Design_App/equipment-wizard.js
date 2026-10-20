@@ -221,7 +221,7 @@
       const imp=[h('div',{class:'ew-row'},h('b',{},'Import a model (STL, SCAD or STEP)'),file)];
       if(imported){
         const o=h('div',{class:'ew-choices'},...['Z is up','Y is up','X is up'].map((t,i)=>{const b=h('button',{type:'button',class:'ew-chip'+(orient===i?' on':'')},t);b.onclick=()=>{orient=i;applyImport();render();};return b;}));
-        const r=h('button',{type:'button',class:'ew-chip'},'↻ Turn 90° on the table');r.onclick=()=>{turn=(turn+1)%4;applyImport();render();};
+        const r=h('button',{type:'button',class:'ew-chip'},'↻ Rotate 90°');r.onclick=()=>{turn=(turn+1)%4;applyImport();render();};
         imp.push(h('div',{class:'ew-row'},'Orientation:',o,r));
         imp.push(h('canvas',{id:'ewModel',class:'ew-model'}),h('p',{class:'ew-note ew-hint'},'Left-drag turns · right-drag moves · scroll zooms at the cursor · Z fits · orange edge = front (faceplate side)'),h('p',{class:'ew-note'},modelNote()));
         const warn=modelWarn();if(warn)imp.push(h('p',{class:'ew-note ew-warn'},warn));
