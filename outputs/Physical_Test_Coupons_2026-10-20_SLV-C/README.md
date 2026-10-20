@@ -1,6 +1,7 @@
 # SLV-C — OptiPlex sleeve rear bracket with cable openings — 2026-10-20
 
 **Question:** does a rear bracket with big cable openings still hold the sleeve tray on the rear posts, and do the PC's rear cables pass through it?
+**SUPERSEDED by SLV-D (2026-10-20), unprinted: don't print SLV-C-REAR.** The app now makes the openings itself (Codex task 29); print [SLV-D-REAR](../Physical_Test_Coupons_2026-10-20_SLV-D/README.md) instead.
 **Status:** PROPOSED, UNVALIDATED. Fit and strength are **UNKNOWN** until Brian prints it and reports back.
 **Replaces SLV-B-REAR** (a solid plate that walled off the PC's rear ports; don't print that one). Print it together with SLV-B-TRAY and reuse SLV-A-PLATE. The orientation and mounting layout are **SETTLED** by Brian (see [SLV-B README](../Physical_Test_Coupons_2026-10-20_SLV-B/README.md)).
 
