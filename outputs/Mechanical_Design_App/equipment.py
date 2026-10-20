@@ -29,6 +29,11 @@ JOINTS = ('screw', 'single')
 PLATE_HALF = 126
 LOCK = threading.Lock()
 REBUILD_LOCK = threading.Lock()
+# Export quality (Brian, 2026-10-19): OpenSCAD curve resolution for equipment_tray.scad STLs. "standard" is the
+# template's own $fn=48 and writes nothing extra, so standard sources (and their build ids) stay byte-identical.
+# Curve resolution changes the mesh only; fit and strength stay UNKNOWN at every level.
+EXPORT_QUALITY = {'draft': 24, 'standard': 48, 'fine': 96}
+DEFAULT_QUALITY = 'standard'
 LIMITS = ['PROPOSED — UNVALIDATED. Printed fit, strength, rack clearance and keystone retention are UNKNOWN.',
           'Mesh closure and successful rendering are not physical approval.']
 
@@ -49,6 +54,83 @@ def _port_id(port, face, index):
     if isinstance(ident, str) and cable_ports.PORT_ID.fullmatch(ident) and not ident.startswith('ks-'):
         return ident
     return f'{face}-{index + 1}'
+
+
+# Option 1 data model (Brian, 2026-10-19): the library item keeps facts about the equipment (name, size,
+# model file, holes, ports); these tray choices belong to each slot allocation's "tray" settings. Older
+# library specs still carry them, and those values stay the defaults when an allocation has none.
+PLACEMENT_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'standoff', 'insert_pilot', 'board_t',
+                  'joint', 'keystones', 'rear_support', 'u')
+
+
+def export_quality(s):
+    """Traceability record for a cleaned spec: the quality level and the $fn it puts in the source."""
+    level = s.get('quality', DEFAULT_QUALITY)
+    return {'level': level, '$fn': EXPORT_QUALITY[level]}
+
+
+def placement_settings(value):
+    """Keep only known tray-choice keys from an allocation's settings (full checks happen in clean())."""
+    if value is None:
+        return {}
+    if not isinstance(value, dict):
+        raise ValueError('Tray settings must be an object.')
+    out = {}
+    for key in PLACEMENT_KEYS:
+        if key not in value:
+            continue
+        v = value[key]
+        if key == 'keystones':
+            if not isinstance(v, list) or len(v) > 12 or any(type(x) not in (int, float) or isinstance(x, bool) for x in v):
+                raise ValueError('Keystones must be a list of positions.')
+            v = list(v)
+        elif key == 'rear_support':
+            if type(v) is not bool:
+                raise ValueError('Rear support must be true or false.')
+        elif key in ('device_mount', 'joint'):
+            if not isinstance(v, str) or len(v) > 20:
+                raise ValueError('Invalid tray setting: ' + key + '.')
+        elif type(v) not in (int, float) or isinstance(v, bool) or not math.isfinite(v):
+            raise ValueError('Invalid tray setting: ' + key + '.')
+        out[key] = v
+    return out
+
+
+def device_facts(spec):
+    """The library-item part of a spec: everything except the per-allocation tray choices."""
+    return {k: v for k, v in spec.items() if k not in PLACEMENT_KEYS}
+
+
+def allocation_spec(item_spec, tray=None):
+    """Spec for one slot allocation: library values are defaults, the allocation's tray settings win.
+    With no tray settings this returns the library spec unchanged, so older items build identically."""
+    merged = dict(item_spec)
+    merged.update(placement_settings(tray))
+    return merged
+
+
+def allocation_request(data_dir, payload):
+    """Place on tray window: {'item': library id, 'tray': slot tray settings} -> cleaned spec.
+    Equipment facts always come from the saved library item; only the tray choices come from the request."""
+    if not isinstance(payload, dict):
+        raise ValueError('Placement request must be an object.')
+    ident = payload.get('item')
+    item = next((i for i in library(data_dir) if i.get('id') == ident), None) if isinstance(ident, str) else None
+    if item is None:
+        raise ValueError('This equipment is no longer in the library.')
+    spec = allocation_spec(item['spec'], payload.get('tray'))
+    if 'quality' in payload:  # export quality is a per-export choice, never a saved tray setting
+        spec['quality'] = payload['quality']
+    return clean(spec)
+
+
+def check_allocation(data_dir, payload):
+    """Run the same checks as a build (clean()) without rendering, writing or saving anything."""
+    try:
+        s = allocation_request(data_dir, payload)
+    except ValueError as exc:
+        return {'ok': False, 'error': str(exc)}
+    return {'ok': True, 'u': s['u']}
 
 
 FRONT_GAP, MARGIN = 12, 8  # mirror front_gap / margin in equipment_tray.scad
@@ -88,12 +170,23 @@ def clean(spec):
         raise ValueError('Rotation must be 0, 90, 180 or 270 degrees.')
     s['dev_rot'] = int(rot)
     s['dev_off_x'] = num(spec.get('dev_off_x', 0) or 0, 'Left/right offset', -115, 115)
+    try:
+        if float(spec.get('dev_off_y', 0) or 0) < -FRONT_GAP:  # equipment_tray.scad assert dev_y>=0
+            raise ValueError('The device is moved into the faceplate; the front gap must be at least 0 mm.')
+    except (TypeError, ValueError) as exc:
+        if 'faceplate' in str(exc):
+            raise
     s['dev_off_y'] = num(spec.get('dev_off_y', 0) or 0, 'Front/back offset', -FRONT_GAP, 230)
     fp_w, fp_d = (s['dev_d'], s['dev_w']) if s['dev_rot'] in (90, 270) else (s['dev_w'], s['dev_d'])
     if 2 * (abs(s['dev_off_x']) + fp_w / 2 + MARGIN) > 230:
         raise ValueError('The device is moved off the tray (the tray would be wider than 230 mm); reduce the left/right offset.')
     if s['rear_support'] and FRONT_GAP + s['dev_off_y'] + fp_d + MARGIN > 240:
         raise ValueError('The device is moved past the rear posts; reduce the front/back offset.')
+    q = spec.get('quality', DEFAULT_QUALITY)
+    if q not in EXPORT_QUALITY:
+        raise ValueError('Export quality must be draft, standard or fine.')
+    if q != DEFAULT_QUALITY:  # kept only when not standard, so standard specs stay identical to older ones
+        s['quality'] = q
     s['coupon'] = []
     c = spec.get('coupon')
     if c:
@@ -152,6 +245,9 @@ def source(s):
         if s.get(k):
             over[k] = s[k]
     over['ports'] = [[p['x'], p['z'], p['w'], p['h'], p['r']] for p in s['ports']]
+    # Export quality: only a non-standard level overrides the template's $fn=48 (last assignment wins in OpenSCAD).
+    if s.get('quality', DEFAULT_QUALITY) != DEFAULT_QUALITY:
+        over['$fn'] = EXPORT_QUALITY[s['quality']]
     lines = ['', '// ---- wizard overrides: ' + re.sub(r'[\r\n]', ' ', s['name'])] + [f'{k}={lit(v)};' for k, v in over.items()]
     return TEMPLATE.read_text(encoding='utf-8') + '\n'.join(lines) + '\n'
 
@@ -390,10 +486,15 @@ def step_to_stl(payload):
 
 def build(spec, data_dir):
     final = render(spec, data_dir)
+    s = clean(spec)
+    # export.json ties this zip's meshes to their source settings, also for builds cached before quality existed.
+    trace = {'export_quality': export_quality(s), 'source_sha256': final.name, 'source': 'equipment.scad',
+             'status': 'PROPOSED — UNVALIDATED', 'note': 'Curve resolution only; printed fit and strength stay UNKNOWN.'}
     stream = io.BytesIO()
     with zipfile.ZipFile(stream, 'w', zipfile.ZIP_DEFLATED) as z:
         for f in sorted(final.iterdir()):
             z.write(f, f.name)
+        z.writestr('export.json', json.dumps(trace, indent=2))
     return stream.getvalue()
 
 
@@ -449,7 +550,7 @@ def render(spec, data_dir):
                         (folder / (name + '.scad')).write_text(text, encoding='utf-8', newline='\n')
                 (folder / 'equipment.scad').write_text(src, encoding='utf-8', newline='\n')
                 parts = [n for n in parts if (folder / (n + '.stl')).exists()]
-                report = {'nudge_mm': nudges,'status': 'PROPOSED — UNVALIDATED', 'spec': s, 'parts': parts, 'id': identity,
+                report = {'nudge_mm': nudges, 'export_quality': export_quality(s), 'status': 'PROPOSED — UNVALIDATED', 'spec': s, 'parts': parts, 'id': identity,
                           'template': 'equipment_tray.scad (faceplate from Pi4 baseline)', 'limitations': LIMITS,
                           'sha256': {n + '.stl': hashlib.sha256((folder / (n + '.stl')).read_bytes()).hexdigest() for n in parts},
                           'logs': logs}
