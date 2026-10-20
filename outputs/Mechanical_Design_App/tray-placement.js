@@ -9,7 +9,7 @@
   const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,rear_openings:false,u:1};
   const FRONT_GAP=12,MARGIN=8,RACK_INNER_W=208,SIDE_CLEAR=2,MAX_TRAY=RACK_INNER_W-2*SIDE_CLEAR,RACK_DEPTH=240,PITCH=44.45,PLATE_HALF=126,PLATE_T=4,TRAY_T=3;
   const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
-  const REAR_STYLES={solid:['Solid','Plain plate'],open:['Open','Original cable windows'],reinforced:['Reinforced','Wider bands and outer stiffening flanges'],slots:['Cable slots','Rounded upper and centre cable slots'],vents:['Vents','Round vents, centre cable slot and outer flanges']};
+  const REAR_STYLES={solid:['Solid','Plain plate'],open:['Open','Original cable windows'],reinforced:['Reinforced','Wider bands and inner top/end lips; ends shorten to clear rear joints'],slots:['Cable slots','Rounded upper and centre cable slots'],vents:['Vents','Dense round vents, centre cable slot and inner top/end lips; ends shorten to clear rear joints']};
   const rearStyle=v=>v.rear_style||(v.rear_openings?'open':'solid');
   const JOINTS={screw:'Screw joint',single:'Single printed piece'};
   const copy=v=>Array.isArray(v)?v.slice():v;

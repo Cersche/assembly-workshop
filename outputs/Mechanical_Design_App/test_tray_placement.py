@@ -538,7 +538,8 @@ class RearStyleTests(unittest.TestCase):
                     floor=.5 if s['device_mount']=='sleeve' else 8.225
                     width=s['dev_w']+16
                     jx=min(40,width/2-12)
-                    cuts=list(g['windows'])+[[x-3,x+3,z-3,z+3] for x,z in g['holes']]
+                    r=eq.REAR_VENT_D/2
+                    cuts=list(g['windows'])+[[x-r,x+r,z-r,z+r] for x,z in g['holes']]
                     for a,b,c,d in cuts:
                         self.assertGreaterEqual(a,-limit-1e-9);self.assertLessEqual(b,limit+1e-9)
                         i=int(c/44.45)
@@ -557,18 +558,18 @@ class RearStyleTests(unittest.TestCase):
                                 self.assertGreaterEqual(hi[2]-lo[3],strip-1e-9)
                     for x,y,z,w,d,h in g['flanges']:
                         self.assertGreaterEqual(x,-100);self.assertLessEqual(x+w,100)
-                        self.assertEqual(y,-12);self.assertEqual(d,8)
+                        self.assertEqual(y,0);self.assertEqual(d,8)
                         self.assertGreaterEqual(z,.525);self.assertLessEqual(z+h,u*44.45-.525+1e-9)
-                        # Mirror maps lip Y to [244,252], all modeled tray/device/joints end <=244.
-                        self.assertEqual(240-(y+d),244);self.assertEqual(240-y,252)
+                        # Mirror maps lips to the inner face, Y [232,240].
+                        self.assertEqual(240-(y+d),232);self.assertEqual(240-y,240)
                         self.assertTrue(w==2.5 or h==2.5)
                     if style in ('reinforced','vents'):
-                        self.assertEqual(len(g['flanges']),4)
+                        self.assertEqual(len(g['flanges']),3)
                     if style=='vents':
                         self.assertGreater(len(g['holes']),0)
                         for x,z in g['holes']:
                             for a,b,c,d in g['windows']:
-                                self.assertTrue(x+3<=a or x-3>=b or z+3<=c or z-3>=d)
+                                self.assertTrue(x+r<=a or x-r>=b or z+r<=c or z-r>=d)
                     src=eq.source(s)
                     if style in ('reinforced','slots','vents'):
                         self.assertIn('if(plain && rear_support)rear_style_cuts();',src)
@@ -576,3 +577,69 @@ class RearStyleTests(unittest.TestCase):
                         self.assertIn('rear_style_windows='+json.dumps(g['windows'])+';',src)
                         self.assertIn('rear_style_holes='+json.dumps(g['holes'])+';',src)
                         self.assertIn('rear_style_lips='+json.dumps(g['flanges'])+';',src)
+
+
+    def test_task31_unchanged_sources_and_specs(self):
+        import importlib.util
+        import copy
+        path=HERE.parents[1]/'docs/archive/codex/2026-10-20/task31/equipment.py'
+        loader=importlib.util.spec_from_file_location('task31_before',path)
+        old=importlib.util.module_from_spec(loader);loader.loader.exec_module(old)
+        old.TEMPLATE=eq.TEMPLATE
+        for raw in self.specimens():
+            for style in (None,'solid','open','slots'):
+                spec=dict(raw)
+                if style:spec['rear_style']=style
+                original=copy.deepcopy(spec)
+                self.assertEqual(old.clean(spec),eq.clean(spec))
+                self.assertEqual(old.source(old.clean(spec)),eq.source(eq.clean(spec)))
+                self.assertEqual(spec,original)
+
+    def test_task31_lip_clearances(self):
+        fixtures=self.specimens()+[
+            dict(self.specimens()[1],u=1),
+            dict(name='204 flat',dev_w=188,dev_d=200,dev_h=20,device_mount='flat',rear_support=True,joint='screw',u=1,dev_off_y=16.5)]
+        for raw in fixtures:
+            for style in ('reinforced','vents'):
+                s=eq.clean(dict(raw,rear_style=style))
+                # Include end-position joints to exercise the shortening path.
+                for joints in ([-40,40],[-94,94]):
+                    s['joint_x']=joints
+                    g=eq.rear_geometry(s)
+                    floor=.5 if s['device_mount'] in ('flat','sleeve') else 8.225
+                    rear=(-4 if s['device_mount']=='sleeve' else 12+s['dev_off_y'])+s['dev_d']
+                    for x,y,z,w,d,h in g['flanges']:
+                        self.assertEqual(y,0);self.assertLessEqual(d,8)
+                        self.assertLessEqual(240-y,244)
+                        self.assertGreaterEqual(z-(floor+3),.5-1e-9)
+                        self.assertGreaterEqual(240-d-rear-eq.REAR_RETENTION_REACH.get(s['device_mount'],0),.5-1e-9)
+                        self.assertGreaterEqual(108-max(abs(x),abs(x+w)),8)
+                        # Inflated envelope encloses uprights, tongues, slots and bosses.
+                        for j in joints:
+                            self.assertTrue(x+w<=j-9-.5 or x>=j+9+.5 or z>=floor+22+.5)
+                    if joints==[-94,94]:
+                        self.assertIn('End lip shortened',eq.source(s))
+
+    def test_task31_dense_vents(self):
+        import math
+        r=eq.REAR_VENT_D/2
+        for raw in self.specimens():
+            s=eq.clean(dict(raw,rear_style='vents'))
+            g=eq.rear_geometry(s)
+            reinforced=eq.rear_geometry(dict(s,rear_style='reinforced'))
+            rectangles=[q for q in reinforced['windows'] if q not in g['windows']]
+            # The 2U inserts upper free region is below the window minimum;
+            # vent holes there remain within the same conservative bands.
+            for a,b,c,d in rectangles:
+                holes=[(x,z) for x,z in g['holes'] if a<=x<=b and c<=z<=d]
+                self.assertTrue(holes)
+                for x,z in holes:
+                    self.assertGreaterEqual(x-r,a-1e-9);self.assertLessEqual(x+r,b+1e-9)
+                    self.assertGreaterEqual(z-r,c-1e-9);self.assertLessEqual(z+r,d+1e-9)
+                polygon_area=24/2*r**2*math.sin(2*math.pi/24)
+                self.assertGreaterEqual(len(holes)*polygon_area/((b-a)*(d-c)),.4)
+            for i,(x,z) in enumerate(g['holes']):
+                for xx,zz in g['holes'][i+1:]:
+                    self.assertGreaterEqual(math.hypot(xx-x,zz-z)-2*r,2-1e-9)
+            for q in g['windows']:
+                self.assertIn(q,eq.rear_geometry(dict(s,rear_style='slots'))['windows'])

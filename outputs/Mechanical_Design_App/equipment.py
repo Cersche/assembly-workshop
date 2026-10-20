@@ -246,8 +246,14 @@ REAR_LIP_T = 2.5
 REAR_LIP_DEPTH = 8
 REAR_LIP_LIMIT = 100
 REAR_EDGE_INSET = 0.5
-REAR_VENT_D = 6
-REAR_VENT_PITCH = 9
+REAR_VENT_D = 6.5
+REAR_VENT_BAR = 2.0
+REAR_VENT_PITCH = REAR_VENT_D + REAR_VENT_BAR
+REAR_VENT_ROW = REAR_VENT_PITCH * math.sqrt(3)/2
+REAR_LIP_CLEAR = 0.5
+REAR_JOINT_HALF = 9
+REAR_JOINT_TOP = 22
+REAR_RETENTION_REACH = {"flat": 6.2, "sleeve": 4, "clips": 1}
 
 
 def rear_style(spec):
@@ -292,18 +298,47 @@ def rear_geometry(s):
             regions.extend(q for q in candidates if q != centre and q[1] > q[0] and q[3] > q[2])
     if style == 'vents':
         radius = REAR_VENT_D/2
-        for row in range(int(height/REAR_VENT_PITCH)+1):
-            z = .025 + REAR_BAND + radius + row*REAR_VENT_PITCH
-            for col in range(24):
-                x = -REAR_LIMIT + radius + col*REAR_VENT_PITCH + (row%2)*REAR_VENT_PITCH/2
-                if any(x-radius >= a and x+radius <= b and z-radius >= c and z+radius <= d for a,b,c,d in regions):
-                    result['holes'].append([x,z])
+        def pack(a,b,c,d):
+            rows = math.floor((d-c-REAR_VENT_D)/REAR_VENT_ROW)+1
+            if rows <= 0 or b-a < REAR_VENT_D:
+                return []
+            holes = []
+            z0 = (c+d-(rows-1)*REAR_VENT_ROW)/2
+            for row in range(rows):
+                offset = (row % 2)*REAR_VENT_PITCH/2
+                count = math.floor((b-a-REAR_VENT_D-offset)/REAR_VENT_PITCH)+1
+                for col in range(max(0,count)):
+                    holes.append([a+radius+offset+col*REAR_VENT_PITCH,z0+row*REAR_VENT_ROW])
+            return holes
+        for a,b,c,d in regions:
+            normal = pack(a,b,c,d)
+            rotated = [[z,x] for x,z in pack(c,d,a,b)]
+            result['holes'].extend(rotated if len(rotated)>len(normal) else normal)
     if style in ('reinforced', 'vents'):
-        # Local bracket coordinates; to_rear maps negative Y behind the rack.
-        a, b = .025+REAR_EDGE_INSET, height-REAR_EDGE_INSET
+        # Local +Y maps to the tray side, assembled Y 232..240.
+        b = height-REAR_EDGE_INSET
         t, depth, edge = REAR_LIP_T, REAR_LIP_DEPTH, REAR_LIP_LIMIT
-        result['flanges'] = [[-edge,-4-depth,a,2*edge,depth,t], [-edge,-4-depth,b-t,2*edge,depth,t],
-                             [-edge,-4-depth,a,t,depth,b-a], [edge-t,-4-depth,a,t,depth,b-a]]
+        fp_d = s['dev_w'] if s.get('dev_rot') in (90,270) else s['dev_d']
+        device_rear = (-4 if s['device_mount']=='sleeve' else FRONT_GAP+s.get('dev_off_y',0))+fp_d
+        clear_depth = 240-device_rear-REAR_RETENTION_REACH.get(s['device_mount'],0)-REAR_LIP_CLEAR
+        if clear_depth < depth:
+            depth = max(0,clear_depth)
+            result.setdefault('notes', []).append('Lip depth shortened to clear the device and rear retention envelope by 0.5 mm.')
+        result['flanges'] = [[-edge,0,b-t,2*edge,depth,t]] if depth > 0 else []
+        for x in (-edge,edge-t):
+            bottom = floor+3+REAR_LIP_CLEAR
+            # Conservative full joint envelope includes the upright at Y 8.3:
+            # its 0.3 gap to an 8 mm lip is too small, so lift that end lip.
+            if s['joint'] == 'screw' and any(
+                    x < j+REAR_JOINT_HALF+REAR_LIP_CLEAR and
+                    x+t > j-REAR_JOINT_HALF-REAR_LIP_CLEAR
+                    for j in s.get('joint_x', [-jx,jx])):
+                bottom = floor+REAR_JOINT_TOP+REAR_LIP_CLEAR
+                result.setdefault('notes', []).append('End lip shortened above the rear joint for 0.5 mm clearance.')
+            if bottom < b-t and depth > 0:
+                result['flanges'].append([x,0,bottom,t,depth,b-t-bottom])
+            else:
+                result.setdefault('notes', []).append('End lip omitted: no clear height below the top lip.')
     return result
 
 
@@ -493,7 +528,7 @@ def source(s):
         over.update(rear_style=style, rear_style_windows=geometry['windows'],
                     rear_style_holes=geometry['holes'], rear_style_lips=geometry['flanges'],
                     rear_style_radius=5 if style == 'slots' or style == 'vents' else 2,
-                    rear_vent_d=REAR_VENT_D)
+                    rear_vent_d=REAR_VENT_D if style == 'vents' else 6)
     if s.get('feet'):
         over['feet'] = [[f['x'], f['y'], f['w'], f['d'], f['h']] for f in s['feet']]
     # Placement keys are written only when moved/rotated, so default sources stay byte-identical to older ones.
@@ -505,6 +540,8 @@ def source(s):
     if s.get('quality', DEFAULT_QUALITY) != DEFAULT_QUALITY:
         over['$fn'] = EXPORT_QUALITY[s['quality']]
     lines = ['', '// ---- wizard overrides: ' + re.sub(r'[\r\n]', ' ', s['name'])] + [f'{k}={lit(v)};' for k, v in over.items()]
+    if style in ('reinforced', 'vents'):
+        lines.extend('// '+note for note in dict.fromkeys(geometry.get('notes', [])))
     return template_source(s) + '\n'.join(lines) + '\n'
 
 

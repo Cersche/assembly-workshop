@@ -47,4 +47,4 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [28-foot-pockets](28-foot-pockets.md) | done, reviewed by Claude (fixed case-in-floor bug; OptiPlex STEP: 4 feet 2.8 mm found, sleeve band 1.8 → 4.6 mm, exact render closed) |
 | [29-rear-bracket-cable-openings](29-rear-bracket-cable-openings.md) | done, reviewed by Claude (139 Py + all JS pass; legacy source byte-identical; OptiPlex + 2U inserts brackets render closed, openings measured = report; SLV-D coupon made from it) |
 | [30-rear-bracket-styles](30-rear-bracket-styles.md) | done, reviewed by Claude (142 Py + all JS pass; all 5 styles render closed; follow-ups: outer lips block flat printing, vents sparse) |
-| [31-rear-bracket-lips-and-vents](31-rear-bracket-lips-and-vents.md) | queued (Brian 2026-10-20: approved both task-30 follow-ups) |
+| [31-rear-bracket-lips-and-vents](31-rear-bracket-lips-and-vents.md) | done, reviewed by Claude (145 Py + all JS pass; outer face flat, lips clash-free, vents 62 holes ~51 % open) |
