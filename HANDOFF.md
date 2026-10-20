@@ -36,10 +36,11 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 - **New tool:** `outputs/Mechanical_Design_App/mesh_study.py` (+ `test_mesh_study.py` in the checks) measures reference meshes per body. It found the bracket's foot grooves. Brian: finding things like this is "the whole point of our app".
 - **Checks:** 135 Python (1 skipped) + all JS pass.
 - **Open items:**
-  - the save summary doesn't count feet;
-  - mesh_study doesn't report through-holes;
-  - which of the 16-Oct rear/split OptiPlex files Brian actually uses is unanswered;
+  - ~~the save summary doesn't count feet~~ done 2026-10-20 (see below);
+  - ~~mesh_study doesn't report through-holes~~ done 2026-10-20 (see below);
+  - **Answered (Brian, 2026-10-20), don't ask again:** he does NOT use any of the 16-Oct OptiPlex files (`optiplex_flush_split.scad`, `optiplex_flush_faceplate.stl`, `rear_stop`, `rear_receiver_L/R`, `rear_support_shoe`). The only confirmed reference is the one-piece bracket (`DellOptiplex10InchRackMount.3mf` / `Dell Optiplex 10 Inch Flush Front.stl`);
   - idea: an app feature that learns from a reference bracket (in the study report).
+- **2026-10-20 (Claude) open items closed:** (1) the wizard save summary now counts feet ("…, 2 holes, 4 feet, …"; left out when there are none), checked in the browser on disposable data (OptiPlex STEP item shows "4 feet"); (2) `mesh_study.py holes FILE [STEP]` / `through_holes()` reports see-through holes along X/Y/Z (axis, centre, size, equal-area diameter, round/rectangular). It can't see angled holes, holes under other material of the same body, slots open to an edge, or holes narrower than ~2 grid steps. On the third-party OptiPlex bracket (read in Downloads) it finds the 4 rack slots, the flush window and 4 side vents. Checks: 148 Python (1 skipped) + all JS pass.
 
 ## 2026-10-19 session summary (read first)
 

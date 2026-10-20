@@ -1,4 +1,5 @@
 """mesh_study: overlapping bodies and a hidden floor groove (the OptiPlex bracket lesson, 2026-10-20)."""
+import math
 import struct
 import tempfile
 import unittest
@@ -58,6 +59,44 @@ class MeshStudyTests(unittest.TestCase):
         rows = mesh_study.section(self.tris, 2, 30, 1.0)
         floor_row = [r for r in rows if r.strip().startswith('3.5')][0]
         self.assertIn('#.....#', floor_row.replace(' ', '')[-70:])
+
+
+def washer(r_out, r_in, t, n=64):
+    """Closed ring: outer radius r_out, round hole r_in, thickness t along Z, centred on the origin."""
+    ring = lambda r, z: [(r * math.cos(2 * math.pi * k / n), r * math.sin(2 * math.pi * k / n), z) for k in range(n)]
+    ob, ot, ib, it = ring(r_out, 0), ring(r_out, t), ring(r_in, 0), ring(r_in, t)
+    tris = []
+    for k in range(n):
+        m = (k + 1) % n
+        tris += [(ob[k], ob[m], ot[m]), (ob[k], ot[m], ot[k]), (ib[k], it[m], ib[m]), (ib[k], it[k], it[m]),
+                 (ot[k], ot[m], it[m]), (ot[k], it[m], it[k]), (ob[k], ib[m], ob[m]), (ob[k], ib[k], ib[m])]
+    return tris
+
+
+class ThroughHoleTests(unittest.TestCase):
+    def test_round_hole_in_a_washer(self):
+        tris = washer(10, 3, 2)
+        self.assertEqual(mesh_study.open_edges(tris), 0)
+        holes = mesh_study.through_holes(tris, step=0.25)
+        self.assertEqual(len(holes), 1)
+        h = holes[0]
+        self.assertEqual((h['axis'], h['shape'], h['through']), ('Z', 'round', (0, 2)))
+        self.assertAlmostEqual(h['diameter'], 6, delta=0.3)
+        self.assertAlmostEqual(h['center'][0], 0, delta=0.25)
+        self.assertAlmostEqual(h['center'][1], 0, delta=0.25)
+
+    def test_square_hole_between_overlapping_bodies(self):
+        # 40 x 30 x 3 plate with a 10 x 10 hole at X 15-25, Y 10-20, built from four overlapping boxes.
+        plate = box(0, 0, 0, 15.5, 30, 3) + box(25, 0, 0, 40, 30, 3) + box(10, 0, 0, 30, 10, 3) + box(10, 20, 0, 30, 30, 3)
+        holes = mesh_study.through_holes(plate, step=0.5)
+        self.assertEqual(len(holes), 1)
+        h = holes[0]
+        self.assertEqual((h['axis'], h['shape'], h['through']), ('Z', 'rectangular', (0, 3)))
+        self.assertEqual(tuple(round(v, 2) for v in h['size']), (9.5, 10))
+        self.assertEqual(tuple(round(v, 2) for v in h['center']), (20.25, 15))
+
+    def test_groove_is_not_a_through_hole(self):
+        self.assertEqual(mesh_study.through_holes(FLOOR, step=1.0), [])
 
 
 if __name__ == '__main__':

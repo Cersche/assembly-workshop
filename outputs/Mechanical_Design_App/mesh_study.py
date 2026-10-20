@@ -17,6 +17,7 @@ Command line (run with `python -I` when the file came from outside the project):
   python -I mesh_study.py info FILE
   python -I mesh_study.py section FILE AXIS AT [STEP]      # ASCII cross-section, AXIS 0/1/2 = X/Y/Z
   python -I mesh_study.py recesses FILE UP [STEP] [MIN_DEPTH]  # floor/roof levels, grooves and bumps
+  python -I mesh_study.py holes FILE [STEP]                # see-through holes along X, Y and Z
 """
 import math
 import re
@@ -228,6 +229,68 @@ def recesses(tris, up, step=0.5, min_depth=0.3, min_cells=4):
     return result
 
 
+def through_holes(tris, step=0.5, min_cells=4):
+    """Holes that go all the way through a body along X, Y or Z (axis-aligned only).
+
+    For each axis and each body's extent along it (a slab): project all material in that slab, from every
+    body, onto the other two axes. An empty patch fully surrounded by material is a through-hole. Returns [{'axis', 'center': (u, v), 'size': (du, dv), 'diameter' (equal-area),
+    'shape': 'round'|'rectangular'|'other', 'through': (start, end) along the axis, 'cells'}].
+
+    Can't detect: holes at an angle to the axes, holes narrower than about two grid steps, holes whose
+    line of sight is blocked by other material of the same body (e.g. a floor hole under a roof), or
+    slots open to an edge (not surrounded). Sizes are only as good as the grid step.
+    """
+    groups = bodies(tris)
+    bb = bbox(tris)
+    out = []
+    for axis in range(3):
+        ua, va = [i for i in range(3) if i != axis]
+        per_body = [_body_columns(b, axis, step) for b in groups]
+        slabs = sorted({tuple(round(x, 4) for x in bbox(b)[axis]) for b in groups})
+        for lo, hi in slabs:
+            if hi - lo < 1e-6:
+                continue
+            solid = set()
+            for cols in per_body:
+                for k, ivs in cols.items():
+                    if any(a < hi - 1e-6 and b > lo + 1e-6 for a, b in ivs):
+                        solid.add((math.floor(k[0] / step), math.floor(k[1] / step)))
+            i0, i1 = math.floor(bb[ua][0] / step), math.floor(bb[ua][1] / step)
+            j0, j1 = math.floor(bb[va][0] / step), math.floor(bb[va][1] / step)
+            seen = set()
+            for i in range(i0, i1 + 1):
+                for j in range(j0, j1 + 1):
+                    if (i, j) in solid or (i, j) in seen:
+                        continue
+                    stack, group, edge = [(i, j)], [], False
+                    seen.add((i, j))
+                    while stack:
+                        c = stack.pop()
+                        group.append(c)
+                        for d in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                            n = (c[0] + d[0], c[1] + d[1])
+                            if not (i0 <= n[0] <= i1 and j0 <= n[1] <= j1):
+                                edge = True
+                            elif n not in solid and n not in seen:
+                                seen.add(n)
+                                stack.append(n)
+                    if edge or len(group) < min_cells:
+                        continue
+                    us, vs = [c[0] for c in group], [c[1] for c in group]
+                    du, dv = (max(us) - min(us) + 1) * step, (max(vs) - min(vs) + 1) * step
+                    area = len(group) * step * step
+                    fill = area / (du * dv)
+                    shape = ('round' if abs(fill - math.pi / 4) < 0.08 and abs(du - dv) <= 2 * step
+                             else 'rectangular' if fill > 0.92 else 'other')
+                    out.append({'axis': 'XYZ'[axis], 'center': ((min(us) * step + du / 2), (min(vs) * step + dv / 2)),
+                                'size': (du, dv), 'diameter': round(2 * math.sqrt(area / math.pi), 2),
+                                'shape': shape, 'through': (round(lo, 3), round(hi, 3)), 'cells': len(group)})
+    uniq = {}
+    for h in out:   # overlapping bodies can report the same hole
+        uniq.setdefault((h['axis'], round(h['center'][0], 1), round(h['center'][1], 1)), h)
+    return list(uniq.values())
+
+
 def main(argv):
     if len(argv) < 2:
         print(__doc__)
@@ -254,6 +317,15 @@ def main(argv):
             for f in face['features']:
                 print('  %s %.2f mm deep: %s %.1f-%.1f, %s %.1f-%.1f (%d samples)' % (
                     f['kind'], f['depth'], ua, *f['span'][0], va, *f['span'][1], f['cells']))
+    elif cmd == 'holes':
+        found = through_holes(tris, float(argv[2]) if len(argv) > 2 else 0.5)
+        for f in found:
+            ua, va = [a for a in 'XYZ' if a != f['axis']]
+            print('%s-axis %s hole, %s %.2f %s %.2f, %.2f x %.2f mm (equal-area dia %.2f), through %s %.2f-%.2f' % (
+                f['axis'], f['shape'], ua, f['center'][0], va, f['center'][1], *f['size'], f['diameter'],
+                f['axis'], *f['through']))
+        if not found:
+            print('no through-holes found (axis-aligned, wider than about two grid steps)')
     else:
         print(__doc__)
         return 2

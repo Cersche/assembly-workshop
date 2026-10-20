@@ -23,7 +23,7 @@ It is one printed piece: a 10-inch panel with a closed 1U **sleeve** behind it. 
 - `optiplex_flush_split.scad` cuts the same STL into a faceplate plus a tray, joined by 6 × M3 screws into heat-set inserts in the 9 mm walls.
 - `optiplex_flush_faceplate.stl` is 4 mm thick, not the 3 mm in that script, so it came from an edited version.
 - The 16-Oct rear parts look like a separate add-on: `rear_stop` (a 206.2 × 45 × 44.4 U-frame), `rear_receiver_L/R` (20 × 43 × 48 blocks) and `rear_support_shoe` (220 × 88 × 44.4).
-- **Answered (Brian, 2026-10-20):** none of the 16-Oct split or rear parts were ever printed. The only printed piece is the one-piece reference bracket (.3mf / Flush Front STL). Treat the others as unprinted ideas.
+- **Answered (Brian, 2026-10-20) — settled, don't ask again:** Brian does NOT use any of the 16-Oct files (`optiplex_flush_split.scad`, `optiplex_flush_faceplate.stl`, `rear_stop`, `rear_receiver_L/R`, `rear_support_shoe`). None were printed. The only confirmed reference is the one-piece bracket (`DellOptiplex10InchRackMount.3mf` = `Dell Optiplex 10 Inch Flush Front.stl`). Treat the others as unused, unprinted ideas.
 
 ## Side by side
 
@@ -65,7 +65,7 @@ Measured clear height inside their bracket is 37.0 mm, but the STEP model says t
    - **Fix:** a "Sleeve" option: side walls to device height plus top lips, like their ledges. Their sleeve is the proven shape for this device, but not proven in our design. Either do this together with gap 3 or switch on the existing `rear_support`. **Codex task.**
    - Retention and strength stay **UNKNOWN** either way.
 5. **Port detection after rotating.** Rotated front openings are kept "as entered", so ports may not be found again after rotating. Check this in the wizard once gap 1 is done. A flush window (gap 3) makes most front cut-outs unnecessary. **Small (Claude check).**
-6. **Rear parts.** Their confirmed bracket has no rear support. Brian's rear stop, receivers and shoe suggest he wanted one. Whether he did depends on his answer to the question above. If yes, our `rear_support` bracket is the place to compare. **Ask Brian first.**
+6. **Rear parts — closed (Brian, 2026-10-20).** Brian does not use the 16-Oct rear stop, receivers or shoe; the confirmed one-piece bracket has no rear support. Nothing to compare here. Our own `rear_support` and rear bracket styles stand on their own (fit and strength UNKNOWN).
 
 Not gaps: rack hole positions match closely (ours come from Brian's settled blank). The plate size and thickness are Brian's settled choices. Device height above the slot bottom is close (4.7 vs 3.7 mm, see the correction in the table).
 

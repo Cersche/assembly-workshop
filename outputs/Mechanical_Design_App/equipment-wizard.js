@@ -232,8 +232,8 @@
     svg.innerHTML=s;
   }
   // Last-step summary; counts front openings and rear ports separately (rear ports get no opening).
-  const count=(n,one)=>n+' '+one+(n===1?'':'s');
-  function summary(spec){return `${spec.name||'Equipment'}: ${spec.dev_w} × ${spec.dev_d} × ${spec.dev_h} mm, ${count(spec.holes.length,'hole')}, ${count(spec.ports.length,'front opening')}, ${count((spec.rear_ports||[]).length,'rear port')}. Tray defaults for new slots: ${spec.u}U, ${MOUNTS[spec.device_mount]}, ${JOINTS[spec.joint]}, ${count(spec.keystones.length,'keystone')}.`;}
+  const count=(n,one,many)=>n+' '+(n===1?one:(many||one+'s'));
+  function summary(spec){return `${spec.name||'Equipment'}: ${spec.dev_w} × ${spec.dev_d} × ${spec.dev_h} mm, ${count(spec.holes.length,'hole')}, ${(spec.feet||[]).length?count(spec.feet.length,'foot','feet')+', ':''}${count(spec.ports.length,'front opening')}, ${count((spec.rear_ports||[]).length,'rear port')}. Tray defaults for new slots: ${spec.u}U, ${MOUNTS[spec.device_mount]}, ${JOINTS[spec.joint]}, ${count(spec.keystones.length,'keystone')}.`;}
   function body(){
     if(step===0){
       const name=h('input',{type:'text',value:spec.display_name??spec.name,placeholder:'e.g. Network switch'});name.oninput=()=>{if(spec.display_name!==undefined)spec.display_name=name.value;else spec.name=name.value;};
