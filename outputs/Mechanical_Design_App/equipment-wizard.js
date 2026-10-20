@@ -5,6 +5,7 @@
   const PLATE_W=252,STEPS=['Device','Holes','Ports'];
   const MOUNTS={inserts:'Heat-set inserts + screws',pegs:'Printed standoffs / pegs',clips:'Snap-fit clips',straps:'Strap / zip-tie slots',flat:'Sits flat on the tray (PCs, boxes)'};
   const JOINTS={screw:'Screw joint',single:'Single printed piece'};
+  let uExplicit=false;
   let spec,step,imported=null,orient=0,turn=0,importMsg='',found=[],foundPorts=[];
   // ---- STL import (phase 2): size from the bounding box, holes from round loops in flat faces.
   function parseStlBuffer(buf){
@@ -165,7 +166,7 @@
       ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.lineTo(c[0],c[1]);ctx.closePath();ctx.fill();if(s.alpha===1){ctx.strokeStyle=ctx.fillStyle;ctx.stroke();}}
   }
   window.EquipmentPainter={draw:paint,bind:bindView,parseStl:parseStlBuffer};
-  function reset(){imported=null;importMsg='';found=[];foundPorts=[];orient=0;turn=0;spec={name:'',dev_w:85,dev_d:56,dev_h:20,u:1,hole_d:2.7,standoff:6,insert_pilot:3.2,board_t:1.6,device_mount:'inserts',joint:'screw',holes:[],ports:[],rear_ports:[],keystones:[]};step=0;}
+  function reset(){uExplicit=false;imported=null;importMsg='';found=[];foundPorts=[];orient=0;turn=0;spec={name:'',dev_w:85,dev_d:56,dev_h:20,u:1,hole_d:2.7,standoff:6,insert_pilot:3.2,board_t:1.6,device_mount:'inserts',joint:'screw',holes:[],ports:[],rear_ports:[],keystones:[]};step=0;}
   // Cable-planning port id (cable-ports.js): stable while the port is edited or moves between faces.
   const portId=()=>'p-'+Math.random().toString(36).slice(2,10);
   const PORT_TYPES=()=>Object.fromEntries(Object.entries(window.LabRaxPorts?.TYPES||{other:{label:'Other'}}).map(([k,v])=>[k,v.label]));
@@ -178,7 +179,7 @@
   const h=(tag,attrs={},...kids)=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k.startsWith('on'))e[k]=v;else e.setAttribute(k,v);}e.append(...kids);return e;};
   function field(label,key,obj=spec,extra={}){
     const input=h('input',{type:'number',step:'0.1',value:obj[key],...extra});
-    input.oninput=()=>{obj[key]=input.value===''?'':Number(input.value);preview();topView();fitWarn();};
+    input.oninput=()=>{if(obj===spec&&key==='u')uExplicit=true;obj[key]=input.value===''?'':Number(input.value);preview();topView();fitWarn();};
     return h('label',{class:'ew-field'},label,input);
   }
   function plateH(){return spec.u*44.45-2.45;}
@@ -278,10 +279,14 @@
       }else if(imported&&!spec.ports.length)sugg.push(h('p',{class:'ew-note'},'Nothing found sticking out at the model’s front. Add openings by hand if needed.'));
       return [h('p',{},'Which ports need an opening in the faceplate? X is from the faceplate centre; Z is height from its bottom edge.'),...sugg,...rows,add,
         h('p',{class:'ew-note'},'Type and Face are cable-planning data for the Cables view. Rear ports get no opening. Keystones become front/rear pass-through port pairs automatically. Connector fit and cable access stay UNKNOWN.'),
-        h('p',{class:'ew-note'},'Heights are for the '+spec.standoff+' mm standoff. In Place on tray, front openings move with the device’s left/right offset and standoff. Position, mounting, standoff, faceplate height, keystones and rear support are chosen per slot in the Place on tray window after you place the item.'),...finish()];
+        h('p',{class:'ew-note'},'Current device lift is '+window.LabRaxPortOpenings.deviceLift(spec)+' mm above the faceplate bottom. Entered opening heights stay as entered when the tray default mount changes; check them against this lift. In Place on tray, front openings move with the device’s left/right offset and standoff. Position, mounting, standoff, faceplate height, keystones and rear support are chosen per slot in the Place on tray window after you place the item.'),...finish()];
     }
   }
+  function mountProblem(){
+    return !spec.holes.length&&['inserts','pegs'].includes(spec.device_mount)?'Add at least one mounting hole for inserts or pegs, or choose another tray default mount below (e.g. Sits flat).':'';
+  }
   function finish(){
+    const mount=select(MOUNTS,spec.device_mount,v=>{spec.device_mount=v;if(!uExplicit)spec.u=window.LabRaxPortOpenings.autoU(spec);render();});
     const go=h('button',{type:'button',class:'primary'},'Generate STL files');
     const status=h('p',{class:'ew-note'},'Fit, strength and rack clearance stay UNKNOWN until a print is tested.');
     go.onclick=async()=>{go.disabled=true;status.textContent='Rendering with OpenSCAD… this can take a minute.';
@@ -297,13 +302,13 @@
       try{await show3D();status.textContent='Left-drag turns, right-drag moves, scroll zooms at the cursor, Z fits. Translucent box = the device. Not saved yet.';}
       catch(e){status.textContent='Problem: '+e.message;}finally{look.disabled=false;}};
     const keep=h('button',{type:'button',class:'primary'},'Save to equipment library');
-    keep.onclick=async()=>{keep.disabled=true;status.textContent='Rendering and saving… this can take a minute.';
+    keep.onclick=async()=>{const problem=mountProblem();if(problem){status.textContent='Problem: '+problem;return;}keep.disabled=true;status.textContent='Rendering and saving… this can take a minute.';
       try{const r=await fetch('/api/equipment-library',{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify(spec)});
         const item=await r.json();if(!r.ok)throw Error(item.error||'Save failed');spec.id=item.id;await loadLibrary();
         status.textContent='Saved. Close this, select an empty rack slot, then click “'+item.name+'” in the Equipment list to place it; the Place on tray window opens for that slot.';}
       catch(e){status.textContent='Problem: '+e.message;}finally{keep.disabled=false;}};
     setTimeout(fitWarn);
-    return [h('h3',{},'Save'),h('p',{id:'ewFitWarn',class:'ew-note ew-warn',hidden:''}),h('p',{},summary(spec)),h('div',{class:'ew-row'},look,keep,go,window.RenderQuality?.exportSlider()||''),status,h('canvas',{id:'ewView',class:'ew-view',hidden:''}),window.RenderQuality?.previewSlider('wizard',draw3D)||''];
+    return [h('h3',{},'Save'),h('p',{class:'ew-note ew-warn'},mountProblem()),h('label',{class:'ew-field'},'Tray default mount',mount),h('p',{id:'ewFitWarn',class:'ew-note ew-warn',hidden:''}),h('p',{},summary(spec)),h('div',{class:'ew-row'},look,keep,go,window.RenderQuality?.exportSlider()||''),status,h('canvas',{id:'ewView',class:'ew-view',hidden:''}),window.RenderQuality?.previewSlider('wizard',draw3D)||''];
   }
   function render(){
     const d=document.getElementById('equipmentWizard');
@@ -364,7 +369,7 @@
     window.dispatchEvent(new Event('equipment-library'));redraw();
   }
   window.equipmentLibraryItems=()=>items;
-  function editItem(it){open();spec=JSON.parse(JSON.stringify({...it.spec,id:it.id,...(it.display_name!==undefined?{display_name:it.display_name}:{})}));render();}
+  function editItem(it){open();uExplicit=true;spec=JSON.parse(JSON.stringify({...it.spec,id:it.id,...(it.display_name!==undefined?{display_name:it.display_name}:{})}));render();}
   // Called by workspace.js openAssembly() for eq- placements ("Edit equipment").
   window.openCustomEquipment=async placement=>{
     if(!items.some(i=>i.id===placement.equipment))await loadLibrary();

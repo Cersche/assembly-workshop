@@ -40,4 +40,4 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [21-pi4-deep-clean](21-pi4-deep-clean.md) | done, reviewed by Claude (113 Py + 166 JS pass; 117 → 11 Pi lines) |
 | [22-viewer-controls](22-viewer-controls.md) | done, reviewed by Claude (ran twice in parallel by mistake; Claude reconciled the wizard API, served viewer-controls.js in app.py, fixed hints; checks pass, browser-checked) |
 | [23-flat-device-low-floor](23-flat-device-low-floor.md) | done, reviewed by Claude (119 Py + 176 JS pass; OptiPlex STEP browser-checked: 2U default + flat hint, Sits flat = 1U, joint and front opening OK in exact preview) |
-| [24-wizard-mount-default](24-wizard-mount-default.md) | queued (2026-10-20; found in task 23 check: wizard cannot save a no-hole device) |
+| [24-wizard-mount-default](24-wizard-mount-default.md) | done, reviewed by Claude (120 Py + 180 JS pass; OptiPlex STEP saved with 0 holes as 1U Sits flat in the browser) |

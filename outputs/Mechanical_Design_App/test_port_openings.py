@@ -5,6 +5,13 @@ import port_openings as P
 SPEC = {'ports': [{'id': 'lan', 'label': 'LAN', 'type': 'rj45', 'x': 0, 'z': 20, 'w': 17, 'h': 14, 'r': 1}], 'standoff': 6}
 
 class PortOpenings(unittest.TestCase):
+    def test_no_hole_flat_device_cleans(self):
+        import equipment
+        spec = equipment.clean(dict(name='Box', dev_w=180, dev_d=180, dev_h=36,
+                                    u=1, device_mount='flat', joint='screw', holes=[]))
+        self.assertEqual(spec['device_mount'], 'flat')
+        self.assertEqual(spec['holes'], [])
+
     def test_movement_and_preservation(self):
         for tray, dx, dz in [(None,0,0), ({},0,0), ({'dev_off_x':11},11,0), ({'standoff':10},0,4), ({'device_mount':'straps'},0,-6), ({'ports':[], 'u':5, 'dev_off_y':100},0,0)]:
             before = deepcopy((SPEC,tray))

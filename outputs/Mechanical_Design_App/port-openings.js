@@ -12,7 +12,7 @@
   const autoU=spec=>Math.min(5,Math.max(1,Math.ceil(neededHeight(spec)/44.45)));
   function flatHint(spec){
     const flat={...spec,device_mount:'flat'},u=Math.ceil(neededHeight(flat)/44.45);
-    return u>=1&&u<=5&&u<Math.ceil(neededHeight(spec)/44.45)?`Fits ${u}U if it sits flat (no standoffs): ${Math.round(neededHeight(flat)*100)/100} mm needed / ${u*44.45} mm available. Choose 'Sits flat' under Mounting in Place on tray.`:'';
+    return u>=1&&u<=5&&u<Math.ceil(neededHeight(spec)/44.45)?`Fits ${u}U if it sits flat (no standoffs): ${Math.round(neededHeight(flat)*100)/100} mm needed / ${u*44.45} mm available. Choose 'Sits flat' as the tray default mount on the Ports step, or under Mounting in Place on tray per slot.`:'';
   }
   // Historical public lift is relative to the old floor top (10 mm); differences include the new floor.
   function lift(spec){return deviceLift(spec)-10;}
