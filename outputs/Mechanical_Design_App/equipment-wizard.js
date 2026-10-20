@@ -82,7 +82,7 @@
     const r1=a=>Math.round(a*10)/10;spec.dev_w=r1(mx[0]-mn[0]);spec.dev_d=r1(mx[1]-mn[1]);spec.dev_h=r1(mx[2]-mn[2]);
     spec.u=Math.min(5,Math.max(1,Math.ceil((spec.dev_h+spec.standoff+10)/44.45)));
     found=findHoles(v,mn[0],mn[1]);foundPorts=findPorts(v,mn,mx);
-    importMsg=`${imported.name}: ${imported.tris.length/9} triangles, ${spec.dev_w} × ${spec.dev_d} × ${spec.dev_h} mm. ${found.length} possible mounting hole(s) and ${foundPorts.length} possible front port(s); confirm them on the Holes and Ports steps.`+(spec.dev_w>230?' Too wide for the tray (230 mm max); try another orientation.':'');
+    importMsg='';
   }
   function topView(){
     const svg=document.getElementById('ewTop');if(!svg)return;const W=+spec.dev_w||1,D=+spec.dev_d||1;
@@ -109,6 +109,30 @@
     if(!cv.ewBound){cv.ewBound=true;bindView(cv,view,draw3D);}
     draw3D();
   }
+  // ---- Step 1 model view: the imported model as oriented now, on a tray floor whose front edge is orange.
+  let modelView={yaw:-0.6,pitch:0.45,zoom:1,sets:[],quality:'wizard'};
+  function drawModel(){
+    const cv=document.getElementById('ewModel');if(!cv||!imported)return;
+    const v=transformed(),mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];
+    for(let i=0;i<v.length;i++){const a=i%3;if(v[i]<mn[a])mn[a]=v[i];if(v[i]>mx[a])mx[a]=v[i];}
+    const W=mx[0]-mn[0],D=mx[1]-mn[1],H=mx[2]-mn[2],m=8,dv=new Array(v.length);
+    // Turned 180° on the table so the front (lowest y) faces the default camera.
+    for(let i=0;i<v.length;i+=3){dv[i]=W/2-(v[i]-mn[0]);dv[i+1]=mx[1]-v[i+1];dv[i+2]=v[i+2]-mn[2];}
+    const quad=(x0,y0,x1,y1,z)=>[x0,y0,z,x1,y0,z,x1,y1,z,x0,y0,z,x1,y1,z,x0,y1,z];
+    modelView.cen=[0,D/2,H/2];modelView.span=Math.max(W,D,H)*1.6+2*m;
+    modelView.sets=[{v:quad(-W/2-m,-m,W/2+m,D+m,-0.5),color:[60,70,84],alpha:1,under:true},{v:quad(-W/2-m,D+m,W/2+m,D+m+6,-0.4),color:[230,140,60],alpha:1,under:true},{v:dv,color:[120,160,210],alpha:1}];
+    bindView(cv,modelView,()=>paint(cv,modelView));paint(cv,modelView);
+  }
+  // One line on what the import found, plus orientation warnings only when something looks off.
+  function modelNote(){
+    return `${imported.name} · found ${count(found.length,'possible mounting hole')} and ${count(foundPorts.length,'possible front port')}; confirm them on the Holes and Ports steps.`;
+  }
+  function modelWarn(){
+    const w=[];
+    if(spec.dev_h>spec.dev_d&&spec.dev_h>spec.dev_w*0.6)w.push('It is taller than it is deep, so it may be standing on its side. Try Y is up or X is up.');
+    if(spec.dev_w>230)w.push('Too wide for the tray (230 mm max); try another orientation.');
+    return w.join(' ');
+  }
   // Small canvas painter, shared with the Place on tray window (tray-placement.js) as window.EquipmentPainter.
   function bindView(cv,view,redraw){let drag=null;
     cv.onpointerdown=e=>{drag=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId);};
@@ -121,7 +145,7 @@
     const W=cv.width=cv.clientWidth*dpr,H=cv.height=cv.clientHeight*dpr,ctx=cv.getContext('2d');
     ctx.fillStyle='#121418';ctx.fillRect(0,0,W,H);
     const cy=Math.cos(view.yaw),sy=Math.sin(view.yaw),cp=Math.cos(view.pitch),sp=Math.sin(view.pitch);
-    const cen=[0,40,25],sc=Math.min(W,H)/280*view.zoom,L=[0.3,-0.5,0.8];
+    const cen=view.cen||[0,40,25],sc=Math.min(W,H)/(view.span||280)*view.zoom,L=[0.3,-0.5,0.8];
     const P=(x,y,z)=>{x-=cen[0];y-=cen[1];z-=cen[2];const x1=x*cy-y*sy,y1=x*sy+y*cy;return[W/2+x1*sc,H/2-(z*cp-y1*sp)*sc,y1*cp+z*sp];};
     const tris=[];
     for(const s of view.sets){const v=cell?RQ.simplify(s.v,cell):s.v;for(let i=0;i<v.length;i+=9){
@@ -130,7 +154,7 @@
       let nx=uy*wz-uz*wy,ny=uz*wx-ux*wz,nz=ux*wy-uy*wx;const n=Math.hypot(nx,ny,nz)||1;
       const lit=0.45+0.55*Math.abs((nx*L[0]+ny*L[1]+nz*L[2])/n);
       tris.push([a,b,c,(a[2]+b[2]+c[2])/3,s,lit]);}}
-    tris.sort((p,q)=>q[3]-p[3]);
+    tris.sort((p,q)=>(q[4].under?1:0)-(p[4].under?1:0)||q[3]-p[3]);  // under: floor sets, always drawn first
     for(const[a,b,c,,s,lit]of tris){ctx.fillStyle=`rgba(${s.color.map(k=>Math.round(k*lit)).join(',')},${s.alpha})`;
       ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.lineTo(c[0],c[1]);ctx.closePath();ctx.fill();if(s.alpha===1){ctx.strokeStyle=ctx.fillStyle;ctx.stroke();}}
   }
@@ -193,11 +217,14 @@
         const o=h('div',{class:'ew-choices'},...['Z is up','Y is up','X is up'].map((t,i)=>{const b=h('button',{type:'button',class:'ew-chip'+(orient===i?' on':'')},t);b.onclick=()=>{orient=i;applyImport();render();};return b;}));
         const r=h('button',{type:'button',class:'ew-chip'},'↻ Turn 90° on the table');r.onclick=()=>{turn=(turn+1)%4;applyImport();render();};
         imp.push(h('div',{class:'ew-row'},'Orientation:',o,r));
+        imp.push(h('canvas',{id:'ewModel',class:'ew-model'}),h('p',{class:'ew-note ew-hint'},'Drag to turn · scroll to zoom · orange edge = front (faceplate side)'),h('p',{class:'ew-note'},modelNote()));
+        const warn=modelWarn();if(warn)imp.push(h('p',{class:'ew-note ew-warn'},warn));
       }
       if(importMsg)imp.push(h('p',{class:'ew-note'},importMsg));
-      return [h('label',{class:'ew-field'},'Name',name),...imp,field('Width (mm, left–right)','dev_w'),field('Depth (mm, front–back)','dev_d'),field('Height (mm)','dev_h'),
+      return [h('label',{class:'ew-field'},'Name',name),...imp,
+        h('div',{class:'ew-row'},h('b',{},'Size (mm)'),field('Width','dev_w'),field('Depth','dev_d'),field('Height','dev_h')),
         h('p',{id:'ewFitWarn',class:'ew-note ew-warn',hidden:''}),
-        h('p',{class:'ew-note'},'Import a model to fill in the size and find mounting holes, or type the measurements yourself. Models are assumed to be in millimetres. A SCAD file must be self-contained (no include/use of other files).')];
+        ...(imported?[]:[h('p',{class:'ew-note'},'Import a model to fill in the size and find mounting holes, or type the measurements. Width is left–right, depth is front–back, all in millimetres. A SCAD file must be self-contained (no include/use).')])];
     }
     if(step===1){
       const rows=spec.holes.map((p,i)=>{const del=h('button',{type:'button',class:'ew-chip'},'Remove');del.onclick=()=>{spec.holes.splice(i,1);render();};
@@ -278,11 +305,11 @@
     back.disabled=step===0;next.hidden=step===STEPS.length-1;back.onclick=()=>{step--;render();};next.onclick=()=>{step++;render();};close.onclick=()=>d.close();
     d.replaceChildren(h('h2',{},spec.id?'Edit equipment':'New equipment'),
       ...(spec.id?[h('p',{class:'ew-note'},'Saving updates this item everywhere it is placed. Changing its rack-unit height does not resize slots already placed.')]:[]),tabs,h('div',{class:'ew-body'},...body()),
-      h('svg',{id:'ewPreview',class:'ew-preview'}),h('div',{class:'ew-nav'},close,back,next));
+      h('p',{class:'ew-note ew-cap'},'Faceplate, seen from the front'),h('svg',{id:'ewPreview',class:'ew-preview'}),h('div',{class:'ew-nav'},close,back,next));
     // innerHTML on an SVG created via createElement needs the SVG namespace
     const old=document.getElementById('ewPreview'),svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.id='ewPreview';svg.setAttribute('class','ew-preview');old.replaceWith(svg);
     const oldTop=document.getElementById('ewTop');if(oldTop){const t=document.createElementNS('http://www.w3.org/2000/svg','svg');t.id='ewTop';t.setAttribute('class','ew-top');oldTop.replaceWith(t);topView();}
-    preview();fitWarn();
+    preview();fitWarn();if(step===0)drawModel();
   }
   // ---- Equipment library: list in the Equipment pane, place into slots, real meshes in the rack view.
   let items=[];const meshes=new Map(),rebuilding=new Set();let libraryNotice='';
@@ -437,7 +464,7 @@
 .ew-dialog::backdrop{background:#0008}.ew-steps{display:flex;gap:4px;flex-wrap:wrap;margin:8px 0}.ew-step,.ew-chip{background:#2b2f37;color:#ddd;border:1px solid #4a4f59;border-radius:14px;padding:4px 10px;cursor:pointer}
 .ew-step.on,.ew-chip.on{background:#3d6b52;border-color:#6fbf8f}.ew-body{min-height:170px;display:flex;flex-direction:column;gap:6px}.ew-field{display:inline-flex;gap:6px;align-items:center;margin-right:10px}
 .ew-field input{width:80px;background:#15171b;color:#eee;border:1px solid #555;border-radius:4px;padding:3px}.ew-field input[type=text]{width:220px}.ew-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.ew-choices{display:flex;flex-wrap:wrap;gap:6px}.ew-note{color:#9aa;font-size:12px;margin:2px 0}.ew-preview{width:100%;height:110px;background:#121418;border-radius:6px;margin:10px 0}
+.ew-choices{display:flex;flex-wrap:wrap;gap:6px}.ew-note{color:#9aa;font-size:12px;margin:2px 0}.ew-hint{text-align:center;margin-top:-2px}.ew-cap{margin:10px 0 -6px;text-transform:uppercase;letter-spacing:.06em;font-size:11px}.ew-model{width:100%;height:300px;background:#121418;border-radius:6px;cursor:grab;touch-action:none}.ew-preview{width:100%;height:110px;background:#121418;border-radius:6px;margin:10px 0}
 .ew-view{width:100%;height:320px;background:#121418;border-radius:6px;cursor:grab;touch-action:none}
 .ew-top{width:100%;max-height:200px;background:#121418;border-radius:6px}.ew-chip input{margin:0 4px 0 0}
 .ew-ksbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.ew-ksbar input{background:#15171b;color:#eee;border:1px solid #555;border-radius:4px}.ew-nav{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}.ew-new{min-height:48px;margin-top:8px}.ew-warn{color:#e0b56f}`));
