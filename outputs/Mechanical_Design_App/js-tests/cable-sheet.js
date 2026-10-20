@@ -4,11 +4,11 @@ const fs=require('node:fs'),vm=require('node:vm');
 const S=require('../cable-sheet.js'),P=require('../cable-ports.js'),C=require('../cable-routes.js'),G=require('../cable-suggest.js');
 const port=(allocation,p)=>({allocation,port:p});
 function fixture(){
-  const ctx={ports:P,cables:C,suggest:G,library:[{id:'pi4',name:'Raspberry Pi 4'},
+  const ctx={ports:P,cables:C,suggest:G,library:[require('./example-fixture.js'),
     {id:'wizard',name:'Library box',spec:{u:1,dev_d:80,keystones:[0],
       ports:[{id:'front',label:'USB',type:'usb-a',x:0,z:20}],
       rear_ports:[{id:'rear',label:'Ethernet',type:'rj45',x:-40,z:20},{id:'power',label:'Power',type:'iec',x:40,z:20}]}}]};
-  const rack={name:'Rack, "Lab"',slots:6,placements:[{id:'pi',equipment:'pi4',slot:1,span:1},
+  const rack={name:'Rack, "Lab"',slots:6,placements:[{id:'pi',equipment:'eq-000000000004',slot:1,span:1},
     {id:'w',equipment:'wizard',slot:2,span:1,assembly:{name:'Box'}},{id:'w2',equipment:'wizard',slot:5,span:1}],
     cabling:{guides:[{id:'g3',post:'RR',slot:3},{id:'g2',post:'RL',slot:2}],
       exits:[{id:'bottom',position:'bottom-rear',slot:6},{id:'left',position:'left',slot:4},{id:'right',position:'right',slot:5}],
@@ -40,13 +40,13 @@ test('all long and short names, saved overrides and name fallbacks',()=>{
   const cases=[
     [null,'Unconnected','unconnected'],[{endpoint:'modem'},'Modem (outside)','Modem'],[{endpoint:'gone'},'Removed endpoint','removed'],
     [port('gone','x'),'Removed equipment','removed'],[port('w','gone'),'Box · removed port','removed'],
-    [port('pi','ethernet'),'Raspberry Pi 4 · Ethernet (U01, face UNKNOWN)','Raspberry Pi 4'],
+    [port('pi','ethernet'),'Board example · Ethernet (U01, face UNKNOWN)','Board example'],
     [port('w','rear'),'Box · Ethernet (U02 rear)','Box'],[port('w','front'),'Box · USB (U02 front)','Box'],
     [port('w','ks-1-rear'),'Box · Keystone 1 · rear (U02)','K1'],[port('w','ks-1-front'),'Box · Keystone 1 · front (U02)','K1'],
     [port('w2','front'),'Library box · USB (U05 front)','Library box']];
   for(const [end,long,short] of cases){assert.equal(call('endName',rack,end,ctx),long);assert.equal(call('shortName',rack,end,ctx),short);}
   rack.cabling.ports=[{allocation:'pi',port:'ethernet',face:'rear'}];
-  assert.equal(call('endName',rack,port('pi','ethernet'),ctx),'Raspberry Pi 4 · Ethernet (U01 rear)');
+  assert.equal(call('endName',rack,port('pi','ethernet'),ctx),'Board example · Ethernet (U01 rear)');
   ctx.library[0].name='';assert.equal(call('shortName',rack,port('pi','ethernet'),ctx),'Equipment');
   rack.cabling.ports.push({allocation:'w',port:'front',type:'keystone'});
   assert.equal(call('shortName',rack,port('w','front'),ctx),'Box');

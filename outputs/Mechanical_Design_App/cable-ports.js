@@ -20,22 +20,6 @@
   // that turns the marker's outward −Y onto that direction. Rotations only, never mirrors.
   const POINTS={front:[1,0,0,0,1,0,0,0,1],rear:[-1,0,0,0,-1,0,0,0,1],right:[0,-1,0,1,0,0,0,0,1],left:[0,1,0,-1,0,0,0,0,1]};
   const POINT_LABELS={front:'toward the front (−Y)',rear:'toward the rear (+Y)',right:'toward the rack’s right side (+X)',left:'toward the rack’s left side (−X)'};
-  // Raspberry Pi 4 preset in the Pi4 adapter frame (pi4_baseline.scad / assembly.json, same frame as pi_reference.json):
-  // board X −44…41, Y 13…69, top ≈ 17.6. Centres measured from the connector bounding boxes of pi_reference.json (±2 mm).
-  // Pointing directions are confirmed from that mesh. Which rack face a cable reaches each port from is UNKNOWN: the
-  // faceplate has no openings, the front-edge connectors face its rear side about 11 mm away, and the USB/Ethernet
-  // connectors face the rack's right side. USB 2.0 vs 3.0 assignment follows the published Pi 4 drawing, not the mesh.
-  const PI4_PORTS=[
-    {id:'usb-c-power',label:'USB-C power',type:'usb-c',x:-32.8,y:11.5,z:18.8,points:'front'},
-    {id:'hdmi0',label:'Micro-HDMI 0',type:'micro-hdmi',x:-18.05,y:11.2,z:18.8,points:'front'},
-    {id:'hdmi1',label:'Micro-HDMI 1',type:'micro-hdmi',x:-4.55,y:11.2,z:18.8,points:'front'},
-    {id:'audio',label:'Audio / composite 3.5 mm',type:'other',x:10,y:10.6,z:20.6,points:'front'},
-    {id:'usb2-lower',label:'USB 2.0 (lower)',type:'usb-a',x:45,y:22,z:21.4,points:'right'},
-    {id:'usb2-upper',label:'USB 2.0 (upper)',type:'usb-a',x:45,y:22,z:29.4,points:'right'},
-    {id:'usb3-lower',label:'USB 3.0 (lower)',type:'usb-a',x:44.6,y:40,z:21.4,points:'right'},
-    {id:'usb3-upper',label:'USB 3.0 (upper)',type:'usb-a',x:44.6,y:40,z:29.4,points:'right'},
-    {id:'ethernet',label:'Ethernet',type:'rj45',x:44.2,y:58.75,z:24.4,points:'right'}];
-  const PI4_NOTE='Raspberry Pi 4 preset: position and pointing direction measured from the Pi reference mesh (±2 mm). Which face a cable reaches it from is UNKNOWN: the faceplate has no openings. Cable and plug access are UNKNOWN.';
   // equipment_tray.scad: plate front at Y = −plate_t (4), device front at front_gap (12) + dev_off_y, keystone opening
   // centred on the plate, device base lifted by the standoff (none for straps).
   const WIZ={plateT:4,frontGap:12};
@@ -61,14 +45,19 @@
     (s.keystones||[]).forEach((x,i)=>{const id='ks-'+(i+1);
       out.push({id:id+'-front',label:'Keystone '+(i+1)+' · front',type:'keystone',face:'front',x:+x,y:-WIZ.plateT,z:plateH/2,points:'front',passThrough:id+'-rear'});
       out.push({id:id+'-rear',label:'Keystone '+(i+1)+' · rear',type:'keystone',face:'rear',x:+x,y:0,z:plateH/2,points:'rear',passThrough:id+'-front'});});
+    for(const p of spec.planning_ports||[]){
+      const angle=(+s.dev_rot||0)*Math.PI/180,dx=p.x-(+spec.dev_off_x||0),dy=p.y-(12+(+spec.dev_off_y||0)+spec.dev_d/2);
+      out.push({...p,x:(+s.dev_off_x||0)+dx*Math.cos(angle)-dy*Math.sin(angle),
+        y:12+(+s.dev_off_y||0)+(s.dev_rot===90||s.dev_rot===270?s.dev_w:s.dev_d)/2+dx*Math.sin(angle)+dy*Math.cos(angle),
+        z:p.z+lift(s)-lift(spec),points:['front','right','rear','left'][(['front','right','rear','left'].indexOf(p.points||'front')+(+s.dev_rot||0)/90)%4],opening:false});
+    }
     return out.filter(p=>[p.x,p.y,p.z].every(Number.isFinite));
   }
   function basePorts(placement,item){
-    if(placement?.equipment==='pi4')return PI4_PORTS.map(p=>({...p,face:null,source:'preset',note:PI4_NOTE}));
     return item?wizardPorts(item.spec,placement?.tray).map(p=>({...p,source:'wizard',note:p.type==='keystone'?'Keystone pass-through from the wizard. Rear marker sits on the plate rear face; the jack body depth is UNKNOWN.':p.face==='front'?'Faceplate opening from the wizard Ports step.':(placement?.tray?'Rear port from the wizard Ports step (no opening), moved with this slot’s tray placement.':'Rear port from the wizard Ports step (no opening). Position as entered.')})):null;
   }
-  // Rack-view base height of an allocation: the Pi4 studio tray draws in its top U, wizard meshes from the bottom U.
-  function baseZ(rack,placement){return (rack.slots-(placement.equipment==='pi4'?placement.slot:placement.slot+placement.span-1))*PITCH;}
+  // All equipment uses the allocation bottom as its rack-view base.
+  function baseZ(rack,placement){return (rack.slots-(placement.slot+placement.span-1))*PITCH;}
   const overridesFor=(rack,placement)=>(rack?.cabling?.ports||[]).filter(o=>o.allocation===placement.id);
   // Effective ports of one placement: preset or wizard ports, then the saved per-rack edits (mesh-click positions,
   // label/type/face changes) and custom ports. Key = allocation id / port id, stable while the slot moves.
@@ -125,6 +114,6 @@
     for(const [type,[outer,...holes]] of Object.entries(shapes)){const m=new S.Mesh();S.slab(m,outer,holes,-2.5,0,(x,z,y)=>[x,y,z]);out['port-'+type]=m;}
     return out;
   }
-  const api={TYPES,FACES,POINTS,POINT_LABELS,PI4_PORTS,PI4_NOTE,wizardPorts,basePorts,baseZ,portsFor,setOverride,prune,newPortId,markerParts,positionFromHit,markerMeshes};
+  const api={TYPES,FACES,POINTS,POINT_LABELS,wizardPorts,basePorts,baseZ,portsFor,setOverride,prune,newPortId,markerParts,positionFromHit,markerMeshes};
   root.LabRaxPorts=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window==='undefined'?globalThis:window);

@@ -57,7 +57,7 @@ function applyHarness(rack){
   return ctx;
 }
 test('Apply to draft changes only the rack draft and the slot span when U changes',()=>{
-  const rack={id:'r1',slots:5,placements:[{id:'a',equipment:'eq-0123456789ab',slot:1,span:1},{id:'b',equipment:'pi4',slot:4,span:1}]};
+  const rack={id:'r1',slots:5,placements:[{id:'a',equipment:'eq-0123456789ab',slot:1,span:1},{id:'b',equipment:'eq-000000000004',slot:4,span:1}]};
   const ctx=applyHarness(rack);
   ctx.window.applyTrayPlacement('r1','a',{dev_off_x:5},null);
   assert.deepEqual(rack.placements[0].tray,{dev_off_x:5});assert.equal(ctx.changed,1);assert.match(ctx.note,/Save to keep it/);

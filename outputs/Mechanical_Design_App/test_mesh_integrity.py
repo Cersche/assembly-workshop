@@ -40,53 +40,10 @@ class IntegrityTests(unittest.TestCase):
             with self.subTest(raw=raw[:40]):
                 p.write_text(raw)
                 with self.assertRaises(ValueError): m.read_mesh(p,'fixture')
-    def test_matching_cache_reuse_and_exact_in_memory_export(self):
-        first=self.build();folder=self.root/'revisions'/first['id']
-        before={p.name:p.read_bytes() for p in folder.iterdir()}
-        with patch.object(m,'compiler',side_effect=AssertionError('Unexpected render')):
-            second=m.build(self.source,self.metadata,self.root)
-        self.assertTrue(second['cached'])
-        self.assertEqual(json.loads(json.dumps(first['assembly'])),second['assembly'])
-        with zipfile.ZipFile(io.BytesIO(m.bundle(first['id'],self.root))) as z:
-            self.assertIsNone(z.testzip())
-            self.assertEqual(set(z.namelist()),set(m.ARTIFACTS)|{'integrity.json'})
-            self.assertEqual(z.read('pi4_proposed.scad').decode('utf-8'),self.source)
-            for name in z.namelist(): self.assertEqual(z.read(name),(folder/name).read_bytes())
-        self.assertEqual(before,{p.name:p.read_bytes() for p in folder.iterdir()})
-    def test_each_corrupt_artifact_blocks_cache_and_download_without_repair(self):
-        result=self.build();folder=self.root/'revisions'/result['id']
-        for name in (*m.ARTIFACTS,'integrity.json'):
-            p=folder/name;original=p.read_bytes();p.write_bytes(original+b'corruption')
-            with self.subTest(name=name):
-                with self.assertRaises(ValueError): m.build(self.source,self.metadata,self.root)
-                with self.assertRaises(ValueError): m.bundle(result['id'],self.root)
-                self.assertEqual(p.read_bytes(),original+b'corruption')
-            p.write_bytes(original)
-    def test_viewer_and_configuration_mismatch_block_even_with_updated_hash(self):
-        import hashlib
-        result=self.build();folder=self.root/'revisions'/result['id']
-        for name in ['assembly.json','revision.json']:
-            p=folder/name;original=p.read_bytes();manifest=folder/'integrity.json';old_manifest=manifest.read_bytes()
-            value=json.loads(original)
-            if name=='assembly.json': value['parts'][0]['vertices'][0][0]=99
-            else: value['build_inputs']['changed_parameter']['insert_pilot']=3
-            p.write_text(json.dumps(value),encoding='utf-8')
-            info=json.loads(old_manifest);info['sha256'][name]=hashlib.sha256(p.read_bytes()).hexdigest();manifest.write_text(json.dumps(info))
-            with self.assertRaises(ValueError): m.bundle(result['id'],self.root)
-            p.write_bytes(original);manifest.write_bytes(old_manifest)
-    def test_new_input_new_id_and_legacy_preserved(self):
-        first=self.build();old=self.root/'revisions'/('a'*64);old.mkdir();(old/'assembly.json').write_text('{}')
-        with self.assertRaisesRegex(ValueError,'Legacy'):m.bundle('a'*64,self.root)
-        self.assertEqual((old/'assembly.json').read_text(),'{}')
-        self.source+='\n// changed'
-        second=self.build();self.assertNotEqual(first['id'],second['id'])
-    def test_renderer_failure_and_timeout_never_publish_partial_revision(self):
-        for outcome in [SimpleNamespace(returncode=1,stderr='ERROR: fixture'),m.subprocess.TimeoutExpired('fixture',180)]:
-            with patch.object(m,'compiler',return_value='fixture'),patch.object(m.subprocess,'run') as run:
-                if isinstance(outcome,Exception):run.side_effect=outcome
-                else:run.return_value=outcome
-                with self.assertRaises(ValueError):m.build(self.source,self.metadata,self.root)
-            self.assertEqual(list((self.root/'revisions').iterdir()),[])
+
+
+
+
 
     def test_exact_collinear_retriangulation_preserves_surface_coordinates_and_volume(self):
         points=POINTS+[(0,.5,0)]

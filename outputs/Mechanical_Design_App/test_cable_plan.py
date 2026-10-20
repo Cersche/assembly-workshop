@@ -29,7 +29,7 @@ class CablePlanTests(unittest.TestCase):
             root = Path(folder)
             value = {'version': 1, 'generation': None, 'racks': [
                 {'id': 'r1', 'name': 'Test rack', 'slots': 6,
-                 'placements': [{'id': 'p1', 'slot': 1, 'span': 1, 'equipment': 'pi4', 'fit': 'UNKNOWN'}],
+                 'placements': [{'id': 'p1', 'slot': 1, 'span': 1, 'equipment': 'eq-000000000004', 'fit': 'UNKNOWN'}],
                  'cabling': plan()}]}
             saved = rack_workspace.save(root, value)
             self.assertEqual(saved['racks'][0]['cabling'], plan())
@@ -86,7 +86,7 @@ class CablePlanTests(unittest.TestCase):
                     with tempfile.TemporaryDirectory() as folder:
                         document = {'version': 1, 'generation': None, 'racks': [
                             {'id': 'r1', 'name': 'Test', 'slots': 6,
-                             'placements': [{'id': 'p1', 'slot': 1, 'span': 1, 'equipment': 'pi4', 'fit': 'UNKNOWN'}],
+                             'placements': [{'id': 'p1', 'slot': 1, 'span': 1, 'equipment': 'eq-000000000004', 'fit': 'UNKNOWN'}],
                              'cabling': value}]}
                         saved = rack_workspace.save(Path(folder), document)
                         self.assertEqual(saved['racks'][0]['cabling'], value)

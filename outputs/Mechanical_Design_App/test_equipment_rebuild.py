@@ -12,6 +12,7 @@ from unittest.mock import patch
 
 import app
 import equipment as eq
+from equipment_examples import example_item
 
 
 class EquipmentRebuildTests(unittest.TestCase):
@@ -67,7 +68,7 @@ class EquipmentRebuildTests(unittest.TestCase):
     def test_status_is_read_only_legacy_array_older_source(self):
         before = self.snapshot()
         with patch.object(eq, 'render', side_effect=AssertionError('must not render')):
-            self.assertEqual(eq.library(self.root), [self.original])
+            self.assertEqual(eq.library(self.root), [self.original, example_item()])
             result = eq.template_status(self.root, self.original)
         self.assertEqual(result['status'], 'older_source')
         self.assertIn('Change details unavailable', result['reason'])
@@ -131,7 +132,7 @@ class EquipmentRebuildTests(unittest.TestCase):
         with patch.object(eq, 'render', side_effect=self.fake_render): out = self.rebuild()
         item = out['item']; items = eq.library(self.root)
         self.assertEqual(items[0], self.original); self.assertIn(original_record, self.index.read_bytes())
-        self.assertEqual(len(items), 2); self.assertNotEqual(item['build'], self.original['build'])
+        self.assertEqual(len(items), 3); self.assertNotEqual(item['build'], self.original['build'])
         self.assertEqual(item['rebuilt_from_item'], self.original['id']); self.assertEqual(item['rebuilt_from_build'], self.original['build'])
         self.assertEqual(item['display_name'], 'Router (current template copy)')
         self.assertEqual(item['spec'], self.spec); self.assertEqual(item['spec']['name'], 'Router')
@@ -183,7 +184,7 @@ class EquipmentRebuildTests(unittest.TestCase):
             again = self.rebuild()
         self.assertEqual(len(results), 2); self.assertEqual(results[0]['item']['id'], results[1]['item']['id'])
         self.assertEqual(again['item']['id'], results[0]['item']['id'])
-        self.assertEqual(len(eq.library(self.root)), 2); render.assert_called_once()
+        self.assertEqual(len(eq.library(self.root)), 3); render.assert_called_once()
 
     def test_stale_missing_or_invalid_identity_rejected_before_render(self):
         before = self.index.read_bytes()
@@ -200,7 +201,7 @@ class EquipmentRebuildTests(unittest.TestCase):
             return result
         with patch.object(eq, 'render', side_effect=render):
             with self.assertRaisesRegex(ValueError, 'changed while rebuilding'): self.rebuild()
-        self.assertEqual(len(eq.library(self.root)), 1); self.assertEqual(eq.library(self.root)[0]['name'], 'Concurrent edit')
+        self.assertEqual(len(eq.library(self.root)), 2); self.assertEqual(eq.library(self.root)[0]['name'], 'Concurrent edit')
 
     def test_corrupt_current_target_blocks_reuse_without_overwrite(self):
         folder = self.write_build(self.spec, eq.source(self.spec)); (folder / 'tray.stl').write_bytes(b'bad target')

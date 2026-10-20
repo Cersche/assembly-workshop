@@ -80,3 +80,25 @@ def port_type(value, default='other'):
     if value not in PORT_TYPES:
         raise ValueError('Unknown port connector type.')
     return value
+
+
+def planning_ports(value, span):
+    """Optional measured connector centres; never faceplate openings or manufacturing inputs."""
+    if not isinstance(value, list) or len(value) > MAX_PER_ALLOCATION:
+        raise ValueError('Invalid library planning ports.')
+    out, seen = [], set()
+    for p in value:
+        if not isinstance(p, dict) or set(p) - {'id', 'label', 'type', 'face', 'points', 'x', 'y', 'z'}:
+            raise ValueError('Invalid planning port fields.')
+        ident = p.get('id')
+        if not isinstance(ident, str) or not PORT_ID.fullmatch(ident) or ident in seen:
+            raise ValueError('Each planning port needs a unique id.')
+        seen.add(ident)
+        if p.get('face') not in (None, *FACES) or p.get('points') not in ('front', 'rear', 'left', 'right'):
+            raise ValueError('Invalid planning port direction.')
+        out.append({'id': ident, 'label': _label(p.get('label', '')), 'type': port_type(p.get('type')),
+                    'face': p.get('face'), 'points': p['points'],
+                    'x': _number(p.get('x'), 'X', -150, 150),
+                    'y': _number(p.get('y'), 'Y', -40, 280),
+                    'z': _number(p.get('z'), 'Z', -10, span * PITCH + 10)})
+    return out

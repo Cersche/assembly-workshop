@@ -74,9 +74,9 @@ class AllocationTray(unittest.TestCase):
         with self.assertRaises(ValueError):
             rack_workspace.validate(bad)
 
-    def test_pi4_allocation_ignores_tray(self):
-        out = rack_workspace.validate(rack([{'id': 'a', 'slot': 1, 'span': 1, 'equipment': 'pi4', 'tray': {'u': 3}}]))
-        self.assertNotIn('tray', out['racks'][0]['placements'][0])
+    def test_library_allocation_keeps_tray(self):
+        out = rack_workspace.validate(rack([{'id': 'a', 'slot': 1, 'span': 1, 'equipment': 'eq-000000000004', 'tray': {'u': 3}}]))
+        self.assertEqual(out['racks'][0]['placements'][0]['tray'], {'u': 3})
 
     def test_older_documents_validate_unchanged(self):
         value = rack([{'id': 'a', 'slot': 1, 'span': 1, 'equipment': 'eq-0123456789ab'}])

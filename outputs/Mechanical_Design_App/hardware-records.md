@@ -1,6 +1,6 @@
 # Hardware JSON records
 
-Current schema and scope — 2026-10-19. Hardware catalog coverage is metadata coverage, not manufacturing-adapter or physical-fit support. Pi4 remains limited to its documented M3 x 0.5 path; the generic equipment wizard is a separate adapter. Rack-frame STL export is in scope. See [README](README.md) and [standing guidance](../../AGENTS.md).
+Current schema and scope — 2026-10-19. Hardware catalog coverage is metadata coverage, not manufacturing-adapter or physical-fit support. Historical M3 x 0.5 evidence remains preserved; all new geometry uses the generic equipment adapter. Rack-frame STL export is in scope. See [README](README.md) and [standing guidance](../../AGENTS.md).
 
 ## Import, revision and provenance
 
@@ -22,7 +22,7 @@ Screw rule fields: `length`, `length_convention` (supported reach uses `under_he
 
 Insert rule fields: `length`, `outside_diameter`, `hole_diameter`, `hole_profile`, `usable_depth`, `min_wall`, `end_type` (`open` or `closed`). `hole_diameter` and `min_wall` must refer to documented installation recommendations, not be inferred from nominal thread diameter. Straight-hole comparisons do not establish support for tapered or stepped geometry.
 
-Project stack is the distance from screw under-head bearing surface to insert entrance, including gaps and washers. The Pi4 baseline provisionally uses 3.3 mm stack and 8 mm available pocket. Minimum engagement and bottom clearance are user targets, not universal fastening standards. Real hardware seating, usable depth and fit remain UNKNOWN unless specifically evidenced.
+Project stack is the distance from screw under-head bearing surface to insert entrance, including gaps and washers. The preserved historical joint inputs used 3.3 mm stack and 8 mm available pocket. Minimum engagement and bottom clearance are user targets, not universal fastening standards. Real hardware seating, usable depth and fit remain UNKNOWN unless specifically evidenced.
 
 `hole_max_diameter` is a supplier upper limit: it enables a separate maximum check, not an exact hole recommendation. McMaster 94459A140's standard-profile row describes 5.7 mm as installed length and 4 mm as For Max. Hole Dia. Neither value establishes usable threaded depth, certified OD, wall minimum or printed-pilot compensation. Preserve original immutable records. See [source review](../Phase7_Digital_Acceptance/Hardware_Source_Review.md) (historical evidence path).
 
@@ -44,4 +44,4 @@ Optional packs use the explicit JSON importer and local SHA-256 validation; they
 
 Verified 2026-10-19 with `powershell -NoProfile -ExecutionPolicy Bypass -File outputs\Mechanical_Design_App\run_checks.ps1`: **95 Python + 152 JS tests passed** on temporary data, with no server or OpenSCAD build. These software checks do not establish physical approval.
 
-Failed checks block affected proposed exports; UNKNOWNs stay visible. Digital screening, mesh closure and supplier metadata do not certify installation, retention, loads, service access, usable thread depth, printed fit or strength. Four rack holes per faceplate U and the 2.5 mm radius limit are settled design direction, not physical approval. The earlier positive specimen report covers only the old two-hole, 3 mm, square-corner specimen. New parts and the Pi4 Print in color result remain unvalidated; physical work requires Brian's direction. STL delivery does not require printer/slicer integration.
+Failed checks block affected proposed exports; UNKNOWNs stay visible. Digital screening, mesh closure and supplier metadata do not certify installation, retention, loads, service access, usable thread depth, printed fit or strength. Four rack holes per faceplate U and the 2.5 mm radius limit are settled design direction, not physical approval. The earlier positive specimen report covers only the old two-hole, 3 mm, square-corner specimen. New parts and any artwork-to-STL result remain unvalidated; physical work requires Brian's direction. STL delivery does not require printer/slicer integration.

@@ -7,7 +7,7 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 from http.server import ThreadingHTTPServer
 from faceplate_mounting import apply_default
-from app import Store, evaluate, make_handler, validate_part, joint_geometry, design_revision, ROOT
+from app import Store, evaluate, make_handler, validate_part, joint_geometry, ROOT
 
 
 def screw(**changes):
@@ -99,17 +99,6 @@ class Tests(unittest.TestCase):
         self.assertEqual(joint_geometry(draft)['reach'], 5)
         self.assertEqual(self.store.project(), before)
 
-    def test_assembly_assets_preserve_design_coordinates(self):
-        model = json.loads((ROOT / 'assembly.json').read_text())
-        self.assertEqual(model['units'], 'mm')
-        parts = {p['id']: p for p in model['parts']}
-        self.assertEqual(len(parts['tray']['triangles']), 10340)
-        self.assertEqual(len(parts['faceplate']['triangles']), 1220)
-        self.assertEqual(parts['tray']['bounds'], [[-56, 0, 7], [56, 82, 29]])
-        self.assertEqual(parts['faceplate']['bounds'], [[-126, -3, 0], [126, 8, 42]])
-        for p in parts.values():
-            self.assertEqual(len(p['source_sha256']), 64)
-            self.assertTrue(all(0 <= i < len(p['vertices']) for tri in p['triangles'] for i in tri))
 
     def test_hardware_envelopes_follow_actual_joint_axes(self):
         project = {'inputs': {}, 'selections': {'screw': screw(length=10, head_diameter=5.5, head_height=3), 'heatset': insert(length=4.3, outside_diameter=None)}}
@@ -128,22 +117,6 @@ class Tests(unittest.TestCase):
         self.assertEqual(len(joint_geometry(project)['hardware_guides']), 0)
         self.assertEqual(len(joint_geometry(project)['hardware_envelopes']), 6)
 
-    def test_revision_uses_four_corner_default_and_rejects_failed_or_unsupported_inputs(self):
-        self.store.load_starter()
-        selection = {p['kind']: p for p in self.store.parts() if p.get('part_number') in ['SSCF-M3-8-A2', '94459A140']}
-        project = {'inputs': {'pilot': 4}, 'selections': selection}
-        baseline = (ROOT / 'pi4_baseline.scad').read_text(encoding='utf-8')
-        source, metadata = design_revision(project)
-        self.assertIn('insert_pilot=4;', source)
-        self.assertEqual(source.split('\n', 1)[1], apply_default(baseline).replace('insert_pilot=4.2;', 'insert_pilot=4;'))
-        self.assertEqual(metadata['mounting_layout']['count'], 4)
-        self.assertEqual(metadata['status'], 'PROPOSED — UNVALIDATED')
-        self.assertEqual(metadata['hardware'], selection)
-        with self.assertRaisesRegex(ValueError, 'Maximum installation hole'):
-            design_revision(dict(project, inputs={'pilot': 4.2}))
-        with self.assertRaisesRegex(ValueError, 'only the pilot'):
-            design_revision(dict(project, inputs={'pilot': 4, 'boss_diameter': 10}))
-        self.assertEqual((ROOT / 'pi4_baseline.scad').read_text(encoding='utf-8'), baseline)
 
     def test_mesh_validation_and_bundle_path_rejection(self):
         import mesh_revision
@@ -153,82 +126,6 @@ class Tests(unittest.TestCase):
             mesh_revision.read_mesh(path, 'bad')
         with self.assertRaisesRegex(ValueError, 'Invalid revision'):
             mesh_revision.bundle('../other-file', self.tmp.name)
-
-    def test_http_handlers_without_network(self):
-        import io
-        from types import SimpleNamespace
-        handler_type = make_handler(self.store, 'test-token')
-        def request(path, data=None, token='test-token', host='127.0.0.1:8765'):
-            h = handler_type.__new__(handler_type)
-            raw = json.dumps(data).encode() if data is not None else b''
-            h.headers = {'Host': host, 'X-App-Token': token, 'Content-Length': str(len(raw))}
-            h.server = SimpleNamespace(server_port=8765)
-            h.path = path
-            h.rfile = io.BytesIO(raw)
-            h.wfile = io.BytesIO()
-            h.request_version = 'HTTP/1.1'
-            h.command = 'GET' if data is None else 'POST'  # real requests always carry this; selected_store() reads it
-            h.log_request = lambda *args: None
-            h.do_GET() if data is None else h.do_POST()
-            head, body = h.wfile.getvalue().split(b'\r\n\r\n', 1)
-            return int(head.split()[1]), body if b'application/zip' in head else body.decode()
-        code, html = request('/')
-        self.assertEqual(code, 200)
-        self.assertIn("const token='test-token'", html)
-        code, body = request('/api/catalog-packs')
-        self.assertEqual(code, 200)
-        packs = json.loads(body)['packs']
-        self.assertEqual(len(packs), 7)
-        self.assertTrue(all(p['available'] for p in packs))
-        before = self.store.project()
-        self.assertEqual(len(self.store.parts()), 0)  # Reading packs never imports them.
-        self.assertEqual(self.store.project(), before)
-        self.assertEqual(request('/catalog.js')[0], 200)
-        self.assertEqual(request('/api/catalog-packs', host='example.com')[0], 403)
-        code, body = request('/api/assembly-checks')
-        self.assertEqual(code, 200)
-        report = json.loads(body)
-        self.assertEqual(report['method'], 'pi4-surface-screen-v2')
-        self.assertEqual(report['status'], 'incomplete')
-        checks = {c['name']: c['status'] for c in report['checks']}
-        self.assertEqual(checks['PCB mounting placement'], 'pass')
-        self.assertEqual(checks['Tray/faceplate and nominal PCB solid regression'], 'pass')
-        self.assertEqual(checks['Whole-Pi solid interference'], 'unknown')
-        code, body = request('/api/pi-reference')
-        self.assertEqual(code, 200)
-        self.assertEqual(len(json.loads(body)['triangles']), 122174)
-
-        self.assertEqual(request('/api/import', [screw()], token='wrong')[0], 403)
-        self.assertEqual(request('/api/state', host='example.com')[0], 403)
-        code, body = request('/api/import', [screw(), insert()])
-        self.assertEqual(code, 200)
-        self.assertEqual(len(json.loads(body)['parts']), 2)
-        code, body = request('/api/save', {'selections': {'screw': {'id': 's', 'revision': 1}, 'heatset': {'id': 'i', 'revision': 1}}, 'inputs': {}})
-        self.assertEqual(code, 200)
-        self.assertEqual(len(json.loads(body)['selections']), 2)
-        self.assertEqual(json.loads(request('/api/check', {})[1])['status'], 'fail')
-        self.assertIn('Test screw', request('/api/bom')[1])
-        self.assertEqual(json.loads(request('/api/project')[1])['units'], 'mm')
-        self.assertAlmostEqual(json.loads(request('/api/geometry')[1])['reach'], 2.7)
-        before = self.store.project()
-        code, body = request('/api/preview', {'selections': {'screw': {'id': 's', 'revision': 1}}, 'inputs': {'stack': 1}})
-        self.assertEqual(code, 200)
-        self.assertEqual(json.loads(body)['reach'], 5)
-        self.assertEqual(self.store.project(), before)
-        self.assertEqual(request('/api/import', [screw(length=-3)])[0], 400)
-        self.assertEqual(json.loads(request('/api/assembly')[1])['revision'], 'Pi4 clearance v2')
-        self.assertIn('initAssemblyViewer', request('/viewer.js')[1])
-        self.store.load_starter()
-        selected = {p['kind']: p for p in self.store.parts() if p.get('part_number') in ['SSCF-M3-8-A2', '94459A140']}
-        before = self.store.project()
-        code, body = request('/api/design', {'selections': selected, 'inputs': {'pilot': 4}})
-        self.assertEqual(code, 200)
-        import zipfile
-        with zipfile.ZipFile(io.BytesIO(body)) as archive:
-            self.assertEqual(archive.testzip(), None)
-            self.assertIn(b'insert_pilot=4;', archive.read('pi4_proposed.scad'))
-            self.assertEqual(json.loads(archive.read('revision.json'))['changed_parameter']['insert_pilot'], 4)
-        self.assertEqual(self.store.project(), before)
 
 
 if __name__ == '__main__':

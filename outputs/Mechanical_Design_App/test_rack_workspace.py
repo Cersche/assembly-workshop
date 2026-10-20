@@ -6,6 +6,74 @@ import tempfile
 import unittest
 
 import rack_workspace
+import equipment
+from equipment_examples import EXAMPLE_ID, example_item
+
+
+class RetiredEquipmentMigrationTests(unittest.TestCase):
+    def test_saved_shape_migrates_as_unsaved_draft_with_exact_history(self):
+        import uuid
+        import assembly_records
+        # Synthetic copy of the documented v2 shape; no actual user data is read.
+        record = assembly_records.normalize({'id': 'asm-12345678', 'name': 'Saved board', 'revision': 7,
+            'project': {'selections': {'screw': {'id': 'pinned', 'revision': 3}},
+                        'inputs': {'pilot': 4}, 'reference': {'historical': True}},
+            'appearance': {'tray': '#123456', 'artwork': {'sha256': 'a' * 64, 'name': 'Saved image'}}}, 'r', 'p')
+        old = {'version': 2, 'generation': str(uuid.uuid4()), 'racks': [{'id': 'r', 'name': 'Saved rack',
+            'slots': 5, 'placements': [{'id': 'p', 'equipment': 'pi4', 'slot': 2, 'span': 2,
+                'geometry': 'pi4-clearance-v2-reference', 'assembly': record}],
+            'cabling': {'ports': [{'allocation': 'p', 'port': 'ethernet', 'face': 'rear', 'x': 39}],
+                        'guides': []}}]}
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            path = root / 'rack-workspace.json'
+            raw = json.dumps(old, ensure_ascii=False, indent=1).encode('utf-8')
+            path.write_bytes(raw)
+            draft = rack_workspace.read(root)
+            self.assertTrue(draft['migration_pending'])
+            p = draft['racks'][0]['placements'][0]
+            self.assertEqual(p['equipment'], EXAMPLE_ID)
+            self.assertEqual(p['geometry'], 'equipment-library')
+            self.assertEqual(p['assembly'], record)
+            port = next(o for o in draft['racks'][0]['cabling']['ports'] if o['port'] == 'ethernet')
+            self.assertEqual((port['face'], port['x'], port['z']), ('rear', 39, 24.4 + 44.45))
+            self.assertEqual(path.read_bytes(), raw)
+            history = root / 'rack-history' / (old['generation'] + '.json')
+            self.assertEqual(history.read_bytes(), raw)
+            self.assertEqual(rack_workspace.read(root), draft)  # idempotent without saving
+            saved = rack_workspace.save(root, draft)
+            self.assertNotIn('migration_pending', saved)
+            self.assertNotEqual(saved['generation'], old['generation'])
+            self.assertEqual(history.read_bytes(), raw)
+            self.assertEqual(rack_workspace.read(root), saved)
+
+    def test_example_is_generic_and_library_read_has_no_side_effect(self):
+        with tempfile.TemporaryDirectory() as folder:
+            items = equipment.library(folder)
+            self.assertEqual(items, [example_item()])
+            self.assertEqual(list(Path(folder).iterdir()), [])
+            self.assertTrue(equipment.check_allocation(folder, {'item': EXAMPLE_ID})['ok'])
+            self.assertEqual(len(equipment.clean(items[0]['spec'])['planning_ports']), 9)
+            source = equipment.source(equipment.clean(items[0]['spec']))
+            self.assertNotIn('planning_ports', source)
+            self.assertNotIn('usb-c-power', source)
+
+    def test_history_disagreement_blocks_migration_without_overwrite(self):
+        import uuid
+        generation = str(uuid.uuid4())
+        value = {'version': 2, 'generation': generation, 'racks': [{'id': 'r', 'name': 'Rack',
+            'slots': 1, 'placements': [{'id': 'p', 'equipment': 'pi4', 'slot': 1, 'span': 1}]}]}
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            raw = json.dumps(value).encode('utf-8')
+            (root / 'rack-workspace.json').write_bytes(raw)
+            (root / 'rack-history').mkdir()
+            history = root / 'rack-history' / (generation + '.json')
+            history.write_bytes(b'preserve this history')
+            with self.assertRaisesRegex(ValueError, 'Recovery history differs'):
+                rack_workspace.read(root)
+            self.assertEqual(history.read_bytes(), b'preserve this history')
+            self.assertEqual((root / 'rack-workspace.json').read_bytes(), raw)
 
 
 class RackWorkspaceTests(unittest.TestCase):
@@ -43,7 +111,7 @@ class RackWorkspaceTests(unittest.TestCase):
         self.assertEqual((self.root / 'rack-workspace.json').read_bytes(), before)
 
     def test_overlap_and_out_of_range_rejected(self):
-        placement = {'id': 'p1', 'slot': 2, 'span': 2, 'equipment': 'pi4'}
+        placement = {'id': 'p1', 'slot': 2, 'span': 2, 'equipment': 'eq-000000000004'}
         self.value['racks'][0]['placements'] = [placement, dict(placement, id='p2', slot=3)]
         with self.assertRaisesRegex(ValueError, 'overlap'):
             rack_workspace.save(self.root, self.value)
@@ -61,7 +129,7 @@ class RackWorkspaceTests(unittest.TestCase):
         self.value['racks'][0]['placements'] = [{'id': 'p1', 'slot': 1, 'span': 1, 'equipment': 'unsupported'}]
         with self.assertRaisesRegex(ValueError, 'Unknown equipment type'):
             rack_workspace.validate(self.value)
-        # Wizard-built library equipment (eq- ids) is accepted beside pi4.
+        # Wizard-built library equipment (eq- ids) is accepted as generic equipment.
         self.value['racks'][0]['placements'] = [{'id': 'p1', 'slot': 1, 'span': 1, 'equipment': 'eq-0123456789ab'}]
         rack_workspace.validate(self.value)
 
@@ -89,12 +157,12 @@ class RackWorkspaceTests(unittest.TestCase):
 
     def test_assignment_retains_unknown_fit(self):
         self.value['racks'][0]['placements'] = [{'id': 'p1', 'slot': 1, 'span': 1,
-                                                'equipment': 'pi4', 'fit': 'PASS'}]
+                                                'equipment': 'eq-000000000004', 'fit': 'PASS'}]
         saved = rack_workspace.save(self.root, self.value)
         self.assertEqual(saved['racks'][0]['placements'][0]['fit'], 'UNKNOWN')
 
     def test_history_lists_and_restores_draft_without_writing(self):
-        self.value['racks'][0]['placements'] = [{'id': 'p1', 'slot': 1, 'span': 1, 'equipment': 'pi4'}]
+        self.value['racks'][0]['placements'] = [{'id': 'p1', 'slot': 1, 'span': 1, 'equipment': 'eq-000000000004'}]
         first = rack_workspace.save(self.root, self.value)
         moved = copy.deepcopy(first)
         moved['racks'][0]['placements'][0]['slot'] = 3

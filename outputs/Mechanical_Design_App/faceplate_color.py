@@ -1,4 +1,4 @@
-"""Multi-color faceplate artwork: one STL per filament color (Pi4 faceplate adapter only).
+"""Multi-color faceplate artwork: one STL per filament color (historical reference faceplate adapter only).
 
 This opt-in "Print in color" export is the only path from artwork to STL; the normal
 tray/faceplate STLs never contain artwork (see AGENTS.md). The saved local preview image is reduced to a few colors on a 0.4 mm grid, thin
@@ -29,7 +29,7 @@ CELL = 0.4                     # grid pitch, mm
 MIN_FEATURE = 0.8              # features thinner than this are merged into a neighbor
 DEPTH = 0.6                    # inlay depth / emboss height, mm
 STYLES = ('inlay', 'emboss')
-# Same window the 3D preview uses for the image on the Pi4 faceplate front (y = -3).
+# Same window the 3D preview uses for the image on the historical reference faceplate front (y = -3).
 WINDOW_W, WINDOW_H, WINDOW_Z, FRONT_Y = 216.0, 34.0, 21.0, -3.0
 MAX_RECTS = 4000
 TINY_ISLAND_CELLS = 6          # about 1 mm²

@@ -76,7 +76,7 @@ def appearance(value, rack=False):
     return result
 
 
-def project_snapshot(project, identity, name='Raspberry Pi 4'):
+def project_snapshot(project, identity, name='Untitled assembly'):
     if not isinstance(project,dict) or not isinstance(project.get('selections',{}),dict) or not isinstance(project.get('inputs',{}),dict):
         raise ValueError('Assembly project needs hardware selections and inputs.')
     result={k:copy.deepcopy(project[k]) for k in ('selections','inputs','notes','reference') if k in project}
@@ -95,7 +95,7 @@ def normalize(value, rack_id, placement_id, seed=None):
         raise ValueError('Invalid assembly identity.')
     revision=value.get('revision',1)
     if type(revision) is not int or revision<1: raise ValueError('Invalid assembly revision.')
-    name=value.get('name','Raspberry Pi 4')
+    name=value.get('name','Untitled assembly')
     if not isinstance(name,str) or not name.strip() or len(name)>100: raise ValueError('Give the assembly a name, up to 100 characters.')
     project=project_snapshot(value.get('project',seed or {}),identity,name.strip())
     return {'id':identity,'name':name.strip(),'revision':revision,'project':project,

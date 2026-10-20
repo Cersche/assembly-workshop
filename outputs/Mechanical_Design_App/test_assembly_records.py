@@ -31,7 +31,7 @@ class AssemblyRecordTests(unittest.TestCase):
         self.store.save({'inputs':initial['inputs'],'selections':{kind:next(p for p in self.store.parts() if p['kind']==kind) for kind in ('screw','heatset')}})
         self.legacy=self.store.project()
         self.document=racks.save(self.root,{'version':1,'generation':None,'racks':[{'id':'rack','name':'Test','slots':5,'placements':[
-            {'id':'a','slot':1,'span':1,'equipment':'pi4'},{'id':'b','slot':2,'span':1,'equipment':'pi4'}]}]},seed_project=self.legacy,
+            {'id':'a','slot':1,'span':1,'equipment':'eq-000000000004'},{'id':'b','slot':2,'span':1,'equipment':'eq-000000000004'}]}]},seed_project=self.legacy,
             canonical_project=lambda p:self.store.draft(p,project=p))
         self.a,self.b=[p['assembly']['id'] for p in self.document['racks'][0]['placements']]
 

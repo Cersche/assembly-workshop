@@ -4,6 +4,7 @@ import assembly_records
 import cable_ports
 import cable_plan
 import equipment as equipment_model
+import equipment_migration
 import math
 import os
 from pathlib import Path
@@ -56,6 +57,7 @@ def _cabling(value, slots, allocations=None):
 def validate(value, seed_project=None):
     if not isinstance(value, dict) or value.get('version') not in (1, 2):
         raise ValueError('Unsupported rack workspace version.')
+    value, _ = equipment_migration.migrate(value)
     racks = value.get('racks')
     if not isinstance(racks, list) or len(racks) > 50:
         raise ValueError('Use up to 50 rack layouts.')
@@ -111,7 +113,7 @@ def validate(value, seed_project=None):
                 raise ValueError('Slot allocations overlap. Choose an empty slot range.')
             occupied.update(allocation)
             equipment = item.get('equipment')
-            if equipment != 'pi4' and not (isinstance(equipment, str) and re.fullmatch('eq-[0-9a-f]{12}', equipment)):
+            if not (isinstance(equipment, str) and re.fullmatch('eq-[0-9a-f]{12}', equipment)):
                 raise ValueError('Unknown equipment type in a slot allocation.')
             item_id = item.get('id')
             if not isinstance(item_id, str) or not item_id or len(item_id) > 80 or item_id in placement_ids:
@@ -121,9 +123,9 @@ def validate(value, seed_project=None):
             if record['id'] in assembly_ids: raise ValueError('Assembly identities must be unique across the workspace.')
             assembly_ids.add(record['id'])
             result['placements'].append({'assembly': record, 'id': item_id, 'equipment': equipment, 'slot': start, 'span': span,
-                                         'geometry': 'pi4-clearance-v2-reference' if equipment == 'pi4' else 'equipment-library', 'fit': 'UNKNOWN'})
+                                         'geometry': 'equipment-library', 'fit': 'UNKNOWN'})
             # Per-allocation tray choices (library equipment only); absent = use the library spec's values.
-            if equipment != 'pi4' and item.get('tray') is not None:
+            if item.get('tray') is not None:
                 tray = equipment_model.placement_settings(item.get('tray'))
                 if tray:
                     result['placements'][-1]['tray'] = tray
@@ -139,12 +141,27 @@ def read(data_dir, seed_project=None):
     path = Path(data_dir) / 'rack-workspace.json'
     if not path.exists():
         return {'version': 2, 'generation': None, 'racks': []}
-    value = json.loads(path.read_text(encoding='utf-8'))
+    original = path.read_bytes()
+    value = json.loads(original.decode('utf-8'))
     try:
         uuid.UUID(value['generation'])
     except (KeyError, ValueError, TypeError, AttributeError) as exc:
         raise ValueError('Invalid rack document generation; preserve the file for recovery.') from exc
-    return dict(validate(value, seed_project), generation=value.get('generation'))
+    converted, changed = equipment_migration.migrate(value)
+    clean = dict(validate(converted, seed_project), generation=value.get('generation'))
+    if changed:
+        # Preserve the original bytes before exposing a converted draft. Never replace the saved rack here.
+        history = path.parent / 'rack-history'
+        history.mkdir(exist_ok=True)
+        backup = history / (str(uuid.UUID(value['generation'])) + '.json')
+        if backup.exists():
+            if backup.read_bytes() != original:
+                raise ValueError('Recovery history differs; preserve it and resolve before migration.')
+        else:
+            with backup.open('xb') as stream:
+                stream.write(original)
+        clean['migration_pending'] = True
+    return clean
 
 
 def _latest_history_record(data_dir, identity, seed_project=None):

@@ -4,7 +4,7 @@
 (function(){
   const PLATE_W=252,STEPS=['Device','Holes','Ports'];
   const MOUNTS={inserts:'Heat-set inserts + screws',pegs:'Printed standoffs / pegs',clips:'Snap-fit clips',straps:'Strap / zip-tie slots'};
-  const JOINTS={screw:'Screw joint (current Pi 4 style)',single:'Single printed piece'};
+  const JOINTS={screw:'Screw joint',single:'Single printed piece'};
   let spec,step,imported=null,orient=0,turn=0,importMsg='',found=[],foundPorts=[];
   // ---- STL import (phase 2): size from the bounding box, holes from round loops in flat faces.
   function parseStlBuffer(buf){
@@ -226,8 +226,9 @@
           else{const q={id:p.id,label:p.label,type:p.type||'other',x:p.x,z:p.z,...startSize(p.type)};autoSize.add(q);spec.ports.push(q);}render();});
         const del=h('button',{type:'button',class:'ew-chip'},'Remove');del.onclick=()=>{list.splice(i,1);render();};
         const dims=face==='front'?[field('W','w',p),field('H','h',p),field('Corner r','r',p)]:[];
-        for(const d of dims)d.querySelector('input').addEventListener('input',()=>autoSize.delete(p));
-        if(face==='front'&&autoSize.has(p))dims.push(h('span',{class:'ew-note ew-size-guess'},SIZE_NOTE()));
+        const guess=face==='front'&&autoSize.has(p)?h('span',{class:'ew-note ew-size-guess'},SIZE_NOTE()):null;
+        for(const d of dims)d.querySelector('input').addEventListener('input',()=>{autoSize.delete(p);guess?.remove();});
+        if(guess)dims.push(guess);
         return h('div',{class:'ew-row'},lab,h('label',{class:'ew-field'},'Type',type),h('label',{class:'ew-field'},'Face',side),field('X','x',p),field('Z','z',p),...dims,del);};
       const rows=[...spec.ports.map((p,i)=>row(spec.ports,p,i,'front')),...spec.rear_ports.map((p,i)=>row(spec.rear_ports,p,i,'rear'))];
       const add=h('button',{type:'button',class:'ew-chip'},'+ Add port opening');add.onclick=()=>{const q={id:portId(),label:'',type:'other',x:0,z:Math.round(plateH()/2),...startSize('other')};autoSize.add(q);spec.ports.push(q);render();};
@@ -374,7 +375,7 @@
   }
   function partsFor(a){
     const it=items.find(i=>i.id===a.equipment);if(!it)return null;
-    if(!hasTray(a)){const parts=meshesOf(it.build,it.parts);return parts&&{item:it,spec:it.spec,parts,key:it.build,view:'library'};}
+    if(it.build&&!hasTray(a)){const parts=meshesOf(it.build,it.parts);return parts&&{item:it,spec:it.spec,parts,key:it.build,view:'library'};}
     const spec=effectiveSpec(it.spec,a.tray),{key,found}=lookup(it,a);
     if(found&&found.id){const parts=meshesOf(found.id,found.parts);if(parts)return {item:it,spec,parts,key:found.id,view:'exact'};}
     const parts=sketchParts(key,a,it);return parts&&{item:it,spec,parts,key:'sketch-'+hash(key),view:'sketch'};
@@ -383,7 +384,7 @@
   // workspace.js asks what a slot shows ('library' | 'exact' | 'sketch'); tray-placement.js calls refresh() after an
   // exact preview or STL build, so a slot whose settings now have an exact render switches from the sketch to it.
   window.EquipmentRackView={
-    status(a){if(!String(a?.equipment).startsWith('eq-'))return null;if(!hasTray(a))return 'library';const it=items.find(i=>i.id===a.equipment);if(!it)return null;
+    status(a){if(!String(a?.equipment).startsWith('eq-'))return null;const it=items.find(i=>i.id===a.equipment);if(!it)return null;if(it.build&&!hasTray(a))return 'library';
       const f=placed.get(it.build+'|'+JSON.stringify(a.tray));return f&&f.id&&meshes.get(f.id)?'exact':'sketch';},
     refresh(){for(const[k,v]of placed)if(!v||v.sketch)placed.delete(k);redraw();}
   };
@@ -418,7 +419,7 @@
         const ap=a.assembly?.appearance||{},z=(rack.slots-(a.slot+a.span-1))*44.45,sel=selectedSlot>=a.slot&&selectedSlot<a.slot+a.span;
         // Preview only: the image is drawn on the front faceplate; wizard STLs never contain artwork.
         for(const[p,mesh]of Object.entries(got.parts)){const plate=p!=='tray',face=p==='faceplate'?frontFace(mesh,got.spec):null,front=ap.artwork?face?.art:null;
-          // The renderer caches GPU buffers by key, so each build/part needs its own key (else the Pi4 plate buffer is reused).
+          // The renderer caches GPU buffers by key, so each build/part needs its own key (else an unrelated plate buffer is reused).
           objects.push({...proto,key:`studio-eq-${got.key}-${p}`,mesh,t:[0,0,z],kind:plate?'plate':'tray',selected:p==='faceplate'&&sel,selRect:face?.sel,
             color:p==='openings'?[0.12,0.13,0.15]:rgb(plate?ap.faceplate:ap.tray,plate?'#4e75a3':'#4d8e6e'),art:front?ap.artwork:null,artWindow:front});}
       }
@@ -429,8 +430,8 @@
   (function waitR(n=0){if(!patchRenderer()&&n<40)setTimeout(()=>waitR(n+1),250);})();
   function open(){reset();let d=document.getElementById('equipmentWizard');if(!d){d=h('dialog',{id:'equipmentWizard',class:'ew-dialog'});document.body.append(d);}render();d.showModal();}
   function mount(){
-    const card=document.getElementById('pi4Card');if(!card||document.getElementById('newEquipmentCard'))return;
-    const b=h('button',{id:'newEquipmentCard',type:'button',class:'equipment-card ew-new'},'+ New equipment from dimensions');b.onclick=open;const lib=h('div',{id:'ewLibrary'});card.after(b,lib);loadLibrary();
+    const card=document.getElementById('equipmentPane');if(!card||document.getElementById('newEquipmentCard'))return;
+    const b=h('button',{id:'newEquipmentCard',type:'button',class:'equipment-card ew-new'},'+ New equipment from dimensions');b.onclick=open;const lib=h('div',{id:'ewLibrary'});card.append(b,lib);loadLibrary();
     document.head.append(h('style',{},`.ew-dialog{width:min(760px,94vw);background:#1f2228;color:#e6e6e6;border:1px solid #444;border-radius:10px;padding:18px}
 .ew-dialog::backdrop{background:#0008}.ew-steps{display:flex;gap:4px;flex-wrap:wrap;margin:8px 0}.ew-step,.ew-chip{background:#2b2f37;color:#ddd;border:1px solid #4a4f59;border-radius:14px;padding:4px 10px;cursor:pointer}
 .ew-step.on,.ew-chip.on{background:#3d6b52;border-color:#6fbf8f}.ew-body{min-height:170px;display:flex;flex-direction:column;gap:6px}.ew-field{display:inline-flex;gap:6px;align-items:center;margin-right:10px}
@@ -440,7 +441,7 @@
 .ew-top{width:100%;max-height:200px;background:#121418;border-radius:6px}.ew-chip input{margin:0 4px 0 0}
 .ew-ksbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.ew-ksbar input{background:#15171b;color:#eee;border:1px solid #555;border-radius:4px}.ew-nav{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}.ew-new{min-height:48px;margin-top:8px}.ew-warn{color:#e0b56f}`));
   }
-  // The equipment pane is built by workspace.js, so retry until #pi4Card exists.
+  // The equipment pane is built by workspace.js, so retry until #equipmentPane exists.
   let tries=0;(function wait(){mount();if(!document.getElementById('newEquipmentCard')&&tries++<40)setTimeout(wait,250);})();
   window.openEquipmentWizard=open;
 })();

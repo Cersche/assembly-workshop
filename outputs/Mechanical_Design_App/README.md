@@ -14,7 +14,7 @@ Python 3.10 standard library is the development baseline. The documented rendere
 
 The dark hybrid studio uses real source meshes in its rack viewport. The final left grouping is Racks & slots, Equipment and Hardware library; the inspector collapses and has Setup/Hardware/Appearance tabs. Click selects; ellipsis/right-click provides actions. Rack layouts have independent slot assemblies, each with its own hardware pins, inputs and revisions. The legacy shared project is preserved and copied once when creating a new assembly.
 
-One explicit atomic Save persists the draft. Draft edits, checks and exports do not silently save. History restores earlier rack versions as unsaved drafts. Appearance includes presets, custom colors, recent colors and local artwork controls. Rack-view artwork on Pi4 and wizard-made faceplates is a preview; selection outlines follow the plate's U height. Wizard clearance screening reports OK/TIGHT/OVER/UNKNOWN against nominal dimensions; width/depth warnings do not block the wizard and do not establish fit.
+One explicit atomic Save persists the draft. Draft edits, checks and exports do not silently save. History restores earlier rack versions as unsaved drafts. Appearance includes presets, custom colors, recent colors and local artwork controls. Rack-view artwork on historical reference and wizard-made faceplates is a preview; selection outlines follow the plate's U height. Wizard clearance screening reports OK/TIGHT/OVER/UNKNOWN against nominal dimensions; width/depth warnings do not block the wizard and do not establish fit.
 
 ## Supported manufacturing paths
 
@@ -24,22 +24,14 @@ Cable ports and clearance screening use each slot's tray settings. With no slot 
 
 Preview quality **Low / Medium / High** is a per-viewer browser preference only. Export quality **Draft / Standard / Fine** sets OpenSCAD `$fn` to **24 / 48 / 96** for `equipment_tray.scad` STLs (`equipment.EXPORT_QUALITY`). It changes curve detail; fit and strength remain UNKNOWN at every level.
 
-- Raspberry Pi 4 tray and faceplate retain their M3 x 0.5 adapter limits and immutable mechanical baseline. The insert-pilot parameter is supported within 3–4.2 mm; catalog breadth does not add geometry support.
-- The equipment wizard accepts dimensions, STL, SCAD and STEP (local FreeCAD), using `equipment_tray.scad` as a second adapter. Generic trays and faceplates support 1U–5U. Snap tabs, clips, pegs, straps, keystones, single-piece joints, rear support and multi-U spacing remain unprinted.
-- PRINT THE RACK (`/api/rack-stl`) is in scope. Each 1U support extension occupies its own U between posts; post U plus extension U equals rack height. Joints are movable. Creator meshes stay local under the documented BY-NC-SA/personal-use direction and are never redistributed.
-- Every faceplate U gets four rack holes, two per side. Corner radius is limited to 2.5 mm. These choices do not establish printed fit or strength.
-
-STLs follow the project's millimeter convention and assembly coordinates; STL itself has no unit field. Normal tray/faceplate STLs, rack STLs and wizard equipment STLs never contain color or artwork. Failed checks block the affected proposed export. All proposals remain **PROPOSED — UNVALIDATED**.
-
-## Faceplate artwork and Print in color
-
-Local PNG, JPEG, WebP, GIF, BMP, AVIF and SVG artwork is converted to a PNG preview of at most 1024 px / 1.4 MB. Rack-view images on wizard faceplates are preview-only and kept clear of openings; wizard Print in color is not supported.
-
-The opt-in Pi4 **Print in color** path (`faceplate_color.py`, `/api/faceplate-colors/preview|export`) uses saved image/settings to produce one STL per filament color for the Raspberry Pi 4 faceplate only. Printed color result, fit and strength remain UNKNOWN. Further artwork-to-STL work requires Brian's direction. See [artwork report](../../work/faceplate-refinement/Report.md). The standing guidance's older sentence saying wizard faceplates do not show images is superseded by the later implementation recorded in HANDOFF.md; it does not expand artwork-to-STL scope.
+- All equipment uses the generic `equipment_tray.scad` adapter (1U–5U), including the bundled historical board example. The example is not selected on startup. Reading the library never builds geometry or writes user data; an unrendered example shows a box sketch.
+- Rack-frame STLs remain a separate PRINT THE RACK export. Creator assets stay local.
+- Legacy slot ids migrate to the example in memory; the original saved document is preserved byte-for-byte in rack history. The converted draft requires explicit Save. Hardware snapshots, artwork and port overrides are retained; historical physical fit does not transfer to the generic geometry.
+- Artwork stays preview-only for generic equipment. Print in color is not available for these faceplates yet: the retired color adapter uses a fixed 3 mm front face and fixed artwork window; generic faceplates use 4 mm and variable heights/openings. Saved artwork and filament settings remain preserved. Printed color result, fit and strength remain UNKNOWN.
 
 ## Cabling planner
 
-Rear view, Cables see-through mode and saved cable-guide placement are implemented. Port planning includes the Pi4 preset, wizard Ports step, markers, selection and mesh-click placement. The Pi4 preset's face is UNKNOWN; its solid faceplate does not imply connector openings. Ports are planning data, not STL changes. Cables connect ports or outside endpoints through automatic or manual routes and exits. Review offers routing suggestions and a saved-rack wiring sheet, cable schedule CSV and wrap labels. Suggestions are advice only; Apply changes the draft. Lengths are planning estimates; guide/cable fit, capacity and strength remain UNKNOWN.
+Rear view, Cables see-through mode and saved cable-guide placement are implemented. Port planning includes library planning ports, wizard Ports step, markers, selection and mesh-click placement. The example's port face is UNKNOWN; its solid faceplate does not imply connector openings. Ports are planning data, not STL changes. Cables connect ports or outside endpoints through automatic or manual routes and exits. Review offers routing suggestions and a saved-rack wiring sheet, cable schedule CSV and wrap labels. Suggestions are advice only; Apply changes the draft. Lengths are planning estimates; guide/cable fit, capacity and strength remain UNKNOWN.
 
 The Lab Rax Cable Guide by mklements (MakerWorld Exclusive License) is local preview only: never redistributed or included in PRINT THE RACK. See the [ports](../../work/cable-management/Step2_Report.md), [routes](../../work/cable-management/Step3_Report.md), [suggestions](../../work/cable-management/Step4_Report.md) and [wiring sheet](../../work/cable-management/Step5_Report.md) reports.
 
@@ -47,11 +39,11 @@ The Lab Rax Cable Guide by mklements (MakerWorld Exclusive License) is local pre
 
 The local SQLite library supports immutable hardware revisions, explicit atomic JSON imports, pinned selections, structured filters, replacement comparisons and optional local catalog packs. Imports do not repin projects; draft does not save. Pack availability and metadata coverage do not certify geometry or physical fit. See [hardware-records](hardware-records.md) for schema, provenance and UNKNOWN limits. Supplier/Pi assets with unresolved rights stay local.
 
-Checks cover screw reach, thread compatibility, open-insert bore envelopes, pockets, supplier hole maxima and applicable documented wall limits. Missing outside diameter is displayed as a labeled unknown rather than an invented body. The Pi4 BOM uses two screws and two inserts; do not infer a full rack BOM from that adapter count.
+Checks cover screw reach, thread compatibility, open-insert bore envelopes, pockets, supplier hole maxima and applicable documented wall limits. Missing outside diameter is displayed as a labeled unknown rather than an invented body. The historical reference BOM uses two screws and two inserts; do not infer a full rack BOM from that adapter count.
 
 ## Artifact integrity and local reference limits
 
-Pi4 renders use the separate `pi4-mesh-v2-triangulation1` identity namespace. `integrity.json` hashes source, STLs, viewer geometry and revision report; cache reuse/download revalidates exact correspondence. Old immutable caches are preserved. Entries lacking the manifest cannot use the integrity-checked download endpoint; corrupt entries are blocked rather than overwritten.
+historical reference renders use the separate `historical reference-mesh-v2-triangulation1` identity namespace. `integrity.json` hashes source, STLs, viewer geometry and revision report; cache reuse/download revalidates exact correspondence. Old immutable caches are preserved. Entries lacking the manifest cannot use the integrity-checked download endpoint; corrupt entries are blocked rather than overwritten.
 
 A bounded export operation removes an exact zero-area collinear triangle and splits its unique long-edge neighbor at the existing interior vertex, retaining coordinates, surface and orientation. Ambiguous repairs are rejected. Raw and processed hashes and the repair trace are recorded in revision.json; strict mesh checks follow. This is not general mesh repair.
 

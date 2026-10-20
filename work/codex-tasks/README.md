@@ -37,3 +37,4 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [18-placement-render-sweep](18-placement-render-sweep.md) | done, reviewed by Claude (24 pass / 2 fail: opening in front of a screw joint; fixed by moving joints) |
 | [19-front-openings-logic](19-front-openings-logic.md) | done, reviewed by Claude (integrated; 110 Py + 163 JS pass) |
 | [20-adapter-cable-warning](20-adapter-cable-warning.md) | done, reviewed by Claude (integrated; shown in Review/sheet/parts order) |
+| [21-pi4-deep-clean](21-pi4-deep-clean.md) | done, reviewed by Claude (113 Py + 166 JS pass; 117 → 11 Pi lines) |

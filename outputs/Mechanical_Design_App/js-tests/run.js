@@ -146,7 +146,7 @@ test('WorkshopClearance.screen keeps unspecified rack numbers UNKNOWN and flags 
   assert.equal(r.checks[1].level, 'unknown');
   assert.equal(r.checks.at(-1).name, 'span');
   assert.equal(r.level, 'over');
-  assert.equal(clearance.screen(nominal, { equipment: 'pi4', span: 1 }, null).level, 'reference');
+  assert.equal(clearance.screen(nominal, { equipment: 'eq-000000000004', span: 1 }, null).level, 'unknown');
   assert.equal(clearance.screen(nominal, { equipment: 'eq-x', span: 1 }, null).level, 'unknown');
 });
 
@@ -177,7 +177,7 @@ test('WorkshopClearance.screen uses the slot tray placement (offset, rotation, s
   assert.equal(at({ u: 1 }, 1, eq({}, 2)).level, 'ok');
 });
 
-const studio = require(path.join(REF, 'rack-studio.js'));
+const studio = require(path.join(APP, 'rack-studio.js'));
 
 test('LabRaxStudio.artworkRect stays inside the 216 x 34 mm faceplate field', () => {
   for (const art of [{}, { x: 0, y: 0, scale: 1 }, { x: 1, y: 1, scale: 0.05 }, null]) {
@@ -190,8 +190,8 @@ test('LabRaxStudio.artworkRect stays inside the 216 x 34 mm faceplate field', ()
   }
 });
 
-test('LabRaxStudio.artworkWindow generalizes the Pi4 window to wizard faceplates of any U span', () => {
-  // A 1U wizard plate (252 x 42 mm, bottom at 0) gives exactly the Pi4 window.
+test('LabRaxStudio.artworkWindow generalizes the reference window to wizard faceplates of any U span', () => {
+  // A 1U wizard plate (252 x 42 mm, bottom at 0) gives exactly the reference window.
   assert.deepEqual(studio.artworkWindow(252, 42), { w: 216, h: 34, z: 21 });
   assert.deepEqual(studio.artworkRect({ x: 0.3, y: 0.7, scale: 0.8 }, 3, studio.artworkWindow(252, 42)),
                    studio.artworkRect({ x: 0.3, y: 0.7, scale: 0.8 }, 3));
@@ -236,7 +236,6 @@ test('LabRaxStudio.artworkRect keeps wizard images clear of port and keystone op
 });
 
 test('LabRaxStudio.selectionRect follows the plate front at any U height', () => {
-  assert.deepEqual(studio.PI4_SELECTION, [0, 22.225, 125.5, 21.75, 4]);
   for (const u of [1, 2, 3, 5]) {
     const h = u * 44.45 - 2.45, [cx, cz, hx, hz, r] = studio.selectionRect(-126, 126, 0, h, 2.5);
     assert.deepEqual([cx, hx, r], [0, 126, 2.5]);
@@ -245,19 +244,20 @@ test('LabRaxStudio.selectionRect follows the plate front at any U height', () =>
 });
 
 const ports = require(path.join(APP, 'cable-ports.js'));
+const example = require('./example-fixture.js');
 const portRack = () => ({ id: 'r', slots: 5, placements: [
-  { id: 'pi', slot: 1, span: 1, equipment: 'pi4' }, { id: 'eq', slot: 3, span: 2, equipment: 'eq-0123456789ab' }] });
+  { id: 'pi', slot: 1, span: 1, equipment: 'eq-000000000004' }, { id: 'eq', slot: 3, span: 2, equipment: 'eq-0123456789ab' }] });
 const wizardItem = { id: 'eq-0123456789ab', spec: { u: 2, dev_d: 80,
   ports: [{ id: 'p-lan', label: 'LAN', type: 'rj45', x: 10, z: 20, w: 16, h: 14 }],
   rear_ports: [{ id: 'p-pwr', label: 'Power', type: 'iec', x: -40, z: 30 }], keystones: [-60, 60] } };
 
-test('LabRaxPorts Pi 4 preset: nine ports, face UNKNOWN, front-edge ports point front and USB/Ethernet right', () => {
-  const list = ports.portsFor(portRack(), portRack().placements[0], null);
+test('LabRaxPorts library planning ports: nine ports, face UNKNOWN, front-edge ports point front and USB/Ethernet right', () => {
+  const list = ports.portsFor(portRack(), portRack().placements[0], example);
   assert.equal(list.length, 9);
   assert.equal(new Set(list.map(p => p.id)).size, 9);
   for (const p of list) {
     assert.equal(p.face, null);
-    assert.equal(p.source, 'preset');
+    assert.equal(p.source, 'wizard');
     assert.ok(ports.TYPES[p.type], p.id);
     assert.equal(p.key, 'pi/' + p.id);
   }
@@ -318,7 +318,7 @@ test('LabRaxPorts overrides merge, reset, custom ports and prune', () => {
   ports.setOverride(rack, 'pi', 'ethernet', { face: 'rear', x: 40.123 });
   ports.setOverride(rack, 'pi', 'ethernet', { label: 'Uplink' });
   assert.deepEqual(rack.cabling.ports, [{ face: 'rear', x: 40.12, label: 'Uplink', allocation: 'pi', port: 'ethernet' }]);
-  let eth = ports.portsFor(rack, pi, null).find(p => p.id === 'ethernet');
+  let eth = ports.portsFor(rack, pi, example).find(p => p.id === 'ethernet');
   assert.equal(eth.face, 'rear'); assert.equal(eth.label, 'Uplink'); assert.equal(eth.x, 40.12);
   assert.ok(eth.tuned && eth.edited); assert.equal(eth.points, 'right');
   const id = ports.newPortId(rack, 'eq');
@@ -328,7 +328,7 @@ test('LabRaxPorts overrides merge, reset, custom ports and prune', () => {
   assert.ok(custom.custom); assert.equal(custom.points, 'rear'); assert.equal(custom.key, 'eq/' + id);
   // Reset removes only that entry; removing the last entry drops cabling entirely.
   ports.setOverride(rack, 'pi', 'ethernet', null);
-  eth = ports.portsFor(rack, pi, null).find(p => p.id === 'ethernet');
+  eth = ports.portsFor(rack, pi, example).find(p => p.id === 'ethernet');
   assert.equal(eth.face, null); assert.ok(!eth.edited);
   rack.cabling.guides = [{ id: 'g', post: 'RL', slot: 1 }];
   const pruned = ports.prune({ ...rack, placements: [pi] });
@@ -347,7 +347,7 @@ test('LabRaxPorts marker rotations are proper rotations and parts sit at the all
     const out = [-R[1], -R[4], -R[7]];  // world direction of the marker's outward −Y
     assert.deepEqual(out.map(v => v + 0), { front: [0, -1, 0], rear: [0, 1, 0], right: [1, 0, 0], left: [-1, 0, 0] }[name]);
   }
-  const rack = portRack(), parts = ports.markerParts(rack, rack.placements, [wizardItem], 'pi/hdmi0');
+  const rack = portRack(), parts = ports.markerParts(rack, rack.placements, [example, wizardItem], 'pi/hdmi0');
   assert.equal(parts.length, 9 + 6);
   assert.equal(parts.filter(p => p.selected).length, 1);
   const hdmi = parts.find(p => p.port === 'pi/hdmi0');
@@ -413,4 +413,38 @@ test('LabRaxCableView exit grommets face outward with proper rotations', () => {
   const m = cableView.grommetMesh(studio);
   assert.ok(m.triangles.length > 0 && m.vertices.every(v => v.every(Number.isFinite)));
   assert.notEqual(cableView.geometryKey([[0, 0, 0], [1, 2, 3]], 3), cableView.geometryKey([[0, 0, 0], [1, 2, 4]], 3));
+});
+
+
+test('first-run UI has no retired equipment card, wording or implicit allocation', () => {
+  for(const name of ['workspace.js','index.html']) {
+    const source=fs.readFileSync(path.join(APP,name),'utf8');
+    assert.doesNotMatch(source,/pi ?_?4|raspberry/i,name);
+    assert.doesNotMatch(source,/equipment:["']pi4["']/i,name);
+  }
+  const workspace=fs.readFileSync(path.join(APP,'workspace.js'),'utf8');
+  assert.match(workspace,/Choose equipment…/);
+  assert.match(workspace,/equipment:item.id/);
+});
+
+test('root front-end assets match their hashes', () => {
+  const crypto=require('node:crypto');
+  for(const entry of JSON.parse(fs.readFileSync(path.join(APP,'asset-manifest.json'),'utf8')))
+    assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(APP,entry.file))).digest('hex'),entry.sha256,entry.file);
+});
+
+test('new placements use the chosen library item and omit historical reference metadata', () => {
+  const source=fs.readFileSync(path.join(APP,'workspace.js'),'utf8');
+  const factory=source.slice(source.indexOf('  function newAssembly(){'),source.indexOf('  function clearBuild(){'));
+  const place=source.slice(source.indexOf('  window.placeLibraryEquipment=function(item){'),source.indexOf('  // Place on tray window "Apply to draft"'));
+  const rack={id:'r',slots:5,placements:[]};let calls=0;
+  const box={window:{},capable:true,assemblyTemplate:{selections:{screw:{id:'s',revision:2}},inputs:{pilot:4},reference:{historical:true}},
+    uid:()=> '12345678',active:()=>rack,selectedSlot:2,assigned:(r,s)=>r.placements.find(p=>s>=p.slot&&s<p.slot+p.span),
+    markChanged:()=>calls++,renderTree:()=>{},setStage:()=>{},renderProperties:()=>{},notify:()=>{}};
+  vm.runInNewContext(factory+place,box);
+  assert.equal(box.window.placeLibraryEquipment({id:'eq-123456789abc',name:'Chosen router',span:2,spec:{u:1}}),true);
+  assert.equal(calls,1);
+  const p=rack.placements[0];assert.equal(p.equipment,'eq-123456789abc');assert.equal(p.geometry,'equipment-library');
+  assert.equal(p.assembly.name,'Chosen router');assert.equal(p.tray.u,2);assert.equal(p.assembly.project.reference,undefined);
+  assert.equal(p.assembly.project.selections.screw.revision,2);
 });

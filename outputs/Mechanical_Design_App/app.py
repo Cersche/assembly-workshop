@@ -25,7 +25,6 @@ import mesh_revision
 import equipment
 import rack_stl
 
-import pi_validation
 import faceplate_mounting
 import faceplate_color
 import catalog_packs
@@ -284,11 +283,10 @@ def evaluate(screw, insert, inputs):
 
         add('Source completeness', 'unknown', 'A selected part is custom or partially documented.')
 
-    head = pi_validation.head_screen(screw)
-    add('Nominal screw-head surface screening', head['status'], json.dumps(head))
+    add('Nominal screw-head surface screening', 'unknown', 'No geometry-specific surface screen is available for this assembly.')
     add('Physical and spatial checks', 'unknown', 'Driver/installation-tool envelopes, insertion path, containment, material, strength and printed fit remain unestablished. A nominal screw-head surface screen is reported separately.')
 
-    return {'status': 'fail' if any(c['status'] == 'fail' for c in checks) else 'incomplete', 'checks': checks, 'access_assessment': pi_validation.access_assessment(screw, insert)}
+    return {'status': 'fail' if any(c['status'] == 'fail' for c in checks) else 'incomplete', 'checks': checks, 'access_assessment': [{'name':'Installation and service access','status':'unknown','required':'Equipment-specific tool, cable and motion envelopes.','limit':'Nominal hardware dimensions do not establish access or fit.'}]}
 
 
 
@@ -374,79 +372,6 @@ def joint_geometry(project):
 
 
 
-def design_revision(project):
-
-    """Narrow adapter for the known Pi4 source; export a proposal, never alter baseline."""
-
-    v = positive_inputs(project['inputs'])
-
-    screw = project['selections'].get('screw')
-
-    insert = project['selections'].get('heatset')
-
-    if not screw or not insert:
-
-        raise ValueError('Select a screw and insert before exporting a design revision.')
-
-    if screw['diameter'] != 3 or insert['diameter'] != 3 or screw['pitch'] != .5 or insert['pitch'] != .5:
-
-        raise ValueError('The current Pi4 design adapter supports M3 × 0.5 joint hardware only.')
-
-    if any(abs(v[k]-expected) > .0001 for k, expected in [('stack', 3.3), ('pocket', 8), ('boss_diameter', 9)]):
-
-        raise ValueError('This adapter changes only the pilot and fixed four-corner mount layout. Restore stack 3.3, pocket 8 and boss diameter 9 mm; other geometry changes are not implemented.')
-
-    if not 3 <= v['pilot'] <= 4.2:
-
-        raise ValueError('Supported pilot range for this Pi4 adapter is 3–4.2 mm; printed fit still requires testing.')
-
-    result = evaluate(screw, insert, v)
-
-    if result['status'] == 'fail':
-
-        failed = ', '.join(c['name'] for c in result['checks'] if c['status'] == 'fail')
-
-        raise ValueError('Resolve these failed checks before exporting: ' + failed)
-
-    baseline = (ROOT / 'pi4_baseline.scad').read_text(encoding='utf-8')
-
-    marker = 'insert_pilot=4.2;'
-
-    if baseline.count(marker) != 1:
-
-        raise ValueError('Baseline source does not match the supported design adapter.')
-
-    assembly_validation = pi_validation.validate()
-    if assembly_validation['status'] == 'fail':
-        raise ValueError('Resolve failed assembly checks before exporting a proposal.')
-    metadata = {'status': 'PROPOSED — UNVALIDATED', 'baseline': 'Pi4 clearance v2',
-
-                'changed_parameter': {'insert_pilot': v['pilot']},
-
-                'hardware': project['selections'], 'checks': result,
-
-                'assembly_validation': assembly_validation,
-                'mounting_layout': faceplate_mounting.profile(),
-                'assembly_validation_scope': 'Baseline evidence retained. Four-corner mounting is a new revision; physical rack engagement, wall/strength and installation remain unvalidated.',
-
-                'limitations': ['Insert outside diameter and usable thread depth may remain unknown.',
-
-                                'Supplier maximum hole diameter is not an exact installation target.',
-
-                                'Pi reference is a separate inspection asset, excluded from manufacturing meshes.',
-
-                                'Re-render, check component clearances and print a fit coupon before use.']}
-
-    # Metadata lives beside the source rather than interpolating user text into SCAD.
-
-    source = '// PROPOSED revision. See revision.json for hardware, assumptions and unresolved checks.\n' + faceplate_mounting.apply_default(baseline).replace(marker, f"insert_pilot={v['pilot']:.6g};")
-
-    return source, metadata
-
-
-
-
-
 class Store:
 
     def __init__(self, path):
@@ -459,11 +384,10 @@ class Store:
 
             db.execute('CREATE TABLE IF NOT EXISTS projects (id TEXT PRIMARY KEY, body TEXT NOT NULL)')
 
-            project = {'id': 'pi4-beta', 'name': 'Lab Rax · Pi4 beta', 'units': 'mm', 'selections': {},
-
-                       'inputs': positive_inputs({}), 'notes': 'Clearance v2 baseline. Insert pilot is provisional. Physical testing pending.'}
-
-            db.execute('INSERT OR IGNORE INTO projects VALUES (?,?)', ('pi4-beta', json.dumps(project)))
+            if not db.execute('SELECT 1 FROM projects LIMIT 1').fetchone():
+                project = {'id':'workshop-default','name':'Untitled assembly','units':'mm',
+                           'selections':{},'inputs':positive_inputs({}),'notes':'Fit and strength UNKNOWN.'}
+                db.execute('INSERT INTO projects VALUES (?,?)',(project['id'],json.dumps(project)))
 
 
 
@@ -485,7 +409,7 @@ class Store:
 
         with self.connect() as db:
 
-            return json.loads(db.execute('SELECT body FROM projects WHERE id=?', ('pi4-beta',)).fetchone()[0])
+            return json.loads(db.execute('SELECT body FROM projects ORDER BY rowid LIMIT 1').fetchone()[0])
 
 
 
@@ -544,10 +468,6 @@ class Store:
         project['selections'] = pinned
 
         project['inputs'] = positive_inputs(payload.get('inputs', {}))
-
-        if 'reference' not in project:
-
-            project['reference'] = pi_validation.reference()[1]
 
         return project
 
@@ -717,7 +637,7 @@ def make_handler(store, token):
                 identity, _, part = self.path[len('/api/equipment-mesh/'):-4].partition('/')
                 return self.send(equipment.mesh_file(Path(store.path).parent, identity, part), mime='model/stl')
 
-            if self.path in ('/workspace.js', '/workspace.css', '/rack-reference.js', '/equipment-wizard.js', '/tray-placement.js', '/render-quality.js'):
+            if self.path in ('/rack-studio.js', '/assembly-studio.js', '/workspace.js', '/workspace.css', '/rack-reference.js', '/equipment-wizard.js', '/tray-placement.js', '/render-quality.js'):
                 name = self.path[1:]
                 return self.send((ROOT / name).read_text(encoding='utf-8'),
                                  mime='text/javascript' if name.endswith('.js') else 'text/css')
@@ -736,25 +656,8 @@ def make_handler(store, token):
 
                 return self.send(joint_geometry(self.selected_store().project()))
 
-            if self.path == '/api/pi-reference':
-
-                try:
-
-                    part, manifest = pi_validation.reference()
-
-                    return self.send(dict(part, reference=manifest))
-
-                except (OSError, ValueError) as exc:
-
-                    return self.send({'error': str(exc)}, 400)
-
-            if self.path == '/api/assembly-checks':
-
-                return self.send(pi_validation.validate())
-
             if self.path == '/api/assembly':
-
-                return self.send(json.loads((ROOT / 'assembly.json').read_text(encoding='utf-8')))
+                return self.send({'units':'mm','revision':'No assembly selected','parts':[]})
 
             if self.path == '/viewer.js':
 
@@ -822,14 +725,7 @@ def make_handler(store, token):
                     if payload.get('assembly') != selected.identity:
                         raise ValueError('The open assembly is not the slot you are exporting. Select that slot and try again.')
                     _, placement = assembly_records.find(selected.document(), selected.identity)
-                    if placement.get('equipment', 'pi4') != 'pi4':
-                        raise ValueError('Print in color supports the Raspberry Pi 4 faceplate only.')
-                    look = placement['assembly']['appearance']
-                    project = selected.project()
-                    source, metadata = design_revision(project)
-                    metadata['assembly_instance'] = {'id': project['instance_id'], 'revision': project['instance_revision'], 'project_sha256': assembly_records.fingerprint(project)}
-                    return self.send(faceplate_color.export(look.get('artwork'), source, metadata, Path(store.path).parent,
-                                                            look.get('faceplate') or '#4e75a3'), mime='application/zip')
+                    raise ValueError('Print in color is not available for this faceplate yet. Saved artwork remains a preview.')
 
                 if self.path == '/api/import':
 
@@ -845,31 +741,8 @@ def make_handler(store, token):
 
                     return self.send(joint_geometry(self.selected_store().draft(payload)))
 
-                if self.path == '/api/design':
-
-                    project = self.selected_store().draft(payload)
-                    source, metadata = design_revision(project)
-                    if project.get('instance_id'):
-                        metadata['assembly_instance'] = {'id': project['instance_id'], 'revision': project['instance_revision'], 'project_sha256': assembly_records.fingerprint(project)}
-
-                    stream = io.BytesIO()
-
-                    with zipfile.ZipFile(stream, 'w', zipfile.ZIP_DEFLATED) as archive:
-
-                        archive.writestr('pi4_proposed.scad', source)
-
-                        archive.writestr('revision.json', json.dumps(metadata, indent=2))
-
-                    return self.send(stream.getvalue(), mime='application/zip')
-
-                if self.path == '/api/build':
-
-                    project = self.selected_store().draft(payload)
-                    source, metadata = design_revision(project)
-                    if project.get('instance_id'):
-                        metadata['assembly_instance'] = {'id': project['instance_id'], 'revision': project['instance_revision'], 'project_sha256': assembly_records.fingerprint(project)}
-
-                    return self.send(mesh_revision.build(source, metadata, Path(store.path).parent))
+                if self.path in ('/api/design', '/api/build'):
+                    raise ValueError('Use Place on tray for this assembly’s proposed geometry.')
 
                 if self.path == '/api/equipment-library':
                     return self.send(equipment.save_item(payload, Path(store.path).parent))

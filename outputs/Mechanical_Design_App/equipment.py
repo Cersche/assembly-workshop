@@ -1,7 +1,7 @@
 """Equipment wizard (phase 1): dimensions -> tray + faceplate STL via OpenSCAD.
 
 Generated parts are PROPOSED and UNVALIDATED; printed fit, strength and rack
-clearance remain UNKNOWN. The Pi4 adapter (pi4_baseline.scad) is untouched.
+clearance remain UNKNOWN. All equipment uses the generic tray adapter.
 """
 
 import hashlib
@@ -266,6 +266,8 @@ def clean(spec):
     ids = [p['id'] for p in s['ports'] + s['rear_ports']]
     if len(ids) != len(set(ids)):
         raise ValueError('Each port needs its own id.')
+    if 'planning_ports' in spec:
+        s['planning_ports'] = cable_ports.planning_ports(spec['planning_ports'], s['u'])
     return s
 
 
@@ -288,7 +290,10 @@ def source(s):
 
 def library(data_dir):
     path = Path(data_dir) / 'equipment-library.json'
-    return json.loads(path.read_text(encoding='utf-8')) if path.exists() else []
+    items = json.loads(path.read_text(encoding='utf-8')) if path.exists() else []
+    from equipment_examples import example_item
+    example = example_item()
+    return items if any(i['id'] == example['id'] for i in items) else items + [example]
 
 
 def template_status(data_dir, item):
@@ -401,7 +406,7 @@ def rebuild_copy(data_dir, item_id, expected_build):
         path = Path(data_dir) / 'equipment-library.json'
         # Append before the closing array bracket, preserving the serialized old entries verbatim.
         raw = path.read_bytes()
-        if json.loads(raw) != items:
+        if json.loads(raw) != [i for i in items if not i.get('example')]:
             raise ValueError('Equipment library changed; reload its details and try again.')
         end = len(raw.rstrip()) - 1
         if raw[end:end + 1] != b']':
@@ -585,7 +590,7 @@ def render(spec, data_dir):
                 (folder / 'equipment.scad').write_text(src, encoding='utf-8', newline='\n')
                 parts = [n for n in parts if (folder / (n + '.stl')).exists()]
                 report = {'nudge_mm': nudges, 'export_quality': export_quality(s), 'status': 'PROPOSED — UNVALIDATED', 'spec': s, 'parts': parts, 'id': identity,
-                          'template': 'equipment_tray.scad (faceplate from Pi4 baseline)', 'limitations': LIMITS,
+                          'template': 'equipment_tray.scad', 'limitations': LIMITS,
                           'sha256': {n + '.stl': hashlib.sha256((folder / (n + '.stl')).read_bytes()).hexdigest() for n in parts},
                           'logs': logs}
                 (folder / 'revision.json').write_text(json.dumps(report, indent=2), encoding='utf-8')

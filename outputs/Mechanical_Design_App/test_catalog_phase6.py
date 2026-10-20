@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
-from app import ROOT, Store, evaluate, validate_part, design_revision
+from app import ROOT, Store, evaluate, validate_part
 
 PACK = ROOT / 'catalog-packs' / 'phase6-batch1.json'
 
@@ -57,8 +57,6 @@ class Phase6CatalogChecks(unittest.TestCase):
             self.assertEqual(checks['Usable thread engagement'],'unknown')
             self.assertEqual(checks['Boss wall'],'unknown')
             self.assertEqual(checks['Nominal screw-head surface screening'],'unknown')
-            with self.assertRaisesRegex(ValueError,'M3'):
-                design_revision({'selections':{'screw':screw,'heatset':insert},'inputs':{}})
 
 
 class Phase6Batch2Checks(unittest.TestCase):

@@ -107,26 +107,6 @@ class FaceplateColorTests(unittest.TestCase):
         self.assertEqual(partial['palette'][1], auto['palette'][1])
         self.assertEqual(partial['palette'][2], '#00ff00')
 
-    def test_export_is_watertight_and_conserves_volume(self):
-        try:
-            mesh_revision.compiler()
-        except ValueError:
-            self.skipTest('OpenSCAD not installed')
-        source = (ROOT / 'pi4_baseline.scad').read_text(encoding='utf-8')
-        volumes = {}
-        for style in ('inlay', 'emboss'):
-            art = dict(self.art, filament=dict(self.art['filament'], style=style))
-            with zipfile.ZipFile(io.BytesIO(fc.export(art, source, {'test': True}, self.dir))) as z:
-                report = json.loads(z.read('revision.json'))
-                self.assertIn('base.stl', z.namelist())
-                for name in report['sha256']:
-                    path = self.dir / name
-                    path.write_bytes(z.read(name))
-                    mesh_revision.read_mesh(path, name)   # closed, consistent, positive volume
-                volumes[style] = report['mesh']
-        inlay_total = sum(v['signed_volume_mm3'] for v in volumes['inlay'].values())
-        self.assertAlmostEqual(inlay_total, volumes['emboss']['base']['signed_volume_mm3'], delta=0.05)
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -169,8 +169,6 @@ async function viewer(mode = 'ok', studioMode = 'missing') {
       if (mode === 'bad-json' && url === '/api/assembly') return { ok: true, json: async () => { throw Error('Fixture invalid JSON'); } };
       if (mode === 'missing' && url === '/api/assembly') return { ok: false };
       if (url === '/api/assembly') return { ok: true, json: async () => ({ revision: 'Fixture only', parts: [mesh] }) };
-      if (url === '/api/pi-reference') return mode === 'no-pi' ? { ok: false } : { ok: true, json: async () => ({ ...mesh, id: 'pi_reference' }) };
-      if (url === '/api/assembly-checks') return { ok: true, json: async () => ({ checks: [] }) };
       throw Error('Unexpected fixture URL: ' + url);
     } });
   const source = read('viewer.js');
@@ -183,7 +181,7 @@ async function viewer(mode = 'ok', studioMode = 'missing') {
 }
 test('viewer startup: actual script loads, binds events and paints its first frame', async () => {
   const h = await viewer();
-  assert.deepEqual(h.calls, ['/api/assembly', '/api/pi-reference', '/api/assembly-checks']);
+  assert.deepEqual(h.calls, ['/api/assembly']);
   assert.equal(h.painted, 1); assert.equal(h.get('assemblyCanvas').dataset.renderer, 'software');
   assert.match(h.get('assemblyStatus').textContent, /Fixture only/);
   assert.ok(h.events.has('assembly-model')); assert.equal(typeof h.get('assemblyReset').onclick, 'function');
@@ -196,10 +194,6 @@ for (const [mode, message] of [['missing', /Assembly load failed/], ['network', 
     assert.equal(h.calls.length, mode === 'no-canvas' ? 0 : 1);
   });
 }
-test('viewer startup: missing optional Pi reference still renders assembly', async () => {
-  const h = await viewer('no-pi'); assert.equal(h.painted, 1);
-  assert.match(h.get('assemblyStatus').textContent, /Fixture only/);
-});
 test('viewer startup: failed studio renderer falls back with a visible reason', async () => {
   const h = await viewer('ok', 'throws'); assert.equal(h.painted, 1);
   assert.equal(h.get('assemblyCanvas').dataset.renderer, 'software');

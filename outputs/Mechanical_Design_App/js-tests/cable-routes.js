@@ -7,7 +7,8 @@ function fixture(){
   const ctx={ports:P,library:[{id:'wizard',spec:{u:1,dev_d:80,
     ports:[{id:'front-left',x:-40,z:20,type:'rj45'}],
     rear_ports:[{id:'rear-left',x:-40,z:20,type:'rj45'},{id:'rear-right',x:40,z:20,type:'iec'}],keystones:[0]}}]};
-  const rack={slots:6,placements:[{id:'pi',equipment:'pi4',slot:1,span:1},
+  ctx.library.push(structuredClone(require('./example-fixture.js')));
+  const rack={slots:6,placements:[{id:'pi',equipment:'eq-000000000004',slot:1,span:1},
     {id:'w1',equipment:'wizard',slot:2,span:1},{id:'w2',equipment:'wizard',slot:5,span:1}],
     cabling:{guides:[],exits:[],endpoints:[{id:'desk',kind:'desk',name:'Desk'}],cables:[]}};
   for(const post of ['FL','FR','RL','RR'])for(let slot=1;slot<=6;slot++)rack.cabling.guides.push({id:post+slot,post,slot});

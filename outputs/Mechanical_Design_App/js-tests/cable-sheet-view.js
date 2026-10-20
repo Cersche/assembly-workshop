@@ -14,7 +14,7 @@ function fixture(){
   const ctx={ports:P,cables:C,suggest:SG,sheet:S,library:[{id:'wizard',name:'Wizard box',spec:{u:1,dev_d:80,
     ports:[{id:'front-left',x:-40,z:20,type:'rj45'}],
     rear_ports:[{id:'rear-left',x:-40,z:20,type:'rj45'},{id:'rear-right',x:40,z:20,type:'iec'}],keystones:[0]}}]};
-  const rack={name:'Lab <"Rax"> & co',slots:6,placements:[{id:'pi',equipment:'pi4',slot:1,span:1,assembly:{name:'Raspberry Pi 4'}},
+  const rack={name:'Lab <"Rax"> & co',slots:6,placements:[{id:'pi',equipment:'eq-000000000004',slot:1,span:1,assembly:{name:'Board example'}},
     {id:'w1',equipment:'wizard',slot:2,span:1,assembly:{name:'Patch & keystones'}},{id:'w2',equipment:'wizard',slot:5,span:2}],
     cabling:{guides:[{id:'g1',post:'RR',slot:3},{id:'g2',post:'RL',slot:4},{id:'g3',post:'FL',slot:2}],
       exits:[{id:'x1',position:'bottom-rear',slot:6}],endpoints:[{id:'wall',kind:'wall-outlet',name:'Office wall outlet'},{id:'unused',kind:'desk',name:'Desk'}],

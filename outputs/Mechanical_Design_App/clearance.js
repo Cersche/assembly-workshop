@@ -15,7 +15,6 @@
     return {name,level,needed,available,margin,text:`${label}: ${needed.toFixed(1)} of ${available.toFixed(1)} ${unit} nominal (${verb}).`};
   }
   function screen(rack,placement,item){
-    if(placement.equipment==='pi4')return {level:'reference',checks:[],note:'Supported Pi 4 reference assembly; not envelope-screened. Rack fit UNKNOWN.'};
     if(!item?.spec)return {level:'unknown',checks:[],note:'Equipment not found in the library; cannot screen. Rack fit UNKNOWN.'};
     // This slot's tray choices (placement.tray, Place on tray window) win over the library values, as in
     // equipment.allocation_spec(). Rotation swaps width and depth; offsets widen the tray and push the device back.

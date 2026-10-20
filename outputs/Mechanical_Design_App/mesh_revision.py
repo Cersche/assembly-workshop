@@ -1,4 +1,4 @@
-"""Render constrained Pi4 proposals with the user's local OpenSCAD CLI."""
+"""Shared mesh checks and local OpenSCAD discovery for equipment geometry."""
 from collections import Counter
 import hashlib
 import io
@@ -124,54 +124,6 @@ def _normalize_collinear_faces(path, longest_first):
             'scope':'Export triangulation only. Existing coordinates and neighboring surface preserved; no dimensions changed.'}
 
 
-ARTIFACTS = ('pi4_proposed.scad', 'tray.stl', 'faceplate.stl', 'revision.json', 'assembly.json')
-
-
-def revision_identity(source, metadata):
-    return hashlib.sha256(('pi4-mesh-v2-triangulation1\n' + source + json.dumps(metadata, sort_keys=True)).encode()).hexdigest()
-
-
-def checked_revision(folder, identity, source=None, metadata=None):
-    """Read-only validation. Old entries remain untouched; regenerate to create v2."""
-    try:
-        integrity = json.loads((folder / 'integrity.json').read_text(encoding='utf-8'))
-        if integrity.get('schema') != 1 or integrity.get('id') != identity:
-            raise ValueError('Integrity identity mismatch.')
-        if set(integrity['sha256']) != set(ARTIFACTS):
-            raise ValueError('Incomplete integrity manifest.')
-        for name in ARTIFACTS:
-            if hashlib.sha256((folder / name).read_bytes()).hexdigest() != integrity['sha256'][name]:
-                raise ValueError('Artifact hash mismatch: ' + name)
-        actual_source = (folder / 'pi4_proposed.scad').read_text(encoding='utf-8')
-        report = json.loads((folder / 'revision.json').read_text(encoding='utf-8'))
-        inputs = report['build_inputs']
-        if revision_identity(actual_source, inputs) != identity:
-            raise ValueError('Source/configuration identity mismatch.')
-        if source is not None and (actual_source != source or inputs != metadata):
-            raise ValueError('Cached source/configuration mismatch.')
-        if any(report.get(k) != v for k,v in inputs.items() if k != 'limitations'):
-            raise ValueError('Revision report differs from build configuration.')
-        assembly = json.loads((folder / 'assembly.json').read_text(encoding='utf-8'))
-        if (assembly.get('units') != 'mm' or assembly.get('proposal_id') != identity
-                or report['mesh_build']['id'] != identity
-                or assembly.get('status') != 'PROPOSED — UNVALIDATED'
-                or len(assembly['parts']) != 2):
-            raise ValueError('Assembly units/revision/parts mismatch.')
-        for name, part in zip(('tray', 'faceplate'), assembly['parts']):
-            if report['mesh_processing'][name]['output_sha256'] != integrity['sha256'][name+'.stl']:
-                raise ValueError('Processing/STL hash mismatch: ' + name)
-            parsed = read_mesh(folder / (name+'.stl'), name)
-            # JSON stores coordinate tuples as arrays.
-            if any(part.get(k) != json.loads(json.dumps(parsed[k])) for k in
-                   ('id', 'vertices', 'triangles', 'source_sha256', 'bounds', 'signed_volume_mm3')):
-                raise ValueError('Viewer/STL mismatch: ' + name)
-        return assembly
-    except (OSError, ValueError, KeyError, TypeError, OverflowError) as exc:
-        raise ValueError('Revision integrity check failed; preserve this entry and generate a new revision. '
-                         'Legacy entries without integrity manifests are preserved but cannot be downloaded. '
-                         + str(exc)) from exc
-
-
 def compiler():
     candidates = [os.environ.get('OPENSCAD_EXE'), shutil.which('openscad'),
                   'C:/Program Files/OpenSCAD/openscad.exe']
@@ -181,61 +133,8 @@ def compiler():
     raise ValueError('OpenSCAD is needed for mesh generation. Install it or set OPENSCAD_EXE to its executable. Source-only export remains available.')
 
 
-def build(source, metadata, data_dir):
-    identity = revision_identity(source, metadata)
-    root = Path(data_dir) / 'revisions'
-    final = root / identity
-    with LOCK:
-        if final.exists():
-            return {'id': identity, 'assembly': checked_revision(final, identity, source, metadata), 'cached': True}
-        executable = compiler()
-        root.mkdir(parents=True, exist_ok=True)
-        with tempfile.TemporaryDirectory(dir=root, prefix='render-') as temp:
-            folder = Path(temp)
-            src = folder / 'pi4_proposed.scad'
-            src.write_text(source, encoding='utf-8', newline='\n')
-            parts, logs, processing = [], {}, {}
-            for name in ['tray', 'faceplate']:
-                try:
-                    result = subprocess.run([executable, '-o', str(folder / (name+'.stl')),
-                                             '-D', f'part="{name}"', str(src)],
-                                            capture_output=True, text=True, timeout=180,
-                                            creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
-                except (OSError, subprocess.TimeoutExpired) as exc:
-                    raise ValueError('Mesh rendering failed or timed out: ' + str(exc)) from exc
-                logs[name] = result.stderr
-                if result.returncode or 'ERROR:' in result.stderr:
-                    raise ValueError('OpenSCAD failed for ' + name + ': ' + result.stderr[-1600:])
-                processing[name] = normalize_collinear_faces(folder / (name+'.stl'))
-                parts.append(read_mesh(folder / (name+'.stl'), name))
-            report = dict(metadata, build_inputs=metadata, mesh_processing=processing, mesh_build={'id': identity, 'compiler': executable,
-                          'checks': 'Finite, nondegenerate, unique STL triangles; closed edges, consistent winding and positive signed volume.', 'logs': logs},
-                          mesh_limits='Mesh closure and successful rendering are not collision, strength or physical fit validation.')
-            report['limitations'] = [line for line in metadata['limitations']
-                                     if 'viewer still displays' not in line]
-            report['limitations'].append('This package contains the generated proposal; the viewer can switch between it and baseline v2.')
-            assembly = {'units': 'mm', 'revision': 'PROPOSED pilot '+str(metadata['changed_parameter']['insert_pilot'])+' mm'+(' · 4 corner mounts' if metadata.get('mounting_layout') else '')+' · '+identity[:8],
-                        'parts': parts, 'proposal_id': identity, 'status': 'PROPOSED — UNVALIDATED'}
-            (folder / 'assembly.json').write_text(json.dumps(assembly, separators=(',', ':')), encoding='utf-8')
-            (folder / 'revision.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
-            integrity = {'schema': 1, 'id': identity, 'sha256': {
-                name: hashlib.sha256((folder/name).read_bytes()).hexdigest() for name in ARTIFACTS}}
-            (folder/'integrity.json').write_text(json.dumps(integrity, indent=2), encoding='utf-8')
-            checked_revision(folder, identity, source, metadata)
-            # Immutable cache entry: every packaged mesh comes from this exact source.
-            folder.rename(final)
-    return {'id': identity, 'assembly': assembly, 'cached': False}
-
 
 def bundle(identity, data_dir):
     if not isinstance(identity, str) or not re.fullmatch('[0-9a-f]{64}', identity):
         raise ValueError('Invalid revision identifier.')
-    folder = Path(data_dir) / 'revisions' / identity
-    if not (folder / 'assembly.json').is_file():
-        raise ValueError('Build this revision before downloading it.')
-    checked_revision(folder, identity)
-    stream = io.BytesIO()
-    with zipfile.ZipFile(stream, 'w', zipfile.ZIP_DEFLATED) as archive:
-        for name in (*ARTIFACTS, 'integrity.json'):
-            archive.write(folder / name, name)
-    return stream.getvalue()
+    raise ValueError('This historical revision is preserved. Use Place on tray to build a new library revision.')

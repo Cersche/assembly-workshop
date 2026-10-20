@@ -15,8 +15,8 @@ class CablePortTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.value = {'version': 1, 'generation': None, 'racks': [
             {'id': 'rack-1', 'name': 'Ports rack', 'slots': 5, 'width_mm': None, 'depth_mm': None, 'pitch_mm': None,
-             'placements': [{'id': 'p1', 'slot': 1, 'span': 1, 'equipment': 'pi4', 'fit': 'UNKNOWN'},
-                            {'id': 'p2', 'slot': 3, 'span': 2, 'equipment': 'pi4', 'fit': 'UNKNOWN'}]}]}
+             'placements': [{'id': 'p1', 'slot': 1, 'span': 1, 'equipment': 'eq-000000000004', 'fit': 'UNKNOWN'},
+                            {'id': 'p2', 'slot': 3, 'span': 2, 'equipment': 'eq-000000000004', 'fit': 'UNKNOWN'}]}]}
 
     def test_port_edits_round_trip(self):
         ports = [{'allocation': 'p1', 'port': 'ethernet', 'face': 'rear', 'x': 44.2, 'y': 58.75, 'z': 24.4},

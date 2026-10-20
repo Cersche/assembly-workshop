@@ -42,5 +42,5 @@ def inspect(part):
                 installation_evidence=evidence,
                 installation_resolution=part.get('installation_evidence_resolution'),
                 installation_conflicts=[evidence['hole_tolerance_conflict']] if evidence.get('hole_tolerance_conflict') and part.get('installation_evidence_resolution',{}).get('status')!='resolved_project_basis' else [],
-                geometry_scope='Existing Pi4 M3 adapter only; catalog coverage does not extend geometry support',
+                geometry_scope='M3 joint screening only; catalog coverage does not extend geometry support',
                 physical_approval=False)

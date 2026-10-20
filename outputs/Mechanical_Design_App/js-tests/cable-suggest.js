@@ -8,7 +8,8 @@ function fixture(){
     ports:[{id:'front-left',x:-40,z:20,type:'rj45'}],rear_ports:[
       {id:'rear-left',x:-40,z:20,type:'rj45'},{id:'rear-right',x:40,z:20,type:'iec'},
       {id:'usb',x:0,z:20,type:'usb-c',label:'USB data'}],keystones:[0]}}]};
-  const rack={slots:6,placements:[{id:'pi',equipment:'pi4',slot:1,span:1},
+  ctx.library.push(structuredClone(require('./example-fixture.js')));
+  const rack={slots:6,placements:[{id:'pi',equipment:'eq-000000000004',slot:1,span:1},
     {id:'w1',equipment:'wizard',slot:2,span:1},{id:'w2',equipment:'wizard',slot:5,span:1}],
     cabling:{guides:[],exits:[],endpoints:[{id:'desk',kind:'desk',name:'Desk'}],cables:[]}};
   const c={id:'c1',number:'C1',type:'rj45',service_loop_m:0.15,from:port('w1','rear-left'),to:port('w2','rear-left'),

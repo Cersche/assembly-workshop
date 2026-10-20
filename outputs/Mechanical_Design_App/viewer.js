@@ -55,12 +55,6 @@ async function initAssemblyViewer(){
 
   const baseline=model;
 
-  let pi=null;
-
-  try{const r=await fetch('/api/pi-reference');if(!r.ok)throw Error('Pi reference unavailable');pi=await r.json()}catch(e){document.getElementById('piStatus').textContent=e.message}
-
-  try{const r=await fetch('/api/assembly-checks'),report=await r.json();document.getElementById('piStatus').textContent=report.checks.map(c=>c.status.toUpperCase()+' · '+c.name+': '+c.detail).concat((report.access_assessment||[]).map(a=>'UNKNOWN · '+a.name+': '+a.required+' '+a.limit)).join('\n')}catch(e){document.getElementById('piStatus').textContent=e.message}
-
   window.addEventListener('assembly-model',e=>{model=e.detail||baseline;selectedPart=null;schedule()});
 
   let yaw=.55,pitch=.65,zoom=1,focus=[0,39.5,21],pending=false,drag=null;
@@ -73,13 +67,13 @@ async function initAssemblyViewer(){
   }
   createStudioRenderer();
   if(studioRenderer)yaw=-.55;
-  const partNames={tray:'Tray',faceplate:'Faceplate',pi_reference:'Pi reference',screw:'Screw references',screw_head:'Screw-head references',insert:'Insert references'};
+  const partNames={tray:'Tray',faceplate:'Faceplate',screw:'Screw references',screw_head:'Screw-head references',insert:'Insert references'};
 
-  const colors={tray:[77,142,110],faceplate:[78,117,163],screw:[179,86,57],screw_head:[179,86,57],insert:[195,152,52],pi_reference:[91,133,69]};
+  const colors={tray:[77,142,110],faceplate:[78,117,163],screw:[179,86,57],screw_head:[179,86,57],insert:[195,152,52]};
   const baseColors=JSON.parse(JSON.stringify(colors));
   async function updateAppearance(value){
     appearance=value||{};
-    for(const [key,id] of [['equipment','pi_reference'],['tray','tray'],['faceplate','faceplate']])colors[id]=/^#[a-f0-9]{6}$/i.test(appearance[key]||'')?[1,3,5].map(i=>parseInt(appearance[key].slice(i,i+2),16)):baseColors[id].slice();
+    for(const [key,id] of [['tray','tray'],['faceplate','faceplate']])colors[id]=/^#[a-f0-9]{6}$/i.test(appearance[key]||'')?[1,3,5].map(i=>parseInt(appearance[key].slice(i,i+2),16)):baseColors[id].slice();
     const identity=appearance.artwork?.sha256;
     if(identity===textureIdentity){schedule();return;}
     const request=++imageRequest;texture=null;textureIdentity=identity;schedule();
@@ -139,7 +133,6 @@ async function initAssemblyViewer(){
 
     const parts=model.parts.filter(p=>document.getElementById('show-'+p.id).checked);
 
-    if(pi&&document.getElementById('show-pi_reference').checked)parts.push(pi);
 
     if(showHardware&&hardware){if(!hardwareMeshes)hardwareMeshes=hardware.hardware_envelopes.map(cylinder);parts.push(...hardwareMeshes);}
     if(selectedPart&&!parts.some(p=>p.id===selectedPart))selectedPart=null;
@@ -193,7 +186,7 @@ async function initAssemblyViewer(){
     canvas.dataset.renderer=usedStudio?'webgl':'software';
     canvas.dataset.artwork=texture?'preview-only':'none';
     canvas.dataset.selectedPart=selectedPart||'none';
-    status.textContent=renderedTriangles.toLocaleString()+' visible triangles · '+(frontMode?'Faceplate front':focus[0]===40?'Right joint focus':'Full assembly')+'. '+model.revision+(texture?' · artwork is preview only.':'')+' · Pi is reference only; surface screening is not physical fit validation.';
+    status.textContent=renderedTriangles.toLocaleString()+' visible triangles · '+(frontMode?'Faceplate front':focus[0]===40?'Right joint focus':'Full assembly')+'. '+model.revision+(texture?' · artwork is preview only.':'')+' · Physical fit and strength remain UNKNOWN.';
     status.textContent+=usedStudio?' · Studio lighting / shadows / contact shading.':studioUnavailable?' · Software fallback: '+studioUnavailable+'.':'';
     status.textContent+=(selectedPart?' Selected: '+(partNames[selectedPart]||selectedPart)+'.':' Click a part to select it.');
 
@@ -227,8 +220,6 @@ async function initAssemblyViewer(){
   for(const part of model.parts)document.getElementById('show-'+part.id).onchange=schedule;
 
   document.getElementById('show-hardware').onchange=schedule;
-
-  document.getElementById('show-pi_reference').onchange=schedule;
 
   new ResizeObserver(schedule).observe(canvas);schedule();
 
