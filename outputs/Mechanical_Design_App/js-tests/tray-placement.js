@@ -137,8 +137,10 @@ test('rear cable openings preserve saved defaults and roundtrip explicit choices
   assert.equal(T.values(old,{rear_openings:true}).rear_openings,true);
   assert.equal(T.values({...old,rear_openings:true},{rear_openings:false}).rear_openings,false);
   const ui=read('tray-placement.js');
-  assert.ok(ui.includes("if(rs.checked)v.rear_openings=true"));
-  assert.ok(ui.includes("...(v.rear_support?[h('label'"));
-  assert.ok(ui.includes('Cable openings in the rear bracket'));
-  assert.ok(ui.includes('this box sketch does not show the cutouts'));
+  assert.ok(ui.includes("v.rear_style='reinforced'"));
+  assert.ok(ui.includes("...(v.rear_support?[styles"));
+  assert.ok(ui.includes('Cable slots'));
+  for(const style of ['solid','open','reinforced','slots','vents'])assert.equal(T.diff(old,T.values(old,{rear_style:style})).rear_style,style);
+  assert.equal(T.diff(old,T.values(old,{rear_support:false,rear_style:'vents'})).rear_style,undefined);
+  assert.ok(ui.includes('This box sketch does not show the cutouts'));
 });

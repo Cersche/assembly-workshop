@@ -61,7 +61,7 @@ def _port_id(port, face, index):
 # model file, holes, ports); these tray choices belong to each slot allocation's "tray" settings. Older
 # library specs still carry them, and those values stay the defaults when an allocation has none.
 PLACEMENT_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'standoff', 'insert_pilot', 'board_t',
-                  'joint', 'keystones', 'rear_support', 'rear_openings', 'u')
+                  'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u')
 
 
 def export_quality(s):
@@ -88,12 +88,17 @@ def placement_settings(value):
         elif key in ('rear_support', 'rear_openings'):
             if type(v) is not bool:
                 raise ValueError('Rear support must be true or false.')
+        elif key == 'rear_style':
+            if v not in REAR_STYLES:
+                raise ValueError('Invalid rear bracket style.')
         elif key in ('device_mount', 'joint'):
             if not isinstance(v, str) or len(v) > 20:
                 raise ValueError('Invalid tray setting: ' + key + '.')
         elif type(v) not in (int, float) or isinstance(v, bool) or not math.isfinite(v):
             raise ValueError('Invalid tray setting: ' + key + '.')
         out[key] = v
+    if out.get('rear_support') is False:
+        out.pop('rear_style', None)
     return out
 
 
@@ -230,10 +235,92 @@ def validate_foot_pockets(spec, tray_w):
             if overlap(p,left,right,0,8):raise ValueError('A foot pocket would cut into the floor strip under the sleeve window; move or remove that foot.')
 
 
+# PROPOSED rear bracket dimensions (mm). Physical stiffness/airflow/strength UNKNOWN.
+REAR_STYLES = ('solid', 'open', 'reinforced', 'slots', 'vents')
+REAR_MARGIN = 6
+REAR_BAND = 5
+REAR_STRIP = 6
+REAR_LIMIT = 96
+REAR_MIN = 10
+REAR_LIP_T = 2.5
+REAR_LIP_DEPTH = 8
+REAR_LIP_LIMIT = 100
+REAR_EDGE_INSET = 0.5
+REAR_VENT_D = 6
+REAR_VENT_PITCH = 9
+
+
+def rear_style(spec):
+    return spec.get('rear_style', 'open' if spec.get('rear_openings') else 'solid') if spec.get('rear_support') else 'solid'
+
+
+def rear_geometry(s):
+    """Analytical cut bounds and lip boxes used directly by the SCAD source; no rendering."""
+    style = rear_style(s)
+    result = dict(windows=[], holes=[], flanges=[])
+    if style == 'solid':
+        return result
+    legacy = style == 'open'
+    margin, band, strip, limit = (4, 3.5, 4, 100.2625) if legacy else (REAR_MARGIN, REAR_BAND, REAR_STRIP, REAR_LIMIT)
+    floor = .5 if s['device_mount'] in ('flat', 'sleeve') else 8.225
+    width = s['dev_d'] if s.get('dev_rot') in (90, 270) else s['dev_w']
+    jx = min(40, abs(s.get('dev_off_x', 0)) + width/2 + 8 - 12)
+    left, right = min(s.get('joint_x', [-jx, jx])), max(s.get('joint_x', [-jx, jx]))
+    half = 6 + margin
+    top = floor + 18.5 + margin
+    height = s['u'] * 44.45 - .025
+    regions = []
+    for i in range(s['u']):
+        lo = max(.025, i*44.45) + band
+        hi = min(height, (i+1)*44.45) - band
+        upper = i*44.45 + top
+        split = min(i*44.45+22.225, upper-strip)
+        candidates = [[-limit,limit,max(lo,upper),hi], [-limit,left-half,lo,split],
+                      [left+half,right-half,lo,split], [right+half,limit,lo,split]]
+        if not legacy:
+            candidates = [[max(-limit,a),min(limit,b),c,d] for a,b,c,d in candidates]
+        valid = [q for q in candidates if q[1]-q[0] >= REAR_MIN and q[3]-q[2] >= REAR_MIN]
+        if style in ('open', 'reinforced'):
+            result['windows'].extend(valid)
+        elif style == 'slots':
+            result['windows'].extend(q for q in valid if q == candidates[0] or q == candidates[2])
+        else:
+            centre = candidates[2]
+            if centre in valid:
+                result['windows'].append(centre)
+            # Use conservative rectangular safe regions; even a complete circle must fit.
+            regions.extend(q for q in candidates if q != centre and q[1] > q[0] and q[3] > q[2])
+    if style == 'vents':
+        radius = REAR_VENT_D/2
+        for row in range(int(height/REAR_VENT_PITCH)+1):
+            z = .025 + REAR_BAND + radius + row*REAR_VENT_PITCH
+            for col in range(24):
+                x = -REAR_LIMIT + radius + col*REAR_VENT_PITCH + (row%2)*REAR_VENT_PITCH/2
+                if any(x-radius >= a and x+radius <= b and z-radius >= c and z+radius <= d for a,b,c,d in regions):
+                    result['holes'].append([x,z])
+    if style in ('reinforced', 'vents'):
+        # Local bracket coordinates; to_rear maps negative Y behind the rack.
+        a, b = .025+REAR_EDGE_INSET, height-REAR_EDGE_INSET
+        t, depth, edge = REAR_LIP_T, REAR_LIP_DEPTH, REAR_LIP_LIMIT
+        result['flanges'] = [[-edge,-4-depth,a,2*edge,depth,t], [-edge,-4-depth,b-t,2*edge,depth,t],
+                             [-edge,-4-depth,a,t,depth,b-a], [edge-t,-4-depth,a,t,depth,b-a]]
+    return result
+
+
 def template_source(spec):
     # New builds always use the current slot-bottom template; saved revisions remain immutable.
     text = TEMPLATE.read_text(encoding='utf-8')
-    if not spec.get('rear_openings'):
+    style = rear_style(spec)
+    if style not in ('reinforced', 'slots', 'vents'):
+        text = re.sub(r'// @rear-styles-begin\n.*?// @rear-styles-end\n(?:\n)?', '', text, flags=re.S)
+    else:
+        text = text.replace('if(plain && rear_support && rear_openings)rear_windows2d();',
+                            'if(plain && rear_support)rear_style_cuts();')
+        text = text.replace('plate_joint_add(true);}', 'plate_joint_add(true);rear_style_flanges();}')
+    if style in ('reinforced', 'slots', 'vents'):
+        text = text.replace('// @rear-openings-begin\n  if(plain && rear_support)rear_style_cuts();\n// @rear-openings-end',
+                            '  if(plain && rear_support)rear_style_cuts();')
+    if style != 'open':
         text = re.sub(r'// @rear-openings-begin\n.*?// @rear-openings-end\n(?:\n)?', '', text, flags=re.S)
     return text
 
@@ -270,6 +357,10 @@ def clean(spec):
             h = num(f.get('h'), 'Foot height', 0.3, s['dev_h'])
             s['feet'].append({'x': x, 'y': y, 'w': w, 'd': d, 'h': h})
     s['rear_support'] = spec.get('rear_support') is True
+    if 'rear_style' in spec and spec['rear_style'] not in REAR_STYLES:
+        raise ValueError('Invalid rear bracket style.')
+    if s['rear_support'] and 'rear_style' in spec:
+        s['rear_style'] = spec['rear_style']
     if s['rear_support'] and 'rear_openings' in spec:
         if not isinstance(spec['rear_openings'], bool):
             raise ValueError('rear_openings must be a boolean.')
@@ -394,8 +485,15 @@ def source(s):
         return json.dumps(v)
     over = {k: s[k] for k in ('dev_w', 'dev_d', 'dev_h', 'hole_d', 'standoff', 'insert_pilot', 'board_t', 'u',
                               'holes', 'keystones', 'device_mount', 'joint', 'rear_support', 'coupon')}
-    if s.get('rear_openings'):
+    style = rear_style(s)
+    if style == 'open':
         over['rear_openings'] = True
+    elif style in ('reinforced', 'slots', 'vents'):
+        geometry = rear_geometry(s)
+        over.update(rear_style=style, rear_style_windows=geometry['windows'],
+                    rear_style_holes=geometry['holes'], rear_style_lips=geometry['flanges'],
+                    rear_style_radius=5 if style == 'slots' or style == 'vents' else 2,
+                    rear_vent_d=REAR_VENT_D)
     if s.get('feet'):
         over['feet'] = [[f['x'], f['y'], f['w'], f['d'], f['h']] for f in s['feet']]
     # Placement keys are written only when moved/rotated, so default sources stay byte-identical to older ones.

@@ -29,7 +29,7 @@ class AllocationTray(unittest.TestCase):
         for key in eq.PLACEMENT_KEYS:
             self.assertNotIn(key, facts)
         self.assertEqual(set(eq.PLACEMENT_KEYS), {'dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'standoff',
-                                                  'insert_pilot', 'board_t', 'joint', 'keystones', 'rear_support', 'rear_openings', 'u'})
+                                                  'insert_pilot', 'board_t', 'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u'})
 
     def test_no_tray_settings_gives_identical_source(self):
         expected = eq.source(eq.clean(OLD_SPEC))

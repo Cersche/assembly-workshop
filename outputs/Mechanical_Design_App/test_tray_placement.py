@@ -501,3 +501,78 @@ class RearOpeningsTests(unittest.TestCase):
         self.assertIn('rear_joint_top=max(tray_z+14+boss_d/2,tongue_z+tongue_h)+rear_margin;', source)
         self.assertIn('device_mount="sleeve";', source)
         self.assertIn('rear_band=3.5;', source)
+
+
+class RearStyleTests(unittest.TestCase):
+    def specimens(self):
+        return [dict(name='OptiPlex',dev_w=182.5,dev_d=194.5,dev_h=38.8,device_mount='sleeve',joint='screw',rear_support=True,u=1),
+                dict(name='2U inserts',dev_w=85,dev_d=100,dev_h=20,holes=[[20,20]],device_mount='inserts',joint='screw',rear_support=True,u=2)]
+
+    def test_legacy_open_exact_source_and_style_precedence(self):
+        old = (HERE.parents[1]/'docs/archive/codex/2026-10-20/task30/equipment_tray.scad').read_text(encoding='utf-8')
+        for spec in self.specimens():
+            s=eq.clean(dict(spec,rear_openings=True))
+            with mock.patch.object(eq,'template_source',return_value=old): expected=eq.source(s)
+            self.assertEqual(eq.source(s),expected)
+            self.assertEqual(eq.source(eq.clean(dict(s,rear_style='open'))),expected)
+            self.assertEqual(eq.source(eq.clean(dict(s,rear_style='solid'))),eq.source(eq.clean(spec)))
+
+    def test_validation_and_disabled_support(self):
+        for spec in self.specimens():
+            for style in eq.REAR_STYLES:
+                self.assertEqual(eq.clean(dict(spec,rear_style=style))['rear_style'],style)
+                self.assertNotIn('rear_style',eq.clean(dict(spec,rear_style=style,rear_support=False)))
+                self.assertEqual(eq.placement_settings({'rear_style':style}),{'rear_style':style})
+                self.assertEqual(eq.placement_settings({'rear_support':False,'rear_style':style}),{'rear_support':False})
+            for bad in ('bad','',None,7,[],{}):
+                with self.assertRaises(ValueError):eq.clean(dict(spec,rear_style=bad))
+                with self.assertRaises(ValueError):eq.placement_settings({'rear_style':bad})
+
+    def test_geometry_all_styles_all_units(self):
+        for spec in self.specimens():
+            for u in range(1,6):
+                for style in eq.REAR_STYLES:
+                    s=eq.clean(dict(spec,u=u,rear_style=style))
+                    g=eq.rear_geometry(s)
+                    margin,band,strip,limit=(4,3.5,4,100.2625) if style=='open' else (6,5,6,96)
+                    floor=.5 if s['device_mount']=='sleeve' else 8.225
+                    width=s['dev_w']+16
+                    jx=min(40,width/2-12)
+                    cuts=list(g['windows'])+[[x-3,x+3,z-3,z+3] for x,z in g['holes']]
+                    for a,b,c,d in cuts:
+                        self.assertGreaterEqual(a,-limit-1e-9);self.assertLessEqual(b,limit+1e-9)
+                        i=int(c/44.45)
+                        self.assertGreaterEqual(c,max(.025,i*44.45)+band-1e-9)
+                        self.assertLessEqual(d,min(u*44.45-.025,(i+1)*44.45)-band+1e-9)
+                        for x in (-jx,jx):
+                            # Conservative boss + tongue rectangle, inflated by the style margin.
+                            self.assertTrue(b<=x-6-margin+1e-9 or a>=x+6+margin-1e-9 or c>=i*44.45+floor+18.5+margin-1e-9)
+                        # Rack slot nearest X=113.2625: all cuts remain inboard.
+                        self.assertLess(b,113.2625);self.assertGreater(a,-113.2625)
+                    for a,b,c,d in g['windows']:
+                        self.assertGreaterEqual(b-a,10);self.assertGreaterEqual(d-c,10)
+                    for lo in g['windows']:
+                        for hi in g['windows']:
+                            if lo[3]<hi[2] and int(lo[2]/44.45)==int(hi[2]/44.45):
+                                self.assertGreaterEqual(hi[2]-lo[3],strip-1e-9)
+                    for x,y,z,w,d,h in g['flanges']:
+                        self.assertGreaterEqual(x,-100);self.assertLessEqual(x+w,100)
+                        self.assertEqual(y,-12);self.assertEqual(d,8)
+                        self.assertGreaterEqual(z,.525);self.assertLessEqual(z+h,u*44.45-.525+1e-9)
+                        # Mirror maps lip Y to [244,252], all modeled tray/device/joints end <=244.
+                        self.assertEqual(240-(y+d),244);self.assertEqual(240-y,252)
+                        self.assertTrue(w==2.5 or h==2.5)
+                    if style in ('reinforced','vents'):
+                        self.assertEqual(len(g['flanges']),4)
+                    if style=='vents':
+                        self.assertGreater(len(g['holes']),0)
+                        for x,z in g['holes']:
+                            for a,b,c,d in g['windows']:
+                                self.assertTrue(x+3<=a or x-3>=b or z+3<=c or z-3>=d)
+                    src=eq.source(s)
+                    if style in ('reinforced','slots','vents'):
+                        self.assertIn('if(plain && rear_support)rear_style_cuts();',src)
+                        self.assertIn('plate_joint_add(true);rear_style_flanges();',src)
+                        self.assertIn('rear_style_windows='+json.dumps(g['windows'])+';',src)
+                        self.assertIn('rear_style_holes='+json.dumps(g['holes'])+';',src)
+                        self.assertIn('rear_style_lips='+json.dumps(g['flanges'])+';',src)

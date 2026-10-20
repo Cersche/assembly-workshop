@@ -5,10 +5,12 @@
 (function(root){
   'use strict';
   // ---- Pure logic (Node-testable). Mirrors equipment.PLACEMENT_KEYS, clean() and equipment_tray.scad asserts.
-  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','u'];
+  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','rear_style','u'];
   const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,rear_openings:false,u:1};
   const FRONT_GAP=12,MARGIN=8,RACK_INNER_W=208,SIDE_CLEAR=2,MAX_TRAY=RACK_INNER_W-2*SIDE_CLEAR,RACK_DEPTH=240,PITCH=44.45,PLATE_HALF=126,PLATE_T=4,TRAY_T=3;
   const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
+  const REAR_STYLES={solid:['Solid','Plain plate'],open:['Open','Original cable windows'],reinforced:['Reinforced','Wider bands and outer stiffening flanges'],slots:['Cable slots','Rounded upper and centre cable slots'],vents:['Vents','Round vents, centre cable slot and outer flanges']};
+  const rearStyle=v=>v.rear_style||(v.rear_openings?'open':'solid');
   const JOINTS={screw:'Screw joint',single:'Single printed piece'};
   const copy=v=>Array.isArray(v)?v.slice():v;
   // Values shown in the window: the allocation's tray settings win, then the library spec, then template defaults.
@@ -21,7 +23,7 @@
   // allocation keeps no tray settings and builds exactly as before.
   function diff(spec,v){
     const out={};
-    for(const k of KEYS){const base=spec&&k in spec?spec[k]:DEFAULTS[k];if(JSON.stringify(base)!==JSON.stringify(v[k]))out[k]=copy(v[k]);}
+    for(const k of KEYS){if(k==='rear_style'&&!v.rear_support)continue;const base=spec&&k in spec?spec[k]:DEFAULTS[k];if(JSON.stringify(base)!==JSON.stringify(v[k]))out[k]=copy(v[k]);}
     return out;
   }
   function layout(spec,v){
@@ -212,7 +214,7 @@
     view.sets=state.exact&&state.exact.key===key?state.exact.sets.concat(schematic(state.item.spec,state.v).filter(s=>s.device)):schematic(state.item.spec,state.v);
     const note=document.getElementById('tpViewNote');
     if(note)note.textContent=state.exact&&state.exact.key===key?`Exact OpenSCAD render of these settings at export quality ${exportNote()} (not saved). Translucent box = the device, orange = its front.`:'Live sketch: boxes for the tray, faceplate, standoffs and device (translucent; orange = device front). Left-drag turns, right-drag moves, scroll zooms.';
-    if(note&&state.v.rear_support&&state.v.rear_openings)note.textContent+=' Rear bracket cable openings are enabled; this box sketch does not show the cutouts. Bracket stiffness UNKNOWN.';
+    if(note&&state.v.rear_support)note.textContent+=' Rear bracket: '+REAR_STYLES[rearStyle(state.v)][0]+'. This box sketch does not show the cutouts or flanges; stiffness/airflow UNKNOWN';
     P.draw(cv,view);
   }
   function update(){
@@ -255,8 +257,8 @@
     const mountOpts=PO().usesStandoffs(v)?[field('Standoff (mm)',()=>v.standoff,x=>v.standoff=x,{step:'0.5',min:'0',max:'30'})]:[h('p',{class:'ew-note'},v.device_mount==='sleeve'?'Low floor, side walls, top lips when space permits, rear stop and optional straps. Front flush; fit/retention/strength UNKNOWN.':v.device_mount==='flat'?'Rests on the low floor with corner stops and optional strap slots. Retention UNKNOWN.':'Rests on the tray floor; no standoffs.')];
     if(v.device_mount==='inserts')mountOpts.push(field('Insert pilot hole (mm)',()=>v.insert_pilot,x=>v.insert_pilot=x,{step:'0.1'}));
     if(v.device_mount==='pegs'||v.device_mount==='clips')mountOpts.push(field(v.device_mount==='pegs'?'Board thickness (mm)':'Edge thickness clipped (mm)',()=>v.board_t,x=>v.board_t=x,{step:'0.1'}));
-    const rs=h('input',{type:'checkbox'});rs.checked=!!v.rear_support;rs.onchange=()=>{v.rear_support=rs.checked;if(rs.checked)v.rear_openings=true;render();};
-    const ro=h('input',{type:'checkbox'});ro.checked=!!v.rear_openings;ro.onchange=()=>{v.rear_openings=ro.checked;update();};
+    const rs=h('input',{type:'checkbox'});rs.checked=!!v.rear_support;rs.onchange=()=>{v.rear_support=rs.checked;if(rs.checked&&!v.rear_style)v.rear_style='reinforced';if(!rs.checked)delete v.rear_style;render();};
+    const styles=h('div',{class:'ew-choices',role:'group','aria-label':'Rear bracket'},h('span',{},'Rear bracket:'),...Object.entries(REAR_STYLES).map(([key,[label]])=>{const b=h('button',{type:'button',class:'ew-chip'+(rearStyle(v)===key?' on':''),'aria-pressed':String(rearStyle(v)===key)},label);b.onclick=()=>{v.rear_style=key;render();};return b;}));
     const cv=h('canvas',{id:'tpView',class:'ew-view tp-view'});
     const exact=h('button',{type:'button'},'Render exact preview');
     exact.onclick=async()=>{exact.disabled=true;setStatus('Rendering with OpenSCAD… this can take a minute. Nothing is saved.');
@@ -291,7 +293,7 @@
           h('h3',{},'Faceplate'),h('div',{class:'ew-row'},field('Height (rack units)',()=>v.u,x=>v.u=x,{min:'1',max:'5'})),keystones(),
           h('p',{},'Tray joint'),chips(JOINTS,v.joint,k=>v.joint=k),
           h('label',{class:'ew-chip'},rs,' Rear support (tray runs to the back posts)'),
-          ...(v.rear_support?[h('label',{class:'ew-chip'},ro,' Cable openings in the rear bracket'),h('p',{class:'ew-note'},"Lets the device's rear cables pass the rear posts. Bracket stiffness UNKNOWN.")]:[]),
+          ...(v.rear_support?[styles,h('p',{class:'ew-note'},REAR_STYLES[rearStyle(v)][1]+'; stiffness/airflow UNKNOWN')]:[]),
           h('p',{class:'tp-unknown'},'Fit, retention, strength: UNKNOWN'))),
       h('p',{id:'tpSummary',class:'ew-note'}),
       h('ul',{id:'tpProblems',class:'tp-problems',role:'alert'}),
@@ -318,7 +320,7 @@
     if(!item)try{item=(await (await fetch('/api/equipment-library')).json()).find(i=>i.id===placement.equipment);}catch(e){}
     if(!item){alert('This equipment is no longer in the library.');return false;}
     const v=values(item.spec,placement.tray);
-    if(v.rear_support&&!('rear_openings' in (placement.tray||{}))&&!('rear_openings' in item.spec))v.rear_openings=true;
+    // Existing rear-supported items retain their legacy solid/open choice.
     state={rack:rackId,id:placement.id,slot:placement.slot,span:placement.span,item,v,prevU:v.u,exact:null};
     // Paint again once the dialog is shown: the canvas has no size before that.
     const d=ensureDialog();render();if(!d.open)d.showModal();draw3D();return true;

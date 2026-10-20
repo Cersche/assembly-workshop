@@ -97,6 +97,18 @@ module rear_windows2d(){for(q=rear_windows())
  translate([(q[0]+q[1])/2,(q[2]+q[3])/2])rrect(q[1]-q[0],q[3]-q[2],rear_radius);}
 // @rear-openings-end
 
+// @rear-styles-begin
+// PROPOSED styles: arrays are derived by equipment.rear_geometry; stiffness/airflow UNKNOWN.
+rear_style="solid"; rear_style_windows=[]; rear_style_holes=[]; rear_style_lips=[];
+rear_style_radius=2; rear_vent_d=6;
+module rear_style_cuts(){
+ for(q=rear_style_windows)let(r=rear_style_radius)
+  hull()for(x=[q[0]+r,q[1]-r],z=[q[2]+r,q[3]-r])translate([x,z])circle(r=r);
+ for(p=rear_style_holes)translate(p)circle(d=rear_vent_d,$fn=24);
+}
+module rear_style_flanges(){for(q=rear_style_lips)translate([q[0],q[1],q[2]])cube([q[3],q[4],q[5]]);}
+// @rear-styles-end
+
 module capsule2d(len=10,diam=7){hull(){translate([-(len-diam)/2,0])circle(d=diam);translate([(len-diam)/2,0])circle(d=diam);}}
 module rrect(w,h,r){rr=min(r,w/2-0.01,h/2-0.01);if(rr<=0)square([w,h],center=true);else offset(r=rr)square([w-2*rr,h-2*rr],center=true);}
 // Mirror front-of-tray features to the rear (about the rack's mid-depth).
