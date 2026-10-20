@@ -4,7 +4,8 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 
 ## 2026-10-19 session summary (read first)
 
-- **Single home:** this PC only; laptop/phone steer sessions via Remote Control. Normal server restarted via start.bat (PID 41408 at handoff) on data/normal-use.
+- **GitHub (2026-10-20):** whole project, all data included, is in the PRIVATE repo https://github.com/Cersche/assembly-workshop (branch `main`). Both of Brian's Claude accounts work from it, one at a time, on any device. See the "Cloud repo and account switching" section in AGENTS.md: pull first, push when done.
+- **Single home (superseded by GitHub above for code/doc work):** this PC only; laptop/phone steer sessions via Remote Control. Normal server restarted via start.bat (PID 41408 at handoff) on data/normal-use.
 - **Checks:** `powershell -NoProfile -ExecutionPolicy Bypass -File outputs\Mechanical_Design_App\run_checks.ps1` → 52 Python (temp data; includes faceplate color, not its OpenSCAD export test) + 47 JS (js-tests/run.js and js-tests/page-logic.js, Node from PATH or the local Codex runtime). Includes page-level Save and viewer-startup tests.
 - **UI cleanup:** Equipment "My Equipment" list ([report](work/equipment-list/Report.md)); slimmer sidebar Hardware library ([report](work/hardware-section/Report.md)); 2C left grouping FINAL. assembly-studio.js restored to the asset manifest (3D inspection viewer had silently fallen back).
 - **New features** ([report](work/save-history/Report.md), [screening](work/clearance-screening/Report.md)): Save **History** (restore earlier rack versions as an unsaved draft); **Recent colors** (per-browser); **clearance screening** in Review for wizard equipment (OK/TIGHT/OVER/UNKNOWN, nominal numbers, fit UNKNOWN); wizard width/depth **warnings never block** (Brian's direction).

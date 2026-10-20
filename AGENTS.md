@@ -54,3 +54,14 @@ Brian resolved the artwork scope conflict: the existing opt-in "Print in color" 
 ## Test print IDs — Brian, 2026-10-19
 
 Every new test print or test coupon gets a unique identifier modeled into the part itself (embossed or engraved text, placed where it doesn't affect the feature under test). Use the same ID in its folder, file names and README so a printed piece can always be matched to its files. Existing coupons keep their files unchanged.
+
+## Cloud repo and account switching — Brian, 2026-10-20
+
+The whole project, including outputs/, data/normal-use/, archives and licensed third-party parts, is in the PRIVATE GitHub repo https://github.com/Cersche/assembly-workshop (branch `main`). This replaces the earlier "assets stay local" rule for this private repo only. Brian uses two Claude accounts on four devices (PC, laptop, iPad, iPhone), one session at a time. Both accounts may push.
+
+- **Start of every session:** `git pull` (cloud sessions start from GitHub automatically). Read HANDOFF.md.
+- **End of every session:** update HANDOFF.md, commit and push to `main` so the next account or device picks up from there. Never leave work only on one machine.
+- **One at a time:** don't run two sessions that edit at once. If a push is rejected, pull and merge first; never force-push.
+- **Keep the repo private.** Never make it public, fork it publicly or add collaborators without Brian's direction. Before any public release, Brian will contact the Lab Rax creator (MakerWorld) and licensed files that conflict will be removed. Redistribution limits still apply to everything outside this repo.
+- **Cloud limits:** cloud sessions run Linux without the PC's OpenSCAD/FreeCAD and can't show the rack GUI. Renders, STL exports and GUI checks still happen on the PC. Never test on data/normal-use in any environment.
+- No secrets or credentials in the repo. Python caches are ignored by .gitignore.
