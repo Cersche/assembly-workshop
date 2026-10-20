@@ -38,6 +38,8 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 
 - **Open items closed (2026-10-19):** parts order committed 6ed1508 (defaults confirmed by Brian). Keystone cables now default to the type of the cable on the other side of the keystone, else RJ45 (workspace.js, uncommitted; checked against saved data on port 8787, the click flow itself not re-run). Backup AssemblyWorkshop_20261019-2058 verified in both locations; normal server 8765 restarted via start.bat (PID 27700) on current code.
 
+- **Wizard fully functional (2026-10-19, uncommitted, [report](work/equipment-wizard-options/Wizard_Fixes_Report.md)):** keystone faceplates no longer fail the mesh check (real defect: OpenSCAD 2021's 1/65536 mm 2D grid left a sliver at the golden block; `ks_golden()` fixed, golden opening and ks_tight=0.2 unchanged, check not loosened). The rack view draws each slot's own tray: an existing exact render, else a box sketch (`/api/equipment-placement-mesh` only looks, never renders); the "Placement not rendered yet" note is gone. Checks: 102 Python + 153 JS. Browser-checked on disposable data (8789). Codex tasks 16 (render sweep) and 17 (docs) queued. Fit/strength UNKNOWN.
+
 ## Current state and Brian's confirmed direction
 
 - Rack-first local studio: configure Lab Rax rack → select slot → create an equipment/tray/faceplate assembly. STL delivery; no printer/slicer integration. Source meshes remain the rack preview; independent slot assemblies keep their own hardware snapshots, inputs and revisions. M3 x 0.5 Pi4 limits and immutable mechanical baseline remain intact.

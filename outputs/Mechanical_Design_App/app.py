@@ -891,6 +891,10 @@ def make_handler(store, token):
                     spec = equipment.allocation_request(data_dir, payload) if isinstance(payload, dict) and 'item' in payload else payload
                     return self.send(equipment.preview(spec, data_dir))
 
+                if self.path == '/api/equipment-placement-mesh':
+                    # Rack view: reuse an existing exact render of a slot's tray settings; never renders.
+                    return self.send(equipment.cached_allocation_render(Path(store.path).parent, payload))
+
                 if self.path == '/api/equipment-placement-check':
                     return self.send(equipment.check_allocation(Path(store.path).parent, payload))
 

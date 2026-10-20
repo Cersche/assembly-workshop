@@ -1,6 +1,7 @@
 """Place on tray window, server side: {item, tray} requests use the saved library facts plus this slot's tray
 choices, and the JS window's plain-language checks agree with clean() on what is blocked.
 New disposable data only (temporary folder); nothing is rendered, built or exported."""
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -8,6 +9,7 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from unittest import mock
 
 import equipment as eq
 
@@ -91,6 +93,68 @@ class PlaceOnTrayRequests(unittest.TestCase):
         self.assertIn("'/tray-placement.js'", src)
         self.assertEqual(src.count("equipment.allocation_request(data_dir, payload) if isinstance(payload, dict) and 'item' in payload else payload"), 2)
 
+
+
+class RackViewLookup(unittest.TestCase):
+    """Rack view: an existing exact render of a slot's tray settings is found by looking only; nothing is rendered."""
+
+    def setUp(self):
+        self.folder = Path(tempfile.mkdtemp(prefix='rack-view-'))
+        (self.folder / 'equipment-library.json').write_text(json.dumps([ITEM]), encoding='utf-8')
+
+    def tearDown(self):
+        shutil.rmtree(self.folder, ignore_errors=True)
+
+    def fake_render(self, tray, quality='standard'):
+        s = eq.allocation_request(self.folder, {'item': ITEM['id'], 'tray': tray, 'quality': quality})
+        identity = hashlib.sha256(eq.source(s).encode('utf-8')).hexdigest()
+        final = self.folder / 'equipment-revisions' / identity
+        final.mkdir(parents=True)
+        (final / 'revision.json').write_text(json.dumps({'id': identity, 'parts': ['tray', 'faceplate']}), encoding='utf-8')
+        return identity
+
+    def test_lookup_finds_existing_render_and_never_renders(self):
+        tray = {'dev_off_x': -10, 'dev_rot': 90, 'keystones': [-100]}
+        with mock.patch.object(eq, 'render', side_effect=AssertionError('no renders')), \
+                mock.patch.object(eq.subprocess, 'run', side_effect=AssertionError('no OpenSCAD')):
+            self.assertEqual(eq.cached_allocation_render(self.folder, {'item': ITEM['id'], 'tray': tray}), {'cached': False})
+            self.assertFalse((self.folder / 'equipment-revisions').exists())
+            identity = self.fake_render(tray)
+            self.assertEqual(eq.cached_allocation_render(self.folder, {'item': ITEM['id'], 'tray': tray}),
+                             {'cached': True, 'id': identity, 'parts': ['tray', 'faceplate'], 'quality': 'standard'})
+            # Other tray settings do not match that render.
+            self.assertFalse(eq.cached_allocation_render(self.folder, {'item': ITEM['id'], 'tray': {'dev_off_x': -11}})['cached'])
+            fine = self.fake_render({'u': 2}, 'fine')
+            self.assertEqual(eq.cached_allocation_render(self.folder, {'item': ITEM['id'], 'tray': {'u': 2}})['id'], fine)
+
+    def test_invalid_settings_or_item_give_no_render(self):
+        out = eq.cached_allocation_render(self.folder, {'item': ITEM['id'], 'tray': {'dev_off_x': 70}})
+        self.assertFalse(out['cached'])
+        self.assertIn('off the tray', out['error'])
+        self.assertFalse(eq.cached_allocation_render(self.folder, {'item': 'eq-ffffffffffff', 'tray': {}})['cached'])
+
+    def test_js_rack_sketch_matches_python_tray_size(self):
+        exe = node()
+        if not exe:
+            self.skipTest('Node.js not found')
+        trays = [c[0] for c in CASES if not c[1]] + [{'dev_off_x': -5, 'dev_off_y': 20, 'dev_rot': 270, 'u': 2, 'rear_support': True}]
+        script = ('const T=require(process.argv[1]);const s=JSON.parse(process.argv[2]);'
+                  'const b=f=>{const lo=[1e9,1e9,1e9],hi=[-1e9,-1e9,-1e9];for(let i=0;i<f.length;i+=3)for(let k=0;k<3;k++){lo[k]=Math.min(lo[k],f[i+k]);hi[k]=Math.max(hi[k],f[i+k]);}return [lo,hi];};'
+                  'console.log(JSON.stringify(JSON.parse(process.argv[3]).map(t=>{const k=T.rackSketch(s,t);'
+                  'return {tray:b(k.tray),plate:b(k.faceplate),ks:k.openings?k.openings.length/108:0,rear:!!k.rear_bracket};})));')
+        r = subprocess.run([exe, '-e', script, str(HERE / 'tray-placement.js'), json.dumps(SPEC), json.dumps(trays)],
+                           capture_output=True, text=True, timeout=60)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        for tray, got in zip(trays, json.loads(r.stdout)):
+            s = eq.clean(eq.allocation_spec(SPEC, tray))
+            fp_w, fp_d = (s['dev_d'], s['dev_w']) if s['dev_rot'] in (90, 270) else (s['dev_w'], s['dev_d'])
+            tray_w = 2 * (abs(s['dev_off_x']) + fp_w / 2 + 8)  # equipment_tray.scad tray_w / tray_d
+            tray_d = 240 if s['rear_support'] else s['dev_off_y'] + fp_d + 12 + 8
+            self.assertAlmostEqual(got['tray'][0][0], -tray_w / 2, msg=tray)
+            self.assertAlmostEqual(got['tray'][1][1], tray_d, msg=tray)
+            self.assertAlmostEqual(got['plate'][1][2], s['u'] * 44.45 - 2.45, msg=tray)
+            self.assertEqual(got['ks'], len(s['keystones']) + len(s['ports']), tray)
+            self.assertEqual(got['rear'], s['rear_support'], tray)
 
 
 class SlotTrayConsumers(unittest.TestCase):

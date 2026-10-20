@@ -332,17 +332,52 @@
     const M=window.LabRaxStudio.Mesh,m=new M(),v=[...text.matchAll(/vertex\s+(\S+)\s+(\S+)\s+(\S+)/g)].map(a=>[+a[1],+a[2],+a[3]]);
     for(let i=0;i+2<v.length;i+=3)m.tri(v[i],v[i+1],v[i+2]);return m;
   }
-  // Rack view: always the library item's own build. A slot's tray placement is not rendered here (Brian 2026-10-19:
-  // no automatic builds); workspace.js shows a 'Placement not rendered yet' note for such slots.
-  function partsFor(id){
-    const it=items.find(i=>i.id===id);if(!it)return null;const key=it.build;
-    if(!meshes.has(key)){meshes.set(key,null);Promise.all(it.parts.map(p=>fetch(`/api/equipment-mesh/${it.build}/${p}.stl`).then(r=>r.text()).then(t=>[p,parseStl(t)])))
-      .then(list=>{meshes.set(key,Object.fromEntries(list));redraw();}).catch(()=>meshes.delete(key));}
-    return meshes.get(key)&&{item:it,parts:meshes.get(key)};
+  // Rack view (Brian 2026-10-19): every slot shows its own effective tray. Without slot tray settings it is the library
+  // item's own build. With them (Place on tray), it is an exact render of those settings when one already exists
+  // (looked up only, never rendered here: no automatic builds), otherwise a box sketch of the same settings.
+  const placed=new Map(); // item build + tray json -> null (looking up) | {id,parts} (exact render) | {sketch:true}
+  function meshesOf(id,parts){
+    if(!meshes.has(id)){meshes.set(id,null);Promise.all(parts.map(p=>fetch(`/api/equipment-mesh/${id}/${p}.stl`).then(r=>{if(!r.ok)throw Error(r.status);return r.text();}).then(t=>[p,parseStl(t)])))
+      .then(list=>{meshes.set(id,Object.fromEntries(list));redraw();if([...placed.values()].some(f=>f&&f.id===id))changed();}).catch(()=>meshes.delete(id));}
+    return meshes.get(id);
   }
+  const hasTray=a=>!!a?.tray&&typeof a.tray==='object'&&Object.keys(a.tray).length>0;
+  // Library spec with the slot's tray choices on top (equipment.allocation_spec; TrayPlacement.values fills defaults).
+  function effectiveSpec(spec,tray){const T=window.TrayPlacement;return T?{...spec,...T.values(spec,tray)}:{...spec,...tray};}
+  function lookup(it,a){
+    const key=it.build+'|'+JSON.stringify(a.tray);
+    if(!placed.has(key)){placed.set(key,null);
+      fetch('/api/equipment-placement-mesh',{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify({item:it.id,tray:a.tray})})
+        .then(r=>r.json()).then(out=>{placed.set(key,out&&out.cached?{id:out.id,parts:out.parts}:{sketch:true});redraw();if(out&&out.cached)changed();})
+        .catch(()=>placed.set(key,{sketch:true}));}
+    return {key,found:placed.get(key)};
+  }
+  const sketches=new Map();
+  function sketchParts(key,a,it){
+    if(sketches.has(key))return sketches.get(key);const T=window.TrayPlacement;if(!T)return null;const M=window.LabRaxStudio.Mesh;
+    const mesh=flat=>{const m=new M();for(let i=0;i+8<flat.length;i+=9)m.tri(flat.slice(i,i+3),flat.slice(i+3,i+6),flat.slice(i+6,i+9));return m;};
+    const out=Object.fromEntries(Object.entries(T.rackSketch(it.spec,a.tray)).map(([p,flat])=>[p,mesh(flat)]));
+    sketches.set(key,out);return out;
+  }
+  function partsFor(a){
+    const it=items.find(i=>i.id===a.equipment);if(!it)return null;
+    if(!hasTray(a)){const parts=meshesOf(it.build,it.parts);return parts&&{item:it,spec:it.spec,parts,key:it.build,view:'library'};}
+    const spec=effectiveSpec(it.spec,a.tray),{key,found}=lookup(it,a);
+    if(found&&found.id){const parts=meshesOf(found.id,found.parts);if(parts)return {item:it,spec,parts,key:found.id,view:'exact'};}
+    const parts=sketchParts(key,a,it);return parts&&{item:it,spec,parts,key:'sketch-'+hash(key),view:'sketch'};
+  }
+  function hash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(36);}
+  // workspace.js asks what a slot shows ('library' | 'exact' | 'sketch'); tray-placement.js calls refresh() after an
+  // exact preview or STL build, so a slot whose settings now have an exact render switches from the sketch to it.
+  window.EquipmentRackView={
+    status(a){if(!String(a?.equipment).startsWith('eq-'))return null;if(!hasTray(a))return 'library';const it=items.find(i=>i.id===a.equipment);if(!it)return null;
+      const f=placed.get(it.build+'|'+JSON.stringify(a.tray));return f&&f.id&&meshes.get(f.id)?'exact':'sketch';},
+    refresh(){for(const[k,v]of placed)if(!v||v.sketch)placed.delete(k);redraw();}
+  };
   // Same as rack-studio.js rgb() (not exported there).
   function rgb(hex,fallback){return /^#[0-9a-f]{6}$/i.test(hex||'')?[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255):rgb(fallback,'#657582');}
   function redraw(){window.dispatchEvent(new Event('resize'));}
+  function changed(){window.dispatchEvent(new Event('equipment-rack-view'));}
   // Image window and selection outline from the plate mesh's own front face (lowest-Y vertices): actual width, height and U span.
   const fronts=new WeakMap();
   // Port and keystone openings in the same frame (X from centre, Z above the plate base), as equipment_tray.scad cuts them.
@@ -364,15 +399,15 @@
     R.prototype.objects=function(scene,ms,rack,selectedSlot){
       const objects=base.apply(this,arguments);
       for(const a of rack?.placements||[]){
-        if(!String(a.equipment).startsWith('eq-'))continue;const got=partsFor(a.equipment);if(!got)continue;
+        if(!String(a.equipment).startsWith('eq-'))continue;const got=partsFor(a);if(!got)continue;
         const proto=objects.find(o=>o.slot===a.slot&&o.key==='studio-tray');if(!proto)continue;
         for(let i=objects.length-1;i>=0;i--)if(objects[i].slot===a.slot&&String(objects[i].key).startsWith('studio-'))objects.splice(i,1);
         const ap=a.assembly?.appearance||{},z=(rack.slots-(a.slot+a.span-1))*44.45,sel=selectedSlot>=a.slot&&selectedSlot<a.slot+a.span;
         // Preview only: the image is drawn on the front faceplate; wizard STLs never contain artwork.
-        for(const[p,mesh]of Object.entries(got.parts)){const plate=p!=='tray',face=p==='faceplate'?frontFace(mesh,got.item.spec):null,front=ap.artwork?face?.art:null;
+        for(const[p,mesh]of Object.entries(got.parts)){const plate=p!=='tray',face=p==='faceplate'?frontFace(mesh,got.spec):null,front=ap.artwork?face?.art:null;
           // The renderer caches GPU buffers by key, so each build/part needs its own key (else the Pi4 plate buffer is reused).
-          objects.push({...proto,key:`studio-eq-${got.item.build}-${p}`,mesh,t:[0,0,z],kind:plate?'plate':'tray',selected:p==='faceplate'&&sel,selRect:face?.sel,
-            color:rgb(plate?ap.faceplate:ap.tray,plate?'#4e75a3':'#4d8e6e'),art:front?ap.artwork:null,artWindow:front});}
+          objects.push({...proto,key:`studio-eq-${got.key}-${p}`,mesh,t:[0,0,z],kind:plate?'plate':'tray',selected:p==='faceplate'&&sel,selRect:face?.sel,
+            color:p==='openings'?[0.12,0.13,0.15]:rgb(plate?ap.faceplate:ap.tray,plate?'#4e75a3':'#4d8e6e'),art:front?ap.artwork:null,artWindow:front});}
       }
       return objects;
     };

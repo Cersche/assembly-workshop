@@ -24,7 +24,7 @@ A local app that runs on this PC. You configure a Lab Rax rack, pick a slot, and
 
 0. **Cable management Steps 1–5 built** (views and guides, ports, cables and exits, suggestions, wiring sheet); see `work/cable-management/`. Equipment wizard Option 1 steps 1–4 and quality sliders committed (6f4f26c).
 1. Automated tests for the page-level logic (save controller, viewer startup). These are only checked by hand today.
-2. Per-instance component editing: mostly covered now. Each slot already keeps its own hardware pins/inputs/revisions, tray placement (Place on tray), port overrides and appearance. Remaining gap: the rack view still draws the library mesh, not the slot's placed tray ("Placement not rendered yet"). Brian to say if anything else is missing.
+2. Per-instance component editing: mostly covered now. Each slot already keeps its own hardware pins/inputs/revisions, tray placement (Place on tray), port overrides and appearance. Rack view now draws each slot's own tray (exact render if one exists, else a box sketch; 2026-10-19, [report](work/equipment-wizard-options/Wizard_Fixes_Report.md)). Brian to say if anything else is missing.
 3. Done 2026-10-19: backup AssemblyWorkshop_20261019-2058 (both locations, verified) and 8765 restarted via start.bat (PID 27700).
 4. Done: app README and hardware-records.md refreshed (Codex task 15).
 

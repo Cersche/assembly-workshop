@@ -124,6 +124,22 @@ def allocation_request(data_dir, payload):
     return clean(spec)
 
 
+def cached_allocation_render(data_dir, payload):
+    """Rack view: does an exact OpenSCAD render of this slot's settings already exist? Looks only; never renders.
+    Standard quality is tried first, then the other export levels. -> {'cached': bool, 'id', 'parts', 'quality'}"""
+    for level in [DEFAULT_QUALITY] + [q for q in EXPORT_QUALITY if q != DEFAULT_QUALITY]:
+        try:
+            s = allocation_request(data_dir, dict(payload, quality=level) if isinstance(payload, dict) else payload)
+        except ValueError as exc:
+            return {'cached': False, 'error': str(exc)}
+        identity = hashlib.sha256(source(s).encode('utf-8')).hexdigest()
+        report = Path(data_dir) / 'equipment-revisions' / identity / 'revision.json'
+        if report.is_file():
+            parts = json.loads(report.read_text(encoding='utf-8')).get('parts', [])
+            return {'cached': True, 'id': identity, 'parts': parts, 'quality': level}
+    return {'cached': False}
+
+
 def check_allocation(data_dir, payload):
     """Run the same checks as a build (clean()) without rendering, writing or saving anything."""
     try:

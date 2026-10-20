@@ -57,8 +57,8 @@ test('equipment list: explicit rebuild posts original identity once and preserve
   assert.ok(h.allText().includes('Created ‘Router (current template copy)’. Existing placements are unchanged. PROPOSED — UNVALIDATED; fit and strength UNKNOWN.'));
   assert.deepEqual(h.draft,before);assert.deepEqual(clone(h.box.current()),before.wizard);
   h.box.seed(h.initial.build,h.meshesReady);h.box.seed(h.copy.build,{tray:{copy:true}});
-  assert.equal(h.box.parts(h.initial.id).item.build,h.initial.build);
-  assert.equal(h.box.parts(h.copy.id).item.build,h.copy.build);
+  assert.equal(h.box.parts({equipment:h.initial.id}).item.build,h.initial.build);
+  assert.equal(h.box.parts({equipment:h.copy.id}).item.build,h.copy.build);
   assert.equal(h.calls.filter(c=>c.options).length,1);assert.equal(h.button().disabled,false);
 });
 test('equipment list: double click and focus refresh while rebuilding do not duplicate requests',async()=>{

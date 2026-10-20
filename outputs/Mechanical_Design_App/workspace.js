@@ -424,7 +424,7 @@
     const title=document.createElement('h2');title.textContent=selectedSlot?'Slot '+String(selectedSlot).padStart(2,'0'):rack.name;host.append(title);
     if(!selectedSlot){host.append(paragraph(rack.slots+' slots · '+rack.placements.length+' assigned assemblies'),button('Edit rack settings',()=>openRackDialog(true),'secondary'));appendExtensionControls(host,rack);appendGuideControls(host,rack);appendCableSetup(host,rack);appendRackStlExport(host,rack);appendReleaseUndo(host,rack);return;}
     const placement=assigned(rack,selectedSlot);
-    if(placement){host.append(paragraph((placement.assembly?.name||'Raspberry Pi 4')+' · slots '+placement.slot+'–'+(placement.slot+placement.span-1)),paragraph('Reference allocation. Installed fit, service access and load capacity are UNKNOWN.'),button(String(placement.equipment).startsWith('eq-')?'Place on tray':'Open assembly',()=>openAssembly(placement),'primary'),button('Slot actions ⋯',e=>showSlotMenu(selectedSlot,e.currentTarget),'secondary'));if(trayNotRendered(placement))host.append(paragraph(TRAY_NOT_RENDERED,'notice'));}
+    if(placement){host.append(paragraph((placement.assembly?.name||'Raspberry Pi 4')+' · slots '+placement.slot+'–'+(placement.slot+placement.span-1)),paragraph('Reference allocation. Installed fit, service access and load capacity are UNKNOWN.'),button(String(placement.equipment).startsWith('eq-')?'Place on tray':'Open assembly',()=>openAssembly(placement),'primary'),button('Slot actions ⋯',e=>showSlotMenu(selectedSlot,e.currentTarget),'secondary'));if(traySketch(placement))host.append(paragraph(TRAY_SKETCH,'notice'));}
     else{host.append(paragraph('An open slot in your rack. Choose equipment to begin a guided assembly.'),button('Create assembly',startWizard,'primary'));}
     if(placement&&!String(placement.equipment).startsWith('eq-')&&!persistedAssemblyIds.has(placement.assembly.id)){host.querySelector('button.primary').disabled=true;host.append(paragraph('Use Save to keep this allocation before opening its hardware editor.'));}
     if(placement)appendPortControls(host,rack,placement);
@@ -454,8 +454,10 @@
   // library item) and, when its faceplate height changed, the slot span. Draft only; Save keeps it.
   // Brian 2026-10-19: the rack view shows the library item's mesh; a slot's own tray placement is not rendered
   // automatically. Screening and ports already use the slot's settings, so say which view lags behind.
-  const TRAY_NOT_RENDERED='Placement not rendered yet: the rack view shows the library item’s mesh, not this slot’s tray placement (position, rotation, height, keystones). Screening and ports use this slot’s settings. Place on tray → Render exact preview shows it.';
-  function trayNotRendered(placement){return String(placement?.equipment).startsWith('eq-')&&!!placement.tray&&Object.keys(placement.tray).length>0;}
+  // Rack view (equipment-wizard.js EquipmentRackView): a slot with its own tray settings shows an exact render of them when one
+  // already exists, else a box sketch of them. Only the sketch gets this note.
+  const TRAY_SKETCH='Rack view shows a box sketch of this slot’s tray settings (position, rotation, height, keystones, ports). Place on tray → Render exact preview draws the exact shape here.';
+  function traySketch(placement){return window.EquipmentRackView?.status(placement)==='sketch';}
   window.applyTrayPlacement=function(rackId,placementId,tray,newSpan){
     const rack=active();if(!rack||rack.id!==rackId)throw Error('Select the original rack before applying this placement.');
     let placement=rack.placements.find(p=>p.id===placementId);if(!placement)throw Error('This allocation is no longer available.');
@@ -474,7 +476,6 @@
       const box=document.createElement('div');box.className='clearance-result clearance-'+r.level;
       const head=document.createElement('strong');head.textContent=labels[r.level]+' · '+where;box.append(head);
       for(const c of r.checks)box.append(paragraph((c.level==='ok'?'✓ ':c.level==='unknown'?'? ':'⚠ ')+c.text,'clearance-check clearance-'+c.level));
-      if(trayNotRendered(p))box.append(paragraph(TRAY_NOT_RENDERED));
       box.append(paragraph(r.note));host.append(box);
     }
     appendCableSuggestions(host,rack);appendWiringSheet(host,rack);appendPartsOrder(host,rack);}
@@ -1349,5 +1350,8 @@
   rackCanvas.onkeydown=e=>{if(e.key==='ArrowLeft')yaw-=.12;else if(e.key==='ArrowRight')yaw+=.12;else if(e.key==='ArrowUp')pitch=Math.min(1.1,pitch+.12);else if(e.key==='ArrowDown')pitch=Math.max(-1.1,pitch-.12);else return;e.preventDefault();drawSoon();};
   const setViewButtons=mode=>{viewMode=mode;for(const [id,m] of [['frontRackView','front'],['rearRackView','rear'],['resetRackView','3d']])byId(id).setAttribute('aria-pressed',String(mode===m));};
   byId('resetRackView').onclick=()=>{perspectiveCamera=true;yaw=-.48;pitch=.24;zoom=1;setViewButtons('3d');drawSoon();};new ResizeObserver(drawSoon).observe(rackCanvas);
+  // equipment-wizard.js asks for a redraw with a 'resize' event when slot meshes arrive, and sends 'equipment-rack-view'
+  // when a slot switches between its box sketch and an exact render (the inspector note depends on it).
+  window.addEventListener('resize',drawSoon);window.addEventListener('equipment-rack-view',()=>{drawSoon();renderProperties();});
   Promise.all([api('workspace-capabilities'),api('rack-workspace'),api('project')]).then(([caps,data,template])=>{if(!caps.independent_assemblies||caps.version!==2||caps.studio_save_version!==1)throw Error('Restart the app server to enable this updated interface.');capable=true;byId('rackHistory').hidden=!caps.save_history;legacyTemplate=template;documentState=data;persistedAssemblyIds=new Set(data.racks.flatMap(r=>r.placements.map(p=>p.assembly.id)));activeId=data.racks[0]?.id||null;render();if(!activeId)dashboard();}).catch(e=>{notify('Rack layouts unavailable: '+e.message,true);byId('saveLayout').disabled=true;});
 })();

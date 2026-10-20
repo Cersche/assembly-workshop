@@ -80,12 +80,38 @@ test('wiring: window opens on place/edit, blocks while a problem shows, never sa
   assert.ok(wiz.includes('window.EquipmentPainter='));
   assert.ok(!wiz.includes('function trayChoices')&&!wiz.includes('Tray choices (temporary'));
 });
-test('rack view keeps the library mesh and says the slot placement is not rendered yet (Brian 2026-10-19)',()=>{
-  const ws=read('workspace.js'),wiz=read('equipment-wizard.js');
-  assert.match(ws,/Placement not rendered yet/);
-  assert.equal((ws.match(/trayNotRendered\(/g)||[]).length,3); // definition, inspector, review
-  // No automatic slot builds: the rack-view patch only fetches the library item's own build.
-  const patch=wiz.slice(wiz.indexOf('function partsFor('),wiz.indexOf('function open()'));
-  assert.ok(patch.includes('function patchRenderer(')&&!/equipment-preview|equipment-build|\.tray/.test(patch));
-  assert.match(patch,/fetch\(`\/api\/equipment-mesh\/\$\{it\.build\}/);
+test('rack view draws each slot\'s own tray: exact render if one exists, else a box sketch; never renders (2026-10-19)',()=>{
+  const ws=read('workspace.js'),wiz=read('equipment-wizard.js'),tp=read('tray-placement.js'),app=read('app.py');
+  assert.ok(!/Placement not rendered yet|trayNotRendered/.test(ws));
+  assert.match(ws,/EquipmentRackView\?\.status\(placement\)==='sketch'/);
+  const patch=wiz.slice(wiz.indexOf('const placed=new Map()'),wiz.indexOf('function open()'));
+  // Lookup only: the rack view never asks for a preview render or an STL build.
+  assert.ok(patch.includes("'/api/equipment-placement-mesh'")&&!/equipment-preview|equipment-build/.test(patch));
+  assert.ok(patch.includes('const got=partsFor(a);')&&patch.includes('T.rackSketch(it.spec,a.tray)'));
+  assert.match(patch,/frontFace\(mesh,got\.spec\)/); // images and outline use the slot's openings
+  assert.ok(app.includes("'/api/equipment-placement-mesh'")&&app.includes('equipment.cached_allocation_render('));
+  assert.equal((tp.match(/window\.EquipmentRackView\?\.refresh\(\)/g)||[]).length,2); // after exact preview and after build
+  // Mesh arrival really redraws the rack, and a sketch -> exact switch refreshes the inspector note.
+  assert.ok(ws.includes("window.addEventListener('resize',drawSoon);window.addEventListener('equipment-rack-view',()=>{drawSoon();renderProperties();});"));
+  assert.ok(wiz.includes("new Event('equipment-rack-view')"));
+});
+const bounds=flat=>{const lo=[Infinity,Infinity,Infinity],hi=[-Infinity,-Infinity,-Infinity];
+  for(let i=0;i<flat.length;i+=3)for(let k=0;k<3;k++){lo[k]=Math.min(lo[k],flat[i+k]);hi[k]=Math.max(hi[k],flat[i+k]);}return [lo,hi];};
+test('rackSketch follows the slot tray settings in equipment_tray.scad coordinates',()=>{
+  const lib=T.rackSketch(SPEC,{});
+  assert.deepEqual(Object.keys(lib).sort(),['faceplate','openings','tray']);
+  assert.deepEqual(bounds(lib.faceplate),[[-126,-4,0],[126,0,44.45-2.45]]);  // 1U plate
+  assert.deepEqual(bounds(lib.tray)[0].slice(0,2),[-(85/2+8),0]);           // tray_w = 2*(fp_w/2+margin)
+  assert.equal(bounds(lib.tray)[1][1],12+56+8);                             // tray_d = front_gap+fp_d+margin
+  const h=(44.45-2.45)/2;
+  assert.deepEqual(bounds(lib.openings),[[-107.4,-4.2,h-8.3],[-92.6,0.2,h+8.3]]); // keystone at -100 (14.8 x 16.6)
+  const moved=T.rackSketch(SPEC,{dev_off_x:-20,dev_off_y:15,dev_rot:90,u:2,keystones:[],rear_support:true});
+  assert.equal(bounds(moved.faceplate)[1][2],2*44.45-2.45);
+  assert.equal(moved.openings,undefined);
+  assert.equal(bounds(moved.tray)[0][0],-(20+56/2+8));                      // rotated: fp_w = dev_d
+  assert.equal(bounds(moved.tray)[1][1],240);                               // rear support: tray to the rear posts
+  assert.deepEqual(bounds(moved.rear_bracket),[[-126,240,0],[126,244,2*44.45-2.45]]);
+  const ported=T.rackSketch({...SPEC,keystones:[],ports:[{x:10,z:20,w:15,h:8,r:1}]},null);
+  assert.deepEqual(bounds(ported.openings),[[2.5,-4.2,16],[17.5,0.2,24]]);
+  for(const flat of Object.values(moved))assert.equal(flat.length%9,0);     // whole triangles
 });

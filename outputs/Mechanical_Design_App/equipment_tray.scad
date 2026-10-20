@@ -110,12 +110,19 @@ KS_GOLD=[
   [7.40,2.50,[[[45.500,4.080],[45.500,0.080],[38.691,0.080],[38.691,0.000],[7.251,0.000],[7.251,0.080],[1.000,0.080],[1.000,4.080],[7.551,4.080],[7.551,2.250],[9.143,2.250],[9.143,6.600],[9.209,7.168],[9.370,7.630],[9.402,7.705],[9.662,8.120],[9.712,8.185],[9.927,8.400],[10.059,8.531],[10.124,8.582],[10.538,8.841],[10.614,8.873],[11.075,9.034],[11.643,9.100],[13.493,9.100],[14.293,9.900],[33.393,9.900],[33.893,10.400],[34.493,10.400],[35.062,10.335],[35.523,10.172],[35.599,10.141],[36.013,9.882],[36.078,9.831],[36.425,9.486],[36.474,9.420],[36.735,9.005],[36.767,8.930],[36.928,8.467],[36.993,7.900],[36.993,2.250],[38.551,2.250],[38.551,4.080],[42.599,4.080]]]],
   [9.90,0.60,[[[45.500,4.080],[45.500,0.080],[38.691,0.080],[38.691,0.000],[7.251,0.000],[7.251,0.080],[1.000,0.080],[1.000,4.080],[7.551,4.080],[7.551,2.250],[38.551,2.250],[38.551,4.080],[42.635,4.080]]]]
 ];
-module ks_golden(){for(x=keystones)translate([x,0,plate_h/2])multmatrix([[1,0,0,0],[0,0,1,-4.08],[0,-1,0,25.09],[0,0,0,1]])
- intersection(){
+// Depths are shifted by -0.08 before polygon() and the 0.08 is added back in the 3D transform: OpenSCAD 2021 snaps 2D
+// points to a 1/65536 mm grid, which put the plate-flush faces (Z 0.08 / 4.08) 0.0000134 mm off the plate and left a
+// non-manifold sliver edge. Shifted, those faces sit at exactly 0 and 4.0 (on the grid); the shape is unchanged.
+// The block is cut 0.1 mm oversize in height, then clipped in rack coordinates by the same box as ks_box_cut, so its
+// top/bottom faces are the very same numbers as the plate opening (the transform alone landed them a hair off).
+module ks_golden(){for(x=keystones)intersection(){
+ translate([x,0,plate_h/2])multmatrix([[1,0,0,0],[0,0,1,-4],[0,-1,0,25.09],[0,0,0,1]])intersection(){
   union()for(b=KS_GOLD)translate([b[0],0,0])rotate([90,0,90])linear_extrude(height=b[1])for(pg=b[2])
-   translate([b[1]>10&&min([for(q=pg)q[0]])>30?-ks_tight:0,0])polygon(pg);  // opening band, hook side
-  translate([-10.5,25.09-18.5,-0.01])cube([21,33.5,10.42]);
- }}
+   translate([b[1]>10&&min([for(q=pg)q[0]])>30?-ks_tight:0,0])polygon([for(q=pg)[q[0],q[1]-0.08]]);  // opening band, hook side
+  translate([-10.5,25.09-18.6,-0.09])cube([21,33.7,10.42]);
+ }
+ translate([x-10.5,-plate_t-1,plate_h/2-15])cube([21,plate_t+16,33.5]);
+}}
 module ks_box_cut(){for(x=keystones)translate([x-10.5,-plate_t-0.01,plate_h/2-15])cube([21,plate_t+0.02,33.5]);}
 module plate_joint_cut(){if(joint=="screw")for(x=joint_x)translate([x,-0.1,tray_z+14])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.2);}
 

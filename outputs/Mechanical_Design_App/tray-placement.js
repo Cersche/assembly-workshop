@@ -91,7 +91,19 @@
     if(jacks.length)sets.push({v:jacks,color:[30,32,36],alpha:1});
     return sets;
   }
-  const api={KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,problems,snap,schematic,box};
+  // Rack view sketch of one slot's effective tray (equipment-wizard.js draws it when no exact render exists):
+  // flat triangle lists in equipment_tray.scad coordinates, the same frame as the rendered STLs.
+  // Openings are dark blocks where the SCAD cuts keystones (ks_w x ks_h = 14.8 x 16.6, centred) and ports.
+  function rackSketch(spec,tray){
+    const v=values(spec,tray),L=layout(spec,v),sets=schematic(spec,v),out={faceplate:sets[0].v,tray:sets[1].v};
+    const holes=[];
+    for(const x of v.keystones||[])if(fin(+x))holes.push(...box(x-7.4,-PLATE_T-0.2,L.plate_h/2-8.3,x+7.4,0.2,L.plate_h/2+8.3));
+    for(const p of spec.ports||[]){const o=[+p.x,+p.z,+p.w,+p.h];if(o.every(fin))holes.push(...box(o[0]-o[2]/2,-PLATE_T-0.2,o[1]-o[3]/2,o[0]+o[2]/2,0.2,o[1]+o[3]/2));}
+    if(holes.length)out.openings=holes;
+    if(v.rear_support)out.rear_bracket=box(-PLATE_HALF,RACK_DEPTH,0,PLATE_HALF,RACK_DEPTH+PLATE_T,L.plate_h); // to_rear(): plate mirrored about mid-depth
+    return out;
+  }
+  const api={KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,problems,snap,schematic,box,rackSketch};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.TrayPlacement=api;
   if(typeof document==='undefined')return;
@@ -190,12 +202,12 @@
     exact.onclick=async()=>{exact.disabled=true;setStatus('Rendering with OpenSCAD… this can take a minute. Nothing is saved.');
       try{if(current().length)throw Error('Fix the problems listed first.');const key=exactKey(),r=await post('/api/equipment-preview',exportRequest()),out=await r.json();if(!r.ok)throw Error(out.error||'Preview failed');
         const sets=[];for(const p of out.parts){const buf=await (await fetch(`/api/equipment-mesh/${out.id}/${p}.stl`)).arrayBuffer();sets.push({v:window.EquipmentPainter.parseStl(buf),color:p==='tray'?[77,142,110]:[78,117,163],alpha:1});}
-        state.exact={key,sets};draw3D();setStatus('Exact preview ready. Change any value to go back to the live sketch.');}
+        state.exact={key,sets};draw3D();window.EquipmentRackView?.refresh();setStatus('Exact preview ready. Change any value to go back to the live sketch.');}
       catch(e){setStatus('Problem: '+e.message);}finally{exact.disabled=false;}};
     const exp=h('button',{type:'button',id:'tpExport'},'Generate proposed STL files');
     exp.onclick=async()=>{if(current().length){update();return;}exp.disabled=true;setStatus('Checking, then rendering with OpenSCAD…');
       try{await serverCheck();const r=await post('/api/equipment-build',exportRequest());if(!r.ok)throw Error((await r.json()).error||'Build failed');
-        const url=URL.createObjectURL(await r.blob()),a=document.createElement('a');a.href=url;a.download=(name||'equipment').replace(/[^\w-]+/g,'_')+'-slot-'+state.slot+'-stl.zip';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+        const url=URL.createObjectURL(await r.blob()),a=document.createElement('a');a.href=url;a.download=(name||'equipment').replace(/[^\w-]+/g,'_')+'-slot-'+state.slot+'-stl.zip';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);window.EquipmentRackView?.refresh();
         setStatus(`Done (${exportNote()}). PROPOSED — UNVALIDATED STLs for these window values; export.json in the zip records the quality.`+' The rack draft is unchanged until you Apply and Save.');}
       catch(e){setStatus('Problem: '+e.message);}finally{update();}};
     const apply=h('button',{type:'button',id:'tpApply',class:'primary'},'Apply to draft');
