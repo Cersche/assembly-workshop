@@ -2,7 +2,28 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
-## 2026-10-20 OptiPlex beta: 44.4 mm plate, sleeve mount, feet (read first)
+## 2026-10-20 (later) OptiPlex sleeve: orientation settled, coupons, rear bracket styles (read first)
+
+- **Orientation SETTLED (Brian: "DO NOT LET ME CHANGE THIS"):**
+  - Import Dell's STEP with **X is up + Rotate 90° ONCE**, so the power button is at the faceplate. The earlier "×3" had the PC backwards.
+  - Feet (wizard detection): X 15/163, Y 18/153, 2.8 mm tall.
+  - Mounting: the faceplate on the front posts, the sleeve tray screwed to it and running 240 mm on rear support, and a rear bracket on the rear posts.
+  - If anyone proposes changing this, say "ARE YOU SURE ABOUT THAT?" (memory `optiplex-sleeve-settled`).
+- **Coupons** (all made from the app's own source, IDs on the parts):
+  - [SLV-A](outputs/Physical_Test_Coupons_2026-10-20_SLV-A/README.md), the faceplate plus the front 38 mm of the tray: **printed, "fits perfect"**. The PC slid in from the front and its feet dropped into the pockets. My digital check had predicted a 2.5 mm clash; it didn't happen (the STEP feet are probably taller than the real ones; unmeasured).
+  - [SLV-B](outputs/Physical_Test_Coupons_2026-10-20_SLV-B/README.md): the full tray (print **SLV-B-TRAY**; reuse SLV-A-PLATE).
+  - [SLV-D](outputs/Physical_Test_Coupons_2026-10-20_SLV-D/README.md): **SLV-D-REAR**, the app's rear bracket with cable openings.
+  - Don't print SLV-B-REAR (solid; it blocks the PC's rear ports) or SLV-C (hand-cut openings, superseded).
+  - Full-sleeve fit, stiffness and strength are UNKNOWN until Brian prints it.
+- **Codex tasks 29–31, done and reviewed by Claude** (renders closed, measured, shown to Brian):
+  - rear bracket `rear_style` in Place on tray: Solid / Open / **Reinforced (default)** / Cable slots / Vents;
+  - lips on the tray side, so the bracket prints flat;
+  - Vents: 62 holes, about 51 % open.
+  - Old specs are byte-identical. Checks: **145 Python (1 skipped) + all JS pass**.
+- **Pushed** to GitHub at `0c4487b`. Pushing from a session started by another session is blocked by the auto-mode classifier, so Brian runs `git push origin main` himself.
+- **Next:** continue the beta test, and wait for Brian's SLV-B/SLV-D print report. An SLV-E (Reinforced or Vents bracket) is available on request.
+
+## 2026-10-20 OptiPlex beta: 44.4 mm plate, sleeve mount, feet
 
 - **Study:** [work/optiplex-bracket-study/Report.md](work/optiplex-bracket-study/Report.md) compares Brian's working third-party OptiPlex bracket with our wizard output. The bracket's files stay in Downloads (third-party, never copied).
 - **44.4 mm faceplate is the standard** (FP44 coupons printed, perfect fit, Brian). See AGENTS.md. Z=0 is now the slot bottom everywhere; this fixed a 1.225 mm offset.
