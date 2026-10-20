@@ -75,6 +75,28 @@ jx=min(40,tray_w/2-12); joint_x=[-jx,jx];
 tongue_w=12; tongue_depth=7; tongue_h=3; tongue_z=tray_z+3.5;
 slot_clear=0.3; boss_d=9; m3_clear=3.4; joint_pilot=4.0;  // 4.0 = the printed, well-fitting Pi4 trial
 
+// @rear-openings-begin
+// PROPOSED clearances; bracket stiffness, fit and strength UNKNOWN.
+rear_openings=false;
+rear_margin=4; rear_band=3.5; rear_ear_keep=13; rear_radius=2; rear_min_window=10;
+rear_limit=hole_x-10/2-rear_ear_keep;
+rear_joint_half=max(boss_d/2,tongue_w/2)+rear_margin;
+rear_joint_top=max(tray_z+14+boss_d/2,tongue_z+tongue_h)+rear_margin;
+function rear_windows()=[for(i=[0:u-1])let(
+ lo=max(plate_bottom,i*rack_pitch)+rear_band,
+ hi=min(plate_bottom+plate_h,(i+1)*rack_pitch)-rear_band,
+ top=i*rack_pitch+rear_joint_top,
+ split=min(i*rack_pitch+rack_pitch/2,top-rear_radius*2),
+ left=min(joint_x),right=max(joint_x))
+ for(q=[[-rear_limit,rear_limit,max(lo,top),hi],
+ [-rear_limit,left-rear_joint_half,lo,split],
+ [left+rear_joint_half,right-rear_joint_half,lo,split],
+ [right+rear_joint_half,rear_limit,lo,split]])
+ if(q[1]-q[0]>=rear_min_window && q[3]-q[2]>=rear_min_window)q];
+module rear_windows2d(){for(q=rear_windows())
+ translate([(q[0]+q[1])/2,(q[2]+q[3])/2])rrect(q[1]-q[0],q[3]-q[2],rear_radius);}
+// @rear-openings-end
+
 module capsule2d(len=10,diam=7){hull(){translate([-(len-diam)/2,0])circle(d=diam);translate([(len-diam)/2,0])circle(d=diam);}}
 module rrect(w,h,r){rr=min(r,w/2-0.01,h/2-0.01);if(rr<=0)square([w,h],center=true);else offset(r=rr)square([w-2*rr,h-2*rr],center=true);}
 // Mirror front-of-tray features to the rear (about the rack's mid-depth).
@@ -86,6 +108,9 @@ module plate2d(rear=false,plain=false){
  difference(){
   hull()for(sx=[-1,1],sz=[-1,1])translate([sx*(plate_w/2-plate_r),plate_center+sz*(plate_h/2-plate_r)])circle(r=plate_r+nudge);
   for(i=[0:u-1],dz=[-hole_dz,hole_dz],x=[-hole_x,hole_x])translate([x,i*rack_pitch+rack_pitch/2+dz])capsule2d();
+// @rear-openings-begin
+  if(plain && rear_support && rear_openings)rear_windows2d();
+// @rear-openings-end
   if(!plain){
    if(sleeve)translate([dev_off_x,(sl_bottom+sl_window_top)/2])square([2*sl_half,sl_window_top-sl_bottom],center=true);
    for(p=ports)translate([p[0],p[1]])rrect(p[2],p[3],p[4]);

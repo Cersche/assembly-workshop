@@ -61,7 +61,7 @@ def _port_id(port, face, index):
 # model file, holes, ports); these tray choices belong to each slot allocation's "tray" settings. Older
 # library specs still carry them, and those values stay the defaults when an allocation has none.
 PLACEMENT_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'standoff', 'insert_pilot', 'board_t',
-                  'joint', 'keystones', 'rear_support', 'u')
+                  'joint', 'keystones', 'rear_support', 'rear_openings', 'u')
 
 
 def export_quality(s):
@@ -85,7 +85,7 @@ def placement_settings(value):
             if not isinstance(v, list) or len(v) > 12 or any(type(x) not in (int, float) or isinstance(x, bool) for x in v):
                 raise ValueError('Keystones must be a list of positions.')
             v = list(v)
-        elif key == 'rear_support':
+        elif key in ('rear_support', 'rear_openings'):
             if type(v) is not bool:
                 raise ValueError('Rear support must be true or false.')
         elif key in ('device_mount', 'joint'):
@@ -232,7 +232,10 @@ def validate_foot_pockets(spec, tray_w):
 
 def template_source(spec):
     # New builds always use the current slot-bottom template; saved revisions remain immutable.
-    return TEMPLATE.read_text(encoding='utf-8')
+    text = TEMPLATE.read_text(encoding='utf-8')
+    if not spec.get('rear_openings'):
+        text = re.sub(r'// @rear-openings-begin\n.*?// @rear-openings-end\n(?:\n)?', '', text, flags=re.S)
+    return text
 
 
 def clean(spec):
@@ -267,6 +270,10 @@ def clean(spec):
             h = num(f.get('h'), 'Foot height', 0.3, s['dev_h'])
             s['feet'].append({'x': x, 'y': y, 'w': w, 'd': d, 'h': h})
     s['rear_support'] = spec.get('rear_support') is True
+    if s['rear_support'] and 'rear_openings' in spec:
+        if not isinstance(spec['rear_openings'], bool):
+            raise ValueError('rear_openings must be a boolean.')
+        s['rear_openings'] = spec['rear_openings']
     if s['rear_support']:
         if s['joint'] == 'single':
             raise ValueError('Rear-post support needs the screw joint (a 240 mm single print is not offered).')
@@ -387,6 +394,8 @@ def source(s):
         return json.dumps(v)
     over = {k: s[k] for k in ('dev_w', 'dev_d', 'dev_h', 'hole_d', 'standoff', 'insert_pilot', 'board_t', 'u',
                               'holes', 'keystones', 'device_mount', 'joint', 'rear_support', 'coupon')}
+    if s.get('rear_openings'):
+        over['rear_openings'] = True
     if s.get('feet'):
         over['feet'] = [[f['x'], f['y'], f['w'], f['d'], f['h']] for f in s['feet']]
     # Placement keys are written only when moved/rotated, so default sources stay byte-identical to older ones.

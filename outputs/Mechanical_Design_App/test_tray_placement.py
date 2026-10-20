@@ -439,3 +439,65 @@ class SleeveGuardTests(unittest.TestCase):
                           ('sl_lip_w',P.SLEEVE_LIP_W),('sl_lip_t',P.SLEEVE_LIP_T),('sl_band',P.SLEEVE_BAND),
                           ('sl_stop_t',P.SLEEVE_STOP_T),('sl_stop_h',P.SLEEVE_STOP_H)]:
             self.assertIn(f'{key}={value:g};',text)
+
+
+class RearOpeningsTests(unittest.TestCase):
+    def test_old_sources_byte_identical_and_new_opt_in(self):
+        archive = HERE.parents[1] / 'docs/archive/codex/2026-10-20/task29/equipment_tray.scad'
+        old = archive.read_text(encoding='utf-8')
+        for mount in eq.MOUNTS:
+            for u in range(1, 6):
+                s = eq.clean(dict(name='Rear test', holes=[[20,20]], dev_w=85, dev_d=100, dev_h=20,
+                                  device_mount=mount, joint="screw", rear_support=True, u=u))
+                with mock.patch.object(eq, 'template_source', return_value=old):
+                    expected = eq.source(s)
+                self.assertEqual(eq.source(s), expected)
+                enabled = eq.clean(dict(s, rear_openings=True))
+                self.assertIn('rear_openings=true;', eq.source(enabled))
+                self.assertIn('if(plain && rear_support && rear_openings)rear_windows2d();', eq.source(enabled))
+                self.assertEqual(eq.source(eq.clean(dict(s, rear_openings=False))), expected)
+
+    def test_boolean_and_placement_roundtrip(self):
+        s = dict(name='Rear', holes=[[20,20]], dev_w=85, dev_d=56, dev_h=20, device_mount='inserts', joint='screw')
+        self.assertNotIn('rear_openings', eq.clean(dict(s, rear_openings=True)))
+        self.assertTrue(eq.clean(dict(s, rear_support=True, rear_openings=True))['rear_openings'])
+        self.assertEqual(eq.placement_settings({'rear_openings':False}), {'rear_openings':False})
+        with self.assertRaises(ValueError):
+            eq.clean(dict(s, rear_support=True, rear_openings='true'))
+
+    def test_geometry_clearance_contract(self):
+        # Analytical bounds, not a render or physical test. Tie the calculations to source expressions.
+        text = eq.TEMPLATE.read_text(encoding='utf-8')
+        for formula in ('rear_limit=hole_x-10/2-rear_ear_keep;',
+                        'rear_joint_half=max(boss_d/2,tongue_w/2)+rear_margin;',
+                        'rear_joint_top=max(tray_z+14+boss_d/2,tongue_z+tongue_h)+rear_margin;',
+                        'split=min(i*rack_pitch+rack_pitch/2,top-rear_radius*2)',
+                        'q[1]-q[0]>=rear_min_window && q[3]-q[2]>=rear_min_window'):
+            self.assertIn(formula,text)
+        for floor in (0.5,8.225):
+            for u in range(1,6):
+                for i in range(u):
+                    lo=max(.025,i*44.45)+3.5
+                    hi=min(u*44.45-.025,(i+1)*44.45)-3.5
+                    top=i*44.45+max(floor+14+4.5,floor+3.5+3)+4
+                    split=min(i*44.45+22.225,top-4)
+                    self.assertGreaterEqual(top-(i*44.45+floor+14+4.5),4-1e-10)
+                    self.assertGreaterEqual(top-(i*44.45+floor+6.5),4)
+                    self.assertGreaterEqual(lo-max(.025,i*44.45),3.5-1e-10)
+                    self.assertGreaterEqual(min(u*44.45-.025,(i+1)*44.45)-hi,3.5-1e-10)
+                    self.assertGreaterEqual(top-split,4-1e-10)
+        self.assertAlmostEqual(118.2625-5-13,100.2625)
+        self.assertEqual(max(4.5,12/2)+4,10)
+        # SLV-B sleeve: 4mm boss margin and a 4mm horizontal web, unlike SLV-C.
+        self.assertEqual(max(.5+14+4.5,.5+3.5+3)+4,23)
+
+    def test_slv_b_reference(self):
+        folder = HERE.parent / 'Physical_Test_Coupons_2026-10-20_SLV-B'
+        spec = json.loads((folder / 'SLV-B_spec.json').read_text(encoding='utf-8'))
+        old = eq.source(eq.clean(spec))
+        self.assertNotIn('rear_windows', old)
+        source = eq.source(eq.clean(dict(spec, rear_openings=True)))
+        self.assertIn('rear_openings=true;', source)
+        self.assertIn('rear_joint_top=max(tray_z+14+boss_d/2,tongue_z+tongue_h)+rear_margin;', source)
+        self.assertIn('device_mount="sleeve";', source)
+        self.assertIn('rear_band=3.5;', source)

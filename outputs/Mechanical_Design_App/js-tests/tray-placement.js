@@ -125,3 +125,20 @@ test('204 mm hard width budget includes margin and offsets, with explicit rotate
   assert.match(T.widthProblem({...s,dev_w:188.1}),/204.1/);
   assert.match(T.widthProblem({...s,dev_w:188},T.values(s,{dev_off_x:.1})),/204.2/);
 });
+
+
+test('rear cable openings preserve saved defaults and roundtrip explicit choices',()=>{
+  const old={...SPEC,rear_support:true};
+  const v=T.values(old,null);
+  assert.equal(v.rear_openings,false);
+  assert.deepEqual(T.diff(old,v),{});
+  v.rear_openings=true;
+  assert.deepEqual(T.diff(old,v),{rear_openings:true});
+  assert.equal(T.values(old,{rear_openings:true}).rear_openings,true);
+  assert.equal(T.values({...old,rear_openings:true},{rear_openings:false}).rear_openings,false);
+  const ui=read('tray-placement.js');
+  assert.ok(ui.includes("if(rs.checked)v.rear_openings=true"));
+  assert.ok(ui.includes("...(v.rear_support?[h('label'"));
+  assert.ok(ui.includes('Cable openings in the rear bracket'));
+  assert.ok(ui.includes('this box sketch does not show the cutouts'));
+});
