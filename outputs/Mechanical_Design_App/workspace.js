@@ -927,7 +927,11 @@
     if(reattach){const c=cableById(rack,reattach);if(!c){cancelConnect();return;}const other=end==='from'?c.to:c.from;if(sameEnd(other,target)){notify('Pick a different end from the cable’s other end.',true);return;}
       connecting=null;rackCanvas.classList.remove('placing-port');updateCable(rack,reattach,{[end]:target});askFaces(rack,reattach,[target]);selectCable(reattach);notify('Cable end reattached in the draft. Save to keep it.');return;}
     if(sameEnd(from,target)){notify('Pick a different port to connect to.',true);return;}
-    const types=[portOfEnd(rack,from)?.type,portOfEnd(rack,target)?.type].filter(Boolean),type=types.find(t=>t!=='keystone'&&t!=='other')||types[0]||'other';
+    // A keystone end alone says nothing about the cable: copy the cable already on the other side of that keystone,
+    // else assume RJ45 (the usual keystone jack). Either way it is only a default the Cable panel can change.
+    const ends=[from,target],types=ends.map(e=>portOfEnd(rack,e)?.type).filter(Boolean);
+    const linkedType=()=>{for(const e of ends){const p=portOfEnd(rack,e);if(p?.type!=='keystone'||!p.passThrough)continue;const id=L.portInUse(rack,e.allocation,p.passThrough,null),t=id&&cableById(rack,id)?.type;if(t&&t!=='keystone')return t;}return null;};
+    const type=types.find(t=>t!=='keystone'&&t!=='other')||(types.includes('keystone')?linkedType()||'rj45':types[0]||'other');
     const cable={id:'cable-'+Math.random().toString(36).slice(2,12),number:L.nextNumber(rack),type,service_loop_m:cableSettings(rack).service_loop_m,from,to:target,route:{mode:'auto',guides:[],exit:null},note:''};
     cable.route={...L.autoRoute({...rack,cabling:{...rack.cabling,cables:[...rackCables(rack),cable]}},cable,cableCtx()),mode:'auto'};
     connecting=null;rackCanvas.classList.remove('placing-port');setCables(rack,[...rackCables(rack),cable]);askFaces(rack,cable.id,[from,target]);selectCable(cable.id);

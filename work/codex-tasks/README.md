@@ -25,3 +25,10 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [06-checks-command-docs](06-checks-command-docs.md) | done, checked by Claude |
 | [07-bom-implementation](07-bom-implementation.md) | done, reviewed by Claude (hashes match; note: workspace.js converted to CRLF) |
 | [08-library-rebuild-copy](08-library-rebuild-copy.md) | done, reviewed by Claude (67 Py + 72 JS pass; equipment-wizard.js converted to CRLF) |
+| [09-cable-schema](09-cable-schema.md) | done (71 Python + 94 JS pass; see task report) |
+| [10-cable-routes-logic](10-cable-routes-logic.md) | done (exact API; 71 Python + 94 JS pass; see task report) |
+| [11-cable-suggest-schema](11-cable-suggest-schema.md) | done, reviewed by Claude (73 Py + 114 JS pass) |
+| [12-cable-suggest-logic](12-cable-suggest-logic.md) | done, reviewed by Claude (exact API; wording tweaked at integration) |
+| [13-cable-sheet-logic](13-cable-sheet-logic.md) | done, reviewed by Claude (exact API; 73 Py + 137 JS pass after integration) |
+| [14-cable-inventory-logic](14-cable-inventory-logic.md) | done, reviewed by Claude; Review card integrated (defaults PROPOSED, Brian to confirm [Parts_Order_Decisions](../cable-management/Parts_Order_Decisions.md)) |
+| [15-docs-refresh-wizard-placement](15-docs-refresh-wizard-placement.md) | done, reviewed by Claude (95 Py + 152 JS pass) |
