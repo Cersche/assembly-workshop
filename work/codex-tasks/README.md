@@ -45,3 +45,4 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [26-tray-width-hard-limit](26-tray-width-hard-limit.md) | done, reviewed by Claude (204 mm hard limit + rotate hint; Claude de-duplicated the step-1 message and fixed the stale 230 mm sketch label) |
 | [27-sleeve-flush-front](27-sleeve-flush-front.md) | done, reviewed by Claude (127 Py + 183 JS pass; OptiPlex STEP sleeve on rear support exact-rendered: closed meshes, window 183.5 x 39.1, 6 mm walls, 1.5 mm lips) |
 | [28-foot-pockets](28-foot-pockets.md) | done, reviewed by Claude (fixed case-in-floor bug; OptiPlex STEP: 4 feet 2.8 mm found, sleeve band 1.8 → 4.6 mm, exact render closed) |
+| [29-rear-bracket-cable-openings](29-rear-bracket-cable-openings.md) | queued (Brian 2026-10-20: sleeve layout SETTLED; SLV-C coupon is the reference) |

@@ -1,0 +1,41 @@
+{
+ "name": "SLV-B OptiPlex Micro 7010 sleeve full tray",
+ "dev_w": 182.5,
+ "dev_d": 194.5,
+ "dev_h": 38.8,
+ "u": 1,
+ "device_mount": "sleeve",
+ "joint": "screw",
+ "rear_support": true,
+ "feet": [
+  {
+   "x": 15,
+   "y": 18,
+   "w": 5,
+   "d": 15,
+   "h": 2.8
+  },
+  {
+   "x": 163,
+   "y": 18,
+   "w": 4,
+   "d": 15,
+   "h": 2.8
+  },
+  {
+   "x": 15,
+   "y": 153,
+   "w": 5,
+   "d": 15,
+   "h": 2.8
+  },
+  {
+   "x": 163,
+   "y": 153,
+   "w": 4,
+   "d": 15,
+   "h": 2.8
+  }
+ ],
+ "dev_rot": 0
+}
