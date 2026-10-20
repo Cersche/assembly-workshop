@@ -2,6 +2,24 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-20 OptiPlex beta: 44.4 mm plate, sleeve mount, feet (read first)
+
+- **Study:** [work/optiplex-bracket-study/Report.md](work/optiplex-bracket-study/Report.md) compares Brian's working third-party OptiPlex bracket with our wizard output. The bracket's files stay in Downloads (third-party, never copied).
+- **44.4 mm faceplate is the standard** (FP44 coupons printed, perfect fit, Brian). See AGENTS.md. Z=0 is now the slot bottom everywhere; this fixed a 1.225 mm offset.
+- **Codex tasks 25–28 done and reviewed by Claude** (queue in work/codex-tasks/README.md):
+  - 44.4 mm plate;
+  - 204 mm hard tray-width limit with a Rotate 90° hint;
+  - "Sleeve" mount with a flush front window, which works on rear-post support;
+  - foot detection plus floor pockets. Claude fixed a bug where the case sat inside the floor.
+- **OptiPlex STEP in the wizard** (disposable data): use X is up + Rotate 90° three times (the power-button end to the orange edge; Brian to confirm). It finds 4 feet, 2.8 mm tall. The Sleeve, 1U, rear-support exact render is closed, with a 4.6 mm plate band above the window. Fit and strength are UNKNOWN.
+- **New tool:** `outputs/Mechanical_Design_App/mesh_study.py` (+ `test_mesh_study.py` in the checks) measures reference meshes per body. It found the bracket's foot grooves. Brian: finding things like this is "the whole point of our app".
+- **Checks:** 135 Python (1 skipped) + all JS pass.
+- **Open items:**
+  - the save summary doesn't count feet;
+  - mesh_study doesn't report through-holes;
+  - which of the 16-Oct rear/split OptiPlex files Brian actually uses is unanswered;
+  - idea: an app feature that learns from a reference bracket (in the study report).
+
 ## 2026-10-19 session summary (read first)
 
 - **GitHub (2026-10-20):** whole project, all data included, is in the PRIVATE repo https://github.com/Cersche/assembly-workshop (branch `main`). Both of Brian's Claude accounts work from it, one at a time, on any device. See the "Cloud repo and account switching" section in AGENTS.md: pull first, push when done.

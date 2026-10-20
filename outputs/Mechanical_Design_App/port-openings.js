@@ -5,9 +5,14 @@
   const plateHeight=u=>u*RACK_PITCH-PLATE_GAP,plateBottom=PLATE_GAP/2;
   // PROPOSED defaults: independent sleeve, nominal clearances; fit/strength UNKNOWN.
   const SLEEVE=Object.freeze({side:0.5,top:0.3,wall:6,lipW:10,lipT:1.5,band:1.5,stopT:4,stopH:6});
+  const FOOT=Object.freeze({clearance:0.5,extraDepth:0.3,minFloor:0.8,lipT:3.0});
+  const footHeight=s=>['flat','sleeve'].includes(s.device_mount)?Math.max(0,...(s.feet||[]).map(f=>+f.h||0)):0;
+  const pocketDepth=s=>footHeight(s)+FOOT.extraDepth;
+  const deviceCaseHeight=s=>Math.max(0,(+s.dev_h||0)-footHeight(s));
   function sleeve(s){if(s.device_mount!=='sleeve')return null;
-    const turned=[90,270].includes(+s.dev_rot),w=+(turned?s.dev_d:s.dev_w),d=+(turned?s.dev_w:s.dev_d),x=+(s.dev_off_x||0),bottom=3.5,half=w/2+SLEEVE.side,top=bottom+ +s.dev_h+SLEEVE.top;
-    return {x,half,bottom,top,width:half*2,height:top-bottom,outside:w+2*(SLEEVE.side+SLEEVE.wall),lip:top+SLEEVE.lipT<=(+s.u||1)*RACK_PITCH?SLEEVE.lipT:0,rear:-4+d,stop_end:-4+d+SLEEVE.stopT,joints:[x-half-SLEEVE.wall/2,x+half+SLEEVE.wall/2],joint_z:[bottom+3,top-3]};
+    const turned=[90,270].includes(+s.dev_rot),w=+(turned?s.dev_d:s.dev_w),d=+(turned?s.dev_w:s.dev_d),x=+(s.dev_off_x||0),bottom=3.5,half=w/2+SLEEVE.side,top=bottom+deviceCaseHeight(s)+SLEEVE.top;
+    const lipT=footHeight(s)?FOOT.lipT:SLEEVE.lipT;
+    return {x,half,bottom,top,width:half*2,height:top-bottom,outside:w+2*(SLEEVE.side+SLEEVE.wall),lip:top+lipT<=(+s.u||1)*RACK_PITCH?lipT:0,rear:-4+d,stop_end:-4+d+SLEEVE.stopT,joints:[x-half-SLEEVE.wall/2,x+half+SLEEVE.wall/2],joint_z:[bottom+3,top-3]};
   }
   function sleevePorts(ports,s){const w=sleeve(s),kept=[],dropped=[],errors=[];if(!w)return {ports:ports||[],dropped,errors};
     for(const p of ports||[]){const x0=p.x-p.w/2,x1=p.x+p.w/2,z0=p.z-p.h/2,z1=p.z+p.h/2;
@@ -22,7 +27,7 @@
   // Shared height rule for the wizard, placement sketches and cable markers; mirrors equipment.py.
   const floorZ=spec=>['flat','sleeve'].includes(spec.device_mount)?0.5:7+LEGACY_SLOT_OFFSET;
   const usesStandoffs=spec=>!['straps','flat','sleeve'].includes(spec.device_mount);
-  const deviceLift=spec=>floorZ(spec)+3+(usesStandoffs(spec)?+(spec.standoff===undefined?6:spec.standoff):0);
+  const deviceLift=spec=>floorZ(spec)+3+(usesStandoffs(spec)?+(spec.standoff===undefined?6:spec.standoff):0)-footHeight(spec);  // case on the floor top; feet hang in their pockets
   const neededHeight=spec=>{const m=spec.device_mount,extra=['pegs','clips'].includes(m)?+(spec.board_t??1.6)+(m==='pegs'?1.6:2.5):0;return Math.max(deviceLift(spec)+Math.max(+spec.dev_h,extra),(spec.joint||'screw')==='screw'?floorZ(spec)+22:0);};
   const autoU=spec=>Math.min(5,Math.max(1,Math.ceil(neededHeight(spec)/RACK_PITCH)));
   function flatHint(spec){
@@ -30,7 +35,7 @@
     return u>=1&&u<=5&&u<Math.ceil(neededHeight(spec)/RACK_PITCH)?`Fits ${u}U if it sits flat (no standoffs): ${Math.round(neededHeight(flat)*100)/100} mm needed / ${u*RACK_PITCH} mm available. Choose 'Sits flat' as the tray default mount on the Ports step, or under Mounting in Place on tray per slot.`:'';
   }
   // Historical public lift is relative to the old floor top (10 mm); differences include the new floor.
-  function lift(spec){return ['flat','sleeve'].includes(spec.device_mount)?0.5-(7+LEGACY_SLOT_OFFSET):spec.device_mount==='straps'?0:+(spec.standoff??6);}
+  function lift(spec){return ['flat','sleeve'].includes(spec.device_mount)?deviceLift(spec)-(7+LEGACY_SLOT_OFFSET+3):spec.device_mount==='straps'?0:+(spec.standoff??6);}
   function frontOpenings(libSpec,tray){
     const eff={...libSpec};
     for(const k of ['dev_off_x','dev_rot','device_mount','standoff'])if(tray&&k in tray)eff[k]=tray[k];
@@ -76,6 +81,6 @@
     const problem=missing.length?`The ${missing.join(' and ')} tray screw joint${missing.length>1?'s':''} cannot be placed clear of the openings and keystones anywhere on the tray. Move the device or an opening, or choose the single printed piece joint.`:null;
     return {joints,default:def,moved:joints[0]!==-def||joints[1]!==def,problem};
   }
-  const api={SLEEVE,sleeve,sleevePorts,RACK_PITCH,PLATE_GAP,plateBottom,plateHeight,floorZ,usesStandoffs,deviceLift,neededHeight,autoU,flatHint,DEFAULT_SIZES,SIZE_NOTE,JOINT_HALF,JOINT_TOP,JOINT_CLEAR,jointPositions,defaultSize,lift,frontOpenings,problems};
+  const api={SLEEVE,FOOT,footHeight,pocketDepth,deviceCaseHeight,sleeve,sleevePorts,RACK_PITCH,PLATE_GAP,plateBottom,plateHeight,floorZ,usesStandoffs,deviceLift,neededHeight,autoU,flatHint,DEFAULT_SIZES,SIZE_NOTE,JOINT_HALF,JOINT_TOP,JOINT_CLEAR,jointPositions,defaultSize,lift,frontOpenings,problems};
   root.LabRaxPortOpenings=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(globalThis);

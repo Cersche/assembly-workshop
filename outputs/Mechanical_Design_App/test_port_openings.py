@@ -5,6 +5,42 @@ import port_openings as P
 SPEC = {'ports': [{'id': 'lan', 'label': 'LAN', 'type': 'rj45', 'x': 0, 'z': 20, 'w': 17, 'h': 14, 'r': 1}], 'standoff': 6}
 
 class PortOpenings(unittest.TestCase):
+    def test_foot_case_budget_and_optiplex_sleeve_values(self):
+        import equipment
+        feet=[{'x':20,'y':14.5,'w':5.5,'d':76.5,'h':2},{'x':169,'y':14.5,'w':5.5,'d':76.5,'h':2}]
+        spec=equipment.clean(dict(name='OptiPlex specimen',dev_w=194.5,dev_d=182.5,dev_h=38.8,u=1,device_mount='sleeve',joint='screw',holes=[],feet=feet,dev_rot=90))
+        self.assertAlmostEqual(equipment.needed_height(spec),40.3)   # case 36.8 on the 3.5 floor top
+        win=P.sleeve(spec)
+        self.assertEqual((win['bottom'],round(win['top'],6),win['lip']),(3.5,40.6,3.0))   # 0.3 mm above the case top
+        self.assertAlmostEqual(win['height'],37.1)
+        self.assertAlmostEqual(spec['u']*P.RACK_PITCH-P.PLATE_GAP/2-win['top'],3.825)
+        pockets=equipment.foot_pockets(spec)
+        self.assertTrue(all(q['through'] for q in pockets))
+        self.assertTrue(all(-99.25<=q['x0']<q['x1']<=99.25 and 0<=q['y0']<q['y1']<=198.5 for q in pockets))
+
+    def test_sleeve_scad_assignments_are_not_commented_out(self):
+        # 2026-10-20: a trailing comment once swallowed sl_window_top on the same line (renders failed, tests passed).
+        from pathlib import Path
+        for line in (Path(__file__).with_name('equipment_tray.scad')).read_text(encoding='utf-8').splitlines():
+            code, _, comment = line.partition('//')
+            for name in ('sl_window_top=', 'sl_bottom=', 'sl_lip=', 'foot_h='):
+                self.assertNotIn(name, comment.replace(' ', ''), line)
+
+    def test_no_feet_preserves_height_and_mount_defaults(self):
+        import equipment
+        for mount in ('inserts','pegs','clips','straps','flat','sleeve'):
+            spec=equipment.clean(dict(name='Legacy',dev_w=85,dev_d=100,dev_h=20,u=1,device_mount=mount,joint='single',holes=[[5,5]] if mount in ('inserts','pegs') else []))
+            self.assertNotIn('feet',spec)
+            self.assertEqual(equipment.device_lift(spec), equipment.floor_z(spec)+3+(spec.get('standoff',6) if mount in ('inserts','pegs','clips') else 0))
+
+    def test_foot_pocket_joint_strap_and_rear_stop_guards(self):
+        import equipment
+        with self.assertRaisesRegex(ValueError,'strap slot'):
+            equipment.validate_foot_pockets({'device_mount':'flat','dev_w':100,'dev_d':100,'dev_h':20,'dev_rot':0,'dev_off_x':0,'dev_off_y':0,'joint':'single','feet':[{'x':-4,'y':25,'w':5,'d':5,'h':1}]},116)
+        for foot,message in [({'x':8,'y':5,'w':2,'d':4,'h':1},'screw joint'),({'x':40,'y':98,'w':2,'d':2,'h':1},'rear stop')]:
+            spec=dict(name='Guard',dev_w=100,dev_d=100,dev_h=20,u=1,device_mount='sleeve',joint='screw',holes=[],feet=[foot])
+            with self.assertRaisesRegex(ValueError,message):equipment.clean(spec)
+
     def test_no_hole_flat_device_cleans(self):
         import equipment
         spec = equipment.clean(dict(name='Box', dev_w=180, dev_d=180, dev_h=36,

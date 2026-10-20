@@ -174,7 +174,8 @@ def floor_z(spec):
 
 
 def device_lift(spec):
-    return floor_z(spec) + 3 + (0 if spec.get('device_mount') in ('straps', 'flat', 'sleeve') else float(spec.get('standoff', 6)))
+    feet = port_openings.foot_height(spec)
+    return floor_z(spec) + 3 + (0 if spec.get('device_mount') in ('straps', 'flat', 'sleeve') else float(spec.get('standoff', 6))) - feet  # case on the floor top; feet hang in their pockets
 
 
 def needed_height(spec):
@@ -182,6 +183,51 @@ def needed_height(spec):
     extra = (float(spec.get('board_t', 1.6)) + (1.6 if mount == 'pegs' else 2.5)) if mount in ('pegs', 'clips') else 0
     return max(device_lift(spec) + max(float(spec['dev_h']), extra),
                floor_z(spec) + 22 if spec.get('joint', 'screw') == 'screw' else 0)
+
+
+def foot_pockets(spec):
+    """Pocket rectangles in tray coordinates, following the SCAD dp() rotation."""
+    if spec.get('device_mount') not in ('flat', 'sleeve') or not spec.get('feet'):
+        return []
+    turned = spec.get('dev_rot', 0) in (90, 270)
+    fw, fd = (spec['dev_d'], spec['dev_w']) if turned else (spec['dev_w'], spec['dev_d'])
+    dx = -fw/2 + float(spec.get('dev_off_x', 0))
+    dy = -4 if spec.get('device_mount') == 'sleeve' else FRONT_GAP + float(spec.get('dev_off_y', 0))
+    def dp(x, y):
+        if spec.get('dev_rot') == 90: return spec['dev_d']-y, x
+        if spec.get('dev_rot') == 180: return spec['dev_w']-x, spec['dev_d']-y
+        if spec.get('dev_rot') == 270: return y, spec['dev_w']-x
+        return x, y
+    out=[]
+    for f in spec['feet']:
+        pts=[dp(f['x'],f['y']),dp(f['x']+f['w'],f['y']),dp(f['x'],f['y']+f['d']),dp(f['x']+f['w'],f['y']+f['d'])]
+        x0=dx+min(p[0] for p in pts)-port_openings.FOOT_CLEARANCE;x1=dx+max(p[0] for p in pts)+port_openings.FOOT_CLEARANCE
+        y0=dy+min(p[1] for p in pts)-port_openings.FOOT_CLEARANCE;y1=dy+max(p[1] for p in pts)+port_openings.FOOT_CLEARANCE
+        out.append({'x0':x0,'x1':x1,'y0':y0,'y1':y1,'depth':f['h']+port_openings.FOOT_EXTRA_DEPTH,'through':f['h']+port_openings.FOOT_EXTRA_DEPTH > 3-port_openings.FOOT_MIN_FLOOR})
+    return out
+
+
+def validate_foot_pockets(spec, tray_w):
+    pockets=foot_pockets(spec)
+    if not pockets:return
+    fp_w,fp_d=(spec['dev_d'],spec['dev_w']) if spec.get('dev_rot',0) in (90,270) else (spec['dev_w'],spec['dev_d'])
+    dev_x=-fp_w/2+float(spec.get('dev_off_x',0));dev_y=-4 if spec.get('device_mount')=='sleeve' else FRONT_GAP+float(spec.get('dev_off_y',0))
+    def overlap(p,x0,x1,y0,y1):return p['x0']<x1 and p['x1']>x0 and p['y0']<y1 and p['y1']>y0
+    if spec.get('joint','screw')=='screw':
+        jx=min(40,tray_w/2-12)
+        if any(overlap(p,x-9,x+9,0,11.3) for p in pockets for x in (-jx,jx)):
+            raise ValueError('A foot pocket would cut into a tray screw joint; move or remove that foot.')
+        if spec.get('rear_support') and any(overlap(p,x-9,x+9,240-11.3,240) for p in pockets for x in (-jx,jx)):
+            raise ValueError('A foot pocket would cut into a rear screw joint; move or remove that foot.')
+    for p in pockets:
+        for x in (dev_x-5.5,dev_x+fp_w+2.5):
+            for y in (dev_y+fp_d*.25,dev_y+fp_d*.75):
+                if overlap(p,x,x+3,y-6,y+6):raise ValueError('A foot pocket would cut into a strap slot; move or remove that foot.')
+        if spec.get('device_mount')=='sleeve':
+            win=port_openings.sleeve(spec);left=win['x']-win['half'];right=win['x']+win['half'];wall=port_openings.SLEEVE_WALL
+            if overlap(p,left-wall,left,0,dev_y+fp_d) or overlap(p,right,right+wall,0,dev_y+fp_d):raise ValueError('A foot pocket would cut into a sleeve wall; move or remove that foot.')
+            if overlap(p,dev_x,dev_x+fp_w,dev_y+fp_d,dev_y+fp_d+port_openings.SLEEVE_STOP_T):raise ValueError('A foot pocket would cut into the sleeve rear stop; move or remove that foot.')
+            if overlap(p,left,right,0,8):raise ValueError('A foot pocket would cut into the floor strip under the sleeve window; move or remove that foot.')
 
 
 def template_source(spec):
@@ -208,6 +254,18 @@ def clean(spec):
     s['joint'] = spec.get('joint') if spec.get('joint') in JOINTS else None
     if not s['device_mount'] or not s['joint']:
         raise ValueError('Choose a device mounting option and a tray joint.')
+    raw_feet = spec.get('feet') or []
+    if not isinstance(raw_feet, list) or len(raw_feet) > 32:
+        raise ValueError('Feet must be a list of at most 32 footprints.')
+    if raw_feet:
+        s['feet'] = []
+        for f in raw_feet:
+            if not isinstance(f, dict):
+                raise ValueError('Each foot needs x, y, width, depth and height.')
+            w, d = num(f.get('w'), 'Foot width', 2, s['dev_w']), num(f.get('d'), 'Foot depth', 2, s['dev_d'])
+            x, y = num(f.get('x'), 'Foot X', 0, s['dev_w']-w), num(f.get('y'), 'Foot Y', 0, s['dev_d']-d)
+            h = num(f.get('h'), 'Foot height', 0.3, s['dev_h'])
+            s['feet'].append({'x': x, 'y': y, 'w': w, 'd': d, 'h': h})
     s['rear_support'] = spec.get('rear_support') is True
     if s['rear_support']:
         if s['joint'] == 'single':
@@ -237,6 +295,7 @@ def clean(spec):
     if tray_width > MAX_TRAY:
         hint = ' Too wide this way round; it fits if you press Rotate 90°.' if 2 * abs(s['dev_off_x']) + fp_d + 2 * border <= MAX_TRAY else ''
         raise ValueError(f'This tray is {tray_width:g} mm wide but the rack opening allows {MAX_TRAY:g} mm ({RACK_INNER_W:g} mm minus {SIDE_CLEAR:g} mm each side). Move the device less far sideways.' + hint)
+    validate_foot_pockets(s, tray_width)
     if not win and s['rear_support'] and FRONT_GAP + s['dev_off_y'] + fp_d + MARGIN > 240:
         raise ValueError('The device is moved past the rear posts; reduce the front/back offset.')
     if s['device_mount'] == 'flat':
@@ -328,6 +387,8 @@ def source(s):
         return json.dumps(v)
     over = {k: s[k] for k in ('dev_w', 'dev_d', 'dev_h', 'hole_d', 'standoff', 'insert_pilot', 'board_t', 'u',
                               'holes', 'keystones', 'device_mount', 'joint', 'rear_support', 'coupon')}
+    if s.get('feet'):
+        over['feet'] = [[f['x'], f['y'], f['w'], f['d'], f['h']] for f in s['feet']]
     # Placement keys are written only when moved/rotated, so default sources stay byte-identical to older ones.
     for k in ('dev_off_x', 'dev_off_y', 'dev_rot', 'joint_x'):
         if s.get(k):

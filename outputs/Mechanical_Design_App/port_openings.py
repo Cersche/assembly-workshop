@@ -9,6 +9,20 @@ RACK_PITCH, PLATE_GAP, LEGACY_SLOT_OFFSET = 44.45, 0.05, 1.225
 SLEEVE_SIDE, SLEEVE_TOP, SLEEVE_WALL = 0.5, 0.3, 6
 SLEEVE_LIP_W, SLEEVE_LIP_T, SLEEVE_BAND = 10, 1.5, 1.5
 SLEEVE_STOP_T, SLEEVE_STOP_H = 4, 6
+FOOT_CLEARANCE, FOOT_EXTRA_DEPTH, FOOT_MIN_FLOOR = 0.5, 0.3, 0.8
+FOOT_LIP_T = 3.0
+
+
+def foot_height(spec):
+    return max([0.0] + [float(f.get('h', 0)) for f in spec.get('feet', [])]) if spec.get('device_mount') in ('flat', 'sleeve') else 0.0
+
+
+def case_height(spec):
+    return max(0.0, float(spec.get('dev_h', 0)) - foot_height(spec))
+
+
+def pocket_depth(spec):
+    return foot_height(spec) + FOOT_EXTRA_DEPTH
 
 
 def sleeve(spec):
@@ -16,10 +30,11 @@ def sleeve(spec):
         return None
     turned = spec.get('dev_rot', 0) in (90, 270)
     w, d = (float(spec['dev_d']), float(spec['dev_w'])) if turned else (float(spec['dev_w']), float(spec['dev_d']))
-    x, bottom = float(spec.get('dev_off_x', 0)), 3.5
+    x, bottom = float(spec.get('dev_off_x', 0)), 3.5  # case rests on the floor top
     half = w / 2 + SLEEVE_SIDE
-    top = bottom + float(spec['dev_h']) + SLEEVE_TOP
-    lip = SLEEVE_LIP_T if top + SLEEVE_LIP_T <= float(spec.get('u', 1)) * RACK_PITCH else 0
+    top = bottom + case_height(spec) + SLEEVE_TOP
+    lip_t = FOOT_LIP_T if foot_height(spec) else SLEEVE_LIP_T
+    lip = lip_t if top + lip_t <= float(spec.get('u', 1)) * RACK_PITCH else 0
     return dict(x=x, half=half, bottom=bottom, top=top, width=half*2,
                 height=top-bottom, outside=w+2*(SLEEVE_SIDE+SLEEVE_WALL),
                 lip=lip, rear=-4+d, stop_end=-4+d+SLEEVE_STOP_T,
@@ -64,7 +79,7 @@ def default_size(type=None):
 
 
 def lift(spec):
-    return (0.5 - (7 + LEGACY_SLOT_OFFSET) if spec.get('device_mount') in ('flat', 'sleeve') else
+    return (0.5 + 3 - (7 + LEGACY_SLOT_OFFSET + 3) - foot_height(spec) if spec.get('device_mount') in ('flat', 'sleeve') else
             0 if spec.get('device_mount') == 'straps' else float(spec.get('standoff', 6)))
 
 

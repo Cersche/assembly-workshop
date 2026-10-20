@@ -452,3 +452,4 @@ test('new placements use the chosen library item and omit historical reference m
 });
 
 require('./flat-floor.js');
+require('./feet.js');

@@ -29,7 +29,7 @@
     const fp_w=turned?d:w,fp_d=turned?w:d,tray_w=2*(Math.abs(v.dev_off_x)+fp_w/2+(v.device_mount==='sleeve'?Math.max(MARGIN,PO().SLEEVE.side+PO().SLEEVE.wall):MARGIN));
     const dev_x=-fp_w/2+v.dev_off_x,dev_y=v.device_mount==='sleeve'?-PLATE_T:FRONT_GAP+v.dev_off_y;
     const tray_d=v.rear_support?RACK_DEPTH:dev_y+fp_d+MARGIN;
-    const lift=PO().deviceLift(v);
+    const lift=PO().deviceLift({...spec,...v});
     return {fp_w,fp_d,tray_w,tray_d,dev_x,dev_y,lift,plate_h:PO().plateHeight(v.u),jx:Math.min(40,tray_w/2-12)};
   }
   // PROPOSED nominal opening and 2 mm clearance per side; never rotates the device.
@@ -42,6 +42,10 @@
   function dp(spec,rot,p){const w=+spec.dev_w,d=+spec.dev_d;
     return rot===90?[d-p[1],p[0]]:rot===180?[w-p[0],d-p[1]]:rot===270?[p[1],w-p[0]]:[p[0],p[1]];}
   function holes(spec,v){const L=layout(spec,v);return (spec.holes||[]).map(p=>{const q=dp(spec,v.dev_rot,p);return [L.dev_x+q[0],L.dev_y+q[1]];});}
+  function footPockets(spec,v){if(!['flat','sleeve'].includes(v.device_mount))return [];const L=layout(spec,v),F=PO().FOOT;
+    return (spec.feet||[]).map(f=>{const pts=[[f.x,f.y],[f.x+f.w,f.y],[f.x,f.y+f.d],[f.x+f.w,f.y+f.d]].map(p=>dp(spec,v.dev_rot,p));const depth=+f.h+F.extraDepth;
+      return {x0:L.dev_x+Math.min(...pts.map(p=>p[0]))-F.clearance,x1:L.dev_x+Math.max(...pts.map(p=>p[0]))+F.clearance,y0:L.dev_y+Math.min(...pts.map(p=>p[1]))-F.clearance,y1:L.dev_y+Math.max(...pts.map(p=>p[1]))+F.clearance,depth,through:depth>TRAY_T-F.minFloor};});}
+  const pocketOverlap=(p,x0,x1,y0,y1)=>p.x0<x1&&p.x1>x0&&p.y0<y1&&p.y1>y0;
   const fin=x=>typeof x==='number'&&Number.isFinite(x);
   // port-openings.js (Brian, 2026-10-19): front openings follow the device; loaded as a page script or, under Node, required.
   function PO(){if(root.LabRaxPortOpenings)return root.LabRaxPortOpenings;
@@ -71,6 +75,12 @@
       if(L.dev_y+L.fp_d+MARGIN>RACK_DEPTH)out.push('The device is moved past the rear posts. Reduce the front gap.');
     }
     if(PO().neededHeight({...spec,...v})>v.u*PITCH)out.push(`The device is taller than ${v.u}U allows. Pick more rack units or a lower standoff.`);
+    const pockets=footPockets(spec,v);if(pockets.length){const jx=Math.min(40,L.tray_w/2-12);
+      if(v.joint==='screw'&&pockets.some(p=>[-jx,jx].some(x=>pocketOverlap(p,x-9,x+9,0,11.3))))out.push('A foot pocket would cut into a tray screw joint; move or remove that foot.');
+      if(v.rear_support&&v.joint==='screw'&&pockets.some(p=>[-jx,jx].some(x=>pocketOverlap(p,x-9,x+9,RACK_DEPTH-11.3,RACK_DEPTH))))out.push('A foot pocket would cut into a rear screw joint; move or remove that foot.');
+      for(const p of pockets){for(const x of [L.dev_x-5.5,L.dev_x+L.fp_w+2.5])for(const y of [L.dev_y+L.fp_d*.25,L.dev_y+L.fp_d*.75])if(pocketOverlap(p,x,x+3,y-6,y+6))out.push('A foot pocket would cut into a strap slot; move or remove that foot.');
+        if(v.device_mount==='sleeve'){const sw=PO().sleeve({...spec,...v}),left=sw.x-sw.half,right=sw.x+sw.half;if(pocketOverlap(p,left-PO().SLEEVE.wall,left,0,L.dev_y+L.fp_d)||pocketOverlap(p,right,right+PO().SLEEVE.wall,0,L.dev_y+L.fp_d))out.push('A foot pocket would cut into a sleeve wall; move or remove that foot.');if(pocketOverlap(p,L.dev_x,L.dev_x+L.fp_w,L.dev_y+L.fp_d,L.dev_y+L.fp_d+PO().SLEEVE.stopT))out.push('A foot pocket would cut into the sleeve rear stop; move or remove that foot.');if(pocketOverlap(p,left,right,0,8))out.push('A foot pocket would cut into the floor strip under the sleeve window; move or remove that foot.');}}
+    }
     if((v.device_mount==='inserts'||v.device_mount==='pegs')&&!(spec.holes||[]).length)out.push('Screws and pegs need mounting holes. Add them to the library item (Edit library item), or choose clips or a strap.');
     if(v.device_mount==='flat'){
       if(L.dev_y<6.2)out.push('Flat corner stops need a front gap of at least 6.2 mm.');
@@ -96,7 +106,7 @@
   // Plain-language warnings that never block (Brian, 2026-10-19).
   // Screw joints placed clear of the openings and keystones (port-openings.js jointPositions); null for the single piece.
   function joints(spec,v){const P=PO();if(v.joint!=='screw'||!P)return null;const sw=P.sleeve({...spec,...v});if(sw)return {joints:sw.joints,moved:false,problem:null};return P.jointPositions(openings(spec,v).ports,v.keystones||[],layout(spec,v).tray_w/2);}
-  function warnings(spec,v){const out=[],sw=PO().sleeve({...spec,...v});if(sw){out.push('Sleeve front is fixed flush with the plate; front gap is ignored. Fit, retention and strength UNKNOWN.');if(!sw.lip)out.push('No top lips fit this height budget; walls only.');const dropped=PO().sleevePorts(openings(spec,v).ports,{...spec,...v}).dropped;if(dropped.length)out.push(`${dropped.length} front opening(s) inside the sleeve window are omitted; the window already exposes them.`);}const m=openings(spec,v).message;if(m)out.push(m);const j=joints(spec,v);
+  function warnings(spec,v){const out=[],sw=PO().sleeve({...spec,...v}),through=footPockets(spec,v).filter(p=>p.through).length;if(through)out.push(`${through} foot pocket(s) pass through the floor (a blind cut would leave less than ${PO().FOOT.minFloor} mm).`);if(sw){out.push('Sleeve front is fixed flush with the plate; front gap is ignored. Fit, retention and strength UNKNOWN.');if(!sw.lip)out.push('No top lips fit this height budget; walls only.');const dropped=PO().sleevePorts(openings(spec,v).ports,{...spec,...v}).dropped;if(dropped.length)out.push(`${dropped.length} front opening(s) inside the sleeve window are omitted; the window already exposes them.`);}const m=openings(spec,v).message;if(m)out.push(m);const j=joints(spec,v);
     if(j&&j.moved&&!j.problem)out.push(`The tray screw joints were moved to X = ${j.joints.map(x=>mm(x)).join(' and ')} mm (normally ±${mm(j.default)} mm) to keep them clear of the openings and keystones.`);
     return out;}
   // Centre: left/right offset back to 0 (front gap unchanged). Snap: whole millimetres.
@@ -112,7 +122,7 @@
     const posts=[];
     if(v.device_mount==='inserts'||v.device_mount==='pegs')for(const[x,y]of holes(spec,v))posts.push(...box(x-3,y-3,floor,x+3,y+3,floor+ +v.standoff));
     if(v.device_mount==='flat'){
-      const h=Math.min(6,+spec.dev_h),w=Math.min(6,L.fp_w),d=Math.min(6,L.fp_d);
+      const h=Math.min(6,PO().deviceCaseHeight({...spec,...v})),w=Math.min(6,L.fp_w),d=Math.min(6,L.fp_d);
       for(const x of [L.dev_x-6.2,L.dev_x+L.fp_w+0.2])for(const y of [L.dev_y,L.dev_y+L.fp_d-d])posts.push(...box(x,y,floor,x+6,y+d,floor+h));
       for(const x of [L.dev_x,L.dev_x+L.fp_w-w])for(const y of [L.dev_y-6.2,L.dev_y+L.fp_d+0.2])posts.push(...box(x,y,floor,x+w,y+6,floor+h));
     }
@@ -125,8 +135,9 @@
       posts.push(...box(L.dev_x,sw.rear,floor,L.dev_x+L.fp_w,sw.stop_end,floor+Math.min(S.stopH,+spec.dev_h)));
     }
     for(const x of v.keystones||[])jacks.push(...box(x-7.4,-PLATE_T-0.2,v.u*PITCH/2-8.3,x+7.4,0.2,v.u*PITCH/2+8.3));
+    const pockets=footPockets(spec,v),pocketSketch=[],pz=PO().floorZ(v)+TRAY_T+0.01,border=0.6;for(const p of pockets){pocketSketch.push(...box(p.x0,p.y0,pz,p.x1,p.y0+border,pz+0.08),...box(p.x0,p.y1-border,pz,p.x1,p.y1,pz+0.08),...box(p.x0,p.y0+border,pz,p.x0+border,p.y1-border,pz+0.08),...box(p.x1-border,p.y0+border,pz,p.x1,p.y1-border,pz+0.08));}
     const sets=[{v:plate,color:[78,117,163],alpha:1},{v:tray.concat(posts),color:[77,142,110],alpha:1},
-      {v:box(L.dev_x,L.dev_y,L.lift,L.dev_x+L.fp_w,L.dev_y+L.fp_d,L.lift+ +spec.dev_h),color:[230,195,92],alpha:0.55}];
+      ...(pocketSketch.length?[{v:pocketSketch,color:[28,42,36],alpha:1}]:[]),{v:box(L.dev_x,L.dev_y,L.lift,L.dev_x+L.fp_w,L.dev_y+L.fp_d,L.lift+ +spec.dev_h),color:[230,195,92],alpha:0.55}];
     if(jacks.length)sets.push({v:jacks,color:[30,32,36],alpha:1});
     return sets;
   }
@@ -142,7 +153,7 @@
     if(v.rear_support)out.rear_bracket=box(-PLATE_HALF,RACK_DEPTH,PO().plateBottom,PLATE_HALF,RACK_DEPTH+PLATE_T,PO().plateBottom+L.plate_h); // to_rear(): plate mirrored about mid-depth
     return out;
   }
-  const api={RACK_INNER_W,SIDE_CLEAR,MAX_TRAY,widthProblem,KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,openings,joints,problems,warnings,snap,schematic,box,rackSketch};
+  const api={RACK_INNER_W,SIDE_CLEAR,MAX_TRAY,widthProblem,KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,footPockets,openings,joints,problems,warnings,snap,schematic,box,rackSketch};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.TrayPlacement=api;
   if(typeof document==='undefined')return;

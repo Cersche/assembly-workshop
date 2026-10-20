@@ -6,7 +6,7 @@
   const MOUNTS={inserts:'Heat-set inserts + screws',pegs:'Printed standoffs / pegs',clips:'Snap-fit clips',straps:'Strap / zip-tie slots',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
   const JOINTS={screw:'Screw joint',single:'Single printed piece'};
   let uExplicit=false;
-  let spec,step,imported=null,orient=0,turn=0,importMsg='',found=[],foundPorts=[];
+  let spec,step,imported=null,orient=0,turn=0,importMsg='',found=[],foundFeet=[],foundPorts=[];
   // ---- STL import (phase 2): size from the bounding box, holes from round loops in flat faces.
   function parseStlBuffer(buf){
     const dv=new DataView(buf),n=buf.byteLength>=84?dv.getUint32(80,true):0,out=[];
@@ -21,6 +21,31 @@
       if(orient===1)[y,z]=[-z,y];else if(orient===2)[x,z]=[-z,x];
       for(let k=0;k<turn;k++)[x,y]=[-y,x];o.push(x,y,z);}
     return o;
+  }
+  // Find lower feet using per-body vertical ray columns; intervals are merged only after each
+  // body is cast, so overlapping shells cannot cancel one another by even/odd parity.
+  function findFeet(v,mn,mx,step=1){
+    const n=v.length/9,parent=Array.from({length:n},(_,i)=>i),root=i=>{while(parent[i]!==i){parent[i]=parent[parent[i]];i=parent[i];}return i;},join=(a,b)=>{a=root(a);b=root(b);if(a!==b)parent[b]=a;};
+    const owners=new Map(),key=(x,y,z)=>`${Math.round(x*1000)},${Math.round(y*1000)},${Math.round(z*1000)}`;
+    for(let t=0;t<n;t++)for(let c=0;c<3;c++){const o=t*9+c*3,k=key(v[o],v[o+1],v[o+2]),old=owners.get(k);if(old===undefined)owners.set(k,t);else join(t,old);}
+    const bodies=new Map();for(let t=0;t<n;t++){const r=root(t);if(!bodies.has(r))bodies.set(r,[]);bodies.get(r).push(t*9);}
+    const W=Math.ceil((mx[0]-mn[0])/step),D=Math.ceil((mx[1]-mn[1])/step);if(!W||!D||W*D>250000)return [];
+    const columns=Array.from({length:W*D},()=>[]);
+    for(const tris of bodies.values()){
+      const hits=Array.from({length:W*D},()=>[]);
+      for(const o of tris){const ax=v[o],ay=v[o+1],az=v[o+2],bx=v[o+3],by=v[o+4],bz=v[o+5],cx=v[o+6],cy=v[o+7],cz=v[o+8],area=(bx-ax)*(cy-ay)-(by-ay)*(cx-ax);if(Math.abs(area)<1e-9)continue;
+        const x0=Math.max(0,Math.floor((Math.min(ax,bx,cx)-mn[0])/step)),x1=Math.min(W-1,Math.floor((Math.max(ax,bx,cx)-mn[0])/step)),y0=Math.max(0,Math.floor((Math.min(ay,by,cy)-mn[1])/step)),y1=Math.min(D-1,Math.floor((Math.max(ay,by,cy)-mn[1])/step));
+        for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const px=mn[0]+(x+.5)*step,py=mn[1]+(y+.5)*step,a=((bx-px)*(cy-py)-(by-py)*(cx-px))/area,b=((cx-px)*(ay-py)-(cy-py)*(ax-px))/area,c=1-a-b;if(a< -1e-7||b< -1e-7||c< -1e-7)continue;hits[y*W+x].push(a*az+b*bz+c*cz);}
+      }
+      for(let i=0;i<hits.length;i++){const z=hits[i].sort((a,b)=>a-b),uniq=[];for(const h of z)if(!uniq.length||h-uniq[uniq.length-1]>.03)uniq.push(h);for(let k=0;k+1<uniq.length;k+=2)columns[i].push([uniq[k],uniq[k+1]]);}
+    }
+    const lower=new Float32Array(W*D);lower.fill(Infinity);
+    for(let i=0;i<columns.length;i++){const a=columns[i].sort((p,q)=>p[0]-q[0]),merged=[];for(const q of a){const last=merged[merged.length-1];if(last&&q[0]<=last[1]+.03)last[1]=Math.max(last[1],q[1]);else merged.push(q.slice());}if(merged.length)lower[i]=merged[0][0];}
+    const bins=new Map();for(const z of lower)if(Number.isFinite(z)){const b=Math.round(z/.25);bins.set(b,(bins.get(b)||0)+1);}const mode=[...bins].sort((a,b)=>b[1]-a[1]||b[0]-a[0])[0];if(!mode)return [];
+    const base=mode[0]*.25,mask=new Uint8Array(W*D);for(let i=0;i<mask.length;i++)if(Number.isFinite(lower[i])&&base-lower[i]>=.3)mask[i]=1;
+    const seen=new Uint8Array(mask.length),out=[];for(let s=0;s<mask.length;s++){if(!mask[s]||seen[s])continue;const st=[s];seen[s]=1;let x0=W,x1=-1,y0=D,y1=-1,zmin=Infinity,count=0;while(st.length){const c=st.pop(),x=c%W,y=(c-x)/W;count++;x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,y);y1=Math.max(y1,y);zmin=Math.min(zmin,lower[c]);for(const q of [x?c-1:-1,x<W-1?c+1:-1,y?c-W:-1,y<D-1?c+W:-1])if(q>=0&&mask[q]&&!seen[q]){seen[q]=1;st.push(q);}}
+      const w=(x1-x0+1)*step,d=(y1-y0+1)*step;if(count<3||w<2||d<2)continue;out.push({x:Math.round(x0*step*10)/10,y:Math.round(y0*step*10)/10,w:Math.round(w*10)/10,d:Math.round(d*10)/10,h:Math.round((base-zmin)*10)/10,keep:true});}
+    return out.sort((a,b)=>a.y-b.y||a.x-b.x).slice(0,32);
   }
   function findHoles(v,minX,minY){
     const R=a=>Math.round(a*1000)/1000,planes=new Map();
@@ -82,7 +107,7 @@
     for(let i=0;i<v.length;i++){const a=i%3;if(v[i]<mn[a])mn[a]=v[i];if(v[i]>mx[a])mx[a]=v[i];}
     const r1=a=>Math.round(a*10)/10;spec.dev_w=r1(mx[0]-mn[0]);spec.dev_d=r1(mx[1]-mn[1]);spec.dev_h=r1(mx[2]-mn[2]);
     spec.u=window.LabRaxPortOpenings.autoU(spec);
-    found=findHoles(v,mn[0],mn[1]);foundPorts=findPorts(v,mn,mx);
+    found=findHoles(v,mn[0],mn[1]);foundFeet=typeof findFeet==='function'?findFeet(v,mn,mx):[];spec.feet=foundFeet.filter(f=>f.keep).map(({x,y,w,d,h})=>({x,y,w,d,h}));foundPorts=findPorts(v,mn,mx);
     importMsg='';
   }
   function topView(){
@@ -91,6 +116,7 @@
     let s=`<rect x="0" y="0" width="${W}" height="${D}" fill="#2c4a3c" stroke="#6fbf8f" stroke-width=".6"/><text x="${W/2}" y="${D+5}" font-size="4" fill="#9aa" text-anchor="middle">front (faceplate)</text>`;
     for(const p of spec.holes)s+=`<circle cx="${p[0]}" cy="${D-p[1]}" r="${(spec.hole_d||2.7)/2+.4}" fill="#e6c35c"/>`;
     found.forEach((c,i)=>{s+=`<circle cx="${c.x}" cy="${D-c.y}" r="${c.d/2+.6}" fill="none" stroke="${c.keep?'#5cc8ff':'#666'}" stroke-width=".6"/><text x="${c.x+c.d/2+1}" y="${D-c.y+1.5}" font-size="4" fill="#5cc8ff">${i+1}</text>`;});
+    for(const f of foundFeet)s+=`<rect x="${f.x}" y="${D-f.y-f.d}" width="${f.w}" height="${f.d}" fill="#e6c35c" fill-opacity="${f.keep?'.35':'0'}" stroke="#e6c35c" stroke-width=".8"/>`;
     svg.innerHTML=s;
   }
   // ---- 3D preview in the wizard: render via /api/equipment-preview, draw with a small canvas painter.
@@ -164,8 +190,9 @@
     for(const[a,b,c,,s,lit]of tris){ctx.fillStyle=`rgba(${s.color.map(k=>Math.round(k*lit)).join(',')},${s.alpha})`;
       ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.lineTo(c[0],c[1]);ctx.closePath();ctx.fill();if(s.alpha===1){ctx.strokeStyle=ctx.fillStyle;ctx.stroke();}}
   }
+  if(typeof module!=='undefined'&&module.exports){module.exports={findFeet};return;}
   window.EquipmentPainter={draw:paint,bind:bindView,parseStl:parseStlBuffer};
-  function reset(){uExplicit=false;imported=null;importMsg='';found=[];foundPorts=[];orient=0;turn=0;spec={name:'',dev_w:85,dev_d:56,dev_h:20,u:1,hole_d:2.7,standoff:6,insert_pilot:3.2,board_t:1.6,device_mount:'inserts',joint:'screw',holes:[],ports:[],rear_ports:[],keystones:[]};step=0;}
+  function reset(){uExplicit=false;imported=null;importMsg='';found=[];foundFeet=[];foundPorts=[];orient=0;turn=0;spec={name:'',dev_w:85,dev_d:56,dev_h:20,u:1,hole_d:2.7,standoff:6,insert_pilot:3.2,board_t:1.6,device_mount:'inserts',joint:'screw',holes:[],feet:[],ports:[],rear_ports:[],keystones:[]};step=0;}
   // Cable-planning port id (cable-ports.js): stable while the port is edited or moves between faces.
   const portId=()=>'p-'+Math.random().toString(36).slice(2,10);
   const PORT_TYPES=()=>Object.fromEntries(Object.entries(window.LabRaxPorts?.TYPES||{other:{label:'Other'}}).map(([k,v])=>[k,v.label]));
@@ -225,6 +252,10 @@
         const o=h('div',{class:'ew-choices'},...['Z is up','Y is up','X is up'].map((t,i)=>{const b=h('button',{type:'button',class:'ew-chip'+(orient===i?' on':'')},t);b.onclick=()=>{orient=i;applyImport();render();};return b;}));
         const r=h('button',{type:'button',class:'ew-chip'},'↻ Rotate 90°');r.onclick=()=>{turn=(turn+1)%4;applyImport();render();};
         imp.push(h('div',{class:'ew-row'},'Orientation:',o,r));
+        const fr=foundFeet.map((f,i)=>{const cb=h('input',{type:'checkbox'});cb.checked=f.keep;cb.onchange=()=>{f.keep=cb.checked;spec.feet=foundFeet.filter(q=>q.keep).map(({x,y,w,d,h})=>({x,y,w,d,h}));topView();fitWarn();};return h('label',{class:'ew-chip'},cb,` ${i+1}: X ${f.x} · Y ${f.y} · ${f.w} × ${f.d} mm · ${f.h} mm tall`);});
+        const addFoot=h('button',{type:'button',class:'ew-chip'},'+ Add foot');addFoot.onclick=()=>{const f={x:0,y:0,w:2,d:2,h:1,keep:true};foundFeet.push(f);spec.feet=foundFeet.filter(q=>q.keep).map(({x,y,w,d,h})=>({x,y,w,d,h}));render();};
+        imp.push(h('p',{},foundFeet.length?`Found ${foundFeet.length} feet, ${Math.max(...foundFeet.map(f=>f.h)).toFixed(1)} mm tallest. Keep or drop each; pocket dimensions are editable.`:'No feet found. Add a foot if the device has one.'),h('div',{class:'ew-row'},...fr,addFoot));
+        const footRows=[];for(let i=0;i<foundFeet.length;i++){const f=foundFeet[i],inputs=[];for(const k of ['x','y','w','d','h']){const inp=h('input',{type:'number',step:'0.1',value:f[k]});inp.oninput=()=>{f[k]=Number(inp.value);spec.feet=foundFeet.filter(q=>q.keep).map(({x,y,w,d,h})=>({x,y,w,d,h}));fitWarn();};inputs.push(h('label',{class:'ew-field'},k.toUpperCase(),inp));}footRows.push(h('div',{class:'ew-row'},`Foot ${i+1}`,...inputs));}imp.push(...footRows);
         imp.push(h('canvas',{id:'ewModel',class:'ew-model'}),h('p',{class:'ew-note ew-hint'},'Left-drag turns · right-drag moves · scroll zooms at the cursor · Z fits · orange edge = front (faceplate side)'),h('p',{class:'ew-note'},modelNote()));
         const hint=window.LabRaxPortOpenings.flatHint(spec);if(hint)imp.push(h('p',{class:'ew-note'},hint));
         const warn=modelWarn();if(warn)imp.push(h('p',{class:'ew-note ew-warn'},warn));
