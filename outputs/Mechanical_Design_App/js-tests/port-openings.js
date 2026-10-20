@@ -24,7 +24,7 @@ test('opening bounds, priority, keystone and finite fixtures',()=>{
   const base={x:0,z:20,w:10,h:8};
   const edge='Port 1 opening would run past the faceplate edge. Move the device back toward the centre or edit the port.';
   const vertical='Port 1 opening would run off the top or bottom of the faceplate. Change the standoff or faceplate height, or edit the port.';
-  for(const [patch,ks,expected] of [[{x:125,z:0},[125],[edge]],[{z:5},[],[vertical]],[{z:39},[],[vertical]],[{x:60},[60],['Port 1 opening would cut into keystone 1 (at X = 60 mm). Move the device or the keystone.']],[{x:-60},[72.5,-60],['Port 1 opening would cut into keystone 2 (at X = -60 mm). Move the device or the keystone.']],[{x:72.5},[72.5],['Port 1 opening would cut into keystone 1 (at X = 72.5 mm). Move the device or the keystone.']],[{x:75.5},[60],[]],[{x:121,z:6},[],[]]]){
+  for(const [patch,ks,expected] of [[{x:125,z:0},[125],[edge]],[{z:5},[],[vertical]],[{z:39},[],[vertical]],[{x:60},[60],['Port 1 opening would cut into keystone 1 (at X = 60 mm). Move the device or the keystone.']],[{x:-60},[72.5,-60],['Port 1 opening would cut into keystone 2 (at X = -60 mm). Move the device or the keystone.']],[{x:72.5},[72.5],['Port 1 opening would cut into keystone 1 (at X = 72.5 mm). Move the device or the keystone.']],[{x:75.5},[60],[]],[{x:121,z:6.025},[],[]]]){
     const ports=[{...base,...patch}],before=structuredClone({ports,ks});assert.deepEqual(P.problems(ports,1,ks),expected);assert.deepEqual({ports,ks},before);}
   for(const key of ['x','z','w','h'])for(const v of [NaN,Infinity,-Infinity])assert.deepEqual(P.problems([{...base,[key]:v}],1,[]),[]);
   assert.equal(P.problems([{...base,label:'LAN',x:125},{...base,z:0}],1,[])[0].startsWith('LAN opening'),true);

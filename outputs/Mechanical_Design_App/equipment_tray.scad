@@ -21,7 +21,7 @@ keystones=[];               // [x,...] keystone centres on faceplate (X=0 centre
 // 19.8 x 27.85 reaching 9.2 mm behind the front face (bottom lip to 10.4) that carries the latch ramp and catches.
 ks_w=14.8; ks_h=16.6;       // front opening
 ks_ow=19.8; ks_ob=11.9; ks_ot=15.95; ks_od=9.2; ks_lip=10.4;  // collar width, below/above opening centre, depth
-ports=[];                   // [[x,z,w,h,r],...] faceplate cut-outs, z from plate bottom, r=corner radius
+ports=[];                   // [[x,z,w,h,r],...] faceplate cut-outs, z from slot bottom, r=corner radius
 front_gap=12;               // device front to faceplate rear face
 margin=8;                   // tray border around device
 dev_off_x=0;                // device left/right offset, mm from centred (+ = right, seen from the front)
@@ -32,27 +32,42 @@ coupon=[];                  // test coupon: [x0,x1,ymax] keeps only that slice o
 
 // 4 mm plate (owner default 2026-10-18). Corner radius is limited by the four-corner holes:
 // the reference holes sit 1.6 mm from the top/bottom edge, so larger corners would cut into them.
-plate_w=252; plate_t=4; plate_r=2.5; plate_h=u*44.45-2.45;
-hole_x=118.2625; hole_dz=15.902;   // each U: holes at its centre ±hole_dz (5.098 / 36.902 on a 1U plate)
+rack_pitch=44.45; plate_gap=0.05; legacy_slot_offset=1.225;
+plate_bottom=plate_gap/2; plate_center=u*rack_pitch/2;
+plate_w=252; plate_t=4; plate_r=2.5; plate_h=u*rack_pitch-plate_gap;
+hole_x=118.2625; hole_dz=15.902;   // each U: holes at its centre ±hole_dz (6.323 / 38.127 above the slot bottom)
 rack_depth=240;             // Lab Rax frame depth (front of front posts to back of rear posts)
 nudge=0;                    // render-repair only: tiny size offset applied when OpenSCAD 2021 emits a sliver
-tray_t=3; floor_z=device_mount=="flat"?0.5:7; tray_z=floor_z; // @flat-floor
+sleeve=device_mount=="sleeve";
+// PROPOSED sleeve defaults (mm); independent design, fit and strength UNKNOWN.
+sl_side=0.5; sl_top=0.3; sl_wall=6; sl_lip_w=10; sl_lip_t=1.5; sl_band=1.5; sl_stop_t=4; sl_stop_h=6;
+tray_t=3; floor_z=(device_mount=="flat"||sleeve)?0.5:7+legacy_slot_offset; tray_z=floor_z; // @flat-floor
 assert(dev_rot==0||dev_rot==90||dev_rot==180||dev_rot==270,"dev_rot must be 0, 90, 180 or 270");
 // Device footprint on the tray after rotation; the tray stays centred and grows to keep the margin.
 fp_w=(dev_rot==90||dev_rot==270)?dev_d:dev_w; fp_d=(dev_rot==90||dev_rot==270)?dev_w:dev_d;
-tray_w=2*(abs(dev_off_x)+fp_w/2+margin); tray_d=rear_support?rack_depth:dev_off_y+fp_d+front_gap+margin;
+rack_inner_w=208; side_clear=2; max_tray=rack_inner_w-2*side_clear; // PROPOSED nominal opening / side clearance
+tray_w=2*(abs(dev_off_x)+fp_w/2+(sleeve?max(margin,sl_side+sl_wall):margin)); tray_d=rear_support?rack_depth:sleeve?-plate_t+fp_d+margin:dev_off_y+fp_d+front_gap+margin;
 tray_x=-tray_w/2; tray_y=0;
  // @flat-begin
 assert(device_mount!="flat"||front_gap+dev_off_y>=6.2,"Flat corner stops need a front gap of at least 6.2 mm");
 assert(device_mount!="flat"||joint!="screw"||front_gap+dev_off_y>=11.5,"Flat device must clear the front screw joint (front gap >= 11.5 mm)");
 assert(device_mount!="flat"||!rear_support||front_gap+dev_off_y+fp_d<=rack_depth-11.5,"Flat device must clear the rear screw joint (rear gap >= 11.5 mm)");
  // @flat-end
-dev_x=-fp_w/2+dev_off_x; dev_y=front_gap+dev_off_y; floor_top=tray_z+tray_t;
-assert(tray_w<=230,str("Device moved off the tray: it needs a ",tray_w," mm tray (max 230); reduce dev_off_x"));
-assert(dev_y>=0,str("Device moved into the faceplate: dev_off_y must be at least ",-front_gap));
+dev_x=-fp_w/2+dev_off_x; dev_y=sleeve?-plate_t:front_gap+dev_off_y; floor_top=tray_z+tray_t;
+assert(tray_w<=max_tray,str("This tray is ",tray_w," mm wide but the rack opening allows ",max_tray," mm (",rack_inner_w," mm minus ",side_clear," mm each side). Try Rotate 90 degrees, or reduce dev_off_x."));
+assert(sleeve||dev_y>=0,str("Device moved into the faceplate: dev_off_y must be at least ",-front_gap));
 assert(!rear_support||dev_y+fp_d+margin<=rack_depth,"Device moved past the rear posts; reduce dev_off_y");
 // Device-frame point [x,y] (front-left origin, unrotated) -> footprint offset from [dev_x,dev_y].
 function dp(p)=dev_rot==90?[dev_d-p[1],p[0]]:dev_rot==180?[dev_w-p[0],dev_d-p[1]]:dev_rot==270?[p[1],dev_w-p[0]]:p;
+sl_half=fp_w/2+sl_side; sl_bottom=floor_top; sl_window_top=floor_top+dev_h+sl_top;
+sl_lip=sl_window_top+sl_lip_t<=u*rack_pitch?sl_lip_t:0;
+sl_rear=dev_y+fp_d;
+sl_joints=[dev_off_x-sl_half-sl_wall/2,dev_off_x+sl_half+sl_wall/2];
+sl_joint_z=[sl_bottom+3,sl_window_top-3];
+assert(!sleeve||fp_d/4-plate_t-6>=8,"Sleeve depth must be at least 72 mm to keep strap slots clear of the front joint");
+assert(!sleeve||sl_bottom-plate_bottom>=sl_band&&u*rack_pitch-plate_bottom-sl_window_top>=sl_band,str("Too tall for a flush window in ",u,"U; choose ",u+1,"U"));
+assert(!sleeve||!rear_support||sl_rear+sl_stop_t<=rack_depth-11.5,"Sleeve rear stop must clear rear joint by 11.5 mm");
+assert(!sleeve||joint!="screw"||sl_window_top-sl_bottom>=10,"Sleeve screw joint needs a window at least 10 mm tall");
 jx=min(40,tray_w/2-12); joint_x=[-jx,jx];
 tongue_w=12; tongue_depth=7; tongue_h=3; tongue_z=tray_z+3.5;
 slot_clear=0.3; boss_d=9; m3_clear=3.4; joint_pilot=4.0;  // 4.0 = the printed, well-fitting Pi4 trial
@@ -66,9 +81,10 @@ module to_rear(){translate([0,rack_depth/2,0])mirror([0,1,0])translate([0,-rack_
 // rear=true cuts the larger keystone pocket; plain=true leaves out keystones/ports (rear bracket).
 module plate2d(rear=false,plain=false){
  difference(){
-  hull()for(sx=[-1,1],sz=[-1,1])translate([sx*(plate_w/2-plate_r),plate_h/2+sz*(plate_h/2-plate_r)])circle(r=plate_r+nudge);
-  for(i=[0:u-1],dz=[-hole_dz,hole_dz],x=[-hole_x,hole_x])translate([x,i*44.45+21+dz])capsule2d();
+  hull()for(sx=[-1,1],sz=[-1,1])translate([sx*(plate_w/2-plate_r),plate_center+sz*(plate_h/2-plate_r)])circle(r=plate_r+nudge);
+  for(i=[0:u-1],dz=[-hole_dz,hole_dz],x=[-hole_x,hole_x])translate([x,i*rack_pitch+rack_pitch/2+dz])capsule2d();
   if(!plain){
+   if(sleeve)translate([dev_off_x,(sl_bottom+sl_window_top)/2])square([2*sl_half,sl_window_top-sl_bottom],center=true);
    for(p=ports)translate([p[0],p[1]])rrect(p[2],p[3],p[4]);
   }
  }
@@ -76,8 +92,8 @@ module plate2d(rear=false,plain=false){
 // Plate between y=y0 (front) and y0+t, built from the 2D outline (cleaner meshes than 3D cuts in OpenSCAD 2021).
 module plate_layer(y0,t,rear=false,plain=false){translate([0,y0+t,0])rotate([90,0,0])linear_extrude(height=t)plate2d(rear,plain);}
 
-module plate_joint_add(){
- if(joint=="screw"){
+module plate_joint_add(rear=false){
+ if(joint=="screw"&&(!sleeve||rear)){
   for(x=joint_x)translate([x-tongue_w/2,0,tongue_z])cube([tongue_w,tongue_depth,tongue_h]);
   for(x=joint_x)translate([x,0,tray_z+14])rotate([-90,0,0])cylinder(d=boss_d,h=8);
  }
@@ -91,11 +107,11 @@ module plate_joint_add(){
 }
 // Keystone collar behind the plate, and the jack-shaped cut through plate + collar.
 // Profile in (d = depth behind front face, z from opening centre); X width is ks_w throughout.
-module ks_collar(){for(x=keystones)translate([x-ks_ow/2,-plate_t,plate_h/2]){
+module ks_collar(){for(x=keystones)translate([x-ks_ow/2,-plate_t,plate_center]){
  translate([0,0,-ks_ob])cube([ks_ow,ks_od,ks_ob+ks_ot]);
  translate([0,0,-ks_ob])cube([ks_ow,ks_lip,ks_ob-ks_h/2]);
 }}
-module ks_cut(){for(x=keystones)translate([x-ks_w/2,-plate_t,plate_h/2])rotate([90,0,90])linear_extrude(height=ks_w)
+module ks_cut(){for(x=keystones)translate([x-ks_w/2,-plate_t,plate_center])rotate([90,0,90])linear_extrude(height=ks_w)
  polygon([[-1,-ks_h/2],[5.8,-ks_h/2],[5.8,-9.9],[9.2,-9.9],[9.2,-ks_h/2],[11,-ks_h/2],[11,11.6],[8.2,11.6],
           [8.2,ks_ot+1],[7.2,ks_ot+1],[7.2,13.6],[0.6,ks_h/2],[-1,ks_h/2]]);}
 // Golden keystone (Brian, 2026-10-19): exact cross-sections of the keystone on Brian's SG108 faceplate, which fits
@@ -121,15 +137,15 @@ KS_GOLD=[
 // The block is cut 0.1 mm oversize in height, then clipped in rack coordinates by the same box as ks_box_cut, so its
 // top/bottom faces are the very same numbers as the plate opening (the transform alone landed them a hair off).
 module ks_golden(){for(x=keystones)intersection(){
- translate([x,0,plate_h/2])multmatrix([[1,0,0,0],[0,0,1,-4],[0,-1,0,25.09],[0,0,0,1]])intersection(){
+ translate([x,0,plate_center])multmatrix([[1,0,0,0],[0,0,1,-4],[0,-1,0,25.09],[0,0,0,1]])intersection(){
   union()for(b=KS_GOLD)translate([b[0],0,0])rotate([90,0,90])linear_extrude(height=b[1])for(pg=b[2])
    translate([b[1]>10&&min([for(q=pg)q[0]])>30?-ks_tight:0,0])polygon([for(q=pg)[q[0],q[1]-0.08]]);  // opening band, hook side
   translate([-10.5,25.09-18.6,-0.09])cube([21,33.7,10.42]);
  }
- translate([x-10.5,-plate_t-1,plate_h/2-15])cube([21,plate_t+16,33.5]);
+ translate([x-10.5,-plate_t-1,plate_center-15])cube([21,plate_t+16,33.5]);
 }}
-module ks_box_cut(){for(x=keystones)translate([x-10.5,-plate_t-0.01,plate_h/2-15])cube([21,plate_t+0.02,33.5]);}
-module plate_joint_cut(){if(joint=="screw")for(x=joint_x)translate([x,-0.1,tray_z+14])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.2);}
+module ks_box_cut(){for(x=keystones)translate([x-10.5,-plate_t-0.01,plate_center-15])cube([21,plate_t+0.02,33.5]);}
+module plate_joint_cut(rear=false){if(joint=="screw"&&(!sleeve||rear))for(x=joint_x)translate([x,-0.1,tray_z+14])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.2);}
 
 module faceplate(){
  union(){
@@ -140,15 +156,25 @@ module faceplate(){
     plate_joint_add();
    }
    plate_joint_cut();
+   if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)translate([x,-plate_t-0.1,z])rotate([-90,0,0])cylinder(d=m3_clear,h=plate_t+0.2);
    if(ks_style=="v2")ks_cut(); else ks_box_cut();
   }
   if(ks_style!="v2")ks_golden();
  }
 }
 // Plain plate on the rear posts (mirror of the faceplate, no openings) that the tray's rear end screws/snaps to.
-module rear_bracket(){to_rear()difference(){union(){plate_layer(-plate_t,plate_t,false,true);plate_joint_add();}plate_joint_cut();}}
+module rear_bracket(){to_rear()difference(){union(){plate_layer(-plate_t,plate_t,false,true);plate_joint_add(true);}plate_joint_cut(true);}}
 
 module device_features_add(){
+ if(sleeve){
+  for(side=[-1,1]){
+   x=side<0?dev_off_x-sl_half-sl_wall:dev_off_x+sl_half;
+   translate([x,0,floor_top])cube([sl_wall,sl_rear,sl_window_top-floor_top]);
+   if(sl_lip>0)translate([side<0?x:dev_off_x+sl_half-min(sl_lip_w,sl_half),0,sl_window_top])cube([sl_wall+min(sl_lip_w,sl_half),sl_rear,sl_lip]);
+  }
+  translate([dev_x,sl_rear,floor_top])cube([fp_w,sl_stop_t,min(sl_stop_h,dev_h)]);
+ }
+
  // @flat-begin
  if(device_mount=="flat"){
   // Corner stops outside the footprint, with 0.2 mm nominal clearance. Retention UNKNOWN.
@@ -174,23 +200,28 @@ module device_features_add(){
  }
 }
 module device_features_cut(){
+ if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)translate([x,-0.1,z])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.1);
+ // Strap access through each wall at quarter-depth, clear of the front/rear joints.
+ if(sleeve)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
+  translate([side<0?dev_off_x-sl_half-sl_wall-0.1:dev_off_x+sl_half-0.1,y-6,floor_top-0.1])cube([sl_wall+0.2,12,3.1]);
+
  if(device_mount=="inserts")for(h=[for(q=holes)dp(q)])translate([dev_x+h[0],dev_y+h[1],floor_top+0.01])cylinder(d=insert_pilot,h=standoff+0.1);
- if(device_mount=="straps"||device_mount=="flat")for(x=[dev_x-5.5,dev_x+fp_w+2.5],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
+ if(device_mount=="straps"||device_mount=="flat"||sleeve)for(x=[dev_x-5.5,dev_x+fp_w+2.5],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
   translate([x,y-6,tray_z-0.1])cube([3,12,tray_t+0.2]);
 }
 
-module tray_joint_add(){
- if(joint=="screw"){
+module tray_joint_add(rear=false){
+ if(joint=="screw"&&(!sleeve||rear)){
   for(x=joint_x) translate([x-9,0,tray_z+tray_t])cube([18,8,5]);
   for(x=joint_x)translate([x-7,8.3,tray_z+3])cube([14,3,19]);
   for(x=joint_x) for(side=[-1,1]) translate([x+side*6-1,0,0])
     hull(){translate([0,9,tray_z+2.7])cube([2,2,0.5]);
            translate([0,9,tray_z+8])cube([2,2,0.5]);
-           translate([0,device_mount=="flat"?9.5:20,tray_z+2.7])cube([2,2,0.5]);}
+           translate([0,(device_mount=="flat"||sleeve)?9.5:20,tray_z+2.7])cube([2,2,0.5]);}
  }
 }
-module tray_joint_cut(){
- if(joint=="screw"){
+module tray_joint_cut(rear=false){
+ if(joint=="screw"&&(!sleeve||rear)){
   for(x=joint_x)translate([x-(tongue_w+slot_clear)/2,-0.1,tongue_z-slot_clear/2])cube([tongue_w+slot_clear,tongue_depth+slot_clear,tongue_h+slot_clear]);
   for(x=joint_x)translate([x,11.4,tray_z+14])rotate([90,0,0])cylinder(d=m3_clear,h=12);
  }
@@ -202,11 +233,11 @@ module tray(){
   union(){
    translate([tray_x,tray_y,tray_z])cube([tray_w,tray_d,tray_t]);
    tray_joint_add();
-   if(rear_support)to_rear()tray_joint_add();
+   if(rear_support)to_rear()tray_joint_add(true);
    device_features_add();
   }
   tray_joint_cut();
-  if(rear_support)to_rear()tray_joint_cut();
+  if(rear_support)to_rear()tray_joint_cut(true);
   device_features_cut();
  }
 }

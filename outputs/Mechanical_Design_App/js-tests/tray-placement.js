@@ -32,11 +32,11 @@ test('layout and hole positions follow equipment_tray.scad (rotation swaps width
 test('SCAD assert errors show as plain messages',()=>{
   const msg=t=>T.problems(SPEC,T.values(SPEC,t)).join(' ');
   assert.equal(msg({}),'');
-  assert.match(msg({dev_off_x:70}),/moved off the tray: it would need a 241 mm wide tray/);
+  assert.match(msg({dev_off_x:70}),/This tray is 241 mm wide.*allows 204 mm/);
   assert.match(msg({dev_off_y:-13}),/moved into the faceplate/);
   assert.match(msg({rear_support:true,dev_off_y:180}),/past the rear posts/);
   assert.match(msg({dev_rot:45}),/Rotation must be 0, 90, 180 or 270/);
-  assert.match(T.problems({...SPEC,dev_w:220,dev_d:60},T.values({...SPEC,dev_w:220},{})).join(' '),/too wide for the tray.*Try rotating it 90°/);
+  assert.match(T.problems({...SPEC,dev_w:220,dev_d:60},T.values({...SPEC,dev_w:220},{})).join(' '),/This tray is 236 mm wide.*Rotate 90°/);
   assert.equal(T.problems({...SPEC,dev_w:220,dev_d:60},T.values(SPEC,{dev_rot:90})).length,0);
   assert.match(msg({standoff:30}),/taller than 1U/);
   assert.match(msg({keystones:[-60]}),/collar would hit the tray/);
@@ -100,18 +100,28 @@ const bounds=flat=>{const lo=[Infinity,Infinity,Infinity],hi=[-Infinity,-Infinit
 test('rackSketch follows the slot tray settings in equipment_tray.scad coordinates',()=>{
   const lib=T.rackSketch(SPEC,{});
   assert.deepEqual(Object.keys(lib).sort(),['faceplate','openings','tray']);
-  assert.deepEqual(bounds(lib.faceplate),[[-126,-4,0],[126,0,44.45-2.45]]);  // 1U plate
+  assert.deepEqual(bounds(lib.faceplate),[[-126,-4,0.025],[126,0,44.45-0.025]]);  // 1U plate
   assert.deepEqual(bounds(lib.tray)[0].slice(0,2),[-(85/2+8),0]);           // tray_w = 2*(fp_w/2+margin)
   assert.equal(bounds(lib.tray)[1][1],12+56+8);                             // tray_d = front_gap+fp_d+margin
-  const h=(44.45-2.45)/2;
+  const h=44.45/2;
   assert.deepEqual(bounds(lib.openings),[[-107.4,-4.2,h-8.3],[-92.6,0.2,h+8.3]]); // keystone at -100 (14.8 x 16.6)
   const moved=T.rackSketch(SPEC,{dev_off_x:-20,dev_off_y:15,dev_rot:90,u:2,keystones:[],rear_support:true});
-  assert.equal(bounds(moved.faceplate)[1][2],2*44.45-2.45);
+  assert.equal(bounds(moved.faceplate)[1][2],0.025+(2*44.45-0.05));
   assert.equal(moved.openings,undefined);
   assert.equal(bounds(moved.tray)[0][0],-(20+56/2+8));                      // rotated: fp_w = dev_d
   assert.equal(bounds(moved.tray)[1][1],240);                               // rear support: tray to the rear posts
-  assert.deepEqual(bounds(moved.rear_bracket),[[-126,240,0],[126,244,2*44.45-2.45]]);
+  assert.deepEqual(bounds(moved.rear_bracket),[[-126,240,0.025],[126,244,0.025+(2*44.45-0.05)]]);
   const ported=T.rackSketch({...SPEC,keystones:[],ports:[{x:10,z:20,w:15,h:8,r:1}]},null);
   assert.deepEqual(bounds(ported.openings),[[2.5,-4.2,16],[17.5,0.2,24]]);
   for(const flat of Object.values(moved))assert.equal(flat.length%9,0);     // whole triangles
+});
+
+test('204 mm hard width budget includes margin and offsets, with explicit rotate advice',()=>{
+  const s={...SPEC,keystones:[],dev_w:194.5,dev_d:182.5,dev_h:38.8,device_mount:'flat'};
+  assert.match(T.widthProblem(s),/210.5.*204.*208.*2 mm each side.*Rotate 90°/);
+  assert.deepEqual(T.problems(s,T.values(s,{dev_rot:90})),[]);
+  assert.equal(T.layout(s,T.values(s,{dev_rot:90})).tray_w,198.5);
+  assert.equal(T.widthProblem({...s,dev_w:188}),'');
+  assert.match(T.widthProblem({...s,dev_w:188.1}),/204.1/);
+  assert.match(T.widthProblem({...s,dev_w:188},T.values(s,{dev_off_x:.1})),/204.2/);
 });

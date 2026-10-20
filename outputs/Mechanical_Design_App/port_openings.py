@@ -2,6 +2,55 @@
 from copy import deepcopy
 import math
 
+RACK_PITCH, PLATE_GAP, LEGACY_SLOT_OFFSET = 44.45, 0.05, 1.225
+
+
+# PROPOSED sleeve defaults, independent of third-party geometry.
+SLEEVE_SIDE, SLEEVE_TOP, SLEEVE_WALL = 0.5, 0.3, 6
+SLEEVE_LIP_W, SLEEVE_LIP_T, SLEEVE_BAND = 10, 1.5, 1.5
+SLEEVE_STOP_T, SLEEVE_STOP_H = 4, 6
+
+
+def sleeve(spec):
+    if spec.get('device_mount') != 'sleeve':
+        return None
+    turned = spec.get('dev_rot', 0) in (90, 270)
+    w, d = (float(spec['dev_d']), float(spec['dev_w'])) if turned else (float(spec['dev_w']), float(spec['dev_d']))
+    x, bottom = float(spec.get('dev_off_x', 0)), 3.5
+    half = w / 2 + SLEEVE_SIDE
+    top = bottom + float(spec['dev_h']) + SLEEVE_TOP
+    lip = SLEEVE_LIP_T if top + SLEEVE_LIP_T <= float(spec.get('u', 1)) * RACK_PITCH else 0
+    return dict(x=x, half=half, bottom=bottom, top=top, width=half*2,
+                height=top-bottom, outside=w+2*(SLEEVE_SIDE+SLEEVE_WALL),
+                lip=lip, rear=-4+d, stop_end=-4+d+SLEEVE_STOP_T,
+                joints=[x-half-SLEEVE_WALL/2, x+half+SLEEVE_WALL/2],
+                joint_z=[bottom+3, top-3])
+
+
+def sleeve_ports(ports, spec):
+    win = sleeve(spec)
+    if not win:
+        return list(ports or []), [], []
+    kept, dropped, errors = [], [], []
+    for p in ports or []:
+        try:
+            x, z, width, height = (float(p[k]) for k in ('x', 'z', 'w', 'h'))
+        except (KeyError, TypeError, ValueError):
+            raise ValueError('Enter valid sleeve front-opening dimensions.')
+        if not all(math.isfinite(v) for v in (x,z,width,height)) or width < 1 or height < 1:
+            raise ValueError('Enter valid sleeve front-opening dimensions.')
+        x0, x1 = x-width/2, x+width/2
+        z0, z1 = z-height/2, z+height/2
+        inside = x0 >= win['x']-win['half'] and x1 <= win['x']+win['half'] and z0 >= win['bottom'] and z1 <= win['top']
+        overlap = x1 > win['x']-win['half'] and x0 < win['x']+win['half'] and z1 > win['bottom'] and z0 < win['top']
+        if inside:
+            dropped.append(p)
+        elif overlap:
+            errors.append('A front opening crosses the sleeve window edge; move or remove it.')
+        else:
+            kept.append(p)
+    return kept, dropped, errors
+
 DEFAULT_SIZES = {
     'rj45': {'w': 17, 'h': 14, 'r': 1}, 'usb-a': {'w': 15, 'h': 8, 'r': 1},
     'usb-c': {'w': 12, 'h': 7, 'r': 3}, 'hdmi': {'w': 17, 'h': 8, 'r': 1},
@@ -15,7 +64,8 @@ def default_size(type=None):
 
 
 def lift(spec):
-    return 0 if spec.get('device_mount', 'inserts') == 'straps' else float(spec.get('standoff', 6))
+    return (0.5 - (7 + LEGACY_SLOT_OFFSET) if spec.get('device_mount') in ('flat', 'sleeve') else
+            0 if spec.get('device_mount') == 'straps' else float(spec.get('standoff', 6)))
 
 
 def front_openings(lib_spec, tray=None):
@@ -24,7 +74,7 @@ def front_openings(lib_spec, tray=None):
     rotation = float(eff.get('dev_rot') or 0)
     follows = rotation == 0
     dx = float(eff.get('dev_off_x') or 0) - float(lib_spec.get('dev_off_x') or 0) if follows else 0
-    dz = lift(eff) - lift(lib_spec) if follows else 0
+    dz = round(lift(eff) - lift(lib_spec), 3) if follows else 0
     ports = deepcopy(lib_spec.get('ports') or [])
     if follows:
         for p in ports:
@@ -39,12 +89,12 @@ def front_openings(lib_spec, tray=None):
 # Tray screw joint behind the faceplate (equipment_tray.scad tray_joint_add/plate_joint_add): block, tongue, boss and
 # post fill X = joint ± 9 mm up to Z = 29 mm. An opening there would be blocked by it (and an edge touching the screw
 # hole cannot be rendered cleanly). Brian, 2026-10-19: block such openings. 1 mm clearance is kept around the zone.
-JOINT_HALF, JOINT_TOP, JOINT_CLEAR = 9, 29, 1
+JOINT_HALF, JOINT_TOP, JOINT_CLEAR = 9, 29 + LEGACY_SLOT_OFFSET, 1
 
 
 def problems(ports, u, keystones, joints=()):
     out = []
-    plate_h = u * 44.45 - 2.45
+    plate_h = u * RACK_PITCH - PLATE_GAP
     for i, p in enumerate(ports or []):
         values = [p.get(k) for k in ('x', 'z', 'w', 'h')]
         if not all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in values):
@@ -53,11 +103,11 @@ def problems(ports, u, keystones, joints=()):
         label = p.get('label') or f'Port {i + 1}'
         if abs(x) + w / 2 > 126:
             out.append(f'{label} opening would run past the faceplate edge. Move the device back toward the centre or edit the port.')
-        elif z - h / 2 < 2 or z + h / 2 > plate_h - 2:
+        elif z - h / 2 < PLATE_GAP / 2 + 2 or z + h / 2 > PLATE_GAP / 2 + plate_h - 2:
             out.append(f'{label} opening would run off the top or bottom of the faceplate. Change the standoff or faceplate height, or edit the port.')
         else:
             for n, k in enumerate(keystones or []):
-                if abs(x - k) < 10.5 + w / 2 and z - h / 2 < plate_h / 2 + 18.5 and z + h / 2 > plate_h / 2 - 15:
+                if abs(x - k) < 10.5 + w / 2 and z - h / 2 < u * RACK_PITCH / 2 + 18.5 and z + h / 2 > u * RACK_PITCH / 2 - 15:
                     out.append(f'{label} opening would cut into keystone {n + 1} (at X = {k:g} mm). Move the device or the keystone.')
                     break
             else:

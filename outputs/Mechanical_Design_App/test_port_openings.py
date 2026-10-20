@@ -46,7 +46,7 @@ class PortOpenings(unittest.TestCase):
         base=dict(x=0,z=20,w=10,h=8)
         edge='Port 1 opening would run past the faceplate edge. Move the device back toward the centre or edit the port.'
         vertical='Port 1 opening would run off the top or bottom of the faceplate. Change the standoff or faceplate height, or edit the port.'
-        fixtures=[(dict(x=125,z=0),[125],[edge]),(dict(z=5),[],[vertical]),(dict(z=39),[],[vertical]),(dict(x=60),[60],['Port 1 opening would cut into keystone 1 (at X = 60 mm). Move the device or the keystone.']),(dict(x=-60),[72.5,-60],['Port 1 opening would cut into keystone 2 (at X = -60 mm). Move the device or the keystone.']),(dict(x=72.5),[72.5],['Port 1 opening would cut into keystone 1 (at X = 72.5 mm). Move the device or the keystone.']),(dict(x=75.5),[60],[]),(dict(x=121,z=6),[],[])]
+        fixtures=[(dict(x=125,z=0),[125],[edge]),(dict(z=5),[],[vertical]),(dict(z=39),[],[vertical]),(dict(x=60),[60],['Port 1 opening would cut into keystone 1 (at X = 60 mm). Move the device or the keystone.']),(dict(x=-60),[72.5,-60],['Port 1 opening would cut into keystone 2 (at X = -60 mm). Move the device or the keystone.']),(dict(x=72.5),[72.5],['Port 1 opening would cut into keystone 1 (at X = 72.5 mm). Move the device or the keystone.']),(dict(x=75.5),[60],[]),(dict(x=121,z=6.025),[],[])]
         for patch,ks,expected in fixtures:
             ports=[{**base,**patch}];before=deepcopy((ports,ks))
             self.assertEqual(P.problems(ports,1,ks),expected)

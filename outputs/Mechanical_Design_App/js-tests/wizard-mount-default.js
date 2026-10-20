@@ -8,7 +8,7 @@ function fixture(){
   const posts=[];
   const node=(tag)=>({tag,children:[],value:'',textContent:'',
     setAttribute(k,v){this[k]=v;},append(...kids){this.children.push(...kids);}});
-  const box=vm.createContext({window:{LabRaxPortOpenings:P},document:{createElement:node,getElementById:()=>null},
+  const box=vm.createContext({window:{LabRaxPortOpenings:P,TrayPlacement:require('../tray-placement.js')},document:{createElement:node,getElementById:()=>null},
     setTimeout:()=>{},token:'test',fetch:async(url,options)=>{posts.push({url,spec:JSON.parse(options.body)});return {ok:true,json:async()=>({id:'fixture',name:'Box'})};}});
   const end=src.indexOf('  let items=[];');
   assert.ok(end>0);
@@ -27,7 +27,7 @@ function fixture(){
 }
 test('wizard mount selector retains inserts default and explicitly selects all mount choices',()=>{
   const f=fixture();assert.equal(f.api.current().device_mount,'inserts');
-  for(const mount of ['pegs','clips','straps','flat','inserts']){
+  for(const mount of ['pegs','clips','straps','flat','sleeve','inserts']){
     f.choose(mount);assert.equal(f.api.current().device_mount,mount);
   }
 });

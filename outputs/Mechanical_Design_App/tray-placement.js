@@ -7,8 +7,8 @@
   // ---- Pure logic (Node-testable). Mirrors equipment.PLACEMENT_KEYS, clean() and equipment_tray.scad asserts.
   const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','standoff','insert_pilot','board_t','joint','keystones','rear_support','u'];
   const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,u:1};
-  const FRONT_GAP=12,MARGIN=8,MAX_TRAY=230,RACK_DEPTH=240,PITCH=44.45,PLATE_HALF=126,PLATE_T=4,TRAY_T=3;
-  const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap',flat:'Sits flat on the tray (PCs, boxes)'};
+  const FRONT_GAP=12,MARGIN=8,RACK_INNER_W=208,SIDE_CLEAR=2,MAX_TRAY=RACK_INNER_W-2*SIDE_CLEAR,RACK_DEPTH=240,PITCH=44.45,PLATE_HALF=126,PLATE_T=4,TRAY_T=3;
+  const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
   const JOINTS={screw:'Screw joint',single:'Single printed piece'};
   const copy=v=>Array.isArray(v)?v.slice():v;
   // Values shown in the window: the allocation's tray settings win, then the library spec, then template defaults.
@@ -26,11 +26,17 @@
   }
   function layout(spec,v){
     const turned=v.dev_rot===90||v.dev_rot===270,w=+spec.dev_w,d=+spec.dev_d;
-    const fp_w=turned?d:w,fp_d=turned?w:d,tray_w=2*(Math.abs(v.dev_off_x)+fp_w/2+MARGIN);
-    const dev_x=-fp_w/2+v.dev_off_x,dev_y=FRONT_GAP+v.dev_off_y;
-    const tray_d=v.rear_support?RACK_DEPTH:v.dev_off_y+fp_d+FRONT_GAP+MARGIN;
+    const fp_w=turned?d:w,fp_d=turned?w:d,tray_w=2*(Math.abs(v.dev_off_x)+fp_w/2+(v.device_mount==='sleeve'?Math.max(MARGIN,PO().SLEEVE.side+PO().SLEEVE.wall):MARGIN));
+    const dev_x=-fp_w/2+v.dev_off_x,dev_y=v.device_mount==='sleeve'?-PLATE_T:FRONT_GAP+v.dev_off_y;
+    const tray_d=v.rear_support?RACK_DEPTH:dev_y+fp_d+MARGIN;
     const lift=PO().deviceLift(v);
-    return {fp_w,fp_d,tray_w,tray_d,dev_x,dev_y,lift,plate_h:v.u*PITCH-2.45,jx:Math.min(40,tray_w/2-12)};
+    return {fp_w,fp_d,tray_w,tray_d,dev_x,dev_y,lift,plate_h:PO().plateHeight(v.u),jx:Math.min(40,tray_w/2-12)};
+  }
+  // PROPOSED nominal opening and 2 mm clearance per side; never rotates the device.
+  function widthProblem(spec,v=values(spec)){
+    const L=layout(spec,v);if(L.tray_w<=MAX_TRAY)return '';
+    const hint=2*Math.abs(v.dev_off_x)+L.fp_d+2*(v.device_mount==='sleeve'?Math.max(MARGIN,PO().SLEEVE.side+PO().SLEEVE.wall):MARGIN)<=MAX_TRAY?' Too wide this way round; it fits if you press Rotate 90°.':'';
+    return `This tray is ${mm(L.tray_w)} mm wide but the rack opening allows ${MAX_TRAY} mm (${RACK_INNER_W} mm minus ${SIDE_CLEAR} mm each side).`+(v.dev_off_x?' Move the device less far sideways.':'')+hint;
   }
   // equipment_tray.scad dp(): device-frame point (front-left origin) -> footprint offset after rotation.
   function dp(spec,rot,p){const w=+spec.dev_w,d=+spec.dev_d;
@@ -56,9 +62,8 @@
     if((v.device_mount==='pegs'||v.device_mount==='clips')&&(!fin(v.board_t)||v.board_t<0.5||v.board_t>6))out.push('Board thickness must be between 0.5 and 6 mm.');
     if(out.length)return out;
     const L=layout(spec,v);
-    if(L.fp_w+2*MARGIN>MAX_TRAY)out.push(`The device is too wide for the tray: it needs ${mm(L.fp_w+2*MARGIN)} mm across with the 8 mm border (max ${MAX_TRAY} mm).`+(v.dev_rot%180===0&&+spec.dev_d+2*MARGIN<=MAX_TRAY?' Try rotating it 90°.':''));
-    else if(L.tray_w>MAX_TRAY)out.push(`The device is moved off the tray: it would need a ${mm(L.tray_w)} mm wide tray (max ${MAX_TRAY} mm). Move it back toward the centre.`);
-    if(L.dev_y<0)out.push('The device is moved into the faceplate. The front gap must be at least 0 mm.');
+    const width=widthProblem(spec,v);if(width)out.push(width);
+    if(v.device_mount!=='sleeve'&&L.dev_y<0)out.push('The device is moved into the faceplate. The front gap must be at least 0 mm.');
     if(v.dev_off_y>230)out.push('The device is moved too far back. The front gap can be at most 242 mm.');
     if(v.rear_support){
       if(v.joint==='single')out.push('Rear-post support needs the screw joint (a 240 mm single print is not offered).');
@@ -80,13 +85,18 @@
     const half=L.tray_w/2;
     if(ks.some(x=>Math.abs(x)-9.9<half+0.5))out.push(`A keystone collar would hit the tray; keep keystones at least ${mm(half+10.4)} mm from the centre.`);
     // Openings moved with the device must stay on the plate and clear of keystones (same limits as equipment.py).
-    const P=PO();if(P){out.push(...P.problems(openings(spec,v).ports,v.u,ks));const j=joints(spec,v);if(j&&j.problem)out.push(j.problem);}
+    const P=PO();if(P){const raw=openings(spec,v).ports,sw=P.sleeve({...spec,...v}),filtered=P.sleevePorts(raw,{...spec,...v});out.push(...filtered.errors);
+      if(sw){if(L.fp_d/4-4-6<8)out.push('Sleeve depth must be at least 72 mm to keep strap slots clear of the front joint.');if(sw.bottom-P.plateBottom<P.SLEEVE.band||v.u*PITCH-P.plateBottom-sw.top<P.SLEEVE.band)out.push(`Too tall for a flush window in ${v.u}U; choose ${v.u+1}U`);
+        if(v.rear_support&&sw.stop_end>RACK_DEPTH-11.5)out.push('Sleeve rear stop and device must clear the rear screw joint by at least 11.5 mm.');
+        if(v.joint==='screw'&&sw.height<10)out.push('Sleeve screw joint needs a window at least 10 mm tall; choose a single printed piece.');
+        if(v.joint==='screw'&&filtered.ports.some(p=>sw.joints.some(x=>Math.abs(p.x-x)<P.SLEEVE.wall/2+p.w/2&&p.z+p.h/2>sw.bottom&&p.z-p.h/2<sw.top)))out.push('A front opening overlaps a sleeve wall joint; move or remove it.');}
+      out.push(...P.problems(filtered.ports,v.u,ks));const j=joints(spec,v);if(j&&j.problem)out.push(j.problem);}
     return out;
   }
   // Plain-language warnings that never block (Brian, 2026-10-19).
   // Screw joints placed clear of the openings and keystones (port-openings.js jointPositions); null for the single piece.
-  function joints(spec,v){const P=PO();if(v.joint!=='screw'||!P)return null;return P.jointPositions(openings(spec,v).ports,v.keystones||[],layout(spec,v).tray_w/2);}
-  function warnings(spec,v){const out=[],m=openings(spec,v).message;if(m)out.push(m);const j=joints(spec,v);
+  function joints(spec,v){const P=PO();if(v.joint!=='screw'||!P)return null;const sw=P.sleeve({...spec,...v});if(sw)return {joints:sw.joints,moved:false,problem:null};return P.jointPositions(openings(spec,v).ports,v.keystones||[],layout(spec,v).tray_w/2);}
+  function warnings(spec,v){const out=[],sw=PO().sleeve({...spec,...v});if(sw){out.push('Sleeve front is fixed flush with the plate; front gap is ignored. Fit, retention and strength UNKNOWN.');if(!sw.lip)out.push('No top lips fit this height budget; walls only.');const dropped=PO().sleevePorts(openings(spec,v).ports,{...spec,...v}).dropped;if(dropped.length)out.push(`${dropped.length} front opening(s) inside the sleeve window are omitted; the window already exposes them.`);}const m=openings(spec,v).message;if(m)out.push(m);const j=joints(spec,v);
     if(j&&j.moved&&!j.problem)out.push(`The tray screw joints were moved to X = ${j.joints.map(x=>mm(x)).join(' and ')} mm (normally ±${mm(j.default)} mm) to keep them clear of the openings and keystones.`);
     return out;}
   // Centre: left/right offset back to 0 (front gap unchanged). Snap: whole millimetres.
@@ -106,8 +116,15 @@
       for(const x of [L.dev_x-6.2,L.dev_x+L.fp_w+0.2])for(const y of [L.dev_y,L.dev_y+L.fp_d-d])posts.push(...box(x,y,floor,x+6,y+d,floor+h));
       for(const x of [L.dev_x,L.dev_x+L.fp_w-w])for(const y of [L.dev_y-6.2,L.dev_y+L.fp_d+0.2])posts.push(...box(x,y,floor,x+w,y+6,floor+h));
     }
-    const plate=box(-PLATE_HALF,-PLATE_T,0,PLATE_HALF,0,L.plate_h),jacks=[];
-    for(const x of v.keystones||[])jacks.push(...box(x-7.4,-PLATE_T-0.2,L.plate_h/2-8.3,x+7.4,0.2,L.plate_h/2+8.3));
+    const sw=PO().sleeve({...spec,...v}),top=PO().plateBottom+L.plate_h;
+    let plate=box(-PLATE_HALF,-PLATE_T,PO().plateBottom,PLATE_HALF,0,top);const jacks=[];
+    if(sw){const S=PO().SLEEVE,left=sw.x-sw.half,right=sw.x+sw.half;
+      plate=[...box(-PLATE_HALF,-PLATE_T,PO().plateBottom,left,0,top),...box(right,-PLATE_T,PO().plateBottom,PLATE_HALF,0,top),...box(left,-PLATE_T,PO().plateBottom,right,0,sw.bottom),...box(left,-PLATE_T,sw.top,right,0,top)];
+      posts.push(...box(left-S.wall,0,floor,left,sw.rear,sw.top),...box(right,0,floor,right+S.wall,sw.rear,sw.top));
+      if(sw.lip)posts.push(...box(left-S.wall,0,sw.top,left+Math.min(S.lipW,sw.half),sw.rear,sw.top+sw.lip),...box(right-Math.min(S.lipW,sw.half),0,sw.top,right+S.wall,sw.rear,sw.top+sw.lip));
+      posts.push(...box(L.dev_x,sw.rear,floor,L.dev_x+L.fp_w,sw.stop_end,floor+Math.min(S.stopH,+spec.dev_h)));
+    }
+    for(const x of v.keystones||[])jacks.push(...box(x-7.4,-PLATE_T-0.2,v.u*PITCH/2-8.3,x+7.4,0.2,v.u*PITCH/2+8.3));
     const sets=[{v:plate,color:[78,117,163],alpha:1},{v:tray.concat(posts),color:[77,142,110],alpha:1},
       {v:box(L.dev_x,L.dev_y,L.lift,L.dev_x+L.fp_w,L.dev_y+L.fp_d,L.lift+ +spec.dev_h),color:[230,195,92],alpha:0.55}];
     if(jacks.length)sets.push({v:jacks,color:[30,32,36],alpha:1});
@@ -119,13 +136,13 @@
   function rackSketch(spec,tray){
     const v=values(spec,tray),L=layout(spec,v),sets=schematic(spec,v),out={faceplate:sets[0].v,tray:sets[1].v};
     const holes=[];
-    for(const x of v.keystones||[])if(fin(+x))holes.push(...box(x-7.4,-PLATE_T-0.2,L.plate_h/2-8.3,x+7.4,0.2,L.plate_h/2+8.3));
-    for(const p of openings(spec,v).ports){const o=[+p.x,+p.z,+p.w,+p.h];if(o.every(fin))holes.push(...box(o[0]-o[2]/2,-PLATE_T-0.2,o[1]-o[3]/2,o[0]+o[2]/2,0.2,o[1]+o[3]/2));}
+    for(const x of v.keystones||[])if(fin(+x))holes.push(...box(x-7.4,-PLATE_T-0.2,v.u*PITCH/2-8.3,x+7.4,0.2,v.u*PITCH/2+8.3));
+    for(const p of PO().sleevePorts(openings(spec,v).ports,{...spec,...v}).ports){const o=[+p.x,+p.z,+p.w,+p.h];if(o.every(fin))holes.push(...box(o[0]-o[2]/2,-PLATE_T-0.2,o[1]-o[3]/2,o[0]+o[2]/2,0.2,o[1]+o[3]/2));}
     if(holes.length)out.openings=holes;
-    if(v.rear_support)out.rear_bracket=box(-PLATE_HALF,RACK_DEPTH,0,PLATE_HALF,RACK_DEPTH+PLATE_T,L.plate_h); // to_rear(): plate mirrored about mid-depth
+    if(v.rear_support)out.rear_bracket=box(-PLATE_HALF,RACK_DEPTH,PO().plateBottom,PLATE_HALF,RACK_DEPTH+PLATE_T,PO().plateBottom+L.plate_h); // to_rear(): plate mirrored about mid-depth
     return out;
   }
-  const api={KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,openings,joints,problems,warnings,snap,schematic,box,rackSketch};
+  const api={RACK_INNER_W,SIDE_CLEAR,MAX_TRAY,widthProblem,KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,openings,joints,problems,warnings,snap,schematic,box,rackSketch};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.TrayPlacement=api;
   if(typeof document==='undefined')return;
@@ -154,11 +171,11 @@
     let s=`<rect x="-126" y="0" width="252" height="4" fill="#4e75a3"/><text x="0" y="14" font-size="6" fill="#9aa" text-anchor="middle">faceplate (front)</text>`;
     const over=L.tray_w>MAX_TRAY;
     s+=`<rect x="${-L.tray_w/2}" y="${-L.tray_d}" width="${L.tray_w}" height="${L.tray_d}" fill="#24382f" stroke="${over?'#e07070':'#4d8e6e'}" stroke-width=".8"/>`;
-    s+=`<rect x="-115" y="${-depth+2}" width="230" height="${depth-2}" fill="none" stroke="#666" stroke-width=".4" stroke-dasharray="3 2"/>`;
+    s+=`<rect x="${-MAX_TRAY/2}" y="${-depth+2}" width="${MAX_TRAY}" height="${depth-2}" fill="none" stroke="#666" stroke-width=".4" stroke-dasharray="3 2"/>`;
     if(v.joint==='screw'){const j=joints(spec,v);for(const x of j?j.joints.filter(x=>x!==null):[-L.jx,L.jx])s+=`<circle cx="${x}" cy="-3.5" r="2" fill="#aab"/>`;}
     for(const x of v.keystones||[])s+=`<rect x="${x-9.9}" y="-10.4" width="19.8" height="10.4" fill="#1d1f24" stroke="#888" stroke-width=".4"/>`;
     // Front-port openings in the faceplate strip (they follow the offset; a turned device leaves them as entered).
-    for(const p of openings(spec,v).ports)if([+p.x,+p.w].every(fin))s+=`<rect x="${+p.x-p.w/2}" y="0.6" width="${+p.w}" height="2.8" fill="#1d1f24" stroke="#ff9f43" stroke-width=".4"><title>${String(p.label||'Port').replace(/[<&"]/g,'')} opening</title></rect>`;
+    for(const p of PO().sleevePorts(openings(spec,v).ports,{...spec,...v}).ports)if([+p.x,+p.w].every(fin))s+=`<rect x="${+p.x-p.w/2}" y="0.6" width="${+p.w}" height="2.8" fill="#1d1f24" stroke="#ff9f43" stroke-width=".4"><title>${String(p.label||'Port').replace(/[<&"]/g,'')} opening</title></rect>`;
     s+=`<rect id="tpDevice" x="${L.dev_x}" y="${-(L.dev_y+L.fp_d)}" width="${L.fp_w}" height="${L.fp_d}" fill="#e6c35c" fill-opacity=".35" stroke="#e6c35c" stroke-width=".8" style="cursor:grab"/>`;
     const a=dp(spec,v.dev_rot,[0,0]),b=dp(spec,v.dev_rot,[+spec.dev_w,0]);
     s+=`<line x1="${L.dev_x+a[0]}" y1="${-(L.dev_y+a[1])}" x2="${L.dev_x+b[0]}" y2="${-(L.dev_y+b[1])}" stroke="#ff9f43" stroke-width="2" pointer-events="none"/>`;
@@ -221,7 +238,7 @@
     const spec=state.item.spec,v=state.v,name=state.item.display_name||state.item.name;
     const rot=h('div',{class:'ew-choices',role:'group','aria-label':'Rotation'},...[0,90,180,270].map(r=>{const b=h('button',{type:'button',class:'ew-chip'+(v.dev_rot===r?' on':''),'aria-pressed':String(v.dev_rot===r)},r+'°');b.onclick=()=>{v.dev_rot=r;render();};return b;}));
     const centre=h('button',{type:'button',class:'ew-chip'},'Centre');centre.onclick=()=>{v.dev_off_x=0;syncFields();update();};
-    const mountOpts=PO().usesStandoffs(v)?[field('Standoff (mm)',()=>v.standoff,x=>v.standoff=x,{step:'0.5',min:'0',max:'30'})]:[h('p',{class:'ew-note'},v.device_mount==='flat'?'Rests on the low floor with corner stops and optional strap slots. Retention UNKNOWN.':'Rests on the tray floor; no standoffs.')];
+    const mountOpts=PO().usesStandoffs(v)?[field('Standoff (mm)',()=>v.standoff,x=>v.standoff=x,{step:'0.5',min:'0',max:'30'})]:[h('p',{class:'ew-note'},v.device_mount==='sleeve'?'Low floor, side walls, top lips when space permits, rear stop and optional straps. Front flush; fit/retention/strength UNKNOWN.':v.device_mount==='flat'?'Rests on the low floor with corner stops and optional strap slots. Retention UNKNOWN.':'Rests on the tray floor; no standoffs.')];
     if(v.device_mount==='inserts')mountOpts.push(field('Insert pilot hole (mm)',()=>v.insert_pilot,x=>v.insert_pilot=x,{step:'0.1'}));
     if(v.device_mount==='pegs'||v.device_mount==='clips')mountOpts.push(field(v.device_mount==='pegs'?'Board thickness (mm)':'Edge thickness clipped (mm)',()=>v.board_t,x=>v.board_t=x,{step:'0.1'}));
     const rs=h('input',{type:'checkbox'});rs.checked=!!v.rear_support;rs.onchange=()=>{v.rear_support=rs.checked;render();};
@@ -252,7 +269,7 @@
       h('p',{class:'ew-note'},`${spec.dev_w} × ${spec.dev_d} × ${spec.dev_h} mm, ${(spec.holes||[]).length} mounting hole(s). These choices belong to this slot only; the library item is not changed.`),
       h('div',{class:'tp-grid'},
         h('div',{class:'tp-pane'},h('h3',{},'Top view'),document.createElementNS(NS,'svg'),
-          h('p',{class:'ew-note'},'Drag the device (snaps to 1 mm). Orange edge = device front. Blue dots = screw/hole positions. Dashed outline = the 230 mm tray limit.'),
+          h('p',{class:'ew-note'},'Drag the device (snaps to 1 mm). Orange edge = device front. Blue dots = screw/hole positions. Dashed outline = the '+MAX_TRAY+' mm tray limit (rack opening minus side clearance).'),
           h('h3',{},'Position'),h('div',{class:'ew-row'},offX,centre),h('div',{class:'ew-row'},gap),h('div',{class:'ew-row'},'Rotate ',rot),
           h('h3',{},'Mounting'),chips(MOUNTS,v.device_mount,k=>v.device_mount=k),h('div',{class:'ew-row'},...mountOpts)),
         h('div',{class:'tp-pane'},h('h3',{},'Live 3D preview'),cv,h('p',{id:'tpViewNote',class:'ew-note'}),h('div',{class:'ew-row'},exact,window.RenderQuality?.previewSlider('placement',draw3D)||''),

@@ -66,7 +66,7 @@ class PlaceOnTrayRequests(unittest.TestCase):
         before = sorted(p.name for p in self.folder.iterdir())
         out = eq.check_allocation(self.folder, {'item': ITEM['id'], 'tray': {'dev_off_x': 70}})
         self.assertFalse(out['ok'])
-        self.assertIn('off the tray', out['error'])
+        self.assertIn('rack opening allows 204 mm', out['error'])
         self.assertIn('into the faceplate', eq.check_allocation(self.folder, {'item': ITEM['id'], 'tray': {'dev_off_y': -13}})['error'])
         self.assertEqual(eq.check_allocation(self.folder, {'item': ITEM['id'], 'tray': {}}), {'ok': True, 'u': 1})
         self.assertEqual(sorted(p.name for p in self.folder.iterdir()), before)
@@ -130,7 +130,7 @@ class RackViewLookup(unittest.TestCase):
     def test_invalid_settings_or_item_give_no_render(self):
         out = eq.cached_allocation_render(self.folder, {'item': ITEM['id'], 'tray': {'dev_off_x': 70}})
         self.assertFalse(out['cached'])
-        self.assertIn('off the tray', out['error'])
+        self.assertIn('rack opening allows 204 mm', out['error'])
         self.assertFalse(eq.cached_allocation_render(self.folder, {'item': 'eq-ffffffffffff', 'tray': {}})['cached'])
 
     def test_js_rack_sketch_matches_python_tray_size(self):
@@ -152,7 +152,7 @@ class RackViewLookup(unittest.TestCase):
             tray_d = 240 if s['rear_support'] else s['dev_off_y'] + fp_d + 12 + 8
             self.assertAlmostEqual(got['tray'][0][0], -tray_w / 2, msg=tray)
             self.assertAlmostEqual(got['tray'][1][1], tray_d, msg=tray)
-            self.assertAlmostEqual(got['plate'][1][2], s['u'] * 44.45 - 2.45, msg=tray)
+            self.assertAlmostEqual(got['plate'][1][2], s['u'] * 44.45 - 0.025, msg=tray)
             self.assertEqual(got['ks'], len(s['keystones']) + len(s['ports']), tray)
             self.assertEqual(got['rear'], s['rear_support'], tray)
 
@@ -228,7 +228,7 @@ class FrontOpeningsFollowTheDevice(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Edge opening would run past the faceplate edge'):
             self.build({'dev_off_x': 20})
         with self.assertRaisesRegex(ValueError, 'run off the top or bottom'):
-            self.build({'standoff': 10})
+            self.build({'standoff': 12})
         lib = eq.clean({**SPEC, 'ports': [{'label': 'Near', 'x': -90, 'z': 20, 'w': 10, 'h': 8}]})
         (self.folder / 'equipment-library.json').write_text(json.dumps([{**ITEM, 'spec': lib}]), encoding='utf-8')
         with self.assertRaisesRegex(ValueError, 'Near opening would cut into keystone 1'):
@@ -288,22 +288,18 @@ class FlatFloorTests(unittest.TestCase):
         return dict(dict(name='Compatibility', dev_w=85, dev_d=56, dev_h=20,
                          device_mount='inserts', joint='screw', holes=[[3.5, 3.5]], u=1), **over)
 
-    def test_legacy_source_hashes(self):
-        import equipment, hashlib
-        expected = {
-            'inserts': '95522c80edb75fed6a7c80de8f6835fbc0dceecddfa4e2b92677ceee6ac93d39',
-            'pegs': '3c7e9003241f25f10219026d61e78ffcdb3aee94aa66b9333b406a9435d4ce82',
-            'clips': '305a2c4dc3f65da337e85f1ed743a6af8670d4ba4fdca96366d070df08d40550',
-            'straps': 'e976699322108711291a23c6f59f82f602fedc0a3054ec91b89523491d920c82'}
-        for mount, digest in expected.items():
-            text = equipment.source(equipment.clean(self.spec(device_mount=mount)))
-            self.assertEqual(hashlib.sha256(text.encode('utf-8')).hexdigest(), digest)
+    def test_new_source_uses_slot_bottom_standard(self):
+        for mount in ('inserts', 'pegs', 'clips', 'straps', 'flat'):
+            text = eq.source(eq.clean(self.spec(device_mount=mount)))
+            self.assertIn('plate_h=u*rack_pitch-plate_gap', text)
+            self.assertIn('floor_z=(device_mount=="flat"||sleeve)?0.5:7+legacy_slot_offset', text)
+            self.assertIn('i*rack_pitch+rack_pitch/2+dz', text)
 
     def test_height_boundaries_all_mounts(self):
         import equipment
-        for mount, lift in [('inserts',16),('pegs',16),('clips',16),('straps',10),('flat',3.5)]:
+        for mount, lift in [('inserts',17.225),('pegs',17.225),('clips',17.225),('straps',11.225),('flat',3.5)]:
             s = self.spec(device_mount=mount, dev_h=44.45-lift)
-            self.assertEqual(equipment.device_lift(s), lift)
+            self.assertAlmostEqual(equipment.device_lift(s), lift)
             equipment.clean(s)
             with self.assertRaisesRegex(ValueError, 'taller'):
                 equipment.clean(dict(s, dev_h=44.451-lift))
@@ -317,14 +313,14 @@ class FlatFloorTests(unittest.TestCase):
             equipment.clean(dict(s,device_mount='inserts',holes=[[3.5,3.5]]))
         self.assertEqual(equipment.clean(dict(s,device_mount='inserts',holes=[[3.5,3.5]],u=2))['u'],2)
         text = equipment.source(equipment.clean(s))
-        self.assertIn('floor_z=device_mount=="flat"?0.5:7', text)
+        self.assertIn('floor_z=(device_mount=="flat"||sleeve)?0.5:7+legacy_slot_offset', text)
         self.assertIn('device_mount=="straps"||device_mount=="flat"',text)
 
     def test_front_openings_follow_floor_both_directions(self):
         import equipment
         lib = self.spec(ports=[dict(x=0,z=22,w=8,h=6,r=1)])
         low = equipment.allocation_spec(lib,dict(device_mount='flat',standoff=30))
-        self.assertEqual(low['ports'][0]['z'],9.5)
+        self.assertEqual(low['ports'][0]['z'],8.275)
         restored = equipment.allocation_spec(low,dict(device_mount='inserts',standoff=6))
         self.assertEqual(restored['ports'],lib['ports'])
         turned = equipment.allocation_spec(lib,dict(device_mount='flat',dev_rot=90))
@@ -342,3 +338,104 @@ class FlatFloorTests(unittest.TestCase):
         equipment.clean(dict(s,joint='single',dev_off_y=-5.8))
         with self.assertRaisesRegex(ValueError,'rear screw joint'):
             equipment.clean(dict(s,dev_off_y=30,dev_d=190,rear_support=True))
+
+
+class RackWidthTests(unittest.TestCase):
+    def test_width_and_rotation_boundaries(self):
+        base = dict(name='Width fixture',dev_w=194.5,dev_d=182.5,dev_h=38.8,
+                    device_mount='flat',joint='screw',u=1,holes=[])
+        with self.assertRaisesRegex(ValueError, '210.5.*204.*Rotate 90'):
+            eq.clean(base)
+        self.assertEqual(eq.clean(dict(base,dev_rot=90))['dev_rot'],90)
+        eq.clean(dict(base,dev_w=188))
+        with self.assertRaisesRegex(ValueError,'204.1.*204'):
+            eq.clean(dict(base,dev_w=188.1))
+        with self.assertRaisesRegex(ValueError,'204.2.*204'):
+            eq.clean(dict(base,dev_w=188,dev_off_x=0.1))
+        eq.clean(dict(base,dev_w=85,dev_d=56,dev_h=20,device_mount='inserts',holes=[[3.5,3.5]]))
+
+
+class SleeveTests(unittest.TestCase):
+    def spec(self, **over):
+        return dict(dict(name='Sleeve fixture',dev_w=182.5,dev_d=194.5,dev_h=38.8,
+                         device_mount='sleeve',joint='screw',u=1,holes=[]), **over)
+
+    def test_optiplex_budgets_and_rear_support(self):
+        import port_openings as P
+        for over in ({}, {'rear_support':True}, {'joint':'single'}, {'dev_w':194.5,'dev_d':182.5,'dev_rot':90}):
+            s=eq.clean(self.spec(**over)); w=P.sleeve(s)
+            self.assertAlmostEqual(eq.device_lift(s),3.5)
+            self.assertAlmostEqual(w['outside'],195.5)
+            self.assertAlmostEqual(w['width'],183.5)
+            self.assertAlmostEqual(w['height'],39.1)
+            self.assertAlmostEqual(w['lip'],1.5)
+            self.assertAlmostEqual(w['bottom']-0.025,3.475)
+            self.assertAlmostEqual(44.425-w['top'],1.825)
+            self.assertAlmostEqual(240-w['stop_end'],45.5)
+            self.assertEqual(w['joints'],[-94.75,94.75])
+            for x in w['joints']:
+                self.assertGreater(abs(x)-2,w['half'])
+        with self.assertRaisesRegex(ValueError,'Rear-post support needs'):
+            eq.clean(self.spec(joint='single',rear_support=True))
+        with self.assertRaisesRegex(ValueError,'Too tall for a flush window in 1U; choose 2U'):
+            eq.clean(self.spec(dev_h=39.2))
+        eq.clean(self.spec(dev_h=39.2,u=2))
+
+    def test_window_drops_only_contained_openings_without_mutating_input(self):
+        import copy, port_openings as P
+        ports=[dict(x=0,z=20,w=17,h=14,r=1),dict(x=106,z=22,w=3,h=5,r=0)]
+        raw=self.spec(ports=ports);before=copy.deepcopy(raw)
+        s=eq.clean(raw)
+        self.assertEqual(len(s['ports']),1)
+        self.assertEqual(s['ports'][0]['x'],106)
+        self.assertEqual(raw,before)
+        self.assertEqual(len(P.sleeve_ports(ports,raw)[1]),1)
+        with self.assertRaisesRegex(ValueError,'crosses the sleeve window'):
+            eq.clean(self.spec(ports=[dict(x=91,z=20,w=5,h=6,r=0)]))
+        with self.assertRaisesRegex(ValueError,'sleeve wall joint'):
+            eq.clean(self.spec(ports=[dict(x=95,z=20,w=3,h=6,r=0)]))
+        with self.assertRaisesRegex(ValueError,'collar would hit'):
+            eq.clean(self.spec(keystones=[0]))
+
+    def test_python_js_sleeve_agree(self):
+        import port_openings as P
+        exe=node()
+        if not exe:self.skipTest('Node unavailable')
+        fixtures=[self.spec(**o) for o in ({},{'rear_support':True},{'joint':'single'},{'dev_h':39.2},{'dev_off_x':3},{'dev_w':194.5,'dev_d':182.5,'dev_rot':90},{'ports':[dict(x=0,z=20,w=10,h=8,r=0)]})]
+        script="const T=require(process.argv[1]),P=require(process.argv[2]);console.log(JSON.stringify(JSON.parse(process.argv[3]).map(s=>({errors:T.problems(s,T.values(s)),window:P.sleeve(s)}))));"
+        run=subprocess.run([exe,'-e',script,str(HERE/'tray-placement.js'),str(HERE/'port-openings.js'),json.dumps(fixtures)],capture_output=True,text=True,encoding='utf-8',timeout=60)
+        self.assertEqual(run.returncode,0,run.stderr)
+        for s,js in zip(fixtures,json.loads(run.stdout)):
+            try:eq.clean(s);valid=True
+            except ValueError:valid=False
+            self.assertEqual(not js['errors'],valid,(s,js))
+            for k,v in P.sleeve(s).items():
+                if isinstance(v,list):self.assertEqual(js['window'][k],v)
+                else:self.assertAlmostEqual(js['window'][k],v)
+
+    def test_source_keeps_rear_joint_and_has_sleeve_window(self):
+        text=eq.source(eq.clean(self.spec(rear_support=True)))
+        for fragment in ('if(sleeve)translate([dev_off_x,(sl_bottom+sl_window_top)/2])square',
+                         'if(joint=="screw"&&(!sleeve||rear))', 'to_rear()tray_joint_add(true)',
+                         'plate_joint_add(true)', 'cylinder(d=joint_pilot,h=8.1)',
+                         'cylinder(d=m3_clear,h=plate_t+0.2)', 'sl_rear+sl_stop_t<=rack_depth-11.5'):
+            self.assertIn(fragment,text)
+
+
+class SleeveGuardTests(unittest.TestCase):
+    def test_short_depth_and_narrow_screw_height_are_guarded(self):
+        base=dict(name='Guard',dev_w=85,dev_d=72,dev_h=20,device_mount='sleeve',joint='screw',u=1)
+        eq.clean(base)
+        with self.assertRaisesRegex(ValueError,'at least 72 mm'):
+            eq.clean(dict(base,dev_d=71.9))
+        with self.assertRaisesRegex(ValueError,'window at least 10 mm'):
+            eq.clean(dict(base,dev_h=5))
+        eq.clean(dict(base,dev_h=5,joint='single'))
+
+    def test_sleeve_parameters_match_scad(self):
+        import port_openings as P
+        text=eq.TEMPLATE.read_text(encoding='utf-8')
+        for key,value in [('sl_side',P.SLEEVE_SIDE),('sl_top',P.SLEEVE_TOP),('sl_wall',P.SLEEVE_WALL),
+                          ('sl_lip_w',P.SLEEVE_LIP_W),('sl_lip_t',P.SLEEVE_LIP_T),('sl_band',P.SLEEVE_BAND),
+                          ('sl_stop_t',P.SLEEVE_STOP_T),('sl_stop_h',P.SLEEVE_STOP_H)]:
+            self.assertIn(f'{key}={value:g};',text)

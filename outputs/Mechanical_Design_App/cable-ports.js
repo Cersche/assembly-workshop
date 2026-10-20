@@ -29,7 +29,7 @@
   function rearPort(lib,s,p){
     const w=+s.dev_w||0,d=+s.dev_d||0,rot=+s.dev_rot||0,turned=rot===90||rot===270,fpW=turned?d:w;
     const px=+p.x+w/2,q=rot===90?[0,px]:rot===180?[w-px,0]:rot===270?[d,w-px]:[px,d];
-    return {x:-fpW/2+(+s.dev_off_x||0)+q[0],y:WIZ.frontGap+(+s.dev_off_y||0)+q[1],z:+p.z+lift(s)-lift(lib),
+    return {x:-fpW/2+(+s.dev_off_x||0)+q[0],y:(s.device_mount==='sleeve'?-WIZ.plateT:WIZ.frontGap+(+s.dev_off_y||0))+q[1],z:+p.z+lift(s)-lift(lib),
       points:rot===90?'left':rot===180?'front':rot===270?'right':'rear'};
   }
   // spec = library item spec; tray = this slot's placement.tray (its keys win, as equipment.allocation_spec()).
@@ -38,17 +38,17 @@
   function PO(){if(root.LabRaxPortOpenings)return root.LabRaxPortOpenings;
     if(typeof module!=='undefined'&&typeof require==='function'){try{return require('./port-openings.js');}catch(e){}}return null;}
   function wizardPorts(spec,tray){
-    if(!spec)return [];const s={...spec,...(tray||{})},out=[],plateH=(+s.u||1)*PITCH-2.45,P=PO();
+    if(!spec)return [];const s={...spec,...(tray||{})},out=[],plateCenter=(+s.u||1)*PITCH/2,P=PO();
     (P&&tray?P.frontOpenings(spec,tray).ports:s.ports||[]).forEach((p,i)=>out.push({id:p.id||'front-'+(i+1),label:p.label||'Port '+(i+1),type:TYPES[p.type]?p.type:'other',face:'front',x:+p.x,y:-WIZ.plateT,z:+p.z,points:'front',opening:true}));
     (s.rear_ports||[]).forEach((p,i)=>out.push({id:p.id||'rear-'+(i+1),label:p.label||'Rear port '+(i+1),type:TYPES[p.type]?p.type:'other',face:'rear',...rearPort(spec,s,p)}));
     // Keystones are pass-through ports: one front face and one rear face, paired by passThrough.
     (s.keystones||[]).forEach((x,i)=>{const id='ks-'+(i+1);
-      out.push({id:id+'-front',label:'Keystone '+(i+1)+' · front',type:'keystone',face:'front',x:+x,y:-WIZ.plateT,z:plateH/2,points:'front',passThrough:id+'-rear'});
-      out.push({id:id+'-rear',label:'Keystone '+(i+1)+' · rear',type:'keystone',face:'rear',x:+x,y:0,z:plateH/2,points:'rear',passThrough:id+'-front'});});
+      out.push({id:id+'-front',label:'Keystone '+(i+1)+' · front',type:'keystone',face:'front',x:+x,y:-WIZ.plateT,z:plateCenter,points:'front',passThrough:id+'-rear'});
+      out.push({id:id+'-rear',label:'Keystone '+(i+1)+' · rear',type:'keystone',face:'rear',x:+x,y:0,z:plateCenter,points:'rear',passThrough:id+'-front'});});
     for(const p of spec.planning_ports||[]){
-      const angle=(+s.dev_rot||0)*Math.PI/180,dx=p.x-(+spec.dev_off_x||0),dy=p.y-(12+(+spec.dev_off_y||0)+spec.dev_d/2);
+      const angle=(+s.dev_rot||0)*Math.PI/180,dx=p.x-(+spec.dev_off_x||0),dy=p.y-((spec.device_mount==='sleeve'?-WIZ.plateT:12+(+spec.dev_off_y||0))+spec.dev_d/2);
       out.push({...p,x:(+s.dev_off_x||0)+dx*Math.cos(angle)-dy*Math.sin(angle),
-        y:12+(+s.dev_off_y||0)+(s.dev_rot===90||s.dev_rot===270?s.dev_w:s.dev_d)/2+dx*Math.sin(angle)+dy*Math.cos(angle),
+        y:(s.device_mount==='sleeve'?-WIZ.plateT:12+(+s.dev_off_y||0))+(s.dev_rot===90||s.dev_rot===270?s.dev_w:s.dev_d)/2+dx*Math.sin(angle)+dy*Math.cos(angle),
         z:p.z+lift(s)-lift(spec),points:['front','right','rear','left'][(['front','right','rear','left'].indexOf(p.points||'front')+(+s.dev_rot||0)/90)%4],opening:false});
     }
     return out.filter(p=>[p.x,p.y,p.z].every(Number.isFinite));

@@ -65,3 +65,7 @@ The whole project, including outputs/, data/normal-use/, archives and licensed t
 - **Keep the repo private.** Never make it public, fork it publicly or add collaborators without Brian's direction. Before any public release, Brian will contact the Lab Rax creator (MakerWorld) and licensed files that conflict will be removed. Redistribution limits still apply to everything outside this repo.
 - **Cloud limits:** cloud sessions run Linux without the PC's OpenSCAD/FreeCAD and can't show the rack GUI. Renders, STL exports and GUI checks still happen on the PC. Never test on data/normal-use in any environment.
 - No secrets or credentials in the repo. Python caches are ignored by .gitignore.
+
+## 44.4 mm faceplate standard — Brian, 2026-10-20
+
+Brian printed plate-height coupons FP44-A..D (outputs/Physical_Test_Coupons_2026-10-20_FP44_plate_height/) and reports a perfect fit: the 44.4 mm-per-1U plate is the new standard, replacing 42 mm. Width 252, thickness 4, 2.5 mm corners and the four-corner slots (±118.2625, ±15.902 about each U centre) are unchanged. The plate is centred in its slot; Z=0 is the slot bottom. Implementation is Codex task 25 (work/codex-tasks/25-faceplate-44-standard.md). Fit applies to those specimens on Brian's rack only; strength stays UNKNOWN. Old saved revisions stay immutable.

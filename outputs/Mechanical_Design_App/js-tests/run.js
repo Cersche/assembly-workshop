@@ -193,12 +193,11 @@ test('LabRaxStudio.artworkRect stays inside the 216 x 34 mm faceplate field', ()
 });
 
 test('LabRaxStudio.artworkWindow generalizes the reference window to wizard faceplates of any U span', () => {
-  // A 1U wizard plate (252 x 42 mm, bottom at 0) gives exactly the reference window.
-  assert.deepEqual(studio.artworkWindow(252, 42), { w: 216, h: 34, z: 21 });
-  assert.deepEqual(studio.artworkRect({ x: 0.3, y: 0.7, scale: 0.8 }, 3, studio.artworkWindow(252, 42)),
-                   studio.artworkRect({ x: 0.3, y: 0.7, scale: 0.8 }, 3));
+  // A 1U wizard plate (252 x 44.4 mm, bottom at 0.025) gives exactly the reference window.
+  assert.deepEqual(studio.artworkWindow(252, 44.4, 0.025), { w: 216, h: 36.4, z: 22.224999999999998 });
+  assert.ok(studio.artworkRect({}, 3)[1] > 22.22);
   for (const u of [1, 2, 3, 5]) {
-    const plateH = u * 44.45 - 2.45, win = studio.artworkWindow(252, plateH);
+    const plateH = u * 44.45 - 0.05, win = studio.artworkWindow(252, plateH);
     assert.ok(Math.abs(win.z - plateH / 2) < 1e-9 && Math.abs(win.h - (plateH - 8)) < 1e-9);
     for (const art of [{}, { x: 0, y: 0, scale: 1 }, { x: 1, y: 1, scale: 1 }, { x: 1, y: 0, scale: 0.05 }, null]) {
       for (const aspect of [0.25, 1, 4, 10]) {
@@ -239,7 +238,7 @@ test('LabRaxStudio.artworkRect keeps wizard images clear of port and keystone op
 
 test('LabRaxStudio.selectionRect follows the plate front at any U height', () => {
   for (const u of [1, 2, 3, 5]) {
-    const h = u * 44.45 - 2.45, [cx, cz, hx, hz, r] = studio.selectionRect(-126, 126, 0, h, 2.5);
+    const h = u * 44.45 - 0.05, [cx, cz, hx, hz, r] = studio.selectionRect(-126, 126, 0, h, 2.5);
     assert.deepEqual([cx, hx, r], [0, 126, 2.5]);
     assert.ok(Math.abs(cz - h / 2) < 1e-9 && Math.abs(hz - h / 2) < 1e-9);
   }
@@ -277,7 +276,7 @@ test('LabRaxPorts wizard ports: front openings, rear ports and keystone pass-thr
     const f = byId[`ks-${n}-front`], r = byId[`ks-${n}-rear`];
     assert.equal(f.passThrough, r.id); assert.equal(r.passThrough, f.id);
     assert.equal(f.type, 'keystone'); assert.equal(f.x, r.x);
-    assert.ok(Math.abs(f.z - (2 * 44.45 - 2.45) / 2) < 1e-9);
+    assert.ok(Math.abs(f.z - 2 * 44.45 / 2) < 1e-9);
   }
   assert.deepEqual(ports.wizardPorts(null), []);
   assert.deepEqual(ports.portsFor(portRack(), portRack().placements[1], undefined), []);
@@ -295,7 +294,7 @@ test('LabRaxPorts wizard ports follow the slot tray placement (placement.tray wi
   assert.deepEqual([moved['p-pwr'].x, moved['p-pwr'].y, moved['p-pwr'].z, moved['p-pwr'].points], [-35, 12 + 10 + 80, 28, 'rear']);
   assert.deepEqual(Object.keys(moved).filter(k => k.startsWith('ks-')), ['ks-1-front', 'ks-1-rear']);
   assert.equal(moved['ks-1-front'].x, 80);
-  assert.ok(Math.abs(moved['ks-1-front'].z - (44.45 - 2.45) / 2) < 1e-9);
+  assert.ok(Math.abs(moved['ks-1-front'].z - 44.45 / 2) < 1e-9);
   // Faceplate opening follows the device (Brian, 2026-10-19): +5 offset, standoff 6 -> 4 = 2 mm lower.
   assert.deepEqual([moved['p-lan'].x, moved['p-lan'].y, moved['p-lan'].z], [15, -4, 18]);
   // Turned device: the opening stays where it was entered.

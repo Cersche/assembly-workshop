@@ -3,7 +3,7 @@
 // (tray-placement.js). New items keep the template defaults below; older items keep their saved values as defaults.
 (function(){
   const PLATE_W=252,STEPS=['Device','Holes','Ports'];
-  const MOUNTS={inserts:'Heat-set inserts + screws',pegs:'Printed standoffs / pegs',clips:'Snap-fit clips',straps:'Strap / zip-tie slots',flat:'Sits flat on the tray (PCs, boxes)'};
+  const MOUNTS={inserts:'Heat-set inserts + screws',pegs:'Printed standoffs / pegs',clips:'Snap-fit clips',straps:'Strap / zip-tie slots',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
   const JOINTS={screw:'Screw joint',single:'Single printed piece'};
   let uExplicit=false;
   let spec,step,imported=null,orient=0,turn=0,importMsg='',found=[],foundPorts=[];
@@ -102,7 +102,7 @@
     const sets=[];
     for(const p of out.parts){const t=await (await fetch(`/api/equipment-mesh/${out.id}/${p}.stl`)).text();sets.push({v:parseStlBuffer(new TextEncoder().encode(t).buffer),color:p==='tray'?[77,142,110]:[78,117,163],alpha:1});}
     // Device ghost: imported model if any, else its bounding box, sitting where the tray holds it.
-    const lift=window.LabRaxPortOpenings.deviceLift(spec),ox=-spec.dev_w/2,oy=12;let dv=[];
+    const lift=window.LabRaxPortOpenings.deviceLift(spec),ox=-spec.dev_w/2,oy=spec.device_mount==='sleeve'?-4:12;let dv=[];
     if(imported){const v=transformed(),mn=[1e9,1e9,1e9];for(let i=0;i<v.length;i++)mn[i%3]=Math.min(mn[i%3],v[i]);for(let i=0;i<v.length;i+=3)dv.push(v[i]-mn[0]+ox,v[i+1]-mn[1]+oy,v[i+2]-mn[2]+lift);}
     else{const[x0,y0,z0,x1,y1,z1]=[ox,oy,lift,ox+ +spec.dev_w,oy+ +spec.dev_d,lift+ +spec.dev_h],c=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
       for(const f of[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]])for(const i of f)dv.push(...c[i]);}
@@ -132,8 +132,7 @@
   function modelWarn(){
     const w=[];
     if(spec.dev_h>spec.dev_d&&spec.dev_h>spec.dev_w*0.6)w.push('It is taller than it is deep, so it may be standing on its side. Try Y is up or X is up.');
-    if(spec.dev_w>230)w.push('Too wide for the tray (230 mm max); try another orientation.');
-    return w.join(' ');
+    return w.join(' ');  // the tray-width problem is shown once, in the fit box (fitWarn)
   }
   // Small canvas painter, shared with the Place on tray window (tray-placement.js) as window.EquipmentPainter.
   function bindView(cv,view,redraw){
@@ -182,25 +181,27 @@
     input.oninput=()=>{if(obj===spec&&key==='u')uExplicit=true;obj[key]=input.value===''?'':Number(input.value);preview();topView();fitWarn();};
     return h('label',{class:'ew-field'},label,input);
   }
-  function plateH(){return spec.u*44.45-2.45;}
+  function plateH(){return window.LabRaxPortOpenings.plateHeight(spec.u);}
   // Non-blocking heads-up: width/depth screened against the selected rack (or nominal 208 × 240 mm).
   function fitWarn(){
     const box=document.getElementById('ewFitWarn');if(!box)return;const screen=window.WorkshopClearance?.screen;if(!screen){box.hidden=true;return;}
     const rack=window.activeRackNumbers?.()||{width_mm:208,depth_mm:240,pitch_mm:44.45};
     const r=screen(rack,{equipment:'eq-draft',span:+spec.u||1},{spec});
     const issues=r.checks.filter(c=>(c.name==='width'||c.name==='depth')&&(c.level==='over'||c.level==='tight'));
+    const width=window.TrayPlacement.widthProblem(spec);if(width){box.hidden=false;box.textContent=width;return;}
     box.hidden=!issues.length;
     box.textContent=issues.length?'Heads up: '+issues.map(c=>c.text).join(' ')+' You can still continue; this is a screening warning, and fit stays UNKNOWN.':'';
   }
   function preview(){
     const svg=document.getElementById('ewPreview');if(!svg)return;const H=plateH();
     svg.setAttribute('viewBox',`${-PLATE_W/2-2} ${-H-2} ${PLATE_W+4} ${H+4}`);
-    let s=`<rect x="${-PLATE_W/2}" y="${-H}" width="${PLATE_W}" height="${H}" fill="#3b6f8f" rx="2.5"/>`;
-    for(let i=0;i<spec.u;i++)for(const dz of[-15.902,15.902])for(const x of[-118.26,118.26])s+=`<rect x="${x-5}" y="${-(i*44.45+21+dz)-3.5}" width="10" height="7" rx="3.5" fill="#1d1f24"/>`;
-    for(const x of spec.keystones)s+=`<rect x="${x-7.4}" y="${-H/2-8.3}" width="14.8" height="16.6" fill="#1d1f24"/>`;
-    for(const p of spec.ports)s+=`<rect x="${p.x-p.w/2}" y="${-p.z-p.h/2}" width="${p.w}" height="${p.h}" rx="${p.r||0}" fill="#1d1f24"/>`;
+    let s=`<rect x="${-PLATE_W/2}" y="${-H-window.LabRaxPortOpenings.plateBottom}" width="${PLATE_W}" height="${H}" fill="#3b6f8f" rx="2.5"/>`;
+    for(let i=0;i<spec.u;i++)for(const dz of[-15.902,15.902])for(const x of[-118.2625,118.2625])s+=`<rect x="${x-5}" y="${-(i*44.45+44.45/2+dz)-3.5}" width="10" height="7" rx="3.5" fill="#1d1f24"/>`;
+    for(const x of spec.keystones)s+=`<rect x="${x-7.4}" y="${-spec.u*44.45/2-8.3}" width="14.8" height="16.6" fill="#1d1f24"/>`;
+    const sw=window.LabRaxPortOpenings.sleeve(spec);if(sw)s+=`<rect x="${sw.x-sw.half}" y="${-sw.top}" width="${sw.width}" height="${sw.height}" fill="#1d1f24"/>`;
+    for(const p of window.LabRaxPortOpenings.sleevePorts(spec.ports,spec).ports)s+=`<rect x="${p.x-p.w/2}" y="${-p.z-p.h/2}" width="${p.w}" height="${p.h}" rx="${p.r||0}" fill="#1d1f24"/>`;
     for(const fp of foundPorts){const p=portOnPlate(fp);s+=`<rect x="${p.x-p.w/2}" y="${-p.z-p.h/2}" width="${p.w}" height="${p.h}" fill="none" stroke="${fp.keep?'#5cc8ff':'#666'}" stroke-width=".8" stroke-dasharray="2 1"/>`;}
-    const tw=Number(spec.dev_w)+16;s+=`<rect x="${-tw/2}" y="${-10}" width="${tw}" height="3" fill="#aab" opacity=".6"/>`;
+    const tw=Number(spec.dev_w)+16;s+=`<rect x="${-tw/2}" y="${-window.LabRaxPortOpenings.floorZ(spec)-3}" width="${tw}" height="3" fill="#aab" opacity=".6"/>`;
     svg.innerHTML=s;
   }
   // Last-step summary; counts front openings and rear ports separately (rear ports get no opening).
@@ -231,7 +232,7 @@
       if(importMsg)imp.push(h('p',{class:'ew-note'},importMsg));
       return [h('label',{class:'ew-field'},'Name',name),...imp,
         h('div',{class:'ew-row'},h('b',{},'Size (mm)'),field('Width','dev_w'),field('Depth','dev_d'),field('Height','dev_h')),
-        h('p',{id:'ewFitWarn',class:'ew-note ew-warn',hidden:''}),
+        h('p',{class:'ew-note'},window.TrayPlacement.warnings(spec,window.TrayPlacement.values(spec)).join(' ')),h('p',{id:'ewFitWarn',class:'ew-note ew-warn',hidden:''}),
         ...(imported?[]:[h('p',{class:'ew-note'},'Import a model to fill in the size and find mounting holes, or type the measurements. Width is left–right, depth is front–back, all in millimetres. A SCAD file must be self-contained (no include/use).')])];
     }
     if(step===1){
@@ -289,7 +290,7 @@
     const mount=select(MOUNTS,spec.device_mount,v=>{spec.device_mount=v;if(!uExplicit)spec.u=window.LabRaxPortOpenings.autoU(spec);render();});
     const go=h('button',{type:'button',class:'primary'},'Generate STL files');
     const status=h('p',{class:'ew-note'},'Fit, strength and rack clearance stay UNKNOWN until a print is tested.');
-    go.onclick=async()=>{go.disabled=true;status.textContent='Rendering with OpenSCAD… this can take a minute.';
+    go.onclick=async()=>{const problem=window.TrayPlacement.problems(spec,window.TrayPlacement.values(spec)).join(' ');if(problem){status.textContent='Problem: '+problem;return;}go.disabled=true;status.textContent='Rendering with OpenSCAD… this can take a minute.';
       // Export quality goes with this build request only; the spec and the library item never keep it.
       const quality=window.RenderQuality?.exportLevel()||'standard';
       try{const r=await fetch('/api/equipment-build',{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify({...spec,quality})});
@@ -298,17 +299,17 @@
         status.textContent=`Done (${window.RenderQuality?.exportNote(quality)||'Standard'}). The zip holds the STL file(s), the .scad source, a report and export.json.`;}
       catch(e){status.textContent='Problem: '+e.message;}finally{go.disabled=false;}};
     const look=h('button',{type:'button'},'Show 3D preview');
-    look.onclick=async()=>{look.disabled=true;status.textContent='Rendering preview with OpenSCAD…';
+    look.onclick=async()=>{const problem=window.TrayPlacement.problems(spec,window.TrayPlacement.values(spec)).join(' ');if(problem){status.textContent='Problem: '+problem;return;}look.disabled=true;status.textContent='Rendering preview with OpenSCAD…';
       try{await show3D();status.textContent='Left-drag turns, right-drag moves, scroll zooms at the cursor, Z fits. Translucent box = the device. Not saved yet.';}
       catch(e){status.textContent='Problem: '+e.message;}finally{look.disabled=false;}};
     const keep=h('button',{type:'button',class:'primary'},'Save to equipment library');
-    keep.onclick=async()=>{const problem=mountProblem();if(problem){status.textContent='Problem: '+problem;return;}keep.disabled=true;status.textContent='Rendering and saving… this can take a minute.';
+    keep.onclick=async()=>{const problem=mountProblem()||window.TrayPlacement.problems(spec,window.TrayPlacement.values(spec)).join(' ');if(problem){status.textContent='Problem: '+problem;return;}keep.disabled=true;status.textContent='Rendering and saving… this can take a minute.';
       try{const r=await fetch('/api/equipment-library',{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify(spec)});
         const item=await r.json();if(!r.ok)throw Error(item.error||'Save failed');spec.id=item.id;await loadLibrary();
         status.textContent='Saved. Close this, select an empty rack slot, then click “'+item.name+'” in the Equipment list to place it; the Place on tray window opens for that slot.';}
       catch(e){status.textContent='Problem: '+e.message;}finally{keep.disabled=false;}};
     setTimeout(fitWarn);
-    return [h('h3',{},'Save'),h('p',{class:'ew-note ew-warn'},mountProblem()),h('label',{class:'ew-field'},'Tray default mount',mount),h('p',{id:'ewFitWarn',class:'ew-note ew-warn',hidden:''}),h('p',{},summary(spec)),h('div',{class:'ew-row'},look,keep,go,window.RenderQuality?.exportSlider()||''),status,h('canvas',{id:'ewView',class:'ew-view',hidden:''}),window.RenderQuality?.previewSlider('wizard',draw3D)||''];
+    return [h('h3',{},'Save'),h('p',{class:'ew-note ew-warn'},mountProblem()||window.TrayPlacement.problems(spec,window.TrayPlacement.values(spec)).join(' ')),h('label',{class:'ew-field'},'Tray default mount',mount),h('p',{class:'ew-note'},window.TrayPlacement.warnings(spec,window.TrayPlacement.values(spec)).join(' ')),h('p',{id:'ewFitWarn',class:'ew-note ew-warn',hidden:''}),h('p',{},summary(spec)),h('div',{class:'ew-row'},look,keep,go,window.RenderQuality?.exportSlider()||''),status,h('canvas',{id:'ewView',class:'ew-view',hidden:''}),window.RenderQuality?.previewSlider('wizard',draw3D)||''];
   }
   function render(){
     const d=document.getElementById('equipmentWizard');
@@ -436,8 +437,9 @@
   const fronts=new WeakMap();
   // Port and keystone openings in the same frame (X from centre, Z above the plate base), as equipment_tray.scad cuts them.
   function openings(spec,z0,plateH){
-    return [...(spec?.keystones||[]).map(x=>({x:+x,z:z0+plateH/2,w:14.8,h:16.6})), // ks_w x ks_h
-            ...(spec?.ports||[]).map(p=>({x:+p.x,z:z0+(+p.z),w:+p.w,h:+p.h}))].filter(o=>[o.x,o.z,o.w,o.h].every(Number.isFinite));
+    const sw=window.LabRaxPortOpenings.sleeve(spec||{});
+    return [...(sw?[{x:sw.x,z:(sw.bottom+sw.top)/2,w:sw.width,h:sw.height}]:[]),...(spec?.keystones||[]).map(x=>({x:+x,z:z0+plateH/2,w:14.8,h:16.6})), // ks_w x ks_h
+            ...(spec?.ports||[]).map(p=>({x:+p.x,z:+p.z,w:+p.w,h:+p.h}))].filter(o=>[o.x,o.z,o.w,o.h].every(Number.isFinite));
   }
   function frontFace(mesh,spec){
     if(fronts.has(mesh))return fronts.get(mesh);let y0=Infinity;for(const v of mesh.vertices)y0=Math.min(y0,v[1]);

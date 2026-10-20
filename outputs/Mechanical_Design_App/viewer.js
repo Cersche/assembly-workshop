@@ -192,10 +192,10 @@ async function initAssemblyViewer(){
 
         const face={points:[a,b,c],pickId:pickParts.indexOf(part.id),depth:(a[2]+b[2]+c[2])/3,color:colors[part.id].map(v=>Math.round(v*shade))};
         // Project only onto actual planar front faces: holes and silhouettes stay empty.
-        if(texture&&part.id==='faceplate'&&ids.every(i=>Math.abs(part.vertices[i][1]+3)<1e-5)){
-          const art=appearance.artwork,availableWidth=216,availableHeight=34,s=Math.max(.05,art.scale),ratio=texture.width/texture.height;
+        if(texture&&part.id==='faceplate'&&ids.every(i=>Math.abs(part.vertices[i][1]+4)<1e-5)){
+          const art=appearance.artwork,availableWidth=216,availableHeight=36.4,s=Math.max(.05,art.scale),ratio=texture.width/texture.height;
           const imageWidth=Math.min(availableWidth,availableHeight*ratio)*s,imageHeight=imageWidth/ratio;
-          const cx=(art.x-.5)*(availableWidth-imageWidth),cz=21+(.5-art.y)*(availableHeight-imageHeight);
+          const cx=(art.x-.5)*(availableWidth-imageWidth),cz=22.225+(.5-art.y)*(availableHeight-imageHeight);
           face.texture=texture;face.shade=shade;face.uv=ids.map(i=>[(part.vertices[i][0]-cx)/imageWidth+.5,.5-(part.vertices[i][2]-cz)/imageHeight]);
         }
         faces.push(face)}}

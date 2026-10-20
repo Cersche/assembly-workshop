@@ -10,7 +10,7 @@
   // Brighten (k > 1, toward white) or dim (k < 1, toward black) a linear colour.
   function shade(c,k){return k>=1?c.map(v=>v+(1-v)*(k-1)):c.map(v=>v*k);}
   // Image window on a faceplate front: width, height and centre height (mm above the plate's base Z).
-  const DEFAULT_ART_WINDOW={w:216,h:34,z:21};
+  const DEFAULT_ART_WINDOW={w:216,h:36.4,z:22.225};
   // Generic window for a plate front face of plate_w x plate_h: same 18 mm side and 4 mm top/bottom margins as the default window.
   function artworkWindow(plateW,plateH,bottom=0){return {w:Math.max(1,plateW-36),h:Math.max(1,plateH-8),z:bottom+plateH/2};}
   // Selection outline: [centre x, centre z above base, half width, half height, corner radius] of the plate front.
@@ -166,7 +166,7 @@
       const beam=meshes.beam_top_front,faces=beam&&(beam.logo_faces||this.logoFaces);
       if(faces){this.logoCache=this.logoCache||new WeakMap();let split=this.logoCache.get(beam);if(!split){split=logoMeshes({...beam,logo_faces:faces});this.logoCache.set(beam,split);}
         for(let i=objects.length-1;i>=0;i--){const o=objects[i];if(o.key!=='beam_top_front')continue;objects.splice(i,1,{...o,key:'beam_top_front-body',mesh:split.body},{...o,key:'beam_top_front-logo',mesh:split.logo,color:rgb(appearance.logo_color,'#a6e22e'),rough:.4});}}
-      for(const allocation of rack?.placements||[]){const a=allocation.assembly?.appearance||{},z=(rack.slots-allocation.slot)*44.45;for(const [key,color,metal,rough] of [['tray',a.tray||'#4d8e6e',0,.48],['plate',a.faceplate||'#4e75a3',0,.38],['brass','#c89a46',.82,.28],['bolts','#303640',.72,.3],['sockets','#11151c',.2,.65]])objects.push({key:'studio-'+key,mesh:this.geometry[key],R:I,t:[0,0,z],kind:key,slot:allocation.slot,selected:key==='plate'&&selectedSlot>=allocation.slot&&selectedSlot<allocation.slot+allocation.span,color:rgb(color),metal,rough,art:key==='plate'?a.artwork:null});}
+      for(const allocation of rack?.placements||[]){const a=allocation.assembly?.appearance||{},z=(rack.slots-(allocation.slot+allocation.span-1))*44.45;for(const [key,color,metal,rough] of [['tray',a.tray||'#4d8e6e',0,.48],['plate',a.faceplate||'#4e75a3',0,.38],['brass','#c89a46',.82,.28],['bolts','#303640',.72,.3],['sockets','#11151c',.2,.65]])objects.push({key:'studio-'+key,mesh:this.geometry[key],R:I,t:[0,0,z],kind:key,slot:allocation.slot,selected:key==='plate'&&selectedSlot>=allocation.slot&&selectedSlot<allocation.slot+allocation.span,color:rgb(color),metal,rough,art:key==='plate'?a.artwork:null});}
       return objects;
     }
     submit(p,objects){

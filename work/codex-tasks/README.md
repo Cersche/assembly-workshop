@@ -41,3 +41,7 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [22-viewer-controls](22-viewer-controls.md) | done, reviewed by Claude (ran twice in parallel by mistake; Claude reconciled the wizard API, served viewer-controls.js in app.py, fixed hints; checks pass, browser-checked) |
 | [23-flat-device-low-floor](23-flat-device-low-floor.md) | done, reviewed by Claude (119 Py + 176 JS pass; OptiPlex STEP browser-checked: 2U default + flat hint, Sits flat = 1U, joint and front opening OK in exact preview) |
 | [24-wizard-mount-default](24-wizard-mount-default.md) | done, reviewed by Claude (120 Py + 180 JS pass; OptiPlex STEP saved with 0 holes as 1U Sits flat in the browser) |
+| [25-faceplate-44-standard](25-faceplate-44-standard.md) | done, reviewed by Claude (44.4 plate, Z=0 = slot bottom; exact render: plate Z 0.02-44.42, slots 6.32/38.13) |
+| [26-tray-width-hard-limit](26-tray-width-hard-limit.md) | done, reviewed by Claude (204 mm hard limit + rotate hint; Claude de-duplicated the step-1 message and fixed the stale 230 mm sketch label) |
+| [27-sleeve-flush-front](27-sleeve-flush-front.md) | done, reviewed by Claude (127 Py + 183 JS pass; OptiPlex STEP sleeve on rear support exact-rendered: closed meshes, window 183.5 x 39.1, 6 mm walls, 1.5 mm lips) |
+| [28-foot-pockets](28-foot-pockets.md) | queued |

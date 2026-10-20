@@ -23,7 +23,7 @@ import mesh_revision
 
 ROOT = Path(__file__).resolve().parent
 TEMPLATE = ROOT / 'equipment_tray.scad'
-MOUNTS = ('inserts', 'pegs', 'clips', 'straps', 'flat')
+MOUNTS = ('inserts', 'pegs', 'clips', 'straps', 'flat', 'sleeve')
 JOINTS = ('screw', 'single')
 # Snap-fit faceplate-to-tray joint retired by Brian 2026-10-19: the printed coupon was too brittle to carry the tray.
 # equipment_tray.scad keeps its geometry as history only; new specs cannot choose it.
@@ -112,13 +112,6 @@ def allocation_spec(item_spec, tray=None):
     # where they were entered (port_openings explains this in Place on tray). Library builds are unchanged.
     if settings and item_spec.get('ports'):
         merged['ports'] = port_openings.front_openings(item_spec, settings)['ports']
-        # port_openings.py retains the historical standoff-only rule; correct its delta here
-        # without changing that out-of-scope module. Rotated openings remain as entered.
-        if float(merged.get('dev_rot') or 0) == 0:
-            old_delta = port_openings.lift(merged) - port_openings.lift(item_spec)
-            correction = device_lift(merged) - device_lift(item_spec) - old_delta
-            for p in merged['ports']:
-                p['z'] = round(p['z'] + correction, 3)
     return merged
 
 
@@ -169,30 +162,31 @@ def check_allocation(data_dir, payload):
     return {'ok': True, 'u': s['u']}
 
 
+RACK_PITCH, PLATE_GAP, LEGACY_SLOT_OFFSET = port_openings.RACK_PITCH, port_openings.PLATE_GAP, port_openings.LEGACY_SLOT_OFFSET
+
+RACK_INNER_W, SIDE_CLEAR = 208, 2  # PROPOSED nominal opening and clearance per side
+MAX_TRAY = RACK_INNER_W - 2 * SIDE_CLEAR
 FRONT_GAP, MARGIN = 12, 8  # mirror front_gap / margin in equipment_tray.scad
 
 
 def floor_z(spec):
-    return 0.5 if spec.get('device_mount') == 'flat' else 7
+    return 0.5 if spec.get('device_mount') in ('flat', 'sleeve') else 7 + LEGACY_SLOT_OFFSET
 
 
 def device_lift(spec):
-    return floor_z(spec) + 3 + (0 if spec.get('device_mount') in ('straps', 'flat') else float(spec.get('standoff', 6)))
+    return floor_z(spec) + 3 + (0 if spec.get('device_mount') in ('straps', 'flat', 'sleeve') else float(spec.get('standoff', 6)))
 
 
 def needed_height(spec):
-    return device_lift(spec) + float(spec['dev_h'])
+    mount = spec.get('device_mount')
+    extra = (float(spec.get('board_t', 1.6)) + (1.6 if mount == 'pegs' else 2.5)) if mount in ('pegs', 'clips') else 0
+    return max(device_lift(spec) + max(float(spec['dev_h']), extra),
+               floor_z(spec) + 22 if spec.get('joint', 'screw') == 'screw' else 0)
 
 
 def template_source(spec):
-    text = TEMPLATE.read_text(encoding='utf-8')
-    if spec.get('device_mount') != 'flat':
-        # Preserve historical source hashes/cached meshes, including comments and whitespace.
-        text = text.replace('tray_t=3; floor_z=device_mount=="flat"?0.5:7; tray_z=floor_z; // @flat-floor', 'tray_t=3; tray_z=7;')
-        text = re.sub(r' // @flat-begin\n.*? // @flat-end\n', '', text, flags=re.S)
-        text = text.replace('if(device_mount=="straps"||device_mount=="flat")for', 'if(device_mount=="straps")for')
-        text = text.replace('translate([0,device_mount=="flat"?9.5:20,tray_z+2.7])', 'translate([0,20,tray_z+2.7])')
-    return text
+    # New builds always use the current slot-bottom template; saved revisions remain immutable.
+    return TEMPLATE.read_text(encoding='utf-8')
 
 
 def clean(spec):
@@ -237,17 +231,31 @@ def clean(spec):
             raise
     s['dev_off_y'] = num(spec.get('dev_off_y', 0) or 0, 'Front/back offset', -FRONT_GAP, 230)
     fp_w, fp_d = (s['dev_d'], s['dev_w']) if s['dev_rot'] in (90, 270) else (s['dev_w'], s['dev_d'])
-    if 2 * (abs(s['dev_off_x']) + fp_w / 2 + MARGIN) > 230:
-        raise ValueError('The device is moved off the tray (the tray would be wider than 230 mm); reduce the left/right offset.')
-    if s['rear_support'] and FRONT_GAP + s['dev_off_y'] + fp_d + MARGIN > 240:
+    win = port_openings.sleeve(s)
+    border = max(MARGIN, port_openings.SLEEVE_SIDE + port_openings.SLEEVE_WALL) if win else MARGIN
+    tray_width = 2 * (abs(s['dev_off_x']) + fp_w / 2 + border)
+    if tray_width > MAX_TRAY:
+        hint = ' Too wide this way round; it fits if you press Rotate 90°.' if 2 * abs(s['dev_off_x']) + fp_d + 2 * border <= MAX_TRAY else ''
+        raise ValueError(f'This tray is {tray_width:g} mm wide but the rack opening allows {MAX_TRAY:g} mm ({RACK_INNER_W:g} mm minus {SIDE_CLEAR:g} mm each side). Move the device less far sideways.' + hint)
+    if not win and s['rear_support'] and FRONT_GAP + s['dev_off_y'] + fp_d + MARGIN > 240:
         raise ValueError('The device is moved past the rear posts; reduce the front/back offset.')
     if s['device_mount'] == 'flat':
         if FRONT_GAP + s['dev_off_y'] < 6.2:
             raise ValueError('Flat corner stops need a front gap of at least 6.2 mm.')
         if s['joint'] == 'screw' and FRONT_GAP + s['dev_off_y'] < 11.5:
             raise ValueError('Flat device must clear the front screw joint (front gap >= 11.5 mm).')
-        if s['rear_support'] and FRONT_GAP + s['dev_off_y'] + fp_d > 240 - 11.5:
+        if not win and s['rear_support'] and FRONT_GAP + s['dev_off_y'] + fp_d > 240 - 11.5:
             raise ValueError('Flat device must clear the rear screw joint (rear gap >= 11.5 mm).')
+    if win:
+        if fp_d / 4 - 4 - 6 < 8:
+            raise ValueError('Sleeve depth must be at least 72 mm to keep strap slots clear of the front joint.')
+        if win['bottom'] - PLATE_GAP/2 < port_openings.SLEEVE_BAND or s['u']*RACK_PITCH-PLATE_GAP/2-win['top'] < port_openings.SLEEVE_BAND:
+            raise ValueError(f"Too tall for a flush window in {s['u']}U; choose {s['u']+1}U")
+        if s['rear_support'] and win['stop_end'] > 240-11.5:
+            raise ValueError('Sleeve rear stop and device must clear the rear screw joint by at least 11.5 mm.')
+        if s['joint'] == 'screw' and win['height'] < 10:
+            raise ValueError('Sleeve screw joint needs a window at least 10 mm tall; choose a single printed piece.')
+        s['dev_off_y'] = 0  # Flush front is fixed; old front-gap placement does not move the sleeve.
     q = spec.get('quality', DEFAULT_QUALITY)
     if q not in EXPORT_QUALITY:
         raise ValueError('Export quality must be draft, standard or fine.')
@@ -257,13 +265,13 @@ def clean(spec):
     c = spec.get('coupon')
     if c:
         s['coupon'] = [num(c[0], 'Coupon X0', -130, 130), num(c[1], 'Coupon X1', -130, 130), num(c[2], 'Coupon depth', 5, 250)]
-    if needed_height(s) > s['u'] * 44.45:
+    if needed_height(s) > s['u'] * RACK_PITCH:
         raise ValueError('Device is taller than %dU allows; pick more rack units.' % s['u'])
     s['holes'] = [[num(x, 'Hole X', 0, s['dev_w']), num(y, 'Hole Y', 0, s['dev_d'])]
                   for x, y in (spec.get('holes') or [])][:16]
     if s['device_mount'] in ('inserts', 'pegs') and not s['holes']:
         raise ValueError('Add at least one mounting hole for inserts or pegs.')
-    plate_h = s['u'] * 44.45 - 2.45
+    plate_h = s['u'] * RACK_PITCH - PLATE_GAP
     s['keystones'] = [num(x, 'Keystone X', -PLATE_HALF + 24, PLATE_HALF - 24) for x in (spec.get('keystones') or [])][:12]
     xs = sorted(s['keystones'])
     if any(b - a < 21 for a, b in zip(xs, xs[1:])):
@@ -273,11 +281,14 @@ def clean(spec):
     if any(abs(x) - 9.9 < tray_half + 0.5 for x in s['keystones']):
         raise ValueError(f'A keystone collar would hit the tray; keep keystones at least {tray_half + 10.4:g} mm from centre.')
     s['ports'] = []
-    for p in (spec.get('ports') or [])[:20]:
+    input_ports, dropped_ports, window_errors = port_openings.sleeve_ports((spec.get('ports') or [])[:20], s) if win else ((spec.get('ports') or [])[:20], [], [])
+    if window_errors:
+        raise ValueError(window_errors[0])
+    for p in input_ports:
         w, h = num(p.get('w'), 'Port width', 1, 200), num(p.get('h'), 'Port height', 1, plate_h - 4)
         s['ports'].append({'label': str(p.get('label') or '')[:30],
                            'x': num(p.get('x'), 'Port X', -PLATE_HALF + w / 2, PLATE_HALF - w / 2),
-                           'z': num(p.get('z'), 'Port Z', h / 2 + 2, plate_h - h / 2 - 2),
+                           'z': num(p.get('z'), 'Port Z', PLATE_GAP / 2 + h / 2 + 2, PLATE_GAP / 2 + plate_h - h / 2 - 2),
                            'w': w, 'h': h, 'r': num(p.get('r', 0), 'Corner radius', 0, 50),
                            # Connector type is cable-planning data only; source() never passes it to OpenSCAD.
                            'type': cable_ports.port_type(p.get('type')), 'id': _port_id(p, 'front', len(s['ports']))})
@@ -290,11 +301,15 @@ def clean(spec):
         s['rear_ports'].append({'id': _port_id(p, 'rear', len(s['rear_ports'])),
                                 'label': str(p.get('label') or '')[:30], 'type': cable_ports.port_type(p.get('type')),
                                 'x': num(p.get('x'), 'Rear port X', -PLATE_HALF, PLATE_HALF),
-                                'z': num(p.get('z'), 'Rear port Z', 0, s['u'] * 44.45)})
+                                'z': num(p.get('z'), 'Rear port Z', 0, s['u'] * RACK_PITCH)})
     # Brian, 2026-10-19 (option 3): each tray screw joint sits where it clears the openings (an opening in front of it
     # would be blocked, and can fail to render) and keystones (16 mm, as before). joint_x is derived, never taken from
     # input, and kept only when a joint moved, so designs whose default joints were clear build exactly as before.
-    if s['joint'] == 'screw':
+    if win and s['joint'] == 'screw':
+        for p in s['ports']:
+            if any(abs(p['x']-x) < port_openings.SLEEVE_WALL/2+p['w']/2 and p['z']+p['h']/2 > win['bottom'] and p['z']-p['h']/2 < win['top'] for x in win['joints']):
+                raise ValueError('A front opening overlaps a sleeve wall joint; move or remove it.')
+    if s['joint'] == 'screw' and not win:
         placed = port_openings.joint_positions(s['ports'], s['keystones'], tray_half)
         if placed['problem']:
             raise ValueError(placed['problem'])
