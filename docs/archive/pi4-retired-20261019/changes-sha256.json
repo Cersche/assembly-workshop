@@ -1,0 +1,290 @@
+[
+  {
+    "file": "outputs/Mechanical_Design_App/README.md",
+    "before_sha256": "df14a30a7123bd621eb31a7e85e3726e16a951a6d1bd3e9a3a9ea663594d8647",
+    "after_sha256": "5d205f646d948ca59493545f7509667e9baddabc8b5dfe147f0b64e034ace5b1",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/app.py",
+    "before_sha256": "16c1531cca5aab465c17c5c32a9c1a2fd72d18937abde2acde789396bcefeb99",
+    "after_sha256": "4ae24b088577b48bf0d67eb331d2dc439486a64bec1dae932d41ee1cd31a00ad",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/assembly.json",
+    "before_sha256": "ef1050c5e535e0616f50d8b2c34a22ce1b94c7954050d2f9c30096306f485436",
+    "after_sha256": null,
+    "operation": "moved to archive"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/assembly_records.py",
+    "before_sha256": "107421263fc5bd412aa451d683544d94b1dee611f75575ebebd3d42db5b01906",
+    "after_sha256": "696e81c7166af0c465ffaac1341b06b03af28db78d925155929adc24958482f5",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/cable-ports.js",
+    "before_sha256": "d6019d3b6f51b922e080369460f3f9f8b2efe82c09d5f0fd35f5a2dd23c9d35b",
+    "after_sha256": "43430bfe347f05bedf12a16ec201dd201600efad1fe796fd579c572373ed423f",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/cable_ports.py",
+    "before_sha256": "8cbbc5d83bed9fe401f2f9e1fd175d879f6baeaf3fcc4193658223d3fc5f7136",
+    "after_sha256": "f437e6789b0d95806a394b503eda2e2336ddd51820e59657786e438f02bdfabe",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/catalog_evidence.py",
+    "before_sha256": "2ac237b5fda7091e84c237cf48a39640750333db0474a672909441766bc181eb",
+    "after_sha256": "2ab8c41440c78fbef1d7545966650b08774d52a0c04ce15223644e100ccb88fa",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/clearance.js",
+    "before_sha256": "c102f2f40c412cecb713fe02800b828f89dc6eaa3bbe4967f77a0cf9b7feef32",
+    "after_sha256": "2dbf27fa0e6c225d62ab192705a1994d1d35d0284ac48586c13c69e7fdb0fb8f",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/equipment-wizard.js",
+    "before_sha256": "04b567d2abc1ba2b27ff25e3e221bec77efd0690a2ed28506c01754572f0548e",
+    "after_sha256": "38d5b88f32854c05fc79da54bd812e1924b44df7a6885d93e75bfcfc3426ada1",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/equipment.py",
+    "before_sha256": "f872227a4fdd63f1cbe5959b9e56b9ea1ab8aef873f34e504ac1a0a42befb3c6",
+    "after_sha256": "55f4ce2c94e362bf35f490ee37a36aa233c65cc8ce38d67069ac43512d27c607",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/faceplate_color.py",
+    "before_sha256": "cff95233b06a3e4bc2a3cd58744a022c7570387395e04c6e1d9280f0b60ffe9c",
+    "after_sha256": "e6cc29cfdc8f5a92572917f101ea9495d9e1267e7dbdab6f2cc94c6b5770f667",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/hardware-records.md",
+    "before_sha256": "9470c7b4b3290261e41c8d3df04d9422426d74a367b7047da5b47f7a739827cb",
+    "after_sha256": "4f916040b366757d2ca7bd70b4ea66a0688ba47acbaafd7a5d6a131297290d4b",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/index.html",
+    "before_sha256": "376c7e211e7d4bd367f37b8ee652cdaa8090fef4e9d3eb080bcaf848ebc10366",
+    "after_sha256": "fa8b33406ab66d89541addcfb40d93fbf15b9778c3dab42ed86720bbd61e5ca1",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/joint_validation.json",
+    "before_sha256": "10723eb1df2d6e3cfdd1fdbf527ec46329cf8798525bc8f8add784af6b8ab2ec",
+    "after_sha256": null,
+    "operation": "moved to archive"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/js-tests/cable-routes.js",
+    "before_sha256": "af0a53f388c5dbf21328db8f63afed5adc08242e8d39c346809badefa2e26917",
+    "after_sha256": "84a8298af85c7970dfd49ce8c0a469442cfcb19ce5ec936c73632d456e289092",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/js-tests/cable-sheet-view.js",
+    "before_sha256": "08112c8d0e5d4d2720b5eccbe11cbc891cd38010070c51890567f2f46d275ae5",
+    "after_sha256": "267328a7dcbdf9849c8d4a9f1f2cc17468e668f5cdd8778683a4cefa2cb6dc0f",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/js-tests/cable-sheet.js",
+    "before_sha256": "aa73cdc0ff07b29937887b4888227755688bc998eb9565a5412ed60c4dad80e7",
+    "after_sha256": "059eae7681388e438b81a9156b5af2acce768918d972a0c2a9cc9de2962a8d47",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/js-tests/cable-suggest.js",
+    "before_sha256": "3731068628db35030fcee41772c45301647fedb3c1319a6c4b6fa8b4c49c7592",
+    "after_sha256": "cca144649b80806f209962bbc548878cd4b5d0c31858e200e6cdf240a484ec98",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/js-tests/page-logic.js",
+    "before_sha256": "c9132668e178221c013c0de9dabc8609c1593092d6619ad8c2d3387e083ada2d",
+    "after_sha256": "d55fc7b41ee0a9143eb46fb627627f75ad9f76da4cb74f1aa1ab89ff0e635cf0",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/js-tests/run.js",
+    "before_sha256": "442867d8e352119f142050093966ca161f37a8bb7368369aa6ebba3a352cd622",
+    "after_sha256": "6b4e0c77fe857eb1ee8a840e962224e89557be506b1dd6e1951b7c01c76394fd",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/js-tests/tray-placement.js",
+    "before_sha256": "81c1177a353bcf4e0429562281db178cb4388abeba7d232b0ea6cdc5159a0771",
+    "after_sha256": "e1b806b13b1e2e453dde5905f48832cb7ff6d5892a85183194bed1ccc45717e1",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/mesh_revision.py",
+    "before_sha256": "4afafbd290cea9c2828a9efe91238f89d1e617c0aeed805f78c3084be71290df",
+    "after_sha256": "60e1d7d4f226f06ae1e144ea734f9df45c7a03392d375c55c7a81ce2746f3416",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/pi4_baseline.scad",
+    "before_sha256": "1136215f33e87d8e943ab62f4cb627010123a8d37dae423e478696a9f9437de4",
+    "after_sha256": null,
+    "operation": "moved to archive"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/pi_validation.py",
+    "before_sha256": "2803477a55e419e91dda49ae951850bd299dd6324d477ec4b6a6012f91ec4e06",
+    "after_sha256": null,
+    "operation": "moved to archive"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-reference.js",
+    "before_sha256": "bbc6df6c94f974861af719c4a4868466ab4bca5ec1bf7cc6bb3d9bf14bde6b5f",
+    "after_sha256": "ea00cfe4b2c11b252de7dda4b4003177a4ed37005742010cd31a508b2149d6d8",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack_workspace.py",
+    "before_sha256": "79347ddd34878f61a0b4b803e5d3a6fb340fef63dab36522fd662034c0cc0ab2",
+    "after_sha256": "3a98de2fdd0b0ef8b6d6cae9139e6b42b1a04cef7d83bd01f1d6e1a44562bc02",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_allocation_tray.py",
+    "before_sha256": "3f1a20a14e5074243c07fc522b636f9a0deb29549bf4ef93de4e64ffb3dec3a6",
+    "after_sha256": "f7934baf060a6284047d2a146a3566df1804a8e967cc45d237d0d440b3ec82a2",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_app.py",
+    "before_sha256": "62ebce520b542b72d938bc33dcae61d885bfdc52602c46fe358ec24e23fead2a",
+    "after_sha256": "6a4a6843fc33a8c373f4567782506c4d85b522e8f09dde9e08d2d680c419657a",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_assembly_records.py",
+    "before_sha256": "291c108ad5d8030c09ce7c476436023b0ccfe1153cb8b1091505bc23908e1b4c",
+    "after_sha256": "ef457cf0ef7ecef28eda6c0b9691be9cbcda60eb353b5155332d6f86f20f016f",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_cable_plan.py",
+    "before_sha256": "f3fbd53a86718f0a0cd489efcb705eebb05aff651e1b52e248d03948b88786d5",
+    "after_sha256": "0866553ee557b316203b11d540f88afba07e7cb2136680d1103c10c7f6fd8a3b",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_cable_ports.py",
+    "before_sha256": "32f39e30962a64303cde92db3250422f7dcfb52391573fbba7c5e8d78eb31f08",
+    "after_sha256": "4e917fb6aeb84febfc09122bc79237aef9f35f0a6e6940dea3627794cb901a2c",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_catalog_phase6.py",
+    "before_sha256": "8fae41d033238f2704be4d8f43344f96a1b60bc875ebe4e58014471755d53a17",
+    "after_sha256": "ffed1360146f98e79fb745f97d1d552a662f23ad0fb80f96d203ee264333b487",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_equipment_rebuild.py",
+    "before_sha256": "eac48172a0e5f8203a4c2b8d80340f7063dec7b934cf13bf7ef1a32e7c28dd9c",
+    "after_sha256": "0955a7d22d39b9221e0da1adabed65f44fcb80cb379df73c68034604db216d41",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_faceplate_color.py",
+    "before_sha256": "9defb5c2b939c94d79cf73884ddaeb4031132c949dd7dfac8e3198951f87d712",
+    "after_sha256": "9aea4a9755684032439d5181ad534337278d6f4db43345b716158fbc48512275",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_mesh_integrity.py",
+    "before_sha256": "c6d5ea28ebbb121a976436617d271de19448bd31cec20ee05c81d1ea52784891",
+    "after_sha256": "66852e645692855c4da0031a8e6cf81f4fc7b3870febbe899806c6d473dbb27b",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_pi_validation.py",
+    "before_sha256": "a9c344ef2d84d888a87ee0af94c6bff763e5f5af419fd28736e0b5c16e12de27",
+    "after_sha256": null,
+    "operation": "moved to archive"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_rack_workspace.py",
+    "before_sha256": "92feaa6024a6b37447d74743813ed58c4111400bd120f5a3affbd6a11c415f7d",
+    "after_sha256": "b2bacfea7f2fcf1a3cdc6a11889e7f49cfc182f379ace96d3a8f96122bde49d9",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/viewer.js",
+    "before_sha256": "5e20055ee087b326f7234eadc31351ed7d013d32ce2975f15afe54c13b13cae5",
+    "after_sha256": "b0072bc08ae061a3732e3d1be333f59d46c126890c87f968027f9038c965d153",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/workspace.js",
+    "before_sha256": "1b6f38fc56fa10e9319ed72b347a66981bc81630a0154f772834155a3af194ab",
+    "after_sha256": "b726126399f7f17b8a554b71d171c741ffb36fe26911f70a7734b06283169234",
+    "operation": "edited"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/workspace.js.bak",
+    "before_sha256": "dca4c58264510ef4edd62ab83a02c8c8a38020116d3a6cf43c9b01ae7c55b9d0",
+    "after_sha256": null,
+    "operation": "moved to archive"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/equipment_examples.py",
+    "before_sha256": null,
+    "after_sha256": "d48ce1b0c88f9fc34bc2d852e51989928eb9d8d753a805be12882c5782f68d13",
+    "operation": "new"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/equipment_migration.py",
+    "before_sha256": null,
+    "after_sha256": "9d1eecab432f64197af9f415d410aed3613fc7b12744bf778be78510aa863b13",
+    "operation": "new"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/equipment-examples.json",
+    "before_sha256": null,
+    "after_sha256": "454d09a320602d0e14852ff5a6183e31fad92e077f0d78cdaaf6e1993b897e5e",
+    "operation": "new"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_equipment_examples.py",
+    "before_sha256": null,
+    "after_sha256": "3faf178cbcdbe68ae2e86c1655b373b9bcc59994731c1adbf332fc79671d54ba",
+    "operation": "new"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/js-tests/example-fixture.js",
+    "before_sha256": null,
+    "after_sha256": "f99a798cd1b4e4eeb6c0793dd1a4e263b0680e7f192862c88544ede2ba5dbf9f",
+    "operation": "new"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/asset-manifest.json",
+    "before_sha256": null,
+    "after_sha256": "a536c02d0a50535ec71f92125b149e7bd9638caab6f22b1eb0bde53988b46bdd",
+    "operation": "new"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-studio.js",
+    "before_sha256": null,
+    "after_sha256": "ab296315ab0ae9ce168983187dc06981754608eda5817d094fa32f27c92df74a",
+    "operation": "new"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/assembly-studio.js",
+    "before_sha256": null,
+    "after_sha256": "296729e6f1e68c4df1ba5dcb798327a266592beabcd1b6341d8476163aac4c13",
+    "operation": "new"
+  }
+]

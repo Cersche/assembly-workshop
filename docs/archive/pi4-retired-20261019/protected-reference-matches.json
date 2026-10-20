@@ -1,0 +1,167 @@
+[
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/rack-studio.js",
+    "line": 13,
+    "text": "  const PI4_ART_WINDOW={w:216,h:34,z:21};"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/rack-studio.js",
+    "line": 14,
+    "text": "  // Generic window for a plate front face of plate_w x plate_h: same 18 mm side and 4 mm top/bottom margins as the Pi4 window."
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/rack-studio.js",
+    "line": 17,
+    "text": "  const PI4_SELECTION=[0,22.225,125.5,21.75,4];"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/rack-studio.js",
+    "line": 36,
+    "text": "  function artworkRect(art={},aspect=1,win=PI4_ART_WINDOW){"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/rack-studio.js",
+    "line": 38,
+    "text": "    art=art||{};win=win||PI4_ART_WINDOW;if(win.openings)win=clearWindow(win,win.openings,aspect);"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/rack-studio.js",
+    "line": 209,
+    "text": "          const sel=o.selRect||PI4_SELECTION;g.uniform1f(this.loc(p,'uSelected'),o.selected?1:0);g.uniform4fv(this.loc(p,'uSelRect'),sel.slice(0,4));g.uniform1f(this.loc(p,'uSelRadius'),sel[4]);g.uniform3fv(this.loc(p,'uColor'),o.color);g.u"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/rack-studio.js",
+    "line": 259,
+    "text": "  const api={Renderer,camera,equipment,logoMeshes,Mesh,slab,rounded,artworkRect,artworkWindow,clearWindow,selectionRect,PI4_SELECTION};root.LabRaxStudio=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/app.py",
+    "line": 376,
+    "text": "    \"\"\"Narrow adapter for the known Pi4 source; export a proposal, never alter baseline.\"\"\""
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/app.py",
+    "line": 390,
+    "text": "        raise ValueError('The current Pi4 design adapter supports M3 × 0.5 joint hardware only.')"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/app.py",
+    "line": 398,
+    "text": "        raise ValueError('Supported pilot range for this Pi4 adapter is 3–4.2 mm; printed fit still requires testing.')"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/app.py",
+    "line": 408,
+    "text": "    baseline = (ROOT / 'pi4_baseline.scad').read_text(encoding='utf-8')"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/app.py",
+    "line": 419,
+    "text": "    metadata = {'status': 'PROPOSED — UNVALIDATED', 'baseline': 'Pi4 clearance v2',"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/app.py",
+    "line": 459,
+    "text": "            project = {'id': 'pi4-beta', 'name': 'Lab Rax · Pi4 beta', 'units': 'mm', 'selections': {},"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/app.py",
+    "line": 463,
+    "text": "            db.execute('INSERT OR IGNORE INTO projects VALUES (?,?)', ('pi4-beta', json.dumps(project)))"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/app.py",
+    "line": 485,
+    "text": "            return json.loads(db.execute('SELECT body FROM projects WHERE id=?', ('pi4-beta',)).fetchone()[0])"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/app.py",
+    "line": 813,
+    "text": "                        archive.writestr('pi4_proposed.scad', source)"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/assembly_records.py",
+    "line": 54,
+    "text": "def project_snapshot(project, identity, name='Raspberry Pi 4'):"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/assembly_records.py",
+    "line": 73,
+    "text": "    name=value.get('name','Raspberry Pi 4')"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/workspace.js",
+    "line": 19,
+    "text": "    <div class=\"studio-columns\"><aside class=\"studio-left\"><details id=\"racksSection\" class=\"library-section\" open><summary>Racks & slots</summary><div class=\"panel-heading\"><span>PROJECT</span><button id=\"newRack\" class=\"subtle\" aria-label"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/workspace.js",
+    "line": 20,
+    "text": "    <main class=\"studio-center\"><div class=\"viewport-heading\"><div><p class=\"section-eyebrow\" id=\"contextEyebrow\">RACK DESIGN</p><h1 id=\"contextTitle\">Build your workspace</h1></div><span id=\"contextBadge\" class=\"studio-badge\">Layout planni"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/workspace.js",
+    "line": 24,
+    "text": "    <dialog id=\"dashboardDialog\"><div class=\"dialog-heading\"><span class=\"section-eyebrow\">YOUR WORKSHOP</span><button id=\"closeDashboard\" class=\"subtle\" aria-label=\"Close dashboard\">✕</button></div><h2>Start with the rack.<br>Make room for"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/workspace.js",
+    "line": 54,
+    "text": "  function setStage(next){if(next==='assemble'&&!window.workshopContext){const p=assigned(active(),selectedSlot);if(p){openAssembly(p);return;}notify('Select an allocated slot and open its saved assembly first.');next='rack';}stage=next;byI"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/workspace.js",
+    "line": 56,
+    "text": "  function renderTree(){const rack=active(),tree=byId('rackTree');tree.replaceChildren();if(!rack){tree.append(paragraph('Create a rack to begin.'));return;}tree.append(paragraph(rack.slots+' SLOTS · '+rack.placements.length+(rack.placement"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/workspace.js",
+    "line": 77,
+    "text": "    const id='asm-'+uid(),name='Raspberry Pi 4',project=JSON.parse(JSON.stringify(legacyTemplate));"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/workspace.js",
+    "line": 190,
+    "text": "    if(placement){host.append(paragraph('Raspberry Pi 4 · slots '+placement.slot+'–'+(placement.slot+placement.span-1)),paragraph('Reference allocation. Installed fit, service access and load capacity are UNKNOWN.'),button('Open assembly',("
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/workspace.js",
+    "line": 202,
+    "text": "  function startWizard(){if(!capable){notify('Wait for the updated workspace to load.',true);return;}showInspector('Setup');const rack=active();if(!rack||!selectedSlot){notify('Select an empty rack slot first.');return;}if(assigned(rack,sel"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/workspace.js",
+    "line": 203,
+    "text": "  function renderReview(){const rack=active(),host=byId('rackReview');host.replaceChildren();host.append(paragraph('UNKNOWN · Rack installation and strength','review-unknown'));if(!rack){host.append(paragraph('No rack layout selected.'));re"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/before-app/workspace.js",
+    "line": 252,
+    "text": "  byId('pi4Card').onclick=startWizard;"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/fixture-0li3pv2o/rack-workspace.json",
+    "line": 19,
+    "text": "            \"name\": \"Raspberry Pi 4\","
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/fixture-0li3pv2o/rack-workspace.json",
+    "line": 39,
+    "text": "                \"package\": \"Pi4_fit_REFERENCE_ONLY.3mf\","
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/fixture-0li3pv2o/rack-workspace.json",
+    "line": 49,
+    "text": "              \"name\": \"Raspberry Pi 4\","
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/fixture-0li3pv2o/rack-workspace.json",
+    "line": 56,
+    "text": "          \"equipment\": \"pi4\","
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/rack-references/fixture-0li3pv2o/rack-workspace.json",
+    "line": 59,
+    "text": "          \"geometry\": \"pi4-clearance-v2-reference\","
+  }
+]

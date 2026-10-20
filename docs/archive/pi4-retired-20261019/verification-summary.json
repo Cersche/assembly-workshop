@@ -1,0 +1,28 @@
+{
+  "baseline": {
+    "main_command": "powershell -ExecutionPolicy Bypass -File outputs/Mechanical_Design_App/run_checks.ps1",
+    "exit_code": 0,
+    "python_run": 111,
+    "python_skipped": 1,
+    "javascript_passed": 164,
+    "standalone_javascript_passed": 26
+  },
+  "final": {
+    "main_exit_code": 0,
+    "python_run": 113,
+    "python_skipped": 1,
+    "javascript_passed": 166,
+    "standalone_javascript_passed": 29,
+    "additional_shared_tests_passed": 12
+  },
+  "example_render": {
+    "command": "& 'C:/Program Files/Python310/python.exe' -B -m unittest -v test_equipment_examples",
+    "working_directory": "outputs/Mechanical_Design_App",
+    "first_attempt": "WinError 5 at temporary cache rename inside sandbox",
+    "approved_rerun_exit_code": 0,
+    "tests_run": 1,
+    "seconds": 6.833,
+    "source_sha256": "bc1d4aa2b5d58fb9536db101005272be900be78f184527565971f474972c370d",
+    "scope": "Fresh temporary data; generic tray and faceplate rendered, read_mesh passed; no bundle or export."
+  }
+}

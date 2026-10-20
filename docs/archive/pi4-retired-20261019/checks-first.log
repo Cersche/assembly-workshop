@@ -1,0 +1,752 @@
+== Python (work/gui-refinement/check_python.py) ==
+test_assignment_retains_unknown_fit (test_rack_workspace.RackWorkspaceTests) ... ok
+test_cable_guides_round_trip_and_reject_invalid (test_rack_workspace.RackWorkspaceTests) ... ok
+test_empty_read_has_no_side_effect (test_rack_workspace.RackWorkspaceTests) ... ok
+test_history_lists_and_restores_draft_without_writing (test_rack_workspace.RackWorkspaceTests) ... ok
+test_invalid_dimensions_and_equipment (test_rack_workspace.RackWorkspaceTests) ... ok
+test_malformed_history_generation_cannot_be_used_as_path (test_rack_workspace.RackWorkspaceTests) ... ok
+test_overlap_and_out_of_range_rejected (test_rack_workspace.RackWorkspaceTests) ... ok
+test_round_trip_unknown_dimensions_and_historical_recovery (test_rack_workspace.RackWorkspaceTests) ... ok
+test_stale_writer_rejected_without_changes (test_rack_workspace.RackWorkspaceTests) ... ok
+test_every_component_retains_exact_source_coordinates_and_indices (test_rack_references.RackReferenceTests) ... ok
+test_reference_route_never_accesses_hardware_store (test_rack_references.RackReferenceTests) ... ok
+test_served_page_scripts_match_the_manifest (test_rack_references.RackReferenceTests) ... ok
+test_tampering_is_rejected_and_unknown_paths_are_not_served (test_rack_references.RackReferenceTests) ... ok
+test_appearance_does_not_change_hardware_identity (test_assembly_records.AssemblyRecordTests) ... ok
+test_artwork_allows_1024_pixels_and_auto_filament_colors (test_assembly_records.AssemblyRecordTests) ... ok
+test_artwork_is_local_verified_png_and_tamper_is_blocked (test_assembly_records.AssemblyRecordTests) ... ok
+test_layout_cannot_overwrite_hardware_and_old_client_is_rejected (test_assembly_records.AssemblyRecordTests) ... ok
+test_old_shared_editor_cannot_mutate_independent_workspace (test_assembly_records.AssemblyRecordTests) ... ok
+test_routes_scope_state_save_bom_and_check_to_instance (test_assembly_records.AssemblyRecordTests) ... ok
+test_saved_release_undo_retains_latest_hardware_revision (test_assembly_records.AssemblyRecordTests) ... ok
+test_stale_save_rejected_and_noop_does_not_bump_revision (test_assembly_records.AssemblyRecordTests) ... ok
+test_two_instances_are_isolated_and_legacy_db_is_unchanged (test_assembly_records.AssemblyRecordTests) ... ok
+test_v1_read_migrates_only_in_memory (test_assembly_records.AssemblyRecordTests) ... ok
+test_wrong_or_stale_instance_bundle_is_rejected_without_render (test_assembly_records.AssemblyRecordTests) ... ok
+test_appearance_only_preserves_hardware_revision (test_studio_save.StudioSaveTests) ... ok
+test_atomic_save_route_and_capability (test_studio_save.StudioSaveTests) ... ok
+test_combined_save_is_one_workspace_commit (test_studio_save.StudioSaveTests) ... ok
+test_invalid_hardware_leaves_layout_and_appearance_unsaved (test_studio_save.StudioSaveTests) ... ok
+test_stale_generation_is_rejected_without_partial_save (test_studio_save.StudioSaveTests) ... ok
+test_unscoped_hardware_tampering_is_rejected (test_studio_save.StudioSaveTests) ... ok
+test_port_edits_rejected (test_cable_ports.CablePortTests) ... ERROR
+test_port_edits_round_trip (test_cable_ports.CablePortTests) ... ERROR
+test_rejections (test_cable_ports.WizardPortTests) ... ok
+test_source_ignores_planning_fields (test_cable_ports.WizardPortTests) ... ok
+test_type_ids_and_rear_ports (test_cable_ports.WizardPortTests) ... ok
+test_changed_original_during_render_is_not_published (test_equipment_rebuild.EquipmentRebuildTests) ... FAIL
+test_copy_normal_edit_persists_display_rename_without_source_name_suffix (test_equipment_rebuild.EquipmentRebuildTests) ... ERROR
+test_copy_preserves_original_build_records_placements_and_planning_ports (test_equipment_rebuild.EquipmentRebuildTests) ... ERROR
+test_corrupt_current_target_blocks_reuse_without_overwrite (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_current_source_reports_unknown_pipeline_and_still_rebuilds_copy (test_equipment_rebuild.EquipmentRebuildTests) ... ERROR
+test_duplicate_and_double_click_requests_append_one_copy (test_equipment_rebuild.EquipmentRebuildTests) ... FAIL
+test_invalid_snap_and_keystone_specs_need_review_without_substitution (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_missing_malformed_and_tampered_evidence_are_separate_states (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_old_keystone_and_arbitrary_source_flag_without_inventing_reason (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_planning_only_metadata_does_not_change_source_name_only_change_does (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_render_failure_or_index_failure_preserves_original_index (test_equipment_rebuild.EquipmentRebuildTests) ... ERROR
+test_stale_missing_or_invalid_identity_rejected_before_render (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_status_and_rebuild_routes_preserve_array_contract_and_token_guard (test_equipment_rebuild.EquipmentRebuildTests) ... FAIL
+test_status_is_read_only_legacy_array_older_source (test_equipment_rebuild.EquipmentRebuildTests) ... FAIL
+test_wrong_source_hash_and_manifest_id_are_integrity_problems (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_rejections (test_cable_plan.CablePlanTests) ... ok
+test_round_trip_and_legacy (test_cable_plan.CablePlanTests) ... ok
+test_suggestion_field_rejections (test_cable_plan.CablePlanTests) ... ok
+test_suggestion_fields_round_trip (test_cable_plan.CablePlanTests) ... ok
+test_unknown_guide_fields_rejected (test_cable_plan.CablePlanTests) ... ok
+test_valid_boundaries_and_defaults (test_cable_plan.CablePlanTests) ... ok
+test_allocation_values_override_library_defaults (test_allocation_tray.AllocationTray) ... ok
+test_keys_split_between_library_and_allocation (test_allocation_tray.AllocationTray) ... ok
+test_no_tray_settings_gives_identical_source (test_allocation_tray.AllocationTray) ... ok
+test_older_documents_validate_unchanged (test_allocation_tray.AllocationTray) ... ok
+test_pi4_allocation_ignores_tray (test_allocation_tray.AllocationTray) ... FAIL
+test_rack_document_keeps_tray_per_allocation (test_allocation_tray.AllocationTray) ... ok
+test_unknown_keys_dropped_and_bad_values_rejected (test_allocation_tray.AllocationTray) ... ok
+test_js_sketch_markers_and_warnings_agree_with_the_build (test_tray_placement.FrontOpeningsFollowTheDevice) ... ok
+test_moved_openings_are_still_guarded (test_tray_placement.FrontOpeningsFollowTheDevice) ... ok
+test_slot_source_cuts_moved_openings (test_tray_placement.FrontOpeningsFollowTheDevice) ... ok
+test_app_routes_window_requests (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_check_reports_plain_message_without_writing (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_js_window_checks_agree_with_python (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_python_checks_block_the_same_cases (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_request_merges_library_facts_and_slot_tray (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_unknown_item_and_bad_payload_are_rejected (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_invalid_settings_or_item_give_no_render (test_tray_placement.RackViewLookup) ... ok
+test_js_rack_sketch_matches_python_tray_size (test_tray_placement.RackViewLookup) ... ok
+test_lookup_finds_existing_render_and_never_renders (test_tray_placement.RackViewLookup) ... ok
+test_js_ports_and_screening_use_the_allocation_spec (test_tray_placement.SlotTrayConsumers) ... ok
+test_slot_export_request_carries_quality (test_export_quality.ExportQualityRequests) ... ok
+test_zip_records_export_quality (test_export_quality.ExportQualityRequests) ... ok
+test_draft_and_fine_add_only_one_fn_line (test_export_quality.ExportQualitySource) ... ok
+test_quality_is_not_a_tray_setting (test_export_quality.ExportQualitySource) ... ok
+test_standard_is_byte_identical_to_before (test_export_quality.ExportQualitySource) ... ok
+test_standard_spec_and_build_id_unchanged (test_export_quality.ExportQualitySource) ... ok
+test_template_default_is_standard (test_export_quality.ExportQualitySource) ... ok
+test_unknown_quality_is_refused (test_export_quality.ExportQualitySource) ... ok
+test_keystone_faceplates_pass_the_mesh_check_without_nudge (test_keystone_mesh.KeystoneRenderTests) ... skipped 'set AW_RENDER_TESTS=1 to render with OpenSCAD'
+test_block_is_clipped_by_the_same_box_as_the_plate_opening (test_keystone_mesh.StaticKeystoneTests) ... ok
+test_golden_table_and_tightness_unchanged (test_keystone_mesh.StaticKeystoneTests) ... ok
+test_plate_flush_depths_land_on_the_2d_grid (test_keystone_mesh.StaticKeystoneTests) ... ok
+test_joint_positions (test_port_openings.PortOpenings) ... ok
+test_movement_and_preservation (test_port_openings.PortOpenings) ... ok
+test_problems (test_port_openings.PortOpenings) ... ok
+test_rotation (test_port_openings.PortOpenings) ... ok
+test_sizes (test_port_openings.PortOpenings) ... ok
+test_auto_colors_stay_automatic (test_faceplate_color.FaceplateColorTests) ... ok
+test_color_only_change_changes_export_identity (test_faceplate_color.FaceplateColorTests) ... ok
+test_opaque_image_keeps_faceplate_as_base (test_faceplate_color.FaceplateColorTests) ... ok
+test_png_round_trip_with_filters (test_faceplate_color.FaceplateColorTests) ... ok
+test_preview_reduces_and_cleans (test_faceplate_color.FaceplateColorTests) ... ok
+test_same_filament_merges_bodies (test_faceplate_color.FaceplateColorTests) ... ok
+test_settings_validation (test_faceplate_color.FaceplateColorTests) ... ok
+test_atomic_immutable_import_and_pinning (test_app.Tests) ... ok
+test_axial_geometry_and_open_insert_overrun (test_app.Tests) ... ok
+test_draft_preview_never_changes_saved_project (test_app.Tests) ... ok
+test_hardware_envelopes_follow_actual_joint_axes (test_app.Tests) ... ok
+test_invalid_dimensions (test_app.Tests) ... ok
+test_maximum_hole_is_not_exact_recommendation (test_app.Tests) ... ok
+test_mesh_validation_and_bundle_path_rejection (test_app.Tests) ... ok
+test_reach_bottoming_and_unknowns (test_app.Tests) ... ok
+test_starter_catalog_is_idempotent_and_keeps_selection (test_app.Tests) ... ok
+test_thread_mismatch_and_missing_selection (test_app.Tests) ... ok
+
+======================================================================
+ERROR: test_port_edits_rejected (test_cable_ports.CablePortTests) (message='must be a list')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_cable_ports.py", line 58, in test_port_edits_rejected
+    rack_workspace.validate(self.value)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\rack_workspace.py", line 60, in validate
+    value, _ = equipment_migration.migrate(value)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\equipment_migration.py", line 24, in migrate
+    existing = {p['port']: p for p in ports if p.get('allocation') == placement.get('id')}
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\equipment_migration.py", line 24, in <dictcomp>
+    existing = {p['port']: p for p in ports if p.get('allocation') == placement.get('id')}
+AttributeError: 'str' object has no attribute 'get'
+
+======================================================================
+ERROR: test_port_edits_rejected (test_cable_ports.CablePortTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_cable_ports.py", line 61, in test_port_edits_rejected
+    self.assertEqual(rack_workspace.validate(self.value)['racks'][0]['cabling']['ports'][0]['z'], 60)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\rack_workspace.py", line 133, in validate
+    cabling = _cabling(rack.get('cabling'), slots, {p['id']: p['span'] for p in result['placements']})
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\rack_workspace.py", line 52, in _cabling
+    result['ports'] = cable_ports.overrides(value['ports'], allocations or {})
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\cable_ports.py", line 70, in overrides
+    out[key] = _number(item[key], key.upper(), lo, hi)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\cable_ports.py", line 19, in _number
+    raise ValueError(f'Port {name} must be a number between {lo:g} and {hi:g} mm.')
+ValueError: Port Z must be a number between -10 and 98.9 mm.
+
+======================================================================
+ERROR: test_port_edits_round_trip (test_cable_ports.CablePortTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_cable_ports.py", line 27, in test_port_edits_round_trip
+    saved = rack_workspace.save(self.root, self.value)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\rack_workspace.py", line 234, in save
+    clean = validate(value, seed_project)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\rack_workspace.py", line 133, in validate
+    cabling = _cabling(rack.get('cabling'), slots, {p['id']: p['span'] for p in result['placements']})
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\rack_workspace.py", line 52, in _cabling
+    result['ports'] = cable_ports.overrides(value['ports'], allocations or {})
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\cable_ports.py", line 70, in overrides
+    out[key] = _number(item[key], key.upper(), lo, hi)
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\cable_ports.py", line 19, in _number
+    raise ValueError(f'Port {name} must be a number between {lo:g} and {hi:g} mm.')
+ValueError: Port Z must be a number between -10 and 98.9 mm.
+
+======================================================================
+ERROR: test_copy_normal_edit_persists_display_rename_without_source_name_suffix (test_equipment_rebuild.EquipmentRebuildTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 151, in test_copy_normal_edit_persists_display_rename_without_source_name_suffix
+    item = self.rebuild()['item']
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 65, in rebuild
+    return eq.rebuild_copy(self.root, self.original['id'], self.original['build'])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\equipment.py", line 410, in rebuild_copy
+    raise ValueError('Equipment library changed; reload its details and try again.')
+ValueError: Equipment library changed; reload its details and try again.
+
+======================================================================
+ERROR: test_copy_preserves_original_build_records_placements_and_planning_ports (test_equipment_rebuild.EquipmentRebuildTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 131, in test_copy_preserves_original_build_records_placements_and_planning_ports
+    with patch.object(eq, 'render', side_effect=self.fake_render): out = self.rebuild()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 65, in rebuild
+    return eq.rebuild_copy(self.root, self.original['id'], self.original['build'])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\equipment.py", line 410, in rebuild_copy
+    raise ValueError('Equipment library changed; reload its details and try again.')
+ValueError: Equipment library changed; reload its details and try again.
+
+======================================================================
+ERROR: test_current_source_reports_unknown_pipeline_and_still_rebuilds_copy (test_equipment_rebuild.EquipmentRebuildTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 87, in test_current_source_reports_unknown_pipeline_and_still_rebuilds_copy
+    out = self.rebuild()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 65, in rebuild
+    return eq.rebuild_copy(self.root, self.original['id'], self.original['build'])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\equipment.py", line 410, in rebuild_copy
+    raise ValueError('Equipment library changed; reload its details and try again.')
+ValueError: Equipment library changed; reload its details and try again.
+
+======================================================================
+ERROR: test_render_failure_or_index_failure_preserves_original_index (test_equipment_rebuild.EquipmentRebuildTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 169, in test_render_failure_or_index_failure_preserves_original_index
+    with self.assertRaisesRegex(OSError, 'index failure'): self.rebuild()
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 65, in rebuild
+    return eq.rebuild_copy(self.root, self.original['id'], self.original['build'])
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\equipment.py", line 410, in rebuild_copy
+    raise ValueError('Equipment library changed; reload its details and try again.')
+ValueError: Equipment library changed; reload its details and try again.
+
+======================================================================
+FAIL: test_changed_original_during_render_is_not_published (test_equipment_rebuild.EquipmentRebuildTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 203, in test_changed_original_during_render_is_not_published
+    self.assertEqual(len(eq.library(self.root)), 1); self.assertEqual(eq.library(self.root)[0]['name'], 'Concurrent edit')
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_duplicate_and_double_click_requests_append_one_copy (test_equipment_rebuild.EquipmentRebuildTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 182, in test_duplicate_and_double_click_requests_append_one_copy
+    self.assertFalse(any(t.is_alive() for t in threads)); self.assertEqual(errors, [])
+AssertionError: Lists differ: [ValueError('Equipment library changed; re[105 chars]n.')] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+ValueError('Equipment library changed; reload its details and try again.')
+
++ []
+- [ValueError('Equipment library changed; reload its details and try again.'),
+-  ValueError('Equipment library changed; reload its details and try again.')]
+
+======================================================================
+FAIL: test_status_and_rebuild_routes_preserve_array_contract_and_token_guard (test_equipment_rebuild.EquipmentRebuildTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 231, in test_status_and_rebuild_routes_preserve_array_contract_and_token_guard
+    out, status = self.request('/api/equipment-rebuild-copy', payload); self.assertEqual(status, 200)
+AssertionError: 400 != 200
+
+======================================================================
+FAIL: test_status_is_read_only_legacy_array_older_source (test_equipment_rebuild.EquipmentRebuildTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_equipment_rebuild.py", line 70, in test_status_is_read_only_legacy_array_older_source
+    self.assertEqual(eq.library(self.root), [self.original])
+AssertionError: Lists differ: [{'id[704 chars]TED'}, {'id': 'eq-000000000004', 'name': 'Rasp[1914 chars]N.'}] != [{'id[704 chars]TED'}]
+
+First list contains 1 additional elements.
+First extra element 1:
+{'id': 'eq-000000000004', 'name': 'Raspberry Pi 4 (example)', 'span': 1, 'spec': {'name': 'Raspberry Pi 4 (example)', 'dev_w': 85, 'dev_d': 56, 'dev_h': 20, 'hole_d': 2.7, 'standoff': 6, 'insert_pilot': 3.2, 'board_t': 1.6, 'u': 1, 'device_mount': 'inserts', 'joint': 'screw', 'rear_support': False, 'dev_off_x': -1.5, 'dev_off_y': 1, 'dev_rot': 0, 'holes': [[3.5, 3.5], [61.5, 3.5], [3.5, 52.5], [61.5, 52.5]], 'ports': [], 'rear_ports': [], 'keystones': [], 'planning_ports': [{'id': 'usb-c-power', 'label': 'USB-C power', 'type': 'usb-c', 'x': -32.8, 'y': 11.5, 'z': 18.8, 'points': 'front', 'face': None}, {'id': 'hdmi0', 'label': 'Micro-HDMI 0', 'type': 'micro-hdmi', 'x': -18.05, 'y': 11.2, 'z': 18.8, 'points': 'front', 'face': None}, {'id': 'hdmi1', 'label': 'Micro-HDMI 1', 'type': 'micro-hdmi', 'x': -4.55, 'y': 11.2, 'z': 18.8, 'points': 'front', 'face': None}, {'id': 'audio', 'label': 'Audio / composite 3.5 mm', 'type': 'other', 'x': 10, 'y': 10.6, 'z': 20.6, 'points': 'front', 'face': None}, {'id': 'usb2-lower', 'label': 'USB 2.0 (lower)', 'type': 'usb-a', 'x': 45, 'y': 22, 'z': 21.4, 'points': 'right', 'face': None}, {'id': 'usb2-upper', 'label': 'USB 2.0 (upper)', 'type': 'usb-a', 'x': 45, 'y': 22, 'z': 29.4, 'points': 'right', 'face': None}, {'id': 'usb3-lower', 'label': 'USB 3.0 (lower)', 'type': 'usb-a', 'x': 44.6, 'y': 40, 'z': 21.4, 'points': 'right', 'face': None}, {'id': 'usb3-upper', 'label': 'USB 3.0 (upper)', 'type': 'usb-a', 'x': 44.6, 'y': 40, 'z': 29.4, 'points': 'right', 'face': None}, {'id': 'ethernet', 'label': 'Ethernet', 'type': 'rj45', 'x': 44.2, 'y': 58.75, 'z': 24.4, 'points': 'right', 'face': None}]}, 'status': 'PROPOSED � UNVALIDATED', 'parts': [], 'example': True, 'template': 'equipment_tray.scad', 'provenance': 'Historical board dimensions and 58 � 49 mm hole pitch; connector centres from local reference mesh, �2 mm. No reference mesh redistributed. Face, cable access, fit and strength UNKNOWN.'}
+
+Diff is 6037 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_pi4_allocation_ignores_tray (test_allocation_tray.AllocationTray)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_allocation_tray.py", line 79, in test_pi4_allocation_ignores_tray
+    self.assertNotIn('tray', out['racks'][0]['placements'][0])
+AssertionError: 'tray' unexpectedly found in {'assembly': {'id': 'asm-f0b77c2f6fd2ee3a7263012a4a76c676', 'name': 'Untitled assembly', 'revision': 1, 'project': {'id': 'asm-f0b77c2f6fd2ee3a7263012a4a76c676', 'name': 'Untitled assembly', 'units': 'mm', 'selections': {}, 'inputs': {}}, 'appearance': {}, 'fit': 'UNKNOWN'}, 'id': 'a', 'equipment': 'eq-000000000004', 'slot': 1, 'span': 1, 'geometry': 'equipment-library', 'fit': 'UNKNOWN', 'tray': {'u': 3}}
+
+----------------------------------------------------------------------
+Ran 110 tests in 4.249s
+
+FAILED (failures=5, errors=7, skipped=1)
+== JavaScript (js-tests/run.js) ==
+✔ every app script parses (92.2143ms)
+✔ every script index.html loads from /rack-references/ is in the asset manifest (33.7108ms)
+✔ RackLayout.checkRange rejects out-of-range and overlapping ranges (0.6838ms)
+✔ RackLayout.change moves an allocation and resets fit to UNKNOWN (0.2281ms)
+✔ RackLayout.release and restore round-trip; restore keeps fit UNKNOWN (0.7752ms)
+✔ WorkshopCatalog.filter: latest revision, kind, exact diameter, unknown material, length bounds (0.3682ms)
+✔ WorkshopCatalog.changes lists changed fields with their effect (0.2615ms)
+✔ LabRaxScene.frame stacks posts in levels of at most 5U that sum to the rack height (0.898ms)
+✔ LabRaxScene.guidePose puts the cable guide plate flat on the post face at the slot hole pair (2.9596ms)
+✔ WorkshopClearance.screen grades height, width and depth against nominal rack numbers (0.6176ms)
+✖ WorkshopClearance.screen keeps unspecified rack numbers UNKNOWN and flags span mismatch (0.9025ms)
+✔ WorkshopClearance.screen uses the slot tray placement (offset, rotation, standoff, rear support, U) (0.4149ms)
+✔ LabRaxStudio.artworkRect stays inside the 216 x 34 mm faceplate field (0.2447ms)
+✔ LabRaxStudio.artworkWindow generalizes the Pi4 window to wizard faceplates of any U span (0.3621ms)
+✔ LabRaxStudio.artworkRect keeps wizard images clear of port and keystone openings (2.9486ms)
+✔ LabRaxStudio.selectionRect follows the plate front at any U height (0.4096ms)
+✖ LabRaxPorts Pi 4 preset: nine ports, face UNKNOWN, front-edge ports point front and USB/Ethernet right (0.4401ms)
+✔ LabRaxPorts wizard ports: front openings, rear ports and keystone pass-through pairs (1.6847ms)
+✔ LabRaxPorts wizard ports follow the slot tray placement (placement.tray wins over the library spec) (0.9041ms)
+✖ LabRaxPorts overrides merge, reset, custom ports and prune (0.3708ms)
+✖ LabRaxPorts marker rotations are proper rotations and parts sit at the allocation base (0.4639ms)
+✔ LabRaxPorts marker meshes exist for every connector type (5.785ms)
+✔ LabRaxCableView tube follows the path, is finite and has closed end caps (1.749ms)
+✔ LabRaxCableView sag dips between points and stays put on vertical runs (0.2181ms)
+✔ LabRaxCableView bundles cables side by side through a guide without overlap (8.3231ms)
+✔ LabRaxCableView exit grommets face outward with proper rotations (1.9177ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 22
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 177.2126
+
+✖ failing tests:
+
+test at outputs\Mechanical_Design_App\js-tests\run.js:144:1
+✖ WorkshopClearance.screen keeps unspecified rack numbers UNKNOWN and flags span mismatch (0.9025ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'unknown'
+  - 'reference'
+  
+      at TestContext.<anonymous> (C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\js-tests\run.js:149:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'unknown',
+    expected: 'reference',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\Mechanical_Design_App\js-tests\run.js:254:1
+✖ LabRaxPorts Pi 4 preset: nine ports, face UNKNOWN, front-edge ports point front and USB/Ethernet right (0.4401ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 9
+  
+      at TestContext.<anonymous> (C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\js-tests\run.js:256:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 9,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\Mechanical_Design_App\js-tests\run.js:316:1
+✖ LabRaxPorts overrides merge, reset, custom ports and prune (0.3708ms)
+  TypeError: Cannot read properties of undefined (reading 'face')
+      at TestContext.<anonymous> (C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\js-tests\run.js:322:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at outputs\Mechanical_Design_App\js-tests\run.js:343:1
+✖ LabRaxPorts marker rotations are proper rotations and parts sit at the allocation base (0.4639ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  6 !== 15
+  
+      at TestContext.<anonymous> (C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\js-tests\run.js:351:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 6,
+    expected: 15,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+== JavaScript page logic (js-tests/page-logic.js) ==
+✔ page Save: layout/hardware dirty status enables Save without persistence (3.0624ms)
+✔ page Save: one atomic request commits layout, appearance and hardware then clears dirty state (1.693ms)
+✔ page Save: rejected request keeps draft and hardware, reports error and permits retry (0.9019ms)
+✔ page Save: edits during in-flight Save remain dirty and double Save is rejected (1.0005ms)
+✔ page Save: precondition capable=false blocks writes (0.639ms)
+✔ page Save: precondition openingAssembly=true blocks writes (0.5853ms)
+✔ page Save: precondition artworkPending=1 blocks writes (1.7707ms)
+✔ page Save: precondition byId("mountWizard").hidden=false blocks writes (1.0295ms)
+✔ page Save: precondition byId("rackDialog").open=true blocks writes (1.1599ms)
+✔ page check: dirty guard blocks action without silently saving (3.2637ms)
+✔ page bom: dirty guard blocks action without silently saving (2.2481ms)
+✔ page project: dirty guard blocks action without silently saving (1.5327ms)
+✔ page designExport: dirty guard blocks action without silently saving (1.8649ms)
+✔ page buildRevision: dirty guard blocks action without silently saving (1.8748ms)
+✔ page checks and BOM: clean actions use saved state without issuing Save (1.8305ms)
+✖ viewer startup: actual script loads, binds events and paints its first frame (17.8593ms)
+✔ viewer startup: missing reports error without drawing or unhandled rejection (0.9602ms)
+✔ viewer startup: network reports error without drawing or unhandled rejection (1.4288ms)
+✔ viewer startup: bad-json reports error without drawing or unhandled rejection (0.7936ms)
+✔ viewer startup: no-canvas reports error without drawing or unhandled rejection (0.7398ms)
+✔ viewer startup: missing optional Pi reference still renders assembly (1.782ms)
+✔ viewer startup: failed studio renderer falls back with a visible reason (1.6636ms)
+✔ rack viewer startup: required and optional meshes load then schedule both views (3.0132ms)
+✔ rack viewer startup: optional-404 keeps required meshes usable (0.6529ms)
+✔ rack viewer startup: optional-network keeps required meshes usable (0.531ms)
+✔ rack viewer startup: required failure retains diagnostic (1.0924ms)
+✔ rack viewer startup: renderer failure retains diagnostic (0.5913ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 26
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 61.1588
+
+✖ failing tests:
+
+test at outputs\Mechanical_Design_App\js-tests\page-logic.js:184:1
+✖ viewer startup: actual script loads, binds events and paints its first frame (17.8593ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      '/api/assembly',
+  -   '/api/pi-reference',
+  -   '/api/assembly-checks'
+    ]
+  
+      at TestContext.<anonymous> (C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\js-tests\page-logic.js:186:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+== JavaScript rack BOM (js-tests/rack-bom.js) ==
+✔ rack BOM worked example: 5U default (4.3653ms)
+✔ rack BOM worked example: 5U custom (0.8395ms)
+✔ rack BOM worked example: 9U default (0.7398ms)
+✔ rack BOM worked example: 9U custom (0.7162ms)
+✔ rack BOM worked example: 14U default (0.7019ms)
+✔ rack BOM worked example: 14U custom (0.676ms)
+✔ rack BOM missing side defaults only the missing stack; 1U has no joints (0.7698ms)
+✔ rack BOM rejects explicitly invalid stacks and heights without fabricated parts (1.4157ms)
+✔ rack BOM locked and unlocked stacks count identically (0.9393ms)
+✔ rack BOM side panels toggle only segmented panels, never top/bottom (0.8607ms)
+✔ rack BOM ignores cable guides, ports and artwork (0.9204ms)
+✔ rack BOM agrees with real rackFrame source placements and all fixed parts (2.3455ms)
+✔ rack BOM requires extensions independently of missing preview assets (1.1063ms)
+✔ rack setup height edits retain chosen saved stacks only at unchanged height, clamp at 14U and do not mutate (1.239ms)
+✔ rack BOM shows explicit allowances/UNKNOWNs and invalid layout error (0.7736ms)
+✔ moving a support refreshes a visible editing BOM; locked layout stays unchanged (0.8709ms)
+✔ multi-U plate across a support extension warns (never blocks); 1U and clear spans stay quiet (1.0149ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26.2272
+== JavaScript equipment rebuild (js-tests/equipment-rebuild.js) ==
+✔ equipment list: read-only status on list/focus/open keeps both drafts and grouping (3.9329ms)
+✔ equipment list: explicit rebuild posts original identity once and preserves placed item lookup/drafts (1.2651ms)
+✔ equipment list: double click and focus refresh while rebuilding do not duplicate requests (1.7546ms)
+✔ equipment list: an item built from the current template says so plainly and offers no rebuild (Brian, 2026-10-19) (1.0935ms)
+✔ equipment list: needs_review has no rebuild and performs no write (0.7677ms)
+✔ equipment list: unknown_evidence has no rebuild and performs no write (0.6535ms)
+✔ equipment list: integrity_problem has no rebuild and performs no write (0.6384ms)
+✔ equipment list: rebuild failure keeps drafts and permits retry with exact error text (0.7846ms)
+✔ equipment copy: normal Edit changes separate display name without changing source-producing spec.name (0.9241ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17.1522
+== JavaScript equipment wizard steps (js-tests/equipment-wizard-steps.js) ==
+✔ wizard has three fact steps (0.8129ms)
+✔ tray choices keep their defaults but are no longer edited in the wizard (0.2078ms)
+✔ save, preview and build buttons remain on the last step (0.1175ms)
+✔ last-step summary counts front openings and rear ports separately (0.8317ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7.3438
+== JavaScript Place on tray window (js-tests/tray-placement.js) ==
+✔ values: slot tray wins, then the library spec, then template defaults (1.2961ms)
+✔ diff keeps only choices that differ from the library item (0.2529ms)
+✔ layout and hole positions follow equipment_tray.scad (rotation swaps width and depth) (0.3041ms)
+✔ SCAD assert errors show as plain messages (2.7041ms)
+✔ snap rounds to whole millimetres; live sketch is whole triangles (1.0458ms)
+✔ Apply to draft changes only the rack draft and the slot span when U changes (1.9818ms)
+✔ wiring: window opens on place/edit, blocks while a problem shows, never saves (1.3487ms)
+✔ rack view draws each slot's own tray: exact render if one exists, else a box sketch; never renders (2026-10-19) (1.6551ms)
+✔ rackSketch follows the slot tray settings in equipment_tray.scad coordinates (1.1139ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17.7406
+== JavaScript front openings (js-tests/port-openings.js) ==
+✔ opening movement fixtures and input preservation (1.8872ms)
+✔ turned openings stay as entered with exact warning (0.2745ms)
+✔ starting sizes are editable copies (0.2163ms)
+✔ opening bounds, priority, keystone and finite fixtures (0.6039ms)
+✔ joint positions: default kept when clear, nearest clear spot per side, else a plain problem (Brian, 2026-10-19) (1.0086ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10.773
+== JavaScript cable routes (js-tests/cable-routes.js) ==
+✔ exact API exports and browser load without window/DOM/fetch (3.456ms)
+✖ port anchors use actual Pi and generic wizard data, pointing offsets and base Z (0.6515ms)
+✔ end faces keep UNKNOWN separate from rear fallback (1.9047ms)
+✖ auto routing chooses one post and orders guides from from to to (2.9448ms)
+✔ multi-U endpoint slots come from anchor Z, not allocation start (0.2613ms)
+✔ exit selection preserves an existing choice and otherwise scores nearest route point (0.4616ms)
+✔ endpoint exit slot determines guide interval in either end direction (0.3006ms)
+✔ path preserves specified point order, manual order and all scene anchor coordinates (0.6201ms)
+✔ length is straight segments plus service loops per connected port, rounded up (0.5955ms)
+✔ rounding handles exact tenths and a value truly above a tenth (0.2476ms)
+✔ keystone pair lookup, port occupancy and lowest unused cable number (0.3461ms)
+✔ guide load counts cables once and crowding is strictly above user setting (0.3747ms)
+✔ manual upkeep drops missing references, retains order and is idempotent (0.4382ms)
+✔ manual moved guide is retained and marked until acknowledged (0.4382ms)
+✔ automatic upkeep follows equipment movement and removed guides (0.7164ms)
+✔ upkeep disconnects removed allocations, ports and outside endpoints without deleting cables (0.4498ms)
+✔ warnings include unconnected, missing exit, UNKNOWN face, route changed and crowding (0.402ms)
+✔ read-only helpers never modify rack or cable fixtures (0.3027ms)
+✔ connector mismatches respect saved overrides and never mutate inputs (1.2622ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 17
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22.4674
+
+✖ failing tests:
+
+test at outputs\Mechanical_Design_App\js-tests\cable-routes.js:31:1
+✖ port anchors use actual Pi and generic wizard data, pointing offsets and base Z (0.6515ms)
+  TypeError: Cannot read properties of null (reading '0')
+      at TestContext.<anonymous> (C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\js-tests\cable-routes.js:33:61)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at outputs\Mechanical_Design_App\js-tests\cable-routes.js:48:1
+✖ auto routing chooses one post and orders guides from from to to (2.9448ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  -   'RR1',
+  -   'RR2',
+  -   'RR3',
+  -   'RR4',
+      'RR5'
+    ]
+  
+      at TestContext.<anonymous> (C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\js-tests\cable-routes.js:55:39)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+== JavaScript cable suggestions (js-tests/cable-suggest.js) ==
+✔ exact API and standalone browser global without DOM, window or fetch (2.6885ms)
+✖ carries defaults, USB label/id at either end, overrides and post settings (2.9616ms)
+✔ power-post wrong rear side, crossing, reverse interval, front exclusion and no target (5.0344ms)
+✔ missing-guide merges cables, rounds midpoint, skips occupied spots, short gaps and multiple posts (1.9143ms)
+✔ missing-guide uses anchors, front/mean-X post, exit slots and absent endpoint fallback (2.0459ms)
+✔ one-exit prefers non-top even with fewer users; ties follow exit order; all-top fallback (2.1226ms)
+✔ top-exit most-used alternative, first unused alternative, no alternative and unused top (1.9777ms)
+✔ keystone and service-loop positive and negative rules (2.4317ms)
+✔ short-run strictly less than U, with two known port anchors and guides (1.1461ms)
+✔ bend right-angle math, tight guide mapping, straight line, threshold and generic factor (1.7045ms)
+✖ crowded uses user threshold and UNKNOWN, one-ended and aggregated unused ports (1.3386ms)
+✔ move-post and drop-guides apply keep exits, make manual and pass real Python validation (336.8547ms)
+✔ add-guide applies to auto routes, leaves manual guides alone, validates, refuses occupied spot (327.1776ms)
+✔ set-exit apply keeps guides and passes real schema for one-exit and top-exit (308.5931ms)
+✔ every apply kind refuses stale involved cable, guide and exit without mutation (0.3575ms)
+✔ apply refuses stale action targets/retained routes, duplicate ids and invalid spots; upkeep failure is atomic (0.532ms)
+✔ signatures stable, 8-hex, change for every specified involved field (3.2376ms)
+✔ ignore includes matching sig only, unignore cleans empty key, pruning changes/disappearance (2.0997ms)
+✔ ignore replaces and caps at 500 dropping oldest; saved shape accepted (161.9267ms)
+✔ suggestion shapes, rule/subject sorting, idempotence and no input mutation (1.1033ms)
+✔ adapter advice is info only, exact, ignorable and pruned when resolved (3.5268ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 19
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1178.3572
+
+✖ failing tests:
+
+test at outputs\Mechanical_Design_App\js-tests\cable-suggest.js:36:1
+✖ carries defaults, USB label/id at either end, overrides and post settings (2.9616ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'data' !== 'power'
+  
+      at TestContext.<anonymous> (C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\js-tests\cable-suggest.js:39:57)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'data',
+    expected: 'power',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at outputs\Mechanical_Design_App\js-tests\cable-suggest.js:131:1
+✖ crowded uses user threshold and UNKNOWN, one-ended and aggregated unused ports (1.3386ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 3
+  
+      at TestContext.<anonymous> (C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\js-tests\cable-suggest.js:136:51)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+== JavaScript cable sheet (js-tests/cable-sheet.js) ==
+✔ exact exports, constants and isolated global load without browser APIs or Date (17.0054ms)
+✔ numeric sorting returns a new array and breaks ties by id (0.3326ms)
+✖ all long and short names, saved overrides and name fallbacks (1.7519ms)
+✔ face selection requires two front ports (0.4765ms)
+✔ schedule has every field, route order, estimates, warning arrays and reciprocal links (3.9192ms)
+✔ carries uses optional suggestions and raw type fallback (1.5952ms)
+✔ CSV BOM, CRLF records, metadata quoting, field order and embedded newline (1.1203ms)
+✔ CSV guards formula prefixes before quoting, preserving whitespace (1.4921ms)
+✔ labels include both connected ends in order and keystone face detail (0.8502ms)
+✔ notes contain each warning in cable order without standing limits (0.4983ms)
+✔ adapter warning flows to schedule, CSV warnings column and notes (0.9396ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35.4335
+
+✖ failing tests:
+
+test at outputs\Mechanical_Design_App\js-tests\cable-sheet.js:38:1
+✖ all long and short names, saved overrides and name fallbacks (1.7519ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Raspberry Pi 4 · removed port'
+  - 'Raspberry Pi 4 · Ethernet (U01, face UNKNOWN)'
+                      ^
+  
+      at TestContext.<anonymous> (C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\js-tests\cable-sheet.js:47:47)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Raspberry Pi 4 · removed port',
+    expected: 'Raspberry Pi 4 · Ethernet (U01, face UNKNOWN)',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+== JavaScript cable inventory (js-tests/cable-inventory.js) ==
+✔ frozen API and browser-independent global load (2.8177ms)
+✔ stock boundaries and nonfinite values (0.2644ms)
+✔ groups by type and stock; numeric cable sort and custom maximum (10.379ms)
+✔ incomplete ends are counted and flagged once even when estimate says complete (0.4351ms)
+✔ keystone pairs counted once per placement and guides counted separately (0.2441ms)
+✔ real routing estimate and slot keystone settings (1.4714ms)
+✔ unknown labels and tie sorting (0.2804ms)
+✔ CSV quotes every field, guards formulas, BOM, CRLF and trailing notes (0.9812ms)
+✔ adapter group note is unique and follows incomplete regardless of cable order (1.864ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24.3424
+== JavaScript wiring sheet drawing (js-tests/cable-sheet-view.js) ==
+✔ exact exports; loads in a bare context without window or DOM (2.4744ms)
+✔ cable points: endpoint ends run out of the exit, in drawing order (2.3197ms)
+✔ sheet SVG: well-formed text, both faces, escaped names, tags, exits, endpoints and notes (12.6967ms)
+✔ rear elevation is mirrored; tall racks shrink to fit; empty rack still draws (1.6022ms)
+✔ many warnings are cut to whole notes with a pointer to the CSV (3.3118ms)
+✔ printable pages: paper size, orientation, 3D page only when given, labels grid and escaping (1.4537ms)
+✔ top and side exits: endpoint arrows go round the outside of the rack, bottom exits point straight down (1.3962ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 31.7272
+RESULT: FAILED or incomplete

@@ -1,0 +1,37 @@
+✔ every app script parses (16.237ms)
+✔ every script index.html loads from /rack-references/ is in the asset manifest (0.8904ms)
+✔ RackLayout.checkRange rejects out-of-range and overlapping ranges (0.5634ms)
+✔ RackLayout.change moves an allocation and resets fit to UNKNOWN (0.2117ms)
+✔ RackLayout.release and restore round-trip; restore keeps fit UNKNOWN (0.7452ms)
+✔ WorkshopCatalog.filter: latest revision, kind, exact diameter, unknown material, length bounds (0.3521ms)
+✔ WorkshopCatalog.changes lists changed fields with their effect (0.2456ms)
+✔ LabRaxScene.frame stacks posts in levels of at most 5U that sum to the rack height (0.5757ms)
+✔ LabRaxScene.guidePose puts the cable guide plate flat on the post face at the slot hole pair (3.0561ms)
+✔ WorkshopClearance.screen grades height, width and depth against nominal rack numbers (0.5441ms)
+✔ WorkshopClearance.screen keeps unspecified rack numbers UNKNOWN and flags span mismatch (0.1374ms)
+✔ WorkshopClearance.screen uses the slot tray placement (offset, rotation, standoff, rear support, U) (0.4002ms)
+✔ LabRaxStudio.artworkRect stays inside the 216 x 34 mm faceplate field (0.2376ms)
+✔ LabRaxStudio.artworkWindow generalizes the reference window to wizard faceplates of any U span (0.3298ms)
+✔ LabRaxStudio.artworkRect keeps wizard images clear of port and keystone openings (2.49ms)
+✔ LabRaxStudio.selectionRect follows the plate front at any U height (0.1719ms)
+✔ LabRaxPorts library planning ports: nine ports, face UNKNOWN, front-edge ports point front and USB/Ethernet right (1.9198ms)
+✔ LabRaxPorts wizard ports: front openings, rear ports and keystone pass-through pairs (0.3311ms)
+✔ LabRaxPorts wizard ports follow the slot tray placement (placement.tray wins over the library spec) (0.7652ms)
+✔ LabRaxPorts overrides merge, reset, custom ports and prune (0.5888ms)
+✔ LabRaxPorts marker rotations are proper rotations and parts sit at the allocation base (0.4002ms)
+✔ LabRaxPorts marker meshes exist for every connector type (4.9723ms)
+✔ LabRaxCableView tube follows the path, is finite and has closed end caps (1.3614ms)
+✔ LabRaxCableView sag dips between points and stays put on vertical runs (0.1448ms)
+✔ LabRaxCableView bundles cables side by side through a guide without overlap (7.6501ms)
+✔ LabRaxCableView exit grommets face outward with proper rotations (1.7695ms)
+✔ first-run UI has no retired equipment card, wording or implicit allocation (3.2848ms)
+✔ root front-end assets match their hashes (7.7419ms)
+✔ new placements use the chosen library item and omit historical reference metadata (1.4405ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 75.2783

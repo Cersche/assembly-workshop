@@ -1,0 +1,57 @@
+[
+  {
+    "file": "outputs/Mechanical_Design_App/equipment-examples.json",
+    "line": 4,
+    "text": "    \"name\": \"Raspberry Pi 4 (example)\","
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/equipment-examples.json",
+    "line": 7,
+    "text": "      \"name\": \"Raspberry Pi 4 (example)\","
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/equipment_migration.py",
+    "line": 22,
+    "text": "            if placement.get('equipment') != 'pi4':"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/equipment_tray.scad",
+    "line": 2,
+    "text": "// Faceplate derived from the Pi4 baseline; rack holes follow the four-corner layout of the user-supplied"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/equipment_tray.scad",
+    "line": 53,
+    "text": "slot_clear=0.3; boss_d=9; m3_clear=3.4; joint_pilot=4.0;  // 4.0 = the printed, well-fitting Pi4 trial"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/pi_reference_manifest.json",
+    "line": 8,
+    "text": "  \"package\": \"Pi4_fit_REFERENCE_ONLY.3mf\","
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_rack_workspace.py",
+    "line": 23,
+    "text": "            'slots': 5, 'placements': [{'id': 'p', 'equipment': 'pi4', 'slot': 2, 'span': 2,"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_rack_workspace.py",
+    "line": 24,
+    "text": "                'geometry': 'pi4-clearance-v2-reference', 'assembly': record}],"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/test_rack_workspace.py",
+    "line": 65,
+    "text": "            'slots': 1, 'placements': [{'id': 'p', 'equipment': 'pi4', 'slot': 1, 'span': 1}]}]}"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/js-tests/run.js",
+    "line": 422,
+    "text": "    assert.doesNotMatch(source,/pi ?_?4|raspberry/i,name);"
+  },
+  {
+    "file": "outputs/Mechanical_Design_App/js-tests/run.js",
+    "line": 423,
+    "text": "    assert.doesNotMatch(source,/equipment:[\"']pi4[\"']/i,name);"
+  }
+]
