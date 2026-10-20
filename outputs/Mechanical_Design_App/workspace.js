@@ -477,7 +477,7 @@
       if(trayNotRendered(p))box.append(paragraph(TRAY_NOT_RENDERED));
       box.append(paragraph(r.note));host.append(box);
     }
-    appendCableSuggestions(host,rack);appendWiringSheet(host,rack);}
+    appendCableSuggestions(host,rack);appendWiringSheet(host,rack);appendPartsOrder(host,rack);}
   function render(){const rack=active();byId('rackChoice').replaceChildren();if(!documentState.racks.length)byId('rackChoice').append(new Option('No rack layout yet',''));for(const r of documentState.racks)byId('rackChoice').append(new Option(r.name,r.id));byId('rackChoice').value=activeId||'';byId('projectTitle').textContent=rack?.name||'Your rack workspace';byId('layoutSaveStatus').textContent=layoutDirty?'Layout changes · unsaved':rack?'Layout saved locally':'No rack selected';updateSaveStatus();byId('rackDimensions').textContent=rack?rack.slots+'U rack · '+(rack.width_mm??208)+' × '+(rack.depth_mm??240)+' mm':'No rack yet';byId('rackScale').textContent='Supplied rack meshes · visual placement';renderTree();renderProperties();renderReview();setStage(stage);}
   function openRackDialog(edit){
     if(!leaveAssembly())return;
@@ -1145,8 +1145,34 @@
     }catch(e){tab?.close();notify(e.message,true);}
   }
   // Keeps the card's "Save first" state in step with the draft (called from updateSaveStatus).
-  function refreshSheetState(){const box=byId('wiringSheet');if(!box)return;const unsaved=sheetUnsaved();box.querySelector('.sheet-save-first').hidden=!unsaved;
-    for(const b of box.querySelectorAll('button[data-sheet]'))b.textContent=unsaved?'Save first':b.dataset.label;}
+  function refreshSheetState(){const unsaved=sheetUnsaved();
+    for(const box of [byId('wiringSheet'),byId('partsOrder')]){if(!box)continue;box.querySelector('.sheet-save-first').hidden=!unsaved;
+      for(const b of box.querySelectorAll('button[data-sheet]'))b.textContent=unsaved?'Save first':b.dataset.label;}}
+  // Parts order (cable inventory; PROPOSED defaults in work/cable-management/Parts_Order_Decisions.md): made from the
+  // SAVED rack like the wiring sheet. A shopping list only: no prices, links or purchases; lengths are estimates.
+  async function runPartsOrder(kind,box){
+    try{
+      const I=window.LabRaxCableInventory,{rack,savedAt,base}=await savedRackForSheet(),ctx=sheetCtx();
+      if(kind==='csv'){downloadText(I.csv(rack,ctx,{savedAt}),base+'-parts-order.csv','text/csv;charset=utf-8');notify('Parts order CSV downloaded, made from the saved rack. Lengths are planning estimates.');return;}
+      const rows=I.items(rack,ctx),out=box.querySelector('.parts-table');out.replaceChildren();
+      if(!rows.length){out.append(paragraph('Nothing to order yet: no cables, keystones or guides in the saved rack.','muted'));return;}
+      const t=document.createElement('table');t.className='parts-order';const hr=t.insertRow();for(const h of ['Item','Qty','Buy or print','Cables','Notes']){const th=document.createElement('th');th.textContent=h;hr.append(th);}
+      for(const r of rows){const tr=t.insertRow();for(const v of [r.item,r.quantity,r.source,r.cables.join(' '),r.notes.join('; ')])tr.insertCell().textContent=String(v);}
+      out.append(t,paragraph('Made from '+savedAt+'.','muted'));
+    }catch(e){notify(e.message,true);}
+  }
+  function appendPartsOrder(host,rack){
+    if(stage!=='review')return;
+    const box=document.createElement('div');box.className='cable-suggestions wiring-sheet';box.id='partsOrder';const head=document.createElement('h3');head.textContent='Parts order';box.append(head);host.append(box);
+    if(!window.LabRaxCableInventory||!window.LabRaxCableSheetView){box.append(paragraph('The parts order is not available in this build yet.','notice'));return;}
+    box.append(paragraph('Cables by type and stock length, keystone jacks and cable guides to print, made from the saved rack. '+LabRaxCableInventory.LIMITS,'muted'));
+    box.append(paragraph('Save first: the parts order is made from the saved rack only, so unsaved changes would be missing.','notice sheet-save-first'));
+    const acts=document.createElement('div');acts.className='suggestion-actions';
+    const act=(label,kind,cls)=>{const b=button(label,()=>runPartsOrder(kind,box),cls);b.dataset.sheet=kind;b.dataset.label=label;return b;};
+    const out=document.createElement('div');out.className='parts-table';
+    acts.append(act('Show parts list','show','primary'),act('Parts order (CSV)','csv','secondary'));box.append(acts,out);
+    refreshSheetState();
+  }
   window.labRaxSheetState=refreshSheetState;
   function appendWiringSheet(host,rack){
     if(stage!=='review')return;

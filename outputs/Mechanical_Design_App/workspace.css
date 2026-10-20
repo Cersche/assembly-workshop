@@ -89,3 +89,4 @@ canvas.placing-port{cursor:crosshair}
 .cable-often input{flex:0 0 auto}#undoApply{margin-left:8px}
 
 .sheet-options{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;margin:6px 0}.sheet-options .port-field{margin:0}.sheet-tick{display:flex;gap:6px;align-items:center;cursor:pointer}.sheet-tick input{flex:0 0 auto;width:auto;margin:0}.sheet-tick{white-space:nowrap;padding-bottom:8px}.wiring-sheet .sheet-save-first[hidden]{display:none}
+.parts-order{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}.parts-order th,.parts-order td{text-align:left;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}.parts-order td:nth-child(2){text-align:right}

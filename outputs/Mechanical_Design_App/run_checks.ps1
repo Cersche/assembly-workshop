@@ -41,6 +41,9 @@ if ($node) {
     Write-Host '== JavaScript cable sheet (js-tests/cable-sheet.js) =='
     & $node --test-reporter=spec (Join-Path $app 'js-tests\cable-sheet.js')
     if ($LASTEXITCODE) { $failed = $true }
+    Write-Host '== JavaScript cable inventory (js-tests/cable-inventory.js) =='
+    & $node --test-reporter=spec (Join-Path $app 'js-tests\cable-inventory.js')
+    if ($LASTEXITCODE) { $failed = $true }
     Write-Host '== JavaScript wiring sheet drawing (js-tests/cable-sheet-view.js) =='
     & $node --test-reporter=spec (Join-Path $app 'js-tests\cable-sheet-view.js')
     if ($LASTEXITCODE) { $failed = $true }

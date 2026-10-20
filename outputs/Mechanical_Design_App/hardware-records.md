@@ -12,6 +12,12 @@ Imports are explicit and atomic. Preserve immutable old revisions and saved pins
 
 ## Screw and insert fields
 
+The equipment wizard records **Device → Holes → Ports**. Per-slot tray choices are made in **Place on tray**, opened when placing a library item or from the slot's button. Apply changes the draft; explicit Save stores only differences from the library item in `placement.tray`. Library equipment facts and immutable hardware pins remain separate. Cable ports and clearance screening use the slot settings; the rack still shows the library mesh with a **Placement not rendered yet** note when settings differ.
+
+Preview quality **Low / Medium / High** is a per-viewer browser preference only. Generic `equipment_tray.scad` STL export quality **Draft / Standard / Fine** uses `$fn` **24 / 48 / 96** (`equipment.EXPORT_QUALITY`). Quality changes curve detail, not hardware verification; fit and strength stay UNKNOWN at every level.
+
+The cable planner supports ports, guides, cables/exits, suggestions and saved-rack wiring sheets. It does not change hardware records or STL geometry. Lengths are planning estimates; jack type, guide capacity and cable fit/strength stay UNKNOWN. The Lab Rax Cable Guide is a local preview only, never redistributed or included in PRINT THE RACK. It does not establish a supported manufactured part.
+
 Screw rule fields: `length`, `length_convention` (supported reach uses `under_head`), `threaded_length`. Inspection fields include `head_diameter`, `head_height`, `drive`, `material` and `finish`. A countersunk overall length does not become a supported under-head reach measurement automatically.
 
 Insert rule fields: `length`, `outside_diameter`, `hole_diameter`, `hole_profile`, `usable_depth`, `min_wall`, `end_type` (`open` or `closed`). `hole_diameter` and `min_wall` must refer to documented installation recommendations, not be inferred from nominal thread diameter. Straight-hole comparisons do not establish support for tapered or stepped geometry.
@@ -35,5 +41,7 @@ Optional packs use the explicit JSON importer and local SHA-256 validation; they
 `catalog_evidence.inspect(part)` audits source/missing fields offline without promoting verification. Comparisons include installation segments, `manufacturer_installation_evidence`, `source_document`, `field_sources`, `unknown_fields` and `rights`. Offline support covers metadata; link-only drawings/CAD are not bundled. Source disagreement remains distinct from project source policy. Conditional manufacturer wall guidance is not generic FDM wall guidance.
 
 ## Validation limits
+
+Verified 2026-10-19 with `powershell -NoProfile -ExecutionPolicy Bypass -File outputs\Mechanical_Design_App\run_checks.ps1`: **95 Python + 152 JS tests passed** on temporary data, with no server or OpenSCAD build. These software checks do not establish physical approval.
 
 Failed checks block affected proposed exports; UNKNOWNs stay visible. Digital screening, mesh closure and supplier metadata do not certify installation, retention, loads, service access, usable thread depth, printed fit or strength. Four rack holes per faceplate U and the 2.5 mm radius limit are settled design direction, not physical approval. The earlier positive specimen report covers only the old two-hole, 3 mm, square-corner specimen. New parts and the Pi4 Print in color result remain unvalidated; physical work requires Brian's direction. STL delivery does not require printer/slicer integration.

@@ -18,6 +18,12 @@ One explicit atomic Save persists the draft. Draft edits, checks and exports do 
 
 ## Supported manufacturing paths
 
+The equipment wizard is **Device → Holes → Ports**: record equipment size/model, mounting holes and ports. Tray choices live in **Place on tray**, which opens when placing a library item in a slot or from that slot's button. Choose position, rotation, mounting, standoff, faceplate height, keystones, joint and rear support there. Apply changes only the draft; explicit Save persists `placement.tray`, containing only values that differ from the library item.
+
+Cable ports and clearance screening use each slot's tray settings. The rack view still shows the library mesh and displays **Placement not rendered yet** when slot settings differ. Use Place on tray's exact preview to inspect that placement; the rack preview does not confirm fit.
+
+Preview quality **Low / Medium / High** is a per-viewer browser preference only. Export quality **Draft / Standard / Fine** sets OpenSCAD `$fn` to **24 / 48 / 96** for `equipment_tray.scad` STLs (`equipment.EXPORT_QUALITY`). It changes curve detail; fit and strength remain UNKNOWN at every level.
+
 - Raspberry Pi 4 tray and faceplate retain their M3 x 0.5 adapter limits and immutable mechanical baseline. The insert-pilot parameter is supported within 3–4.2 mm; catalog breadth does not add geometry support.
 - The equipment wizard accepts dimensions, STL, SCAD and STEP (local FreeCAD), using `equipment_tray.scad` as a second adapter. Generic trays and faceplates support 1U–5U. Snap tabs, clips, pegs, straps, keystones, single-piece joints, rear support and multi-U spacing remain unprinted.
 - PRINT THE RACK (`/api/rack-stl`) is in scope. Each 1U support extension occupies its own U between posts; post U plus extension U equals rack height. Joints are movable. Creator meshes stay local under the documented BY-NC-SA/personal-use direction and are never redistributed.
@@ -33,9 +39,9 @@ The opt-in Pi4 **Print in color** path (`faceplate_color.py`, `/api/faceplate-co
 
 ## Cabling planner
 
-Rear view, Cables see-through mode and saved cable-guide placement are implemented. Port planning includes the Pi4 preset, wizard Ports step, markers, selection and mesh-click placement. The Pi4 preset's face is UNKNOWN; its solid faceplate does not imply connector openings. Ports are planning data, not STL changes. Cable routing, suggestions and the wiring sheet are not built. Lengths are planning estimates; guide/cable fit, capacity and strength remain UNKNOWN.
+Rear view, Cables see-through mode and saved cable-guide placement are implemented. Port planning includes the Pi4 preset, wizard Ports step, markers, selection and mesh-click placement. The Pi4 preset's face is UNKNOWN; its solid faceplate does not imply connector openings. Ports are planning data, not STL changes. Cables connect ports or outside endpoints through automatic or manual routes and exits. Review offers routing suggestions and a saved-rack wiring sheet, cable schedule CSV and wrap labels. Suggestions are advice only; Apply changes the draft. Lengths are planning estimates; guide/cable fit, capacity and strength remain UNKNOWN.
 
-The Lab Rax Cable Guide by mklements (MakerWorld Exclusive License) is local preview only: never redistributed or included in PRINT THE RACK. See [cabling reports](../../work/cable-management/Step2_Report.md).
+The Lab Rax Cable Guide by mklements (MakerWorld Exclusive License) is local preview only: never redistributed or included in PRINT THE RACK. See the [ports](../../work/cable-management/Step2_Report.md), [routes](../../work/cable-management/Step3_Report.md), [suggestions](../../work/cable-management/Step4_Report.md) and [wiring sheet](../../work/cable-management/Step5_Report.md) reports.
 
 ## Hardware library and checks
 
@@ -53,7 +59,7 @@ Mesh checks cover finite coordinates, nondegenerate unique triangles, two incide
 
 ## Verification and remaining UNKNOWNs
 
-Run `powershell -NoProfile -ExecutionPolicy Bypass -File outputs\Mechanical_Design_App\run_checks.ps1` from the project root. It starts no server and runs no OpenSCAD build; tests use temporary data. Current checks: 52 Python + 47 JS, including page-level Save and viewer startup. See the [baseline report](../../work/codex-tasks/01-run-checks-baseline-REPORT.md) for the earlier run and the [page-logic report](../../work/codex-tasks/03-page-logic-tests-REPORT.md) for the expanded suite. ExecutionPolicy Bypass applies only to this process and changes no persistent system setting. Test results do not establish physical approval.
+Run `powershell -NoProfile -ExecutionPolicy Bypass -File outputs\Mechanical_Design_App\run_checks.ps1` from the project root. It starts no server and runs no OpenSCAD build; tests use temporary data. Verified 2026-10-19: **95 Python + 152 JS tests passed**, including page-level Save, viewer startup, tray placement and cable inventory. See the [baseline report](../../work/codex-tasks/01-run-checks-baseline-REPORT.md) for the earlier run and the [page-logic report](../../work/codex-tasks/03-page-logic-tests-REPORT.md) for the expanded suite. ExecutionPolicy Bypass applies only to this process and changes no persistent system setting. Test results do not establish physical approval.
 
 Brian confirmed qualitative fit only for the earlier two-hole, 3 mm, square-corner Clearance v2 specimen. That evidence does not transfer to the four-hole 4 mm plate, wizard parts, rack-frame exports or Print in color result. Physical testing is deferred until Brian directs it. Strength, retention, installation, usable depth, unsupported dimensions, generic FDM wall/process/load guidance, whole-solid containment, tool/insertion paths and service/cable access remain UNKNOWN where not established. No printer details are needed to continue software work.
 

@@ -725,7 +725,7 @@ def make_handler(store, token):
             if self.path == '/api/catalog-packs':
                 return self.send(catalog_packs.inventory())
 
-            if self.path in ('/catalog.js', '/clearance.js', '/cable-ports.js', '/cable-routes.js', '/cable-view.js', '/cable-suggest.js', '/cable-sheet.js', '/cable-sheet-view.js'):
+            if self.path in ('/catalog.js', '/clearance.js', '/cable-ports.js', '/cable-routes.js', '/cable-view.js', '/cable-suggest.js', '/cable-sheet.js', '/cable-sheet-view.js', '/cable-inventory.js'):
                 return self.send((ROOT / self.path[1:]).read_text(encoding='utf-8'), mime='text/javascript')
 
             if self.path == '/api/project':
