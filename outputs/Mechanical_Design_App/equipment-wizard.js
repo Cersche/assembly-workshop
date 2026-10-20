@@ -181,9 +181,10 @@
       const file=h('input',{type:'file',accept:'.stl,.scad,.step,.stp'});
       file.onchange=async()=>{const f=file.files[0];if(!f)return;
         try{let buf;
-          if(/\.(scad|step|stp)$/i.test(f.name)){const step=!/\.scad$/i.test(f.name);importMsg='Rendering '+f.name+(step?' with FreeCAD':' with OpenSCAD')+'… this can take a minute.';render();
+          if(/\.(scad|step|stp)$/i.test(f.name)){const step=!/\.scad$/i.test(f.name);
+            if(f.size>60e6)throw Error(`${f.name} is ${Math.round(f.size/1e6)} MB; models must be 60 MB or smaller.`);importMsg='Rendering '+f.name+(step?' with FreeCAD':' with OpenSCAD')+'… this can take a minute.';render();
             const r=await fetch(step?'/api/step-to-stl':'/api/scad-to-stl',{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify({source:await f.text()})});
-            if(!r.ok)throw Error((await r.json()).error||'SCAD render failed');buf=await r.arrayBuffer();}
+            if(!r.ok)throw Error((await r.json().catch(()=>({}))).error||(step?'STEP conversion failed':'SCAD render failed'));buf=await r.arrayBuffer();}
           else buf=await f.arrayBuffer();
           imported={name:f.name,tris:parseStlBuffer(buf)};orient=0;turn=0;if(!spec.name)spec.name=f.name.replace(/\.(stl|scad|step|stp)$/i,'');applyImport();}
         catch(e){importMsg='Could not read that file: '+e.message;}render();};

@@ -522,6 +522,15 @@ class WorkshopHTTPServer(ThreadingHTTPServer):
     request_queue_size = 64
 
 
+# Model uploads carry whole STEP/SCAD files (STEP is capped at 60 MB of text);
+# JSON escaping of line endings can nearly double that, so allow 130 MB there.
+MODEL_UPLOAD_PATHS = ('/api/step-to-stl', '/api/scad-to-stl')
+
+
+def body_limit(path):
+    return 130_000_000 if path in MODEL_UPLOAD_PATHS else 2_000_000
+
+
 def make_handler(store, token):
 
     class Handler(BaseHTTPRequestHandler):
@@ -694,9 +703,11 @@ def make_handler(store, token):
 
                 length = int(self.headers.get('Content-Length', '0'))
 
-                if not 0 < length <= 2_000_000:
+                limit = body_limit(self.path)
 
-                    raise ValueError('Request size must be between 1 byte and 2 MB.')
+                if not 0 < length <= limit:
+
+                    raise ValueError(f'Request size must be between 1 byte and {limit // 1_000_000} MB.')
 
                 payload = json.loads(self.rfile.read(length))
 

@@ -7,7 +7,7 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 from http.server import ThreadingHTTPServer
 from faceplate_mounting import apply_default
-from app import Store, evaluate, make_handler, validate_part, joint_geometry, ROOT
+from app import Store, evaluate, make_handler, validate_part, joint_geometry, ROOT, body_limit
 
 
 def screw(**changes):
@@ -41,6 +41,11 @@ class Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.store.import_parts([insert(id='new'), screw(length=9)])
         self.assertNotIn('new', [p['id'] for p in self.store.parts()])
+
+    def test_model_uploads_get_a_larger_request_limit(self):
+        self.assertGreaterEqual(body_limit('/api/step-to-stl'), 120_000_000)
+        self.assertGreaterEqual(body_limit('/api/scad-to-stl'), 120_000_000)
+        self.assertEqual(body_limit('/api/studio-save'), 2_000_000)
 
     def test_invalid_dimensions(self):
         for value in [None, True, float('nan'), float('inf'), -1, 0, '3']:
