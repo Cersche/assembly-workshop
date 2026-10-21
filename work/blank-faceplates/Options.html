@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Blank Faceplate Options</title>
+<style>:root{--bg:#1b1e23;--card:#262a31;--fg:#e6e6e6;--mut:#9aa3ad;--acc:#4e75a3}body{background:var(--bg);color:var(--fg);font:15px/1.5 system-ui;margin:0;padding:16px;max-width:900px}
+.card{background:var(--card);border-radius:8px;padding:14px 16px;margin:12px 0}h2{margin:.2em 0}.mut{color:var(--mut)}
+.plate{background:var(--acc);border-radius:3px;height:44px;position:relative;margin:10px 0;max-width:504px}.plate.u2{height:88px}
+.hole{position:absolute;width:10px;height:5px;background:var(--bg);border-radius:3px}.ks{position:absolute;top:13px;width:15px;height:17px;background:#111;border:2px solid #555}</style></head><body>
+<h1>Blank faceplates — options</h1>
+<p class="mut">A plate in a slot with nothing behind it. 44.4 mm per U, 252 wide, 4 thick, 2.5 mm corners, four-corner slots. Fit and strength stay UNKNOWN.</p>
+<div class="plate"><span class="hole" style="left:6px;top:6px"></span><span class="hole" style="left:6px;bottom:6px"></span><span class="hole" style="right:6px;top:6px"></span><span class="hole" style="right:6px;bottom:6px"></span><span class="ks" style="left:180px"></span><span class="ks" style="left:220px"></span><span class="ks" style="left:260px"></span><span class="ks" style="left:300px"></span></div>
+<p class="mut">1U blank with four keystones (sketch, not to scale).</p>
+
+<div class="card"><h2>A. "Blank plate" slot choice (recommended)</h2>
+<p>When you pick a slot you get a new choice next to "Create assembly": <b>Blank plate</b>. You set height (1U, 2U, 3U…), then go straight to the same Setup / Hardware / Appearance tabs. No device, no tray, no wizard steps. Keystones use the new keystone picker on the plate face.</p>
+<p class="mut">Behind the scenes it reuses the wizard's faceplate-only part (<code>equipment_tray.scad</code> already has <code>part="faceplate"</code>), so the plate is the same proven shape as every other faceplate. Smallest change, fastest to use.</p></div>
+
+<div class="card"><h2>B. "Blank plate" library item</h2>
+<p>A saved item in the Equipment library ("Blank 1U", "Blank 2U", "Patch 1U · 6 keystones"). You drop it in a slot like any equipment, and can save your own patch-panel layouts to reuse.</p>
+<p class="mut">Good if you'll repeat the same patch panel in many racks. Needs a "no device" kind of library item, a bit more work.</p></div>
+
+<div class="card"><h2>C. Both</h2>
+<p>A's quick slot choice, plus "Save to library" to reuse a layout later. Build A first, add the library part when you want it.</p></div>
+
+<div class="card"><h2>Same for every option</h2>
+<ul><li><b>Height:</b> 1U and up, holes on every U like now.</li>
+<li><b>Rear support:</b> none needed — nothing hangs off it. Keystone jacks + cables are light; the plate is held by its four corners per U. (Strength still UNKNOWN.)</li>
+<li><b>Keystones:</b> same keystone picker the keystone-picker session is building, same golden keystone. Labels too, once keystone-labels lands.</li>
+<li><b>Paint and images:</b> color presets / custom color / image fit work in the preview like other faceplates.</li>
+<li><b>Export:</b> one STL — the plate.</li></ul></div>
+
+<div class="card"><h2>Question on artwork</h2>
+<p>Today colors and images are <b>preview only</b>. "Print in color" (image → one STL per filament) only works on the old Pi 4 plate. Making it work on blank plates is a scope extension that needs your OK.</p>
+<p><b>1.</b> Preview-only for now &nbsp; <b>2.</b> Yes, extend Print in color to blank plates (would be PROPOSED — UNVALIDATED)</p></div>
+</body></html>

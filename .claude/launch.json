@@ -240,6 +240,20 @@
       "autoPort": false
     },
     {
+      "name": "disposable-portslist-8811",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8811",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\d547d061-2303-4cb5-adac-a097054e7383\\scratchpad\\data"
+      ],
+      "port": 8811,
+      "autoPort": false
+    },
+    {
       "name": "beta-8799",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [

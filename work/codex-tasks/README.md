@@ -51,3 +51,4 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [32-protrusion-detection](32-protrusion-detection.md) | done, reviewed by Claude (155 Py + 204 JS pass; real SG108 STEP: plug found, 3 questions, size from case, keep-clear zone cuts the rear bracket; Claude fixed an over-cut on Slots/Vents) |
 | [33-front-position-and-bezel](33-front-position-and-bezel.md) | done, reviewed by Claude (exact renders closed; chamfer 45°, rounded 8-step, 2 mm webs held; keystones/slots untouched; defaults byte-identical) |
 | [34-protrusion-polish](34-protrusion-polish.md) | done, reviewed by Claude (159 Py + 210 JS pass; real SG108 STEP: 1 back question, warning says 2.1 mm band vs 5 mm; front-gap messages merged to one; no geometry change) |
+| [35-webgl-small-viewers](35-webgl-small-viewers.md) | open: WebGL for the wizard / Place on tray preview, 2D painter kept as fallback, 16 ms budget |

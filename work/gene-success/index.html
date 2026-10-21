@@ -1,0 +1,29 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Lick It Saved</title>
+<style>
+body{font-family:system-ui;background:#111;color:#eee;display:grid;place-items:center;height:100vh;margin:0}
+button{font-size:1.2rem;padding:.8em 1.6em;margin:.4em;border:0;border-radius:8px;background:#e11;color:#fff;cursor:pointer}
+#toast{position:fixed;right:24px;bottom:-400px;display:flex;align-items:center;gap:12px;background:#000;border:2px solid #e11;border-radius:12px;padding:10px 16px;transition:bottom .35s cubic-bezier(.3,1.6,.5,1)}
+#toast.show{bottom:24px}
+#toast img{width:90px;border-radius:6px}
+#toast b{font-size:1.3rem}
+#full{position:fixed;inset:0;background:#000 url(gene.png) center/contain no-repeat;opacity:0;pointer-events:none;transition:opacity .2s}
+#full.show{opacity:1;animation:zoom .9s ease-out}
+@keyframes zoom{from{transform:scale(1.4) rotate(-3deg)}to{transform:scale(1)}}
+</style></head><body>
+<div>
+  <button onclick="geneSuccess('Saved.')">Save</button>
+  <button onclick="geneSuccess('Big win.', true)">Big win</button>
+</div>
+<div id="toast"><img src="gene.png" alt=""><b id="msg"></b></div>
+<div id="full"></div>
+<script>
+// Drop-in: call geneSuccess(message, big) from any success path.
+function geneSuccess(text = 'Success.', big = false) {
+  const el = document.getElementById(big ? 'full' : 'toast');
+  document.getElementById('msg').textContent = text;
+  el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), big ? 1100 : 2200);
+}
+</script>
+</body></html>
