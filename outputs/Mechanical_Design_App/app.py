@@ -646,7 +646,7 @@ def make_handler(store, token):
                 identity, _, part = self.path[len('/api/equipment-mesh/'):-4].partition('/')
                 return self.send(equipment.mesh_file(Path(store.path).parent, identity, part), mime='model/stl')
 
-            if self.path in ('/rack-studio.js', '/assembly-studio.js', '/workspace.js', '/workspace.css', '/rack-reference.js', '/equipment-wizard.js', '/tray-placement.js', '/render-quality.js', '/viewer-controls.js'):
+            if self.path in ('/rack-studio.js', '/assembly-studio.js', '/workspace.js', '/workspace.css', '/rack-reference.js', '/equipment-wizard.js', '/tray-placement.js', '/tray-pair.js', '/render-quality.js', '/viewer-controls.js'):
                 name = self.path[1:]
                 return self.send((ROOT / name).read_text(encoding='utf-8'),
                                  mime='text/javascript' if name.endswith('.js') else 'text/css')
@@ -766,7 +766,7 @@ def make_handler(store, token):
                 if self.path == '/api/equipment-library-delete':
                     data_dir = Path(store.path).parent
                     document = rack_workspace.read(data_dir, seed_project=store.project())
-                    in_use = {p['equipment'] for r in document['racks'] for p in r['placements']}
+                    in_use = {e for r in document['racks'] for p in r['placements'] for e in (p['equipment'], p.get('second', {}).get('equipment'))}
                     return self.send(equipment.delete_item(payload.get('id'), data_dir, in_use))
 
                 if self.path == '/api/equipment-preview':

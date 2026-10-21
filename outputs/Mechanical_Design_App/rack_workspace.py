@@ -129,6 +129,16 @@ def validate(value, seed_project=None):
                 tray = equipment_model.placement_settings(item.get('tray'))
                 if tray:
                     result['placements'][-1]['tray'] = tray
+            # Optional second device on the same tray (Brian, 2026-10-20): its own library item and position keys.
+            second = item.get('second')
+            if second is not None:
+                if not isinstance(second, dict) or not (isinstance(second.get('equipment'), str) and re.fullmatch('eq-[0-9a-f]{12}', second['equipment'])):
+                    raise ValueError('Unknown equipment type for the second device in a slot.')
+                entry = {'equipment': second['equipment']}
+                tray = equipment_model.second_settings(second.get('tray'))
+                if tray:
+                    entry['tray'] = tray
+                result['placements'][-1]['second'] = entry
         # Ports refer to placements by id, so cabling is checked after them.
         cabling = _cabling(rack.get('cabling'), slots, {p['id']: p['span'] for p in result['placements']})
         if cabling is not None:

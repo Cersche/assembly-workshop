@@ -21,9 +21,13 @@
     const tray=placement.tray||{},s={...item.spec,...tray},checks=[];
     const turned=+s.dev_rot===90||+s.dev_rot===270,fpW=turned?+s.dev_d:+s.dev_w,fpD=turned?+s.dev_w:+s.dev_d;
     const lift=FLOOR+(s.device_mount==='straps'?0:(+s.standoff||0));
-    checks.push(grade('height',`Height in ${placement.span}U`,lift+(+s.dev_h),placement.span*(rack.pitch_mm||PITCH)));
-    checks.push(grade('width','Tray width vs internal width',fpW+TRAY_SIDES+2*Math.abs(+s.dev_off_x||0),rack.width_mm));
-    const depth=FACE_OFFSET+(+s.dev_off_y||0)+fpD;
+    // Two devices on one tray (Brian, 2026-10-20): the taller and deeper device and the shared tray width count.
+    const it2=placement.second&&(root.equipmentLibraryItems?.()||[]).find(i=>i.id===placement.second.equipment),s2=it2?{...s,...it2.spec,...(placement.second.tray||{})}:null;
+    const turned2=s2&&(+s2.dev_rot===90||+s2.dev_rot===270),lift2=s2?FLOOR+(s2.device_mount==='straps'?0:(+s2.standoff||0)):0;
+    const Pr=root.TrayPair,Tp=root.TrayPlacement,pairW=s2&&Pr&&Tp?Pr.layout(item.spec,Tp.values(item.spec,tray),it2.spec,Pr.values(it2.spec,placement.second.tray)).tray_w:null;
+    checks.push(grade('height',`Height in ${placement.span}U`,Math.max(lift+(+s.dev_h),s2?lift2+(+s2.dev_h):0),placement.span*(rack.pitch_mm||PITCH)));
+    checks.push(grade('width','Tray width vs internal width',pairW??fpW+TRAY_SIDES+2*Math.abs(+s.dev_off_x||0),rack.width_mm));
+    const depth=Math.max(FACE_OFFSET+(+s.dev_off_y||0)+fpD,s2?FACE_OFFSET+(+s2.dev_off_y||0)+(turned2?+s2.dev_w:+s2.dev_d):0);
     const depthCheck=grade('depth',s.rear_support?'Rear-support tray depth vs usable depth':'Depth behind faceplate vs usable depth',s.rear_support?Math.max(depth,REAR_TRAY):depth,rack.depth_mm);
     // Brian, 2026-10-19: a rear-support tray reaches the back posts on purpose, so a depth equal to the rack depth is
     // OK (by design), not TIGHT. A device that pushes the tray past the rack depth is still graded normally.

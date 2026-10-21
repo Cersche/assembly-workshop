@@ -53,8 +53,16 @@
     }
     return out.filter(p=>[p.x,p.y,p.z].every(Number.isFinite));
   }
-  function basePorts(placement,item){
-    return item?wizardPorts(item.spec,placement?.tray).map(p=>({...p,source:'wizard',note:p.type==='keystone'?'Keystone pass-through from the wizard. Rear marker sits on the plate rear face; the jack body depth is UNKNOWN.':p.face==='front'?'Faceplate opening from the wizard Ports step.':(placement?.tray?'Rear port from the wizard Ports step (no opening), moved with this slot’s tray placement.':'Rear port from the wizard Ports step (no opening). Position as entered.')})):null;
+  // Two devices on one tray (Brian, 2026-10-20): the second device's ports join the slot's list with a "d2-" id and its
+  // name on the label; keystones belong to the shared faceplate and come from the first device only.
+  function secondPorts(placement,library){
+    const s=placement?.second,it=s&&(library||root.equipmentLibraryItems?.()||[]).find(i=>i.id===s.equipment);if(!it)return [];
+    const shared={};for(const k of ['u','joint','rear_support'])if(placement.tray&&k in placement.tray)shared[k]=placement.tray[k];
+    const name=it.display_name||it.name||'Device 2';
+    return wizardPorts({...it.spec,keystones:[]},{...shared,...(s.tray||{}),keystones:[]}).map(p=>({...p,id:'d2-'+p.id,label:name+' · '+p.label,device:2}));
+  }
+  function basePorts(placement,item,library){
+    return item?[...wizardPorts(item.spec,placement?.tray),...secondPorts(placement,library)].map(p=>({...p,source:'wizard',note:p.type==='keystone'?'Keystone pass-through from the wizard. Rear marker sits on the plate rear face; the jack body depth is UNKNOWN.':p.face==='front'?'Faceplate opening from the wizard Ports step.':(placement?.tray?'Rear port from the wizard Ports step (no opening), moved with this slot’s tray placement.':'Rear port from the wizard Ports step (no opening). Position as entered.')})):null;
   }
   // All equipment uses the allocation bottom as its rack-view base.
   function baseZ(rack,placement){return (rack.slots-(placement.slot+placement.span-1))*PITCH;}

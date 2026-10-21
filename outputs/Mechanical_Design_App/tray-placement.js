@@ -208,11 +208,12 @@
   // Rack view sketch of one slot's effective tray (equipment-wizard.js draws it when no exact render exists):
   // flat triangle lists in equipment_tray.scad coordinates, the same frame as the rendered STLs.
   // Openings are dark blocks where the SCAD cuts keystones (ks_w x ks_h = 14.8 x 16.6, centred) and ports.
-  function rackSketch(spec,tray){
-    const v=values(spec,tray),L=layout(spec,v),sets=schematic(spec,v),out={faceplate:sets[0].v,tray:sets[1].v};
+  function rackSketch(spec,tray,second){
+    const v=values(spec,tray),Pr=second&&root.TrayPair,v2=Pr?Pr.values(second.spec,second.tray):null,L=Pr?Pr.layout(spec,v,second.spec,v2):layout(spec,v),
+      sets=Pr?Pr.schematic(spec,v,second.spec,v2):schematic(spec,v),out={faceplate:sets[0].v,tray:sets[1].v};
     const holes=[];
     for(const x of v.keystones||[])if(fin(+x))holes.push(...box(x-7.4,-PLATE_T-0.2,v.u*PITCH/2-8.3,x+7.4,0.2,v.u*PITCH/2+8.3));
-    for(const p of PO().sleevePorts(openings(spec,v).ports,{...spec,...v}).ports){const o=[+p.x,+p.z,+p.w,+p.h];if(o.every(fin))holes.push(...box(o[0]-o[2]/2,-PLATE_T-0.2,o[1]-o[3]/2,o[0]+o[2]/2,0.2,o[1]+o[3]/2));}
+    for(const p of [...PO().sleevePorts(openings(spec,v).ports,{...spec,...v}).ports,...(Pr?Pr.ports2(second.spec,Pr.merged(v,v2)):[])]){const o=[+p.x,+p.z,+p.w,+p.h];if(o.every(fin))holes.push(...box(o[0]-o[2]/2,-PLATE_T-0.2,o[1]-o[3]/2,o[0]+o[2]/2,0.2,o[1]+o[3]/2));}
     if(holes.length)out.openings=holes;
     if(v.rear_support)out.rear_bracket=box(-PLATE_HALF,RACK_DEPTH,PO().plateBottom,PLATE_HALF,RACK_DEPTH+PLATE_T,PO().plateBottom+L.plate_h); // to_rear(): plate mirrored about mid-depth
     return out;
@@ -227,9 +228,14 @@
   const NS='http://www.w3.org/2000/svg';
   // index.html declares the session token as a top-level const (not a window property).
   const appToken=()=>typeof token!=='undefined'?token:'';
-  let state=null; // {placement id, rack id, item, v (working values), prevU, exact (rendered meshes for this json)}
+  let state=null; // {placement id, rack id, item, v (working values), prevU, exact (rendered meshes for this json), second: null | {item, v}, tab: 1 | 2}
   const view={yaw:2.5,pitch:0.5,zoom:1.6,sets:[],quality:'placement'}; // seen from behind and above, so the faceplate does not hide the device
-  function current(){return state&&problems(state.item.spec,state.v);}
+  // Two devices (tray-pair.js, Brian 2026-10-20): the first device's own joint placement is replaced by the shared one.
+  function current(){if(!state)return null;const own=problems(state.item.spec,state.v);if(!state.second)return own;
+    return [...new Set([...own.filter(t=>!/screw joints? cannot be placed/.test(t)),...TrayPair.problems(state.item.spec,state.v,state.second.item.spec,state.second.v)])];}
+  const pairLayout=()=>state.second?TrayPair.layout(state.item.spec,state.v,state.second.item.spec,state.second.v):layout(state.item.spec,state.v);
+  // The device whose position and mounting the window is editing (tab), as spec + full values.
+  function editing(){return state.tab===2&&state.second?{spec:state.second.item.spec,v:state.second.v,full:TrayPair.merged(state.v,state.second.v)}:{spec:state.item.spec,v:state.v,full:state.v};}
   function field(label,get,set,attrs={}){
     const input=h('input',{type:'number',step:'1',value:String(get()),...attrs});
     input.oninput=()=>{if(input.value==='')return;set(Number(input.value));update();};
@@ -240,8 +246,8 @@
     return h('div',{class:'ew-choices'},...Object.entries(options).map(([k,t])=>{const b=h('button',{type:'button',class:'ew-chip'+(value===k?' on':''),'aria-pressed':String(value===k)},t);b.onclick=()=>{pick(k);render();};return b;}));
   }
   function topView(){
-    const svg=document.getElementById('tpTop');if(!svg)return;const spec=state.item.spec,v=state.v,L=layout(spec,v);
-    const depth=Math.max(L.tray_d,L.dev_y+L.fp_d)+12;
+    const svg=document.getElementById('tpTop');if(!svg)return;const spec=state.item.spec,v=state.v,L=pairLayout();
+    const depth=Math.max(L.tray_d,L.dev_y+L.fp_d,L.second?L.second.dev_y+L.second.fp_d:0)+12;
     svg.setAttribute('viewBox',`-132 ${-depth} 264 ${depth+20}`);
     let s=`<rect x="-126" y="0" width="252" height="4" fill="#4e75a3"/><text x="0" y="14" font-size="6" fill="#9aa" text-anchor="middle">faceplate (front)</text>`;
     const over=L.tray_w>MAX_TRAY;
@@ -251,27 +257,36 @@
     for(const x of v.keystones||[])s+=`<rect x="${x-9.9}" y="-10.4" width="19.8" height="10.4" fill="#1d1f24" stroke="#888" stroke-width=".4"/>`;
     // Front-port openings in the faceplate strip (they follow the offset; a turned device leaves them as entered).
     for(const p of PO().sleevePorts(openings(spec,v).ports,{...spec,...v}).ports)if([+p.x,+p.w].every(fin))s+=`<rect x="${+p.x-p.w/2}" y="0.6" width="${+p.w}" height="2.8" fill="#1d1f24" stroke="#ff9f43" stroke-width=".4"><title>${String(p.label||'Port').replace(/[<&"]/g,'')} opening</title></rect>`;
-    s+=`<rect id="tpDevice" x="${L.dev_x}" y="${-(L.dev_y+L.fp_d)}" width="${L.fp_w}" height="${L.fp_d}" fill="#e6c35c" fill-opacity=".35" stroke="#e6c35c" stroke-width=".8" style="cursor:grab"/>`;
+    if(state.second){const S2=state.second,m=TrayPair.merged(v,S2.v),L2=L.second,sp=S2.item.spec;
+      for(const p of TrayPair.ports2(sp,m))if([+p.x,+p.w].every(fin))s+=`<rect x="${+p.x-p.w/2}" y="0.6" width="${+p.w}" height="2.8" fill="#1d1f24" stroke="#5cb8e6" stroke-width=".4"/>`;
+      s+=`<rect id="tpDevice2" x="${L2.dev_x}" y="${-(L2.dev_y+L2.fp_d)}" width="${L2.fp_w}" height="${L2.fp_d}" fill="#6eb4e6" fill-opacity=".35" stroke="#6eb4e6" stroke-width="${state.tab===2?1.6:.8}" style="cursor:grab"/>`;
+      const a2=dp(sp,m.dev_rot,[0,0]),b2=dp(sp,m.dev_rot,[+sp.dev_w,0]);
+      s+=`<line x1="${L2.dev_x+a2[0]}" y1="${-(L2.dev_y+a2[1])}" x2="${L2.dev_x+b2[0]}" y2="${-(L2.dev_y+b2[1])}" stroke="#ff9f43" stroke-width="2" pointer-events="none"/>`;
+      for(const[x,y]of holes(sp,m))s+=`<circle cx="${x}" cy="${-y}" r="${(+sp.hole_d||2.7)/2+.4}" fill="#5cc8ff" pointer-events="none"/>`;
+      s+=`<text x="${L2.dev_x+L2.fp_w/2}" y="${-(L2.dev_y+L2.fp_d/2)}" font-size="6" fill="#eee" text-anchor="middle" pointer-events="none">2 · ${m.dev_rot}°</text>`;}
+    s+=`<rect id="tpDevice" x="${L.dev_x}" y="${-(L.dev_y+L.fp_d)}" width="${L.fp_w}" height="${L.fp_d}" fill="#e6c35c" fill-opacity=".35" stroke="#e6c35c" stroke-width="${state.second&&state.tab===1?1.6:.8}" style="cursor:grab"/>`;
     const a=dp(spec,v.dev_rot,[0,0]),b=dp(spec,v.dev_rot,[+spec.dev_w,0]);
     s+=`<line x1="${L.dev_x+a[0]}" y1="${-(L.dev_y+a[1])}" x2="${L.dev_x+b[0]}" y2="${-(L.dev_y+b[1])}" stroke="#ff9f43" stroke-width="2" pointer-events="none"/>`;
     for(const[x,y]of holes(spec,v))s+=`<circle cx="${x}" cy="${-y}" r="${(+spec.hole_d||2.7)/2+.4}" fill="#5cc8ff" pointer-events="none"/>`;
-    s+=`<text x="${L.dev_x+L.fp_w/2}" y="${-(L.dev_y+L.fp_d/2)}" font-size="6" fill="#eee" text-anchor="middle" pointer-events="none">${v.dev_rot}°</text>`;
+    s+=`<text x="${L.dev_x+L.fp_w/2}" y="${-(L.dev_y+L.fp_d/2)}" font-size="6" fill="#eee" text-anchor="middle" pointer-events="none">${state.second?'1 · ':''}${v.dev_rot}°</text>`;
     svg.innerHTML=s;
-    const dev=svg.querySelector('#tpDevice');
-    dev.onpointerdown=e=>{e.preventDefault();dev.setPointerCapture(e.pointerId);const m=svg.getScreenCTM().inverse(),pt=q=>{const p=svg.createSVGPoint();p.x=q.clientX;p.y=q.clientY;return p.matrixTransform(m);};
-      const start=pt(e),x0=v.dev_off_x,y0=v.dev_off_y;
-      dev.onpointermove=ev=>{const p=pt(ev);v.dev_off_x=Math.max(-150,Math.min(150,snap(x0+p.x-start.x)));if(v.front_position==='today')v.dev_off_y=Math.max(-40,Math.min(260,snap(y0-(p.y-start.y))));syncFields();update();};
-      dev.onpointerup=()=>{dev.onpointermove=null;};};
+    // Dragging a device also selects its tab (the tabs are redrawn when the drag ends).
+    for(const [id,tab] of [['#tpDevice',1],['#tpDevice2',2]]){const dev=svg.querySelector(id);if(!dev)continue;const dv=tab===2?state.second.v:v;
+      dev.onpointerdown=e=>{e.preventDefault();dev.setPointerCapture(e.pointerId);const m=svg.getScreenCTM().inverse(),pt=q=>{const p=svg.createSVGPoint();p.x=q.clientX;p.y=q.clientY;return p.matrixTransform(m);};
+        const start=pt(e),x0=dv.dev_off_x,y0=dv.dev_off_y,switched=state.tab!==tab;state.tab=tab;
+        dev.onpointermove=ev=>{const p=pt(ev);dv.dev_off_x=Math.max(-150,Math.min(150,snap(x0+p.x-start.x)));if(v.front_position==='today')dv.dev_off_y=Math.max(-40,Math.min(260,snap(y0-(p.y-start.y))));syncFields();update();};
+        dev.onpointerup=()=>{dev.onpointermove=null;if(switched)render();};};}
   }
   function syncFields(){
-    const x=document.getElementById('tpOffX'),y=document.getElementById('tpGap');
-    if(x&&document.activeElement!==x)x.value=String(state.v.dev_off_x);
-    if(y&&document.activeElement!==y)y.value=String(FRONT_GAP+state.v.dev_off_y);
+    const x=document.getElementById('tpOffX'),y=document.getElementById('tpGap'),dv=editing().v;
+    if(x&&document.activeElement!==x)x.value=String(dv.dev_off_x);
+    if(y&&document.activeElement!==y)y.value=String(FRONT_GAP+dv.dev_off_y);
   }
   function draw3D(){
     const cv=document.getElementById('tpView'),P=window.EquipmentPainter;if(!cv||!P)return;
     const key=exactKey();
-    view.sets=state.exact&&state.exact.key===key?state.exact.sets.concat(schematic(state.item.spec,state.v).filter(s=>s.device)):schematic(state.item.spec,state.v);
+    const sketch=state.second?TrayPair.schematic(state.item.spec,state.v,state.second.item.spec,state.second.v):schematic(state.item.spec,state.v);
+    view.sets=state.exact&&state.exact.key===key?state.exact.sets.concat(sketch.filter(s=>s.device)):sketch;
     const note=document.getElementById('tpViewNote');
     if(note)note.textContent=state.exact&&state.exact.key===key?`Exact OpenSCAD render of these settings at export quality ${exportNote()} (not saved). Translucent box = the device, orange = its front.`:'Live sketch: boxes for the tray, faceplate, standoffs and device (translucent; orange = device front). Left-drag turns, right-drag moves, scroll zooms.';
     if(note&&state.v.rear_support)note.textContent+=' Rear bracket: '+REAR_STYLES[rearStyle(state.v)][0]+'. This box sketch does not show the cutouts or flanges; stiffness/airflow UNKNOWN';
@@ -286,8 +301,8 @@
     const warn=document.getElementById('tpWarnings');
     if(warn){const ws=warnings(state.item.spec,state.v),jw=window.extensionJointWarning?.(state.slot,state.v.u);if(jw)ws.push(jw);
       warn.replaceChildren(...ws.map(t=>h('li',{},t)));warn.hidden=!ws.length;}
-    const L=layout(state.item.spec,state.v),sum=document.getElementById('tpSummary');
-    if(sum)sum.textContent=`Tray ${mm(L.tray_w)} × ${mm(L.tray_d)} mm · device ${mm(L.fp_w)} × ${mm(L.fp_d)} mm on the tray · ${state.v.u}U faceplate.`;
+    const L=pairLayout(),sum=document.getElementById('tpSummary');
+    if(sum)sum.textContent=`Tray ${mm(L.tray_w)} × ${mm(L.tray_d)} mm · device ${mm(L.fp_w)} × ${mm(L.fp_d)} mm`+(L.second?` and ${mm(L.second.fp_w)} × ${mm(L.second.fp_d)} mm`:'')+` on the tray · ${state.v.u}U faceplate.`;
   }
   function keystones(){
     const v=state.v,x=h('input',{type:'number',step:'1',value:String(v.keystones.length?Math.min(100,v.keystones.at(-1)+25):-100),style:'width:70px','aria-label':'Keystone X position (mm)'});
@@ -298,12 +313,13 @@
   async function post(path,body){
     return fetch(path,{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':appToken()},body:JSON.stringify(body)});
   }
-  function request(){return {item:state.item.id,tray:diff(state.item.spec,state.v)};}
+  function secondRequest(){return state.second?{item:state.second.item.id,tray:TrayPair.diff(state.second.item.spec,state.second.v)}:null;}
+  function request(){const r={item:state.item.id,tray:diff(state.item.spec,state.v)},s2=secondRequest();if(s2)r.second=s2;return r;}
   // Export quality (render-quality.js) goes with exact renders and exports only; it is never a saved tray setting.
   const exportLevel=()=>window.RenderQuality?.exportLevel()||'standard';
   const exportNote=()=>window.RenderQuality?.exportNote(exportLevel())||'Standard';
   function exportRequest(){return {...request(),quality:exportLevel()};}
-  const exactKey=()=>JSON.stringify(state.v)+'|'+exportLevel();
+  const exactKey=()=>JSON.stringify(state.v)+'|'+JSON.stringify(secondRequest())+'|'+exportLevel();
   async function serverCheck(){
     const r=await post('/api/equipment-placement-check',request()),out=await r.json();
     if(!r.ok)throw Error(out.error||'Check failed');if(!out.ok)throw Error(out.error);
@@ -311,12 +327,12 @@
   function setStatus(t){const s=document.getElementById('tpStatus');if(s)s.textContent=t;}
   function render(){
     const d=document.getElementById('trayPlacement');if(!d||!state)return;
-    const spec=state.item.spec,v=state.v,name=state.item.display_name||state.item.name;
-    const rot=h('div',{class:'ew-choices',role:'group','aria-label':'Rotation'},...[0,90,180,270].map(r=>{const b=h('button',{type:'button',class:'ew-chip'+(v.dev_rot===r?' on':''),'aria-pressed':String(v.dev_rot===r)},r+'°');b.onclick=()=>{v.dev_rot=r;render();};return b;}));
-    const centre=h('button',{type:'button',class:'ew-chip'},'Centre');centre.onclick=()=>{v.dev_off_x=0;syncFields();update();};
-    const mountOpts=PO().usesStandoffs(v)?[field('Standoff (mm)',()=>v.standoff,x=>v.standoff=x,{step:'0.5',min:'0',max:'30'})]:[h('p',{class:'ew-note'},v.device_mount==='sleeve'?'Low floor, side walls, top lips when space permits, rear stop and optional straps. Front flush; fit/retention/strength UNKNOWN.':v.device_mount==='flat'?'Rests on the low floor with corner stops and optional strap slots. Retention UNKNOWN.':'Rests on the tray floor; no standoffs.')];
-    if(v.device_mount==='inserts')mountOpts.push(field('Insert pilot hole (mm)',()=>v.insert_pilot,x=>v.insert_pilot=x,{step:'0.1'}));
-    if(v.device_mount==='pegs'||v.device_mount==='clips')mountOpts.push(field(v.device_mount==='pegs'?'Board thickness (mm)':'Edge thickness clipped (mm)',()=>v.board_t,x=>v.board_t=x,{step:'0.1'}));
+    const spec=state.item.spec,v=state.v,name=state.item.display_name||state.item.name,E=editing(),dv=E.v,dspec=E.spec;
+    const rot=h('div',{class:'ew-choices',role:'group','aria-label':'Rotation'},...[0,90,180,270].map(r=>{const b=h('button',{type:'button',class:'ew-chip'+(dv.dev_rot===r?' on':''),'aria-pressed':String(dv.dev_rot===r)},r+'°');b.onclick=()=>{dv.dev_rot=r;render();};return b;}));
+    const centre=h('button',{type:'button',class:'ew-chip'},'Centre');centre.onclick=()=>{dv.dev_off_x=0;syncFields();update();};
+    const mountOpts=PO().usesStandoffs(dv)?[field('Standoff (mm)',()=>dv.standoff,x=>dv.standoff=x,{step:'0.5',min:'0',max:'30'})]:[h('p',{class:'ew-note'},dv.device_mount==='sleeve'?'Low floor, side walls, top lips when space permits, rear stop and optional straps. Front flush; fit/retention/strength UNKNOWN.':v.device_mount==='flat'?'Rests on the low floor with corner stops and optional strap slots. Retention UNKNOWN.':'Rests on the tray floor; no standoffs.')];
+    if(dv.device_mount==='inserts')mountOpts.push(field('Insert pilot hole (mm)',()=>dv.insert_pilot,x=>dv.insert_pilot=x,{step:'0.1'}));
+    if(dv.device_mount==='pegs'||dv.device_mount==='clips')mountOpts.push(field(dv.device_mount==='pegs'?'Board thickness (mm)':'Edge thickness clipped (mm)',()=>dv.board_t,x=>dv.board_t=x,{step:'0.1'}));
     const rs=h('input',{type:'checkbox'});rs.checked=!!v.rear_support;rs.onchange=()=>{v.rear_support=rs.checked;if(rs.checked&&!v.rear_style)v.rear_style='reinforced';if(!rs.checked)delete v.rear_style;render();};
     const styles=h('div',{class:'ew-choices',role:'group','aria-label':'Rear bracket'},h('span',{},'Rear bracket:'),...Object.entries(REAR_STYLES).map(([key,[label]])=>{const b=h('button',{type:'button',class:'ew-chip'+(rearStyle(v)===key?' on':''),'aria-pressed':String(rearStyle(v)===key)},label);b.onclick=()=>{v.rear_style=key;render();};return b;}));
     const cv=h('canvas',{id:'tpView',class:'ew-view tp-view'});
@@ -334,24 +350,32 @@
       catch(e){setStatus('Problem: '+e.message);}finally{update();}};
     const apply=h('button',{type:'button',id:'tpApply',class:'primary'},'Apply to draft');
     apply.onclick=async()=>{if(current().length){update();return;}apply.disabled=true;setStatus('Checking…');
-      try{await serverCheck();if(!window.applyTrayPlacement)throw Error('The workspace is not ready.');
-        window.applyTrayPlacement(state.rack,state.id,diff(spec,v),v.u!==state.prevU?v.u:null);d.close();}
+      try{await serverCheck();if(!window.applyTrayPlacement)throw Error('The workspace is not ready.');const s2=secondRequest();
+        window.applyTrayPlacement(state.rack,state.id,diff(spec,v),v.u!==state.prevU?v.u:null,s2&&{equipment:s2.item,...(Object.keys(s2.tray).length?{tray:s2.tray}:{})});d.close();}
       catch(e){setStatus('Problem: '+e.message);update();}};
     const cancel=h('button',{type:'button'},'Cancel');cancel.onclick=()=>d.close();
-    const lib=h('button',{type:'button',class:'subtle'},'Edit library item…');lib.onclick=()=>{d.close();window.openCustomEquipment?.({equipment:state.item.id});};
-    const offX=field('Left/right offset (mm)',()=>v.dev_off_x,x=>v.dev_off_x=x,{id:'tpOffX'});
-    const gap=field('Front gap (mm)',()=>FRONT_GAP+v.dev_off_y,x=>v.dev_off_y=x-FRONT_GAP,{id:'tpGap',min:'0'});
+    const lib=h('button',{type:'button',class:'subtle'},'Edit library item…');lib.onclick=()=>{const id=(state.tab===2&&state.second?state.second.item:state.item).id;d.close();window.openCustomEquipment?.({equipment:id});};
+    const offX=field('Left/right offset (mm)',()=>dv.dev_off_x,x=>dv.dev_off_x=x,{id:'tpOffX'});
+    const gap=field('Front gap (mm)',()=>FRONT_GAP+dv.dev_off_y,x=>dv.dev_off_y=x-FRONT_GAP,{id:'tpGap',min:'0'});
+    // Device tabs (option A, Brian 2026-10-20): Position and Mounting edit the selected device; Faceplate is shared.
+    const tab=(n,label)=>{const b=h('button',{type:'button',role:'tab',class:'tp-tab'+(state.tab===n?' on':''),'aria-selected':String(state.tab===n)},label);b.onclick=()=>{state.tab=n;render();};return b;};
+    const tabs=h('div',{class:'tp-tabs',role:'tablist','aria-label':'Devices on this tray'},tab(1,(state.second?'1 · ':'')+name));
+    if(state.second){const rm=h('button',{type:'button',class:'tp-tab-x',title:'Remove the second device','aria-label':'Remove the second device'},'✕');
+      rm.onclick=()=>{state.second=null;state.tab=1;render();};tabs.append(h('span',{class:'tp-tab-pair'},tab(2,'2 · '+(state.second.item.display_name||state.second.item.name)),rm));}
+    else{const pick=h('select',{'aria-label':'Second device'},h('option',{value:''},'+ Add a second device…'),...(window.equipmentLibraryItems?.()||[]).map(i=>h('option',{value:i.id},i.display_name||i.name)));
+      pick.onchange=()=>{const item=(window.equipmentLibraryItems?.()||[]).find(i=>i.id===pick.value);if(item)addSecond(item);};tabs.append(pick);}
 
     const position=h('div',{class:'ew-row'},h('span',{},'Front position:'),chips({today:'As today',flush:'Flush with faceplate',setback:'Set back'},v.front_position,k=>{v.front_position=k;}),...(v.front_position==='setback'?[field('Set back (mm)',()=>v.front_setback,x=>v.front_setback=x,{min:'0',max:'100',step:'.1'})]:[]));
     const bezel=h('div',{class:'ew-row'},h('span',{},'Bezel:'),chips({none:'None',chamfer:'Chamfer',rounded:'Rounded'},v.bezel,k=>v.bezel=k),...(v.bezel!=='none'?[field('Bezel size (mm)',()=>v.bezel_size,x=>v.bezel_size=x,{min:'.5',max:'1.5',step:'.1'})]:[]));
     d.replaceChildren(
-      h('div',{class:'tp-head'},h('div',{},h('p',{class:'section-eyebrow'},'PLACE ON TRAY · SLOT '+state.slot+(state.span>1?'–'+(state.slot+state.span-1):'')),h('h2',{},name)),lib),
-      h('p',{class:'ew-note'},`${spec.dev_w} × ${spec.dev_d} × ${spec.dev_h} mm, ${(spec.holes||[]).length} mounting hole(s). These choices belong to this slot only; the library item is not changed.`),
+      h('div',{class:'tp-head'},h('div',{},h('p',{class:'section-eyebrow'},'PLACE ON TRAY · SLOT '+state.slot+(state.span>1?'–'+(state.slot+state.span-1):'')),h('h2',{},state.tab===2&&state.second?state.second.item.display_name||state.second.item.name:name)),lib),
+      h('p',{class:'ew-note'},`${dspec.dev_w} × ${dspec.dev_d} × ${dspec.dev_h} mm, ${(dspec.holes||[]).length} mounting hole(s). These choices belong to this slot only; the library item is not changed.`),tabs,
       h('div',{class:'tp-grid'},
         h('div',{class:'tp-pane'},h('h3',{},'Top view'),document.createElementNS(NS,'svg'),
-          h('p',{class:'ew-note'},'Drag the device (snaps to 1 mm). Orange edge = device front. Blue dots = screw/hole positions. Dashed outline = the '+MAX_TRAY+' mm tray limit (rack opening minus side clearance).'),
-          h('h3',{},'Position'),h('div',{class:'ew-row'},offX,centre),...(v.front_position==='today'?[h('div',{class:'ew-row'},gap)]:[]),position,h('p',{class:'ew-note'},'Flush and Set back are measured from the outside front face. Set back: 0–100 mm. Near the plate, use Sleeve or a single printed piece; flat corner stops need at least 10.2 mm set back.'),h('div',{class:'ew-row'},'Rotate ',rot),
-          h('h3',{},'Mounting'),chips(MOUNTS,v.device_mount,k=>v.device_mount=k),h('div',{class:'ew-row'},...mountOpts)),
+          h('p',{class:'ew-note'},(state.second?'Yellow = device 1, blue = device 2; drag either. They need at least '+TrayPair.GAP+' mm between them (more for clips, straps and flat stops). ':'')+'Drag the device (snaps to 1 mm). Orange edge = device front. Blue dots = screw/hole positions. Dashed outline = the '+MAX_TRAY+' mm tray limit (rack opening minus side clearance).'),
+          h('h3',{},'Position'+(state.second?' · device '+state.tab:'')),h('div',{class:'ew-row'},offX,centre),...(v.front_position==='today'?[h('div',{class:'ew-row'},gap)]:[]),
+          ...(state.tab===1?[position,h('p',{class:'ew-note'},'Flush and Set back are measured from the outside front face. Set back: 0–100 mm. Near the plate, use Sleeve or a single printed piece; flat corner stops need at least 10.2 mm set back.')]:[h('p',{class:'ew-note'},'Both devices use the As today front position. Faceplate height, joint, keystones and rear support are shared by the whole tray.')]),h('div',{class:'ew-row'},'Rotate ',rot),
+          h('h3',{},'Mounting'+(state.second?' · device '+state.tab:'')),chips(MOUNTS,dv.device_mount,k=>dv.device_mount=k),h('div',{class:'ew-row'},...mountOpts)),
         h('div',{class:'tp-pane'},h('h3',{},'Live 3D preview'),cv,h('p',{id:'tpViewNote',class:'ew-note'}),h('div',{class:'ew-row'},exact,window.RenderQuality?.previewSlider('placement',draw3D)||''),
           h('h3',{},'Faceplate'),bezel,h('p',{class:'ew-note'},'Bezel softens front opening edges only. Size 0.5–1.5 mm; reduced or omitted to preserve 2 mm webs. Rounded prints best with the front face up; Chamfer prints either way.'),h('div',{class:'ew-row'},field('Height (rack units)',()=>v.u,x=>v.u=x,{min:'1',max:'5'})),keystones(),
           h('p',{},'Tray joint'),chips(JOINTS,v.joint,k=>v.joint=k),
@@ -374,8 +398,16 @@
       document.head.append(h('style',{},`.tp-dialog{width:min(1040px,96vw)}.tp-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.tp-head h2{margin:0}
 .tp-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:14px}@media(max-width:760px){.tp-grid{grid-template-columns:1fr}}.tp-pane h3{margin:10px 0 4px;font-size:13px;color:#cfd6df}
 .tp-top{width:100%;height:300px;background:#121418;border-radius:6px;touch-action:none}.tp-view{height:240px}.tp-unknown{color:#e0b56f;font-weight:600;margin-top:10px}
+.tp-tabs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0;border-bottom:1px solid #3a3f48;padding-bottom:6px}.tp-tab{background:#2b2f37;color:#ddd;border:1px solid #4a4f59;border-radius:6px 6px 0 0;padding:5px 12px;cursor:pointer}.tp-tab.on{background:#3b6fa8;border-color:#6ea0d8;color:#fff}.tp-tab-pair{display:inline-flex;gap:2px}.tp-tab-x{background:none;border:none;color:#e09a9a;cursor:pointer;font-size:14px}.tp-tabs select{background:#15171b;color:#ddd;border:1px dashed #5a606b;border-radius:6px;padding:4px}
 .tp-problems{color:#ff9a9a;margin:6px 0;padding-left:18px}.tp-problems:empty{display:none}.tp-warnings{color:#e0b56f;margin:6px 0;padding-left:18px}.tp-warnings:empty{display:none}`));}
     return d;
+  }
+  function addSecond(item){
+    const v=state.v,v2={...TrayPair.values(item.spec),dev_off_y:v.dev_off_y,dev_rot:0};if(v2.device_mount==='sleeve')v2.device_mount=v.device_mount==='flat'?'flat':'straps';
+    const w1=layout(state.item.spec,v).fp_w,w2=layout(item.spec,TrayPair.merged(v,v2)).fp_w,need=Math.max(TrayPair.GAP,(TrayPair.REACH[v.device_mount]||0)+(TrayPair.REACH[v2.device_mount]||0)),total=w1+need+w2;
+    v.dev_off_x=snap(-total/2+w1/2);v2.dev_off_x=snap(total/2-w2/2);
+    state.second={item,v:v2};state.tab=2;render();
+    setStatus('Second device added beside the first; the pair is centred. Drag either one. Apply changes the rack draft only.');
   }
   // Called by workspace.js when a library item is placed in a slot or its slot placement is edited.
   window.openTrayPlacement=async function(rackId,placement){
@@ -383,8 +415,10 @@
     if(!item)try{item=(await (await fetch('/api/equipment-library')).json()).find(i=>i.id===placement.equipment);}catch(e){}
     if(!item){alert('This equipment is no longer in the library.');return false;}
     const v=values(item.spec,placement.tray);
+    let second=null;if(placement.second){const s2=(window.equipmentLibraryItems?.()||[]).find(i=>i.id===placement.second.equipment);
+      if(!s2){alert('The second device on this tray is no longer in the library.');return false;}second={item:s2,v:TrayPair.values(s2.spec,placement.second.tray)};}
     // Existing rear-supported items retain their legacy solid/open choice.
-    state={rack:rackId,id:placement.id,slot:placement.slot,span:placement.span,item,v,prevU:v.u,exact:null};
+    state={rack:rackId,id:placement.id,slot:placement.slot,span:placement.span,item,v,prevU:v.u,exact:null,second,tab:1};
     // Paint again once the dialog is shown: the canvas has no size before that.
     const d=ensureDialog();render();if(!d.open)d.showModal();draw3D();return true;
   };

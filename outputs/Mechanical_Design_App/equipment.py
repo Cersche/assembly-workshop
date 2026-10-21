@@ -143,6 +143,13 @@ def allocation_request(data_dir, payload):
         found = []
     if found:
         raise ValueError(found[0])
+    # Optional second device on the same tray: {'item': library id, 'tray': its own SECOND_KEYS}.
+    second = payload.get('second')
+    if second is not None:
+        other = next((i for i in library(data_dir) if i.get('id') == second.get('item')), None) if isinstance(second, dict) else None
+        if other is None:
+            raise ValueError('The second device is no longer in the library.')
+        spec['second'] = allocation_spec(other['spec'], second_settings(second.get('tray')))
     if 'quality' in payload:  # export quality is a per-export choice, never a saved tray setting
         spec['quality'] = payload['quality']
     return clean(spec)
@@ -297,7 +304,7 @@ def rear_geometry(s):
     margin, band, strip, limit = (4, 3.5, 4, 100.2625) if legacy else (REAR_MARGIN, REAR_BAND, REAR_STRIP, REAR_LIMIT)
     floor = .5 if s['device_mount'] in ('flat', 'sleeve') else 8.225
     width = s['dev_d'] if s.get('dev_rot') in (90, 270) else s['dev_w']
-    jx = min(40, abs(s.get('dev_off_x', 0)) + width/2 + 8 - 12)
+    jx = min(40, (pair_tray_half(s) if s.get('second') else abs(s.get('dev_off_x', 0)) + width/2 + 8) - 12)
     left, right = min(s.get('joint_x', [-jx, jx])), max(s.get('joint_x', [-jx, jx]))
     half = 6 + margin
     top = floor + 18.5 + margin
@@ -345,9 +352,8 @@ def rear_geometry(s):
         # Local +Y maps to the tray side, assembled Y 232..240.
         b = height-REAR_EDGE_INSET
         t, depth, edge = REAR_LIP_T, REAR_LIP_DEPTH, REAR_LIP_LIMIT
-        fp_d = s['dev_w'] if s.get('dev_rot') in (90,270) else s['dev_d']
-        device_rear = (port_openings.device_y(s))+fp_d
-        clear_depth = 240-device_rear-REAR_RETENTION_REACH.get(s['device_mount'],0)-REAR_LIP_CLEAR
+        clear_depth = min(240-(port_openings.device_y(d)+(d['dev_w'] if d.get('dev_rot') in (90,270) else d['dev_d']))
+                          -REAR_RETENTION_REACH.get(d['device_mount'],0)-REAR_LIP_CLEAR for d in tray_devices(s))
         if clear_depth < depth:
             depth = max(0,clear_depth)
             result.setdefault('notes', []).append('Lip depth shortened to clear the device and rear retention envelope by 0.5 mm.')
@@ -461,6 +467,8 @@ def template_source(spec):
         code+=BEZEL_SCAD
         code+='\n'+'\n'.join('// '+n for n in plan['notes'])+'\n'
         text=text.replace('   plate_joint_cut();','   plate_joint_cut();bezel_cuts();')+code
+    if spec.get('second'):
+        text = second_device_source(text)
     return text
 
 
@@ -474,6 +482,8 @@ module bezel_cuts(){for(p=bezel_shapes)let(n=bezel_rounded?8:1)for(i=[0:n-1])hul
 def clean(spec):
     if not isinstance(spec, dict):
         raise ValueError('Equipment spec must be an object.')
+    if spec.get('second') is not None:
+        return clean_pair(spec)
     name = str(spec.get('name') or 'Equipment').strip()[:60] or 'Equipment'
     s = {'name': name,
          'dev_w': num(spec.get('dev_w'), 'Width', 5, 230),
@@ -635,7 +645,7 @@ def clean(spec):
         for p in s['ports']:
             if any(abs(p['x']-x) < port_openings.SLEEVE_WALL/2+p['w']/2 and p['z']+p['h']/2 > win['bottom'] and p['z']-p['h']/2 < win['top'] for x in win['joints']):
                 raise ValueError('A front opening overlaps a sleeve wall joint; move or remove it.')
-    if s['joint'] == 'screw' and not win:
+    if s['joint'] == 'screw' and not win and not spec.get('_pair'):  # a pair places its joints in clean_pair()
         placed = port_openings.joint_positions(s['ports'], s['keystones'], tray_half)
         if placed['problem']:
             raise ValueError(placed['problem'])
@@ -647,6 +657,158 @@ def clean(spec):
     if 'planning_ports' in spec:
         s['planning_ports'] = cable_ports.planning_ports(spec['planning_ports'], s['u'])
     return s
+
+
+# Two devices on one tray (Brian, 2026-10-20): "space permitting". The first device keeps the slot's tray settings;
+# the second has its own position, rotation and mounting (SECOND_KEYS) and shares everything else (rack units, joint,
+# keystones, rear support, bezel). Fit, retention and strength of both stay UNKNOWN.
+SECOND_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'standoff', 'insert_pilot', 'board_t')
+PAIR_GAP = 4  # PROPOSED minimum gap between the two footprints
+# How far each mounting's printed features reach outside the footprint (equipment_tray.scad device_features_*).
+PAIR_REACH = {'inserts': 0, 'pegs': 0, 'clips': 2.5, 'straps': 5.5, 'flat': 6.2}
+SECOND_FIELDS = ('name', 'dev_w', 'dev_d', 'dev_h', 'hole_d', 'standoff', 'insert_pilot', 'board_t', 'holes',
+                 'device_mount', 'dev_off_x', 'dev_off_y', 'dev_rot', 'feet')
+
+
+def second_settings(value):
+    """Keep only the second device's own tray keys (placement.second.tray)."""
+    return {k: v for k, v in placement_settings(value).items() if k in SECOND_KEYS}
+
+
+def tray_devices(s):
+    """The devices on a cleaned spec's tray, each as a spec dict (the second shares the slot settings)."""
+    out = [s]
+    if s.get('second'):
+        out.append(dict(s, **s['second']))
+    return out
+
+
+def footprint(d):
+    """(x0, x1, y0, y1) of a device on the tray: X from the rack centre, Y behind the faceplate rear face."""
+    fw, fd = (d['dev_d'], d['dev_w']) if d.get('dev_rot', 0) in (90, 270) else (d['dev_w'], d['dev_d'])
+    x0, y0 = float(d.get('dev_off_x', 0)) - fw/2, port_openings.device_y(d)
+    return x0, x0 + fw, y0, y0 + fd
+
+
+def pair_tray_half(s):
+    return max(max(abs(f[0]), abs(f[1])) for f in map(footprint, tray_devices(s))) + MARGIN
+
+
+def pair_problems(a, b):
+    """Plain-language problems for two cleaned single-device specs sharing one tray (tray-pair.js mirrors this)."""
+    out = []
+    if 'sleeve' in (a['device_mount'], b['device_mount']):
+        out.append('A sleeve boxes in the whole front, so it cannot share a tray. Choose another mounting, or use one device.')
+    if a.get('front_position', 'today') != 'today':
+        out.append('With two devices, use the As today front position (Flush and Set back cut a window for one device only).')
+    if (a['device_mount'] == 'flat') != (b['device_mount'] == 'flat'):
+        out.append('Both devices sit on one tray floor: either both use Sits flat, or neither does.')
+    if out:
+        return out
+    fa, fb = footprint(a), footprint(b)
+    need = max(PAIR_GAP, PAIR_REACH.get(a['device_mount'], 0) + PAIR_REACH.get(b['device_mount'], 0))
+    apart = max(fb[0] - fa[1], fa[0] - fb[1], fb[2] - fa[3], fa[2] - fb[3])
+    if apart < need - 1e-9:
+        gap = 'overlapping' if apart < 0 else f'only {round(apart, 1):g} mm apart'
+        out.append(f'The two devices are {gap}; they need at least {need:g} mm between them (mounting features included). '
+                   'Drag one sideways or behind the other.')
+    width = 2 * (max(abs(v) for v in fa[:2] + fb[:2]) + MARGIN)
+    if width > MAX_TRAY:
+        out.append(f'Together the two devices need a tray {round(width, 1):g} mm wide; the rack opening allows {MAX_TRAY:g} mm. '
+                   'Rotate one, move them closer to the centre, or put one behind the other.')
+    return out
+
+
+def opening_clash(ports_a, ports_b, web=2):
+    """First pair of front openings (one per device) closer than the 2 mm web, as a sentence; else None."""
+    for p in ports_a:
+        for q in ports_b:
+            if abs(p['x'] - q['x']) - (p['w'] + q['w'])/2 < web and abs(p['z'] - q['z']) - (p['h'] + q['h'])/2 < web:
+                return (f"The {p['label'] or 'first device'} and {q['label'] or 'second device'} openings are closer than "
+                        f'{web:g} mm on the faceplate. Move one device sideways.')
+    return None
+
+
+def clean_pair(spec):
+    second = spec['second']
+    if not isinstance(second, dict):
+        raise ValueError('The second device must be an object.')
+    first = {k: v for k, v in spec.items() if k != 'second'}
+    keystones = first.get('keystones') or []
+    s = clean(dict(first, keystones=[], _pair=True))
+    d2 = {k: v for k, v in second.items() if (k not in PLACEMENT_KEYS or k in SECOND_KEYS)
+          and k not in ('quality', 'coupon', 'planning_ports', 'second')}
+    try:
+        s2 = clean(dict(d2, keystones=[], u=s['u'], joint=s['joint'], rear_support=s['rear_support'], _pair=True))
+    except ValueError as exc:
+        raise ValueError(f'Second device: {exc}')
+    problems = pair_problems(s, s2)
+    if not problems and s['rear_support'] and s2.get('protrusions'):
+        problems.append('Rear keep-clear zones of the second device are not supported yet; remove them in its library item or turn off rear support.')
+    if problems:
+        raise ValueError(problems[0])
+    s.pop('joint_x', None)
+    s['second'] = {k: s2[k] for k in SECOND_FIELDS if k in s2}
+    half = pair_tray_half(s)
+    validate_foot_pockets(s, 2 * half)
+    validate_foot_pockets(dict(s, **s['second']), 2 * half)
+    s['keystones'] = [num(x, 'Keystone X', -PLATE_HALF + 24, PLATE_HALF - 24) for x in keystones][:12]
+    xs = sorted(s['keystones'])
+    if any(b - a < 21 for a, b in zip(xs, xs[1:])):
+        raise ValueError('Keystones must be at least 21 mm apart.')
+    if any(abs(x) - 9.9 < half + 0.5 for x in s['keystones']):
+        raise ValueError(f'A keystone collar would hit the tray; keep keystones at least {half + 10.4:g} mm from centre.')
+    # Second-device ports get a "d2-" id so cable plans can tell the two devices apart.
+    ports2 = [dict(p, id=('d2-' + p['id'])[:40]) for p in s2['ports']]
+    found = port_openings.problems(s['ports'] + ports2, s['u'], s['keystones'])
+    clash = opening_clash(s['ports'], ports2)
+    if found or clash:
+        raise ValueError(found[0] if found else clash)
+    s['ports'] += ports2
+    s['rear_ports'] += [dict(p, id=('d2-' + p['id'])[:40]) for p in s2['rear_ports']]
+    if s['joint'] == 'screw':
+        placed = port_openings.joint_positions(s['ports'], s['keystones'], half)
+        if placed['problem']:
+            raise ValueError(placed['problem'])
+        if placed['moved']:
+            s['joint_x'] = placed['joints']
+    ids = [p['id'] for p in s['ports'] + s['rear_ports']]
+    if len(ids) != len(set(ids)):
+        raise ValueError('Each port needs its own id.')
+    return s
+
+
+# The second device reuses the template's own device features: dp() and the two feature modules are copied with every
+# device-specific name renamed, so a one-device source stays byte-identical to older ones.
+SECOND_RENAMES = {'dev_x': 'dev2_x', 'dev_y': 'dev2_y', 'fp_w': 'fp2_w', 'fp_d': 'fp2_d', 'dev_w': 'dev2_w', 'dev_d': 'dev2_d',
+                  'dev_h': 'dev2_h', 'dev_rot': 'dev2_rot', 'dev_off_x': 'dev2_off_x', 'holes': 'dev2_holes', 'hole_d': 'dev2_hole_d',
+                  'standoff': 'dev2_standoff', 'insert_pilot': 'dev2_insert_pilot', 'board_t': 'dev2_board_t',
+                  'device_mount': 'dev2_mount', 'feet': 'dev2_feet', 'foot_h': 'dev2_foot_h', 'dp': 'dp2',
+                  'device_features_add': 'device2_features_add', 'device_features_cut': 'device2_features_cut'}
+SECOND_SCAD = """
+// ---- Second device on this tray (Brian, 2026-10-20). PROPOSED; fit, retention and strength UNKNOWN.
+// Declared here so the derived values below see them; the wizard overrides at the end replace them in place.
+dev2_w=1; dev2_d=1; dev2_h=1; dev2_hole_d=2.7; dev2_standoff=6; dev2_insert_pilot=3.2; dev2_board_t=1.6; dev2_holes=[]; dev2_mount="inserts"; dev2_off_x=0; dev2_off_y=0; dev2_rot=0; dev2_feet=[];
+fp2_w=(dev2_rot==90||dev2_rot==270)?dev2_d:dev2_w; fp2_d=(dev2_rot==90||dev2_rot==270)?dev2_w:dev2_d;
+dev2_x=-fp2_w/2+dev2_off_x; dev2_y=front_gap+dev2_off_y;
+dev2_foot_h=dev2_mount=="flat"?max([0,for(f=dev2_feet)f[4]]):0;
+module device2_ghost(){%translate([dev2_x,dev2_y,floor_top+(dev2_mount=="inserts"||dev2_mount=="pegs"||dev2_mount=="clips"?dev2_standoff:0)-dev2_foot_h])cube([fp2_w,fp2_d,dev2_h]);}
+"""
+
+
+def second_device_source(text):
+    dp = re.search(r'^function dp\(p\)=.*$', text, flags=re.M).group(0)
+    body = re.search(r'^module device_features_add\(\)\{.*?(?=^module tray_joint_add)', text, flags=re.M | re.S).group(0)
+    code = dp + '\n' + body
+    for old, new in SECOND_RENAMES.items():
+        code = re.sub(r'\b' + old + r'\b', new, code)
+    for old, new in (('   device_features_add();\n', '   device_features_add();device2_features_add();\n'),
+                     ('  device_features_cut();\n }', '  device_features_cut();device2_features_cut();\n }'),
+                     ('cube([fp_w,fp_d,dev_h]);}', 'cube([fp_w,fp_d,dev_h]);device2_ghost();}')):
+        if text.count(old) != 1:
+            raise ValueError('The tray template changed; two-device trays cannot be built from it.')
+        text = text.replace(old, new)
+    return text + SECOND_SCAD + code
 
 
 def source(s):
@@ -673,6 +835,17 @@ def source(s):
     # Export quality: only a non-standard level overrides the template's $fn=48 (last assignment wins in OpenSCAD).
     if s.get('quality', DEFAULT_QUALITY) != DEFAULT_QUALITY:
         over['$fn'] = EXPORT_QUALITY[s['quality']]
+    if s.get('second'):
+        d2 = s['second']
+        over.update(dev2_w=d2['dev_w'], dev2_d=d2['dev_d'], dev2_h=d2['dev_h'], dev2_hole_d=d2['hole_d'],
+                    dev2_standoff=d2['standoff'], dev2_insert_pilot=d2['insert_pilot'], dev2_board_t=d2['board_t'],
+                    dev2_holes=d2['holes'], dev2_mount=d2['device_mount'], dev2_off_x=d2.get('dev_off_x', 0),
+                    dev2_off_y=d2.get('dev_off_y', 0), dev2_rot=d2.get('dev_rot', 0),
+                    dev2_feet=[[f['x'], f['y'], f['w'], f['d'], f['h']] for f in d2.get('feet', [])])
+        # The tray spans both devices (still centred); the template's own formula only knows the first.
+        over['tray_w'] = round(2 * pair_tray_half(s), 4)
+        if not s['rear_support']:
+            over['tray_d'] = round(max(f[3] for f in map(footprint, tray_devices(s))) + MARGIN, 4)
     lines = ['', '// ---- wizard overrides: ' + re.sub(r'[\r\n]', ' ', s['name'])] + [f'{k}={lit(v)};' for k, v in over.items()]
     if style in ('reinforced', 'vents'):
         lines.extend('// '+note for note in dict.fromkeys(geometry.get('notes', [])))

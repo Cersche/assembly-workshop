@@ -457,3 +457,4 @@ require('./feet.js');
 require('./protrusions.js');
 
 require('./front-position-bezel.js');
+require('./tray-pair.js');
