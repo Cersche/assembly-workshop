@@ -2,6 +2,17 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-20 (evening) Tasks 32–33 reviewed: protrusions, Front position, Bezel (read first)
+
+- **Codex tasks 32 and 33 are done and reviewed by Claude.** Not committed yet.
+  - **32:** the wizard finds plugs and cables and asks about each one (Part of the case / keep space / leave out). "Keep space" zones cut the rear bracket and give warnings.
+  - **33:** Place on tray gets Front position (As today / Flush / Set back) and Bezel (None / Chamfer / Rounded) on the front openings only.
+  - Checks: 155 Python (1 skipped) + 204 JS pass. Old specs are byte-identical.
+- **Real SG108 STEP** (`Downloads\TP-Link TL-SG108.stp`, read in place). Import with **Y is up**: the plug is found as 3 questions, the size comes from the case (158 × 101.1 × 26.5 mm), and a back zone with Set back 70 + Rear support cuts the bracket. That cut leaves a 2.1 mm band. Exact renders are closed and measured (see both REPORTs).
+- **Claude fixes:** keep-clear cuts no longer over-cut on Cable slots/Vents, and the protrusion number boxes are rounded to 0.1 mm.
+- **Next:** [task 34](work/codex-tasks/34-protrusion-polish.md) (one question per plug, band number in the warning, duplicate message). Prompt: docs/prompts/codex/2026-10-20_protrusion-polish_task-34.md.
+- Fit, looks after printing, cable bend space and strength stay UNKNOWN.
+
 ## 2026-10-20 (later) OptiPlex sleeve: orientation settled, coupons, rear bracket styles (read first)
 
 - **Orientation SETTLED (Brian: "DO NOT LET ME CHANGE THIS"):**

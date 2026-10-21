@@ -1,0 +1,477 @@
+== Python (work/gui-refinement/check_python.py) ==
+test_assignment_retains_unknown_fit (test_rack_workspace.RackWorkspaceTests) ... ok
+test_cable_guides_round_trip_and_reject_invalid (test_rack_workspace.RackWorkspaceTests) ... ok
+test_empty_read_has_no_side_effect (test_rack_workspace.RackWorkspaceTests) ... ok
+test_history_lists_and_restores_draft_without_writing (test_rack_workspace.RackWorkspaceTests) ... ok
+test_invalid_dimensions_and_equipment (test_rack_workspace.RackWorkspaceTests) ... ok
+test_malformed_history_generation_cannot_be_used_as_path (test_rack_workspace.RackWorkspaceTests) ... ok
+test_overlap_and_out_of_range_rejected (test_rack_workspace.RackWorkspaceTests) ... ok
+test_round_trip_unknown_dimensions_and_historical_recovery (test_rack_workspace.RackWorkspaceTests) ... ok
+test_stale_writer_rejected_without_changes (test_rack_workspace.RackWorkspaceTests) ... ok
+test_example_is_generic_and_library_read_has_no_side_effect (test_rack_workspace.RetiredEquipmentMigrationTests) ... ok
+test_history_disagreement_blocks_migration_without_overwrite (test_rack_workspace.RetiredEquipmentMigrationTests) ... ok
+test_saved_shape_migrates_as_unsaved_draft_with_exact_history (test_rack_workspace.RetiredEquipmentMigrationTests) ... ok
+test_every_component_retains_exact_source_coordinates_and_indices (test_rack_references.RackReferenceTests) ... ok
+test_reference_route_never_accesses_hardware_store (test_rack_references.RackReferenceTests) ... ok
+test_served_page_scripts_match_the_manifest (test_rack_references.RackReferenceTests) ... ok
+test_tampering_is_rejected_and_unknown_paths_are_not_served (test_rack_references.RackReferenceTests) ... ok
+test_appearance_does_not_change_hardware_identity (test_assembly_records.AssemblyRecordTests) ... ok
+test_artwork_allows_1024_pixels_and_auto_filament_colors (test_assembly_records.AssemblyRecordTests) ... ok
+test_artwork_is_local_verified_png_and_tamper_is_blocked (test_assembly_records.AssemblyRecordTests) ... ok
+test_layout_cannot_overwrite_hardware_and_old_client_is_rejected (test_assembly_records.AssemblyRecordTests) ... ok
+test_old_shared_editor_cannot_mutate_independent_workspace (test_assembly_records.AssemblyRecordTests) ... ok
+test_routes_scope_state_save_bom_and_check_to_instance (test_assembly_records.AssemblyRecordTests) ... ok
+test_saved_release_undo_retains_latest_hardware_revision (test_assembly_records.AssemblyRecordTests) ... ok
+test_stale_save_rejected_and_noop_does_not_bump_revision (test_assembly_records.AssemblyRecordTests) ... ok
+test_two_instances_are_isolated_and_legacy_db_is_unchanged (test_assembly_records.AssemblyRecordTests) ... ok
+test_v1_read_migrates_only_in_memory (test_assembly_records.AssemblyRecordTests) ... ok
+test_wrong_or_stale_instance_bundle_is_rejected_without_render (test_assembly_records.AssemblyRecordTests) ... ok
+test_appearance_only_preserves_hardware_revision (test_studio_save.StudioSaveTests) ... ok
+test_atomic_save_route_and_capability (test_studio_save.StudioSaveTests) ... ok
+test_combined_save_is_one_workspace_commit (test_studio_save.StudioSaveTests) ... ok
+test_invalid_hardware_leaves_layout_and_appearance_unsaved (test_studio_save.StudioSaveTests) ... ok
+test_stale_generation_is_rejected_without_partial_save (test_studio_save.StudioSaveTests) ... ok
+test_unscoped_hardware_tampering_is_rejected (test_studio_save.StudioSaveTests) ... ok
+test_port_edits_rejected (test_cable_ports.CablePortTests) ... ok
+test_port_edits_round_trip (test_cable_ports.CablePortTests) ... ok
+test_rejections (test_cable_ports.WizardPortTests) ... ok
+test_source_ignores_planning_fields (test_cable_ports.WizardPortTests) ... ok
+test_type_ids_and_rear_ports (test_cable_ports.WizardPortTests) ... ok
+test_changed_original_during_render_is_not_published (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_copy_normal_edit_persists_display_rename_without_source_name_suffix (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_copy_preserves_original_build_records_placements_and_planning_ports (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_corrupt_current_target_blocks_reuse_without_overwrite (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_current_source_reports_unknown_pipeline_and_still_rebuilds_copy (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_duplicate_and_double_click_requests_append_one_copy (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_invalid_snap_and_keystone_specs_need_review_without_substitution (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_missing_malformed_and_tampered_evidence_are_separate_states (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_old_keystone_and_arbitrary_source_flag_without_inventing_reason (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_planning_only_metadata_does_not_change_source_name_only_change_does (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_render_failure_or_index_failure_preserves_original_index (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_stale_missing_or_invalid_identity_rejected_before_render (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_status_and_rebuild_routes_preserve_array_contract_and_token_guard (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_status_is_read_only_legacy_array_older_source (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_wrong_source_hash_and_manifest_id_are_integrity_problems (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_rejections (test_cable_plan.CablePlanTests) ... ok
+test_round_trip_and_legacy (test_cable_plan.CablePlanTests) ... ok
+test_suggestion_field_rejections (test_cable_plan.CablePlanTests) ... ok
+test_suggestion_fields_round_trip (test_cable_plan.CablePlanTests) ... ok
+test_unknown_guide_fields_rejected (test_cable_plan.CablePlanTests) ... ok
+test_valid_boundaries_and_defaults (test_cable_plan.CablePlanTests) ... ok
+test_allocation_values_override_library_defaults (test_allocation_tray.AllocationTray) ... ok
+test_keys_split_between_library_and_allocation (test_allocation_tray.AllocationTray) ... ok
+test_library_allocation_keeps_tray (test_allocation_tray.AllocationTray) ... ok
+test_no_tray_settings_gives_identical_source (test_allocation_tray.AllocationTray) ... ok
+test_older_documents_validate_unchanged (test_allocation_tray.AllocationTray) ... ok
+test_rack_document_keeps_tray_per_allocation (test_allocation_tray.AllocationTray) ... ok
+test_unknown_keys_dropped_and_bad_values_rejected (test_allocation_tray.AllocationTray) ... ok
+test_flat_joint_clearance (test_tray_placement.FlatFloorTests) ... ok
+test_front_openings_follow_floor_both_directions (test_tray_placement.FlatFloorTests) ... ok
+test_height_boundaries_all_mounts (test_tray_placement.FlatFloorTests) ... ok
+test_new_source_uses_slot_bottom_standard (test_tray_placement.FlatFloorTests) ... ok
+test_optiplex_budget_and_no_holes (test_tray_placement.FlatFloorTests) ... ok
+test_js_sketch_markers_and_warnings_agree_with_the_build (test_tray_placement.FrontOpeningsFollowTheDevice) ... ok
+test_moved_openings_are_still_guarded (test_tray_placement.FrontOpeningsFollowTheDevice) ... ok
+test_slot_source_cuts_moved_openings (test_tray_placement.FrontOpeningsFollowTheDevice) ... ok
+test_app_routes_window_requests (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_check_reports_plain_message_without_writing (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_js_window_checks_agree_with_python (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_python_checks_block_the_same_cases (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_request_merges_library_facts_and_slot_tray (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_unknown_item_and_bad_payload_are_rejected (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_invalid_settings_or_item_give_no_render (test_tray_placement.RackViewLookup) ... ok
+test_js_rack_sketch_matches_python_tray_size (test_tray_placement.RackViewLookup) ... ok
+test_lookup_finds_existing_render_and_never_renders (test_tray_placement.RackViewLookup) ... ok
+test_width_and_rotation_boundaries (test_tray_placement.RackWidthTests) ... ok
+test_boolean_and_placement_roundtrip (test_tray_placement.RearOpeningsTests) ... ok
+test_geometry_clearance_contract (test_tray_placement.RearOpeningsTests) ... ok
+test_old_sources_byte_identical_and_new_opt_in (test_tray_placement.RearOpeningsTests) ... ok
+test_slv_b_reference (test_tray_placement.RearOpeningsTests) ... ok
+test_geometry_all_styles_all_units (test_tray_placement.RearStyleTests) ... ok
+test_legacy_open_exact_source_and_style_precedence (test_tray_placement.RearStyleTests) ... ok
+test_task31_dense_vents (test_tray_placement.RearStyleTests) ... ok
+test_task31_lip_clearances (test_tray_placement.RearStyleTests) ... ok
+test_task31_unchanged_sources_and_specs (test_tray_placement.RearStyleTests) ... ok
+test_validation_and_disabled_support (test_tray_placement.RearStyleTests) ... ok
+test_short_depth_and_narrow_screw_height_are_guarded (test_tray_placement.SleeveGuardTests) ... ok
+test_sleeve_parameters_match_scad (test_tray_placement.SleeveGuardTests) ... ok
+test_optiplex_budgets_and_rear_support (test_tray_placement.SleeveTests) ... ok
+test_python_js_sleeve_agree (test_tray_placement.SleeveTests) ... ok
+test_source_keeps_rear_joint_and_has_sleeve_window (test_tray_placement.SleeveTests) ... ok
+test_window_drops_only_contained_openings_without_mutating_input (test_tray_placement.SleeveTests) ... ok
+test_js_ports_and_screening_use_the_allocation_spec (test_tray_placement.SlotTrayConsumers) ... ok
+test_slot_export_request_carries_quality (test_export_quality.ExportQualityRequests) ... ok
+test_zip_records_export_quality (test_export_quality.ExportQualityRequests) ... ok
+test_draft_and_fine_add_only_one_fn_line (test_export_quality.ExportQualitySource) ... ok
+test_quality_is_not_a_tray_setting (test_export_quality.ExportQualitySource) ... ok
+test_standard_is_byte_identical_to_before (test_export_quality.ExportQualitySource) ... ok
+test_standard_spec_and_build_id_unchanged (test_export_quality.ExportQualitySource) ... ok
+test_template_default_is_standard (test_export_quality.ExportQualitySource) ... ok
+test_unknown_quality_is_refused (test_export_quality.ExportQualitySource) ... ok
+test_keystone_faceplates_pass_the_mesh_check_without_nudge (test_keystone_mesh.KeystoneRenderTests) ... skipped 'set AW_RENDER_TESTS=1 to render with OpenSCAD'
+test_block_is_clipped_by_the_same_box_as_the_plate_opening (test_keystone_mesh.StaticKeystoneTests) ... ok
+test_golden_table_and_tightness_unchanged (test_keystone_mesh.StaticKeystoneTests) ... ok
+test_plate_flush_depths_land_on_the_2d_grid (test_keystone_mesh.StaticKeystoneTests) ... ok
+test_bezel_web_reduction_pair_edge_slots_and_keystone (test_port_openings.FrontPositionBezelTests) ... ok
+test_defaults_are_byte_identical_for_four_existing_shapes (test_port_openings.FrontPositionBezelTests) ... ok
+test_geometry_is_only_front_opening_edges (test_port_openings.FrontPositionBezelTests) ... ok
+test_position_and_flush_window (test_port_openings.FrontPositionBezelTests) ... FAIL
+test_ranges_unknown_values_and_allocation_round_trip (test_port_openings.FrontPositionBezelTests) ... ok
+test_foot_case_budget_and_optiplex_sleeve_values (test_port_openings.PortOpenings) ... ok
+test_foot_pocket_joint_strap_and_rear_stop_guards (test_port_openings.PortOpenings) ... ok
+test_joint_positions (test_port_openings.PortOpenings) ... ok
+test_movement_and_preservation (test_port_openings.PortOpenings) ... ok
+test_no_feet_preserves_height_and_mount_defaults (test_port_openings.PortOpenings) ... ok
+test_no_hole_flat_device_cleans (test_port_openings.PortOpenings) ... ok
+test_problems (test_port_openings.PortOpenings) ... ok
+test_rotation (test_port_openings.PortOpenings) ... ok
+test_sizes (test_port_openings.PortOpenings) ... ok
+test_sleeve_scad_assignments_are_not_commented_out (test_port_openings.PortOpenings) ... ok
+test_rotated_keep_clear_zone_hits_rear (test_port_openings.ProtrusionTests) ... ok
+test_validation_round_trip_and_legacy_bytes (test_port_openings.ProtrusionTests) ... ok
+test_bodies_and_closure (test_mesh_study.MeshStudyTests) ... ok
+test_finds_the_groove (test_mesh_study.MeshStudyTests) ... ok
+test_overlapping_bodies_merge_into_one_solid (test_mesh_study.MeshStudyTests) ... ok
+test_section_shows_the_groove (test_mesh_study.MeshStudyTests) ... ok
+test_groove_is_not_a_through_hole (test_mesh_study.ThroughHoleTests) ... ok
+test_round_hole_in_a_washer (test_mesh_study.ThroughHoleTests) ... ok
+test_square_hole_between_overlapping_bodies (test_mesh_study.ThroughHoleTests) ... ok
+test_auto_colors_stay_automatic (test_faceplate_color.FaceplateColorTests) ... ok
+test_color_only_change_changes_export_identity (test_faceplate_color.FaceplateColorTests) ... ok
+test_opaque_image_keeps_faceplate_as_base (test_faceplate_color.FaceplateColorTests) ... ok
+test_png_round_trip_with_filters (test_faceplate_color.FaceplateColorTests) ... ok
+test_preview_reduces_and_cleans (test_faceplate_color.FaceplateColorTests) ... ok
+test_same_filament_merges_bodies (test_faceplate_color.FaceplateColorTests) ... ok
+test_settings_validation (test_faceplate_color.FaceplateColorTests) ... ok
+test_atomic_immutable_import_and_pinning (test_app.Tests) ... ok
+test_axial_geometry_and_open_insert_overrun (test_app.Tests) ... ok
+test_draft_preview_never_changes_saved_project (test_app.Tests) ... ok
+test_hardware_envelopes_follow_actual_joint_axes (test_app.Tests) ... ok
+test_invalid_dimensions (test_app.Tests) ... ok
+test_maximum_hole_is_not_exact_recommendation (test_app.Tests) ... ok
+test_mesh_validation_and_bundle_path_rejection (test_app.Tests) ... ok
+test_model_uploads_get_a_larger_request_limit (test_app.Tests) ... ok
+test_reach_bottoming_and_unknowns (test_app.Tests) ... ok
+test_starter_catalog_is_idempotent_and_keeps_selection (test_app.Tests) ... ok
+test_thread_mismatch_and_missing_selection (test_app.Tests) ... ok
+
+======================================================================
+FAIL: test_position_and_flush_window (test_port_openings.FrontPositionBezelTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\outputs\Mechanical_Design_App\test_port_openings.py", line 172, in test_position_and_flush_window
+    if window:self.assertIn('square([86.0,20.3]',E.source(s))
+AssertionError: 'square([86.0,20.3]' not found in '// Lab Rax generic equipment tray + faceplate (wizard template).\n// Faceplate derived from the Pi4 baseline; rack holes follow the four-corner layout of the user-supplied\n// 1U blank plate (faceplate_mounting.json): EVERY rack unit gets 4 holes, never a single centre pair.\n// The wizard appends override assignments at the end of this file.\n// PROPOSED, UNVALIDATED: printed fit, strength and rack clearance are UNKNOWN.\n$fn=48;\npart="assembly";            // assembly, faceplate, tray, combined, rear_bracket\n// Device envelope (mm). Origin of hole coordinates = device front-left corner, seen from above.\ndev_w=85; dev_d=56; dev_h=20;\nfeet=[];                     // [[x,y,w,d,h],...] underside feet, device frame front-left origin\nholes=[];                   // [[x,y],...] mounting hole centres\nhole_d=2.7;                 // device mounting hole diameter\ndevice_mount="inserts";     // inserts, pegs, clips, straps\nstandoff=6;                 // device lift above tray floor\ninsert_pilot=3.2;           // pilot for heat-set insert (inserts mode)\nboard_t=1.6;                // board/flange thickness (pegs, clips)\njoint="screw";              // screw, single ("snap" retired 2026-10-19: too brittle; kept as history)\nu=1;                        // faceplate height in rack units\nkeystones=[];               // [x,...] keystone centres on faceplate (X=0 centre)\n// Keystone v2 (2026-10-19, now the fallback; see ks_style): re-modelled from measurements of Brian\'s reference keystone frame\n// (14.5 x 16 opening was too narrow when printed). Opening 14.8 x 16.6 through the plate, plus a rear collar\n// 19.8 x 27.85 reaching 9.2 mm behind the front face (bottom lip to 10.4) that carries the latch ramp and catches.\nks_w=14.8; ks_h=16.6;       // front opening\nks_ow=19.8; ks_ob=11.9; ks_ot=15.95; ks_od=9.2; ks_lip=10.4;  // collar width, below/above opening centre, depth\nports=[];                   // [[x,z,w,h,r],...] faceplate cut-outs, z from slot bottom, r=corner radius\nfront_gap=12;               // device front to faceplate rear face\nmargin=8;                   // tray border around device\ndev_off_x=0;                // device left/right offset, mm from centred (+ = right, seen from the front)\ndev_off_y=0;                // device front/back offset, mm added to front_gap (+ = toward the rear)\ndev_rot=0;                  // device rotation seen from above: 0, 90, 180, 270 (90/270 swap width and depth)\nrear_support=false;         // heavy/deep equipment: tray runs to the rear posts and screws to a rear bracket\ncoupon=[];                  // test coupon: [x0,x1,ymax] keeps only that slice of the part\n\n// 4 mm plate (owner default 2026-10-18). Corner radius is limited by the four-corner holes:\n// the reference holes sit 1.6 mm from the top/bottom edge, so larger corners would cut into them.\nrack_pitch=44.45; plate_gap=0.05; legacy_slot_offset=1.225;\nplate_bottom=plate_gap/2; plate_center=u*rack_pitch/2;\nplate_w=252; plate_t=4; plate_r=2.5; plate_h=u*rack_pitch-plate_gap;\nhole_x=118.2625; hole_dz=15.902;   // each U: holes at its centre �hole_dz (6.323 / 38.127 above the slot bottom)\nrack_depth=240;             // Lab Rax frame depth (front of front posts to back of rear posts)\nnudge=0;                    // render-repair only: tiny size offset applied when OpenSCAD 2021 emits a sliver\nsleeve=device_mount=="sleeve";\n// PROPOSED sleeve defaults (mm); independent design, fit and strength UNKNOWN.\nsl_side=0.5; sl_top=0.3; sl_wall=6; sl_lip_w=10; sl_lip_t=1.5; sl_band=1.5; sl_stop_t=4; sl_stop_h=6;\nfoot_clearance=0.5; foot_extra_depth=0.3; foot_min_floor=0.8; foot_lip_t=3.0;\ntray_t=3; floor_z=(device_mount=="flat"||sleeve)?0.5:7+legacy_slot_offset; tray_z=floor_z; // @flat-floor\nassert(dev_rot==0||dev_rot==90||dev_rot==180||dev_rot==270,"dev_rot must be 0, 90, 180 or 270");\n// Device footprint on the tray after rotation; the tray stays centred and grows to keep the margin.\nfp_w=(dev_rot==90||dev_rot==270)?dev_d:dev_w; fp_d=(dev_rot==90||dev_rot==270)?dev_w:dev_d;\nrack_inner_w=208; side_clear=2; max_tray=rack_inner_w-2*side_clear; // PROPOSED nominal opening / side clearance\ntray_w=2*(abs(dev_off_x)+fp_w/2+(sleeve?max(margin,sl_side+sl_wall):margin)); tray_d=rear_support?rack_depth:sleeve?-plate_t+fp_d+margin:dev_off_y+fp_d+front_gap+margin;\ntray_x=-tray_w/2; tray_y=0;\n // @flat-begin\nassert(device_mount!="flat"||front_gap+dev_off_y>=6.2,"Flat corner stops need a front gap of at least 6.2 mm");\nassert(device_mount!="flat"||joint!="screw"||front_gap+dev_off_y>=11.5,"Flat device must clear the front screw joint (front gap >= 11.5 mm)");\nassert(device_mount!="flat"||!rear_support||front_gap+dev_off_y+fp_d<=rack_depth-11.5,"Flat device must clear the rear screw joint (rear gap >= 11.5 mm)");\n // @flat-end\ndev_x=-fp_w/2+dev_off_x; dev_y=-4.0; floor_top=tray_z+tray_t;\nassert(tray_w<=max_tray,str("This tray is ",tray_w," mm wide but the rack opening allows ",max_tray," mm (",rack_inner_w," mm minus ",side_clear," mm each side). Try Rotate 90 degrees, or reduce dev_off_x."));\nassert(true,str("Device moved into the faceplate: dev_off_y must be at least ",-front_gap));\nassert(!rear_support||dev_y+fp_d+margin<=rack_depth,"Device moved past the rear posts; reduce dev_off_y");\n// Device-frame point [x,y] (front-left origin, unrotated) -> footprint offset from [dev_x,dev_y].\nfunction dp(p)=dev_rot==90?[dev_d-p[1],p[0]]:dev_rot==180?[dev_w-p[0],dev_d-p[1]]:dev_rot==270?[p[1],dev_w-p[0]]:p;\nfoot_h=(device_mount=="flat"||sleeve)?max([0,for(f=feet)f[4]]):0; foot_depth=foot_h>0?foot_h+foot_extra_depth:0;\nsl_half=fp_w/2+sl_side; sl_bottom=floor_top; sl_window_top=sl_bottom+dev_h-foot_h+sl_top;  // case rests on the floor top; feet hang in pockets foot_extra_depth deeper\nsl_lip=sl_window_top+(foot_h>0?foot_lip_t:sl_lip_t)<=u*rack_pitch?(foot_h>0?foot_lip_t:sl_lip_t):0;\nsl_rear=dev_y+fp_d;\nsl_joints=[dev_off_x-sl_half-sl_wall/2,dev_off_x+sl_half+sl_wall/2];\nsl_joint_z=[sl_bottom+3,sl_window_top-3];\nassert(!sleeve||fp_d/4-plate_t-6>=8,"Sleeve depth must be at least 72 mm to keep strap slots clear of the front joint");\nassert(!sleeve||sl_bottom-plate_bottom>=sl_band&&u*rack_pitch-plate_bottom-sl_window_top>=sl_band,str("Too tall for a flush window in ",u,"U; choose ",u+1,"U"));\nassert(!sleeve||!rear_support||sl_rear+sl_stop_t<=rack_depth-11.5,"Sleeve rear stop must clear rear joint by 11.5 mm");\nassert(!sleeve||joint!="screw"||sl_window_top-sl_bottom>=10,"Sleeve screw joint needs a window at least 10 mm tall");\njx=min(40,tray_w/2-12); joint_x=[-jx,jx];\ntongue_w=12; tongue_depth=7; tongue_h=3; tongue_z=tray_z+3.5;\nslot_clear=0.3; boss_d=9; m3_clear=3.4; joint_pilot=4.0;  // 4.0 = the printed, well-fitting Pi4 trial\n\nmodule capsule2d(len=10,diam=7){hull(){translate([-(len-diam)/2,0])circle(d=diam);translate([(len-diam)/2,0])circle(d=diam);}}\nmodule rrect(w,h,r){rr=min(r,w/2-0.01,h/2-0.01);if(rr<=0)square([w,h],center=true);else offset(r=rr)square([w-2*rr,h-2*rr],center=true);}\n// Mirror front-of-tray features to the rear (about the rack\'s mid-depth).\nmodule to_rear(){translate([0,rack_depth/2,0])mirror([0,1,0])translate([0,-rack_depth/2,0])children();}\n\n// Faceplate outline seen from the front: 2D X = rack X, 2D Y = height Z.\n// rear=true cuts the larger keystone pocket; plain=true leaves out keystones/ports (rear bracket).\nmodule plate2d(rear=false,plain=false){\n difference(){\n  hull()for(sx=[-1,1],sz=[-1,1])translate([sx*(plate_w/2-plate_r),plate_center+sz*(plate_h/2-plate_r)])circle(r=plate_r+nudge);\n  for(i=[0:u-1],dz=[-hole_dz,hole_dz],x=[-hole_x,hole_x])translate([x,i*rack_pitch+rack_pitch/2+dz])capsule2d();\n  if(!plain){\n   translate([0.0,27.375])square([86.0,20.299999999999997],center=true);\n   for(p=ports)translate([p[0],p[1]])rrect(p[2],p[3],p[4]);\n  }\n }\n}\n// Plate between y=y0 (front) and y0+t, built from the 2D outline (cleaner meshes than 3D cuts in OpenSCAD 2021).\nmodule plate_layer(y0,t,rear=false,plain=false){translate([0,y0+t,0])rotate([90,0,0])linear_extrude(height=t)plate2d(rear,plain);}\n\nmodule plate_joint_add(rear=false){\n if(joint=="screw"&&(!sleeve||rear)){\n  for(x=joint_x)translate([x-tongue_w/2,0,tongue_z])cube([tongue_w,tongue_depth,tongue_h]);\n  for(x=joint_x)translate([x,0,tray_z+14])rotate([-90,0,0])cylinder(d=boss_d,h=8);\n }\n if(joint=="snap") for(x=joint_x){\n  // Cantilever arm under the tray floor; barb snaps up into a floor window.\n  translate([x-4,0,tray_z-2])cube([8,16,2]);\n  // Barb v2: square catch face toward the plate, ramp falling toward the rear so the tray, slid in\n  // from the rear, cams the arm down until its window drops over the barb.\n  translate([x-4,12,tray_z])hull(){cube([8,0.6,1.2]);cube([8,2.4,0.01]);}\n }\n}\n// Keystone collar behind the plate, and the jack-shaped cut through plate + collar.\n// Profile in (d = depth behind front face, z from opening centre); X width is ks_w throughout.\nmodule ks_collar(){for(x=keystones)translate([x-ks_ow/2,-plate_t,plate_center]){\n translate([0,0,-ks_ob])cube([ks_ow,ks_od,ks_ob+ks_ot]);\n translate([0,0,-ks_ob])cube([ks_ow,ks_lip,ks_ob-ks_h/2]);\n}}\nmodule ks_cut(){for(x=keystones)translate([x-ks_w/2,-plate_t,plate_center])rotate([90,0,90])linear_extrude(height=ks_w)\n polygon([[-1,-ks_h/2],[5.8,-ks_h/2],[5.8,-9.9],[9.2,-9.9],[9.2,-ks_h/2],[11,-ks_h/2],[11,11.6],[8.2,11.6],\n          [8.2,ks_ot+1],[7.2,ks_ot+1],[7.2,13.6],[0.6,ks_h/2],[-1,ks_h/2]]);}\n// Golden keystone (Brian, 2026-10-19): exact cross-sections of the keystone on Brian\'s SG108 faceplate, which fits\n// perfectly in practice. Source: "10 inch shelf TP-Link SG108 Plus Keystone" by Goul (MakerWorld remix, BY-NC-SA),\n// local/personal use only, never redistributed. Each band: [X from opening centre, width, polygons in source (Y, Z)]\n// with source Y running down the plate (opening centre Y=25.09) and Z = depth (keystone face 0, plate back 4.08).\n// The block replaces the plate within 21 x 33.5 mm around each keystone; front face sits 0.08 proud like the source.\nks_style="golden";          // golden (SG108 copy) or v2 (own measured rebuild, kept as fallback)\n// Brian, 2026-10-19: the golden v3 print fit left/right well but had ~0.4 mm play up/down. ks_tight moves the\n// bottom (hook-side) edge of the opening, its hook groove and lip up by this much; the latch side is unchanged.\nks_tight=0.2;  // Brian, 2026-10-19: v5 coupon (0.2) printed a perfect fit; v4 (0.4) was too tight.\nKS_GOLD=[\n  [-10.50,0.60,[[[45.500,4.080],[45.500,0.080],[38.691,0.080],[38.691,0.000],[7.251,0.000],[7.251,0.080],[1.000,0.080],[1.000,4.080],[1.071,4.080]]]],\n  [-9.90,0.98,[[[9.143,4.080],[9.143,6.600],[9.205,7.147],[9.207,7.160],[9.226,7.216],[9.395,7.692],[9.679,8.145],[9.697,8.169],[10.075,8.546],[10.099,8.565],[10.551,8.848],[11.083,9.036],[11.643,9.100],[13.493,9.100],[14.293,9.900],[33.393,9.900],[33.893,10.400],[34.493,10.400],[35.054,10.336],[35.586,10.148],[36.038,9.865],[36.062,9.846],[36.439,9.469],[36.458,9.445],[36.742,8.992],[36.753,8.965],[36.930,8.460],[36.993,7.900],[36.993,4.080],[45.500,4.080],[45.500,0.080],[38.691,0.080],[38.691,0.000],[7.251,0.000],[7.251,0.080],[1.000,0.080],[1.000,4.080],[1.014,4.080]]]],\n  [-8.92,1.52,[[[7.551,4.080],[7.551,2.250],[9.143,2.250],[9.143,6.600],[9.209,7.169],[9.367,7.620],[9.404,7.709],[9.658,8.114],[9.716,8.190],[9.755,8.229],[10.054,8.527],[10.130,8.586],[10.534,8.840],[10.623,8.876],[11.074,9.034],[11.643,9.100],[13.493,9.100],[14.293,9.900],[33.393,9.900],[33.893,10.400],[34.493,10.400],[35.063,10.334],[35.514,10.176],[35.603,10.140],[36.006,9.886],[36.083,9.827],[36.420,9.490],[36.479,9.414],[36.719,9.030],[36.737,9.000],[36.770,8.920],[36.927,8.469],[36.993,7.900],[36.993,2.250],[38.551,2.250],[38.551,4.080],[45.500,4.080],[45.500,0.080],[38.691,0.080],[38.691,0.000],[7.251,0.000],[7.251,0.080],[1.000,0.080],[1.000,4.080],[1.044,4.080]]]],\n  [-7.40,14.80,[[[7.551,4.080],[7.551,2.250],[9.143,2.250],[9.143,6.600],[9.175,6.878],[9.229,7.247],[9.478,7.850],[9.876,8.368],[10.393,8.765],[10.996,9.015],[11.365,9.069],[11.643,9.100],[13.493,9.100],[13.493,8.100],[11.493,8.100],[11.493,7.200],[16.793,0.500],[16.793,0.000],[7.251,0.000],[7.251,0.080],[1.000,0.080],[1.000,4.080],[1.025,4.080]],[[45.500,4.080],[45.500,0.080],[38.691,0.080],[38.691,0.000],[33.393,0.000],[33.393,5.800],[34.993,5.800],[34.993,8.400],[33.393,8.400],[33.393,9.900],[33.893,10.400],[34.493,10.400],[34.771,10.369],[35.140,10.315],[35.743,10.065],[36.200,9.715],[36.261,9.668],[36.658,9.150],[36.908,8.547],[36.962,8.178],[36.993,7.900],[36.993,2.250],[38.551,2.250],[38.551,4.080],[42.555,4.080]]]],\n  [7.40,2.50,[[[45.500,4.080],[45.500,0.080],[38.691,0.080],[38.691,0.000],[7.251,0.000],[7.251,0.080],[1.000,0.080],[1.000,4.080],[7.551,4.080],[7.551,2.250],[9.143,2.250],[9.143,6.600],[9.209,7.168],[9.370,7.630],[9.402,7.705],[9.662,8.120],[9.712,8.185],[9.927,8.400],[10.059,8.531],[10.124,8.582],[10.538,8.841],[10.614,8.873],[11.075,9.034],[11.643,9.100],[13.493,9.100],[14.293,9.900],[33.393,9.900],[33.893,10.400],[34.493,10.400],[35.062,10.335],[35.523,10.172],[35.599,10.141],[36.013,9.882],[36.078,9.831],[36.425,9.486],[36.474,9.420],[36.735,9.005],[36.767,8.930],[36.928,8.467],[36.993,7.900],[36.993,2.250],[38.551,2.250],[38.551,4.080],[42.599,4.080]]]],\n  [9.90,0.60,[[[45.500,4.080],[45.500,0.080],[38.691,0.080],[38.691,0.000],[7.251,0.000],[7.251,0.080],[1.000,0.080],[1.000,4.080],[7.551,4.080],[7.551,2.250],[38.551,2.250],[38.551,4.080],[42.635,4.080]]]]\n];\n// Depths are shifted by -0.08 before polygon() and the 0.08 is added back in the 3D transform: OpenSCAD 2021 snaps 2D\n// points to a 1/65536 mm grid, which put the plate-flush faces (Z 0.08 / 4.08) 0.0000134 mm off the plate and left a\n// non-manifold sliver edge. Shifted, those faces sit at exactly 0 and 4.0 (on the grid); the shape is unchanged.\n// The block is cut 0.1 mm oversize in height, then clipped in rack coordinates by the same box as ks_box_cut, so its\n// top/bottom faces are the very same numbers as the plate opening (the transform alone landed them a hair off).\nmodule ks_golden(){for(x=keystones)intersection(){\n translate([x,0,plate_center])multmatrix([[1,0,0,0],[0,0,1,-4],[0,-1,0,25.09],[0,0,0,1]])intersection(){\n  union()for(b=KS_GOLD)translate([b[0],0,0])rotate([90,0,90])linear_extrude(height=b[1])for(pg=b[2])\n   translate([b[1]>10&&min([for(q=pg)q[0]])>30?-ks_tight:0,0])polygon([for(q=pg)[q[0],q[1]-0.08]]);  // opening band, hook side\n  translate([-10.5,25.09-18.6,-0.09])cube([21,33.7,10.42]);\n }\n translate([x-10.5,-plate_t-1,plate_center-15])cube([21,plate_t+16,33.5]);\n}}\nmodule ks_box_cut(){for(x=keystones)translate([x-10.5,-plate_t-0.01,plate_center-15])cube([21,plate_t+0.02,33.5]);}\nmodule plate_joint_cut(rear=false){if(joint=="screw"&&(!sleeve||rear))for(x=joint_x)translate([x,-0.1,tray_z+14])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.2);}\n\nmodule faceplate(){\n union(){\n  difference(){\n   union(){\n    plate_layer(-plate_t,plate_t);\n    if(ks_style=="v2")ks_collar();\n    plate_joint_add();\n   }\n   plate_joint_cut();\n   if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)translate([x,-plate_t-0.1,z])rotate([-90,0,0])cylinder(d=m3_clear,h=plate_t+0.2);\n   if(ks_style=="v2")ks_cut(); else ks_box_cut();\n  }\n  if(ks_style!="v2")ks_golden();\n }\n}\n// Plain plate on the rear posts (mirror of the faceplate, no openings) that the tray\'s rear end screws/snaps to.\nmodule rear_bracket(){to_rear()difference(){union(){plate_layer(-plate_t,plate_t,false,true);plate_joint_add(true);}plate_joint_cut(true);}}\n\nmodule device_features_add(){\n if(sleeve){\n  for(side=[-1,1]){\n   x=side<0?dev_off_x-sl_half-sl_wall:dev_off_x+sl_half;\n   translate([x,0,floor_top])cube([sl_wall,sl_rear,sl_window_top-floor_top]);\n   if(sl_lip>0)translate([side<0?x:dev_off_x+sl_half-min(sl_lip_w,sl_half),0,sl_window_top])cube([sl_wall+min(sl_lip_w,sl_half),sl_rear,sl_lip]);\n  }\n  translate([dev_x,sl_rear,floor_top])cube([fp_w,sl_stop_t,min(sl_stop_h,dev_h-foot_h)]);\n }\n\n // @flat-begin\n if(device_mount=="flat"){\n  // Corner stops outside the footprint, with 0.2 mm nominal clearance. Retention UNKNOWN.\n  for(x=[dev_x-6.2,dev_x+fp_w+0.2],y=[dev_y,dev_y+fp_d-min(6,fp_d)])\n   translate([x,y,floor_top])cube([6,min(6,fp_d),min(6,dev_h-foot_h)]);\n  for(x=[dev_x,dev_x+fp_w-min(6,fp_w)],y=[dev_y-6.2,dev_y+fp_d+0.2])\n   translate([x,y,floor_top])cube([min(6,fp_w),6,min(6,dev_h-foot_h)]);\n }\n // @flat-end\n if(device_mount=="inserts")for(h=[for(q=holes)dp(q)])translate([dev_x+h[0],dev_y+h[1],floor_top])cylinder(d=max(insert_pilot+3.5,7),h=standoff);\n if(device_mount=="pegs")for(h=[for(q=holes)dp(q)])translate([dev_x+h[0],dev_y+h[1],floor_top]){\n  cylinder(d=hole_d+3,h=standoff);\n  translate([0,0,standoff])cylinder(d=hole_d-0.3,h=board_t+0.8);\n  translate([0,0,standoff+board_t+0.8])cylinder(d1=hole_d-0.3,d2=hole_d-1,h=0.8);\n }\n if(device_mount=="clips"){\n  // Support ledges at the four corners plus a flexing clip on each side.\n  for(x=[dev_x-1,dev_x+fp_w-5],y=[dev_y-1,dev_y+fp_d-5])translate([x,y,floor_top])cube([6,6,standoff]);\n  for(s=[-1,1])translate([s>0?dev_x+fp_w+0.2:dev_x-2.2,dev_y+fp_d/2-5,floor_top]){\n   cube([2,10,standoff+board_t+2.5]);\n   translate([s>0?-1.2:2,0,standoff+board_t+0.2])hull(){cube([1.2,10,1.6]);translate([s>0?1.2:0,0,1.6])cube([0.01,10,0.6]);}\n  }\n }\n}\nmodule device_features_cut(){\n if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)translate([x,-0.1,z])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.1);\n // Strap access through each wall at quarter-depth, clear of the front/rear joints.\n if(sleeve)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])\n  translate([side<0?dev_off_x-sl_half-sl_wall-0.1:dev_off_x+sl_half-0.1,y-6,floor_top-0.1])cube([sl_wall+0.2,12,3.1]);\n\n if(device_mount=="inserts")for(h=[for(q=holes)dp(q)])translate([dev_x+h[0],dev_y+h[1],floor_top+0.01])cylinder(d=insert_pilot,h=standoff+0.1);\n if(device_mount=="straps"||device_mount=="flat"||sleeve)for(x=[dev_x-5.5,dev_x+fp_w+2.5],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])\n  translate([x,y-6,tray_z-0.1])cube([3,12,tray_t+0.2]);\n // Blind pockets retain at least foot_min_floor; taller feet pass through the floor by design.\n if(foot_h>0&&(device_mount=="flat"||sleeve))for(f=feet){corners=[dp([f[0],f[1]]),dp([f[0]+f[2],f[1]]),dp([f[0],f[1]+f[3]]),dp([f[0]+f[2],f[1]+f[3]])];x0=dev_x+min([for(p=corners)p[0]])-foot_clearance;x1=dev_x+max([for(p=corners)p[0]])+foot_clearance;y0=dev_y+min([for(p=corners)p[1]])-foot_clearance;y1=dev_y+max([for(p=corners)p[1]])+foot_clearance;deep=f[4]+foot_extra_depth;\n  translate([x0,y0,deep>tray_t-foot_min_floor?tray_z-0.1:floor_top-deep])cube([x1-x0,y1-y0,deep>tray_t-foot_min_floor?tray_t+0.2:deep+0.02]);}\n}\n\nmodule tray_joint_add(rear=false){\n if(joint=="screw"&&(!sleeve||rear)){\n  for(x=joint_x) translate([x-9,0,tray_z+tray_t])cube([18,8,5]);\n  for(x=joint_x)translate([x-7,8.3,tray_z+3])cube([14,3,19]);\n  for(x=joint_x) for(side=[-1,1]) translate([x+side*6-1,0,0])\n    hull(){translate([0,9,tray_z+2.7])cube([2,2,0.5]);\n           translate([0,9,tray_z+8])cube([2,2,0.5]);\n           translate([0,(device_mount=="flat"||sleeve)?9.5:20,tray_z+2.7])cube([2,2,0.5]);}\n }\n}\nmodule tray_joint_cut(rear=false){\n if(joint=="screw"&&(!sleeve||rear)){\n  for(x=joint_x)translate([x-(tongue_w+slot_clear)/2,-0.1,tongue_z-slot_clear/2])cube([tongue_w+slot_clear,tongue_depth+slot_clear,tongue_h+slot_clear]);\n  for(x=joint_x)translate([x,11.4,tray_z+14])rotate([90,0,0])cylinder(d=m3_clear,h=12);\n }\n if(joint=="snap")for(x=joint_x)translate([x-4.3,11.6,tray_z-0.1])cube([8.6,3.2,tray_t+0.2]);\n}\n\nmodule tray(){\n difference(){\n  union(){\n   translate([tray_x,tray_y,tray_z])cube([tray_w,tray_d,tray_t]);\n   tray_joint_add();\n   if(rear_support)to_rear()tray_joint_add(true);\n   device_features_add();\n  }\n  tray_joint_cut();\n  if(rear_support)to_rear()tray_joint_cut(true);\n  device_features_cut();\n }\n}\n\nmodule clip_coupon(){if(len(coupon)==3)intersection(){children();translate([coupon[0],-50,-50])cube([coupon[1]-coupon[0],coupon[2]+50,400]);}else children();}\n\nclip_coupon(){\n if(part=="faceplate")faceplate();\n else if(part=="tray")tray();\n else if(part=="rear_bracket")rear_bracket();\n else if(part=="combined")union(){faceplate();translate([tray_x,-0.01,tray_z])cube([tray_w,0.02+0.01,tray_t]);tray();if(rear_support)rear_bracket();}\n else {color("steelblue")faceplate();color("silver")tray();if(rear_support)color("steelblue")rear_bracket();\n  %translate([dev_x,dev_y,floor_top+(device_mount=="inserts"||device_mount=="pegs"||device_mount=="clips"?standoff:0)-foot_h])cube([fp_w,fp_d,dev_h]);}\n}\n\n// ---- wizard overrides: Bench\ndev_w=85.0;\ndev_d=100.0;\ndev_h=20.0;\nhole_d=2.7;\nstandoff=6.0;\ninsert_pilot=3.2;\nboard_t=1.6;\nu=1;\nholes=[[10.0, 15.0]];\nkeystones=[];\ndevice_mount="inserts";\njoint="single";\nrear_support=false;\ncoupon=[];\ndev_off_y=-16.0;\nports=[];\n'
+
+----------------------------------------------------------------------
+Ran 155 tests in 5.878s
+
+FAILED (failures=1, skipped=1)
+== JavaScript (js-tests/run.js) ==
+feet detector: 50,000 triangles in 127.1 ms
+protrusions: 50k triangles 201.8 ms
+✔ viewer button actions and strict four pixel threshold (1.7443ms)
+✔ cursor anchor is invariant across zoom and existing pan (0.2149ms)
+✔ GPU projection, projected labels and inverse picking agree (0.2636ms)
+✔ subthreshold clicks, pan versus orbit, and cancel retain selection semantics (0.8436ms)
+✔ shortcuts are scoped, do not consume typing/undo, and rebinding is idempotent (0.4865ms)
+✔ pinch zooms and never emits a click after either finger lifts (0.1928ms)
+✔ wizard mount selector retains inserts default and explicitly selects all mount choices (5.0332ms)
+✔ wizard Save blocks no-hole inserts and pegs with pointer; flat reaches Save unchanged (2.2753ms)
+✔ mount changes use shared autoU, retain entered port Z, and protect typed or saved U (2.3828ms)
+✔ flat hint points to Ports and wizard note uses current device lift without moving heights (1.3703ms)
+✔ every app script parses (16.8381ms)
+✔ every script index.html loads from /rack-references/ is in the asset manifest (0.7094ms)
+✔ RackLayout.checkRange rejects out-of-range and overlapping ranges (0.6462ms)
+✔ RackLayout.change moves an allocation and resets fit to UNKNOWN (0.2602ms)
+✔ RackLayout.release and restore round-trip; restore keeps fit UNKNOWN (0.3033ms)
+✔ WorkshopCatalog.filter: latest revision, kind, exact diameter, unknown material, length bounds (0.3597ms)
+✔ WorkshopCatalog.changes lists changed fields with their effect (0.2252ms)
+✔ LabRaxScene.frame stacks posts in levels of at most 5U that sum to the rack height (0.4875ms)
+✔ LabRaxScene.guidePose puts the cable guide plate flat on the post face at the slot hole pair (2.4577ms)
+✔ WorkshopClearance.screen grades height, width and depth against nominal rack numbers (0.4368ms)
+✔ WorkshopClearance.screen keeps unspecified rack numbers UNKNOWN and flags span mismatch (0.1168ms)
+✔ WorkshopClearance.screen uses the slot tray placement (offset, rotation, standoff, rear support, U) (0.4004ms)
+✔ LabRaxStudio.artworkRect stays inside the 216 x 34 mm faceplate field (0.2448ms)
+✔ LabRaxStudio.artworkWindow generalizes the reference window to wizard faceplates of any U span (0.3486ms)
+✔ LabRaxStudio.artworkRect keeps wizard images clear of port and keystone openings (2.7577ms)
+✔ LabRaxStudio.selectionRect follows the plate front at any U height (0.355ms)
+✔ LabRaxPorts library planning ports: nine ports, face UNKNOWN, front-edge ports point front and USB/Ethernet right (0.6038ms)
+✔ LabRaxPorts wizard ports: front openings, rear ports and keystone pass-through pairs (0.3203ms)
+✔ LabRaxPorts wizard ports follow the slot tray placement (placement.tray wins over the library spec) (0.7904ms)
+✔ LabRaxPorts overrides merge, reset, custom ports and prune (0.6473ms)
+✔ LabRaxPorts marker rotations are proper rotations and parts sit at the allocation base (0.4595ms)
+✔ LabRaxPorts marker meshes exist for every connector type (5.8488ms)
+✔ LabRaxCableView tube follows the path, is finite and has closed end caps (1.4187ms)
+✔ LabRaxCableView sag dips between points and stays put on vertical runs (0.1865ms)
+✔ LabRaxCableView bundles cables side by side through a guide without overlap (8.6448ms)
+✔ LabRaxCableView exit grommets face outward with proper rotations (1.1859ms)
+✔ first-run UI has no retired equipment card, wording or implicit allocation (1.9109ms)
+✔ root front-end assets match their hashes (19.3511ms)
+✔ new placements use the chosen library item and omit historical reference metadata (1.5246ms)
+✔ height rule and auto-U use the actual floor and only real standoffs (0.239ms)
+✔ wizard import actually uses shared auto-U and shows the flat hint without changing mount (1.2147ms)
+✔ flat placement fits 1U, sketch floor and device agree, joints remain guarded (1.0935ms)
+✔ front, rear and custom cable ports track the lower floor and preserve library input (0.2581ms)
+✔ slot-bottom standard: 1U/2U bounds, rack holes, preserved non-flat rack heights (1.6095ms)
+✔ sleeve sketch contains a real window and walls/lips/stop in the shared coordinate frame (1.2089ms)
+✔ detects four lower feet on separate overlapping bodies and ignores a plain case (3.4865ms)
+✔ orientation and quarter-turn transform foot locations in the device frame (3.1697ms)
+✔ 50,000 triangle import stays responsive (139.308ms)
+✔ flat and sleeve use case height, rotated pockets and unchanged legacy specs (0.5206ms)
+✔ pockets colliding with joints or straps block placement (0.3594ms)
+✔ back cylinder separate (5.3669ms)
+✔ back cylinder fused (7.7093ms)
+✔ feet excluded; sub-2mm bumps and internal solids excluded (11.7486ms)
+✔ left plug answers keep the case origin and mandatory unanswered guard (1.1969ms)
+✔ front and bottom plug origin stays stable for holes feet and ports (1.9921ms)
+✔ warnings rotate zones and include real bend-space limits (0.2451ms)
+✔ screening performance 50k triangles (212.7615ms)
+ℹ tests 57
+ℹ suites 0
+ℹ pass 57
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 505.1913
+== JavaScript page logic (js-tests/page-logic.js) ==
+✔ page Save: layout/hardware dirty status enables Save without persistence (3.2109ms)
+✔ page Save: one atomic request commits layout, appearance and hardware then clears dirty state (1.8309ms)
+✔ page Save: rejected request keeps draft and hardware, reports error and permits retry (0.9311ms)
+✔ page Save: edits during in-flight Save remain dirty and double Save is rejected (1.0444ms)
+✔ page Save: precondition capable=false blocks writes (0.7472ms)
+✔ page Save: precondition openingAssembly=true blocks writes (0.7928ms)
+✔ page Save: precondition artworkPending=1 blocks writes (1.6304ms)
+✔ page Save: precondition byId("mountWizard").hidden=false blocks writes (0.6378ms)
+✔ page Save: precondition byId("rackDialog").open=true blocks writes (0.6959ms)
+✔ page check: dirty guard blocks action without silently saving (3.6009ms)
+✔ page bom: dirty guard blocks action without silently saving (1.7402ms)
+✔ page project: dirty guard blocks action without silently saving (1.7897ms)
+✔ page designExport: dirty guard blocks action without silently saving (1.8362ms)
+✔ page buildRevision: dirty guard blocks action without silently saving (2.4486ms)
+✔ page checks and BOM: clean actions use saved state without issuing Save (2.7851ms)
+✔ viewer startup: actual script loads, binds events and paints its first frame (18.5873ms)
+✔ viewer startup: missing reports error without drawing or unhandled rejection (1.0377ms)
+✔ viewer startup: network reports error without drawing or unhandled rejection (1.4444ms)
+✔ viewer startup: bad-json reports error without drawing or unhandled rejection (0.9308ms)
+✔ viewer startup: no-canvas reports error without drawing or unhandled rejection (0.8827ms)
+✔ viewer startup: failed studio renderer falls back with a visible reason (2.2548ms)
+✔ rack viewer startup: required and optional meshes load then schedule both views (2.8039ms)
+✔ rack viewer startup: optional-404 keeps required meshes usable (0.6606ms)
+✔ rack viewer startup: optional-network keeps required meshes usable (0.5739ms)
+✔ rack viewer startup: required failure retains diagnostic (0.6032ms)
+✔ rack viewer startup: renderer failure retains diagnostic (0.4902ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 61.8635
+== JavaScript rack BOM (js-tests/rack-bom.js) ==
+✔ rack BOM worked example: 5U default (4.4994ms)
+✔ rack BOM worked example: 5U custom (0.9186ms)
+✔ rack BOM worked example: 9U default (1.072ms)
+✔ rack BOM worked example: 9U custom (0.9267ms)
+✔ rack BOM worked example: 14U default (0.8426ms)
+✔ rack BOM worked example: 14U custom (0.7566ms)
+✔ rack BOM missing side defaults only the missing stack; 1U has no joints (0.8989ms)
+✔ rack BOM rejects explicitly invalid stacks and heights without fabricated parts (1.1816ms)
+✔ rack BOM locked and unlocked stacks count identically (0.8825ms)
+✔ rack BOM side panels toggle only segmented panels, never top/bottom (0.8731ms)
+✔ rack BOM ignores cable guides, ports and artwork (0.7553ms)
+✔ rack BOM agrees with real rackFrame source placements and all fixed parts (2.0555ms)
+✔ rack BOM requires extensions independently of missing preview assets (1.1596ms)
+✔ rack setup height edits retain chosen saved stacks only at unchanged height, clamp at 14U and do not mutate (1.3467ms)
+✔ rack BOM shows explicit allowances/UNKNOWNs and invalid layout error (0.9237ms)
+✔ moving a support refreshes a visible editing BOM; locked layout stays unchanged (1.0948ms)
+✔ multi-U plate across a support extension warns (never blocks); 1U and clear spans stay quiet (1.231ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28.5574
+== JavaScript equipment rebuild (js-tests/equipment-rebuild.js) ==
+✔ equipment list: read-only status on list/focus/open keeps both drafts and grouping (4.8815ms)
+✔ equipment list: explicit rebuild posts original identity once and preserves placed item lookup/drafts (2.1249ms)
+✔ equipment list: double click and focus refresh while rebuilding do not duplicate requests (1.3256ms)
+✔ equipment list: an item built from the current template says so plainly and offers no rebuild (Brian, 2026-10-19) (0.9133ms)
+✔ equipment list: needs_review has no rebuild and performs no write (0.8775ms)
+✔ equipment list: unknown_evidence has no rebuild and performs no write (0.7526ms)
+✔ equipment list: integrity_problem has no rebuild and performs no write (0.838ms)
+✔ equipment list: rebuild failure keeps drafts and permits retry with exact error text (0.9562ms)
+✔ equipment copy: normal Edit changes separate display name without changing source-producing spec.name (1.1529ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19.677
+== JavaScript equipment wizard steps (js-tests/equipment-wizard-steps.js) ==
+✔ wizard has three fact steps (0.763ms)
+✔ tray choices keep their defaults but are no longer edited in the wizard (0.2602ms)
+✔ save, preview and build buttons remain on the last step (0.8499ms)
+✔ last-step summary counts front openings and rear ports separately (0.3616ms)
+✔ last-step summary counts feet and leaves them out when there are none (0.4458ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9.0477
+== JavaScript Place on tray window (js-tests/tray-placement.js) ==
+✔ values: slot tray wins, then the library spec, then template defaults (1.9691ms)
+✔ diff keeps only choices that differ from the library item (0.3285ms)
+✔ layout and hole positions follow equipment_tray.scad (rotation swaps width and depth) (2.2271ms)
+✔ SCAD assert errors show as plain messages (2.8804ms)
+✔ snap rounds to whole millimetres; live sketch is whole triangles (0.6129ms)
+✔ Apply to draft changes only the rack draft and the slot span when U changes (2.2423ms)
+✔ wiring: window opens on place/edit, blocks while a problem shows, never saves (1.7369ms)
+✔ rack view draws each slot's own tray: exact render if one exists, else a box sketch; never renders (2026-10-19) (1.6531ms)
+✔ rackSketch follows the slot tray settings in equipment_tray.scad coordinates (1.0639ms)
+✔ 204 mm hard width budget includes margin and offsets, with explicit rotate advice (0.5507ms)
+✔ rear cable openings preserve saved defaults and roundtrip explicit choices (0.7679ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22.2239
+== JavaScript front openings (js-tests/port-openings.js) ==
+✔ opening movement fixtures and input preservation (1.9292ms)
+✔ turned openings stay as entered with exact warning (0.4081ms)
+✔ starting sizes are editable copies (0.8786ms)
+✔ opening bounds, priority, keystone and finite fixtures (0.7041ms)
+✔ joint positions: default kept when clear, nearest clear spot per side, else a plain problem (Brian, 2026-10-19) (1.5238ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11.4285
+== JavaScript cable routes (js-tests/cable-routes.js) ==
+✔ exact API exports and browser load without window/DOM/fetch (3.5832ms)
+✔ port anchors use actual Pi and generic wizard data, pointing offsets and base Z (4.0319ms)
+✔ end faces keep UNKNOWN separate from rear fallback (0.3784ms)
+✔ auto routing chooses one post and orders guides from from to to (1.6627ms)
+✔ multi-U endpoint slots come from anchor Z, not allocation start (0.2962ms)
+✔ exit selection preserves an existing choice and otherwise scores nearest route point (0.4752ms)
+✔ endpoint exit slot determines guide interval in either end direction (0.2321ms)
+✔ path preserves specified point order, manual order and all scene anchor coordinates (0.3418ms)
+✔ length is straight segments plus service loops per connected port, rounded up (0.4547ms)
+✔ rounding handles exact tenths and a value truly above a tenth (0.2902ms)
+✔ keystone pair lookup, port occupancy and lowest unused cable number (0.4678ms)
+✔ guide load counts cables once and crowding is strictly above user setting (0.3647ms)
+✔ manual upkeep drops missing references, retains order and is idempotent (0.5765ms)
+✔ manual moved guide is retained and marked until acknowledged (0.324ms)
+✔ automatic upkeep follows equipment movement and removed guides (0.5294ms)
+✔ upkeep disconnects removed allocations, ports and outside endpoints without deleting cables (0.4526ms)
+✔ warnings include unconnected, missing exit, UNKNOWN face, route changed and crowding (0.7694ms)
+✔ read-only helpers never modify rack or cable fixtures (0.4376ms)
+✔ connector mismatches respect saved overrides and never mutate inputs (1.2917ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23.4902
+== JavaScript cable suggestions (js-tests/cable-suggest.js) ==
+✔ exact API and standalone browser global without DOM, window or fetch (2.8043ms)
+✔ carries defaults, USB label/id at either end, overrides and post settings (3.7068ms)
+✔ power-post wrong rear side, crossing, reverse interval, front exclusion and no target (5.9808ms)
+✔ missing-guide merges cables, rounds midpoint, skips occupied spots, short gaps and multiple posts (1.7358ms)
+✔ missing-guide uses anchors, front/mean-X post, exit slots and absent endpoint fallback (1.999ms)
+✔ one-exit prefers non-top even with fewer users; ties follow exit order; all-top fallback (1.8538ms)
+✔ top-exit most-used alternative, first unused alternative, no alternative and unused top (1.814ms)
+✔ keystone and service-loop positive and negative rules (2.3288ms)
+✔ short-run strictly less than U, with two known port anchors and guides (1.034ms)
+✔ bend right-angle math, tight guide mapping, straight line, threshold and generic factor (1.5675ms)
+✔ crowded uses user threshold and UNKNOWN, one-ended and aggregated unused ports (2.2811ms)
+✔ move-post and drop-guides apply keep exits, make manual and pass real Python validation (315.9809ms)
+✔ add-guide applies to auto routes, leaves manual guides alone, validates, refuses occupied spot (344.1065ms)
+✔ set-exit apply keeps guides and passes real schema for one-exit and top-exit (336.8482ms)
+✔ every apply kind refuses stale involved cable, guide and exit without mutation (0.8704ms)
+✔ apply refuses stale action targets/retained routes, duplicate ids and invalid spots; upkeep failure is atomic (0.6489ms)
+✔ signatures stable, 8-hex, change for every specified involved field (4.5914ms)
+✔ ignore includes matching sig only, unignore cleans empty key, pruning changes/disappearance (2.5309ms)
+✔ ignore replaces and caps at 500 dropping oldest; saved shape accepted (160.5349ms)
+✔ suggestion shapes, rule/subject sorting, idempotence and no input mutation (1.4289ms)
+✔ adapter advice is info only, exact, ignorable and pruned when resolved (3.3622ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1205.5678
+== JavaScript cable sheet (js-tests/cable-sheet.js) ==
+✔ exact exports, constants and isolated global load without browser APIs or Date (21.8714ms)
+✔ numeric sorting returns a new array and breaks ties by id (0.3823ms)
+✔ all long and short names, saved overrides and name fallbacks (2.2003ms)
+✔ face selection requires two front ports (0.7682ms)
+✔ schedule has every field, route order, estimates, warning arrays and reciprocal links (5.0504ms)
+✔ carries uses optional suggestions and raw type fallback (1.7403ms)
+✔ CSV BOM, CRLF records, metadata quoting, field order and embedded newline (2.0497ms)
+✔ CSV guards formula prefixes before quoting, preserving whitespace (2.5474ms)
+✔ labels include both connected ends in order and keystone face detail (0.7741ms)
+✔ notes contain each warning in cable order without standing limits (0.4959ms)
+✔ adapter warning flows to schedule, CSV warnings column and notes (0.782ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 44.5179
+== JavaScript cable inventory (js-tests/cable-inventory.js) ==
+✔ frozen API and browser-independent global load (2.7237ms)
+✔ stock boundaries and nonfinite values (0.1954ms)
+✔ groups by type and stock; numeric cable sort and custom maximum (10.9828ms)
+✔ incomplete ends are counted and flagged once even when estimate says complete (0.4832ms)
+✔ keystone pairs counted once per placement and guides counted separately (0.7406ms)
+✔ real routing estimate and slot keystone settings (0.9489ms)
+✔ unknown labels and tie sorting (0.2812ms)
+✔ CSV quotes every field, guards formulas, BOM, CRLF and trailing notes (1.0888ms)
+✔ adapter group note is unique and follows incomplete regardless of cable order (1.8131ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24.9159
+== JavaScript wiring sheet drawing (js-tests/cable-sheet-view.js) ==
+✔ exact exports; loads in a bare context without window or DOM (2.4894ms)
+✔ cable points: endpoint ends run out of the exit, in drawing order (2.1718ms)
+✔ sheet SVG: well-formed text, both faces, escaped names, tags, exits, endpoints and notes (12.4653ms)
+✔ rear elevation is mirrored; tall racks shrink to fit; empty rack still draws (1.65ms)
+✔ many warnings are cut to whole notes with a pointer to the CSV (3.4894ms)
+✔ printable pages: paper size, orientation, 3D page only when given, labels grid and escaping (1.2988ms)
+✔ top and side exits: endpoint arrows go round the outside of the rack, bottom exits point straight down (1.0403ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30.5135
+RESULT: FAILED or incomplete

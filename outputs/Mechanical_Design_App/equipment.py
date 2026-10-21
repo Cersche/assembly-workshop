@@ -61,7 +61,7 @@ def _port_id(port, face, index):
 # model file, holes, ports); these tray choices belong to each slot allocation's "tray" settings. Older
 # library specs still carry them, and those values stay the defaults when an allocation has none.
 PLACEMENT_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'standoff', 'insert_pilot', 'board_t',
-                  'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u')
+                  'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size')
 
 
 def export_quality(s):
@@ -88,6 +88,12 @@ def placement_settings(value):
         elif key in ('rear_support', 'rear_openings'):
             if type(v) is not bool:
                 raise ValueError('Rear support must be true or false.')
+        elif key in ('front_position','bezel'):
+            if v not in (port_openings.FRONT_POSITIONS if key=='front_position' else port_openings.BEZELS):
+                raise ValueError('Invalid '+key+'.')
+        elif key in ('front_setback','bezel_size'):
+            if isinstance(v,bool):raise ValueError('Invalid '+key+'.')
+            v=num(v,key,0 if key=='front_setback' else .5,100 if key=='front_setback' else 1.5)
         elif key == 'rear_style':
             if v not in REAR_STYLES:
                 raise ValueError('Invalid rear bracket style.')
@@ -197,7 +203,7 @@ def foot_pockets(spec):
     turned = spec.get('dev_rot', 0) in (90, 270)
     fw, fd = (spec['dev_d'], spec['dev_w']) if turned else (spec['dev_w'], spec['dev_d'])
     dx = -fw/2 + float(spec.get('dev_off_x', 0))
-    dy = -4 if spec.get('device_mount') == 'sleeve' else FRONT_GAP + float(spec.get('dev_off_y', 0))
+    dy = port_openings.device_y(spec)
     def dp(x, y):
         if spec.get('dev_rot') == 90: return spec['dev_d']-y, x
         if spec.get('dev_rot') == 180: return spec['dev_w']-x, spec['dev_d']-y
@@ -216,7 +222,7 @@ def validate_foot_pockets(spec, tray_w):
     pockets=foot_pockets(spec)
     if not pockets:return
     fp_w,fp_d=(spec['dev_d'],spec['dev_w']) if spec.get('dev_rot',0) in (90,270) else (spec['dev_w'],spec['dev_d'])
-    dev_x=-fp_w/2+float(spec.get('dev_off_x',0));dev_y=-4 if spec.get('device_mount')=='sleeve' else FRONT_GAP+float(spec.get('dev_off_y',0))
+    dev_x=-fp_w/2+float(spec.get('dev_off_x',0));dev_y=port_openings.device_y(spec)
     def overlap(p,x0,x1,y0,y1):return p['x0']<x1 and p['x1']>x0 and p['y0']<y1 and p['y1']>y0
     if spec.get('joint','screw')=='screw':
         jx=min(40,tray_w/2-12)
@@ -260,10 +266,31 @@ def rear_style(spec):
     return spec.get('rear_style', 'open' if spec.get('rear_openings') else 'solid') if spec.get('rear_support') else 'solid'
 
 
+def keep_clear_boxes(s):
+    """Rotate device-local AABBs into rack coordinates; no tray geometry changes."""
+    w,d=s['dev_w'],s['dev_d'];rot=s.get('dev_rot',0)
+    fw,fd=(d,w) if rot in (90,270) else (w,d)
+    dx=-fw/2+s.get('dev_off_x',0);dy=port_openings.device_y(s)
+    def point(x,y):
+        return (d-y,x) if rot==90 else (w-x,d-y) if rot==180 else (y,w-x) if rot==270 else (x,y)
+    out=[]
+    for p in s.get('protrusions',[]):
+        pts=[point(x,y) for x in (p['x'],p['x']+p['w']) for y in (p['y'],p['y']+p['d'])]
+        out.append(dict(x0=dx+min(q[0] for q in pts),x1=dx+max(q[0] for q in pts),y0=dy+min(q[1] for q in pts),y1=dy+max(q[1] for q in pts),z0=device_lift(s)+p['z'],z1=device_lift(s)+p['z']+p['h']))
+    return out
+
+
+def keep_clear_openings(s):
+    # Bracket occupies assembled Y=240..244. Full rectangles, never clipped to pretend clearance.
+    return [[p['x0']-.5,p['x1']+.5,p['z0']-.5,p['z1']+.5] for p in keep_clear_boxes(s)
+            if s.get('rear_support') and p['y0']<244 and p['y1']>=240]
+
+
 def rear_geometry(s):
     """Analytical cut bounds and lip boxes used directly by the SCAD source; no rendering."""
     style = rear_style(s)
-    result = dict(windows=[], holes=[], flanges=[])
+    # Keep-clear zones stay plain rectangles (keep_clear_cut); the rounded style windows would over-cut small ones.
+    result = dict(windows=[], holes=[], flanges=[], keep_clear=keep_clear_openings(s))
     if style == 'solid':
         return result
     legacy = style == 'open'
@@ -319,7 +346,7 @@ def rear_geometry(s):
         b = height-REAR_EDGE_INSET
         t, depth, edge = REAR_LIP_T, REAR_LIP_DEPTH, REAR_LIP_LIMIT
         fp_d = s['dev_w'] if s.get('dev_rot') in (90,270) else s['dev_d']
-        device_rear = (-4 if s['device_mount']=='sleeve' else FRONT_GAP+s.get('dev_off_y',0))+fp_d
+        device_rear = (port_openings.device_y(s))+fp_d
         clear_depth = 240-device_rear-REAR_RETENTION_REACH.get(s['device_mount'],0)-REAR_LIP_CLEAR
         if clear_depth < depth:
             depth = max(0,clear_depth)
@@ -357,7 +384,35 @@ def template_source(spec):
                             '  if(plain && rear_support)rear_style_cuts();')
     if style != 'open':
         text = re.sub(r'// @rear-openings-begin\n.*?// @rear-openings-end\n(?:\n)?', '', text, flags=re.S)
+    cuts=keep_clear_openings(spec)
+    if cuts:
+        code='\n// User-confirmed keep-clear zones; real cable bend space UNKNOWN.\nmodule keep_clear_cut(){for(q='+json.dumps(cuts)+')translate([q[0],-4.1,q[2]])cube([q[1]-q[0],12.2,q[3]-q[2]]); }\n'
+        text=text.replace('plate_joint_cut(true);}}','plate_joint_cut(true);keep_clear_cut();}}')+code
+    if spec.get('front_position','today')!='today':
+        y=port_openings.device_y(spec)
+        text=text.replace('dev_y=sleeve?-plate_t:front_gap+dev_off_y;', 'dev_y='+json.dumps(y)+';')
+        if y<0 and spec['device_mount']!='sleeve':
+            text=text.replace('assert(sleeve||dev_y>=0,','assert(true,')
+        win=port_openings.front_window(spec)
+        if win and spec['device_mount']!='sleeve':
+            old='if(sleeve)translate([dev_off_x,(sl_bottom+sl_window_top)/2])square([2*sl_half,sl_window_top-sl_bottom],center=true);'
+            text=text.replace(old,'translate(['+str(win['x'])+','+str((win['bottom']+win['top'])/2)+'])square(['+str(win['width'])+','+str(round(win['height'],3))+'],center=true);')
+    if spec.get('bezel','none')!='none':
+        plan=port_openings.bezel_plan(spec)
+        shapes=[[p['x'],p['z'],p['w'],p['h'],p['r'],p['size']] for p in plan['openings'] if p['size']>0]
+        code='\n// Front-edge bezel only: ports and case window. 8 rounded steps; 2 mm web.\n'
+        code+='bezel_shapes='+json.dumps(shapes)+';\nbezel_rounded='+('true' if spec['bezel']=='rounded' else 'false')+';\n'
+        code+=BEZEL_SCAD
+        code+='\n'+'\n'.join('// '+n for n in plan['notes'])+'\n'
+        text=text.replace('   plate_joint_cut();','   plate_joint_cut();bezel_cuts();')+code
     return text
+
+
+BEZEL_SCAD = r"""
+function bezel_out(b,t)=bezel_rounded?b-sqrt(max(0,b*b-(b-t)*(b-t))):b-t;
+module bezel_slice(p,t){translate([p[0],-4+t,p[1]])rotate([90,0,0])linear_extrude(height=0.02)offset(delta=bezel_out(p[5],t))rrect(p[2],p[3],p[4]);}
+module bezel_cuts(){for(p=bezel_shapes)let(n=bezel_rounded?8:1)for(i=[0:n-1])hull(){bezel_slice(p,p[5]*i/n);bezel_slice(p,p[5]*(i+1)/n);}}
+"""
 
 
 def clean(spec):
@@ -391,6 +446,18 @@ def clean(spec):
             x, y = num(f.get('x'), 'Foot X', 0, s['dev_w']-w), num(f.get('y'), 'Foot Y', 0, s['dev_d']-d)
             h = num(f.get('h'), 'Foot height', 0.3, s['dev_h'])
             s['feet'].append({'x': x, 'y': y, 'w': w, 'd': d, 'h': h})
+    raw_zones = spec.get('protrusions', [])
+    if not isinstance(raw_zones, list) or len(raw_zones)>32:
+        raise ValueError('Protrusions must be a list of at most 32 keep-clear zones.')
+    if raw_zones:
+        s['protrusions']=[]
+        for p in raw_zones:
+            if not isinstance(p,dict) or p.get('face') not in ('front','back','left','right','top','bottom') or p.get('keep_clear') is not True:
+                raise ValueError('Each protrusion needs a face and keep_clear: true.')
+            q={'face':p['face'],'keep_clear':True}
+            for k in ('x','y','z'):q[k]=num(p.get(k),'Keep-clear '+k,-500,500)
+            for k in ('w','d','h'):q[k]=num(p.get(k),'Keep-clear '+k,.1,500)
+            s['protrusions'].append(q)
     s['rear_support'] = spec.get('rear_support') is True
     if 'rear_style' in spec and spec['rear_style'] not in REAR_STYLES:
         raise ValueError('Invalid rear bracket style.')
@@ -405,6 +472,15 @@ def clean(spec):
             raise ValueError('Rear-post support needs the screw joint (a 240 mm single print is not offered).')
         if s['dev_d'] > 200:
             raise ValueError('With rear-post support the device can be at most 200 mm deep.')
+    mode=spec.get('front_position','today');bezel=spec.get('bezel','none')
+    if mode not in port_openings.FRONT_POSITIONS:raise ValueError('Invalid front position.')
+    if bezel not in port_openings.BEZELS:raise ValueError('Invalid bezel.')
+    if any(isinstance(spec.get(k),bool) for k in ('front_setback','bezel_size')):raise ValueError('Position and bezel sizes must be numbers, not booleans.')
+    setback=num(spec.get('front_setback',16),'Set back',0,100)
+    bezel_size=num(spec.get('bezel_size',1),'Bezel size',.5,1.5)
+    if mode!='today':s['front_position']=mode
+    if mode=='setback':s['front_setback']=setback
+    if bezel!='none':s.update(bezel=bezel,bezel_size=bezel_size)
     # Placement on the tray (older library items have none of these keys = centred, unrotated).
     try:
         rot = float(spec.get('dev_rot', 0) or 0)
@@ -415,12 +491,14 @@ def clean(spec):
     s['dev_rot'] = int(rot)
     s['dev_off_x'] = num(spec.get('dev_off_x', 0) or 0, 'Left/right offset', -115, 115)
     try:
-        if float(spec.get('dev_off_y', 0) or 0) < -FRONT_GAP:  # equipment_tray.scad assert dev_y>=0
+        if mode=='today' and float(spec.get('dev_off_y', 0) or 0) < -FRONT_GAP:  # equipment_tray.scad assert dev_y>=0
             raise ValueError('The device is moved into the faceplate; the front gap must be at least 0 mm.')
     except (TypeError, ValueError) as exc:
         if 'faceplate' in str(exc):
             raise
-    s['dev_off_y'] = num(spec.get('dev_off_y', 0) or 0, 'Front/back offset', -FRONT_GAP, 230)
+    s['dev_off_y'] = num(spec.get('dev_off_y', 0) or 0, 'Front/back offset', -FRONT_GAP, 230) if mode=='today' else port_openings.device_y(s)-FRONT_GAP
+    position_errors=port_openings.position_problems(dict(s,holes=spec.get('holes') or []))
+    if position_errors:raise ValueError(position_errors[0])
     fp_w, fp_d = (s['dev_d'], s['dev_w']) if s['dev_rot'] in (90, 270) else (s['dev_w'], s['dev_d'])
     win = port_openings.sleeve(s)
     border = max(MARGIN, port_openings.SLEEVE_SIDE + port_openings.SLEEVE_WALL) if win else MARGIN
@@ -473,7 +551,7 @@ def clean(spec):
     if any(abs(x) - 9.9 < tray_half + 0.5 for x in s['keystones']):
         raise ValueError(f'A keystone collar would hit the tray; keep keystones at least {tray_half + 10.4:g} mm from centre.')
     s['ports'] = []
-    input_ports, dropped_ports, window_errors = port_openings.sleeve_ports((spec.get('ports') or [])[:20], s) if win else ((spec.get('ports') or [])[:20], [], [])
+    input_ports, dropped_ports, window_errors = port_openings.sleeve_ports((spec.get('ports') or [])[:20], s) if port_openings.front_window(s) else ((spec.get('ports') or [])[:20], [], [])
     if window_errors:
         raise ValueError(window_errors[0])
     for p in input_ports:

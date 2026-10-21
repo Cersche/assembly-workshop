@@ -16,7 +16,7 @@ test('height rule and auto-U use the actual floor and only real standoffs',()=>{
 test('wizard import actually uses shared auto-U and shows the flat hint without changing mount',()=>{
   const src=fs.readFileSync(path.join(__dirname,'../equipment-wizard.js'),'utf8');
   const apply=src.slice(src.indexOf('  function applyImport(){'),src.indexOf('  function topView(){'));
-  const box={spec:{...spec},window:{LabRaxPortOpenings:P},transformed:()=>[0,0,0,182.5,194.5,38.8],findHoles:()=>[],findPorts:()=>[]};
+  const box={spec:{...spec},window:{LabRaxPortOpenings:P},transformed:()=>[0,0,0,182.5,194.5,38.8],findHoles:()=>[],findPorts:()=>[],findProtrusions:()=>({items:[]}),syncImportFrame:()=>{}};
   vm.runInNewContext(apply+';applyImport();',box);
   assert.equal(box.spec.u,2);assert.equal(box.spec.device_mount,'inserts');
   box.spec.device_mount='flat';vm.runInNewContext('applyImport()',box);assert.equal(box.spec.u,1);

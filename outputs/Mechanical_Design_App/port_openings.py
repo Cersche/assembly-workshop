@@ -43,7 +43,7 @@ def sleeve(spec):
 
 
 def sleeve_ports(ports, spec):
-    win = sleeve(spec)
+    win = front_window(spec)
     if not win:
         return list(ports or []), [], []
     kept, dropped, errors = [], [], []
@@ -168,3 +168,81 @@ def joint_positions(ports, keystones, tray_half):
                    'the openings and keystones anywhere on the tray. Move the device or an opening, or choose the single '
                    'printed piece joint.')
     return {'joints': joints, 'default': default, 'moved': joints != [-default, default], 'problem': problem}
+
+
+# Position measured from front Y=-4; unchanged defaults never add source text.
+FRONT_POSITIONS = ('today', 'flush', 'setback')
+BEZELS = ('none', 'chamfer', 'rounded')
+SETBACK_MIN, SETBACK_MAX = 0, 100
+BEZEL_MIN, BEZEL_MAX, BEZEL_DEFAULT, BEZEL_STEPS = .5, 1.5, 1., 8
+BEZEL_WEB = 2.0  # >= existing problems() top/bottom allowance (2 mm)
+
+
+def device_y(spec):
+    mode=spec.get('front_position','today')
+    if mode=='flush':return -4.0
+    if mode=='setback':return -4.0+float(spec.get('front_setback',16))
+    return -4.0 if spec.get('device_mount')=='sleeve' else 12.0+float(spec.get('dev_off_y',0))
+
+
+def front_window(s):
+    existing=sleeve(s)
+    if existing:return existing
+    if s.get('front_position','today')=='today' or device_y(s)>0:return None
+    w=float(s['dev_d'] if s.get('dev_rot',0) in (90,270) else s['dev_w'])
+    bottom=11.225+(0 if s.get('device_mount')=='straps' else float(s.get('standoff',6)))
+    if s.get('device_mount')=='flat':bottom=3.5
+    half=w/2+SLEEVE_SIDE;top=bottom+case_height(s)+SLEEVE_TOP
+    return dict(x=float(s.get('dev_off_x',0)),half=half,bottom=bottom,top=top,width=half*2,height=top-bottom)
+
+
+def position_problems(s):
+    if s.get('front_position','today')=='today':return []
+    y=device_y(s);out=[]
+    if s.get('device_mount')=='sleeve' and abs(y+4)>1e-9:
+        out.append('Sleeve set back is not supported: its front wall joints and strap slots assume a flush case. Choose As today or Flush with faceplate, or change the mount.')
+    if y<11.5 and s.get('device_mount')!='sleeve' and s.get('joint')!='single':
+        out.append('Flush or a set back under 15.5 mm needs the Sleeve mount or a single printed piece joint; the front screw joint would hit the case.')
+    if s.get('device_mount')=='flat' and y<6.2:
+        out.append('Flat corner stops need a front gap of at least 6.2 mm. Set back at least 10.2 mm or choose Sleeve.')
+    if s.get('device_mount')=='clips' and y<1:
+        out.append('Clip support ledges need a front gap of at least 1 mm. Set back at least 5 mm or choose Sleeve.')
+    win=front_window(s)
+    if win and (win['bottom']-PLATE_GAP/2<SLEEVE_BAND or s['u']*RACK_PITCH-PLATE_GAP/2-win['top']<SLEEVE_BAND):
+        out.append('The front window needs 1.5 mm bands above and below; choose more rack units or lower the device.')
+    if y<0 and s.get('device_mount') in ('inserts','pegs'):
+        for x,hy in s.get('holes',[]):
+            # Conservative all-rotation footprint check, 5 mm standoff/floor margin.
+            rot=s.get('dev_rot',0);qy=x if rot==90 else s['dev_d']-hy if rot==180 else s['dev_w']-x if rot==270 else hy
+            if y+qy<5:out.append('A front standoff would extend past the tray floor. Move the mounting hole back, increase Set back or choose Sleeve.');break
+    return out
+
+
+def bezel_plan(s):
+    if s.get('bezel','none')=='none':return dict(openings=[],notes=[])
+    ports,_,_=sleeve_ports(s.get('ports',[]),s)
+    shapes=[dict(x=p['x'],z=p['z'],w=p['w'],h=p['h'],r=p.get('r',0),label=p.get('label') or 'Port '+str(i+1)) for i,p in enumerate(ports)]
+    win=front_window(s)
+    if win:shapes.append(dict(x=win['x'],z=(win['bottom']+win['top'])/2,w=win['width'],h=win['height'],r=0,label='Front window'))
+    def rect(p):return (p['x']-p['w']/2,p['x']+p['w']/2,p['z']-p['h']/2,p['z']+p['h']/2)
+    def gap(a,b):return max(a[0]-b[1],b[0]-a[1],a[2]-b[3],b[2]-a[3])
+    obstacles=[]
+    for i in range(s['u']):
+        for x in (-118.2625,118.2625):
+            for dz in (-15.902,15.902):
+                z=i*RACK_PITCH+RACK_PITCH/2+dz;obstacles.append((x-5,x+5,z-3.5,z+3.5))
+    for x in s.get('keystones',[]):obstacles.append((x-10.5,x+10.5,s['u']*RACK_PITCH/2-15,s['u']*RACK_PITCH/2+18.5))
+    sw=sleeve(s)
+    if sw and s.get('joint')=='screw':
+        for x in sw['joints']:
+            for z in sw['joint_z']:obstacles.append((x-1.7,x+1.7,z-1.7,z+1.7))
+    requested=float(s.get('bezel_size',BEZEL_DEFAULT));out=[];notes=[]
+    for i,p in enumerate(shapes):
+        a=rect(p);available=min(requested,a[0]+126-BEZEL_WEB,126-a[1]-BEZEL_WEB,a[2]-PLATE_GAP/2-BEZEL_WEB,s['u']*RACK_PITCH-PLATE_GAP/2-a[3]-BEZEL_WEB)
+        for o in obstacles:available=min(available,gap(a,o)-BEZEL_WEB)
+        for j,q in enumerate(shapes):
+            if j!=i:available=min(available,(gap(a,rect(q))-BEZEL_WEB)/2)
+        size=max(0,math.floor((available+1e-9)*1000)/1000)
+        if size<requested-1e-6:notes.append(p['label']+' bezel '+('omitted' if size==0 else 'reduced to '+str(size)+' mm')+' to keep a 2 mm web; existing openings are unchanged.')
+        out.append(dict(p,size=size))
+    return dict(openings=out,notes=notes)

@@ -14,7 +14,7 @@
     const lipT=footHeight(s)?FOOT.lipT:SLEEVE.lipT;
     return {x,half,bottom,top,width:half*2,height:top-bottom,outside:w+2*(SLEEVE.side+SLEEVE.wall),lip:top+lipT<=(+s.u||1)*RACK_PITCH?lipT:0,rear:-4+d,stop_end:-4+d+SLEEVE.stopT,joints:[x-half-SLEEVE.wall/2,x+half+SLEEVE.wall/2],joint_z:[bottom+3,top-3]};
   }
-  function sleevePorts(ports,s){const w=sleeve(s),kept=[],dropped=[],errors=[];if(!w)return {ports:ports||[],dropped,errors};
+  function sleevePorts(ports,s){const w=frontWindow(s),kept=[],dropped=[],errors=[];if(!w)return {ports:ports||[],dropped,errors};
     for(const p of ports||[]){const x0=p.x-p.w/2,x1=p.x+p.w/2,z0=p.z-p.h/2,z1=p.z+p.h/2;
       if(x0>=w.x-w.half&&x1<=w.x+w.half&&z0>=w.bottom&&z1<=w.top)dropped.push(p);
       else if(x1>w.x-w.half&&x0<w.x+w.half&&z1>w.bottom&&z0<w.top)errors.push('A front opening crosses the sleeve window edge; move or remove it.');
@@ -81,6 +81,32 @@
     const problem=missing.length?`The ${missing.join(' and ')} tray screw joint${missing.length>1?'s':''} cannot be placed clear of the openings and keystones anywhere on the tray. Move the device or an opening, or choose the single printed piece joint.`:null;
     return {joints,default:def,moved:joints[0]!==-def||joints[1]!==def,problem};
   }
-  const api={SLEEVE,FOOT,footHeight,pocketDepth,deviceCaseHeight,sleeve,sleevePorts,RACK_PITCH,PLATE_GAP,plateBottom,plateHeight,floorZ,usesStandoffs,deviceLift,neededHeight,autoU,flatHint,DEFAULT_SIZES,SIZE_NOTE,JOINT_HALF,JOINT_TOP,JOINT_CLEAR,jointPositions,defaultSize,lift,frontOpenings,problems};
+
+  const FRONT_POSITIONS=['today','flush','setback'],BEZELS=['none','chamfer','rounded'],BEZEL_WEB=2,BEZEL_STEPS=8;
+  function deviceY(s){return s.front_position==='flush'?-4:s.front_position==='setback'?-4+ +(s.front_setback??16):s.device_mount==='sleeve'?-4:12+ +(s.dev_off_y||0);}
+  function frontWindow(s){const win=sleeve(s);if(win)return win;if(!s.front_position||s.front_position==='today'||deviceY(s)>0)return null;
+    const w=+([90,270].includes(+s.dev_rot)?s.dev_d:s.dev_w),bottom=s.device_mount==='flat'?3.5:11.225+(s.device_mount==='straps'?0:+(s.standoff??6)),half=w/2+SLEEVE.side,top=bottom+deviceCaseHeight(s)+SLEEVE.top;
+    return {x:+(s.dev_off_x||0),half,bottom,top,width:half*2,height:top-bottom};}
+  function positionProblems(s){if(!s.front_position||s.front_position==='today')return [];const out=[],y=deviceY(s),win=frontWindow(s);
+    if(s.device_mount==='sleeve'&&Math.abs(y+4)>1e-9)out.push('Sleeve set back is not supported: its front wall joints and strap slots assume a flush case. Choose As today or Flush with faceplate, or change the mount.');
+    if(y<11.5&&s.device_mount!=='sleeve'&&s.joint!=='single')out.push('Flush or a set back under 15.5 mm needs the Sleeve mount or a single printed piece joint; the front screw joint would hit the case.');
+    if(s.device_mount==='flat'&&y<6.2)out.push('Flat corner stops need a front gap of at least 6.2 mm. Set back at least 10.2 mm or choose Sleeve.');
+    if(s.device_mount==='clips'&&y<1)out.push('Clip support ledges need a front gap of at least 1 mm. Set back at least 5 mm or choose Sleeve.');
+    if(win&&(win.bottom-plateBottom<SLEEVE.band||s.u*RACK_PITCH-plateBottom-win.top<SLEEVE.band))out.push('The front window needs 1.5 mm bands above and below; choose more rack units or lower the device.');
+    if(y<0&&['inserts','pegs'].includes(s.device_mount)){for(const [x,hy]of s.holes||[]){const qy=s.dev_rot===90?x:s.dev_rot===180?s.dev_d-hy:s.dev_rot===270?s.dev_w-x:hy;if(y+qy<5){out.push('A front standoff would extend past the tray floor. Move the mounting hole back, increase Set back or choose Sleeve.');break;}}}
+    return out;}
+  function bezelPlan(s){if(!s.bezel||s.bezel==='none')return {openings:[],notes:[]};
+    const shapes=sleevePorts(s.ports||[],s).ports.map((p,i)=>({...p,r:p.r||0,label:p.label||'Port '+(i+1)})),win=frontWindow(s);
+    if(win)shapes.push({x:win.x,z:(win.bottom+win.top)/2,w:win.width,h:win.height,r:0,label:'Front window'});
+    const rect=p=>[p.x-p.w/2,p.x+p.w/2,p.z-p.h/2,p.z+p.h/2],gap=(a,b)=>Math.max(a[0]-b[1],b[0]-a[1],a[2]-b[3],b[2]-a[3]),obstacles=[];
+    for(let i=0;i<s.u;i++)for(const x of [-118.2625,118.2625])for(const dz of [-15.902,15.902]){const z=i*RACK_PITCH+RACK_PITCH/2+dz;obstacles.push([x-5,x+5,z-3.5,z+3.5]);}
+    for(const x of s.keystones||[])obstacles.push([x-10.5,x+10.5,s.u*RACK_PITCH/2-15,s.u*RACK_PITCH/2+18.5]);
+    const sw=sleeve(s);if(sw&&s.joint==='screw')for(const x of sw.joints)for(const z of sw.joint_z)obstacles.push([x-1.7,x+1.7,z-1.7,z+1.7]);
+    const requested=+(s.bezel_size??1),notes=[],openings=shapes.map((p,i)=>{const a=rect(p);let available=Math.min(requested,a[0]+126-BEZEL_WEB,126-a[1]-BEZEL_WEB,a[2]-plateBottom-BEZEL_WEB,s.u*RACK_PITCH-plateBottom-a[3]-BEZEL_WEB);
+      for(const o of obstacles)available=Math.min(available,gap(a,o)-BEZEL_WEB);shapes.forEach((q,j)=>{if(i!==j)available=Math.min(available,(gap(a,rect(q))-BEZEL_WEB)/2);});
+      const size=Math.max(0,Math.floor((available+1e-9)*1000)/1000);if(size<requested-1e-6)notes.push(p.label+' bezel '+(size===0?'omitted':'reduced to '+size+' mm')+' to keep a 2 mm web; existing openings are unchanged.');return {...p,size};});return {openings,notes};
+  }
+
+  const api={FRONT_POSITIONS,BEZELS,BEZEL_WEB,BEZEL_STEPS,deviceY,frontWindow,positionProblems,bezelPlan,SLEEVE,FOOT,footHeight,pocketDepth,deviceCaseHeight,sleeve,sleevePorts,RACK_PITCH,PLATE_GAP,plateBottom,plateHeight,floorZ,usesStandoffs,deviceLift,neededHeight,autoU,flatHint,DEFAULT_SIZES,SIZE_NOTE,JOINT_HALF,JOINT_TOP,JOINT_CLEAR,jointPositions,defaultSize,lift,frontOpenings,problems};
   root.LabRaxPortOpenings=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(globalThis);

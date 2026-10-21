@@ -238,6 +238,20 @@
       ],
       "port": 8795,
       "autoPort": false
+    },
+    {
+      "name": "beta-8799",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--port",
+        "8799",
+        "--existing-library",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\aw-beta-data"
+      ],
+      "port": 8799,
+      "autoPort": false
     }
   ]
 }

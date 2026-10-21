@@ -47,6 +47,68 @@
       const w=(x1-x0+1)*step,d=(y1-y0+1)*step;if(count<3||w<2||d<2)continue;out.push({x:Math.round(x0*step*10)/10,y:Math.round(y0*step*10)/10,w:Math.round(w*10)/10,d:Math.round(d*10)/10,h:Math.round((base-zmin)*10)/10,keep:true});}
     return out.sort((a,b)=>a.y-b.y||a.x-b.x).slice(0,32);
   }
+
+  // Named screening thresholds. Coordinates: -Y front, +Y back, -X left, +Z top.
+  const PROTRUSION={smallVolume:.10,fullArea:.50,minLength:2,sliceMM:.5,maxSlices:600,weldMM:.001,maxCount:32,footToleranceMM:.5};
+  function findProtrusions(v,mn,mx,feet=[]){
+    const n=v.length/9,parent=Array.from({length:n},(_,i)=>i),root=i=>{while(parent[i]!==i){parent[i]=parent[parent[i]];i=parent[i];}return i;},owners=new Map();
+    for(let t=0;t<n;t++)for(let c=0;c<3;c++){const o=t*9+c*3,k=[v[o],v[o+1],v[o+2]].map(x=>Math.round(x/PROTRUSION.weldMM)).join(',');if(owners.has(k)){const a=root(t),b=root(owners.get(k));parent[a]=b;}else owners.set(k,t);}
+    const bodies=new Map();for(let t=0;t<n;t++){const r=root(t);if(!bodies.has(r))bodies.set(r,{tris:[],mn:[Infinity,Infinity,Infinity],mx:[-Infinity,-Infinity,-Infinity],volume:0});const b=bodies.get(r),o=t*9;b.tris.push(o);
+      for(let c=0;c<9;c++){const a=c%3;b.mn[a]=Math.min(b.mn[a],v[o+c]);b.mx[a]=Math.max(b.mx[a],v[o+c]);}
+      b.volume+=(v[o]*(v[o+4]*v[o+8]-v[o+5]*v[o+7])+v[o+1]*(v[o+5]*v[o+6]-v[o+3]*v[o+8])+v[o+2]*(v[o+3]*v[o+7]-v[o+4]*v[o+6]))/6;}
+    const sorted=[...bodies.values()].sort((a,b)=>Math.abs(b.volume)-Math.abs(a.volume));if(!sorted.length)return {caseMin:mn.slice(),caseMax:mx.slice(),items:[]};
+    const main=sorted[0],lo=main.mn.slice(),hi=main.mx.slice(),raw=[];
+    const names=[['left','right'],['front','back'],['bottom','top']],footH=Math.max(0,...feet.map(f=>f.h));
+    // A section is a set of oriented line segments. Green's theorem gives its solid area,
+    // including holes. Only the largest body is sliced; separate shells cannot cancel it.
+    for(let axis=0;axis<3;axis++){
+      const a=(axis+1)%3,b=(axis+2)%3,L=hi[axis]-lo[axis],N=Math.min(PROTRUSION.maxSlices,Math.ceil(L/PROTRUSION.sliceMM)),step=L/N,areas=new Float64Array(N);
+      for(const o of main.tris){const pts=[0,3,6].map(c=>v.slice(o+c,o+c+3)),low=Math.min(...pts.map(p=>p[axis])),high=Math.max(...pts.map(p=>p[axis]));
+        const normal=(pts[1][a]-pts[0][a])*(pts[2][b]-pts[0][b])-(pts[1][b]-pts[0][b])*(pts[2][a]-pts[0][a]);
+        // Orient each cut segment using the triangle's normal projected into the section.
+        const na=(pts[1][b]-pts[0][b])*(pts[2][axis]-pts[0][axis])-(pts[1][axis]-pts[0][axis])*(pts[2][b]-pts[0][b]);
+        const nb=(pts[1][axis]-pts[0][axis])*(pts[2][a]-pts[0][a])-(pts[1][a]-pts[0][a])*(pts[2][axis]-pts[0][axis]);
+        for(let j=Math.max(0,Math.ceil((low-lo[axis])/step-.5));j<N&&lo[axis]+(j+.5)*step<high;j++){
+          const z=lo[axis]+(j+.5)*step,hits=[];for(let e=0;e<3;e++){const p=pts[e],q=pts[(e+1)%3];if((p[axis]<=z&&q[axis]>z)||(q[axis]<=z&&p[axis]>z)){const t=(z-p[axis])/(q[axis]-p[axis]);hits.push([p[a]+t*(q[a]-p[a]),p[b]+t*(q[b]-p[b])]);}}
+          if(hits.length===2){let [p,q]=hits;if((q[0]-p[0])*(-nb)+(q[1]-p[1])*na<0)[p,q]=[q,p];areas[j]+=(p[0]*q[1]-q[0]*p[1])/2;}
+        }
+      }
+      const max=Math.max(...areas.map(Math.abs)),full=[];for(let j=0;j<N;j++)if(Math.abs(areas[j])>=max*PROTRUSION.fullArea&&max>0)full.push(j);if(!full.length)continue;
+      for(const side of [0,1]){const edge=side?full[full.length-1]+1:full[0],cut=lo[axis]+edge*step,len=side?hi[axis]-cut:cut-lo[axis];if(len<PROTRUSION.minLength-1e-6||axis===2&&!side&&len<=footH+PROTRUSION.footToleranceMM)continue;
+        const rlo=[Infinity,Infinity,Infinity],rhi=[-Infinity,-Infinity,-Infinity];
+        for(const o of main.tris){if(![0,3,6].some(c=>side?v[o+c+axis]>cut+1e-7:v[o+c+axis]<cut-1e-7))continue;for(let c=0;c<3;c++){const p=v.slice(o+c*3,o+c*3+3),q=v.slice(o+((c+1)%3)*3,o+((c+1)%3)*3+3);const use=[];if(side?p[axis]>=cut:p[axis]<=cut)use.push(p);if((p[axis]<cut&&q[axis]>cut)||(q[axis]<cut&&p[axis]>cut)){const t=(cut-p[axis])/(q[axis]-p[axis]);use.push(p.map((x,i)=>x+t*(q[i]-x)));}for(const r of use)for(let i=0;i<3;i++){rlo[i]=Math.min(rlo[i],r[i]);rhi[i]=Math.max(rhi[i],r[i]);}}}
+        raw.push({face:names[axis][side],axis,side,lo:rlo,hi:rhi,cut,method:'fused'});
+      }
+    }
+    for(const r of raw){if(r.side)hi[r.axis]=r.cut;else lo[r.axis]=r.cut;}
+    for(const body of sorted.slice(1)){const start=raw.length;if(Math.abs(body.volume)<Math.abs(main.volume)*PROTRUSION.smallVolume){
+      for(let axis=0;axis<3;axis++)for(const side of [0,1]){const length=side?body.mx[axis]-hi[axis]:lo[axis]-body.mn[axis];if(length<PROTRUSION.minLength||axis===2&&!side&&length<=footH+PROTRUSION.footToleranceMM)continue;
+        raw.push({face:names[axis][side],axis,side,lo:body.mn.slice(),hi:body.mx.slice(),cut:side?hi[axis]:lo[axis],method:'separate body'});}}
+      // Material that was not a question must stay in the envelope (large bodies and short bumps).
+      if(raw.length===start)for(let axis=0;axis<3;axis++){lo[axis]=Math.min(lo[axis],body.mn[axis]);hi[axis]=Math.max(hi[axis],body.mx[axis]);}
+    }
+    // Preserve the feet-inclusive Z convention used by the existing floor-pocket path.
+    if(footH)lo[2]=mn[2];
+    const items=raw.slice(0,PROTRUSION.maxCount).map(r=>({face:r.face,x:r.lo[0]-lo[0],y:r.lo[1]-lo[1],z:r.lo[2]-lo[2],w:r.hi[0]-r.lo[0],d:r.hi[1]-r.lo[1],h:r.hi[2]-r.lo[2],method:r.method,axis:r.axis,side:r.side,answer:''}));
+    return {caseMin:lo,caseMax:hi,items};
+  }
+  const protrusionsAnswered=items=>items.every(p=>['case','space','omit'].includes(p.answer));
+  function importFrame(detection){
+    const mn=detection.caseMin.slice(),mx=detection.caseMax.slice();
+    for(const p of detection.items)if(p.answer==='case'){const q=[p.x,p.y,p.z],size=[p.w,p.d,p.h];for(let a=0;a<3;a++){mn[a]=Math.min(mn[a],detection.caseMin[a]+q[a]);mx[a]=Math.max(mx[a],detection.caseMin[a]+q[a]+size[a]);}}
+    return {mn,mx,zones:detection.items.filter(p=>p.answer==='space').map(p=>({face:p.face,x:p.x+detection.caseMin[0]-mn[0],y:p.y+detection.caseMin[1]-mn[1],z:p.z+detection.caseMin[2]-mn[2],w:p.w,d:p.d,h:p.h,keep_clear:true}))};
+  }
+  let protrusionDetection=null,importOrigin=null;
+  function syncImportFrame(){
+    if(!protrusionDetection)return;
+    const {mn,mx,zones}=importFrame(protrusionDetection),old=importOrigin||mn,dx=old[0]-mn[0],dy=old[1]-mn[1],dz=old[2]-mn[2],oldW=spec.dev_w;
+    spec.dev_w=+(mx[0]-mn[0]).toFixed(3);spec.dev_d=+(mx[1]-mn[1]).toFixed(3);spec.dev_h=+(mx[2]-mn[2]).toFixed(3);
+    for(const p of found){p.x+=dx;p.y+=dy;}for(const p of spec.holes){p[0]+=dx;p[1]+=dy;}for(const f of foundFeet){f.x+=dx;f.y+=dy;}
+    for(const p of foundPorts){p.cx+=dx;p.cz+=dz;}for(const p of [...spec.ports,...spec.rear_ports]){p.x+=dx+(oldW-spec.dev_w)/2;p.z+=dz;}
+    spec.feet=foundFeet.filter(f=>f.keep).map(({x,y,w,d,h})=>({x,y,w,d,h}));spec.protrusions=zones;importOrigin=mn;
+    if(!uExplicit)spec.u=window.LabRaxPortOpenings.autoU(spec);
+  }
+
   function findHoles(v,minX,minY){
     const R=a=>Math.round(a*1000)/1000,planes=new Map();
     for(let i=0;i<v.length;i+=9){
@@ -108,6 +170,7 @@
     const r1=a=>Math.round(a*10)/10;spec.dev_w=r1(mx[0]-mn[0]);spec.dev_d=r1(mx[1]-mn[1]);spec.dev_h=r1(mx[2]-mn[2]);
     spec.u=window.LabRaxPortOpenings.autoU(spec);
     found=findHoles(v,mn[0],mn[1]);foundFeet=typeof findFeet==='function'?findFeet(v,mn,mx):[];spec.feet=foundFeet.filter(f=>f.keep).map(({x,y,w,d,h})=>({x,y,w,d,h}));foundPorts=findPorts(v,mn,mx);
+    protrusionDetection=findProtrusions(v,mn,mx,foundFeet);importOrigin=mn.slice();syncImportFrame();
     importMsg='';
   }
   function topView(){
@@ -129,7 +192,7 @@
     for(const p of out.parts){const t=await (await fetch(`/api/equipment-mesh/${out.id}/${p}.stl`)).text();sets.push({v:parseStlBuffer(new TextEncoder().encode(t).buffer),color:p==='tray'?[77,142,110]:[78,117,163],alpha:1});}
     // Device ghost: imported model if any, else its bounding box, sitting where the tray holds it.
     const lift=window.LabRaxPortOpenings.deviceLift(spec),ox=-spec.dev_w/2,oy=spec.device_mount==='sleeve'?-4:12;let dv=[];
-    if(imported){const v=transformed(),mn=[1e9,1e9,1e9];for(let i=0;i<v.length;i++)mn[i%3]=Math.min(mn[i%3],v[i]);for(let i=0;i<v.length;i+=3)dv.push(v[i]-mn[0]+ox,v[i+1]-mn[1]+oy,v[i+2]-mn[2]+lift);}
+    if(imported){const v=transformed(),mn=[1e9,1e9,1e9];for(let i=0;i<v.length;i++)mn[i%3]=Math.min(mn[i%3],v[i]);for(let i=0;i<v.length;i+=3)dv.push(v[i]-(importOrigin||mn)[0]+ox,v[i+1]-(importOrigin||mn)[1]+oy,v[i+2]-(importOrigin||mn)[2]+lift);}
     else{const[x0,y0,z0,x1,y1,z1]=[ox,oy,lift,ox+ +spec.dev_w,oy+ +spec.dev_d,lift+ +spec.dev_h],c=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
       for(const f of[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]])for(const i of f)dv.push(...c[i]);}
     sets.push({v:dv,color:[230,195,92],alpha:0.55});
@@ -149,6 +212,10 @@
     const quad=(x0,y0,x1,y1,z)=>[x0,y0,z,x1,y0,z,x1,y1,z,x0,y0,z,x1,y1,z,x0,y1,z];
     modelView.cen=[0,D/2,H/2];modelView.span=Math.max(W,D,H)*1.6+2*m;
     modelView.sets=[{v:quad(-W/2-m,-m,W/2+m,D+m,-0.5),color:[60,70,84],alpha:1,under:true},{v:quad(-W/2-m,-m-6,W/2+m,-m,-0.4),color:[230,140,60],alpha:1,under:true},{v:dv,color:[120,160,210],alpha:1}];
+
+    for(const p of protrusionDetection?.items||[]){const o=protrusionDetection.caseMin,pts=[[0,0,0],[1,0,0],[1,1,0],[0,1,0],[0,0,1],[1,0,1],[1,1,1],[0,1,1]],box=[];
+      for(const f of [[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]])for(const i of f)box.push(o[0]+p.x+pts[i][0]*p.w-mn[0]-W/2,o[1]+p.y+pts[i][1]*p.d-mn[1],o[2]+p.z+pts[i][2]*p.h-mn[2]);
+      modelView.sets.push({v:box,color:[255,120,60],alpha:.35});}
     bindView(cv,modelView,()=>paint(cv,modelView));paint(cv,modelView);
   }
   // One line on what the import found, plus orientation warnings only when something looks off.
@@ -190,9 +257,9 @@
     for(const[a,b,c,,s,lit]of tris){ctx.fillStyle=`rgba(${s.color.map(k=>Math.round(k*lit)).join(',')},${s.alpha})`;
       ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.lineTo(c[0],c[1]);ctx.closePath();ctx.fill();if(s.alpha===1){ctx.strokeStyle=ctx.fillStyle;ctx.stroke();}}
   }
-  if(typeof module!=='undefined'&&module.exports){module.exports={findFeet};return;}
+  if(typeof module!=='undefined'&&module.exports){module.exports={findFeet,findProtrusions,PROTRUSION,importFrame,protrusionsAnswered};return;}
   window.EquipmentPainter={draw:paint,bind:bindView,parseStl:parseStlBuffer};
-  function reset(){uExplicit=false;imported=null;importMsg='';found=[];foundFeet=[];foundPorts=[];orient=0;turn=0;spec={name:'',dev_w:85,dev_d:56,dev_h:20,u:1,hole_d:2.7,standoff:6,insert_pilot:3.2,board_t:1.6,device_mount:'inserts',joint:'screw',holes:[],feet:[],ports:[],rear_ports:[],keystones:[]};step=0;}
+  function reset(){protrusionDetection=null;importOrigin=null;uExplicit=false;imported=null;importMsg='';found=[];foundFeet=[];foundPorts=[];orient=0;turn=0;spec={name:'',dev_w:85,dev_d:56,dev_h:20,u:1,hole_d:2.7,standoff:6,insert_pilot:3.2,board_t:1.6,device_mount:'inserts',joint:'screw',holes:[],feet:[],ports:[],rear_ports:[],keystones:[]};step=0;}
   // Cable-planning port id (cable-ports.js): stable while the port is edited or moves between faces.
   const portId=()=>'p-'+Math.random().toString(36).slice(2,10);
   const PORT_TYPES=()=>Object.fromEntries(Object.entries(window.LabRaxPorts?.TYPES||{other:{label:'Other'}}).map(([k,v])=>[k,v.label]));
@@ -233,7 +300,7 @@
   }
   // Last-step summary; counts front openings and rear ports separately (rear ports get no opening).
   const count=(n,one,many)=>n+' '+(n===1?one:(many||one+'s'));
-  function summary(spec){return `${spec.name||'Equipment'}: ${spec.dev_w} × ${spec.dev_d} × ${spec.dev_h} mm, ${count(spec.holes.length,'hole')}, ${(spec.feet||[]).length?count(spec.feet.length,'foot','feet')+', ':''}${count(spec.ports.length,'front opening')}, ${count((spec.rear_ports||[]).length,'rear port')}. Tray defaults for new slots: ${spec.u}U, ${MOUNTS[spec.device_mount]}, ${JOINTS[spec.joint]}, ${count(spec.keystones.length,'keystone')}.`;}
+  function summary(spec){return `${spec.name||'Equipment'}: ${spec.dev_w} × ${spec.dev_d} × ${spec.dev_h} mm, ${count(spec.holes.length,'hole')}, ${(spec.feet||[]).length?count(spec.feet.length,'foot','feet')+', ':''}${(spec.protrusions||[]).length?count(spec.protrusions.length,'keep-clear zone')+', ':''}${count(spec.ports.length,'front opening')}, ${count((spec.rear_ports||[]).length,'rear port')}. Tray defaults for new slots: ${spec.u}U, ${MOUNTS[spec.device_mount]}, ${JOINTS[spec.joint]}, ${count(spec.keystones.length,'keystone')}.`;}
   function body(){
     if(step===0){
       const name=h('input',{type:'text',value:spec.display_name??spec.name,placeholder:'e.g. Network switch'});name.oninput=()=>{if(spec.display_name!==undefined)spec.display_name=name.value;else spec.name=name.value;};
@@ -256,6 +323,15 @@
         const addFoot=h('button',{type:'button',class:'ew-chip'},'+ Add foot');addFoot.onclick=()=>{const f={x:0,y:0,w:2,d:2,h:1,keep:true};foundFeet.push(f);spec.feet=foundFeet.filter(q=>q.keep).map(({x,y,w,d,h})=>({x,y,w,d,h}));render();};
         imp.push(h('p',{},foundFeet.length?`Found ${foundFeet.length} feet, ${Math.max(...foundFeet.map(f=>f.h)).toFixed(1)} mm tallest. Keep or drop each; pocket dimensions are editable.`:'No feet found. Add a foot if the device has one.'),h('div',{class:'ew-row'},...fr,addFoot));
         const footRows=[];for(let i=0;i<foundFeet.length;i++){const f=foundFeet[i],inputs=[];for(const k of ['x','y','w','d','h']){const inp=h('input',{type:'number',step:'0.1',value:f[k]});inp.oninput=()=>{f[k]=Number(inp.value);spec.feet=foundFeet.filter(q=>q.keep).map(({x,y,w,d,h})=>({x,y,w,d,h}));fitWarn();};inputs.push(h('label',{class:'ew-field'},k.toUpperCase(),inp));}footRows.push(h('div',{class:'ew-row'},`Foot ${i+1}`,...inputs));}imp.push(...footRows);
+
+        if(protrusionDetection?.items.length){
+          imp.push(h('p',{class:'ew-note'},'Answer every question before continuing. Part of the case is the safe choice when unsure. Real cables need extra bend space the app cannot know.'));
+          protrusionDetection.items.forEach((p,i)=>{
+            const axisSize=[p.w,p.d,p.h][p.axis],ask=select({'':'Choose an answer',case:'Part of the case',space:'Plug or cable, keep space for it',omit:'Plug or cable, leave it out'},p.answer,a=>{p.answer=a;syncImportFrame();render();});
+            const dims=['x','y','z','w','d','h'].map(k=>{const inp=h('input',{type:'number',step:'.1',value:Math.round(p[k]*10)/10});inp.oninput=()=>{p[k]=Number(inp.value);syncImportFrame();drawModel();};return h('label',{class:'ew-field'},k.toUpperCase(),inp);});
+            imp.push(h('p',{},`Something sticks out of the ${p.face}: about ${axisSize.toFixed(1)} mm long, ${p.w.toFixed(1)} × ${p.d.toFixed(1)} × ${p.h.toFixed(1)} mm (${p.method}). What is it?`),ask,h('div',{class:'ew-row'},...dims));
+          });
+        }
         imp.push(h('canvas',{id:'ewModel',class:'ew-model'}),h('p',{class:'ew-note ew-hint'},'Left-drag turns · right-drag moves · scroll zooms at the cursor · Z fits · orange edge = front (faceplate side)'),h('p',{class:'ew-note'},modelNote()));
         const hint=window.LabRaxPortOpenings.flatHint(spec);if(hint)imp.push(h('p',{class:'ew-note'},hint));
         const warn=modelWarn();if(warn)imp.push(h('p',{class:'ew-note ew-warn'},warn));
@@ -334,7 +410,7 @@
       try{await show3D();status.textContent='Left-drag turns, right-drag moves, scroll zooms at the cursor, Z fits. Translucent box = the device. Not saved yet.';}
       catch(e){status.textContent='Problem: '+e.message;}finally{look.disabled=false;}};
     const keep=h('button',{type:'button',class:'primary'},'Save to equipment library');
-    keep.onclick=async()=>{const problem=mountProblem()||window.TrayPlacement.problems(spec,window.TrayPlacement.values(spec)).join(' ');if(problem){status.textContent='Problem: '+problem;return;}keep.disabled=true;status.textContent='Rendering and saving… this can take a minute.';
+    keep.onclick=async()=>{if(!protrusionsAnswered(protrusionDetection?.items||[])){status.textContent='Answer each protrusion question on Device first.';return;}const problem=mountProblem()||window.TrayPlacement.problems(spec,window.TrayPlacement.values(spec)).join(' ');if(problem){status.textContent='Problem: '+problem;return;}keep.disabled=true;status.textContent='Rendering and saving… this can take a minute.';
       try{const r=await fetch('/api/equipment-library',{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify(spec)});
         const item=await r.json();if(!r.ok)throw Error(item.error||'Save failed');spec.id=item.id;await loadLibrary();
         status.textContent='Saved. Close this, select an empty rack slot, then click “'+item.name+'” in the Equipment list to place it; the Place on tray window opens for that slot.';}
@@ -344,9 +420,9 @@
   }
   function render(){
     const d=document.getElementById('equipmentWizard');
-    const tabs=h('div',{class:'ew-steps'},...STEPS.map((s,i)=>{const b=h('button',{type:'button',class:'ew-step'+(i===step?' on':'')},`${i+1}. ${s}`);b.onclick=()=>{step=i;render();};return b;}));
+    const tabs=h('div',{class:'ew-steps'},...STEPS.map((s,i)=>{const b=h('button',{type:'button',class:'ew-step'+(i===step?' on':'')},`${i+1}. ${s}`);b.onclick=()=>{if(i>step&&!protrusionsAnswered(protrusionDetection?.items||[]))return;step=i;render();};return b;}));
     const back=h('button',{type:'button'},'Back'),next=h('button',{type:'button',class:'primary'},'Next'),close=h('button',{type:'button'},'Close');
-    back.disabled=step===0;next.hidden=step===STEPS.length-1;back.onclick=()=>{step--;render();};next.onclick=()=>{step++;render();};close.onclick=()=>d.close();
+    back.disabled=step===0;next.hidden=step===STEPS.length-1;back.onclick=()=>{step--;render();};next.disabled=!protrusionsAnswered(protrusionDetection?.items||[]);next.onclick=()=>{if(!protrusionsAnswered(protrusionDetection?.items||[]))return;step++;render();};close.onclick=()=>d.close();
     d.replaceChildren(h('h2',{},spec.id?'Edit equipment':'New equipment'),
       ...(spec.id?[h('p',{class:'ew-note'},'Saving updates this item everywhere it is placed. Changing its rack-unit height does not resize slots already placed.')]:[]),tabs,h('div',{class:'ew-body'},...body()),
       h('p',{class:'ew-note ew-cap'},'Faceplate, seen from the front'),h('svg',{id:'ewPreview',class:'ew-preview'}),h('div',{class:'ew-nav'},close,back,next));

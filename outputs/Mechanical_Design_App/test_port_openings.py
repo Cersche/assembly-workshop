@@ -114,3 +114,97 @@ class PortOpenings(unittest.TestCase):
         before=deepcopy(lan);P.joint_positions(lan,[],68);self.assertEqual(lan,before)
 
 if __name__ == '__main__': unittest.main()
+
+
+class ProtrusionTests(unittest.TestCase):
+    def base(self):
+        import equipment as E
+        return E.clean(dict(name='Test box',dev_w=100,dev_d=100,dev_h=20,u=1,device_mount='flat',joint='screw'))
+
+    def test_validation_round_trip_and_legacy_bytes(self):
+        import equipment as E
+        from pathlib import Path
+        import importlib.util
+        old_path=Path(__file__).resolve().parents[2]/'docs/archive/codex/2026-10-20/task32/equipment.py'
+        mod=importlib.util.spec_from_file_location('before32',old_path);old=importlib.util.module_from_spec(mod);mod.loader.exec_module(old);old.TEMPLATE=E.TEMPLATE
+        for mount in ('flat','sleeve','inserts'):
+            raw=dict(self.base(),device_mount=mount,holes=[[5,5]])
+            self.assertEqual(E.source(E.clean(raw)),old.source(old.clean(raw)))
+        p=dict(face='back',x=10,y=100,z=5,w=10,d=140,h=8,keep_clear=True)
+        raw=dict(self.base(),protrusions=[p],rear_support=True)
+        clean=E.clean(raw);self.assertEqual(E.clean(clean),clean)
+        self.assertEqual(clean['protrusions'],[p]);self.assertTrue(E.rear_geometry(clean)['keep_clear']);self.assertFalse(E.rear_geometry(clean)['windows']);self.assertIn('keep_clear_cut();',E.source(clean))
+        for value in ({},None,[p]*33,[dict(p,keep_clear=False)],[dict(p,w=float('nan'))],[dict(p,face='rear')]):
+            with self.assertRaises(ValueError):E.clean(dict(raw,protrusions=value))
+        self.assertNotIn('protrusions',E.clean(dict(raw,protrusions=[])))
+        vents=E.rear_geometry(E.clean(dict(raw,rear_style='vents')))  # Claude review: zones never join the rounded style windows
+        self.assertTrue(vents['keep_clear']);self.assertTrue(all(q not in vents['windows'] for q in vents['keep_clear']))
+
+    def test_rotated_keep_clear_zone_hits_rear(self):
+        import equipment as E
+        s=dict(self.base(),rear_support=True,dev_rot=90,protrusions=[dict(face='left',x=100,y=40,z=4,w=140,d=10,h=8,keep_clear=True)])
+        box=E.keep_clear_boxes(s)[0]
+        self.assertEqual((box['y0'],box['y1']),(112,252))
+        self.assertEqual(len(E.keep_clear_openings(s)),1)
+
+
+class FrontPositionBezelTests(unittest.TestCase):
+    def base(self,**kw):
+        return dict(dict(name='Bench',dev_w=85,dev_d=100,dev_h=20,u=1,device_mount='inserts',joint='screw',holes=[[10,15]],ports=[]),**kw)
+
+    def test_defaults_are_byte_identical_for_four_existing_shapes(self):
+        import equipment as E
+        from pathlib import Path
+        import importlib.util
+        path=Path(__file__).resolve().parents[2]/'docs/archive/codex/2026-10-20/task33/equipment.py'
+        mod=importlib.util.spec_from_file_location('before33',path);old=importlib.util.module_from_spec(mod);mod.loader.exec_module(old);old.TEMPLATE=E.TEMPLATE
+        for spec in [self.base(device_mount='sleeve',dev_w=182.5,dev_d=194.5,dev_h=36.8),self.base(ports=[dict(x=0,z=26,w=15,h=8,r=1)]),self.base(device_mount='flat'),self.base(u=2)]:
+            with self.subTest(spec=spec):
+                before=old.source(old.clean(spec))
+                self.assertEqual(E.source(E.clean(spec)),before)
+                self.assertEqual(E.source(E.clean(dict(spec,front_position='today',bezel='none',front_setback=16,bezel_size=1))),before)
+
+    def test_position_and_flush_window(self):
+        import equipment as E
+        for mode,amount,y,window in [('flush',0,-4,True),('setback',3,-1,True),('setback',4,0,True),('setback',10,6,False)]:
+            s=E.clean(self.base(joint='single',front_position=mode,front_setback=amount))
+            self.assertEqual(P.device_y(s),y);self.assertEqual(bool(P.front_window(s)),window)
+            self.assertEqual(E.clean(s),s)
+            self.assertIn('dev_y='+str(float(y))+';',E.source(s))
+            if window:self.assertIn('square([86.0,20.3]',E.source(s))
+        for spec,message in [(self.base(front_position='flush'),'Sleeve mount'),(self.base(device_mount='flat',joint='single',front_position='flush'),'corner stops'),(self.base(device_mount='sleeve',front_position='setback',front_setback=10),'Sleeve set back'),(self.base(joint='single',front_position='flush',dev_h=35),'bands'),(self.base(joint='single',front_position='flush',holes=[[10,2]]),'standoff')]:
+            with self.assertRaisesRegex(ValueError,message):E.clean(spec)
+
+    def test_ranges_unknown_values_and_allocation_round_trip(self):
+        import equipment as E
+        for k,value in [('front_position','bad'),('bezel','bad'),('front_setback',True),('bezel_size',True),('front_setback',-1),('front_setback',101),('bezel_size',.4),('bezel_size',1.6),('bezel_size',float('nan'))]:
+            with self.subTest(key=k,value=value):
+                with self.assertRaises(ValueError):E.clean(self.base(**{k:value}))
+                with self.assertRaises(ValueError):E.placement_settings({k:value})
+        choices=dict(front_position='setback',front_setback=20,bezel='chamfer',bezel_size=1.2)
+        self.assertEqual(E.placement_settings(choices),choices)
+        s=E.clean(E.allocation_spec(self.base(),choices));self.assertEqual(P.device_y(s),16)
+        self.assertEqual(E.clean(s),s)
+
+    def test_bezel_web_reduction_pair_edge_slots_and_keystone(self):
+        ports=[dict(x=-6.5,z=22,w=10,h=8,r=1),dict(x=6.5,z=22,w=10,h=8,r=1)]
+        s=self.base(ports=ports,bezel='rounded',bezel_size=1.5)
+        plan=P.bezel_plan(s);self.assertEqual([p['size'] for p in plan['openings']],[.5,.5]);self.assertEqual(len(plan['notes']),2)
+        self.assertGreaterEqual(3-sum(p['size'] for p in plan['openings']),P.BEZEL_WEB)
+        for port in [dict(x=120,z=6.323,w=5,h=4),dict(x=123,z=23,w=4,h=4),dict(x=0,z=3.025,w=10,h=2)]:
+            q=P.bezel_plan(self.base(ports=[port],bezel='chamfer'))
+            self.assertEqual(q['openings'][0]['size'],0);self.assertTrue(q['notes'])
+        q=P.bezel_plan(self.base(ports=[dict(x=15,z=22,w=4,h=4)],keystones=[0],bezel='chamfer',bezel_size=1.5))
+        self.assertEqual(q['openings'][0]['size'],.5)
+
+    def test_geometry_is_only_front_opening_edges(self):
+        import equipment as E
+        base=self.base(ports=[dict(x=0,z=26,w=15,h=8,r=1)])
+        a=E.source(E.clean(base));b=E.source(E.clean(dict(base,bezel='rounded')))
+        self.assertNotIn('bezel_cuts',a);self.assertIn('bezel_cuts();',b);self.assertIn('bezel_rounded=true;',b);self.assertIn('bezel_rounded?8:1',b)
+        self.assertEqual(a[a.index('module ks_cut'):a.index('module faceplate')],b[b.index('module ks_cut'):b.index('module faceplate')])
+        self.assertEqual(a[a.index('module rear_bracket'):a.index('module device_features_add')],b[b.index('module rear_bracket'):b.index('module device_features_add')])
+        self.assertNotIn('minkowski',b)
+        s=E.clean(self.base(device_mount='sleeve',joint='single',bezel='chamfer'))
+        self.assertEqual(P.bezel_plan(s)['openings'][0]['label'],'Front window')
+        self.assertIn('bezel_shapes=[[',E.source(s))
