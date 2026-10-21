@@ -32,7 +32,7 @@
   const autoU=spec=>Math.min(5,Math.max(1,Math.ceil(neededHeight(spec)/RACK_PITCH)));
   function flatHint(spec){
     const flat={...spec,device_mount:'flat'},u=Math.ceil(neededHeight(flat)/RACK_PITCH);
-    return u>=1&&u<=5&&u<Math.ceil(neededHeight(spec)/RACK_PITCH)?`Fits ${u}U if it sits flat (no standoffs): ${Math.round(neededHeight(flat)*100)/100} mm needed / ${u*RACK_PITCH} mm available. Choose 'Sits flat' as the tray default mount on the Ports step, or under Mounting in Place on tray per slot.`:'';
+    return u>=1&&u<=5&&u<Math.ceil(neededHeight(spec)/RACK_PITCH)?`Fits ${u}U if it sits flat (no standoffs): ${Math.round(neededHeight(flat)*100)/100} mm needed / ${Math.round(u*RACK_PITCH*100)/100} mm available. Choose 'Sits flat' as the tray default mount on the Ports step, or under Mounting in Place on tray per slot.`:'';
   }
   // Historical public lift is relative to the old floor top (10 mm); differences include the new floor.
   function lift(spec){return ['flat','sleeve'].includes(spec.device_mount)?deviceLift(spec)-(7+LEGACY_SLOT_OFFSET+3):spec.device_mount==='straps'?0:+(spec.standoff??6);}
@@ -89,8 +89,10 @@
     return {x:+(s.dev_off_x||0),half,bottom,top,width:half*2,height:top-bottom};}
   function positionProblems(s){if(!s.front_position||s.front_position==='today')return [];const out=[],y=deviceY(s),win=frontWindow(s);
     if(s.device_mount==='sleeve'&&Math.abs(y+4)>1e-9)out.push('Sleeve set back is not supported: its front wall joints and strap slots assume a flush case. Choose As today or Flush with faceplate, or change the mount.');
-    if(y<11.5&&s.device_mount!=='sleeve'&&s.joint!=='single')out.push('Flush or a set back under 15.5 mm needs the Sleeve mount or a single printed piece joint; the front screw joint would hit the case.');
-    if(s.device_mount==='flat'&&y<6.2)out.push('Flat corner stops need a front gap of at least 6.2 mm. Set back at least 10.2 mm or choose Sleeve.');
+    const joint=y<11.5&&s.device_mount!=='sleeve'&&s.joint!=='single',flat=s.device_mount==='flat'&&y<6.2;
+    if(joint&&flat)out.push('Flush or a set back under 15.5 mm is too close for the front screw joint and the flat corner stops. Set back at least 15.5 mm or choose Sleeve.');
+    else if(joint)out.push('Flush or a set back under 15.5 mm needs the Sleeve mount or a single printed piece joint; the front screw joint would hit the case.');
+    else if(flat)out.push('Flat corner stops need a front gap of at least 6.2 mm. Set back at least 10.2 mm or choose Sleeve.');
     if(s.device_mount==='clips'&&y<1)out.push('Clip support ledges need a front gap of at least 1 mm. Set back at least 5 mm or choose Sleeve.');
     if(win&&(win.bottom-plateBottom<SLEEVE.band||s.u*RACK_PITCH-plateBottom-win.top<SLEEVE.band))out.push('The front window needs 1.5 mm bands above and below; choose more rack units or lower the device.');
     if(y<0&&['inserts','pegs'].includes(s.device_mount)){for(const [x,hy]of s.holes||[]){const qy=s.dev_rot===90?x:s.dev_rot===180?s.dev_d-hy:s.dev_rot===270?s.dev_w-x:hy;if(y+qy<5){out.push('A front standoff would extend past the tray floor. Move the mounting hole back, increase Set back or choose Sleeve.');break;}}}

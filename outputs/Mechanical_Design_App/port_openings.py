@@ -201,9 +201,13 @@ def position_problems(s):
     y=device_y(s);out=[]
     if s.get('device_mount')=='sleeve' and abs(y+4)>1e-9:
         out.append('Sleeve set back is not supported: its front wall joints and strap slots assume a flush case. Choose As today or Flush with faceplate, or change the mount.')
-    if y<11.5 and s.get('device_mount')!='sleeve' and s.get('joint')!='single':
+    joint=y<11.5 and s.get('device_mount')!='sleeve' and s.get('joint')!='single'
+    flat=s.get('device_mount')=='flat' and y<6.2
+    if joint and flat:
+        out.append('Flush or a set back under 15.5 mm is too close for the front screw joint and the flat corner stops. Set back at least 15.5 mm or choose Sleeve.')
+    elif joint:
         out.append('Flush or a set back under 15.5 mm needs the Sleeve mount or a single printed piece joint; the front screw joint would hit the case.')
-    if s.get('device_mount')=='flat' and y<6.2:
+    elif flat:
         out.append('Flat corner stops need a front gap of at least 6.2 mm. Set back at least 10.2 mm or choose Sleeve.')
     if s.get('device_mount')=='clips' and y<1:
         out.append('Clip support ledges need a front gap of at least 1 mm. Set back at least 5 mm or choose Sleeve.')

@@ -90,8 +90,8 @@
     }
     if((v.device_mount==='inserts'||v.device_mount==='pegs')&&!(spec.holes||[]).length)out.push('Screws and pegs need mounting holes. Add them to the library item (Edit library item), or choose clips or a strap.');
     if(v.device_mount==='flat'){
-      if(L.dev_y<6.2)out.push('Flat corner stops need a front gap of at least 6.2 mm.');
-      if(v.joint==='screw'&&L.dev_y<11.5)out.push('Flat device must clear the front screw joint (front gap >= 11.5 mm).');
+      if(v.front_position==='today'&&L.dev_y<6.2)out.push('Flat corner stops need a front gap of at least 6.2 mm.');
+      if(v.front_position==='today'&&v.joint==='screw'&&L.dev_y<11.5)out.push('Flat device must clear the front screw joint (front gap >= 11.5 mm).');
       if(v.rear_support&&L.dev_y+L.fp_d>RACK_DEPTH-11.5)out.push('Flat device must clear the rear screw joint (rear gap >= 11.5 mm).');
     }
     const ks=v.keystones||[];
@@ -113,13 +113,59 @@
   // Plain-language warnings that never block (Brian, 2026-10-19).
   // Screw joints placed clear of the openings and keystones (port-openings.js jointPositions); null for the single piece.
   function joints(spec,v){const P=PO();if(v.joint!=='screw'||!P)return null;const sw=P.sleeve({...spec,...v});if(sw)return {joints:sw.joints,moved:false,problem:null};return P.jointPositions(openings(spec,v).ports,v.keystones||[],layout(spec,v).tray_w/2);}
-  function warnings(spec,v){const out=[...PO().bezelPlan({...spec,...v,ports:openings(spec,v).ports}).notes];if(v.bezel==='rounded')out.push('Rounded prints best with the front face up; Chamfer prints either way.');const L=layout(spec,v);for(const p of spec.protrusions||[]){const pts=[[p.x,p.y],[p.x+p.w,p.y],[p.x,p.y+p.d],[p.x+p.w,p.y+p.d]].map(q=>dp(spec,v.dev_rot,q)),x0=L.dev_x+Math.min(...pts.map(q=>q[0])),x1=L.dev_x+Math.max(...pts.map(q=>q[0])),y0=L.dev_y+Math.min(...pts.map(q=>q[1])),y1=L.dev_y+Math.max(...pts.map(q=>q[1])),z1=L.lift+p.z+p.h;const hits=[];
+  // Mirrors equipment.rear_geometry cut bounds, without lips or rendering.
+  function rearCutGeometry(spec,v){
+    const style=rearStyle(v),L=layout(spec,v),width=L.fp_w,jx=Math.min(40,Math.abs(v.dev_off_x)+width/2+8-12),placed=joints(spec,v);
+    // Rear joints use joint_x from clean(), which only moves the non-sleeve front joints.
+    const xs=v.joint==='screw'&&v.device_mount!=='sleeve'&&placed&&!placed.problem?placed.joints:[-jx,jx];
+    const g={windows:[],holes:[],keep_clear:[],joints:v.joint==='screw'?xs:[]};
+    for(const p of spec.protrusions||[]){const pts=[[p.x,p.y],[p.x+p.w,p.y],[p.x,p.y+p.d],[p.x+p.w,p.y+p.d]].map(q=>dp(spec,v.dev_rot,q)),y0=L.dev_y+Math.min(...pts.map(q=>q[1])),y1=L.dev_y+Math.max(...pts.map(q=>q[1]));
+      if(v.rear_support&&y0<244&&y1>=240)g.keep_clear.push([L.dev_x+Math.min(...pts.map(q=>q[0]))-.5,L.dev_x+Math.max(...pts.map(q=>q[0]))+.5,L.lift+p.z-.5,L.lift+p.z+p.h+.5]);}
+    if(!v.rear_support||style==='solid')return g;
+    const legacy=style==='open',margin=legacy?4:6,band=legacy?3.5:5,strip=legacy?4:6,limit=legacy?100.2625:96,floor=['flat','sleeve'].includes(v.device_mount)?.5:8.225;
+    const left=Math.min(...xs),right=Math.max(...xs),half=6+margin,top=floor+18.5+margin,height=v.u*PITCH-.025,regions=[];
+    for(let i=0;i<v.u;i++){const lo=Math.max(.025,i*PITCH)+band,hi=Math.min(height,(i+1)*PITCH)-band,upper=i*PITCH+top,split=Math.min(i*PITCH+22.225,upper-strip);
+      let candidates=[[-limit,limit,Math.max(lo,upper),hi],[-limit,left-half,lo,split],[left+half,right-half,lo,split],[right+half,limit,lo,split]];
+      if(!legacy)candidates=candidates.map(([a,b,c,d])=>[Math.max(-limit,a),Math.min(limit,b),c,d]);
+      const valid=candidates.filter(q=>q[1]-q[0]>=10&&q[3]-q[2]>=10);
+      if(['open','reinforced'].includes(style))g.windows.push(...valid);
+      else if(style==='slots')g.windows.push(...valid.filter(q=>q===candidates[0]||q===candidates[2]));
+      else{if(valid.includes(candidates[2]))g.windows.push(candidates[2]);regions.push(...candidates.filter(q=>q!==candidates[2]&&q[1]>q[0]&&q[3]>q[2]));}
+    }
+    if(style==='vents'){
+      const diameter=6.5,pitch=8.5,rowPitch=pitch*Math.sqrt(3)/2;
+      const pack=(a,b,c,d)=>{const rows=Math.floor((d-c-diameter)/rowPitch)+1,out=[];if(rows<=0||b-a<diameter)return out;const z0=(c+d-(rows-1)*rowPitch)/2;
+        for(let row=0;row<rows;row++){const offset=row%2*pitch/2,count=Math.floor((b-a-diameter-offset)/pitch)+1;for(let col=0;col<Math.max(0,count);col++)out.push([a+diameter/2+offset+col*pitch,z0+row*rowPitch]);}return out;};
+      for(const [a,b,c,d] of regions){const normal=pack(a,b,c,d),rotated=pack(c,d,a,b).map(([z,x])=>[x,z]);g.holes.push(...(rotated.length>normal.length?rotated:normal));}
+    }return g;
+  }
+  // Nominal planar distances: rounded window cores + 2 mm radius, circular vents/bosses,
+  // capsule rack slots. Merged cutouts are named separately from remaining positive bands.
+  function keepClearBands(spec,v){
+    const g=rearCutGeometry(spec,v),style=rearStyle(v),height=v.u*PITCH-.025,floor=['flat','sleeve'].includes(v.device_mount)?.5:8.225;
+    const gap=(q,c,r=0)=>Math.max(0,Math.hypot(Math.max(c[0]-q[1],q[0]-c[1],0),Math.max(c[2]-q[3],q[2]-c[3],0))-r),obstacles=[];
+    for(const [a,b,c,d] of g.windows)obstacles.push(['style window',[a+2,b-2,c+2,d-2],2]);
+    for(const [x,z] of g.holes)obstacles.push(['vent hole',[x,x,z,z],3.25]);
+    for(let i=0;i<v.u;i++)for(const x of [-118.2625,118.2625])for(const dz of [-15.902,15.902]){const z=i*PITCH+22.225+dz;obstacles.push(['rack slot',[x-1.5,x+1.5,z,z],3.5]);}
+    return g.keep_clear.map((q,i)=>{let edge=Math.min(q[0]+126,126-q[1],q[2]-.025,height-q[3]);
+      for(const x of [q[0],q[1]])for(const z of [q[2],q[3]]){const dx=Math.max(Math.abs(x)-123.5,0),dz=Math.max(2.525-z,z-(height-2.5),0);if(dx>0&&dz>0)edge=Math.min(edge,2.5-Math.hypot(dx,dz));}
+      const distances=[[Math.max(0,edge),'plate edge']],merged=new Set(),collisions=new Set();
+      for(const [name,core,radius] of [...obstacles,...g.keep_clear.flatMap((p,j)=>i===j?[]:[['keep-clear opening',p,0]])]){const distance=gap(q,core,radius);if(distance<=1e-9)merged.add(name);else distances.push([distance,name]);}
+      for(const x of g.joints)for(const [name,radius] of [['joint boss',4.5],['joint pilot',2]]){const distance=gap(q,[x,x,floor+14,floor+14],radius);distances.push([distance,name]);if(distance<=1e-9)collisions.add(name);}
+      const [distance,nearest]=distances.reduce((a,b)=>b[0]<a[0]?b:a);
+      return {opening:q,band:Math.round(distance*1e6)/1e6,nearest,normal_band:style==='open'?3.5:style!=='solid'?5:null,merged:[...merged].sort(),collisions:[...collisions].sort()};
+    });
+  }
+  function warnings(spec,v){const out=[...PO().bezelPlan({...spec,...v,ports:openings(spec,v).ports}).notes];if(v.bezel==='rounded')out.push('Rounded prints best with the front face up; Chamfer prints either way.');const L=layout(spec,v),bands=keepClearBands(spec,v);let rearIndex=0;for(const p of spec.protrusions||[]){const pts=[[p.x,p.y],[p.x+p.w,p.y],[p.x,p.y+p.d],[p.x+p.w,p.y+p.d]].map(q=>dp(spec,v.dev_rot,q)),x0=L.dev_x+Math.min(...pts.map(q=>q[0])),x1=L.dev_x+Math.max(...pts.map(q=>q[0])),y0=L.dev_y+Math.min(...pts.map(q=>q[1])),y1=L.dev_y+Math.max(...pts.map(q=>q[1])),z1=L.lift+p.z+p.h;const hits=[];
       if(y0<0)hits.push('goes through the faceplate; no front opening is cut automatically');
       if(y1>RACK_DEPTH)hits.push('extends past the rack depth');
       if((x0< -104||x1>104)&&((y0<12&&y1>0)||(y0<244&&y1>228)))hits.push('may hit a rack post');
       if(x0< -L.tray_w/2||x1>L.tray_w/2||v.device_mount==='sleeve'&&(x0<L.dev_x-.5||x1>L.dev_x+L.fp_w+.5))hits.push('may hit a tray or sleeve wall');
       if(z1>v.u*PITCH)hits.push('extends above the allocated U');
-      if(v.rear_support&&y0<244&&y1>=240)hits.push('needs a rear bracket opening; check remaining bands and joints');
+      if(v.rear_support&&y0<244&&y1>=240){const b=bands[rearIndex++],style=rearStyle(v),normal=b.normal_band===null?'':` (the ${REAR_STYLES[style][0]} style normally keeps ${b.normal_band} mm)`;
+        hits.push(`needs a rear bracket opening; ${b.merged.length?`it joins a ${b.merged.join(' and a ')} and `:''}leaves a ${b.band.toFixed(1)} mm band to the ${b.merged.includes(b.nearest)?'next ':''}${b.nearest}${normal}`);
+        if(b.collisions.length)hits.push('cuts the '+b.collisions.join(' and '));
+      }
       if(hits.length)out.push('Keep-clear zone '+hits.join('; ')+'. Real cables need extra bend space the app cannot know.');
     }const sw=PO().sleeve({...spec,...v}),through=footPockets(spec,v).filter(p=>p.through).length;if(through)out.push(`${through} foot pocket(s) pass through the floor (a blind cut would leave less than ${PO().FOOT.minFloor} mm).`);if(sw){out.push('Sleeve front is flush with the plate; choose As today or Flush with faceplate. Front gap is ignored. Fit, retention and strength UNKNOWN.');if(!sw.lip)out.push('No top lips fit this height budget; walls only.');const dropped=PO().sleevePorts(openings(spec,v).ports,{...spec,...v}).dropped;if(dropped.length)out.push(`${dropped.length} front opening(s) inside the sleeve window are omitted; the window already exposes them.`);}const m=openings(spec,v).message;if(m)out.push(m);const j=joints(spec,v);
     if(j&&j.moved&&!j.problem)out.push(`The tray screw joints were moved to X = ${j.joints.map(x=>mm(x)).join(' and ')} mm (normally ±${mm(j.default)} mm) to keep them clear of the openings and keystones.`);
@@ -171,7 +217,7 @@
     if(v.rear_support)out.rear_bracket=box(-PLATE_HALF,RACK_DEPTH,PO().plateBottom,PLATE_HALF,RACK_DEPTH+PLATE_T,PO().plateBottom+L.plate_h); // to_rear(): plate mirrored about mid-depth
     return out;
   }
-  const api={RACK_INNER_W,SIDE_CLEAR,MAX_TRAY,widthProblem,KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,footPockets,openings,joints,problems,warnings,snap,schematic,box,rackSketch};
+  const api={RACK_INNER_W,SIDE_CLEAR,MAX_TRAY,widthProblem,KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,footPockets,openings,joints,rearCutGeometry,keepClearBands,problems,warnings,snap,schematic,box,rackSketch};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.TrayPlacement=api;
   if(typeof document==='undefined')return;

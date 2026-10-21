@@ -2,6 +2,84 @@ import unittest
 from copy import deepcopy
 import port_openings as P
 
+
+class ProtrusionPolishTests(unittest.TestCase):
+    def base(self, **kw):
+        s=dict(name='Disposable band fixture',dev_w=158,dev_d=101.1,dev_h=26.5,
+               device_mount='flat',joint='screw',rear_support=True,rear_style='reinforced',
+               front_position='setback',front_setback=70,u=1,holes=[])
+        s.update(kw)
+        return s
+
+    def zone(self, x0=-74.5, x1=-64.5, z0=12.4, z1=22.9):
+        # Known rack-frame cut after 0.5 mm padding; flat lift = 3.5 mm.
+        return dict(face='back',x=x0+79+.5,y=101.1,z=z0-3.5+.5,
+                    w=x1-x0-1,d=140,h=z1-z0-1,keep_clear=True)
+
+    def test_merged_window_leaves_2_1_mm_and_does_not_change_spec_or_source(self):
+        import equipment as E
+        s=E.clean(self.base(protrusions=[self.zone()]))
+        before=deepcopy(s);source=E.source(s)
+        band=E.keep_clear_bands(s)[0]
+        self.assertEqual(band['band'],2.1)
+        self.assertEqual(band['normal_band'],5)
+        self.assertEqual(band['nearest'],'style window')
+        self.assertEqual(band['merged'],['style window'])
+        self.assertEqual(band['collisions'],[])
+        self.assertEqual(s,before);self.assertEqual(E.source(s),source)
+
+    def test_joint_boss_pilot_and_plate_edge(self):
+        import equipment as E
+        for zone,expected in [(self.zone(-43,-37,12,17),['joint boss','joint pilot']),
+                              (self.zone(-46,-44,12,17),['joint boss'])]:
+            s=E.clean(self.base(protrusions=[zone]))
+            b=E.keep_clear_bands(s)[0]
+            self.assertEqual(b['collisions'],expected);self.assertEqual(b['band'],0)
+        b=E.keep_clear_bands(E.clean(self.base(protrusions=[self.zone(-125,-115,1,8)])))[0]
+        self.assertIn('rack slot',b['merged'])
+        self.assertEqual(E.keep_clear_bands(E.clean(self.base(rear_support=False))),[])
+        b=E.keep_clear_bands(E.clean(self.base(protrusions=[self.zone(-130,-120,10,18)])))[0]
+        self.assertEqual(b['band'],0);self.assertEqual(b['nearest'],'plate edge')
+
+    def test_task34_legacy_specs_and_source_bytes_unchanged(self):
+        import equipment as E
+        import importlib.util
+        from pathlib import Path
+        path=Path(__file__).resolve().parents[2]/'docs/archive/codex/2026-10-20/task34/equipment.py'
+        loader=importlib.util.spec_from_file_location('before34',path)
+        old=importlib.util.module_from_spec(loader);loader.loader.exec_module(old);old.TEMPLATE=E.TEMPLATE
+        count=0
+        for mount in ('flat','sleeve','inserts','pegs','clips','straps'):
+            for style in ('solid','open','reinforced','slots','vents'):
+                for u in (1,2,5):
+                    for rot in (0,90,180,270):
+                        raw=self.base(device_mount=mount,rear_style=style,u=u,dev_rot=rot,
+                                      dev_w=85,dev_d=100,dev_h=20,holes=[[20,20]],front_position='today')
+                        untouched=deepcopy(raw);before=old.clean(raw);after=E.clean(raw)
+                        self.assertEqual(before,after);self.assertEqual(raw,untouched)
+                        self.assertEqual(old.source(before).encode('utf-8'),E.source(after).encode('utf-8'))
+                        self.assertEqual(E.source(after),E.source(E.clean(dict(raw,bezel='none',front_setback=16,bezel_size=1))))
+                        count+=1
+        self.assertEqual(count,360)
+
+    def test_numeric_slot_edge_corner_vent_and_other_zone_gaps(self):
+        import equipment as E
+        import math
+        def band(q, **kw):
+            return E.keep_clear_bands(E.clean(self.base(rear_style='solid',
+                                                       protrusions=[self.zone(*q)],**kw)))[0]
+        b=band((108,110,6,7.2));self.assertEqual(b['nearest'],'rack slot');self.assertEqual(b['band'],3.2625)
+        b=band((-10,-5,10,15));self.assertEqual(b['nearest'],'plate edge');self.assertEqual(b['band'],9.975)
+        b=band((123.8,125,1,2.2));self.assertAlmostEqual(b['band'],2.5-math.hypot(1.5,1.525),places=6)
+        # Small rectangle 0.4 mm above a vent; circumscribed circles are conservative
+        # relative to the template's 24-sided polygons.
+        s=E.clean(self.base(rear_style='vents'))
+        x,z=E.rear_geometry(s)['holes'][0]
+        s['protrusions']=[self.zone(x-.6,x+.6,z+3.65,z+5.65)]
+        b=E.keep_clear_bands(s)[0];self.assertEqual(b['nearest'],'vent hole');self.assertAlmostEqual(b['band'],.4)
+        s=E.clean(self.base(rear_style='solid',protrusions=[self.zone(-20,-15,10,15),self.zone(-13,-8,10,15)]))
+        self.assertEqual([b['band'] for b in E.keep_clear_bands(s)],[2,2])
+
 SPEC = {'ports': [{'id': 'lan', 'label': 'LAN', 'type': 'rj45', 'x': 0, 'z': 20, 'w': 17, 'h': 14, 'r': 1}], 'standoff': 6}
 
 class PortOpenings(unittest.TestCase):

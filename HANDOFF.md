@@ -2,6 +2,14 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-20 (night) Task 34 reviewed: one question per plug, band in the warning (read first)
+
+- **Codex task 34 is done and reviewed by Claude.** Not committed yet (Brian commits/pushes).
+- Real SG108 STEP (Y is up): now **one** back question (cable + plug + tip merged, "separate bodies"). Set back 70 + Rear support + Reinforced: the warning says it **leaves a 2.1 mm band (Reinforced normally keeps 5 mm)**. Flush + Sits flat: the 6.2 mm message shows once.
+- Checks: **159 Python (1 skipped) + 209 JS** pass. Old specs give byte-identical SCAD vs 09f1734. No geometry change, no render needed.
+- Claude fixes: the wizard's "133.35000000000002 mm available" now rounds; the band warning reads "joins a style window and leaves a 2.1 mm band to the next style window"; Flush + Sits flat + Screw joint shows one front-gap message instead of three. Checks now 159 Python + 210 JS.
+- Review: [34 REPORT](work/codex-tasks/34-protrusion-polish-REPORT.md). Fit, cable bend space and strength stay UNKNOWN.
+
 ## 2026-10-20 (evening) Tasks 32–33 reviewed: protrusions, Front position, Bezel (read first)
 
 - **Codex tasks 32 and 33 are done and reviewed by Claude.** Not committed yet.

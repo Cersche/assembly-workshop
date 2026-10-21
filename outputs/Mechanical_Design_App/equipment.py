@@ -369,6 +369,62 @@ def rear_geometry(s):
     return result
 
 
+def keep_clear_bands(s):
+    """Nominal 2D gaps at each cut, not a stiffness/strength assessment.
+
+    Rounded windows/capsules/circles use core rectangles plus a radius. Merged
+    cutouts have no intervening band and are named separately; measure the
+    smallest remaining positive gap to other cuts. Edges and joint collisions
+    count as zero. Do not change geometry or saved specs.
+    """
+    geometry = rear_geometry(s)
+    cuts = geometry['keep_clear']
+    if not cuts:
+        return []
+    style = rear_style(s)
+    height = s['u']*44.45-.025
+    floor = .5 if s['device_mount'] in ('flat', 'sleeve') else 8.225
+    width = s['dev_d'] if s.get('dev_rot') in (90,270) else s['dev_w']
+    jx = min(40,abs(s.get('dev_off_x',0))+width/2+8-12)
+    joints = s.get('joint_x',[-jx,jx]) if s['joint']=='screw' else []
+    def gap(q, core, radius=0):
+        return max(0,math.hypot(max(core[0]-q[1],q[0]-core[1],0),
+                                max(core[2]-q[3],q[2]-core[3],0))-radius)
+    obstacles = []
+    for a,b,c,d in geometry['windows']:
+        obstacles.append(('style window',[a+2,b-2,c+2,d-2],2))
+    for x,z in geometry['holes']:
+        obstacles.append(('vent hole',[x,x,z,z],REAR_VENT_D/2))
+    for i in range(s['u']):
+        for x in (-118.2625,118.2625):
+            for dz in (-15.902,15.902):
+                z=i*44.45+22.225+dz
+                obstacles.append(('rack slot',[x-1.5,x+1.5,z,z],3.5))
+    out=[]
+    for i,q in enumerate(cuts):
+        # Rounded outer plate: minimum at a corner of the rectangular cut.
+        edge=min(q[0]+126,126-q[1],q[2]-.025,height-q[3])
+        for x in (q[0],q[1]):
+            for z in (q[2],q[3]):
+                dx=max(abs(x)-123.5,0); dz=max(2.525-z,z-(height-2.5),0)
+                if dx>0 and dz>0:edge=min(edge,2.5-math.hypot(dx,dz))
+        distances=[(max(0,edge),'plate edge')]; merged=[]; collisions=[]
+        for name,core,radius in obstacles+[("keep-clear opening",p,0) for j,p in enumerate(cuts) if i!=j]:
+            distance=gap(q,core,radius)
+            if distance<=1e-9:merged.append(name)
+            else:distances.append((distance,name))
+        for x in joints:
+            for name,radius in (('joint boss',4.5),('joint pilot',2)):
+                distance=gap(q,[x,x,floor+14,floor+14],radius)
+                distances.append((distance,name))
+                if distance<=1e-9:collisions.append(name)
+        distance,nearest=min(distances,key=lambda p:p[0])
+        out.append(dict(opening=q,band=round(distance,6),nearest=nearest,
+                        normal_band=3.5 if style=='open' else 5 if style!='solid' else None,
+                        merged=sorted(set(merged)),collisions=sorted(set(collisions))))
+    return out
+
+
 def template_source(spec):
     # New builds always use the current slot-bottom template; saved revisions remain immutable.
     text = TEMPLATE.read_text(encoding='utf-8')

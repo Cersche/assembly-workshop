@@ -49,7 +49,7 @@
   }
 
   // Named screening thresholds. Coordinates: -Y front, +Y back, -X left, +Z top.
-  const PROTRUSION={smallVolume:.10,fullArea:.50,minLength:2,sliceMM:.5,maxSlices:600,weldMM:.001,maxCount:32,footToleranceMM:.5};
+  const PROTRUSION={smallVolume:.10,fullArea:.50,minLength:2,sliceMM:.5,maxSlices:600,weldMM:.001,maxCount:32,footToleranceMM:.5,mergeToleranceMM:.5};
   function findProtrusions(v,mn,mx,feet=[]){
     const n=v.length/9,parent=Array.from({length:n},(_,i)=>i),root=i=>{while(parent[i]!==i){parent[i]=parent[parent[i]];i=parent[i];}return i;},owners=new Map();
     for(let t=0;t<n;t++)for(let c=0;c<3;c++){const o=t*9+c*3,k=[v[o],v[o+1],v[o+2]].map(x=>Math.round(x/PROTRUSION.weldMM)).join(',');if(owners.has(k)){const a=root(t),b=root(owners.get(k));parent[a]=b;}else owners.set(k,t);}
@@ -89,7 +89,14 @@
     }
     // Preserve the feet-inclusive Z convention used by the existing floor-pocket path.
     if(footH)lo[2]=mn[2];
-    const items=raw.slice(0,PROTRUSION.maxCount).map(r=>({face:r.face,x:r.lo[0]-lo[0],y:r.lo[1]-lo[1],z:r.lo[2]-lo[2],w:r.hi[0]-r.lo[0],d:r.hi[1]-r.lo[1],h:r.hi[2]-r.lo[2],method:r.method,axis:r.axis,side:r.side,answer:''}));
+    // Connected components of ORIGINAL boxes: using a growing union box could bridge unrelated plugs.
+    // Same face only; <= 0.5 mm separation on every axis counts as touching.
+    const groups=[],seen=new Set();
+    for(let i=0;i<raw.length;i++){if(seen.has(i))continue;const ids=[i];seen.add(i);
+      for(let k=0;k<ids.length;k++)for(let j=0;j<raw.length;j++)if(!seen.has(j)&&raw[j].face===raw[i].face&&raw[j].lo.every((x,a)=>x<=raw[ids[k]].hi[a]+PROTRUSION.mergeToleranceMM&&raw[j].hi[a]>=raw[ids[k]].lo[a]-PROTRUSION.mergeToleranceMM)){seen.add(j);ids.push(j);}
+      const r={...raw[i],lo:raw[i].lo.slice(),hi:raw[i].hi.slice()};for(const j of ids)for(let a=0;a<3;a++){r.lo[a]=Math.min(r.lo[a],raw[j].lo[a]);r.hi[a]=Math.max(r.hi[a],raw[j].hi[a]);}if(ids.length>1)r.method='separate bodies';groups.push(r);
+    }
+    const items=groups.slice(0,PROTRUSION.maxCount).map(r=>({face:r.face,x:r.lo[0]-lo[0],y:r.lo[1]-lo[1],z:r.lo[2]-lo[2],w:r.hi[0]-r.lo[0],d:r.hi[1]-r.lo[1],h:r.hi[2]-r.lo[2],method:r.method,axis:r.axis,side:r.side,answer:''}));
     return {caseMin:lo,caseMax:hi,items};
   }
   const protrusionsAnswered=items=>items.every(p=>['case','space','omit'].includes(p.answer));

@@ -50,4 +50,4 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [31-rear-bracket-lips-and-vents](31-rear-bracket-lips-and-vents.md) | done, reviewed by Claude (145 Py + all JS pass; outer face flat, lips clash-free, vents 62 holes ~51 % open) |
 | [32-protrusion-detection](32-protrusion-detection.md) | done, reviewed by Claude (155 Py + 204 JS pass; real SG108 STEP: plug found, 3 questions, size from case, keep-clear zone cuts the rear bracket; Claude fixed an over-cut on Slots/Vents) |
 | [33-front-position-and-bezel](33-front-position-and-bezel.md) | done, reviewed by Claude (exact renders closed; chamfer 45°, rounded 8-step, 2 mm webs held; keystones/slots untouched; defaults byte-identical) |
-| [34-protrusion-polish](34-protrusion-polish.md) | queued (one question per plug, remaining band in the warning, duplicate flat message) |
+| [34-protrusion-polish](34-protrusion-polish.md) | done, reviewed by Claude (159 Py + 210 JS pass; real SG108 STEP: 1 back question, warning says 2.1 mm band vs 5 mm; front-gap messages merged to one; no geometry change) |
