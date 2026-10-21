@@ -16,7 +16,7 @@ import sys
 import time
 from datetime import datetime, timedelta, timezone
 
-DEFAULT_SOURCE = Path(r"C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop")
+DEFAULT_SOURCE = Path(__file__).resolve().parents[2]
 DEFAULT_LOCAL = Path(r"D:\Backups\Assembly Workshop")
 DEFAULT_CLOUD = Path(r"C:\Users\brian\OneDrive\Backups\Assembly Workshop")
 CHUNK = 1024 * 1024
