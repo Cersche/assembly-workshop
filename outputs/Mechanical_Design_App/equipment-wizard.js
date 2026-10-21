@@ -508,15 +508,17 @@
       .then(list=>{meshes.set(id,Object.fromEntries(list));redraw();if([...placed.values()].some(f=>f&&f.id===id))changed();}).catch(()=>meshes.delete(id));}
     return meshes.get(id);
   }
-  const hasTray=a=>!!a?.tray&&typeof a.tray==='object'&&Object.keys(a.tray).length>0;
+  // A second device on the tray (Brian, 2026-10-20) always needs the slot's own render or sketch.
+  const hasTray=a=>!!a?.second||!!a?.tray&&typeof a.tray==='object'&&Object.keys(a.tray).length>0;
+  const secondOf=a=>{const s=a?.second&&items.find(i=>i.id===a.second.equipment);return s?{spec:s.spec,tray:a.second.tray}:null;};
   // Library spec with the slot's tray choices on top (equipment.allocation_spec; TrayPlacement.values fills defaults).
   // Front openings follow the device's offset and standoff (port-openings.js), as equipment.allocation_spec() cuts them.
   function effectiveSpec(spec,tray){const T=window.TrayPlacement,out=T?{...spec,...T.values(spec,tray)}:{...spec,...tray},P=window.LabRaxPortOpenings;
     if(P&&tray&&spec.ports)out.ports=P.frontOpenings(spec,tray).ports;return out;}
   function lookup(it,a){
-    const key=it.build+'|'+JSON.stringify(a.tray);
+    const key=it.build+'|'+JSON.stringify(a.tray)+(a.second?'|'+JSON.stringify(a.second):'');
     if(!placed.has(key)){placed.set(key,null);
-      fetch('/api/equipment-placement-mesh',{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify({item:it.id,tray:a.tray})})
+      fetch('/api/equipment-placement-mesh',{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify({item:it.id,tray:a.tray,...(a.second?{second:{item:a.second.equipment,tray:a.second.tray}}:{})})})
         .then(r=>r.json()).then(out=>{placed.set(key,out&&out.cached?{id:out.id,parts:out.parts}:{sketch:true});redraw();if(out&&out.cached)changed();})
         .catch(()=>placed.set(key,{sketch:true}));}
     return {key,found:placed.get(key)};
@@ -525,13 +527,14 @@
   function sketchParts(key,a,it){
     if(sketches.has(key))return sketches.get(key);const T=window.TrayPlacement;if(!T)return null;const M=window.LabRaxStudio.Mesh;
     const mesh=flat=>{const m=new M();for(let i=0;i+8<flat.length;i+=9)m.tri(flat.slice(i,i+3),flat.slice(i+3,i+6),flat.slice(i+6,i+9));return m;};
-    const out=Object.fromEntries(Object.entries(T.rackSketch(it.spec,a.tray)).map(([p,flat])=>[p,mesh(flat)]));
+    const out=Object.fromEntries(Object.entries(T.rackSketch(it.spec,a.tray,secondOf(a))).map(([p,flat])=>[p,mesh(flat)]));
     sketches.set(key,out);return out;
   }
   function partsFor(a){
     const it=items.find(i=>i.id===a.equipment);if(!it)return null;
     if(it.build&&!hasTray(a)){const parts=meshesOf(it.build,it.parts);return parts&&{item:it,spec:it.spec,parts,key:it.build,view:'library'};}
-    const spec=effectiveSpec(it.spec,a.tray),{key,found}=lookup(it,a);
+    const spec=effectiveSpec(it.spec,a.tray),{key,found}=lookup(it,a),s2=secondOf(a),Pr=window.TrayPair;
+    if(s2&&Pr)spec.ports=[...(spec.ports||[]),...Pr.ports2(s2.spec,Pr.merged(spec,Pr.values(s2.spec,s2.tray)))];
     if(found&&found.id){const parts=meshesOf(found.id,found.parts);if(parts)return {item:it,spec,parts,key:found.id,view:'exact'};}
     const parts=sketchParts(key,a,it);return parts&&{item:it,spec,parts,key:'sketch-'+hash(key),view:'sketch'};
   }
@@ -540,7 +543,7 @@
   // exact preview or STL build, so a slot whose settings now have an exact render switches from the sketch to it.
   window.EquipmentRackView={
     status(a){if(!String(a?.equipment).startsWith('eq-'))return null;const it=items.find(i=>i.id===a.equipment);if(!it)return null;if(it.build&&!hasTray(a))return 'library';
-      const f=placed.get(it.build+'|'+JSON.stringify(a.tray));return f&&f.id&&meshes.get(f.id)?'exact':'sketch';},
+      const f=placed.get(it.build+'|'+JSON.stringify(a.tray)+(a.second?'|'+JSON.stringify(a.second):''));return f&&f.id&&meshes.get(f.id)?'exact':'sketch';},
     refresh(){for(const[k,v]of placed)if(!v||v.sketch)placed.delete(k);redraw();}
   };
   // Same as rack-studio.js rgb() (not exported there).

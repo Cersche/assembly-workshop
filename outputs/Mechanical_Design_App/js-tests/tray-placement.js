@@ -87,7 +87,7 @@ test('rack view draws each slot\'s own tray: exact render if one exists, else a 
   const patch=wiz.slice(wiz.indexOf('const placed=new Map()'),wiz.indexOf('function open()'));
   // Lookup only: the rack view never asks for a preview render or an STL build.
   assert.ok(patch.includes("'/api/equipment-placement-mesh'")&&!/equipment-preview|equipment-build/.test(patch));
-  assert.ok(patch.includes('const got=partsFor(a);')&&patch.includes('T.rackSketch(it.spec,a.tray)'));
+  assert.ok(patch.includes('const got=partsFor(a);')&&patch.includes('T.rackSketch(it.spec,a.tray,secondOf(a))'));
   assert.match(patch,/frontFace\(mesh,got\.spec\)/); // images and outline use the slot's openings
   assert.ok(app.includes("'/api/equipment-placement-mesh'")&&app.includes('equipment.cached_allocation_render('));
   assert.equal((tp.match(/window\.EquipmentRackView\?\.refresh\(\)/g)||[]).length,2); // after exact preview and after build

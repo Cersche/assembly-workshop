@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Two devices per tray — plan</title>
+<style>
+body{background:#16191d;color:#dde3ea;font:15px/1.5 system-ui,sans-serif;max-width:980px;margin:0 auto;padding:16px}
+h1{font-size:22px}h2{font-size:18px;margin-top:28px;border-bottom:1px solid #333a42;padding-bottom:4px}
+code{background:#242a31;padding:1px 4px;border-radius:3px}.muted{color:#93a0ad}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+.card{background:#1e2329;border:1px solid #333a42;border-radius:8px;padding:12px}
+.card h3{margin:0 0 6px;font-size:16px}.pro{color:#8fd19e}.con{color:#e6b072}
+svg{width:100%;height:auto;background:#12151a;border-radius:6px}
+.tab{fill:#2b323a}.tab.on{fill:#3b6fa8}.t{fill:#dde3ea;font:11px system-ui}.s{fill:#93a0ad;font:10px system-ui}
+.tray{fill:#2c4a3c;stroke:#4d8e6e}.d1{fill:#3b6fa8;opacity:.85}.d2{fill:#a86b3b;opacity:.85}.plate{fill:#4e75a3}
+</style></head><body>
+<h1>Two devices on one tray</h1>
+<p class="muted">Brian: “we should be able to mount two devices on a tray, space permitting.” Plan only — nothing built yet. Fit, retention and strength stay UNKNOWN.</p>
+
+<h2>1. How it's saved</h2>
+<ul>
+<li>A slot keeps its first device exactly as today: <code>equipment</code> + <code>tray</code>. Old slots and old revisions load and build unchanged.</li>
+<li>A second device is one optional extra entry on the slot: <code>second: {equipment: "eq-…", tray: {…}}</code>. Only one extra device (two total).</li>
+<li><b>Shared by the whole slot</b> (stay in the first <code>tray</code>): rack units, tray–faceplate joint, keystones, rear-post support and bracket style.</li>
+<li><b>Each device has its own</b>: left/right position, front gap, rotation, how it attaches (screws, pegs, clips, strap, flat), standoff, front position/bezel. A sleeve can't share a tray in v1 (it boxes the whole front in).</li>
+<li>The SCAD template gets a second device block (<code>dev2_*</code>) that is off unless a second device is set, so a one-device tray produces the same file as today.</li>
+</ul>
+
+<h2>2. “Space permitting” — what's checked</h2>
+<ul>
+<li>Both footprints together fit inside the 204 mm tray limit (208 rack opening minus 2 mm each side), with the 8 mm border on the outside.</li>
+<li>The devices don't overlap and keep at least a <b>4 mm gap</b> between them (proposed; you can tell me a different number). Strap slots and foot pockets of one device can't cut into the other.</li>
+<li>Both devices' front openings fit on the faceplate with 2 mm webs between every opening, and stay clear of the rack-hole slots, keystones and tray screw joints.</li>
+<li>The taller device sets the needed rack units; the tray depth follows the deeper one.</li>
+<li>When it doesn't fit, you get a plain sentence (e.g. “Together they're 221 mm wide; the tray allows 204. Try rotating one.”) and Apply/export stay blocked, same as today.</li>
+</ul>
+
+<h2>3. Ports and openings</h2>
+<ul>
+<li>Each device's front openings follow that device, as now. Rear ports go into the cable planner as separate ports labelled with the device name, so cables can connect to either.</li>
+<li>Keystones stay one shared list for the faceplate.</li>
+<li>The rack view shows both device previews on the tray; the clearance review screens the combined envelope.</li>
+</ul>
+
+<h2>4. Place on tray window — pick one</h2>
+<div class="opts">
+<div class="card"><h3>A · Device tabs</h3>
+<svg viewBox="0 0 300 190"><rect class="tab on" x="8" y="8" width="80" height="22" rx="4"/><text class="t" x="18" y="23">Router</text><rect class="tab" x="92" y="8" width="80" height="22" rx="4"/><text class="t" x="102" y="23">Switch</text><rect class="tab" x="176" y="8" width="60" height="22" rx="4"/><text class="t" x="186" y="23">Slot</text>
+<rect class="plate" x="20" y="44" width="260" height="8"/><rect class="tray" x="40" y="52" width="220" height="110"/><rect class="d1" x="52" y="66" width="90" height="70" stroke="#fff" stroke-width="2"/><rect class="d2" x="152" y="66" width="96" height="60"/>
+<text class="s" x="8" y="182">Settings below show the selected tab only</text></svg>
+<p>One tab per device plus a “Slot” tab for shared things (U, joint, keystones, rear support). “+ Add device” becomes a second tab; ✕ on a tab removes it. Drag either device in the sketch; clicking one switches tabs.</p>
+<p class="pro">+ Today's form stays almost the same; least clutter.</p><p class="con">− You only see one device's settings at a time.</p></div>
+
+<div class="card"><h3>B · Two columns</h3>
+<svg viewBox="0 0 300 190"><rect class="plate" x="20" y="10" width="260" height="8"/><rect class="tray" x="40" y="18" width="220" height="80"/><rect class="d1" x="52" y="30" width="90" height="55"/><rect class="d2" x="152" y="30" width="96" height="45"/>
+<rect class="tab" x="8" y="108" width="138" height="72" rx="4"/><text class="t" x="16" y="124">Router</text><text class="s" x="16" y="140">offset · rotate · mount</text>
+<rect class="tab" x="154" y="108" width="138" height="72" rx="4"/><text class="t" x="162" y="124">Switch  ✕</text><text class="s" x="162" y="140">offset · rotate · mount</text></svg>
+<p>Sketch on top; both devices' settings side by side underneath, shared slot settings below them. Empty right column shows “+ Add a second device”.</p>
+<p class="pro">+ Compare both at a glance.</p><p class="con">− Window gets wide/long; cramped on the laptop.</p></div>
+
+<div class="card"><h3>C · Sketch-first list</h3>
+<svg viewBox="0 0 300 190"><rect class="plate" x="20" y="10" width="190" height="8"/><rect class="tray" x="32" y="18" width="166" height="140"/><rect class="d1" x="42" y="34" width="70" height="90" stroke="#fff" stroke-width="2"/><rect class="d2" x="118" y="34" width="72" height="70"/>
+<rect class="tab on" x="218" y="10" width="76" height="22" rx="4"/><text class="t" x="224" y="25">● Router</text><rect class="tab" x="218" y="36" width="76" height="22" rx="4"/><text class="t" x="224" y="51">● Switch</text><rect class="tab" x="218" y="62" width="76" height="22" rx="4"/><text class="s" x="224" y="77">+ Add…</text></svg>
+<p>Big sketch; a small device list beside it (like layers). Select in the list or sketch, then the one settings panel below edits that device. Slot settings stay in their own section.</p>
+<p class="pro">+ Feels like arranging things on a bench.</p><p class="con">− Biggest change to the current window.</p></div>
+</div>
+
+<p><b>My pick: A.</b> It changes the least, keeps the window small, and merges cleanly with the keystone-picker work happening in the same file.</p>
+<h2>5. Then</h2>
+<p>Build the chosen option with Python + JS tests, check it in the browser on a throwaway data folder (never data/normal-use), and send screenshots. No exports, commits or pushes without asking.</p>
+</body></html>

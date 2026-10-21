@@ -456,11 +456,12 @@
   // already exists, else a box sketch of them. Only the sketch gets this note.
   const TRAY_SKETCH='Rack view shows a box sketch of this slot’s tray settings (position, rotation, height, keystones, ports). Place on tray → Render exact preview draws the exact shape here.';
   function traySketch(placement){return window.EquipmentRackView?.status(placement)==='sketch';}
-  window.applyTrayPlacement=function(rackId,placementId,tray,newSpan){
+  window.applyTrayPlacement=function(rackId,placementId,tray,newSpan,second){
     const rack=active();if(!rack||rack.id!==rackId)throw Error('Select the original rack before applying this placement.');
     let placement=rack.placements.find(p=>p.id===placementId);if(!placement)throw Error('This allocation is no longer available.');
     if(newSpan&&newSpan!==placement.span)placement=RackLayout.change(rack,placementId,placement.slot,newSpan);
     if(tray&&Object.keys(tray).length)placement.tray=tray;else delete placement.tray;
+    if(second)placement.second=second;else delete placement.second; // two devices on one tray (Brian, 2026-10-20)
     selectedSlot=placement.slot;markChanged();render();
     notify('Tray placement applied to the draft. Save to keep it. Fit, retention and strength are UNKNOWN.');
   };
