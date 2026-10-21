@@ -725,18 +725,24 @@ def make_handler(store, token):
 
                 if self.path == '/api/faceplate-colors/preview':
                     # Draft settings are fine here: nothing is written.
-                    return self.send(faceplate_color.preview(payload.get('artwork'), Path(store.path).parent,
+                    # The slot's draft equipment/tray settings only place the image; no file is built.
+                    data_dir = Path(store.path).parent
+                    return self.send(faceplate_color.preview(payload.get('artwork'), data_dir,
+                                                             faceplate_color.slot_spec(data_dir, payload.get('slot')),
                                                              payload.get('faceplate') or '#4e75a3'))
 
                 if self.path == '/api/faceplate-colors/export':
-                    # Exports use the SAVED slot assembly only (drafts never leak into files).
-                    selected = self.selected_store()
-                    if not isinstance(selected, assembly_records.InstanceStore):
-                        raise ValueError('Open the slot assembly before exporting its color faceplate.')
-                    if payload.get('assembly') != selected.identity:
-                        raise ValueError('The open assembly is not the slot you are exporting. Select that slot and try again.')
-                    _, placement = assembly_records.find(selected.document(), selected.identity)
-                    raise ValueError('Print in color is not available for this faceplate yet. Saved artwork remains a preview.')
+                    # Exports use the SAVED rack document only (drafts never leak into files); an unsaved slot is not found.
+                    data_dir = Path(store.path).parent
+                    if not isinstance(payload.get('assembly'), str):
+                        raise ValueError('Select the slot to export.')
+                    _, placement = assembly_records.find(rack_workspace.read(data_dir, seed_project=store.project()), payload['assembly'])
+                    appearance = placement['assembly'].get('appearance') or {}
+                    spec = faceplate_color.slot_spec(data_dir, placement)
+                    # Cached by content, so nothing slot-specific goes in (the same plate in another slot reuses it).
+                    metadata = {'equipment': placement['equipment'], 'name': spec.get('name')}
+                    return self.send(faceplate_color.export(appearance.get('artwork'), spec, metadata, data_dir,
+                                                            appearance.get('faceplate') or '#4e75a3'), mime='application/zip')
 
                 if self.path == '/api/import':
 

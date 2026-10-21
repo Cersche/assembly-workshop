@@ -292,22 +292,23 @@
     else renderRackPaint(details,rack);
     host.append(details);
     const p=assigned(rack,selectedSlot);if(!p)return;p.assembly.appearance ||= {};
-    const hasColorExport=false;
-    const artDetails=document.createElement('details');artDetails.open=true;artDetails.id='assemblyAppearance';const sum=document.createElement('summary');sum.textContent=hasColorExport?'Equipment colors & faceplate image':'Tray & faceplate colors & image';artDetails.append(sum);
-    const colorKeys=[['tray','Tray','#4d8e6e'],['faceplate','Faceplate','#4e75a3']];if(hasColorExport)colorKeys.unshift(['equipment','Equipment','#5b8545']);
+    // Print in color works for wizard-made (library) faceplates: faceplate_color.py rebuilds this slot's own plate.
+    const hasColorExport=String(p.equipment||'').startsWith('eq-');
+    const artDetails=document.createElement('details');artDetails.open=true;artDetails.id='assemblyAppearance';const sum=document.createElement('summary');sum.textContent='Tray & faceplate colors & image';artDetails.append(sum);
+    const colorKeys=[['tray','Tray','#4d8e6e'],['faceplate','Faceplate','#4e75a3']];
     for(const [key,title,defaultColor] of colorKeys)colorField(artDetails,title,p.assembly.appearance[key]||defaultColor,v=>{p.assembly.appearance[key]=v;markChanged();applyAssemblyAppearance(p);if(key==='faceplate')refreshFilament();});
     const art=p.assembly.appearance.artwork;
     // The native file input always reads "No file chosen" after a re-render, so a button drives a hidden input.
     {const fileLabel=paragraph('Faceplate image','section-eyebrow');const file=document.createElement('input');file.id='faceplateImage';file.type='file';file.accept=ARTWORK_ACCEPT;file.hidden=true;file.onchange=()=>loadArtwork(file,p);
     const choose=button(art?'Replace image…':'Choose image…',()=>file.click(),'secondary');choose.setAttribute('aria-controls','faceplateImage');
-    artDetails.append(fileLabel,file,choose,paragraph(hasColorExport?'PNG, JPEG, WebP, GIF, BMP, AVIF or SVG. Vector SVG is drawn sharp at full preview size, which suits Print in color best.':'PNG, JPEG, WebP, GIF, BMP, AVIF or SVG. Shown on this faceplate in the rack view only, in the largest area clear of port and keystone openings; Print in color is not available for this faceplate yet.','muted'));}
+    artDetails.append(fileLabel,file,choose,paragraph('PNG, JPEG, WebP, GIF, BMP, AVIF or SVG. Shown on this faceplate in the rack view, in the largest area clear of port and keystone openings.'+(hasColorExport?' Vector SVG is drawn sharp at full preview size, which suits Print in color best.':' Print in color is not available for this faceplate.'),'muted'));}
     if(art){artDetails.append(paragraph('Current: '+art.name),button('Fit & center image',()=>{Object.assign(art,{x:.5,y:.5,scale:1});markChanged();applyAssemblyAppearance(p);renderAppearance();},'secondary'),button('Center image',()=>{Object.assign(art,{x:.5,y:.5});markChanged();applyAssemblyAppearance(p);renderAppearance();},'secondary'));for(const [key,title,min,max] of [['x','Image horizontal position',0,1],['y','Image vertical position',0,1],['scale','Image size',.05,1]]){const label=document.createElement('label');label.textContent=title;const input=document.createElement('input');input.type='range';input.min=min;input.max=max;input.step=.01;input.value=art[key];input.setAttribute('aria-label',title);input.oninput=()=>{art[key]=Number(input.value);markChanged();applyAssemblyAppearance(p);refreshFilament();};label.append(input);artDetails.append(label);}artDetails.append(button('Remove image',()=>{delete p.assembly.appearance.artwork;filamentPreviews.delete(p.assembly.id);markChanged();applyAssemblyAppearance(p);renderAppearance();byId('assemblyAppearance').open=true;},'secondary'));}
-    if(hasColorExport)artDetails.append(button('View faceplate front',async()=>{await openAssembly(p);if(window.workshopContext?.id===p.assembly.id)window.dispatchEvent(new Event('assembly-faceplate-front'));},'secondary'));
-    artDetails.append(paragraph(hasColorExport?'Colors and the image are previews. Save to keep them. The normal tray and faceplate STLs never include color or artwork; the opt-in "Print in color" export below is the only artwork-to-STL path.':'Colors and the image are previews in the rack view. Save to keep them. Wizard-made equipment STLs never include color or artwork.','notice'));host.append(artDetails);
+    artDetails.append(paragraph(hasColorExport?'Colors and the image are previews in the rack view. Save to keep them. The normal tray and faceplate STLs never include color or artwork; the opt-in "Print in color" export below is the only artwork-to-STL path.':'Colors and the image are previews in the rack view. Save to keep them. Equipment STLs never include color or artwork.','notice'));host.append(artDetails);
     refreshFilament=()=>{};
     if(art&&hasColorExport)renderFilament(host,p,art);
   }
-  // Multi-color faceplate: one STL per filament color (faceplate_color.py). Fixed-outline legacy color export, currently unavailable for generic faceplates.
+  // Multi-color faceplate: one STL per filament color (faceplate_color.py), on this slot's own wizard-made faceplate.
+  // The preview sends the slot's draft equipment/tray choices only to place the image; export uses the saved slot.
   const filamentPreviews=new Map();let filamentTimer=null,filamentRequest=0,refreshFilament=()=>{};
   function renderFilament(host,p,art){
     const box=document.createElement('details');box.id='filamentColors';box.open=filamentPreviews.has(p.assembly.id);
@@ -330,9 +331,8 @@
     const exportButton=button('Export color STLs (.zip)',async()=>{
       try{
         if(window.assertWorkshopSaved)window.assertWorkshopSaved();
-        if(window.workshopContext?.id!==p.assembly.id)await openAssembly(p);
-        // Never fall through to whichever assembly happens to be open.
-        if(window.workshopContext?.id!==p.assembly.id)throw Error('Could not open this slot\'s assembly; open it from Setup, then export.');
+        // The server reads this slot from the saved rack document by its assembly id; nothing needs to be open.
+        if(!persistedAssemblyIds.has(p.assembly.id))throw Error('Use Save to keep this slot before exporting its color faceplate.');
         exportButton.disabled=true;notify('Building color STLs… this can take a minute for detailed images.');
         const response=await fetch('/api/faceplate-colors/export',{method:'POST',headers:{...projectHeaders(),'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify({assembly:p.assembly.id})});
         if(!response.ok){const e=await response.json();throw Error(e.error);}
@@ -364,7 +364,7 @@
     }
     async function preview(quiet){
       const request=++filamentRequest;
-      try{const r=await api('faceplate-colors/preview',{artwork:art,faceplate:p.assembly.appearance.faceplate});if(request!==filamentRequest)return;filamentPreviews.set(p.assembly.id,r);if(box.isConnected){box.open=true;show(r);}}
+      try{const r=await api('faceplate-colors/preview',{artwork:art,faceplate:p.assembly.appearance.faceplate,slot:{equipment:p.equipment,tray:p.tray,second:p.second}});if(request!==filamentRequest)return;filamentPreviews.set(p.assembly.id,r);if(box.isConnected){box.open=true;show(r);}}
       catch(e){if(request!==filamentRequest)return;if(!quiet)notify(e.message,true);else out.replaceChildren(paragraph(e.message,'workspace-error'));}
     }
     if(filamentPreviews.has(p.assembly.id))preview(true);

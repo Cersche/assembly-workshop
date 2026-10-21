@@ -236,6 +236,18 @@ test('LabRaxStudio.artworkRect keeps wizard images clear of port and keystone op
   assert.equal(studio.clearWindow(plain, [{ x: 0, z: 60, w: 10, h: 10 }]), plain);
 });
 
+test('LabRaxStudio.artworkRect gives the placement Print in color uses (test_faceplate_color.py asserts the same numbers)', () => {
+  const cases = [
+    [44.4, [{ x: 60, z: 22.225 + 1.75, w: 21, h: 33.5 }, { x: -70, z: 20, w: 17, h: 14 }], { x: 0.3, y: 0.6, scale: 0.8 }, 2.5, [-12.84, 21.497, 72.8, 29.12]],
+    [88.85, [{ x: 0, z: 44.45 + 1.75, w: 21, h: 33.5 }, { x: -60, z: 70, w: 30, h: 10 }], { x: 0.5, y: 0.5, scale: 1 }, 1, [60.25, 44.45, 80.85, 80.85]],
+    [44.4, [], { x: 0.5, y: 0.5, scale: 0.65 }, 4, [0, 22.225, 94.64, 23.66]],
+  ];
+  for (const [plateH, openings, art, aspect, want] of cases) {
+    const got = studio.artworkRect(art, aspect, { ...studio.artworkWindow(252, plateH, 0.025), openings });
+    got.forEach((v, i) => assert.ok(Math.abs(v - want[i]) < 1e-9, `${v} vs ${want[i]}`));
+  }
+});
+
 test('LabRaxStudio.selectionRect follows the plate front at any U height', () => {
   for (const u of [1, 2, 3, 5]) {
     const h = u * 44.45 - 0.05, [cx, cz, hx, hz, r] = studio.selectionRect(-126, 126, 0, h, 2.5);

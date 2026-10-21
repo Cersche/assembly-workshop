@@ -266,6 +266,20 @@
       ],
       "port": 8799,
       "autoPort": false
+    },
+    {
+      "name": "disposable-color-8813",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8813",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\e6bf173f-3a58-4360-98ce-2217e21adcff\\scratchpad\\color-data"
+      ],
+      "port": 8813,
+      "autoPort": false
     }
   ]
 }

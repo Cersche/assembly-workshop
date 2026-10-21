@@ -2,6 +2,18 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-21 Print in color now works on wizard-made faceplates (read first)
+
+- **Brian directed it; Claude built it.** The opt-in "Print in color (multi-material)" panel (Appearance tab) now shows for every wizard-made slot, 1U–5U, including one-piece "combined" builds. Export rebuilds the slot's own `equipment_tray.scad` faceplate (4 mm, front Y=-4, 44.4 mm per U, four-corner slots) from the saved library item and tray settings. It writes one STL per color plus `base.stl`, a README and revision.json. The old Pi4-only geometry (216 × 34 window, Y=-3) is gone.
+- **Placement = rack view.** The image lands exactly where the rack view draws it. Python `clear_window`/`openings` mirror `rack-studio.js` and `equipment-wizard.js`, and a test pins the same numbers on both sides. The rack view now also avoids flush windows, sleeve joint holes and the full golden keystone block (21 × 33.5). It reads the plate front at Y=-4 (keystones stand 0.08 proud, which used to shrink the window), and it shows images on one-piece builds.
+- **Keep-clear:** no color within 2 mm of ports, windows, keystone blocks or rack slots, nor within 1 mm of the plate edge. The STL side also clips to the shrunk plate outline.
+- **Export uses the saved rack document only** (no "open assembly" step anymore). Preview may use draft settings and writes nothing.
+- **Checks:** 172 Python (1 skipped) + all JS pass. Real OpenSCAD renders (`python -m unittest test_faceplate_color.FaceplateColorRenderTests`, about 30 s, not in run_checks): every mesh is closed. 1U inlay: base + 2 colors = 44 274.96 mm³, the plain plate exactly. 2U emboss: base = plain plate.
+- **Browser check** on a disposable copy of old test data (port 8813, not normal-use): the preview and export of a 2U slot worked. That gave a 105 KB zip. Base + 3 colors = 88 955.13 mm³ vs plain 88 955.12. The image sits where the rack view shows it. A 1U test slot from that old data correctly refused: "A keystone collar would hit the tray" (it breaks a later keystone rule).
+- `faceplate_mounting.json` still starts with a UTF-8 BOM. The live reader already uses `utf-8-sig`; only archived copies use plain `utf-8`. No change needed.
+- `.claude/launch.json` (D: copy) gained `disposable-color-8813`. Note: the desktop preview tool still reads the old C: folder's launch.json.
+- Printed color result, fit and strength stay UNKNOWN. Nothing printed.
+
 ## 2026-10-21 Project moved to D:\Projects\assembly-workshop (read first)
 
 - **New home: `D:\Projects\assembly-workshop`.** Copied with robocopy (0 failures); git status was clean. The old folder `C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop` is untouched; Brian decides about it around 2026-10-28. Do not delete it.

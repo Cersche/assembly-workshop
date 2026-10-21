@@ -10,11 +10,9 @@ with tempfile.TemporaryDirectory(prefix='checks-',dir=Path(__file__).parent) as 
         # Imported fixture classes are excluded from the studio-save module.
         if module=='test_studio_save': suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(loaded.StudioSaveTests))
         else:suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(loaded))
-    # Faceplate color reduction/cache tests; the OpenSCAD export test is excluded (no builds here).
+    # Faceplate color placement/reduction/cache tests; the OpenSCAD renders (FaceplateColorRenderTests) are excluded (no builds here).
     import test_faceplate_color
-    for name in unittest.defaultTestLoader.getTestCaseNames(test_faceplate_color.FaceplateColorTests):
-        if name!='test_export_is_watertight_and_conserves_volume':
-            suite.addTest(test_faceplate_color.FaceplateColorTests(name))
+    suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(test_faceplate_color.FaceplateColorTests))
     import test_app
     for name in unittest.defaultTestLoader.getTestCaseNames(test_app.Tests):
         if name not in ('test_revision_uses_four_corner_default_and_rejects_failed_or_unsupported_inputs','test_http_handlers_without_network'):

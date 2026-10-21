@@ -1,11 +1,13 @@
-"""Multi-color faceplate artwork: one STL per filament color (historical reference faceplate adapter only).
+"""Multi-color faceplate artwork: one STL per filament color for wizard-made faceplates (equipment_tray.scad).
 
 This opt-in "Print in color" export is the only path from artwork to STL; the normal
-tray/faceplate STLs never contain artwork (see AGENTS.md). The saved local preview image is reduced to a few colors on a 0.4 mm grid, thin
-features are cleaned up, and each color becomes a body of merged rectangles that
-OpenSCAD extrudes. The base faceplate gets a matching pocket (inlay) or is left
-unchanged (emboss). All files share the faceplate origin, so a slicer can load
-them together and assign one filament per file.
+tray/faceplate STLs never contain artwork (see AGENTS.md). The saved local preview image is
+placed exactly as the rack view places it (same window, same opening-avoidance), reduced to a
+few colors on a 0.4 mm grid, thin features are cleaned up, cells near openings and rack holes
+are left as plain faceplate, and each color becomes a body of merged rectangles that OpenSCAD
+extrudes. The slot's own faceplate gets a matching pocket (inlay) or is left unchanged
+(emboss). All files share the faceplate origin, so a slicer can load them together and assign
+one filament per file.
 
 PROPOSED — UNVALIDATED. Printed color result, fit, strength and filament behavior
 remain UNKNOWN. No printer, slicer or material integration.
@@ -14,6 +16,7 @@ from collections import Counter, deque
 import hashlib
 import io
 import json
+import math
 from pathlib import Path
 import struct
 import subprocess
@@ -23,14 +26,23 @@ import zipfile
 import zlib
 
 import assembly_records
+import equipment
 import mesh_revision
+import port_openings
 
 CELL = 0.4                     # grid pitch, mm
 MIN_FEATURE = 0.8              # features thinner than this are merged into a neighbor
 DEPTH = 0.6                    # inlay depth / emboss height, mm
 STYLES = ('inlay', 'emboss')
-# Same window the 3D preview uses for the image on the historical reference faceplate front (y = -3).
-WINDOW_W, WINDOW_H, WINDOW_Z, FRONT_Y = 216.0, 34.0, 21.0, -3.0
+# Generic faceplate (equipment_tray.scad): 252 mm wide, 4 mm thick, front face at Y = -4, 44.45 mm pitch per U.
+FRONT_Y, PLATE_W = -4.0, 252.0
+RACK_PITCH, PLATE_GAP = port_openings.RACK_PITCH, port_openings.PLATE_GAP
+SIDE_MARGIN, EDGE_MARGIN = 18.0, 4.0   # image window margins: rack-studio.js artworkWindow()
+OPENING_GAP = 2.0                      # clearance kept around openings: rack-studio.js clearWindow()
+KS_BLOCK_W, KS_BLOCK_H, KS_BLOCK_DZ = 21.0, 33.5, 1.75   # golden keystone block (ks_box_cut), centre above plate centre
+SLEEVE_JOINT_D = 3.4                   # m3_clear holes through the plate for a sleeve screw joint
+HOLE_X, HOLE_DZ, SLOT_LEN, SLOT_D = 118.2625, 15.902, 10.0, 7.0   # four-corner rack slots per U
+EDGE_KEEP = 1.0                        # color stays this far inside the plate outline and every hole (SCAD clip)
 MAX_RECTS = 4000
 TINY_ISLAND_CELLS = 6          # about 1 mm²
 DENSITY_ESTIMATE = 1.24        # g/cm³, PLA-typical; estimate only
@@ -142,15 +154,104 @@ def settings(art):
     return clean, fil
 
 
-def layout(clean, width, height):
-    """Image rectangle on the faceplate front, mm (mirrors viewer.js)."""
-    s = max(.05, clean['scale'])
+# ---------------------------------------------------------------- faceplate front
+def slot_spec(data_dir, placement):
+    """Cleaned equipment spec for a slot allocation ({'equipment', 'tray', 'second'}), as Place on tray builds it."""
+    if not isinstance(placement, dict) or not str(placement.get('equipment') or '').startswith('eq-'):
+        raise ValueError('Print in color needs equipment from the library in this slot.')
+    request = {'item': placement['equipment'], 'tray': placement.get('tray')}
+    second = placement.get('second')
+    if isinstance(second, dict) and second.get('equipment'):
+        request['second'] = {'item': second['equipment'], 'tray': second.get('tray')}
+    return equipment.allocation_request(data_dir, request)
+
+
+def openings(s):
+    """Front openings {x, z, w, h} (X from centre, Z from the slot bottom), as equipment-wizard.js openings() lists them."""
+    grow = float(s.get('bezel_size', 1)) if s.get('bezel', 'none') != 'none' else 0.0
+    out = []
+    win = port_openings.front_window(s)
+    if win:
+        out.append({'x': win['x'], 'z': (win['bottom'] + win['top']) / 2, 'w': win['width'] + 2 * grow, 'h': win['height'] + 2 * grow})
+    sleeve = port_openings.sleeve(s)
+    if sleeve and s.get('joint') == 'screw':
+        out += [{'x': x, 'z': z, 'w': SLEEVE_JOINT_D, 'h': SLEEVE_JOINT_D} for x in sleeve['joints'] for z in sleeve['joint_z']]
+    centre = s['u'] * RACK_PITCH / 2
+    out += [{'x': float(x), 'z': centre + KS_BLOCK_DZ, 'w': KS_BLOCK_W, 'h': KS_BLOCK_H} for x in s.get('keystones') or []]
+    out += [{'x': p['x'], 'z': p['z'], 'w': p['w'] + 2 * grow, 'h': p['h'] + 2 * grow} for p in s.get('ports') or []]
+    return out
+
+
+def plate(s):
+    """Image window and keep-out areas of a wizard faceplate front (same numbers as the rack view)."""
+    u = s['u']
+    bottom, plate_h = PLATE_GAP / 2, u * RACK_PITCH - PLATE_GAP
+    slots = [{'x': x, 'z': i * RACK_PITCH + RACK_PITCH / 2 + dz, 'w': SLOT_LEN, 'h': SLOT_D}
+             for i in range(u) for dz in (-HOLE_DZ, HOLE_DZ) for x in (-HOLE_X, HOLE_X)]
+    holes = openings(s)
+    return {'u': u, 'height_mm': plate_h, 'bottom': bottom, 'openings': holes, 'keep_out': holes + slots,
+            'window': {'w': max(1.0, PLATE_W - 2 * SIDE_MARGIN), 'h': max(1.0, plate_h - 2 * EDGE_MARGIN), 'z': bottom + plate_h / 2}}
+
+
+def clear_window(win, obstacles, aspect=1.0, gap=OPENING_GAP):
+    """Largest part of the window clear of openings (+ gap) for this image aspect. Port of rack-studio.js clearWindow()."""
+    cx = win.get('x', 0)
+    L, R, B, T, eps = cx - win['w'] / 2, cx + win['w'] / 2, win['z'] - win['h'] / 2, win['z'] + win['h'] / 2, 1e-6
+    obs = [(o['x'] - o['w'] / 2 - gap, o['x'] + o['w'] / 2 + gap, o['z'] - o['h'] / 2 - gap, o['z'] + o['h'] / 2 + gap) for o in obstacles]
+    obs = [o for o in obs if o[1] > L and o[0] < R and o[3] > B and o[2] < T]
+    if not obs:
+        return win
+    xs = sorted(set(min(R, max(L, x)) for x in [L, R] + [v for o in obs for v in o[:2]]))
+    best, score = None, -1
+    for i in range(len(xs)):
+        for j in range(i + 1, len(xs)):
+            x0, x1 = xs[i], xs[j]
+            spans = sorted(([o[2], o[3]] for o in obs if o[1] > x0 + eps and o[0] < x1 - eps), key=lambda a: a[0])
+            z = B
+            for b, t in spans + [[T, T]]:
+                if b > z + eps:
+                    h = min(b, T) - z
+                    width = min(x1 - x0, h * aspect)
+                    s = width * width / aspect - 1e-6 * math.hypot((x0 + x1) / 2 - cx, z + h / 2 - win['z'])
+                    if s > score:
+                        score, best = s, {'x': (x0 + x1) / 2, 'z': z + h / 2, 'w': x1 - x0, 'h': h}
+                z = max(z, t)
+                if z >= T:
+                    break
+    return best or win
+
+
+def layout(clean, width, height, front):
+    """Image rectangle on the faceplate front, mm. Mirrors rack-studio.js artworkRect() with the opening-clear window."""
     ratio = width / height
-    w = min(WINDOW_W, WINDOW_H * ratio) * s
+    win = clear_window(front['window'], front['openings'], ratio)
+    w = min(win['w'], win['h'] * ratio) * max(.05, clean['scale'])
     h = w / ratio
-    cx = (clean['x'] - .5) * (WINDOW_W - w)
-    cz = WINDOW_Z + (.5 - clean['y']) * (WINDOW_H - h)
+    cx = win.get('x', 0) + (clean['x'] - .5) * (win['w'] - w)
+    cz = win['z'] + (.5 - clean['y']) * (win['h'] - h)
     return cx - w / 2, cz + h / 2, w, h   # left X, top Z, width, height
+
+
+def keep_clear(cells, nx, nz, left, top, cw, ch, front):
+    """Leave cells within the gap of any opening or rack slot, or near the plate edge, as plain faceplate."""
+    boxes = [(o['x'] - o['w'] / 2 - OPENING_GAP, o['x'] + o['w'] / 2 + OPENING_GAP,
+              o['z'] - o['h'] / 2 - OPENING_GAP, o['z'] + o['h'] / 2 + OPENING_GAP) for o in front['keep_out']]
+    lo, hi = front['bottom'] + EDGE_KEEP, front['bottom'] + front['height_mm'] - EDGE_KEEP
+    edge = PLATE_W / 2 - EDGE_KEEP
+    cleared = 0
+    for j in range(nz):
+        z1 = top - j * ch
+        z0 = z1 - ch
+        for i in range(nx):
+            k = j * nx + i
+            if cells[k] is None:
+                continue
+            x0 = left + i * cw
+            x1 = x0 + cw
+            if x0 < -edge or x1 > edge or z0 < lo or z1 > hi or any(x1 > b[0] and x0 < b[1] and z1 > b[2] and z0 < b[3] for b in boxes):
+                cells[k] = None
+                cleared += 1
+    return cleared
 
 
 # ---------------------------------------------------------------- reduction
@@ -297,17 +398,20 @@ def decoded(data_dir, identity):
     return _DECODED[identity]
 
 
-def reduce(art, data_dir, faceplate_color='#4e75a3'):
-    """Image + settings -> grid labels, palette, stats and warnings (no files written).
+def reduce(art, data_dir, s, faceplate_color='#4e75a3'):
+    """Image + settings + the slot's cleaned equipment spec -> grid labels, palette, stats and warnings (no files written).
 
     Index 0 is always the faceplate itself (transparent image area and everything
     outside the image). The image is reduced to count - 1 colors; a color given the
     same filament as the base is merged into the faceplate."""
     clean, fil = settings(art)
     width, height, rgba = decoded(data_dir, clean['sha256'])
-    left, top, w, h = layout(clean, width, height)
+    front = plate(s)
+    left, top, w, h = layout(clean, width, height, front)
     nx, nz = max(1, round(w / CELL)), max(1, round(h / CELL))
+    cw, ch = w / nx, h / nz
     cells = sample(width, height, rgba, nx, nz)
+    kept_clear = keep_clear(cells, nx, nz, left, top, cw, ch, front)
     count = fil['count']
     centers = kmeans(cells, count - 1)
     raw = [None if c is None else min(range(len(centers)), key=lambda i: dist(c, centers[i])) for c in cells]
@@ -334,7 +438,6 @@ def reduce(art, data_dir, faceplate_color='#4e75a3'):
     labels = [merge[v] for v in labels]
     labels, changed, still_thin = clean_thin(labels, nx, nz)
     total_islands, small_islands = islands(labels, nx, nz)
-    cw, ch = w / nx, h / nz
     counts = Counter(labels)
     bodies = []
     for n in range(1, len(palette)):
@@ -346,6 +449,8 @@ def reduce(art, data_dir, faceplate_color='#4e75a3'):
                        'area_mm2': round(area, 1), 'volume_mm3': round(area * DEPTH, 1),
                        'grams_estimate': round(area * DEPTH / 1000 * DENSITY_ESTIMATE, 2)})
     warnings = []
+    if kept_clear:
+        warnings.append(f'{kept_clear} image cells near openings, rack holes or the plate edge stay plain faceplate.')
     if changed:
         warnings.append(f'{changed} cells thinner than {MIN_FEATURE:g} mm were merged into a neighboring color.')
     if still_thin:
@@ -359,14 +464,14 @@ def reduce(art, data_dir, faceplate_color='#4e75a3'):
         warnings.append(f'The design needs {rect_total} rectangles (limit {MAX_RECTS}); simplify the image, reduce colors or reduce its size before export.')
     if not bodies:
         warnings.append('Only the base color remains; there is nothing to print in a second color.')
-    return {'settings': {'count': count, 'style': fil['style']}, 'clean': clean, 'grid': [nx, nz],
+    return {'settings': {'count': count, 'style': fil['style']}, 'clean': clean, 'grid': [nx, nz], 'spec': s, 'plate': front,
             'cell_mm': [cw, ch], 'origin': [left, top], 'size_mm': [round(w, 2), round(h, 2)],
             'labels': labels, 'palette': palette, 'base_hex': base_hex, 'merge': merge, 'bodies': bodies,
             'rect_total': rect_total, 'warnings': warnings}
 
 
-def preview(art, data_dir, faceplate_color='#4e75a3'):
-    r = reduce(art, data_dir, faceplate_color)
+def preview(art, data_dir, s, faceplate_color='#4e75a3'):
+    r = reduce(art, data_dir, s, faceplate_color)
     nx, nz = r['grid']
     base = hexrgb(r['base_hex'])
     shown = [hexrgb(c) if c else base for c in r['palette']]
@@ -379,12 +484,27 @@ def preview(art, data_dir, faceplate_color='#4e75a3'):
             'merged': [n for n, m in r['merge'].items() if m != n],
             'bodies': [{k: b[k] for k in ('index', 'color', 'area_mm2', 'volume_mm3', 'grams_estimate')} | {'rectangles': len(b['rects'])}
                        for b in r['bodies']],
-            'size_mm': r['size_mm'], 'grid': r['grid'], 'style': r['settings']['style'], 'count': r['settings']['count'],
+            'size_mm': r['size_mm'], 'origin_mm': [round(v, 3) for v in r['origin']], 'u': r['plate']['u'],
+            'grid': r['grid'], 'style': r['settings']['style'], 'count': r['settings']['count'],
             'depth_mm': DEPTH, 'warnings': r['warnings'], 'filaments': FILAMENTS, 'limitations': LIMITS,
             'exportable': bool(r['bodies']) and r['rect_total'] <= MAX_RECTS}
 
 
 # ---------------------------------------------------------------- geometry
+# Appended to the slot's equipment source (used via `use <faceplate_source.scad>`), so these modules see its variables.
+# color_base(): the printed faceplate part, or the one-piece faceplate + tray for a single printed piece joint.
+# color_clip(): keeps color EDGE_KEEP inside the plate outline and every through-hole (slots, ports, windows).
+SOURCE_HELPERS = f"""
+// ---- Print in color helpers (faceplate_color.py). PROPOSED — UNVALIDATED.
+module color_base(){{if(joint=="single")union(){{faceplate();translate([tray_x,-0.01,tray_z])cube([tray_w,0.02+0.01,tray_t]);tray();if(rear_support)rear_bracket();}}else faceplate();}}
+module color_clip(){{intersection(){{children();offset(delta=-{EDGE_KEEP})plate2d();}}}}
+"""
+
+
+def faceplate_source(s):
+    return equipment.source(s) + SOURCE_HELPERS
+
+
 def scad(r):
     left, top = r['origin']
     cw, ch = r['cell_mm']
@@ -394,18 +514,18 @@ def scad(r):
     for b in r['bodies']:
         name = 'color_%d' % b['index']
         names.append(name)
-        lines.append(f'module {name}(){{union(){{')
+        lines.append(f'module {name}(){{color_clip()union(){{')
         for x0, y0, x1, y1 in b['rects']:
             lines.append(f' translate([{left + x0 * cw:.4f},{top - y1 * ch:.4f}])square([{(x1 - x0) * cw:.4f},{(y1 - y0) * ch:.4f}]);')
         lines.append('}}')
     lines.append('module art_all(){union(){' + ''.join(n + '();' for n in names) + '}}')
     # 2D X = rack X, 2D Y = height Z; rotate([90,0,0]) extrudes toward -Y.
     if r['settings']['style'] == 'inlay':
-        lines.append('if(part=="base")difference(){faceplate();translate([0,front_y+depth,0])rotate([90,0,0])linear_extrude(height=depth+0.1)art_all();}')
+        lines.append('if(part=="base")difference(){color_base();translate([0,front_y+depth,0])rotate([90,0,0])linear_extrude(height=depth+0.1)art_all();}')
         for n in names:
             lines.append(f'if(part=="{n}")translate([0,front_y+depth,0])rotate([90,0,0])linear_extrude(height=depth){n}();')
     else:
-        lines.append('if(part=="base")faceplate();')
+        lines.append('if(part=="base")color_base();')
         for n in names:
             lines.append(f'if(part=="{n}")translate([0,front_y,0])rotate([90,0,0])linear_extrude(height=depth){n}();')
     return '\n'.join(lines) + '\n', names
@@ -416,19 +536,20 @@ def export_identity(r, faceplate_source, art_source):
     (v1 keyed geometry only and could return a cached zip listing old colors)."""
     named = json.dumps({'base': r['base_hex'], 'bodies': [[b['index'], b['color']] for b in r['bodies']],
                         'image': r['clean']['name']}, sort_keys=True)
-    return hashlib.sha256(('faceplate-color-v2\n' + faceplate_source + '\n' + art_source + '\n' + named).encode('utf-8')).hexdigest()
+    return hashlib.sha256(('faceplate-color-v3\n' + faceplate_source + '\n' + art_source + '\n' + named).encode('utf-8')).hexdigest()
 
 
-def export(art, faceplate_source, metadata, data_dir, faceplate_color='#4e75a3'):
-    """Render base + one body per color; returns a zip. Cached immutably by content."""
-    r = reduce(art, data_dir, faceplate_color)
+def export(art, s, metadata, data_dir, faceplate_color='#4e75a3'):
+    """Render base + one body per color for the slot's cleaned equipment spec; returns a zip. Cached immutably by content."""
+    r = reduce(art, data_dir, s, faceplate_color)
     if not r['bodies']:
         raise ValueError('Only the base color remains; there is nothing to export in a second color.')
     if r['rect_total'] > MAX_RECTS:
         raise ValueError(r['warnings'][-1])
     art_source, names = scad(r)
     base_hex = r['base_hex']
-    identity = export_identity(r, faceplate_source, art_source)
+    source = faceplate_source(s)
+    identity = export_identity(r, source, art_source)
     final = Path(data_dir) / 'faceplate-color-revisions' / identity
     with LOCK:
         if not final.exists():
@@ -436,34 +557,50 @@ def export(art, faceplate_source, metadata, data_dir, faceplate_color='#4e75a3')
             exe = mesh_revision.compiler()
             with tempfile.TemporaryDirectory(dir=final.parent, prefix='render-') as temp:
                 folder = Path(temp)
-                (folder / 'faceplate_source.scad').write_text(faceplate_source, encoding='utf-8', newline='\n')
                 (folder / 'faceplate_colors.scad').write_text(art_source, encoding='utf-8', newline='\n')
-                files, logs, meshes = [], {}, {}
+                files, logs, meshes, nudges = [], {}, {}, {}
                 for part in ['base'] + names:
                     out = folder / (part + '.stl')
-                    try:
-                        res = subprocess.run([exe, '-o', str(out), '-D', f'part="{part}"', str(folder / 'faceplate_colors.scad')],
-                                             capture_output=True, text=True, timeout=600,
-                                             creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
-                    except (OSError, subprocess.TimeoutExpired) as exc:
-                        raise ValueError('Mesh rendering failed or timed out: ' + str(exc)) from exc
-                    logs[part] = res.stderr[-4000:]
-                    if res.returncode or 'ERROR:' in res.stderr or not out.exists():
-                        raise ValueError('OpenSCAD failed for ' + part + ': ' + res.stderr[-1200:])
-                    try:
-                        mesh_revision.normalize_collinear_faces(out)
-                    except ValueError:
-                        pass  # optional tidy-up; read_mesh still enforces a closed, valid mesh
-                    mesh = mesh_revision.read_mesh(out, part)
+                    # Same OpenSCAD 2021 sliver repair as equipment.render(): retry the base with the plate nudged;
+                    # color bodies then use the base's nudge, so their outline clip matches its pocket.
+                    for nudge in ((0, 0.011, 0.023, 0.037, 0.051) if part == 'base' else (nudges['base'],)):
+                        (folder / 'faceplate_source.scad').write_text(source + (f'nudge={nudge};\n' if nudge else ''), encoding='utf-8', newline='\n')
+                        try:
+                            res = subprocess.run([exe, '-o', str(out), '-D', f'part="{part}"', str(folder / 'faceplate_colors.scad')],
+                                                 capture_output=True, text=True, timeout=600,
+                                                 creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+                        except (OSError, subprocess.TimeoutExpired) as exc:
+                            raise ValueError('Mesh rendering failed or timed out: ' + str(exc)) from exc
+                        logs[part] = res.stderr[-4000:]
+                        if res.returncode or 'ERROR:' in res.stderr or not out.exists():
+                            raise ValueError('OpenSCAD failed for ' + part + ': ' + res.stderr[-1200:])
+                        try:
+                            mesh_revision.normalize_collinear_faces(out)
+                        except ValueError:
+                            pass  # optional tidy-up; read_mesh still enforces a closed, valid mesh
+                        try:
+                            mesh = mesh_revision.read_mesh(out, part)
+                            break
+                        except ValueError:
+                            if nudge == 0.051 or part != 'base':
+                                raise
+                    nudges[part] = nudge
                     meshes[part] = {'signed_volume_mm3': round(mesh['signed_volume_mm3'], 3), 'bounds': mesh['bounds']}
                     files.append(part + '.stl')
+                # The zip's source is the exact one rendered (with a nudge line only when the repair was needed).
+                (folder / 'faceplate_source.scad').write_text(source + (f"nudge={nudges['base']};\n" if nudges['base'] else ''), encoding='utf-8', newline='\n')
                 bodies = [{k: b[k] for k in ('index', 'color', 'area_mm2', 'volume_mm3', 'grams_estimate')} | {'file': 'color_%d.stl' % b['index']}
                           for b in r['bodies']]
                 report = {'id': identity, 'status': 'PROPOSED — UNVALIDATED', 'style': r['settings']['style'],
                           'depth_mm': DEPTH, 'grid_mm': [round(v, 4) for v in r['cell_mm']],
                           'min_feature_mm': MIN_FEATURE, 'image': {k: r['clean'][k] for k in ('sha256', 'name', 'x', 'y', 'scale')},
-                          'image_size_mm': r['size_mm'],
-                          'base': {'file': 'base.stl', 'color': base_hex, 'note': 'The faceplate itself, printed in the base filament.'},
+                          'image_size_mm': r['size_mm'], 'image_origin_mm': [round(v, 4) for v in r['origin']],
+                          'faceplate': {'template': 'equipment_tray.scad', 'u': s['u'], 'front_y_mm': FRONT_Y,
+                                        'equipment_source_sha256': hashlib.sha256(equipment.source(s).encode('utf-8')).hexdigest(),
+                                        'plate_height_mm': round(r['plate']['height_mm'], 4), 'joint': s['joint'],
+                                        'keep_clear_mm': {'openings_and_rack_holes': OPENING_GAP, 'plate_outline_clip': EDGE_KEEP}},
+                          'nudge_mm': nudges,
+                          'base': {'file': 'base.stl', 'color': base_hex, 'note': 'The faceplate itself (with the tray for a single printed piece), printed in the base filament.'},
                           'bodies': bodies, 'warnings': r['warnings'], 'mesh': meshes, 'faceplate_revision': metadata,
                           'limitations': LIMITS, 'logs': logs,
                           'sha256': {f: hashlib.sha256((folder / f).read_bytes()).hexdigest() for f in files}}
@@ -471,7 +608,7 @@ def export(art, faceplate_source, metadata, data_dir, faceplate_color='#4e75a3')
                 readme = ['Multi-color faceplate (PROPOSED — UNVALIDATED)', '',
                           'Load ALL .stl files together into your slicer as ONE multi-part object',
                           '(keep their positions; they share the same origin), then assign a filament to each:', '',
-                          f'  base.stl     -> {base_hex}  (faceplate)']
+                          f'  base.stl     -> {base_hex}  (faceplate{" + tray, one piece" if s["joint"] == "single" else ""})']
                 readme += [f"  {b['file']:<12} -> {b['color']}  (~{b['grams_estimate']} g estimate)" for b in bodies]
                 readme += ['', f"Style: {r['settings']['style']}, {DEPTH} mm. Print the faceplate front face down for an inlay.",
                            ''] + LIMITS

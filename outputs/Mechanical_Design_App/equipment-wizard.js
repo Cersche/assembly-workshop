@@ -552,16 +552,20 @@
   function changed(){window.dispatchEvent(new Event('equipment-rack-view'));}
   // Image window and selection outline from the plate mesh's own front face (lowest-Y vertices): actual width, height and U span.
   const fronts=new WeakMap();
-  // Port and keystone openings in the same frame (X from centre, Z above the plate base), as equipment_tray.scad cuts them.
+  // Port, window and keystone openings in the same frame (X from centre, Z above the plate base), as equipment_tray.scad cuts them.
+  // Print in color uses the very same list (faceplate_color.openings), so preview and export place the image identically.
   function openings(spec,z0,plateH){
-    const sw=window.LabRaxPortOpenings.sleeve(spec||{});
-    return [...(sw?[{x:sw.x,z:(sw.bottom+sw.top)/2,w:sw.width,h:sw.height}]:[]),...(spec?.keystones||[]).map(x=>({x:+x,z:z0+plateH/2,w:14.8,h:16.6})), // ks_w x ks_h
-            ...(spec?.ports||[]).map(p=>({x:+p.x,z:+p.z,w:+p.w,h:+p.h}))].filter(o=>[o.x,o.z,o.w,o.h].every(Number.isFinite));
+    const P=window.LabRaxPortOpenings,s=spec||{},sw=P.frontWindow(s),sl=P.sleeve(s),grow=s.bezel&&s.bezel!=='none'?+(s.bezel_size??1):0;
+    return [...(sw?[{x:sw.x,z:(sw.bottom+sw.top)/2,w:sw.width+2*grow,h:sw.height+2*grow}]:[]),
+            ...(sl&&s.joint==='screw'?sl.joints.flatMap(x=>sl.joint_z.map(z=>({x,z,w:3.4,h:3.4}))):[]), // m3_clear sleeve joint holes
+            ...(s.keystones||[]).map(x=>({x:+x,z:z0+plateH/2+1.75,w:21,h:33.5})), // golden keystone block (ks_box_cut)
+            ...(s.ports||[]).map(p=>({x:+p.x,z:+p.z,w:+p.w+2*grow,h:+p.h+2*grow}))].filter(o=>[o.x,o.z,o.w,o.h].every(Number.isFinite));
   }
   function frontFace(mesh,spec){
-    if(fronts.has(mesh))return fronts.get(mesh);let y0=Infinity;for(const v of mesh.vertices)y0=Math.min(y0,v[1]);
+    if(fronts.has(mesh))return fronts.get(mesh);
+    // The plate front is Y=-4 (plate_t); keystone blocks stand 0.08 mm proud, so take everything within 0.1 mm of it.
     let x0=Infinity,x1=-Infinity,z0=Infinity,z1=-Infinity;
-    for(const v of mesh.vertices)if(v[1]<y0+.01){x0=Math.min(x0,v[0]);x1=Math.max(x1,v[0]);z0=Math.min(z0,v[2]);z1=Math.max(z1,v[2]);}
+    for(const v of mesh.vertices)if(v[1]<-3.9){x0=Math.min(x0,v[0]);x1=Math.max(x1,v[0]);z0=Math.min(z0,v[2]);z1=Math.max(z1,v[2]);}
     // The image keeps clear of openings: artworkRect picks the largest clear part of this window for the image's aspect.
     const S=window.LabRaxStudio,f=x1>x0&&z1>z0?{art:{...S.artworkWindow(x1-x0,z1-z0,z0),openings:openings(spec,z0,z1-z0)},sel:S.selectionRect(x0,x1,z0,z1,2.5)}:null; // 2.5 = plate_r in equipment_tray.scad
     fronts.set(mesh,f);return f;
@@ -576,8 +580,9 @@
         const proto=objects.find(o=>o.slot===a.slot&&o.key==='studio-tray');if(!proto)continue;
         for(let i=objects.length-1;i>=0;i--)if(objects[i].slot===a.slot&&String(objects[i].key).startsWith('studio-'))objects.splice(i,1);
         const ap=a.assembly?.appearance||{},z=(rack.slots-(a.slot+a.span-1))*44.45,sel=selectedSlot>=a.slot&&selectedSlot<a.slot+a.span;
-        // Preview only: the image is drawn on the front faceplate; wizard STLs never contain artwork.
-        for(const[p,mesh]of Object.entries(got.parts)){const plate=p!=='tray',face=p==='faceplate'?frontFace(mesh,got.spec):null,front=ap.artwork?face?.art:null;
+        // The image is drawn on the front faceplate (also a one-piece "combined" part); only the opt-in Print in color
+        // export (faceplate_color.py) turns it into STLs, with this same placement. Normal wizard STLs never contain artwork.
+        for(const[p,mesh]of Object.entries(got.parts)){const plate=p!=='tray',face=p==='faceplate'||p==='combined'?frontFace(mesh,got.spec):null,front=ap.artwork?face?.art:null;
           // The renderer caches GPU buffers by key, so each build/part needs its own key (else an unrelated plate buffer is reused).
           objects.push({...proto,key:`studio-eq-${got.key}-${p}`,mesh,t:[0,0,z],kind:plate?'plate':'tray',selected:p==='faceplate'&&sel,selRect:face?.sel,
             color:p==='openings'?[0.12,0.13,0.15]:rgb(plate?ap.faceplate:ap.tray,plate?'#4e75a3':'#4d8e6e'),art:front?ap.artwork:null,artWindow:front});}
