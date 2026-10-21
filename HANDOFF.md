@@ -61,7 +61,8 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
   - Vents: 62 holes, about 51 % open.
   - Old specs are byte-identical. Checks: **145 Python (1 skipped) + all JS pass**.
 - **Pushed** to GitHub at `0c4487b`. Pushing from a session started by another session is blocked by the auto-mode classifier, so Brian runs `git push origin main` himself.
-- **Next:** continue the beta test, and wait for Brian's SLV-B/SLV-D print report. An SLV-E (Reinforced or Vents bracket) is available on request.
+- **2026-10-21:** [SLV-E](outputs/Physical_Test_Coupons_2026-10-21_SLV-E/README.md) made: **SLV-E-REAR**, the app's default Reinforced rear bracket, to compare with SLV-D (smaller openings, stiffening lips; 1 body, 0 open edges). Not printed. Brian's photo of SLV-A on the PC shows the badge **OptiPlex 7060**, while the model came from the 7010 STEP; SLV-A fitted anyway (the cases being the same size is unconfirmed).
+- **Next:** continue the beta test, and wait for Brian's SLV-B/SLV-D/SLV-E print report.
 
 ## 2026-10-20 OptiPlex beta: 44.4 mm plate, sleeve mount, feet
 
