@@ -862,13 +862,23 @@
   }
   function appendPortControls(host,rack,placement){
     if(!window.LabRaxPorts)return;const P=LabRaxPorts,eq=String(placement.equipment).startsWith('eq-'),item=libraryItem(placement);
-    host.append(paragraph('PORTS','section-eyebrow'),paragraph(eq?'From this equipment’s wizard Ports step: front openings, rear ports and keystones (front and rear face each). Planning data only.':'Library ports are planning data only. Cable access and physical fit remain UNKNOWN.'));
-    if(eq&&!item){host.append(paragraph('This equipment’s ports load with the equipment library.'));return;}
-    const ports=P.portsFor(rack,placement,item),faceText=p=>p.face?P.FACES[p.face]:'Face UNKNOWN';
-    if(!ports.length)host.append(paragraph('No ports yet. Add them in the equipment wizard’s Ports step, or add a custom port below.'));
+    // Collapsed by default (open state remembered per viewer); opens anyway while one of its ports is selected.
+    const ports=eq&&!item?[]:P.portsFor(rack,placement,item),box=document.createElement('details'),sum=document.createElement('summary');
+    box.className='ports-section';sum.textContent=`Ports (${ports.length})`;box.append(sum);host.append(box);
+    let remembered=false;try{remembered=localStorage.getItem('aw.portsOpen')==='1';}catch(e){}
+    box.open=remembered||ports.some(p=>p.key===selectedPort);
+    box.addEventListener('toggle',()=>{try{localStorage.setItem('aw.portsOpen',box.open?'1':'0');}catch(e){}});
+    box.append(paragraph(eq?'From this equipment’s wizard Ports step: front openings, rear ports and keystones (front and rear face each). Planning data only.':'Library ports are planning data only. Cable access and physical fit remain UNKNOWN.','muted'));
+    if(eq&&!item){box.append(paragraph('This equipment’s ports load with the equipment library.'));return;}
+    const unknownFace=ports.filter(p=>!p.face).length;
+    if(unknownFace)box.append(paragraph(unknownFace===ports.length?'Face UNKNOWN for all ports until set.':`Face UNKNOWN for ${unknownFace} of ${ports.length} ports (marked ?).`,'notice'));
+    if(!ports.length)box.append(paragraph('No ports yet. Add them in the equipment wizard’s Ports step, or add a custom port below.'));
     for(const p of ports){const row=document.createElement('div');row.className='guide-row port-row'+(p.key===selectedPort?' selected':'');
-      const name=button(`${p.label} · ${P.TYPES[p.type]?.label||p.type} · ${faceText(p)}${p.tuned?' · moved':''}`,()=>p.key===selectedPort?(selectedPort=null,placingPort=null,renderProperties(),drawSoon()):selectPort(p.key),'guide-name');
-      name.setAttribute('aria-pressed',String(p.key===selectedPort));name.style.setProperty('--port-color',P.TYPES[p.type]?.color||'#c3ccd6');row.append(name);host.append(row);}
+      const face=p.face?P.FACES[p.face]:(unknownFace===ports.length?'':'?');
+      const name=button([p.label,P.TYPES[p.type]?.label||p.type,face,p.tuned?'moved':''].filter(Boolean).join(' · '),()=>p.key===selectedPort?(selectedPort=null,placingPort=null,renderProperties(),drawSoon()):selectPort(p.key),'guide-name');
+      name.title=`${p.label} · ${P.TYPES[p.type]?.label||p.type} · ${p.face?P.FACES[p.face]:'Face UNKNOWN'}${p.tuned?' · moved':''}`;
+      name.setAttribute('aria-pressed',String(p.key===selectedPort));name.style.setProperty('--port-color',P.TYPES[p.type]?.color||'#c3ccd6');row.append(name);box.append(row);}
+    host=box;
     const selected=ports.find(p=>p.key===selectedPort);
     if(selected)appendPortPanel(host,rack,placement,selected,ports);
     host.append(button('Add custom port',()=>{const id=P.newPortId(rack,placement.id);P.setOverride(rack,placement.id,id,{label:'Custom port',type:'other',face:'rear',x:0,y:eq?60:70,z:20},true);markChanged();selectPort(placement.id+'/'+id);notify('Custom port added to the draft. Set its position, then Save to keep it.');},'secondary'));
