@@ -7,6 +7,7 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 - **New home: `D:\Projects\assembly-workshop`.** Copied with robocopy (0 failures); git status was clean. The old folder `C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop` is untouched; Brian decides about it around 2026-10-28. Do not delete it.
 - Claude memory did not arrive at the new key. Claude copied it from the old C: key (still there), and it now loads: 23 files. Memory now records the D: path.
 - **Backup script fixed:** `DEFAULT_SOURCE` is now `D:\Projects\assembly-workshop`. The earlier change (edb063d) made the script find the project from its own location. That can't work, because the script must run from a copy outside the project. Destinations are unchanged: `D:\Backups\Assembly Workshop` and `OneDrive\Backups\Assembly Workshop`, both outside the project; the script also refuses overlap. Not run during the move.
+- **2026-10-21 backup:** `AssemblyWorkshop_20261021-0730` made with the fixed script (run from a scratch copy, defaults). VERIFIED: 1949 files / 159,142,603 bytes in both `D:\Backups\Assembly Workshop` and OneDrive (unshared), 0 hash mismatches, 30 SQLite snapshots; library.sqlite3, revisions/, rack-history/, artwork/ present in both.
 - `.claude/launch.json` disposable-data paths point to old session scratch folders in `AppData\Local\Temp`. They still work because Temp wasn't moved.
 - Brian repoints any desktop/Start menu shortcuts (e.g. to start.bat) by hand.
 
