@@ -41,14 +41,21 @@ rack_depth=240;             // Lab Rax frame depth (front of front posts to back
 nudge=0;                    // render-repair only: tiny size offset applied when OpenSCAD 2021 emits a sliver
 sleeve=device_mount=="sleeve";
 // PROPOSED sleeve defaults (mm); independent design, fit and strength UNKNOWN.
-sl_side=0.5; sl_top=0.3; sl_wall=6; sl_lip_w=10; sl_lip_t=1.5; sl_band=1.5; sl_stop_t=4; sl_stop_h=6;
+// Sleeve v2 options (task 36): defined before first use, because OpenSCAD evaluates a variable where it is first assigned.
+sleeve_top=0.3; feet_style="pockets"; rear_floor_opening=false; insert_bosses=false;
+sl_ride=0.5; sl_pilot_inside=2; sl_pilot_radius=2; sl_boss_outside=3; sl_boss_depth=12;
+sl_pilot_offset=sl_pilot_inside+sl_pilot_radius; sl_boss_fn=48; sl_boss_r=(sl_pilot_radius+sl_boss_outside)/cos(180/sl_boss_fn);
+foot_tracks=[]; foot_dips=[]; floor_cable_box=[];
+groove_attach=0.8; v2_eps=0.1; v2_tol=0.000000001; floor_cable_r=2; slot_bottom=0;
+floor_cable_min=10; floor_stop_clear=4; floor_joint_clear=3; floor_wall_clear=5; rear_floor_joint_half=9; rear_floor_joint_reach=11.3;
+sl_side=0.5; sl_top=sleeve_top+(feet_style=="grooves"?sl_ride:0); sl_wall=6; sl_lip_w=10; sl_lip_t=1.5; sl_band=1.5; sl_stop_t=4; sl_stop_h=6;
 foot_clearance=0.5; foot_extra_depth=0.3; foot_min_floor=0.8; foot_lip_t=3.0;
 tray_t=3; floor_z=(device_mount=="flat"||sleeve)?0.5:7+legacy_slot_offset; tray_z=floor_z; // @flat-floor
 assert(dev_rot==0||dev_rot==90||dev_rot==180||dev_rot==270,"dev_rot must be 0, 90, 180 or 270");
 // Device footprint on the tray after rotation; the tray stays centred and grows to keep the margin.
 fp_w=(dev_rot==90||dev_rot==270)?dev_d:dev_w; fp_d=(dev_rot==90||dev_rot==270)?dev_w:dev_d;
 rack_inner_w=208; side_clear=2; max_tray=rack_inner_w-2*side_clear; // PROPOSED nominal opening / side clearance
-tray_w=2*(abs(dev_off_x)+fp_w/2+(sleeve?max(margin,sl_side+sl_wall):margin)); tray_d=rear_support?rack_depth:sleeve?-plate_t+fp_d+margin:dev_off_y+fp_d+front_gap+margin;
+tray_w=2*(abs(dev_off_x)+fp_w/2+(sleeve?max(margin,sl_side+sl_wall,insert_bosses?sl_side+sl_pilot_offset+sl_boss_r:0):margin)); tray_d=rear_support?rack_depth:sleeve?-plate_t+fp_d+margin:dev_off_y+fp_d+front_gap+margin;
 tray_x=-tray_w/2; tray_y=0;
  // @flat-begin
 assert(device_mount!="flat"||front_gap+dev_off_y>=6.2,"Flat corner stops need a front gap of at least 6.2 mm");
@@ -65,7 +72,7 @@ foot_h=(device_mount=="flat"||sleeve)?max([0,for(f=feet)f[4]]):0; foot_depth=foo
 sl_half=fp_w/2+sl_side; sl_bottom=floor_top; sl_window_top=sl_bottom+dev_h-foot_h+sl_top;  // case rests on the floor top; feet hang in pockets foot_extra_depth deeper
 sl_lip=sl_window_top+(foot_h>0?foot_lip_t:sl_lip_t)<=u*rack_pitch?(foot_h>0?foot_lip_t:sl_lip_t):0;
 sl_rear=dev_y+fp_d;
-sl_joints=[dev_off_x-sl_half-sl_wall/2,dev_off_x+sl_half+sl_wall/2];
+sl_joints=[dev_off_x-sl_half-(insert_bosses?sl_pilot_offset:sl_wall/2),dev_off_x+sl_half+(insert_bosses?sl_pilot_offset:sl_wall/2)];
 sl_joint_z=[sl_bottom+3,sl_window_top-3];
 assert(!sleeve||fp_d/4-plate_t-6>=8,"Sleeve depth must be at least 72 mm to keep strap slots clear of the front joint");
 assert(!sleeve||sl_bottom-plate_bottom>=sl_band&&u*rack_pitch-plate_bottom-sl_window_top>=sl_band,str("Too tall for a flush window in ",u,"U; choose ",u+1,"U"));
@@ -196,6 +203,7 @@ module faceplate(){
     plate_joint_add();
    }
    plate_joint_cut();
+   if(sleeve&&feet_style=="grooves")sleeve_v2_cut();
    if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)translate([x,-plate_t-0.1,z])rotate([-90,0,0])cylinder(d=m3_clear,h=plate_t+0.2);
    if(ks_style=="v2")ks_cut(); else ks_box_cut();
   }
@@ -206,6 +214,7 @@ module faceplate(){
 module rear_bracket(){to_rear()difference(){union(){plate_layer(-plate_t,plate_t,false,true);plate_joint_add(true);}plate_joint_cut(true);}}
 
 module device_features_add(){
+ sleeve_v2_add();
  if(sleeve){
   for(side=[-1,1]){
    x=side<0?dev_off_x-sl_half-sl_wall:dev_off_x+sl_half;
@@ -240,6 +249,7 @@ module device_features_add(){
  }
 }
 module device_features_cut(){
+ sleeve_v2_cut();
  if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)translate([x,-0.1,z])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.1);
  // Strap access through each wall at quarter-depth, clear of the front/rear joints.
  if(sleeve)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
@@ -249,7 +259,7 @@ module device_features_cut(){
  if(device_mount=="straps"||device_mount=="flat"||sleeve)for(x=[dev_x-5.5,dev_x+fp_w+2.5],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
   translate([x,y-6,tray_z-0.1])cube([3,12,tray_t+0.2]);
  // Blind pockets retain at least foot_min_floor; taller feet pass through the floor by design.
- if(foot_h>0&&(device_mount=="flat"||sleeve))for(f=feet){corners=[dp([f[0],f[1]]),dp([f[0]+f[2],f[1]]),dp([f[0],f[1]+f[3]]),dp([f[0]+f[2],f[1]+f[3]])];x0=dev_x+min([for(p=corners)p[0]])-foot_clearance;x1=dev_x+max([for(p=corners)p[0]])+foot_clearance;y0=dev_y+min([for(p=corners)p[1]])-foot_clearance;y1=dev_y+max([for(p=corners)p[1]])+foot_clearance;deep=f[4]+foot_extra_depth;
+ if(feet_style!="grooves"&&foot_h>0&&(device_mount=="flat"||sleeve))for(f=feet){corners=[dp([f[0],f[1]]),dp([f[0]+f[2],f[1]]),dp([f[0],f[1]+f[3]]),dp([f[0]+f[2],f[1]+f[3]])];x0=dev_x+min([for(p=corners)p[0]])-foot_clearance;x1=dev_x+max([for(p=corners)p[0]])+foot_clearance;y0=dev_y+min([for(p=corners)p[1]])-foot_clearance;y1=dev_y+max([for(p=corners)p[1]])+foot_clearance;deep=f[4]+foot_extra_depth;
   translate([x0,y0,deep>tray_t-foot_min_floor?tray_z-0.1:floor_top-deep])cube([x1-x0,y1-y0,deep>tray_t-foot_min_floor?tray_t+0.2:deep+0.02]);}
 }
 
@@ -295,3 +305,44 @@ clip_coupon(){
  else {color("steelblue")faceplate();color("silver")tray();if(rear_support)color("steelblue")rear_bracket();
   %translate([dev_x,dev_y,floor_top+(device_mount=="inserts"||device_mount=="pegs"||device_mount=="clips"?standoff:0)-foot_h])cube([fp_w,fp_d,dev_h]);}
 }
+// @sleeve-v2-begin
+// Opt-in geometry, derived analytically by equipment.py. Fit/retention/strength UNKNOWN.
+assert(sleeve_top>=0.3&&sleeve_top<=2,"Top play must be 0.3 to 2 mm");
+assert(feet_style=="pockets"||feet_style=="grooves","Feet must be pockets or grooves");
+assert(feet_style!="grooves"||floor_top+dev_h-foot_h+sl_ride<=u*rack_pitch,"Sliding device must clear allocated U");
+assert(feet_style!="grooves"||((sleeve||device_mount=="flat")&&len(feet)>0&&len(foot_tracks)>0),"Foot grooves need feet and derived tracks");
+assert(!rear_floor_opening||(rear_support&&len(floor_cable_box)==4),"Cable opening needs rear support and a derived clear rectangle");
+assert(!insert_bosses||(sleeve&&joint=="screw"),"Insert bosses need a sleeve and screw joint");
+// Derived boxes also get conservative guards when the generated source is opened directly.
+assert(!rear_floor_opening||(floor_cable_box[1]-floor_cable_box[0]>=floor_cable_min&&floor_cable_box[3]-floor_cable_box[2]>=floor_cable_min),"Not enough floor for cable opening");
+assert(!rear_floor_opening||floor_cable_box[2]>=sl_rear+(sleeve?sl_stop_t:0)+floor_stop_clear,"Cable opening must clear rear stop");
+assert(!rear_floor_opening||floor_cable_box[3]<=rack_depth-rear_floor_joint_reach-floor_joint_clear,"Cable opening must clear rear uprights");
+assert(!rear_floor_opening||max([abs(floor_cable_box[0]),abs(floor_cable_box[1])])<=min([for(x=joint_x)abs(x)])-rear_floor_joint_half-floor_joint_clear,"Cable opening must clear rear tongues and bosses");
+assert(!rear_floor_opening||!sleeve||(floor_cable_box[0]>=dev_off_x-sl_half+floor_wall_clear&&floor_cable_box[1]<=dev_off_x+sl_half-floor_wall_clear),"Cable opening must clear sleeve walls");
+module sleeve_v2_add(){
+ // Full-width slab down to the slot bottom so the underside stays flat on the print bed.
+ if(feet_style=="grooves"&&len([for(t=foot_tracks)if(t[5]<tray_z)1])>0)translate([tray_x,tray_y,slot_bottom])cube([tray_w,tray_d,tray_z-slot_bottom+v2_eps]);
+ if(feet_style=="grooves")for(t=foot_tracks){
+  assert(floor_top-t[4]-t[5]+v2_tol>=foot_min_floor,"Grooves must retain 0.8 mm above slot bottom");
+  // Grow downward only, with side webs joining the unchanged 3 mm floor.
+  if(t[5]<tray_z)translate([t[0]-groove_attach,max(0,t[2]),t[5]])cube([t[1]-t[0]+2*groove_attach,t[3]-max(0,t[2]),floor_top-t[5]]);
+ }
+ if(insert_bosses)for(side=[-1,1],z=sl_joint_z)let(x=dev_off_x+side*(sl_half+sl_pilot_offset),inside=dev_off_x+side*sl_half)
+  intersection(){
+   translate([x,0,z])rotate([-90,0,0])cylinder(r=sl_boss_r,h=sl_boss_depth,$fn=sl_boss_fn);
+   translate([side<0?inside-sl_pilot_offset-sl_boss_r:inside,0,tray_z])cube([sl_pilot_offset+sl_boss_r,sl_boss_depth,sl_window_top+sl_lip-tray_z]);
+  }
+}
+module sleeve_v2_cut(){
+ if(feet_style=="grooves"){
+  for(t=foot_tracks)translate([t[0],t[2],floor_top-t[4]])cube([t[1]-t[0],t[3]-t[2],t[4]+v2_eps]);
+  // Strap slots also pass through the slab.
+  if(device_mount=="straps"||device_mount=="flat"||sleeve)for(x=[dev_x-5.5,dev_x+fp_w+2.5],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
+   translate([x,y-6,slot_bottom-v2_eps])cube([3,12,tray_z-slot_bottom+2*v2_eps]);
+  // Rotate an extruded Y/Z profile into X; both transitions have equal rise/run.
+  for(p=foot_dips)translate([p[0],0,0])rotate([90,0,90])linear_extrude(height=p[1]-p[0])
+   polygon([[p[2]-p[6],floor_top-p[5]],[p[2],floor_top-p[4]],[p[3],floor_top-p[4]],[p[3]+p[6],floor_top-p[5]],[p[3]+p[6],floor_top+v2_eps],[p[2]-p[6],floor_top+v2_eps]]);
+ }
+ if(rear_floor_opening)let(q=floor_cable_box)translate([(q[0]+q[1])/2,(q[2]+q[3])/2,slot_bottom-v2_eps])linear_extrude(height=floor_top-slot_bottom+2*v2_eps)rrect(q[1]-q[0],q[3]-q[2],floor_cable_r);
+}
+// @sleeve-v2-end

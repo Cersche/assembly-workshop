@@ -434,7 +434,7 @@ class SleeveGuardTests(unittest.TestCase):
 
     def test_sleeve_parameters_match_scad(self):
         import port_openings as P
-        text=eq.TEMPLATE.read_text(encoding='utf-8')
+        text=eq.template_source(eq.clean(dict(name='Legacy',dev_w=85,dev_d=100,dev_h=20,device_mount='sleeve',joint='screw')))
         for key,value in [('sl_side',P.SLEEVE_SIDE),('sl_top',P.SLEEVE_TOP),('sl_wall',P.SLEEVE_WALL),
                           ('sl_lip_w',P.SLEEVE_LIP_W),('sl_lip_t',P.SLEEVE_LIP_T),('sl_band',P.SLEEVE_BAND),
                           ('sl_stop_t',P.SLEEVE_STOP_T),('sl_stop_h',P.SLEEVE_STOP_H)]:
@@ -585,7 +585,7 @@ class RearStyleTests(unittest.TestCase):
         path=HERE.parents[1]/'docs/archive/codex/2026-10-20/task31/equipment.py'
         loader=importlib.util.spec_from_file_location('task31_before',path)
         old=importlib.util.module_from_spec(loader);loader.loader.exec_module(old)
-        old.TEMPLATE=eq.TEMPLATE
+        old.TEMPLATE=eq.ROOT.parents[1]/'docs/archive/codex/2026-10-21/task36/equipment_tray.scad'
         for raw in self.specimens():
             for style in (None,'solid','open','slots'):
                 spec=dict(raw)
@@ -643,3 +643,104 @@ class RearStyleTests(unittest.TestCase):
                     self.assertGreaterEqual(math.hypot(xx-x,zz-z)-2*r,2-1e-9)
             for q in g['windows']:
                 self.assertIn(q,eq.rear_geometry(dict(s,rear_style='slots'))['windows'])
+
+
+import math
+
+
+class SleeveV2Tests(unittest.TestCase):
+    ROOT = Path(__file__).resolve().parents[2]
+    CHOICES = dict(sleeve_top=.8, feet_style='grooves', rear_floor_opening=True, insert_bosses=True)
+
+    def raw(self, **choices):
+        spec = json.loads((self.ROOT/'outputs/Physical_Test_Coupons_2026-10-20_SLV-B/SLV-B_spec.json').read_text(encoding='utf-8'))
+        spec.update(self.CHOICES)
+        spec.update(choices)
+        return spec
+
+    def test_optiplex_tracks_floor_and_45_degree_dips(self):
+        s=eq.clean(self.raw()); tracks=eq.foot_grooves(s)
+        self.assertEqual(len(tracks),2)
+        self.assertEqual([(t['x0'],t['x1']) for t in tracks],[(-76.75,-70.75),(71.25,76.25)])
+        for t in tracks:
+            self.assertAlmostEqual(t['depth'],2.3)
+            self.assertAlmostEqual(t['bottom'],1.2)
+            self.assertEqual(t['floor_bottom'],0)
+            self.assertGreaterEqual(t['bottom']-t['floor_bottom'],.8)
+            self.assertEqual(t['y0'],-4)
+            self.assertAlmostEqual(t['y1'],165.8)
+            self.assertEqual([(p['y0'],p['y1']) for p in t['dips']],[(13.5,29.5),(148.5,164.5)])
+            for p in t['dips']:
+                self.assertAlmostEqual(p['ramp'],p['cut_depth']-t['depth'])
+                self.assertAlmostEqual(p['ramp'],1.3)
+        source=eq.source(s)
+        self.assertIn('if(sleeve&&feet_style=="grooves")sleeve_v2_cut();',source)
+        self.assertIn('rotate([90,0,90])linear_extrude',source)
+        self.assertIn('foot_tracks=[[-76.75, -70.75, -4.0, 165.8, 2.3, 0]',source)
+        self.assertEqual(eq.clean(s),s)
+
+    def test_optiplex_window_bosses_width_and_cable_clearances(self):
+        s=eq.clean(self.raw()); w=eq.sleeve_geometry(s); q=eq.rear_floor_geometry(s)
+        self.assertAlmostEqual(w['height'],37.3); self.assertAlmostEqual(w['top'],40.8)
+        self.assertAlmostEqual(44.45-.025-w['top'],3.625);self.assertEqual(w['lip'],3)
+        self.assertEqual(w['joints'],[-95.75,95.75]);self.assertEqual(w['joint_z'],[6.5,37.8])
+        self.assertAlmostEqual(eq.tray_width(s),201.521456708);self.assertLessEqual(eq.tray_width(s),204)
+        self.assertEqual(abs(w['joints'][0])-eq.PILOT_RADIUS-w['half'],2)
+        self.assertAlmostEqual(eq.INSERT_BOSS_R*math.cos(math.pi/eq.BOSS_FACETS)-eq.PILOT_RADIUS,3)
+        self.assertEqual(q,dict(x0=-28,x1=28,y0=198.5,y1=225.7,r=2))
+        self.assertGreaterEqual(q['y0']-w['stop_end'],4)
+        self.assertGreaterEqual(240-eq.REAR_FLOOR_JOINT_REACH-q['y1'],3-1e-9)
+        self.assertGreaterEqual(40-eq.REAR_JOINT_HALF-q['x1'],3)
+        self.assertGreaterEqual(w['half']-q['x1'],5)
+        self.assertTrue(all(not eq._rect_overlap(q,t) for t in eq.foot_grooves(s)))
+        self.assertIn('floor_cable_box=[-28, 28, 198.5, 225.7];',eq.source(s))
+        with self.assertRaisesRegex(ValueError,'204'):eq.clean(self.raw(dev_off_x=2))
+
+    def test_validation_and_settings_round_trip(self):
+        self.assertEqual(eq.placement_settings(self.CHOICES),self.CHOICES)
+        s=eq.clean(eq.allocation_spec(self.raw(**eq.V2_DEFAULTS),self.CHOICES))
+        self.assertEqual(eq.clean(s),s)
+        for k,v in [('sleeve_top',.29),('sleeve_top',2.1),('sleeve_top',True),('sleeve_top',float('nan')),('feet_style','slots'),('rear_floor_opening',1),('insert_bosses','yes')]:
+            with self.subTest(key=k,value=v):
+                with self.assertRaises(ValueError):eq.clean(self.raw(**{k:v}))
+                with self.assertRaises(ValueError):eq.placement_settings({k:v})
+        for spec,message in [(self.raw(feet=[]),'need'),(self.raw(joint='single',rear_support=False,rear_floor_opening=False),'bosses'),(self.raw(rear_support=False),'rear support'),(self.raw(dev_w=220,dev_d=182.5,dev_rot=90),'Not enough floor')]:
+            with self.assertRaisesRegex(ValueError,message):eq.clean(spec)
+        raw=self.raw();raw['feet']=[dict(f,h=3.3) for f in raw['feet']]
+        with self.assertRaisesRegex(ValueError,'too tall for grooves'):eq.clean(raw)
+        raw=self.raw();raw['feet'][0]['h']=.5
+        with self.assertRaises(ValueError):eq.clean(raw)
+
+    def test_flat_and_rotated_tracks_and_interference(self):
+        spec=dict(name='Flat',dev_w=100,dev_d=110,dev_h=20,device_mount='flat',joint='single',feet_style='grooves',feet=[dict(x=20,y=20,w=5,d=8,h=2)])
+        for rotation in (0,90,180,270):
+            s=eq.clean(dict(spec,dev_rot=rotation));t=eq.foot_grooves(s)[0]
+            self.assertAlmostEqual(t['depth'],1.5)
+            self.assertEqual(t['floor_bottom'],.5)
+            self.assertEqual(t['y0'],12)
+        with self.assertRaisesRegex(ValueError,'rear screw joint'):
+            eq.clean(dict(spec,joint='screw',rear_support=True,dev_d=200,dev_off_y=16,feet=[dict(x=10,y=195,w=5,d=5,h=2)]))
+        with self.assertRaisesRegex(ValueError,'rear stop'):
+            eq.clean(self.raw(feet=[dict(x=20,y=190,w=5,d=4.5,h=2.8)]))
+
+    def test_legacy_specs_and_sources_byte_identical(self):
+        import importlib.util
+        folder=self.ROOT/'docs/archive/codex/2026-10-21/task36'
+        loader=importlib.util.spec_from_file_location('before36',folder/'equipment.py')
+        old=importlib.util.module_from_spec(loader);loader.loader.exec_module(old)
+        old.TEMPLATE=folder/'equipment_tray.scad'
+        fixtures=[]
+        for name,day in [('SLV-B','2026-10-20'),('SLV-D','2026-10-20'),('SLV-E','2026-10-21')]:
+            fixtures.append(json.loads((self.ROOT/f'outputs/Physical_Test_Coupons_{day}_{name}/{name}_spec.json').read_text(encoding='utf-8')))
+        for mount in eq.MOUNTS:
+            for joint in eq.JOINTS:
+                for units in (1,2,5):
+                    for style in ('solid','open','reinforced','slots','vents'):
+                        fixtures.append(dict(name='Legacy',dev_w=85,dev_d=100,dev_h=20,holes=[[20,20]],device_mount=mount,joint=joint,u=units,rear_support=joint=='screw',rear_style=style))
+        for raw in fixtures:
+            with self.subTest(mount=raw['device_mount'],name=raw['name']):
+                before=old.clean(raw);after=eq.clean(raw)
+                self.assertEqual(json.dumps(before),json.dumps(after))
+                expected=old.source(before).encode('utf-8')
+                self.assertEqual(eq.source(after).encode('utf-8'),expected)
+                self.assertEqual(eq.source(eq.clean(dict(raw,**eq.V2_DEFAULTS))).encode('utf-8'),expected)

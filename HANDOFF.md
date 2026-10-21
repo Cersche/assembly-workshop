@@ -68,7 +68,13 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
   - he wants smooth foot grooves with a click-in dip (option A), a simple floor cable opening behind the PC (barrel plug + network only), and outward bosses at the 4 front heat-set holes.
   - Written up as **Codex task 36** ([work/codex-tasks/36-optiplex-sleeve-v2.md](work/codex-tasks/36-optiplex-sleeve-v2.md), prompt in docs/prompts/codex/). Not started.
   - The backstop is the tray's existing sleeve rear stop.
-- **Next:** Brian runs task 36 in Codex. Claude reviews, renders and makes the next front coupon (new ID). Hold SLV-B/D/E prints until then, since the tray changes.
+- **Task 36 done by Codex, reviewed by Claude (2026-10-21).**
+  - Claude fixed two things before exporting: (1) the v2 SCAD settings were defined after their first use, so the render had no walls (the tests were analytical only); (2) the groove thickening is now a full-width slab, so the underside prints flat.
+  - Legacy source is byte-identical. Python 177 OK (1 skipped). JS has 1 older rack-BOM failure (`window is not defined`), unrelated and still open.
+- **[SLV-F](outputs/Physical_Test_Coupons_2026-10-21_SLV-F/README.md) full print package:** plate, tray, and rear bracket R (Reinforced) or O (Open). No coupon first, by Brian's choice.
+  - Digitally checked: the PC seats and slides clear, and the click holds by about 0.45 mm.
+  - Fit, retention and strength are UNKNOWN.
+- **Next:** Brian checks SLV-F in the slicer and prints it if it looks right. Then he reports on the slide/click, the inserts, the bracket and the cables.
 
 ## 2026-10-20 OptiPlex beta: 44.4 mm plate, sleeve mount, feet
 

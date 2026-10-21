@@ -61,7 +61,8 @@ def _port_id(port, face, index):
 # model file, holes, ports); these tray choices belong to each slot allocation's "tray" settings. Older
 # library specs still carry them, and those values stay the defaults when an allocation has none.
 PLACEMENT_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'standoff', 'insert_pilot', 'board_t',
-                  'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size')
+                  'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size',
+                  'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses')
 
 
 def export_quality(s):
@@ -85,9 +86,14 @@ def placement_settings(value):
             if not isinstance(v, list) or len(v) > 12 or any(type(x) not in (int, float) or isinstance(x, bool) for x in v):
                 raise ValueError('Keystones must be a list of positions.')
             v = list(v)
-        elif key in ('rear_support', 'rear_openings'):
+        elif key in ('rear_support', 'rear_openings', 'rear_floor_opening', 'insert_bosses'):
             if type(v) is not bool:
                 raise ValueError('Rear support must be true or false.')
+        elif key == 'feet_style':
+            if v not in FEET_STYLES: raise ValueError('Feet must be pockets or grooves.')
+        elif key == 'sleeve_top':
+            if isinstance(v, bool): raise ValueError('Top play must be a number.')
+            v = num(v, 'Top play', SLEEVE_TOP_DEFAULT, SLEEVE_TOP_MAX)
         elif key in ('front_position','bezel'):
             if v not in (port_openings.FRONT_POSITIONS if key=='front_position' else port_openings.BEZELS):
                 raise ValueError('Invalid '+key+'.')
@@ -199,7 +205,8 @@ def device_lift(spec):
 def needed_height(spec):
     mount = spec.get('device_mount')
     extra = (float(spec.get('board_t', 1.6)) + (1.6 if mount == 'pegs' else 2.5)) if mount in ('pegs', 'clips') else 0
-    return max(device_lift(spec) + max(float(spec['dev_h']), extra),
+    ride = SL_RIDE if spec.get('feet_style') == 'grooves' else 0
+    return max(device_lift(spec) + max(float(spec['dev_h']), extra) + ride,
                floor_z(spec) + 22 if spec.get('joint', 'screw') == 'screw' else 0)
 
 
@@ -225,15 +232,137 @@ def foot_pockets(spec):
     return out
 
 
+# Sleeve v2 is opt-in. These dimensions are design choices, not physical approval.
+SLEEVE_TOP_DEFAULT, SLEEVE_TOP_MAX, SL_RIDE = .3, 2, .5
+FEET_STYLES = ('pockets', 'grooves')
+TRAY_T, SLOT_BOTTOM, GROOVE_ATTACH, CUT_EPS, FOOT_HEIGHT_TOL = 3, 0, .8, .1, .001
+PILOT_RADIUS, INSERT_INSIDE, INSERT_OUTSIDE, INSERT_BOSS_DEPTH = 2, 2, 3, 12
+BOSS_FACETS = 48
+INSERT_BOSS_R = (PILOT_RADIUS+INSERT_OUTSIDE)/math.cos(math.pi/BOSS_FACETS)
+FLOOR_OPEN_W, FLOOR_OPEN_D, FLOOR_OPEN_R, FLOOR_OPEN_MIN = 60, 30, 2, 10
+FLOOR_STOP_CLEAR, FLOOR_JOINT_CLEAR, FLOOR_WALL_CLEAR = 4, 3, 5
+REAR_FLOOR_JOINT_REACH = 11.3
+V2_DEFAULTS = dict(sleeve_top=.3, feet_style='pockets', rear_floor_opening=False, insert_bosses=False)
+SLEEVE_HEADER = '// PROPOSED sleeve defaults (mm); independent design, fit and strength UNKNOWN.\n'
+# The v2 parameters sit before their first use: OpenSCAD evaluates a variable where it is first assigned.
+V2_PARAMS = (
+    '// Sleeve v2 options (task 36): defined before first use, because OpenSCAD evaluates a variable where it is first assigned.\n'
+    'sleeve_top=0.3; feet_style="pockets"; rear_floor_opening=false; insert_bosses=false;\n'
+    'sl_ride=0.5; sl_pilot_inside=2; sl_pilot_radius=2; sl_boss_outside=3; sl_boss_depth=12;\n'
+    'sl_pilot_offset=sl_pilot_inside+sl_pilot_radius; sl_boss_fn=48; sl_boss_r=(sl_pilot_radius+sl_boss_outside)/cos(180/sl_boss_fn);\n'
+    'foot_tracks=[]; foot_dips=[]; floor_cable_box=[];\n'
+    'groove_attach=0.8; v2_eps=0.1; v2_tol=0.000000001; floor_cable_r=2; slot_bottom=0;\n'
+    'floor_cable_min=10; floor_stop_clear=4; floor_joint_clear=3; floor_wall_clear=5; rear_floor_joint_half=9; rear_floor_joint_reach=11.3;\n'
+)
+V2_REPLACEMENTS = {
+    SLEEVE_HEADER: SLEEVE_HEADER+V2_PARAMS,
+    'sl_top=0.3;': 'sl_top=sleeve_top+(feet_style=="grooves"?sl_ride:0);',
+    'max(margin,sl_side+sl_wall)': 'max(margin,sl_side+sl_wall,insert_bosses?sl_side+sl_pilot_offset+sl_boss_r:0)',
+    'sl_joints=[dev_off_x-sl_half-sl_wall/2,dev_off_x+sl_half+sl_wall/2];':
+        'sl_joints=[dev_off_x-sl_half-(insert_bosses?sl_pilot_offset:sl_wall/2),dev_off_x+sl_half+(insert_bosses?sl_pilot_offset:sl_wall/2)];',
+    'module device_features_add(){': 'module device_features_add(){\n sleeve_v2_add();',
+    'module device_features_cut(){': 'module device_features_cut(){\n sleeve_v2_cut();',
+    '   plate_joint_cut();': '   plate_joint_cut();\n   if(sleeve&&feet_style=="grooves")sleeve_v2_cut();',
+    'if(foot_h>0&&(device_mount=="flat"||sleeve))for(f=feet)':
+        'if(feet_style!="grooves"&&foot_h>0&&(device_mount=="flat"||sleeve))for(f=feet)',
+}
+
+
+def window_spec(spec):
+    """Adapt the shared opening planner without changing its legacy API or sources."""
+    if spec.get('device_mount') != 'sleeve': return spec
+    extra = spec.get('sleeve_top', SLEEVE_TOP_DEFAULT)-SLEEVE_TOP_DEFAULT
+    if spec.get('feet_style') == 'grooves': extra += SL_RIDE
+    return dict(spec, dev_h=spec['dev_h']+extra) if extra else spec
+
+
+def sleeve_geometry(spec):
+    win = port_openings.sleeve(window_spec(spec))
+    if win and spec.get('insert_bosses'):
+        reach = win['half']+INSERT_INSIDE+PILOT_RADIUS
+        win['joints'] = [win['x']-reach, win['x']+reach]
+        win['outside'] = 2*(reach+INSERT_BOSS_R)
+    return win
+
+
+def tray_width(spec):
+    fw = spec['dev_d'] if spec.get('dev_rot') in (90, 270) else spec['dev_w']
+    win = sleeve_geometry(spec)
+    half = fw/2 + (max(MARGIN, port_openings.SLEEVE_SIDE+port_openings.SLEEVE_WALL) if win else MARGIN)
+    if win and spec.get('insert_bosses'): half = max(half, win['outside']/2)
+    return 2*(abs(spec.get('dev_off_x', 0))+half)
+
+
+def foot_grooves(spec):
+    if spec.get('feet_style') != 'grooves': return []
+    pockets = foot_pockets(spec)
+    tracks = []
+    for p in sorted(pockets, key=lambda q:q['x0']):
+        if tracks and p['x0'] <= tracks[-1]['x1']:
+            tracks[-1]['x1'] = max(tracks[-1]['x1'], p['x1'])
+            tracks[-1]['dips'].append(p)
+        else: tracks.append(dict(x0=p['x0'], x1=p['x1'], dips=[p]))
+    top = floor_z(spec)+TRAY_T
+    for t in tracks:
+        heights = [p['depth']-port_openings.FOOT_EXTRA_DEPTH for p in t['dips']]
+        if max(heights)-min(heights) > FOOT_HEIGHT_TOL:
+            raise ValueError('Feet sharing a groove must have the same height.')
+        depth = max(heights)-SL_RIDE
+        if depth <= 0: raise ValueError('Feet must be taller than the 0.5 mm groove ride lift.')
+        bottom = top-depth
+        if bottom-SLOT_BOTTOM < port_openings.FOOT_MIN_FLOOR-1e-9:
+            raise ValueError('Feet are too tall for grooves: cannot keep 0.8 mm of floor above the slot bottom.')
+        for p in t['dips']:
+            p['cut_depth'] = top-SLOT_BOTTOM+CUT_EPS if p['through'] else p['depth']
+            p['ramp'] = p['cut_depth']-depth  # rise/run = 1:1, 45 degrees
+        ramp = max(p['ramp'] for p in t['dips'])
+        t.update(y0=port_openings.device_y(spec), y1=max(p['y1'] for p in t['dips'])+ramp,
+                 depth=depth, bottom=bottom, floor_bottom=SLOT_BOTTOM if bottom-floor_z(spec)<port_openings.FOOT_MIN_FLOOR else floor_z(spec), ramp=ramp)
+    return tracks
+
+
+def rear_floor_geometry(spec):
+    if not spec.get('rear_floor_opening'): return None
+    fw, fd = (spec['dev_d'], spec['dev_w']) if spec.get('dev_rot') in (90,270) else (spec['dev_w'], spec['dev_d'])
+    win = sleeve_geometry(spec)
+    stop_end = port_openings.device_y(spec)+fd+(port_openings.SLEEVE_STOP_T if win else 6.2 if spec['device_mount']=='flat' else 0)
+    width = tray_width(spec)
+    jx = min(40, width/2-12)
+    # Central rectangle clears both conservative rear tongue/upright/boss envelopes.
+    joints = spec.get('joint_x', [-jx, jx])
+    half = min(FLOOR_OPEN_W/2, min(abs(x) for x in joints)-REAR_JOINT_HALF-FLOOR_JOINT_CLEAR,
+               (win['half']-abs(win['x']) if win else width/2)-FLOOR_WALL_CLEAR)
+    y0 = stop_end+FLOOR_STOP_CLEAR
+    y1 = min(y0+FLOOR_OPEN_D, 240-REAR_FLOOR_JOINT_REACH-FLOOR_JOINT_CLEAR)
+    opening = dict(x0=-half,x1=half,y0=y0,y1=y1,r=FLOOR_OPEN_R)
+    if 2*half < FLOOR_OPEN_MIN or y1-y0 < FLOOR_OPEN_MIN:
+        raise ValueError('Not enough floor behind the device for the cable opening and its clearances.')
+    dx = -fw/2+spec.get('dev_off_x',0); dy=port_openings.device_y(spec)
+    obstacles = foot_grooves(spec) if spec.get('feet_style')=='grooves' else foot_pockets(spec)
+    obstacles += [dict(x0=x,x1=x+3,y0=y-6,y1=y+6) for x in (dx-5.5,dx+fw+2.5) for y in (dy+fd*.25,dy+fd*.75)]
+    if any(_rect_overlap(opening,p) for p in obstacles):
+        raise ValueError('Cable opening would overlap a strap slot or foot groove/pocket.')
+    return opening
+
+
+def _rect_overlap(a,b):
+    return a['x0']<b['x1'] and a['x1']>b['x0'] and a['y0']<b['y1'] and a['y1']>b['y0']
+
+
 def validate_foot_pockets(spec, tray_w):
     pockets=foot_pockets(spec)
     if not pockets:return
     fp_w,fp_d=(spec['dev_d'],spec['dev_w']) if spec.get('dev_rot',0) in (90,270) else (spec['dev_w'],spec['dev_d'])
     dev_x=-fp_w/2+float(spec.get('dev_off_x',0));dev_y=port_openings.device_y(spec)
     def overlap(p,x0,x1,y0,y1):return p['x0']<x1 and p['x1']>x0 and p['y0']<y1 and p['y1']>y0
+    if spec.get('feet_style') == 'grooves':
+        tracks = foot_grooves(spec)
+        # Include the ramp tails in all interference checks. The sleeve front floor strip
+        # is intentionally grooved; the front screw joints are in the sleeve walls.
+        pockets = [dict(p, y0=p['y0']-p['ramp'], y1=p['y1']+p['ramp']) for t in tracks for p in t['dips']] + tracks
     if spec.get('joint','screw')=='screw':
         jx=min(40,tray_w/2-12)
-        if any(overlap(p,x-9,x+9,0,11.3) for p in pockets for x in (-jx,jx)):
+        if not (spec.get('feet_style')=='grooves' and spec.get('device_mount')=='sleeve') and any(overlap(p,x-9,x+9,0,11.3) for p in pockets for x in (-jx,jx)):
             raise ValueError('A foot pocket would cut into a tray screw joint; move or remove that foot.')
         if spec.get('rear_support') and any(overlap(p,x-9,x+9,240-11.3,240) for p in pockets for x in (-jx,jx)):
             raise ValueError('A foot pocket would cut into a rear screw joint; move or remove that foot.')
@@ -245,7 +374,7 @@ def validate_foot_pockets(spec, tray_w):
             win=port_openings.sleeve(spec);left=win['x']-win['half'];right=win['x']+win['half'];wall=port_openings.SLEEVE_WALL
             if overlap(p,left-wall,left,0,dev_y+fp_d) or overlap(p,right,right+wall,0,dev_y+fp_d):raise ValueError('A foot pocket would cut into a sleeve wall; move or remove that foot.')
             if overlap(p,dev_x,dev_x+fp_w,dev_y+fp_d,dev_y+fp_d+port_openings.SLEEVE_STOP_T):raise ValueError('A foot pocket would cut into the sleeve rear stop; move or remove that foot.')
-            if overlap(p,left,right,0,8):raise ValueError('A foot pocket would cut into the floor strip under the sleeve window; move or remove that foot.')
+            if spec.get('feet_style')!='grooves' and overlap(p,left,right,0,8):raise ValueError('A foot pocket would cut into the floor strip under the sleeve window; move or remove that foot.')
 
 
 # PROPOSED rear bracket dimensions (mm). Physical stiffness/airflow/strength UNKNOWN.
@@ -434,6 +563,9 @@ def keep_clear_bands(s):
 def template_source(spec):
     # New builds always use the current slot-bottom template; saved revisions remain immutable.
     text = TEMPLATE.read_text(encoding='utf-8')
+    if not any(k in spec for k in V2_DEFAULTS):
+        text = text.split('// @sleeve-v2-begin\n')[0]
+        for old, new in V2_REPLACEMENTS.items(): text = text.replace(new, old)
     style = rear_style(spec)
     if style not in ('reinforced', 'slots', 'vents'):
         text = re.sub(r'// @rear-styles-begin\n.*?// @rear-styles-end\n(?:\n)?', '', text, flags=re.S)
@@ -460,7 +592,7 @@ def template_source(spec):
             old='if(sleeve)translate([dev_off_x,(sl_bottom+sl_window_top)/2])square([2*sl_half,sl_window_top-sl_bottom],center=true);'
             text=text.replace(old,'translate(['+str(win['x'])+','+str((win['bottom']+win['top'])/2)+'])square(['+str(win['width'])+','+str(round(win['height'],3))+'],center=true);')
     if spec.get('bezel','none')!='none':
-        plan=port_openings.bezel_plan(spec)
+        plan=port_openings.bezel_plan(window_spec(spec))
         shapes=[[p['x'],p['z'],p['w'],p['h'],p['r'],p['size']] for p in plan['openings'] if p['size']>0]
         code='\n// Front-edge bezel only: ports and case window. 8 rounded steps; 2 mm web.\n'
         code+='bezel_shapes='+json.dumps(shapes)+';\nbezel_rounded='+('true' if spec['bezel']=='rounded' else 'false')+';\n'
@@ -512,6 +644,17 @@ def clean(spec):
             x, y = num(f.get('x'), 'Foot X', 0, s['dev_w']-w), num(f.get('y'), 'Foot Y', 0, s['dev_d']-d)
             h = num(f.get('h'), 'Foot height', 0.3, s['dev_h'])
             s['feet'].append({'x': x, 'y': y, 'w': w, 'd': d, 'h': h})
+    choices = placement_settings({k:spec[k] for k in V2_DEFAULTS if k in spec})
+    for k, default in V2_DEFAULTS.items():
+        if k in choices and choices[k] != default: s[k] = choices[k]
+    if 'sleeve_top' in s and s['device_mount'] != 'sleeve':
+        raise ValueError('Top play is only available for a sleeve.')
+    if s.get('feet_style') == 'grooves' and (s['device_mount'] not in ('flat','sleeve') or not s.get('feet')):
+        raise ValueError('Foot grooves need a flat or sleeve mount with feet.')
+    if s.get('insert_bosses') and (s['device_mount'] != 'sleeve' or s['joint'] != 'screw'):
+        raise ValueError('Stronger insert bosses need a sleeve with a screw joint.')
+    if s.get('rear_floor_opening') and spec.get('rear_support') is not True:
+        raise ValueError('Cable opening in floor needs rear support.')
     raw_zones = spec.get('protrusions', [])
     if not isinstance(raw_zones, list) or len(raw_zones)>32:
         raise ValueError('Protrusions must be a list of at most 32 keep-clear zones.')
@@ -566,13 +709,13 @@ def clean(spec):
     position_errors=port_openings.position_problems(dict(s,holes=spec.get('holes') or []))
     if position_errors:raise ValueError(position_errors[0])
     fp_w, fp_d = (s['dev_d'], s['dev_w']) if s['dev_rot'] in (90, 270) else (s['dev_w'], s['dev_d'])
-    win = port_openings.sleeve(s)
+    win = sleeve_geometry(s)
     border = max(MARGIN, port_openings.SLEEVE_SIDE + port_openings.SLEEVE_WALL) if win else MARGIN
-    tray_width = 2 * (abs(s['dev_off_x']) + fp_w / 2 + border)
-    if tray_width > MAX_TRAY:
+    width = tray_width(s)
+    if width > MAX_TRAY:
         hint = ' Too wide this way round; it fits if you press Rotate 90°.' if 2 * abs(s['dev_off_x']) + fp_d + 2 * border <= MAX_TRAY else ''
-        raise ValueError(f'This tray is {tray_width:g} mm wide but the rack opening allows {MAX_TRAY:g} mm ({RACK_INNER_W:g} mm minus {SIDE_CLEAR:g} mm each side). Move the device less far sideways.' + hint)
-    validate_foot_pockets(s, tray_width)
+        raise ValueError(f'This tray is {width:g} mm wide but the rack opening allows {MAX_TRAY:g} mm ({RACK_INNER_W:g} mm minus {SIDE_CLEAR:g} mm each side). Move the device less far sideways.' + hint)
+    validate_foot_pockets(s, width)
     if not win and s['rear_support'] and FRONT_GAP + s['dev_off_y'] + fp_d + MARGIN > 240:
         raise ValueError('The device is moved past the rear posts; reduce the front/back offset.')
     if s['device_mount'] == 'flat':
@@ -613,11 +756,11 @@ def clean(spec):
     if any(b - a < 21 for a, b in zip(xs, xs[1:])):
         raise ValueError('Keystones must be at least 21 mm apart.')
     # Keystone collars (golden SG108 copy and v2 fallback: 19.8 mm wide) reach 10.4 mm behind the plate, so they must clear the tray.
-    tray_half = abs(s['dev_off_x']) + fp_w / 2 + MARGIN
+    tray_half = width/2 if s.get('insert_bosses') else abs(s['dev_off_x']) + fp_w / 2 + MARGIN
     if any(abs(x) - 9.9 < tray_half + 0.5 for x in s['keystones']):
         raise ValueError(f'A keystone collar would hit the tray; keep keystones at least {tray_half + 10.4:g} mm from centre.')
     s['ports'] = []
-    input_ports, dropped_ports, window_errors = port_openings.sleeve_ports((spec.get('ports') or [])[:20], s) if port_openings.front_window(s) else ((spec.get('ports') or [])[:20], [], [])
+    input_ports, dropped_ports, window_errors = port_openings.sleeve_ports((spec.get('ports') or [])[:20], window_spec(s)) if port_openings.front_window(s) else ((spec.get('ports') or [])[:20], [], [])
     if window_errors:
         raise ValueError(window_errors[0])
     for p in input_ports:
@@ -656,6 +799,7 @@ def clean(spec):
         raise ValueError('Each port needs its own id.')
     if 'planning_ports' in spec:
         s['planning_ports'] = cable_ports.planning_ports(spec['planning_ports'], s['u'])
+    rear_floor_geometry(s)
     return s
 
 
@@ -730,6 +874,8 @@ def opening_clash(ports_a, ports_b, web=2):
 
 
 def clean_pair(spec):
+    if any(s.get('feet_style') == 'grooves' or s.get('rear_floor_opening') for s in (spec, spec.get('second') or {}) if isinstance(s, dict)):
+        raise ValueError('Foot grooves and the cable floor opening need a single-device tray.')
     second = spec['second']
     if not isinstance(second, dict):
         raise ValueError('The second device must be an object.')
@@ -816,6 +962,15 @@ def source(s):
         return json.dumps(v)
     over = {k: s[k] for k in ('dev_w', 'dev_d', 'dev_h', 'hole_d', 'standoff', 'insert_pilot', 'board_t', 'u',
                               'holes', 'keystones', 'device_mount', 'joint', 'rear_support', 'coupon')}
+    for key in V2_DEFAULTS:
+        if key in s: over[key] = s[key]
+    if s.get('feet_style') == 'grooves':
+        tracks = foot_grooves(s)
+        over['foot_tracks'] = [[t[k] for k in ('x0','x1','y0','y1','depth','floor_bottom')] for t in tracks]
+        over['foot_dips'] = [[p[k] for k in ('x0','x1','y0','y1','cut_depth')]+[t['depth'],p['ramp']] for t in tracks for p in t['dips']]
+    if s.get('rear_floor_opening'):
+        q = rear_floor_geometry(s)
+        over['floor_cable_box'] = [q[k] for k in ('x0','x1','y0','y1')]
     style = rear_style(s)
     if style == 'open':
         over['rear_openings'] = True

@@ -47,7 +47,7 @@ class ProtrusionPolishTests(unittest.TestCase):
         from pathlib import Path
         path=Path(__file__).resolve().parents[2]/'docs/archive/codex/2026-10-20/task34/equipment.py'
         loader=importlib.util.spec_from_file_location('before34',path)
-        old=importlib.util.module_from_spec(loader);loader.loader.exec_module(old);old.TEMPLATE=E.TEMPLATE
+        old=importlib.util.module_from_spec(loader);loader.loader.exec_module(old);old.TEMPLATE=E.ROOT.parents[1]/'docs/archive/codex/2026-10-21/task36/equipment_tray.scad'
         count=0
         for mount in ('flat','sleeve','inserts','pegs','clips','straps'):
             for style in ('solid','open','reinforced','slots','vents'):
@@ -204,7 +204,7 @@ class ProtrusionTests(unittest.TestCase):
         from pathlib import Path
         import importlib.util
         old_path=Path(__file__).resolve().parents[2]/'docs/archive/codex/2026-10-20/task32/equipment.py'
-        mod=importlib.util.spec_from_file_location('before32',old_path);old=importlib.util.module_from_spec(mod);mod.loader.exec_module(old);old.TEMPLATE=E.TEMPLATE
+        mod=importlib.util.spec_from_file_location('before32',old_path);old=importlib.util.module_from_spec(mod);mod.loader.exec_module(old);old.TEMPLATE=E.ROOT.parents[1]/'docs/archive/codex/2026-10-21/task36/equipment_tray.scad'
         for mount in ('flat','sleeve','inserts'):
             raw=dict(self.base(),device_mount=mount,holes=[[5,5]])
             self.assertEqual(E.source(E.clean(raw)),old.source(old.clean(raw)))
@@ -235,7 +235,7 @@ class FrontPositionBezelTests(unittest.TestCase):
         from pathlib import Path
         import importlib.util
         path=Path(__file__).resolve().parents[2]/'docs/archive/codex/2026-10-20/task33/equipment.py'
-        mod=importlib.util.spec_from_file_location('before33',path);old=importlib.util.module_from_spec(mod);mod.loader.exec_module(old);old.TEMPLATE=E.TEMPLATE
+        mod=importlib.util.spec_from_file_location('before33',path);old=importlib.util.module_from_spec(mod);mod.loader.exec_module(old);old.TEMPLATE=E.ROOT.parents[1]/'docs/archive/codex/2026-10-21/task36/equipment_tray.scad'
         for spec in [self.base(device_mount='sleeve',dev_w=182.5,dev_d=194.5,dev_h=36.8),self.base(ports=[dict(x=0,z=26,w=15,h=8,r=1)]),self.base(device_mount='flat'),self.base(u=2)]:
             with self.subTest(spec=spec):
                 before=old.source(old.clean(spec))
