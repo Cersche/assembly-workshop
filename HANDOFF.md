@@ -2,6 +2,14 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-21 Project moved to D:\Projects\assembly-workshop (read first)
+
+- **New home: `D:\Projects\assembly-workshop`.** Copied with robocopy (0 failures); git status was clean. The old folder `C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop` is untouched; Brian decides about it around 2026-10-28. Do not delete it.
+- Claude memory did not arrive at the new key. Claude copied it from the old C: key (still there), and it now loads: 23 files. Memory now records the D: path.
+- **Backup script fixed:** `DEFAULT_SOURCE` is now `D:\Projects\assembly-workshop`. The earlier change (edb063d) made the script find the project from its own location. That can't work, because the script must run from a copy outside the project. Destinations are unchanged: `D:\Backups\Assembly Workshop` and `OneDrive\Backups\Assembly Workshop`, both outside the project; the script also refuses overlap. Not run during the move.
+- `.claude/launch.json` disposable-data paths point to old session scratch folders in `AppData\Local\Temp`. They still work because Temp wasn't moved.
+- Brian repoints any desktop/Start menu shortcuts (e.g. to start.bat) by hand.
+
 ## 2026-10-20 (night) Task 34 reviewed: one question per plug, band in the warning (read first)
 
 - **Codex task 34 is done and reviewed by Claude.** Not committed yet (Brian commits/pushes).

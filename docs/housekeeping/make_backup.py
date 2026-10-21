@@ -16,7 +16,8 @@ import sys
 import time
 from datetime import datetime, timedelta, timezone
 
-DEFAULT_SOURCE = Path(__file__).resolve().parents[2]
+# Fixed path: the script must run from a copy outside the project, so its own location can't find it.
+DEFAULT_SOURCE = Path(r"D:\Projects\assembly-workshop")
 DEFAULT_LOCAL = Path(r"D:\Backups\Assembly Workshop")
 DEFAULT_CLOUD = Path(r"C:\Users\brian\OneDrive\Backups\Assembly Workshop")
 CHUNK = 1024 * 1024
