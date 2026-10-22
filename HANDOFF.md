@@ -8,7 +8,7 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 - Codex's numbers: 82k-triangle STL 545 ms (Canvas) → ~0.15 ms draw call (WebGL); rack view readPixels hash identical before/after; 20 open/close cycles leak no contexts. Report: work/codex-tasks/35-webgl-small-viewers-REPORT.md.
 - Claude verified: SHA-256s match the report; run_checks pass (177 Python, 1 skipped + all JS); in the app on disposable data (port 8841), WebGL is chosen, the Canvas preference switches to the 2D painter with the note and back; Codex's screenshots show tray, standoffs and device with correct depth.
 - Small known quirk: any one-off exception in the WebGL draw marks that canvas "WebGL unavailable" until the window is reopened. Harmless; fix only if it shows up.
-- Unrelated: importing a 4 MB synthetic STL in the wizard took ~47 min in Codex's run (detection, not drawing). Worth a look later.
+- The ~47 min "import" in Codex's report was most likely Codex waiting for Brian's permission prompt while he was away (Brian, 2026-10-22), not app slowness. Only time a large STL import if it feels slow in normal use.
 
 ## 2026-10-21 Print in color now works on wizard-made faceplates (read first)
 
