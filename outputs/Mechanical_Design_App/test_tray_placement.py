@@ -674,7 +674,9 @@ class SleeveV2Tests(unittest.TestCase):
                 self.assertAlmostEqual(p['ramp'],p['cut_depth']-t['depth'])
                 self.assertAlmostEqual(p['ramp'],1.3)
         source=eq.source(s)
-        self.assertIn('if(sleeve&&feet_style=="grooves")sleeve_v2_cut();',source)
+        # Brian, 2026-10-22: the PC goes into the bare tray before the faceplate, so the plate has no groove notches.
+        self.assertNotIn('if(sleeve&&feet_style=="grooves")sleeve_v2_cut();',source)
+        self.assertIn(' sleeve_v2_cut();',source)
         self.assertIn('rotate([90,0,90])linear_extrude',source)
         self.assertIn('foot_tracks=[[-76.75, -70.75, -4.0, 165.8, 2.3, 0]',source)
         self.assertEqual(eq.clean(s),s)

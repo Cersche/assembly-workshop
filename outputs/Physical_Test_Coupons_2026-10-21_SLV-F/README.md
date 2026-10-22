@@ -26,7 +26,7 @@ Print **one** rear bracket (R or O); both are included so Brian can choose in th
   - The PC slides in on its feet along two smooth grooves (2.3 mm deep), lifted 0.5 mm.
   - At the end its feet drop into dips with 45° ramps and the case settles onto the floor.
   - The rear feet cross the front dips on the way in, so expect a mild bump halfway.
-  - The grooves also notch the plate's bottom strip, so the feet can enter.
+  - Loading: the PC slides into the bare tray from the front, then the faceplate goes on (Brian, 2026-10-22). So the plate has **no groove notches** (removed 2026-10-22; the plate was re-exported, the tray is unchanged).
 - **Backstop:** the tray's existing rear stop (unchanged).
 - **Cable opening** in the floor behind the PC, between the rear uprights: X −28..28, Y 198.5..225.7 (56 × 27 mm, 2 mm corners). For the barrel plug and the network cable.
 - **Insert bosses:** the 4 front heat-set holes moved outward to X ±95.75. They now have ≥ 2.0 mm of plastic inside and ≥ 3.0 mm outside (was 1 mm), in round bosses 12 mm long. The faceplate's screw holes moved to match. Because of the bosses, the tray is 201.5 mm wide (limit 204).
@@ -54,7 +54,7 @@ Print **one** rear bracket (R or O); both are included so Brian can choose in th
 ## What to check in the slicer
 
 - The tray's underside lies flat with no support needed, apart from the usual bridges over the dips, strap slots and cable opening.
-- The plate's bottom edge has two small notches (the groove entries). That's expected.
+- The plate has no notches; its bottom strip is solid.
 
 ## What to report after printing
 

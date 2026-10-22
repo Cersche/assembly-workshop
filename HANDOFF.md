@@ -74,6 +74,8 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 - **[SLV-F](outputs/Physical_Test_Coupons_2026-10-21_SLV-F/README.md) full print package:** plate, tray, and rear bracket R (Reinforced) or O (Open). No coupon first, by Brian's choice.
   - Digitally checked: the PC seats and slides clear, and the click holds by about 0.45 mm.
   - Fit, retention and strength are UNKNOWN.
+- **2026-10-22:** Brian loads the PC into the bare tray from the front, then puts the faceplate on. So Claude removed the groove notches from the faceplate (template, `V2_REPLACEMENTS`, both tests) and re-exported SLV-F-PLATE. The tray is unchanged and legacy sources are byte-identical. **All checks pass**, including JS: the old rack-BOM failure no longer shows on D:.
+- **Open (Brian, 2026-10-22):** he worries the top lips flex as the PC rides in. Digitally there's 0.8 mm above the riding PC (1.3 seated), but tilting during insertion wasn't checked. The options discussed are more top play, stiffer or shorter lips, or a lead-in ramp. Nothing is decided.
 - **Next:** Brian checks SLV-F in the slicer and prints it if it looks right. Then he reports on the slide/click, the inserts, the bracket and the cables.
 
 ## 2026-10-20 OptiPlex beta: 44.4 mm plate, sleeve mount, feet

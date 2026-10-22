@@ -32,5 +32,5 @@ test('sleeve v2 blocks invalid dimensions and unsupported combinations',()=>{
 });
 test('sleeve v2 control labels and source hooks are wired without persistence',()=>{
  const ui=fs.readFileSync(path.join(__dirname,'../tray-placement.js'),'utf8');for(const label of ['Top play (mm)','Feet:','Grooves','Cable opening in floor','Stronger insert bosses'])assert.ok(ui.includes(label),label);
- const scad=fs.readFileSync(path.join(__dirname,'../equipment_tray.scad'),'utf8');assert.match(scad,/if\(sleeve&&feet_style=="grooves"\)sleeve_v2_cut\(\);/);assert.match(scad,/sl_joints=.*sl_pilot_offset/);
+ const scad=fs.readFileSync(path.join(__dirname,'../equipment_tray.scad'),'utf8');assert.doesNotMatch(scad,/if\(sleeve&&feet_style=="grooves"\)sleeve_v2_cut\(\);/);assert.match(scad,/module device_features_cut\(\)\{\r?\n sleeve_v2_cut\(\);/);assert.match(scad,/sl_joints=.*sl_pilot_offset/);
 });

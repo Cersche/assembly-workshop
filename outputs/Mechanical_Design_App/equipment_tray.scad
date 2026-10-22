@@ -203,7 +203,6 @@ module faceplate(){
     plate_joint_add();
    }
    plate_joint_cut();
-   if(sleeve&&feet_style=="grooves")sleeve_v2_cut();
    if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)translate([x,-plate_t-0.1,z])rotate([-90,0,0])cylinder(d=m3_clear,h=plate_t+0.2);
    if(ks_style=="v2")ks_cut(); else ks_box_cut();
   }

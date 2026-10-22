@@ -262,7 +262,6 @@ V2_REPLACEMENTS = {
         'sl_joints=[dev_off_x-sl_half-(insert_bosses?sl_pilot_offset:sl_wall/2),dev_off_x+sl_half+(insert_bosses?sl_pilot_offset:sl_wall/2)];',
     'module device_features_add(){': 'module device_features_add(){\n sleeve_v2_add();',
     'module device_features_cut(){': 'module device_features_cut(){\n sleeve_v2_cut();',
-    '   plate_joint_cut();': '   plate_joint_cut();\n   if(sleeve&&feet_style=="grooves")sleeve_v2_cut();',
     'if(foot_h>0&&(device_mount=="flat"||sleeve))for(f=feet)':
         'if(feet_style!="grooves"&&foot_h>0&&(device_mount=="flat"||sleeve))for(f=feet)',
 }
