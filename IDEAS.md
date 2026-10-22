@@ -25,3 +25,5 @@ Write any idea here the moment it comes up, one line with the date. Don't judge 
 ## After v1 — use the rack (brainstorm once the rack is built)
 
 - 2026-10-19 — Run the app on the workshop laptop. Options, simplest first: remote access to the PC over the home network (one copy of the data), a portable folder with Python and OpenSCAD bundled, a single .exe, or a real installer. Packaging needs Brian's explicit go-ahead. Keep user data separate from the program. Creator meshes are personal-use only, so leave them out of anything shared.
+
+- Wall-mount box wizard (like a small indoor fiber NID enclosure, built with the bracket-wizard tech, plus custom equipment from common parts). See work/notes/2026-10-22-feet-floor-and-wall-box-wizard.md
