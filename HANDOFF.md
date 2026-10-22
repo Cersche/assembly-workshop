@@ -2,6 +2,14 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-22 Task 35 reviewed: WebGL small previews (read first)
+
+- **Codex task 35 done, reviewed by Claude, committed.** The wizard and Place on tray previews now draw with WebGL (`LabRaxStudio.PreviewRenderer`, same shaders as the rack view). The old 2D painter stays as `EquipmentPainter.paint2d` fallback, with a one-line "Simple preview — …" note (no WebGL, lost context, Canvas preference `assemblyWorkshop.previewRenderer=canvas`, frame budget). `EquipmentPainter.stats` reports renderer/triangles/ms. Preview only: no STL/SCAD/data change.
+- Codex's numbers: 82k-triangle STL 545 ms (Canvas) → ~0.15 ms draw call (WebGL); rack view readPixels hash identical before/after; 20 open/close cycles leak no contexts. Report: work/codex-tasks/35-webgl-small-viewers-REPORT.md.
+- Claude verified: SHA-256s match the report; run_checks pass (177 Python, 1 skipped + all JS); in the app on disposable data (port 8841), WebGL is chosen, the Canvas preference switches to the 2D painter with the note and back; Codex's screenshots show tray, standoffs and device with correct depth.
+- Small known quirk: any one-off exception in the WebGL draw marks that canvas "WebGL unavailable" until the window is reopened. Harmless; fix only if it shows up.
+- Unrelated: importing a 4 MB synthetic STL in the wizard took ~47 min in Codex's run (detection, not drawing). Worth a look later.
+
 ## 2026-10-21 Print in color now works on wizard-made faceplates (read first)
 
 - **Brian directed it; Claude built it.** The opt-in "Print in color (multi-material)" panel (Appearance tab) now shows for every wizard-made slot, 1U–5U, including one-piece "combined" builds. Export rebuilds the slot's own `equipment_tray.scad` faceplate (4 mm, front Y=-4, 44.4 mm per U, four-corner slots) from the saved library item and tray settings. It writes one STL per color plus `base.stl`, a README and revision.json. The old Pi4-only geometry (216 × 34 window, Y=-3) is gone.

@@ -472,3 +472,5 @@ require('./front-position-bezel.js');
 require('./tray-pair.js');
 
 require('./sleeve-v2.js');
+
+require('./preview-webgl.js');

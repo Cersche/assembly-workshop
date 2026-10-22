@@ -1,0 +1,23 @@
+{
+  "recovery": {
+    "fallback": {
+      "renderer": "canvas",
+      "triangles": 96,
+      "lastMs": 0.6000000238418579,
+      "medianMs": 0.6000000238418579
+    },
+    "restored": {
+      "renderer": "webgl",
+      "triangles": 96,
+      "lastMs": 2.200000047683716,
+      "medianMs": 2.200000047683716
+    }
+  },
+  "largePlacement": {
+    "renderer": "webgl",
+    "triangles": 82016,
+    "lastMs": 220,
+    "medianMs": 220,
+    "importedTriangles": 81920
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "rack": [
+    {
+      "label": "before",
+      "sha256": "bb09299245cd809a97c1c4ffe2190bb0ad742c63631ab9292cd2cf64ea89d41d",
+      "stats": {
+        "objects": 24,
+        "guides": 0,
+        "ports": 0,
+        "cables": 0,
+        "exits": 0,
+        "ghosts": 0,
+        "triangles": 115678,
+        "shadows": true,
+        "ambientOcclusion": true,
+        "perspective": true
+      }
+    },
+    {
+      "label": "after",
+      "sha256": "bb09299245cd809a97c1c4ffe2190bb0ad742c63631ab9292cd2cf64ea89d41d",
+      "stats": {
+        "objects": 24,
+        "guides": 0,
+        "ports": 0,
+        "cables": 0,
+        "exits": 0,
+        "ghosts": 0,
+        "triangles": 115678,
+        "shadows": true,
+        "ambientOcclusion": true,
+        "perspective": true
+      }
+    }
+  ],
+  "rackEqual": true,
+  "timings": [
+    {
+      "device": "example",
+      "requested": "canvas",
+      "level": "low",
+      "renderer": "canvas",
+      "triangles": 96,
+      "lastMs": 0.19999998807907104,
+      "medianMs": 0.19999998807907104,
+      "frames": 716
+    },
+    {
+      "device": "example",
+      "requested": "canvas",
+      "level": "medium",
+      "renderer": "canvas",
+      "triangles": 96,
+      "lastMs": 0.19999998807907104,
+      "medianMs": 0.19999998807907104,
+      "frames": 718
+    },
+    {
+      "device": "example",
+      "requested": "canvas",
+      "level": "high",
+      "renderer": "canvas",
+      "triangles": 96,
+      "lastMs": 0.19999998807907104,
+      "medianMs": 0.19999998807907104,
+      "frames": 718
+    },
+    {
+      "device": "example",
+      "requested": "webgl",
+      "level": "low",
+      "renderer": "webgl",
+      "triangles": 88,
+      "lastMs": 0.10000002384185791,
+      "medianMs": 0.15000000596046448,
+      "frames": 718
+    },
+    {
+      "device": "example",
+      "requested": "webgl",
+      "level": "medium",
+      "renderer": "webgl",
+      "triangles": 96,
+      "lastMs": 0,
+      "medianMs": 0.15000000596046448,
+      "frames": 718
+    },
+    {
+      "device": "example",
+      "requested": "webgl",
+      "level": "high",
+      "renderer": "webgl",
+      "triangles": 96,
+      "lastMs": 0.09999996423721313,
+      "medianMs": 0.09999999403953552,
+      "frames": 717
+    },
+    {
+      "device": "large STL",
+      "requested": "canvas",
+      "level": "low",
+      "renderer": "canvas",
+      "triangles": 82016,
+      "lastMs": 109.5,
+      "medianMs": 80.44999998807907,
+      "frames": 58
+    },
+    {
+      "device": "large STL",
+      "requested": "canvas",
+      "level": "medium",
+      "renderer": "canvas",
+      "triangles": 82016,
+      "lastMs": 533.9000000357628,
+      "medianMs": 546.3000000119209,
+      "frames": 10
+    },
+    {
+      "device": "large STL",
+      "requested": "canvas",
+      "level": "high",
+      "renderer": "canvas",
+      "triangles": 82016,
+      "lastMs": 811,
+      "medianMs": 545.1500000059605,
+      "frames": 10
+    },
+    {
+      "device": "large STL",
+      "requested": "webgl",
+      "level": "low",
+      "renderer": "webgl",
+      "triangles": 12376,
+      "lastMs": 0.19999998807907104,
+      "medianMs": 0.10000002384185791,
+      "frames": 717
+    },
+    {
+      "device": "large STL",
+      "requested": "webgl",
+      "level": "medium",
+      "renderer": "webgl",
+      "triangles": 82016,
+      "lastMs": 0.19999998807907104,
+      "medianMs": 0.10000002384185791,
+      "frames": 709
+    },
+    {
+      "device": "large STL",
+      "requested": "webgl",
+      "level": "high",
+      "renderer": "webgl",
+      "triangles": 82016,
+      "lastMs": 0,
+      "medianMs": 0.15000000596046448,
+      "frames": 670
+    }
+  ],
+  "largeTriangles": 81920,
+  "done": true
+}

@@ -229,5 +229,69 @@
     }
     dispose(){this.disposed=true;const g=this.gl;for(const {buffer} of this.buffers.values())g.deleteBuffer(buffer);for(const a of this.textures.values())if(a.texture)g.deleteTexture(a.texture);if(this.depthTarget){g.deleteFramebuffer(this.depthTarget.fbo);g.deleteTexture(this.depthTarget.texture);g.deleteRenderbuffer(this.depthTarget.depth);}g.deleteTexture(this.blank);g.deleteTexture(this.shadowTexture);g.deleteFramebuffer(this.shadowFbo);g.deleteRenderbuffer(this.shadowDepth);g.deleteProgram(this.program);g.deleteProgram(this.depthProgram);}
   }
-  const api={Renderer,camera,equipment,logoMeshes,Mesh,slab,rounded,artworkRect,artworkWindow,clearWindow,selectionRect,DEFAULT_SELECTION};root.LabRaxStudio=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
+
+  // Small orthographic previews share the rack shader, upload, uniform and submit code.
+  // Nothing in Renderer.draw or its shaders is changed by this adapter.
+  function previewCamera(view,W,H,dpr=1,range=100000){
+    const cy=Math.cos(view.yaw),sy=Math.sin(view.yaw),cp=Math.cos(view.pitch),sp=Math.sin(view.pitch),
+      right=[cy,-sy,0],up=[sp*sy,sp*cy,cp],depth=[cp*sy,cp*cy,-sp],cen=view.cen||[0,40,25],
+      sc=Math.min(W,H)/(view.span||280)*view.zoom,tx=2*(view.panX||0)*dpr/W,ty=-2*(view.panY||0)*dpr/H,m=new Float32Array(16);
+    for(let i=0;i<3;i++){m[i*4]=right[i]*sc*2/W;m[i*4+1]=up[i]*sc*2/H;m[i*4+2]=depth[i]/range;}
+    m[12]=tx-dot(cen,right)*sc*2/W;m[13]=ty-dot(cen,up)*sc*2/H;m[14]=-dot(cen,depth)/range;m[15]=1;
+    return {matrix:m,eye:sub(cen,depth.map(v=>v*range)),depthParams:[0,0,range,0],
+      project:p=>{const v=sub(p,cen);return [W/2+(view.panX||0)*dpr+dot(v,right)*sc,H/2+(view.panY||0)*dpr-dot(v,up)*sc,dot(v,depth)];}};
+  }
+  function featureEdges(v){
+    const edges=new Map(),points=new Map(),key=p=>p.map(x=>Math.round(x*1e6)).join(',');
+    for(let i=0;i<v.length;i+=9){const p=[v.slice(i,i+3),v.slice(i+3,i+6),v.slice(i+6,i+9)],n=unit(cross(sub(p[1],p[0]),sub(p[2],p[0])));if(!Math.hypot(...n))continue;
+      for(let j=0;j<3;j++){const a=key(p[j]),b=key(p[(j+1)%3]);if(a===b)continue;points.set(a,Array.from(p[j]));points.set(b,Array.from(p[(j+1)%3]));const id=[a,b].sort().join('|');let e=edges.get(id);if(!e){e={a,b,n:[]};edges.set(id,e);}e.n.push(n);}}
+    const lines=[...edges.values()].filter(e=>e.n.length!==2||dot(e.n[0],e.n[1])<Math.cos(Math.PI/6)-1e-7).map(e=>[e.a,e.b]);
+    // Collapse collinear boundary subdivisions; triangulation must not add edge lines.
+    const adj=new Map();lines.forEach((e,i)=>e.forEach(p=>{if(!adj.has(p))adj.set(p,new Set());adj.get(p).add(i);}));
+    for(const [p,ids] of adj){if(ids.size!==2)continue;const [i,j]=ids,[a,b]=[lines[i],lines[j]];if(!a||!b)continue;const x=a.find(k=>k!==p),y=b.find(k=>k!==p);if(x===y)continue;
+      if(dot(unit(sub(points.get(x),points.get(p))),unit(sub(points.get(y),points.get(p))))>-.999999)continue;
+      adj.get(x).delete(i);adj.get(y).delete(j);lines[i]=[x,y];lines[j]=null;adj.get(x).add(i);adj.get(y).add(i);ids.clear();}
+    return lines.filter(Boolean).flatMap(e=>e.flatMap(p=>points.get(p)));
+  }
+  const median=a=>{const b=[...a].sort((a,b)=>a-b),n=b.length;return n?(b[(n-1)>>1]+b[n>>1])/2:0;};
+  function previewSwitch({available=true,preference='',lost=false,forced=false,level='medium',times=[]}){
+    if(!available||preference==='canvas'||lost||forced)return {renderer:'canvas',level};
+    const ms=median(times.slice(-10));if(times.length>=10){if(level==='low'&&ms>33)return {renderer:'canvas',level};if(level!=='low'&&ms>16)return {renderer:'webgl',level:level==='high'?'medium':'low'};}
+    return {renderer:'webgl',level};
+  }
+  class PreviewRenderer{
+    constructor(){this.canvas=document.createElement('canvas');this.gl=this.canvas.getContext('webgl',{alpha:false,antialias:true,preserveDrawingBuffer:true});if(!this.gl)throw Error('WebGL unavailable');this.init();}
+    init(){const g=this.gl;this.buffers=new Map();this.locations=new Map();this.records=[];this.identities=new WeakMap();this.program=this.programFor(VS,FS);
+      this.blank=g.createTexture();g.bindTexture(g.TEXTURE_2D,this.blank);g.texImage2D(g.TEXTURE_2D,0,g.RGBA,1,1,0,g.RGBA,g.UNSIGNED_BYTE,new Uint8Array([255,255,255,0]));this.textureSettings();this.uploads=0;}
+    artwork(){return null;}
+    geometryFor(v,version){
+      let r=this.identities.get(v);if(r&&r.version===version&&this.buffers.has(r.key))return r;
+      // The tray sketch is recreated by its caller. Reuse equal geometry as well as array identities.
+      r=this.records.find(r=>r.version===version&&r.v.length===v.length&&r.v.every((n,i)=>n===v[i]));
+      if(!r){const mesh={vertices:[],triangles:[]};let sum=[0,0,0];for(let i=0;i<v.length;i+=3){mesh.vertices.push([v[i],v[i+1],v[i+2]]);for(let k=0;k<3;k++)sum[k]+=v[i+k];if(i%9===0)mesh.triangles.push([i/3,i/3+1,i/3+2]);}
+        r={v,version,mesh,radius:mesh.vertices.reduce((n,p)=>Math.max(n,Math.hypot(...p)),0),key:{},center:sum.map(x=>x/(v.length/3||1))};this.records.push(r);this.upload(r.key,mesh);this.uploads++;}
+      this.identities.set(v,r);return r;
+    }
+    draw(sets,view,W,H,dpr,edges=false){
+      const g=this.gl;if(this.canvas.width!==W)this.canvas.width=W;if(this.canvas.height!==H)this.canvas.height=H;
+      const used=new Set(),objects=sets.map(s=>{const r=this.geometryFor(s.v,s.version);used.add(r);return {key:r.key,mesh:r.mesh,R:I,t:[0,0,0],color:s.color.map(c=>c/255),metal:0,rough:.52,alpha:s.alpha??1,r};});
+      for(const r of this.records)if(!used.has(r)){g.deleteBuffer(this.buffers.get(r.key).buffer);this.buffers.delete(r.key);if(r.edgeBuffer)g.deleteBuffer(r.edgeBuffer);this.identities.delete(r.v);}
+      this.records=this.records.filter(r=>used.has(r));
+      const cen=view.cen||[0,40,25],range=Math.max(1,...this.records.map(r=>r.radius+Math.hypot(...cen)))*2,cam=previewCamera(view,W,H,dpr,range),p=this.program;
+      g.bindFramebuffer(g.FRAMEBUFFER,null);g.viewport(0,0,W,H);g.enable(g.DEPTH_TEST);g.depthFunc(g.LEQUAL);g.depthMask(true);g.disable(g.BLEND);g.disable(g.CULL_FACE);g.disable(g.DITHER);g.clearColor(18/255,20/255,24/255,1);g.clear(g.COLOR_BUFFER_BIT|g.DEPTH_BUFFER_BIT);g.useProgram(p);
+      g.uniformMatrix4fv(this.loc(p,'uCamera'),false,cam.matrix);g.uniformMatrix4fv(this.loc(p,'uLight'),false,cam.matrix);g.uniform3fv(this.loc(p,'uEye'),cam.eye);g.uniform1f(this.loc(p,'uShadowEnabled'),0);g.uniform1f(this.loc(p,'uAOEnabled'),0);
+      for(const [i,name] of ['uShadow','uArtwork','uSceneDepth'].entries()){g.activeTexture(g.TEXTURE0+i);g.bindTexture(g.TEXTURE_2D,this.blank);g.uniform1i(this.loc(p,name),i);}
+      g.uniform4fv(this.loc(p,'uDepthParams'),cam.depthParams);
+      const solid=objects.filter(o=>o.alpha>=1),ghost=objects.filter(o=>o.alpha<1).sort((a,b)=>cam.project(b.r.center)[2]-cam.project(a.r.center)[2]);
+      if(edges){g.enable(g.POLYGON_OFFSET_FILL);g.polygonOffset(1,1);}this.submit(p,solid);g.disable(g.POLYGON_OFFSET_FILL);
+      if(edges){for(const o of solid){const r=o.r;if(!r.edgeBuffer){const lines=featureEdges(r.v),data=new Float32Array(lines.length*2);for(let i=0;i<lines.length;i+=3){data.set(lines.slice(i,i+3),i*2);data.set([0,0,1],i*2+3);}r.edgeBuffer=g.createBuffer();r.edgeCount=data.length/6;g.bindBuffer(g.ARRAY_BUFFER,r.edgeBuffer);g.bufferData(g.ARRAY_BUFFER,data,g.STATIC_DRAW);}
+          g.bindBuffer(g.ARRAY_BUFFER,r.edgeBuffer);g.vertexAttribPointer(this.loc(p,'aPosition'),3,g.FLOAT,false,24,0);g.vertexAttribPointer(this.loc(p,'aNormal'),3,g.FLOAT,false,24,12);g.uniform3fv(this.loc(p,'uColor'),[.035,.04,.05]);g.drawArrays(g.LINES,0,r.edgeCount);}}
+      if(ghost.length){g.enable(g.BLEND);g.blendFunc(g.SRC_ALPHA,g.ONE_MINUS_SRC_ALPHA);g.depthMask(false);this.submit(p,ghost);g.depthMask(true);g.disable(g.BLEND);}
+      this.triangles=objects.reduce((n,o)=>n+o.mesh.triangles.length,0);return this.canvas;
+    }
+    dispose(lose=true){const g=this.gl;for(const b of this.buffers.values())g.deleteBuffer(b.buffer);for(const r of this.records)if(r.edgeBuffer)g.deleteBuffer(r.edgeBuffer);g.deleteProgram(this.program);g.deleteTexture(this.blank);this.records=[];this.buffers.clear();if(lose)g.getExtension('WEBGL_lose_context')?.loseContext();}
+  }
+  for(const name of ['programFor','loc','textureSettings','upload','submit'])PreviewRenderer.prototype[name]=Renderer.prototype[name];
+
+  const api={Renderer,PreviewRenderer,previewCamera,previewSwitch,featureEdges,median,camera,equipment,logoMeshes,Mesh,slab,rounded,artworkRect,artworkWindow,clearWindow,selectionRect,DEFAULT_SELECTION};root.LabRaxStudio=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window==='undefined'?globalThis:window);

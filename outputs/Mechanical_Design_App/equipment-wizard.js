@@ -244,7 +244,7 @@
   }
   function draw3D(){const cv=document.getElementById('ewView');if(cv&&!cv.hidden)paint(cv,view);}
   // view.quality names the viewer for the preview-quality slider (render-quality.js); Medium draws as before.
-  function paint(cv,view){
+  function paint2d(cv,view){
     const RQ=window.RenderQuality,q=RQ&&view.quality,dpr=q?RQ.pixelRatio(q,devicePixelRatio):devicePixelRatio,cell=q?RQ.cell(q):0;
     const W=cv.width=cv.clientWidth*dpr,H=cv.height=cv.clientHeight*dpr,ctx=cv.getContext('2d');
     ctx.fillStyle='#121418';ctx.fillRect(0,0,W,H);
@@ -264,8 +264,34 @@
     for(const[a,b,c,,s,lit]of tris){ctx.fillStyle=`rgba(${s.color.map(k=>Math.round(k*lit)).join(',')},${s.alpha})`;
       ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.lineTo(c[0],c[1]);ctx.closePath();ctx.fill();if(s.alpha===1){ctx.strokeStyle=ctx.fillStyle;ctx.stroke();}}
   }
+
+  const painters=new WeakMap();
+  const painterStats={renderer:'canvas',triangles:0,lastMs:0,medianMs:0};
+  function rendererPreference(){try{return window.localStorage?.getItem('assemblyWorkshop.previewRenderer')||'';}catch(e){return '';}}
+  function disposePainter(cv){const s=painters.get(cv);if(!s)return;s.disposed=true;s.observer?.disconnect();if(s.frame)cancelAnimationFrame(s.frame);s.renderer?.canvas.removeEventListener('webglcontextlost',s.onLost);s.renderer?.canvas.removeEventListener('webglcontextrestored',s.onRestore);s.renderer?.dispose();s.note?.remove();painters.delete(cv);}
+  function paint(cv,view){
+    let s=painters.get(cv);if(!s){s={times:[],canvasTimes:[],frame:0,disposed:false};painters.set(cv,s);
+      // All small viewers live in dialogs, including the imported-model viewer.
+      const dialog=cv.closest('dialog');dialog?.addEventListener('close',()=>disposePainter(cv),{once:true});
+      const observer=new MutationObserver(()=>{if(!cv.isConnected){observer.disconnect();disposePainter(cv);}});observer.observe(dialog||cv.parentNode,{childList:true,subtree:true});s.observer=observer;
+      try{s.renderer=new window.LabRaxStudio.PreviewRenderer();s.onLost=e=>{e.preventDefault();s.lost=true;paint(cv,s.view);};s.onRestore=()=>{s.renderer.init();s.lost=false;s.forced=false;s.times=[];paint(cv,s.view);};s.renderer.canvas.addEventListener('webglcontextlost',s.onLost);s.renderer.canvas.addEventListener('webglcontextrestored',s.onRestore);}catch(e){s.unavailable=true;}}
+    s.view=view;if(s.frame)return;s.frame=requestAnimationFrame(()=>{s.frame=0;if(s.disposed)return;
+      const RQ=window.RenderQuality,requested=RQ?.previewLevel(view.quality)||'medium';if(requested!==s.requested){s.requested=requested;s.level=requested;s.times=[];s.forced=false;}
+      const decision=window.LabRaxStudio.previewSwitch({available:!s.unavailable,preference:rendererPreference(),lost:s.lost,forced:s.forced,level:s.level,times:s.times});
+      if(decision.level!==s.level){s.level=decision.level;s.times=[];}if(decision.renderer==='canvas'&&!s.lost&&!s.unavailable&&rendererPreference()!=='canvas')s.forced=true;
+      let mode=decision.renderer,start=performance.now();
+      if(mode==='webgl')try{const level=RQ?.PREVIEW[s.level]||{scale:1,cell:0},base=devicePixelRatio||1,dpr=s.level==='medium'?base:Math.max(.5,Math.min(3,base*level.scale)),W=Math.max(1,Math.floor(cv.clientWidth*dpr)),H=Math.max(1,Math.floor(cv.clientHeight*dpr));
+        const sets=view.sets.map(o=>({...o,v:RQ?.simplify(o.v,level.cell)||o.v})),image=s.renderer.draw(sets,view,W,H,dpr,s.level==='high'&&view.edges!==false);cv.width=W;cv.height=H;cv.getContext('2d').drawImage(image,0,0);
+      }catch(e){s.unavailable=true;mode='canvas';}
+      if(mode==='canvas')paint2d(cv,view);
+      const ms=performance.now()-start,history=mode==='webgl'?s.times:s.canvasTimes;history.push(ms);if(history.length>10)history.shift();
+      Object.assign(painterStats,{renderer:mode,triangles:mode==='webgl'?s.renderer.triangles:view.sets.reduce((n,o)=>n+o.v.length/9,0),lastMs:ms,medianMs:window.LabRaxStudio.median(history)});
+      cv.dataset.renderer=mode;if(!s.note){s.note=document.createElement('p');s.note.className='ew-note';s.note.setAttribute('role','status');cv.after(s.note);}s.note.hidden=mode==='webgl';s.note.textContent=mode==='canvas'?'Simple preview — '+(rendererPreference()==='canvas'?'Canvas preference':s.lost?'WebGL context lost':s.forced?'frame budget':'WebGL unavailable'):'';
+    });
+  }
+
   if(typeof module!=='undefined'&&module.exports){module.exports={findFeet,findProtrusions,PROTRUSION,importFrame,protrusionsAnswered};return;}
-  window.EquipmentPainter={draw:paint,bind:bindView,parseStl:parseStlBuffer};
+  window.EquipmentPainter={draw:paint,paint2d,bind:bindView,parseStl:parseStlBuffer,dispose:disposePainter,stats:painterStats};
   function reset(){protrusionDetection=null;importOrigin=null;uExplicit=false;imported=null;importMsg='';found=[];foundFeet=[];foundPorts=[];orient=0;turn=0;spec={name:'',dev_w:85,dev_d:56,dev_h:20,u:1,hole_d:2.7,standoff:6,insert_pilot:3.2,board_t:1.6,device_mount:'inserts',joint:'screw',holes:[],feet:[],ports:[],rear_ports:[],keystones:[]};step=0;}
   // Cable-planning port id (cable-ports.js): stable while the port is edited or moves between faces.
   const portId=()=>'p-'+Math.random().toString(36).slice(2,10);

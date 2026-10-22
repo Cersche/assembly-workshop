@@ -434,7 +434,7 @@
   function ensureDialog(){
     let d=document.getElementById('trayPlacement');
     if(!d){d=h('dialog',{id:'trayPlacement',class:'ew-dialog tp-dialog','aria-label':'Place on tray'});document.body.append(d);
-      d.addEventListener('close',()=>{state=null;});
+      d.addEventListener('close',()=>{window.EquipmentPainter?.dispose(document.getElementById('tpView'));state=null;});
       document.head.append(h('style',{},`.tp-dialog{width:min(1040px,96vw)}.tp-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.tp-head h2{margin:0}
 .tp-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:14px}@media(max-width:760px){.tp-grid{grid-template-columns:1fr}}.tp-pane h3{margin:10px 0 4px;font-size:13px;color:#cfd6df}
 .tp-top{width:100%;height:300px;background:#121418;border-radius:6px;touch-action:none}.tp-view{height:240px}.tp-unknown{color:#e0b56f;font-weight:600;margin-top:10px}

@@ -1,0 +1,52 @@
+{
+  "cycles": {
+    "opened": 20,
+    "created": 20,
+    "released": 20,
+    "live": 0,
+    "lost": 20
+  },
+  "occlusion": [
+    {
+      "pitch": 1.5707963267948966,
+      "rgba": [
+        236,
+        57,
+        57,
+        255
+      ],
+      "correct": true
+    },
+    {
+      "pitch": 1.5707963267948966,
+      "rgba": [
+        236,
+        57,
+        57,
+        255
+      ],
+      "correct": true
+    },
+    {
+      "pitch": -1.5707963267948966,
+      "rgba": [
+        25,
+        25,
+        112,
+        255
+      ],
+      "correct": true
+    },
+    {
+      "pitch": -1.5707963267948966,
+      "rgba": [
+        25,
+        25,
+        112,
+        255
+      ],
+      "correct": true
+    }
+  ],
+  "occlusionPass": true
+}
