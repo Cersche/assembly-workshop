@@ -10,6 +10,12 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 - Small known quirk: any one-off exception in the WebGL draw marks that canvas "WebGL unavailable" until the window is reopened. Harmless; fix only if it shows up.
 - The ~47 min "import" in Codex's report was most likely Codex waiting for Brian's permission prompt while he was away (Brian, 2026-10-22), not app slowness. Only time a large STL import if it feels slow in normal use.
 
+## 2026-10-22 Task 37 reviewed: rack-view floor under the feet (read first)
+
+- The rack view's floor was fixed at Z = -42; the feet reach Z = -47, so they clipped through it. The floor now sits 0.65 mm under the lowest rack part (-47.65 for a rack with feet). Preview only; no part moved, no STL/SCAD change.
+- Codex task 37, reviewed by Claude: `run_checks.ps1` passes (177 Python, 1 skipped; all JS). Low-angle screenshot shows the feet on the floor. [Report](work/codex-tasks/37-rack-floor-feet-REPORT.md).
+- Open from notes: wall-mount box wizard idea (`work/notes/2026-10-22-feet-floor-and-wall-box-wizard.md`) needs Brian's scope decision.
+
 ## 2026-10-21 Print in color now works on wizard-made faceplates (read first)
 
 - **Brian directed it; Claude built it.** The opt-in "Print in color (multi-material)" panel (Appearance tab) now shows for every wizard-made slot, 1U–5U, including one-piece "combined" builds. Export rebuilds the slot's own `equipment_tray.scad` faceplate (4 mm, front Y=-4, 44.4 mm per U, four-corner slots) from the saved library item and tray settings. It writes one STL per color plus `base.stl`, a README and revision.json. The old Pi4-only geometry (216 × 34 window, Y=-3) is gone.

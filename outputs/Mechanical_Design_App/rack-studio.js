@@ -48,6 +48,25 @@
       for(const f of [[0,3,2,1],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]])this.quad(...f.map(i=>p[i]));
     }
   }
+  // Bounds of the actually drawn meshes in world coordinates. Meshes are immutable once uploaded;
+  // cache each rotation, then apply the current translation without rescanning source vertices.
+  function partBounds(objects,cache=new WeakMap()){
+    const bounds=[];
+    for(const o of objects){
+      if(!o.mesh?.triangles.length)continue;
+      let rotations=cache.get(o.mesh);if(!rotations){rotations=new Map();cache.set(o.mesh,rotations);}
+      const key=o.R.join(',');let box=rotations.get(key);
+      if(!box){const lo=[Infinity,Infinity,Infinity],hi=[-Infinity,-Infinity,-Infinity];
+        for(const tri of o.mesh.triangles)for(const i of tri){const v=o.mesh.vertices[i];for(let k=0;k<3;k++){const n=o.R[k*3]*v[0]+o.R[k*3+1]*v[1]+o.R[k*3+2]*v[2];lo[k]=Math.min(lo[k],n);hi[k]=Math.max(hi[k],n);}}
+        box={lo,hi};rotations.set(key,box);}
+      bounds.push({lo:box.lo.map((n,k)=>n+o.t[k]),hi:box.hi.map((n,k)=>n+o.t[k])});
+    }
+    return bounds;
+  }
+  function floorTop(bounds){
+    let min=Infinity;for(const box of bounds)if(Number.isFinite(box.lo[2]))min=Math.min(min,box.lo[2]);
+    return Number.isFinite(min)?min-.65:-42;
+  }
   function rounded(x0,x1,z0,z1,r,steps=12){const p=[];for(const [x,z,start] of [[x1-r,z1-r,0],[x0+r,z1-r,90],[x0+r,z0+r,180],[x1-r,z0+r,270]])for(let i=0;i<=steps;i++){const t=(start+i*90/steps)*Math.PI/180;p.push([x+r*Math.cos(t),z+r*Math.sin(t)]);}return p;}
   function circle(x,z,r,steps=40){return Array.from({length:steps},(_,i)=>[x+r*Math.cos(i*TAU/steps),z+r*Math.sin(i*TAU/steps)]);}
   // Exact polygonal scan bands: triangulate material intervals, never paint over holes.
@@ -124,7 +143,7 @@
   class Renderer{
     constructor(){
       this.canvas=document.createElement('canvas');const gl=this.gl=this.canvas.getContext('webgl',{alpha:true,antialias:true,preserveDrawingBuffer:true,premultipliedAlpha:false});if(!gl)throw Error('WebGL unavailable. Enable graphics acceleration for the rack preview.');
-      this.buffers=new Map();this.textures=new Map();this.geometry=equipment();this.shadowKey='';this.invalidated=()=>{};this.ambientOcclusion=true;
+      this.boundsCache=new WeakMap();this.buffers=new Map();this.textures=new Map();this.geometry=equipment();this.shadowKey='';this.invalidated=()=>{};this.ambientOcclusion=true;
       this.logoFaces=null;if(typeof fetch==='function')fetch('/rack-references/rack-logo-faces.json').then(r=>r.ok?r.json():null).then(d=>{if(d&&Array.isArray(d.triangles)){this.logoFaces=d.triangles;this.invalidated();}}).catch(()=>{});
       this.program=this.programFor(VS,FS);this.depthProgram=this.programFor(VS,DEPTH);this.locations=new Map();
       this.shadowSize=Math.min(2048,gl.getParameter(gl.MAX_TEXTURE_SIZE));
@@ -133,7 +152,7 @@
       this.shadowDepth=gl.createRenderbuffer();gl.bindRenderbuffer(gl.RENDERBUFFER,this.shadowDepth);gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT16,this.shadowSize,this.shadowSize);gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,this.shadowDepth);
       this.shadowSupported=this.shadows=gl.checkFramebufferStatus(gl.FRAMEBUFFER)===gl.FRAMEBUFFER_COMPLETE;gl.bindFramebuffer(gl.FRAMEBUFFER,null);
       this.blank=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,this.blank);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([255,255,255,0]));this.textureSettings();
-      const floor=new Mesh();floor.box(-900,900,-700,900,-43,-42);this.geometry.floor=floor;
+      const floor=new Mesh();floor.box(-900,900,-700,900,-1,0);this.geometry.floor=floor;
       this.canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();this.lost=true;this.invalidated();});
       this.canvas.addEventListener('webglcontextrestored',()=>{this.restoreRequired=true;this.invalidated();});
     }
@@ -187,15 +206,20 @@
       }
     }
     draw(scene,meshes,view,width,height,rack,selectedSlot=null){
-      if(this.lost)throw Error('Graphics context lost; waiting for recovery.');const g=this.gl;if(this.canvas.width!==width||this.canvas.height!==height){this.canvas.width=width;this.canvas.height=height;}const objects=this.objects(scene,meshes,rack,selectedSlot),box=root.LabRaxScene.bounds({parts:scene.parts.filter(p=>!p.mesh)},meshes),light=root.LabRaxScene.camera(box,.62,.8,2048,2048,.79).matrix;
+      if(this.lost)throw Error('Graphics context lost; waiting for recovery.');const g=this.gl;if(this.canvas.width!==width||this.canvas.height!==height){this.canvas.width=width;this.canvas.height=height;}const objects=this.objects(scene,meshes,rack,selectedSlot),bounds=partBounds(objects,this.boundsCache),z=floorTop(bounds);
+      // Include the receiver height in shadow framing, but keep the floor's large X/Y extent out.
+      const box=bounds.length?{lo:[0,1,2].map(k=>Math.min(...bounds.map(b=>b.lo[k]))),hi:[0,1,2].map(k=>Math.max(...bounds.map(b=>b.hi[k])))}:{lo:[-1,-1,z],hi:[1,1,z+1]};
+      box.lo[2]=Math.min(box.lo[2],z);const light=root.LabRaxScene.camera(box,.62,.8,2048,2048,.79).matrix;
+      // Inspection viewers may supply their own floor mesh; translate its top to the same gap.
+      const floorOffset=z-Math.max(...this.geometry.floor.vertices.map(v=>v[2]));
       g.enable(g.DEPTH_TEST);g.depthMask(true);g.depthFunc(g.LEQUAL);g.disable(g.CULL_FACE);g.disable(g.BLEND);g.disable(g.DITHER);
       // See-through parts (Cables view) are drawn last, blended, without depth writes; they cast no shadow and are not pickable.
       // ghostTrays (Cables view): equipment trays turn see-through so the port markers inside them show and can be clicked.
       if(this.ghostTrays)for(const o of objects)if(o.kind==='tray'){o.ghost=true;o.alpha=.3;}
       const solid=objects.filter(o=>!o.ghost),ghosts=objects.filter(o=>o.ghost);
-      const key=JSON.stringify([scene.slots,solid.map(p=>p.key+p.t),rack?.placements.map(p=>[p.id,p.slot])]);
+      const key=JSON.stringify([scene.slots,solid.map(p=>[p.key,p.t,p.R]),rack?.placements.map(p=>[p.id,p.slot]),z,Array.from(light)]);
       if(this.shadows&&key!==this.shadowKey){g.bindFramebuffer(g.FRAMEBUFFER,this.shadowFbo);g.viewport(0,0,this.shadowSize,this.shadowSize);g.clearColor(1,1,1,1);g.clear(g.COLOR_BUFFER_BIT|g.DEPTH_BUFFER_BIT);g.enable(g.POLYGON_OFFSET_FILL);g.polygonOffset(2,3);g.useProgram(this.depthProgram);g.uniformMatrix4fv(this.loc(this.depthProgram,'uCamera'),false,light);this.submit(this.depthProgram,solid);g.disable(g.POLYGON_OFFSET_FILL);this.shadowKey=key;}
-      solid.push({key:'studio-floor',mesh:this.geometry.floor,R:I,t:[0,0,0],kind:'floor',color:rgb('#1a2330'),metal:.05,rough:.8});
+      solid.push({key:'studio-floor',mesh:this.geometry.floor,R:I,t:[0,0,floorOffset],kind:'floor',color:rgb('#1a2330'),metal:.05,rough:.8});
       const depthTarget=this.sceneDepthTarget(width,height),depthKey=key+JSON.stringify(Array.from(view.matrix))+width+':'+height;
       if(this.ambientOcclusion&&depthTarget.ready&&this.depthKey!==depthKey){g.bindFramebuffer(g.FRAMEBUFFER,depthTarget.fbo);g.viewport(0,0,depthTarget.width,depthTarget.height);g.clearColor(1,1,1,1);g.clear(g.COLOR_BUFFER_BIT|g.DEPTH_BUFFER_BIT);g.useProgram(this.depthProgram);g.uniformMatrix4fv(this.loc(this.depthProgram,'uCamera'),false,view.matrix);this.submit(this.depthProgram,solid);this.depthKey=depthKey;}
       g.bindFramebuffer(g.FRAMEBUFFER,null);g.viewport(0,0,width,height);g.clearColor(.035,.05,.075,1);g.clear(g.COLOR_BUFFER_BIT|g.DEPTH_BUFFER_BIT);g.useProgram(this.program);g.uniformMatrix4fv(this.loc(this.program,'uCamera'),false,view.matrix);g.uniformMatrix4fv(this.loc(this.program,'uLight'),false,light);g.uniform3fv(this.loc(this.program,'uEye'),view.eye);g.uniform1f(this.loc(this.program,'uShadowEnabled'),this.shadows?1:0);g.activeTexture(g.TEXTURE0);g.bindTexture(g.TEXTURE_2D,this.shadowTexture);g.uniform1i(this.loc(this.program,'uShadow'),0);g.uniform1i(this.loc(this.program,'uArtwork'),1);
@@ -293,5 +317,5 @@
   }
   for(const name of ['programFor','loc','textureSettings','upload','submit'])PreviewRenderer.prototype[name]=Renderer.prototype[name];
 
-  const api={Renderer,PreviewRenderer,previewCamera,previewSwitch,featureEdges,median,camera,equipment,logoMeshes,Mesh,slab,rounded,artworkRect,artworkWindow,clearWindow,selectionRect,DEFAULT_SELECTION};root.LabRaxStudio=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
+  const api={floorTop,partBounds,Renderer,PreviewRenderer,previewCamera,previewSwitch,featureEdges,median,camera,equipment,logoMeshes,Mesh,slab,rounded,artworkRect,artworkWindow,clearWindow,selectionRect,DEFAULT_SELECTION};root.LabRaxStudio=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window==='undefined'?globalThis:window);

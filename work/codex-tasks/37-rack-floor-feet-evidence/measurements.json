@@ -1,0 +1,282 @@
+{
+  "fixtureRack": {
+    "id": "3ff440e4-9b4e-419d-ae12-41272290afde",
+    "name": "My Lab Rax",
+    "slots": 5,
+    "appearance": {},
+    "width_mm": 208,
+    "depth_mm": 240,
+    "pitch_mm": 44.45,
+    "placements": []
+  },
+  "panels": true,
+  "parts": [
+    {
+      "i": 0,
+      "key": "beam_bottom",
+      "kind": "frame",
+      "t": [
+        0,
+        27.425,
+        -7.575
+      ],
+      "minZ": -35.0000031,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 1,
+      "key": "beam_bottom",
+      "kind": "frame",
+      "t": [
+        0,
+        212.575,
+        -7.575
+      ],
+      "minZ": -35.0000031,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 2,
+      "key": "side_rail",
+      "kind": "frame",
+      "t": [
+        -125.98,
+        120,
+        -17.5
+      ],
+      "minZ": -35,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 3,
+      "key": "side_rail",
+      "kind": "frame",
+      "t": [
+        125.98,
+        120,
+        -17.5
+      ],
+      "minZ": -35,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 4,
+      "key": "panel_bottom",
+      "kind": "panel",
+      "t": [
+        0,
+        120,
+        -31.5
+      ],
+      "minZ": -32.99999905,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 5,
+      "key": "foot",
+      "kind": "foot",
+      "t": [
+        -124.73,
+        55,
+        -41
+      ],
+      "minZ": -47,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 6,
+      "key": "foot",
+      "kind": "foot",
+      "t": [
+        -124.73,
+        185,
+        -41
+      ],
+      "minZ": -47,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 7,
+      "key": "foot",
+      "kind": "foot",
+      "t": [
+        124.73,
+        55,
+        -41
+      ],
+      "minZ": -47,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 8,
+      "key": "foot",
+      "kind": "foot",
+      "t": [
+        124.73,
+        185,
+        -41
+      ],
+      "minZ": -47,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 9,
+      "key": "post5",
+      "kind": "frame",
+      "t": [
+        -125.98,
+        17.5,
+        111.125
+      ],
+      "minZ": 0,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 10,
+      "key": "post5",
+      "kind": "frame",
+      "t": [
+        125.98,
+        17.5,
+        111.125
+      ],
+      "minZ": 0,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 11,
+      "key": "post5",
+      "kind": "frame",
+      "t": [
+        -125.98,
+        222.5,
+        111.125
+      ],
+      "minZ": 0,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 12,
+      "key": "post5",
+      "kind": "frame",
+      "t": [
+        125.98,
+        222.5,
+        111.125
+      ],
+      "minZ": 0,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 13,
+      "key": "panel5",
+      "kind": "side",
+      "t": [
+        -138.48,
+        120,
+        111.125
+      ],
+      "minZ": -2.949996999999996,
+      "optionalSidePanel": true
+    },
+    {
+      "i": 14,
+      "key": "panel5",
+      "kind": "side",
+      "t": [
+        138.48,
+        120,
+        111.125
+      ],
+      "minZ": -2.949996999999996,
+      "optionalSidePanel": true
+    },
+    {
+      "i": 15,
+      "key": "beam_top_front",
+      "kind": "frame",
+      "t": [
+        0,
+        27.425,
+        229.825
+      ],
+      "minZ": 202.3999969,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 16,
+      "key": "beam_top_rear",
+      "kind": "frame",
+      "t": [
+        0,
+        212.575,
+        229.825
+      ],
+      "minZ": 202.3999969,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 17,
+      "key": "side_rail",
+      "kind": "frame",
+      "t": [
+        -125.98,
+        120,
+        239.75
+      ],
+      "minZ": 222.25,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 18,
+      "key": "side_rail",
+      "kind": "frame",
+      "t": [
+        125.98,
+        120,
+        239.75
+      ],
+      "minZ": 222.25,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 19,
+      "key": "panel_top",
+      "kind": "panel",
+      "t": [
+        0,
+        120,
+        253.75
+      ],
+      "minZ": 252.25,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 20,
+      "key": "handle",
+      "kind": "frame",
+      "t": [
+        -124.789,
+        120,
+        276
+      ],
+      "minZ": 257.25,
+      "optionalSidePanel": false
+    },
+    {
+      "i": 21,
+      "key": "handle",
+      "kind": "frame",
+      "t": [
+        124.789,
+        120,
+        276
+      ],
+      "minZ": 257.25,
+      "optionalSidePanel": false
+    }
+  ],
+  "sceneMinZ": -47,
+  "oldFloorTop": -42,
+  "newFloorTop": -47.65
+}
