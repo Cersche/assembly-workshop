@@ -27,6 +27,10 @@ Brian: faceplate screws must be used but not seen. New sleeve-only key `hidden_j
 
 - Delivered `outputs/STL_Deliveries/2026-10-22_TL-SG108E_hidden-screws/` (hand-made `build.py` patches the generated source): switch set back 17 mm, hidden joints in front of it at X -91/+61, plate window narrowed to 130 mm, no rear stop (loads from the rear). Meshes closed and probed; not sliced. App hidden_joint still limited to 150 mm devices; making this an app option is open.
 
+## 2026-10-23 TL-SG108E flush version (read first)
+
+- Brian's print: ports not flush with the rack front; switch must not fall out the back. New delivery `outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/` supersedes both 2026-10-22 TL-SG108E folders: measured depth 100 mm, solid rear stop, ports flush, sleeve_top 0.8, visible front screws. Unprinted; not opened in a slicer.
+
 ## 2026-10-22 TL-SG108E switch tray; tray_follow + engraved labels (read first)
 
 - Delivered `outputs/STL_Deliveries/2026-10-22_TL-SG108E/`: 1U sleeve, ports facing out, shifted 15 mm left, golden keystone at +88 (moved in from +102 after Brian saw it crowd the right post) with "UPLINK" engraved below. Not opened in a slicer; not saved to the library.
