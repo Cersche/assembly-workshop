@@ -1,0 +1,16 @@
+{
+  "keystone": {"name": "Keystone jack (golden keystone)", "kind": "cutout", "cutout": {"type": "keystone"},
+    "note": "The SG108 golden keystone block from equipment_tray.scad, ks_tight 0.2 (fit confirmed on Brian's faceplate coupon only)."},
+  "pg7": {"name": "Cable gland PG7", "kind": "cutout", "cutout": {"type": "gland", "size": "PG7"},
+    "note": "12.5 mm hole (DIN 40430 thread OD). The nut keep-out is an estimate; check your gland."},
+  "pg9": {"name": "Cable gland PG9", "kind": "cutout", "cutout": {"type": "gland", "size": "PG9"},
+    "note": "15.2 mm hole (DIN 40430 thread OD). The nut keep-out is an estimate; check your gland."},
+  "barrel_jack": {"name": "Panel DC barrel jack 5.5/2.1", "kind": "cutout", "cutout": null,
+    "note": "Panel hole sizes differ by model: measure your jack, then use a round cutout."},
+  "usb_c_panel": {"name": "USB-C panel connector", "kind": "cutout", "cutout": null,
+    "note": "Panel cutouts differ by model: measure yours, then use a rect cutout."},
+  "rocker_switch": {"name": "Rocker switch", "kind": "cutout", "cutout": null,
+    "note": "Snap-in cutouts differ by model: measure yours, then use a rect cutout."},
+  "screenbeam_ecb7250": {"name": "ScreenBeam ECB7250 MoCA adapter", "kind": "device", "size": null, "ports": null,
+    "note": "Dimensions and port positions UNKNOWN until Brian measures the unit (or an official datasheet gives them)."}
+}

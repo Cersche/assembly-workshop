@@ -5,7 +5,7 @@ sys.path.insert(0,str(root/'outputs/Mechanical_Design_App'))
 with tempfile.TemporaryDirectory(prefix='checks-',dir=Path(__file__).parent) as folder:
     tempfile.tempdir=folder
     suite=unittest.TestSuite()
-    for module in ('test_rack_workspace','test_rack_references','test_assembly_records','test_studio_save','test_cable_ports','test_equipment_rebuild','test_cable_plan','test_allocation_tray','test_tray_placement','test_tray_pair','test_export_quality','test_keystone_mesh','test_port_openings','test_mesh_study','test_drive_tray','test_print_layout','test_tray_follow'):
+    for module in ('test_rack_workspace','test_rack_references','test_assembly_records','test_studio_save','test_cable_ports','test_equipment_rebuild','test_cable_plan','test_allocation_tray','test_tray_placement','test_tray_pair','test_export_quality','test_keystone_mesh','test_port_openings','test_mesh_study','test_drive_tray','test_print_layout','test_tray_follow','test_wall_box'):
         loaded=__import__(module)
         # Imported fixture classes are excluded from the studio-save module.
         if module=='test_studio_save': suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(loaded.StudioSaveTests))

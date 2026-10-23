@@ -56,6 +56,12 @@ Brian authorized a personal portable package. `tools/make_portable_zip.ps1` buil
 - Small known quirk: any one-off exception in the WebGL draw marks that canvas "WebGL unavailable" until the window is reopened. Harmless; fix only if it shows up.
 - The ~47 min "import" in Codex's report was most likely Codex waiting for Brian's permission prompt while he was away (Brian, 2026-10-22), not app slowness. Only time a large STL import if it feels slow in normal use.
 
+## 2026-10-22 Wall-mount box: template built (task 38, by Claude) (read first)
+
+- Brian moved the wall-box wizard ahead of v1. Decisions: [Scope](work/wall-box-wizard/Scope.md) (separate wizard; lids screw/hinge/snap; mounts keyhole/tabs/cleat; vents; 250 mm max; ScreenBeam ECB7250 size UNKNOWN until measured).
+- Built `wall_box.scad` + `wall_box.py` + `wall_box_parts.json` + `test_wall_box.py` (no GUI yet). All 9 lid × mount combinations and a loaded box render closed. Checks pass. [Report](work/wall-box-wizard/Task38_Report.md).
+- Next: the wizard page and STL export. PROPOSED — UNVALIDATED; nothing printed.
+
 ## 2026-10-22 Task 37 reviewed: rack-view floor under the feet (read first)
 
 - The rack view's floor was fixed at Z = -42; the feet reach Z = -47, so they clipped through it. The floor now sits 0.65 mm under the lowest rack part (-47.65 for a rack with feet). Preview only; no part moved, no STL/SCAD change.
