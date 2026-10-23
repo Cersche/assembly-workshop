@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "disposable-8767",
+      "name": "Test data – general",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -15,7 +15,7 @@
       "port": 8767
     },
     {
-      "name": "disposable-wizard-art-8769",
+      "name": "Test data – wizard artwork",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -29,7 +29,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-cables-8771",
+      "name": "Test data – cable planner 1",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -43,7 +43,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-ports-8773",
+      "name": "Test data – ports",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -57,7 +57,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-cables3-8775",
+      "name": "Test data – cable planner 3",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -71,7 +71,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-cables4-8777",
+      "name": "Test data – cable planner 4",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -85,7 +85,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-cables5-8779",
+      "name": "Test data – cable planner 5",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -99,7 +99,7 @@
       "autoPort": false
     },
     {
-      "name": "sheet-preview-8780",
+      "name": "Preview – cable sheet",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "-m",
@@ -114,7 +114,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-finalcheck-8781",
+      "name": "Test data – final check",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -128,7 +128,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-traywindow-8783",
+      "name": "Test data – tray window",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -142,7 +142,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-consumers-8785",
+      "name": "Test data – power consumers",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -156,7 +156,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-parts-8787",
+      "name": "Test data – parts list",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -170,7 +170,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-rackview-8789",
+      "name": "Test data – rack view",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -184,7 +184,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-e2e-8791",
+      "name": "Test data – end-to-end",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -198,7 +198,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-picks-8793",
+      "name": "Test data – port picking",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -212,7 +212,7 @@
       "autoPort": false
     },
     {
-      "name": "aw-beta-8798",
+      "name": "Beta test data (A)",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -226,7 +226,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-piclean-8795",
+      "name": "Test data – Pi cleanup",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -240,7 +240,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-portslist-8811",
+      "name": "Test data – ports list",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -254,7 +254,7 @@
       "autoPort": false
     },
     {
-      "name": "beta-8799",
+      "name": "Beta test data (B)",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -268,7 +268,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-color-8813",
+      "name": "Test data – print in color",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
@@ -282,7 +282,7 @@
       "autoPort": false
     },
     {
-      "name": "disposable-faceplate-8845",
+      "name": "Test data – faceplate only",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [
         "outputs/Mechanical_Design_App/app.py",
