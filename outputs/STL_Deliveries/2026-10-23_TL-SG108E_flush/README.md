@@ -10,10 +10,13 @@ faceplate). Hand-patched (`build.py` on the app's generated source), not an app 
   behind the port face, centred on the width, 110 mm apart). Bump **3 mm** high (coupon KD-D locked very nicely); floor
   **6.5 mm** (coupon KD-E) so the 8 × 26 × 1.8 mm arm bends into a pocket inside the floor instead of out the bottom.
   The switch and window sit 3.5 mm higher than with a 3 mm floor (still 1U).
-- **Assembly:** screw the faceplate on, slide the switch in from the front (ports out) until it clicks over the bumps
-  and touches the rear stop.
+- **Hidden screws:** no holes through the faceplate front. Two 9 mm bosses on the plate back above the window
+  (4.0 mm pilot, 7 mm deep: heat insert or self-tap), X = −92.5 and +62.5, Z ≈ 39.4; two 12 × 6 mm uprights on the
+  sleeve's top lips, 0.3 mm behind the bosses. **2 × M3 ~12 mm**, driven from behind over the top of the switch.
+- **Assembly:** set the faceplate against the sleeve front, screw it on from behind, then slide the switch in from the
+  front (ports out) until it clicks over the bumps and touches the rear stop.
 - Sleeve inside height **25.85 mm** (25 mm switch + 0.85 mm, Brian). Layout: 15 mm left, keystone at +88, "UPLINK" with a separate inlay part
   (3MF faceplate object = `faceplate` + `UPLINK label`).
 - UNKNOWN: thick-floor version unprinted (KD-E), exact keyhole position, arm spring/fatigue, fit, strength.
 
-Source revision: a638a339de9c72a29acae977d8e90da583999c19861f2ff2dd7ddbdeae9a7f64 (`.scad` is the patched source).
+Source revision: 05d39b8aa121b44e20d34e549e45f1bce89e3d48626fa0c447a966cfb7e21853 (`.scad` is the patched source).

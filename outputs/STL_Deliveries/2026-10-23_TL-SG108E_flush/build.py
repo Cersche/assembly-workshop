@@ -24,6 +24,15 @@ module detent_cut(){{for(x=key_x){{
 module detent_add(){{for(x=key_x)translate([x-bump_w/2,0,0])rotate([90,0,90])linear_extrude(height=bump_w)
  polygon([[key_y-bump_flat/2-bump_hh,bump_base],[key_y-bump_flat/2,bump_top],[key_y+bump_flat/2,bump_top],[key_y+bump_flat/2+bump_hh*tan(30),bump_base]]);}}
 '''
+HIDDEN = """
+// Hidden screws (Brian, 2026-10-23): no holes through the plate front. Two plate bosses above the window, two uprights on
+// the sleeve's top lips; M3 from behind through each upright (3.4 clear) into the boss (4.0 pilot, insert/self-tap).
+// Screw ~12 mm. Same boss/pilot sizes as the app's tray joint. Fit/strength UNKNOWN.
+hs_x=[dev_off_x-sl_half-sl_wall+8, dev_off_x+sl_half+sl_wall-8]; hs_z=(sl_window_top+sl_lip+u*rack_pitch)/2; hs_w=12; hs_gap=0.3; hs_t=6;
+module top_bosses(){for(x=hs_x)translate([x,0,hs_z])rotate([-90,0,0])difference(){cylinder(d=boss_d,h=8);translate([0,0,1])cylinder(d=joint_pilot,h=8);}}
+module top_uprights(){for(x=hs_x)difference(){translate([x-hs_w/2,8+hs_gap,sl_window_top])cube([hs_w,hs_t,u*rack_pitch-0.6-sl_window_top]);
+ translate([x,8+hs_gap-0.1,hs_z])rotate([-90,0,0])cylinder(d=m3_clear,h=hs_t+0.2);}}
+"""
 orig = equipment.template_source
 def patched(spec):
     t = orig(spec)
@@ -33,7 +42,14 @@ def patched(spec):
     old = ' else if(part=="tray")tray();'
     assert t.count(old) == 1
     t = t.replace(old, ' else if(part=="tray")union(){tray();detent_add();}')
-    return t + DETENT
+    old = 'if(sleeve&&joint=="screw")for(x=sl_joints'
+    assert t.count(old) == 2  # front screw holes in plate + pilots in sleeve walls: gone (hidden screws)
+    t = t.replace(old, 'if(false)for(x=sl_joints')
+    old = '  if(ks_style!="v2")ks_golden();'
+    assert t.count(old) == 1
+    t = t.replace(old, old + chr(10) + '  top_bosses();')
+    t = t.replace(' else if(part=="tray")union(){tray();detent_add();}', ' else if(part=="tray")union(){tray();detent_add();top_uprights();}')
+    return t + DETENT + HIDDEN
 equipment.template_source = patched
 f = equipment.render(SPEC, sys.argv[1])
 print(f.name, json.load(open(f / 'revision.json'))['parts'])

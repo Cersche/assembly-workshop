@@ -166,11 +166,12 @@ module faceplate(){
     plate_joint_add();
    }
    plate_joint_cut();
-   if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)translate([x,-plate_t-0.1,z])rotate([-90,0,0])cylinder(d=m3_clear,h=plate_t+0.2);
+   if(false)for(x=sl_joints,z=sl_joint_z)translate([x,-plate_t-0.1,z])rotate([-90,0,0])cylinder(d=m3_clear,h=plate_t+0.2);
    if(ks_style=="v2")ks_cut(); else ks_box_cut();
    label_cut();
   }
   if(ks_style!="v2")ks_golden();
+  top_bosses();
  }
 }
 // Plain plate on the rear posts (mirror of the faceplate, no openings) that the tray's rear end screws/snaps to.
@@ -213,7 +214,7 @@ module device_features_add(){
 }
 module device_features_cut(){
  sleeve_v2_cut();
- if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)translate([x,-0.1,z])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.1);
+ if(false)for(x=sl_joints,z=sl_joint_z)translate([x,-0.1,z])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.1);
  // Strap access through each wall at quarter-depth, clear of the front/rear joints.
  if(sleeve)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
   translate([side<0?dev_off_x-sl_half-sl_wall-0.1:dev_off_x+sl_half-0.1,y-6,floor_top-0.1])cube([sl_wall+0.2,12,3.1]);
@@ -263,7 +264,7 @@ module clip_coupon(){if(len(coupon)==3)intersection(){children();translate([coup
 
 clip_coupon(){
  if(part=="faceplate")faceplate();
- else if(part=="tray")union(){tray();detent_add();}
+ else if(part=="tray")union(){tray();detent_add();top_uprights();}
  else if(part=="rear_bracket")rear_bracket();
  else if(part=="combined")union(){faceplate();translate([tray_x,-0.01,tray_z])cube([tray_w,0.02+0.01,tray_t]);tray();if(rear_support)rear_bracket();}
  else {color("steelblue")faceplate();color("silver")tray();if(rear_support)color("steelblue")rear_bracket();
@@ -329,6 +330,14 @@ module detent_cut(){for(x=key_x){
  translate([x-arm_w/2-0.01,arm_root+3,tray_z-0.1])cube([arm_w+0.02,arm_l-3+0.01,arm_z0+0.1]);}}
 module detent_add(){for(x=key_x)translate([x-bump_w/2,0,0])rotate([90,0,90])linear_extrude(height=bump_w)
  polygon([[key_y-bump_flat/2-bump_hh,bump_base],[key_y-bump_flat/2,bump_top],[key_y+bump_flat/2,bump_top],[key_y+bump_flat/2+bump_hh*tan(30),bump_base]]);}
+
+// Hidden screws (Brian, 2026-10-23): no holes through the plate front. Two plate bosses above the window, two uprights on
+// the sleeve's top lips; M3 from behind through each upright (3.4 clear) into the boss (4.0 pilot, insert/self-tap).
+// Screw ~12 mm. Same boss/pilot sizes as the app's tray joint. Fit/strength UNKNOWN.
+hs_x=[dev_off_x-sl_half-sl_wall+8, dev_off_x+sl_half+sl_wall-8]; hs_z=(sl_window_top+sl_lip+u*rack_pitch)/2; hs_w=12; hs_gap=0.3; hs_t=6;
+module top_bosses(){for(x=hs_x)translate([x,0,hs_z])rotate([-90,0,0])difference(){cylinder(d=boss_d,h=8);translate([0,0,1])cylinder(d=joint_pilot,h=8);}}
+module top_uprights(){for(x=hs_x)difference(){translate([x-hs_w/2,8+hs_gap,sl_window_top])cube([hs_w,hs_t,u*rack_pitch-0.6-sl_window_top]);
+ translate([x,8+hs_gap-0.1,hs_z])rotate([-90,0,0])cylinder(d=m3_clear,h=hs_t+0.2);}}
 
 // ---- wizard overrides: TP-Link TL-SG108E
 dev_w=158.0;
