@@ -14,7 +14,7 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 | --- | --- | --- | --- |
 | 2026-10-21 | OptiPlex sleeve SLV-A | ~0.5 mm too tight up/down, sides fine | Sleeve v2 redesign (task 36) |
 | 2026-10-22 | TL-SG108E sleeve, first delivery (`2026-10-22_TL-SG108E`) | Too tight top to bottom | Hidden-screw version uses `sleeve_top: 0.8` (+0.5 mm), unprinted |
-| 2026-10-23 | TL-SG108E (Brian printed; version not confirmed, hidden-screw build sets it 17 mm back) | Ports not flush with the rack front; rear retention needed | `2026-10-23_TL-SG108E_flush`: measured depth 100 mm, rear stop, 1.5 mm front lips (switch 1.8 mm back), `sleeve_top` 0.8, unprinted |
+| 2026-10-23 | TL-SG108E (Brian printed; version not confirmed, hidden-screw build sets it 17 mm back) | Ports not flush with the rack front; rear retention needed | `2026-10-23_TL-SG108E_flush`: measured depth 100 mm, ports flush, rear stop, keyhole spring detents (0.6 mm bumps), `sleeve_top` 0.8, unprinted |
 
 ## Other fit results (see HANDOFF.md for details)
 

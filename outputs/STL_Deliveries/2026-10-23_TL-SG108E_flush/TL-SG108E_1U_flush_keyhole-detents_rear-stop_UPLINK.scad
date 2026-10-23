@@ -62,7 +62,7 @@ assert(device_mount!="flat"||front_gap+dev_off_y>=6.2,"Flat corner stops need a 
 assert(device_mount!="flat"||joint!="screw"||front_gap+dev_off_y>=11.5,"Flat device must clear the front screw joint (front gap >= 11.5 mm)");
 assert(device_mount!="flat"||!rear_support||front_gap+dev_off_y+fp_d<=rack_depth-11.5,"Flat device must clear the rear screw joint (rear gap >= 11.5 mm)");
  // @flat-end
-dev_x=-fp_w/2+dev_off_x; dev_y=-plate_t+1.8; floor_top=tray_z+tray_t;
+dev_x=-fp_w/2+dev_off_x; dev_y=sleeve?-plate_t:front_gap+dev_off_y; floor_top=tray_z+tray_t;
 assert(tray_w<=max_tray,str("This tray is ",tray_w," mm wide but the rack opening allows ",max_tray," mm (",rack_inner_w," mm minus ",side_clear," mm each side). Try Rotate 90 degrees, or reduce dev_off_x."));
 assert(sleeve||dev_y>=0,str("Device moved into the faceplate: dev_off_y must be at least ",-front_gap));
 assert(!rear_support||dev_y+fp_d+margin<=rack_depth,"Device moved past the rear posts; reduce dev_off_y");
@@ -171,7 +171,6 @@ module faceplate(){
    label_cut();
   }
   if(ks_style!="v2")ks_golden();
-  front_lips();
  }
 }
 // Plain plate on the rear posts (mirror of the faceplate, no openings) that the tray's rear end screws/snaps to.
@@ -256,6 +255,7 @@ module tray(){
   tray_joint_cut();
   if(rear_support)to_rear()tray_joint_cut(true);
   device_features_cut();
+  detent_cut();
  }
 }
 
@@ -263,7 +263,7 @@ module clip_coupon(){if(len(coupon)==3)intersection(){children();translate([coup
 
 clip_coupon(){
  if(part=="faceplate")faceplate();
- else if(part=="tray")tray();
+ else if(part=="tray")union(){tray();detent_add();}
  else if(part=="rear_bracket")rear_bracket();
  else if(part=="combined")union(){faceplate();translate([tray_x,-0.01,tray_z])cube([tray_w,0.02+0.01,tray_t]);tray();if(rear_support)rear_bracket();}
  else {color("steelblue")faceplate();color("silver")tray();if(rear_support)color("steelblue")rear_bracket();
@@ -315,9 +315,18 @@ module sleeve_v2_cut(){
 labels=[]; label_depth=0.6;
 module label_cut(){for(l=labels)translate([l[1],-plate_t-0.1,l[2]])rotate([90,0,0])mirror([0,0,1])linear_extrude(height=label_depth+0.1)text(l[0],size=l[3],font="Liberation Sans:style=Bold",halign="center",valign="center");}
 
-// Front retention (Brian, 2026-10-23): 1.5 mm lips over 4.0 mm of the case's left/right ends, in front of the
-// switch, which sits 1.8 mm back. Assumes the ports leave >= 4.0 mm of plain case at each end (UNKNOWN, not measured).
-module front_lips(){for(sx=[-1,1])translate([dev_off_x+sx*(sl_half-4.0/2)-4.0/2,-plate_t,sl_bottom])cube([4.0,1.5,sl_window_top-sl_bottom]);}
+// Keyhole detents (Brian, 2026-10-23). Arm: 8 mm wide, 1.8 mm thick, 26 mm long, root toward the front, 1.2 mm slot around it.
+// Bump: 5 mm wide, stands 0.6 mm above the floor (keyholes are shallow); 45 deg ramp facing the front (switch rides over going in),
+// 60 deg face toward the rear (catches the keyhole edge), 4 mm flat top centred on the keyhole.
+key_y=-plate_t+48.5; key_x=[dev_off_x-55.0,dev_off_x+55.0];
+arm_w=8; arm_t=1.8; arm_l=26; arm_gap=1.2; arm_end=key_y+5; arm_root=arm_end-arm_l;
+bump_w=5; bump_up=0.6; bump_flat=4; bump_base=tray_z+arm_t; bump_top=floor_top+bump_up; bump_hh=bump_top-bump_base;
+module detent_cut(){for(x=key_x){
+ difference(){translate([x-arm_w/2-arm_gap,arm_root,tray_z-0.1])cube([arm_w+2*arm_gap,arm_l+arm_gap,tray_t+0.2]);
+  translate([x-arm_w/2,arm_root-0.1,tray_z-0.2])cube([arm_w,arm_l+0.1,tray_t+0.4]);}
+ translate([x-arm_w/2-0.01,arm_root+3,bump_base])cube([arm_w+0.02,arm_l-3+0.01,tray_t]);}}
+module detent_add(){for(x=key_x)translate([x-bump_w/2,0,0])rotate([90,0,90])linear_extrude(height=bump_w)
+ polygon([[key_y-bump_flat/2-bump_hh,bump_base],[key_y-bump_flat/2,bump_top],[key_y+bump_flat/2,bump_top],[key_y+bump_flat/2+bump_hh*tan(30),bump_base]]);}
 
 // ---- wizard overrides: TP-Link TL-SG108E
 dev_w=158.0;

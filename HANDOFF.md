@@ -29,7 +29,7 @@ Brian: faceplate screws must be used but not seen. New sleeve-only key `hidden_j
 
 ## 2026-10-23 TL-SG108E flush version (read first)
 
-- Brian's print: ports not flush with the rack front; switch must not fall out the back. New delivery `outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/` supersedes both 2026-10-22 TL-SG108E folders: measured depth 100 mm, solid rear stop, 1.5 mm faceplate lips over 4 mm of each end of the switch (ports ~1.8 mm back), sleeve_top 0.8, visible front screws; hand-patched via build.py. Unprinted; not opened in a slicer.
+- Brian's print: ports not flush with the rack front; switch must not fall out the back. New delivery `outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/` supersedes both 2026-10-22 TL-SG108E folders: measured depth 100 mm, ports flush, solid rear stop, two spring detents in the tray floor catching the switch keyholes (Brian measured 48.5 mm back, 110 mm apart, shallow; bumps 0.6 mm), sleeve_top 0.8, visible front screws; hand-patched via build.py. Brian rejected faceplate lips (ports must be flush). Unprinted; not opened in a slicer.
 
 ## 2026-10-22 TL-SG108E switch tray; tray_follow + engraved labels (read first)
 

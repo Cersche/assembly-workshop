@@ -1,17 +1,19 @@
-# TP-Link TL-SG108E — 1U, front lips + rear stop (2026-10-23)
+# TP-Link TL-SG108E — 1U, ports flush, keyhole detents + rear stop (2026-10-23)
 
-PROPOSED — UNVALIDATED. Replaces both 2026-10-22 TL-SG108E deliveries after Brian's print: ports sat well behind the
-faceplate, and the switch must be held at both the back and the front. Hand-patched (`build.py`), not an app feature.
+PROPOSED — UNVALIDATED. Replaces both 2026-10-22 TL-SG108E deliveries after Brian's print (ports sat well behind the
+faceplate). Hand-patched (`build.py` on the app's generated source), not an app feature.
 
-- Switch depth **100 mm (Brian measured)**; 158 × 25 mm still nominal.
-- **Rear stop:** solid wall across the sleeve at tray Y 97.8–101.8 mm; the switch can't go out the back.
-- **Front lips:** the faceplate window has a 1.5 mm-thick lip over **4 mm** of each end (left/right) of the switch face.
-  The switch sits 1.8 mm back from the plate front (1.5 lip + 0.3 play), so the ports are ~1.8 mm behind the face.
-  Assumes the ports leave ≥4 mm of plain case at each end (UNKNOWN; check before printing).
-- **Assembly:** slide the switch into the tray sleeve (port side forward) until it touches the rear stop, then screw the
-  faceplate on (visible M3 screws into the sleeve walls). The switch is then trapped between lips and stop.
-- Sleeve height clearance 0.8 mm. Layout as before: 15 mm left, keystone at +88, "UPLINK" with a separate inlay part
+- Switch depth **100 mm (Brian measured)**; 158 × 25 mm nominal. Ports on the edge with the folded strip + screws.
+- **Ports flush:** switch front at the faceplate front (Y = −4). Nothing covers the switch face.
+- **Back:** solid rear stop across the sleeve (tray Y 96–100 mm).
+- **Front:** two spring detents in the tray floor catch the switch's wall-mount keyholes (Brian: round parts 48.5 mm
+  behind the port face, centred on the width, 110 mm apart, 8–9 mm across, very shallow). Each is an 8 × 26 mm arm,
+  1.8 mm thick, with a 5 × 4 mm bump **0.6 mm** above the floor: 45° ramp toward the front, 60° face toward the rear.
+  About ±1.5 mm of play front/back once caught; firm pull releases it.
+- **Assembly:** screw the faceplate on, slide the switch in from the front (ports out) until it clicks over the bumps
+  and touches the rear stop.
+- Sleeve height clearance 0.8 mm. Layout: 15 mm left, keystone at +88, "UPLINK" with a separate inlay part
   (3MF faceplate object = `faceplate` + `UPLINK label`).
-- Fit, retention, strength, lip strength UNKNOWN.
+- UNKNOWN: keyhole depth (0.6 mm bump may not hold), exact keyhole position, arm spring/fatigue, fit, strength.
 
-Source revision: 803b228431541565e5313352d161efd57f175bea65ea28ecabfbd466f8bce7d9 (`…​.scad` is the patched source).
+Source revision: 78f2a90e56184516b5944537fbafb2a449b53006d69a43f4c5d63e0f0202ce19 (`.scad` is the patched source).
