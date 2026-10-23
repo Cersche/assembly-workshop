@@ -280,6 +280,19 @@
       ],
       "port": 8813,
       "autoPort": false
+    },
+    {
+      "name": "disposable-faceplate-8845",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--port",
+        "8845",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\D--Projects-assembly-workshop\\630cfaae-8f64-425e-bcc3-ad343478c893\\scratchpad\\faceplate-data"
+      ],
+      "port": 8845,
+      "autoPort": false
     }
   ]
 }
