@@ -2,6 +2,20 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "Normal use (Brian's data)",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8851",
+        "--data",
+        "D:\\Projects\\assembly-workshop\\data\\normal-use"
+      ],
+      "port": 8851,
+      "autoPort": false
+    },
+    {
       "name": "Test data – general",
       "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
       "runtimeArgs": [

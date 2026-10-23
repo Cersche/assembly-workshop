@@ -2,6 +2,10 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-23 Whole 9U rack placed in the app (read first)
+
+- Brian approved writing to data/normal-use. `work/rack-plan/apply_9u_items.py` saved 6 library items via `equipment.save_item` and placed them via `rack_workspace.save` (old rack in rack-history/; old library in `data/normal-use/library-backups/`, kept OUT of rack-history because that folder must hold rack documents only). U1 Dell OptiPlex Micro 7010 (SLV-B sleeve spec, sleeve_top 0.8), U2 drive tray (3.5" + 2.5"), U3–U5 7" screen plate (PLACEHOLDER, 155×86 window), U6 Pi 4 + Hue (unchanged), U7 keystone panel 10, U8 TL-SG108E (plain app spec; the printable part is still the hand-patched `STL_Deliveries/2026-10-23_TL-SG108E_flush`), U9 modem ECB7250 (PLACEHOLDER box, straps). Browser-checked on port 8851 (launch.json "Normal use"): 7 assemblies listed, no console errors. Fit/strength UNKNOWN; screen and modem need real designs.
+
 ## 2026-10-22 Task 41: hidden faceplate screws, opt-in (read first)
 
 Brian: faceplate screws must be used but not seen. New sleeve-only key `hidden_joint` (default off): the plate front loses its screw holes and the printed non-sleeve tongue/boss/upright joint is placed outside the sleeve walls (devices up to ~150 mm wide); screws go in from behind, BEFORE the rear bracket is attached. Done by Claude directly: 200 Py + JS checks pass, exact renders closed, 19 legacy sources byte-identical. Not done: UI click-through of the new "Hidden screws" toggle, any print (no coupon yet, Brian: too early). Fit/strength UNKNOWN. Report: work/codex-tasks/41-hidden-faceplate-screws-REPORT.md.

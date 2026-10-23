@@ -206,5 +206,317 @@
     ],
     "status": "PROPOSED \u2014 UNVALIDATED",
     "display_name": "Philips Hue Bridge + Raspberry Pi 4 (keystone)"
+  },
+  {
+    "id": "eq-c0e8f57fdaf5",
+    "name": "Dell OptiPlex Micro 7010 (sleeve)",
+    "span": 1,
+    "spec": {
+      "name": "Dell OptiPlex Micro 7010 (sleeve)",
+      "dev_w": 182.5,
+      "dev_d": 194.5,
+      "dev_h": 38.8,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "sleeve",
+      "joint": "screw",
+      "feet": [
+        {
+          "x": 15.0,
+          "y": 18.0,
+          "w": 5.0,
+          "d": 15.0,
+          "h": 2.8
+        },
+        {
+          "x": 163.0,
+          "y": 18.0,
+          "w": 4.0,
+          "d": 15.0,
+          "h": 2.8
+        },
+        {
+          "x": 15.0,
+          "y": 153.0,
+          "w": 5.0,
+          "d": 15.0,
+          "h": 2.8
+        },
+        {
+          "x": 163.0,
+          "y": 153.0,
+          "w": 4.0,
+          "d": 15.0,
+          "h": 2.8
+        }
+      ],
+      "sleeve_top": 0.8,
+      "rear_support": true,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": []
+    },
+    "build": "fcb9dff6521aaa19ec3753e7781fd80968556b0f70d6663181bfcef44be751e3",
+    "parts": [
+      "tray",
+      "faceplate",
+      "rear_bracket"
+    ],
+    "status": "PROPOSED \u2014 UNVALIDATED",
+    "display_name": "Dell OptiPlex Micro 7010 (sleeve)"
+  },
+  {
+    "id": "eq-90c95fdb9fce",
+    "name": "Drive tray (3.5\" HDD + 2.5\" SSD)",
+    "span": 1,
+    "spec": {
+      "name": "Drive tray (3.5\" HDD + 2.5\" SSD)",
+      "dev_w": 179.45,
+      "dev_d": 147.0,
+      "dev_h": 29.1,
+      "hole_d": 2.7,
+      "standoff": 0.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "flat",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 0.0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": [],
+      "drives": [
+        [
+          "3.5",
+          -89.725,
+          0.0
+        ],
+        [
+          "2.5",
+          19.875,
+          0.0
+        ]
+      ],
+      "drive_mount": "screws",
+      "ssd_h": 7.0
+    },
+    "build": "3297879222e50ed29b4a51dcc9ea8518a326ef2e217f4fc07f27b30240562a4e",
+    "parts": [
+      "tray",
+      "faceplate"
+    ],
+    "status": "PROPOSED \u2014 UNVALIDATED",
+    "display_name": "Drive tray (3.5\" HDD + 2.5\" SSD)"
+  },
+  {
+    "id": "eq-6cee544dd821",
+    "name": "7\" touch screen plate (placeholder)",
+    "span": 3,
+    "spec": {
+      "name": "Faceplate only",
+      "faceplate_only": true,
+      "layout": "custom",
+      "u": 3,
+      "dev_w": 5.0,
+      "dev_d": 5.0,
+      "dev_h": 1.0,
+      "hole_d": 2.7,
+      "standoff": 0.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "device_mount": "straps",
+      "joint": "none",
+      "rear_support": false,
+      "coupon": [],
+      "holes": [],
+      "ports": [
+        {
+          "x": 0.0,
+          "z": 66.675,
+          "w": 155.0,
+          "h": 86.0,
+          "r": 2.0,
+          "label": "Screen",
+          "type": "other",
+          "id": "front-1"
+        }
+      ],
+      "rear_ports": [],
+      "keystones": []
+    },
+    "build": "2046c1b868b97fee6086d32a6624dffc2ccdf1685b9c15af4d2708fa05a25745",
+    "parts": [
+      "faceplate"
+    ],
+    "status": "PROPOSED \u2014 UNVALIDATED",
+    "display_name": "7\" touch screen plate (placeholder)"
+  },
+  {
+    "id": "eq-cf85e14e09b8",
+    "name": "Keystone panel, 10 (3 USB, 4 LAN, 3 blank)",
+    "span": 1,
+    "spec": {
+      "name": "Faceplate only",
+      "faceplate_only": true,
+      "layout": "keystones",
+      "u": 1,
+      "dev_w": 5.0,
+      "dev_d": 5.0,
+      "dev_h": 1.0,
+      "hole_d": 2.7,
+      "standoff": 0.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "device_mount": "straps",
+      "joint": "none",
+      "rear_support": false,
+      "coupon": [],
+      "holes": [],
+      "ports": [],
+      "rear_ports": [],
+      "keystones": [
+        [
+          -96.75,
+          22.225
+        ],
+        [
+          -75.25,
+          22.225
+        ],
+        [
+          -53.75,
+          22.225
+        ],
+        [
+          -32.25,
+          22.225
+        ],
+        [
+          -10.75,
+          22.225
+        ],
+        [
+          10.75,
+          22.225
+        ],
+        [
+          32.25,
+          22.225
+        ],
+        [
+          53.75,
+          22.225
+        ],
+        [
+          75.25,
+          22.225
+        ],
+        [
+          96.75,
+          22.225
+        ]
+      ],
+      "count": 10,
+      "rows": 1
+    },
+    "build": "2a641ad48c0a91ea8649abebe33a2d6b3ce556039f36bb23b2d3af4d4b173635",
+    "parts": [
+      "faceplate"
+    ],
+    "status": "PROPOSED \u2014 UNVALIDATED",
+    "display_name": "Keystone panel, 10 (3 USB, 4 LAN, 3 blank)"
+  },
+  {
+    "id": "eq-748d6610d466",
+    "name": "TP-Link TL-SG108E",
+    "span": 1,
+    "spec": {
+      "name": "TP-Link TL-SG108E",
+      "dev_w": 158.0,
+      "dev_d": 100.0,
+      "dev_h": 25.0,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "sleeve",
+      "joint": "screw",
+      "sleeve_top": 0.85,
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": -15.0,
+      "dev_off_y": 0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [
+        88.0
+      ],
+      "tray_follow": true,
+      "ports": [],
+      "rear_ports": [],
+      "labels": [
+        {
+          "text": "UPLINK",
+          "x": 88.0,
+          "z": 3.8,
+          "size": 4.5
+        }
+      ]
+    },
+    "build": "8252da3ca3388b62cc2033c067866604e6f9efb072810d4c19ac83ae31beb26b",
+    "parts": [
+      "tray",
+      "faceplate"
+    ],
+    "status": "PROPOSED \u2014 UNVALIDATED",
+    "display_name": "TP-Link TL-SG108E"
+  },
+  {
+    "id": "eq-c374022fea31",
+    "name": "Modem ECB7250 (placeholder)",
+    "span": 1,
+    "spec": {
+      "name": "Modem ECB7250 (placeholder)",
+      "dev_w": 120.0,
+      "dev_d": 65.0,
+      "dev_h": 30.0,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "straps",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 0.0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": []
+    },
+    "build": "733df8f95e2d357cfd9848858db6b9c3e20abf346619d0150108599493efdb77",
+    "parts": [
+      "tray",
+      "faceplate"
+    ],
+    "status": "PROPOSED \u2014 UNVALIDATED",
+    "display_name": "Modem ECB7250 (placeholder)"
   }
 ]

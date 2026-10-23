@@ -1,0 +1,77 @@
+{
+  "nudge_mm": {
+    "tray": 0,
+    "faceplate": 0
+  },
+  "export_quality": {
+    "level": "standard",
+    "$fn": 48
+  },
+  "status": "PROPOSED \u2014 UNVALIDATED",
+  "spec": {
+    "name": "Drive tray (3.5\" HDD + 2.5\" SSD)",
+    "dev_w": 179.45,
+    "dev_d": 147.0,
+    "dev_h": 29.1,
+    "hole_d": 2.7,
+    "standoff": 0.0,
+    "insert_pilot": 3.2,
+    "board_t": 1.6,
+    "u": 1,
+    "device_mount": "flat",
+    "joint": "screw",
+    "rear_support": false,
+    "dev_rot": 0,
+    "dev_off_x": 0.0,
+    "dev_off_y": 0.0,
+    "coupon": [],
+    "holes": [],
+    "keystones": [],
+    "ports": [],
+    "rear_ports": [],
+    "drives": [
+      [
+        "3.5",
+        -89.725,
+        0.0
+      ],
+      [
+        "2.5",
+        19.875,
+        0.0
+      ]
+    ],
+    "drive_mount": "screws",
+    "ssd_h": 7.0
+  },
+  "parts": [
+    "tray",
+    "faceplate"
+  ],
+  "id": "3297879222e50ed29b4a51dcc9ea8518a326ef2e217f4fc07f27b30240562a4e",
+  "template": "equipment_tray.scad",
+  "limitations": [
+    "PROPOSED \u2014 UNVALIDATED. Printed fit, strength, rack clearance and keystone retention are UNKNOWN.",
+    "Mesh closure and successful rendering are not physical approval.",
+    "PROPOSED \u2014 UNVALIDATED. Drive fit, vibration, strength, airflow/temperature and usable rack depth UNKNOWN.",
+    "Nominal SFF dimensions only; actual drive holes, thread depth, screw heads/torque and cable bend space must be checked. 7 mm SSD bottom holes are optional."
+  ],
+  "sha256": {
+    "tray.stl": "428a7f447aed682ca629054837db0415c23e23cef5e6411c3d65e3b0962c4cb3",
+    "faceplate.stl": "628aafa5cb57d68828fff813adbce6d8b1e384e9f5c3c35178abadc82675aa2b"
+  },
+  "logs": {
+    "tray": "WARNING: dev_w was assigned on line 29 of \"equipment.scad\" but was overwritten in file equipment.scad, line 283\nWARNING: dev_d was assigned on line 29 of \"equipment.scad\" but was overwritten in file equipment.scad, line 284\nWARNING: dev_h was assigned on line 29 of \"equipment.scad\" but was overwritten in file equipment.scad, line 285\nWARNING: hole_d was assigned on line 32 of \"equipment.scad\" but was overwritten in file equipment.scad, line 286\nWARNING: standoff was assigned on line 34 of \"equipment.scad\" but was overwritten in file equipment.scad, line 287\nWARNING: insert_pilot was assigned on line 35 of \"equipment.scad\" but was overwritten in file equipment.scad, line 288\nWARNING: board_t was assigned on line 36 of \"equipment.scad\" but was overwritten in file equipment.scad, line 289\nWARNING: u was assigned on line 38 of \"equipment.scad\" but was overwritten in file equipment.scad, line 290\nWARNING: holes was assigned on line 31 of \"equipment.scad\" but was overwritten in file equipment.scad, line 291\nWARNING: keystones was assigned on line 39 of \"equipment.scad\" but was overwritten in file equipment.scad, line 292\nWARNING: device_mount was assigned on line 33 of \"equipment.scad\" but was overwritten in file equipment.scad, line 293\nWARNING: joint was assigned on line 37 of \"equipment.scad\" but was overwritten in file equipment.scad, line 294\nWARNING: rear_support was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 295\nWARNING: coupon was assigned on line 52 of \"equipment.scad\" but was overwritten in file equipment.scad, line 296\nWARNING: ports was assigned on line 45 of \"equipment.scad\" but was overwritten in file equipment.scad, line 297\nWARNING: drives was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 298\nWARNING: drive_mount was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 299\nWARNING: ssd_h was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 300\nWARNING: tray_w was assigned on line 71 of \"equipment.scad\" but was overwritten in file equipment.scad, line 301\nWARNING: tray_d was assigned on line 71 of \"equipment.scad\" but was overwritten in file equipment.scad, line 302\nGeometries in cache: 130\nGeometry cache size in bytes: 347504\nCGAL Polyhedrons in cache: 22\nCGAL cache size in bytes: 21217984\nTotal rendering time: 0:00:18.167\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     3712\n   Halfedges:   11136\n   Edges:        5568\n   Halffacets:   3764\n   Facets:       1882\n   Volumes:         2\n",
+    "faceplate": "WARNING: dev_w was assigned on line 29 of \"equipment.scad\" but was overwritten in file equipment.scad, line 283\nWARNING: dev_d was assigned on line 29 of \"equipment.scad\" but was overwritten in file equipment.scad, line 284\nWARNING: dev_h was assigned on line 29 of \"equipment.scad\" but was overwritten in file equipment.scad, line 285\nWARNING: hole_d was assigned on line 32 of \"equipment.scad\" but was overwritten in file equipment.scad, line 286\nWARNING: standoff was assigned on line 34 of \"equipment.scad\" but was overwritten in file equipment.scad, line 287\nWARNING: insert_pilot was assigned on line 35 of \"equipment.scad\" but was overwritten in file equipment.scad, line 288\nWARNING: board_t was assigned on line 36 of \"equipment.scad\" but was overwritten in file equipment.scad, line 289\nWARNING: u was assigned on line 38 of \"equipment.scad\" but was overwritten in file equipment.scad, line 290\nWARNING: holes was assigned on line 31 of \"equipment.scad\" but was overwritten in file equipment.scad, line 291\nWARNING: keystones was assigned on line 39 of \"equipment.scad\" but was overwritten in file equipment.scad, line 292\nWARNING: device_mount was assigned on line 33 of \"equipment.scad\" but was overwritten in file equipment.scad, line 293\nWARNING: joint was assigned on line 37 of \"equipment.scad\" but was overwritten in file equipment.scad, line 294\nWARNING: rear_support was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 295\nWARNING: coupon was assigned on line 52 of \"equipment.scad\" but was overwritten in file equipment.scad, line 296\nWARNING: ports was assigned on line 45 of \"equipment.scad\" but was overwritten in file equipment.scad, line 297\nWARNING: drives was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 298\nWARNING: drive_mount was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 299\nWARNING: ssd_h was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 300\nWARNING: tray_w was assigned on line 71 of \"equipment.scad\" but was overwritten in file equipment.scad, line 301\nWARNING: tray_d was assigned on line 71 of \"equipment.scad\" but was overwritten in file equipment.scad, line 302\nGeometries in cache: 32\nGeometry cache size in bytes: 302432\nCGAL Polyhedrons in cache: 7\nCGAL cache size in bytes: 4216784\nTotal rendering time: 0:00:01.819\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      904\n   Halfedges:    2712\n   Edges:        1356\n   Halffacets:    920\n   Facets:        460\n   Volumes:         2\n"
+  },
+  "drive_hardware": [
+    {
+      "quantity": 4,
+      "description": "6-32 x 1/4 inch (drive screws; head/torque UNKNOWN)"
+    },
+    {
+      "quantity": 4,
+      "description": "M3 x 4 mm (drive screws; head/torque UNKNOWN)"
+    }
+  ]
+}
