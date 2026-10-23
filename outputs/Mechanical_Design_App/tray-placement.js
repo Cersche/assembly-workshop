@@ -5,8 +5,8 @@
 (function(root){
   'use strict';
   // ---- Pure logic (Node-testable). Mirrors equipment.PLACEMENT_KEYS, clean() and equipment_tray.scad asserts.
-  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','rear_style','u','front_position','front_setback','bezel','bezel_size','sleeve_top','feet_style','rear_floor_opening','insert_bosses'];
-  const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,rear_openings:false,u:1,front_position:'today',front_setback:16,bezel:'none',bezel_size:1,sleeve_top:.3,feet_style:'pockets',rear_floor_opening:false,insert_bosses:false};
+  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','rear_style','u','front_position','front_setback','bezel','bezel_size','sleeve_top','feet_style','rear_floor_opening','insert_bosses','hidden_joint'];
+  const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,rear_openings:false,u:1,front_position:'today',front_setback:16,bezel:'none',bezel_size:1,sleeve_top:.3,feet_style:'pockets',rear_floor_opening:false,insert_bosses:false,hidden_joint:false};
   const FRONT_GAP=12,MARGIN=8,RACK_INNER_W=208,SIDE_CLEAR=2,MAX_TRAY=RACK_INNER_W-2*SIDE_CLEAR,RACK_DEPTH=240,PITCH=44.45,PLATE_HALF=126,PLATE_T=4,TRAY_T=3;
   const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
   const REAR_STYLES={solid:['Solid','Plain plate'],open:['Open','Original cable windows'],reinforced:['Reinforced','Wider bands and inner top/end lips; ends shorten to clear rear joints'],slots:['Cable slots','Rounded upper and centre cable slots'],vents:['Vents','Dense round vents, centre cable slot and inner top/end lips; ends shorten to clear rear joints']};
@@ -28,7 +28,7 @@
   }
   function layout(spec,v){
     const turned=v.dev_rot===90||v.dev_rot===270,w=+spec.dev_w,d=+spec.dev_d;
-    const fp_w=turned?d:w,fp_d=turned?w:d,tray_w=2*(Math.abs(v.dev_off_x)+fp_w/2+(v.device_mount==='sleeve'?Math.max(MARGIN,PO().SLEEVE.side+PO().SLEEVE.wall,v.insert_bosses?PO().SLEEVE.side+V2.pilotOffset+V2.bossR:0):MARGIN));
+    const fp_w=turned?d:w,fp_d=turned?w:d,tray_w=2*(Math.abs(v.dev_off_x)+fp_w/2+(v.device_mount==='sleeve'?Math.max(MARGIN,PO().SLEEVE.side+PO().SLEEVE.wall,v.insert_bosses?PO().SLEEVE.side+V2.pilotOffset+V2.bossR:0,v.hidden_joint?PO().SLEEVE.side+PO().SLEEVE.wall+PO().SLEEVE.hiddenGap+2*PO().SLEEVE.hiddenHalf:0):MARGIN));
     const dev_x=-fp_w/2+v.dev_off_x,dev_y=PO().deviceY({...spec,...v});
     const tray_d=v.rear_support?RACK_DEPTH:dev_y+fp_d+MARGIN;
     const lift=PO().deviceLift({...spec,...v});
@@ -37,8 +37,8 @@
   // PROPOSED nominal opening and 2 mm clearance per side; never rotates the device.
   function widthProblem(spec,v=values(spec)){
     const L=layout(spec,v);if(L.tray_w<=MAX_TRAY)return '';
-    const hint=2*Math.abs(v.dev_off_x)+L.fp_d+2*(v.device_mount==='sleeve'?Math.max(MARGIN,PO().SLEEVE.side+PO().SLEEVE.wall,v.insert_bosses?PO().SLEEVE.side+V2.pilotOffset+V2.bossR:0):MARGIN)<=MAX_TRAY?' Too wide this way round; it fits if you press Rotate 90°.':'';
-    return `This tray is ${mm(L.tray_w)} mm wide but the rack opening allows ${MAX_TRAY} mm (${RACK_INNER_W} mm minus ${SIDE_CLEAR} mm each side).`+(v.dev_off_x?' Move the device less far sideways.':'')+hint;
+    const hint=2*Math.abs(v.dev_off_x)+L.fp_d+2*(v.device_mount==='sleeve'?Math.max(MARGIN,PO().SLEEVE.side+PO().SLEEVE.wall,v.insert_bosses?PO().SLEEVE.side+V2.pilotOffset+V2.bossR:0,v.hidden_joint?PO().SLEEVE.side+PO().SLEEVE.wall+PO().SLEEVE.hiddenGap+2*PO().SLEEVE.hiddenHalf:0):MARGIN)<=MAX_TRAY?' Too wide this way round; it fits if you press Rotate 90°.':'';
+    return `This tray is ${mm(L.tray_w)} mm wide but the rack opening allows ${MAX_TRAY} mm (${RACK_INNER_W} mm minus ${SIDE_CLEAR} mm each side).`+(v.dev_off_x?' Move the device less far sideways.':'')+hint+(v.hidden_joint&&v.device_mount==='sleeve'?' The hidden screw joint adds about 20 mm of tray beside each sleeve wall; turn it off for a wider device.':'');
   }
   // equipment_tray.scad dp(): device-frame point (front-left origin) -> footprint offset after rotation.
   function dp(spec,rot,p){const w=+spec.dev_w,d=+spec.dev_d;
@@ -93,10 +93,12 @@
     if(!fin(v.bezel_size)||v.bezel_size<.5||v.bezel_size>1.5)out.push('Bezel size must be 0.5 to 1.5 mm.');
     if(!fin(v.sleeve_top)||v.sleeve_top<V2.topDefault||v.sleeve_top>V2.topMax)out.push('Top play must be 0.3 to 2 mm.');
     if(!['pockets','grooves'].includes(v.feet_style))out.push('Feet must be pockets or grooves.');
-    for(const k of ['rear_floor_opening','insert_bosses'])if(typeof v[k]!=='boolean')out.push(k+' must be true or false.');
+    for(const k of ['rear_floor_opening','insert_bosses','hidden_joint'])if(typeof v[k]!=='boolean')out.push(k+' must be true or false.');
     if(v.sleeve_top!==V2.topDefault&&v.device_mount!=='sleeve')out.push('Top play is only available for a sleeve.');
     if(v.feet_style==='grooves'&&(!['flat','sleeve'].includes(v.device_mount)||!(spec.feet||[]).length))out.push('Foot grooves need a flat or sleeve mount with feet.');
     if(v.insert_bosses&&(v.device_mount!=='sleeve'||v.joint!=='screw'))out.push('Stronger insert bosses need a sleeve with a screw joint.');
+    if(v.hidden_joint&&(v.device_mount!=='sleeve'||v.joint!=='screw'))out.push('Hidden screws need a sleeve with a screw joint.');
+    if(v.hidden_joint&&v.insert_bosses)out.push('Hidden screws and stronger insert bosses cannot be combined.');
     if(v.rear_floor_opening&&!v.rear_support)out.push('Cable opening in floor needs rear support.');
     if(out.length)return out;
     try{footGrooves(spec,v);rearFloorGeometry(spec,v);}catch(e){return [e.message];}
@@ -135,7 +137,8 @@
       if(sw){if(L.fp_d/4-4-6<8)out.push('Sleeve depth must be at least 72 mm to keep strap slots clear of the front joint.');if(sw.bottom-P.plateBottom<P.SLEEVE.band||v.u*PITCH-P.plateBottom-sw.top<P.SLEEVE.band)out.push(`Too tall for a flush window in ${v.u}U; choose ${v.u+1}U`);
         if(v.rear_support&&sw.stop_end>RACK_DEPTH-11.5)out.push('Sleeve rear stop and device must clear the rear screw joint by at least 11.5 mm.');
         if(v.joint==='screw'&&sw.height<10)out.push('Sleeve screw joint needs a window at least 10 mm tall; choose a single printed piece.');
-        if(v.joint==='screw'&&filtered.ports.some(p=>sw.joints.some(x=>Math.abs(p.x-x)<P.SLEEVE.wall/2+p.w/2&&p.z+p.h/2>sw.bottom&&p.z-p.h/2<sw.top)))out.push('A front opening overlaps a sleeve wall joint; move or remove it.');}
+        if(sw.hidden&&filtered.ports.some(p=>sw.joints.some(x=>Math.abs(p.x-x)<P.JOINT_HALF+P.JOINT_CLEAR+p.w/2&&p.z-p.h/2<P.SLEEVE.hiddenTop+P.JOINT_CLEAR)))out.push('A front opening sits in front of the hidden screw joint; move or remove it.');
+        if(!sw.hidden&&v.joint==='screw'&&filtered.ports.some(p=>sw.joints.some(x=>Math.abs(p.x-x)<P.SLEEVE.wall/2+p.w/2&&p.z+p.h/2>sw.bottom&&p.z-p.h/2<sw.top)))out.push('A front opening overlaps a sleeve wall joint; move or remove it.');}
       out.push(...P.problems(filtered.ports,v.u,ks));const j=joints(spec,v);if(j&&j.problem)out.push(j.problem);}
     return out;
   }
@@ -229,6 +232,7 @@
     const pockets=footPockets(spec,v),pocketSketch=[],pz=PO().floorZ(v)+TRAY_T+0.01,border=0.6;for(const p of pockets){pocketSketch.push(...box(p.x0,p.y0,pz,p.x1,p.y0+border,pz+0.08),...box(p.x0,p.y1-border,pz,p.x1,p.y1,pz+0.08),...box(p.x0,p.y0+border,pz,p.x0+border,p.y1-border,pz+0.08),...box(p.x1-border,p.y0+border,pz,p.x1,p.y1-border,pz+0.08));}
     if(v.feet_style==='grooves')try{for(const t of footGrooves(spec,v))pocketSketch.push(...box(t.x0,Math.max(0,t.y0),pz,t.x1,t.y1,pz+.08));}catch(e){}
     if(v.rear_floor_opening)try{const q=rearFloorGeometry(spec,v);pocketSketch.push(...box(q.x0,q.y0,pz,q.x1,q.y1,pz+.08));}catch(e){}
+    if(v.hidden_joint&&sw&&sw.hidden){const fz=PO().floorZ(v);for(const x of sw.joints)posts.push(...box(x-9,0,fz+3,x+9,8,fz+8),...box(x-7,8.3,fz+3,x+7,11.3,fz+22),...box(x-4.5,0,fz+14-4.5,x+4.5,8,fz+14+4.5));}  // tongue block, upright and plate boss of the hidden joint
     if(v.insert_bosses&&sw)for(const x of sw.joints)for(const z of sw.joint_z){const inside=sw.x+(x<sw.x?-sw.half:sw.half);posts.push(...box(x<sw.x?x-V2.bossR:inside,0,Math.max(PO().floorZ(v),z-V2.bossR),x<sw.x?inside:x+V2.bossR,V2.bossDepth,Math.min(sw.top+sw.lip,z+V2.bossR)));}
     const sets=[{v:plate,color:[78,117,163],alpha:1},{v:tray.concat(posts),color:[77,142,110],alpha:1},
       ...(pocketSketch.length?[{v:pocketSketch,color:[28,42,36],alpha:1}]:[]),{v:box(L.dev_x,L.dev_y,L.lift,L.dev_x+L.fp_w,L.dev_y+L.fp_d,L.lift+ +spec.dev_h),color:[230,195,92],alpha:0.55,device:true},
@@ -378,7 +382,8 @@
       h('div',{class:'ew-row'},'Feet:',chips({pockets:'Pockets',grooves:'Grooves'},v.feet_style,k=>v.feet_style=k)),
       h('p',{class:'ew-note'},'Grooves lift the case 0.5 mm while sliding, then dip at the feet. Fit and retention UNKNOWN.'),
       toggleV2('rear_floor_opening','Cable opening in floor','Needs rear support; cable fit UNKNOWN.'),
-      toggleV2('insert_bosses','Stronger insert bosses','Sleeve + screw joint; strength UNKNOWN.')]:[];
+      toggleV2('insert_bosses','Stronger insert bosses','Sleeve + screw joint; strength UNKNOWN.'),
+      toggleV2('hidden_joint','Hidden screws','Faceplate screws go in from behind, outside the sleeve walls; device up to about 150 mm wide; strength UNKNOWN.')]:[];
     const styles=h('div',{class:'ew-choices',role:'group','aria-label':'Rear bracket'},h('span',{},'Rear bracket:'),...Object.entries(REAR_STYLES).map(([key,[label]])=>{const b=h('button',{type:'button',class:'ew-chip'+(rearStyle(v)===key?' on':''),'aria-pressed':String(rearStyle(v)===key)},label);b.onclick=()=>{v.rear_style=key;render();};return b;}));
     const cv=h('canvas',{id:'tpView',class:'ew-view tp-view'});
     const exact=h('button',{type:'button'},'Render exact preview');

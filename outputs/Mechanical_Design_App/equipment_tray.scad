@@ -68,6 +68,7 @@ sl_pilot_offset=sl_pilot_inside+sl_pilot_radius; sl_boss_fn=48; sl_boss_r=(sl_pi
 foot_tracks=[]; foot_dips=[]; floor_cable_box=[];
 groove_attach=0.8; v2_eps=0.1; v2_tol=0.000000001; floor_cable_r=2; slot_bottom=0;
 floor_cable_min=10; floor_stop_clear=4; floor_joint_clear=3; floor_wall_clear=5; rear_floor_joint_half=9; rear_floor_joint_reach=11.3;
+hidden_joint=false; hj_gap=2; hj_half=9;
 sl_side=0.5; sl_top=sleeve_top+(feet_style=="grooves"?sl_ride:0); sl_wall=6; sl_lip_w=10; sl_lip_t=1.5; sl_band=1.5; sl_stop_t=4; sl_stop_h=6;
 foot_clearance=0.5; foot_extra_depth=0.3; foot_min_floor=0.8; foot_lip_t=3.0;
 tray_t=3; floor_z=(device_mount=="flat"||sleeve)?0.5:7+legacy_slot_offset; tray_z=floor_z; // @flat-floor
@@ -75,7 +76,7 @@ assert(dev_rot==0||dev_rot==90||dev_rot==180||dev_rot==270,"dev_rot must be 0, 9
 // Device footprint on the tray after rotation; the tray stays centred and grows to keep the margin.
 fp_w=(dev_rot==90||dev_rot==270)?dev_d:dev_w; fp_d=(dev_rot==90||dev_rot==270)?dev_w:dev_d;
 rack_inner_w=208; side_clear=2; max_tray=rack_inner_w-2*side_clear; // PROPOSED nominal opening / side clearance
-tray_w=2*(abs(dev_off_x)+fp_w/2+(sleeve?max(margin,sl_side+sl_wall,insert_bosses?sl_side+sl_pilot_offset+sl_boss_r:0):margin)); tray_d=rear_support?rack_depth:sleeve?-plate_t+fp_d+margin:dev_off_y+fp_d+front_gap+margin;
+tray_w=2*(abs(dev_off_x)+fp_w/2+(sleeve?max(margin,sl_side+sl_wall,insert_bosses?sl_side+sl_pilot_offset+sl_boss_r:0,hidden_joint?sl_side+sl_wall+hj_gap+2*hj_half:0):margin)); tray_d=rear_support?rack_depth:sleeve?-plate_t+fp_d+margin:dev_off_y+fp_d+front_gap+margin;
 tray_x=-tray_w/2; tray_y=0;
  // @flat-begin
 assert(device_mount!="flat"||front_gap+dev_off_y>=6.2,"Flat corner stops need a front gap of at least 6.2 mm");
@@ -94,6 +95,9 @@ sl_lip=sl_window_top+(foot_h>0?foot_lip_t:sl_lip_t)<=u*rack_pitch?(foot_h>0?foot
 sl_rear=dev_y+fp_d;
 sl_joints=[dev_off_x-sl_half-(insert_bosses?sl_pilot_offset:sl_wall/2),dev_off_x+sl_half+(insert_bosses?sl_pilot_offset:sl_wall/2)];
 sl_joint_z=[sl_bottom+3,sl_window_top-3];
+hj_x=[dev_off_x-sl_half-sl_wall-hj_gap-hj_half,dev_off_x+sl_half+sl_wall+hj_gap+hj_half];  // hidden joint centres (outside the sleeve walls)
+function jon(r)=joint=="screw"&&(!sleeve||r||hidden_joint);  // is the tongue/boss joint built here?
+function jxs(r)=(hidden_joint&&!r)?hj_x:joint_x;  // front joint X (the rear bracket keeps joint_x)
 assert(!sleeve||fp_d/4-plate_t-6>=8,"Sleeve depth must be at least 72 mm to keep strap slots clear of the front joint");
 assert(!sleeve||sl_bottom-plate_bottom>=sl_band&&u*rack_pitch-plate_bottom-sl_window_top>=sl_band,str("Too tall for a flush window in ",u,"U; choose ",u+1,"U"));
 assert(!sleeve||!rear_support||sl_rear+sl_stop_t<=rack_depth-11.5,"Sleeve rear stop must clear rear joint by 11.5 mm");
@@ -160,9 +164,9 @@ module plate2d(rear=false,plain=false){
 module plate_layer(y0,t,rear=false,plain=false){translate([0,y0+t,0])rotate([90,0,0])linear_extrude(height=t)plate2d(rear,plain);}
 
 module plate_joint_add(rear=false){
- if(joint=="screw"&&(!sleeve||rear)){
-  for(x=joint_x)translate([x-tongue_w/2,0,tongue_z])cube([tongue_w,tongue_depth,tongue_h]);
-  for(x=joint_x)translate([x,0,tray_z+14])rotate([-90,0,0])cylinder(d=boss_d,h=8);
+ if(jon(rear)){
+  for(x=jxs(rear))translate([x-tongue_w/2,0,tongue_z])cube([tongue_w,tongue_depth,tongue_h]);
+  for(x=jxs(rear))translate([x,0,tray_z+14])rotate([-90,0,0])cylinder(d=boss_d,h=8);
  }
  if(joint=="snap") for(x=joint_x){
   // Cantilever arm under the tray floor; barb snaps up into a floor window.
@@ -212,7 +216,7 @@ module ks_golden(){for(k=keystones)let(x=is_list(k)?k[0]:k,kz=is_list(k)&&len(k)
  translate([x-10.5,-plate_t-1,kz-15])cube([21,plate_t+16,33.5]);
 }}
 module ks_box_cut(){for(k=keystones)let(x=is_list(k)?k[0]:k,kz=is_list(k)&&len(k)>1?k[1]:plate_center)translate([x-10.5,-plate_t-0.01,kz-15])cube([21,plate_t+0.02,33.5]);}
-module plate_joint_cut(rear=false){if(joint=="screw"&&(!sleeve||rear))for(x=joint_x)translate([x,-0.1,tray_z+14])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.2);}
+module plate_joint_cut(rear=false){if(jon(rear))for(x=jxs(rear))translate([x,-0.1,tray_z+14])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.2);}
 
 module faceplate(){
  union(){
@@ -223,7 +227,7 @@ module faceplate(){
     plate_joint_add();
    }
    plate_joint_cut();
-   if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)translate([x,-plate_t-0.1,z])rotate([-90,0,0])cylinder(d=m3_clear,h=plate_t+0.2);
+   if(sleeve&&joint=="screw"&&!hidden_joint)for(x=sl_joints,z=sl_joint_z)translate([x,-plate_t-0.1,z])rotate([-90,0,0])cylinder(d=m3_clear,h=plate_t+0.2);
    if(ks_style=="v2")ks_cut(); else ks_box_cut();
   }
   if(ks_style!="v2")ks_golden();
@@ -269,7 +273,7 @@ module device_features_add(){
 }
 module device_features_cut(){
  sleeve_v2_cut();
- if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)translate([x,-0.1,z])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.1);
+ if(sleeve&&joint=="screw"&&!hidden_joint)for(x=sl_joints,z=sl_joint_z)translate([x,-0.1,z])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.1);
  // Strap access through each wall at quarter-depth, clear of the front/rear joints.
  if(sleeve)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
   translate([side<0?dev_off_x-sl_half-sl_wall-0.1:dev_off_x+sl_half-0.1,y-6,floor_top-0.1])cube([sl_wall+0.2,12,3.1]);
@@ -283,19 +287,19 @@ module device_features_cut(){
 }
 
 module tray_joint_add(rear=false){
- if(joint=="screw"&&(!sleeve||rear)){
-  for(x=joint_x) translate([x-9,0,tray_z+tray_t])cube([18,8,5]);
-  for(x=joint_x)translate([x-7,8.3,tray_z+3])cube([14,3,19]);
-  for(x=joint_x) for(side=[-1,1]) translate([x+side*6-1,0,0])
+ if(jon(rear)){
+  for(x=jxs(rear)) translate([x-9,0,tray_z+tray_t])cube([18,8,5]);
+  for(x=jxs(rear))translate([x-7,8.3,tray_z+3])cube([14,3,19]);
+  for(x=jxs(rear)) for(side=[-1,1]) translate([x+side*6-1,0,0])
     hull(){translate([0,9,tray_z+2.7])cube([2,2,0.5]);
            translate([0,9,tray_z+8])cube([2,2,0.5]);
            translate([0,(device_mount=="flat"||sleeve)?9.5:20,tray_z+2.7])cube([2,2,0.5]);}
  }
 }
 module tray_joint_cut(rear=false){
- if(joint=="screw"&&(!sleeve||rear)){
-  for(x=joint_x)translate([x-(tongue_w+slot_clear)/2,-0.1,tongue_z-slot_clear/2])cube([tongue_w+slot_clear,tongue_depth+slot_clear,tongue_h+slot_clear]);
-  for(x=joint_x)translate([x,11.4,tray_z+14])rotate([90,0,0])cylinder(d=m3_clear,h=12);
+ if(jon(rear)){
+  for(x=jxs(rear))translate([x-(tongue_w+slot_clear)/2,-0.1,tongue_z-slot_clear/2])cube([tongue_w+slot_clear,tongue_depth+slot_clear,tongue_h+slot_clear]);
+  for(x=jxs(rear))translate([x,11.4,tray_z+14])rotate([90,0,0])cylinder(d=m3_clear,h=12);
  }
  if(joint=="snap")for(x=joint_x)translate([x-4.3,11.6,tray_z-0.1])cube([8.6,3.2,tray_t+0.2]);
 }
@@ -365,3 +369,5 @@ module sleeve_v2_cut(){
  if(rear_floor_opening)let(q=floor_cable_box)translate([(q[0]+q[1])/2,(q[2]+q[3])/2,slot_bottom-v2_eps])linear_extrude(height=floor_top-slot_bottom+2*v2_eps)rrect(q[1]-q[0],q[3]-q[2],floor_cable_r);
 }
 // @sleeve-v2-end
+assert(!hidden_joint||(sleeve&&joint=="screw"&&!insert_bosses),"Hidden joint needs a sleeve with a screw joint and no insert bosses");
+assert(!hidden_joint||max([for(x=hj_x)abs(x)])+hj_half<=118.2625-5-3,"Hidden joint must keep 3 mm from the rack slots");

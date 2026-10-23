@@ -2,6 +2,10 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-22 Task 41: hidden faceplate screws, opt-in (read first)
+
+Brian: faceplate screws must be used but not seen. New sleeve-only key `hidden_joint` (default off): the plate front loses its screw holes and the printed non-sleeve tongue/boss/upright joint is placed outside the sleeve walls (devices up to ~150 mm wide); screws go in from behind, BEFORE the rear bracket is attached. Done by Claude directly: 200 Py + JS checks pass, exact renders closed, 19 legacy sources byte-identical. Not done: UI click-through of the new "Hidden screws" toggle, any print (no coupon yet, Brian: too early). Fit/strength UNKNOWN. Report: work/codex-tasks/41-hidden-faceplate-screws-REPORT.md.
+
 ## 2026-10-22 U numbering (U1 = bottom) + 9U rack saved (read first)
 
 - **U numbers now count from the BOTTOM everywhere** (rack list, properties, guides, exits, Place on tray, Review, cable sheet/CSV, suggestions, zip names). Display-only: stored `slot` numbers still count from the top, label = `slots - slot + 1`; a multi-U plate shows as `U03–U05`. Guide ▲/▼ and all physical positions are unchanged. Helpers: `uNum/uText` in workspace.js, `window.rackUText` for tray-placement.js, local copies in the cable-* files. Checks: 195 Python + all JS pass (cable tests and rack-bom.js updated to the new numbers; the old rack-bom `window is not defined` failure no longer reproduces). Browser-checked on a disposable copy (port 8870): a 5-slot rack lists U05 at the top.

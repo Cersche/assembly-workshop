@@ -4,7 +4,7 @@
   const RACK_PITCH=44.45,PLATE_GAP=0.05,LEGACY_SLOT_OFFSET=1.225;
   const plateHeight=u=>u*RACK_PITCH-PLATE_GAP,plateBottom=PLATE_GAP/2;
   // PROPOSED defaults: independent sleeve, nominal clearances; fit/strength UNKNOWN.
-  const SLEEVE=Object.freeze({side:0.5,top:0.3,wall:6,lipW:10,lipT:1.5,band:1.5,stopT:4,stopH:6});
+  const SLEEVE=Object.freeze({side:0.5,top:0.3,wall:6,lipW:10,lipT:1.5,band:1.5,stopT:4,stopH:6,hiddenGap:2,hiddenHalf:9,hiddenTop:22.5});
   const FOOT=Object.freeze({clearance:0.5,extraDepth:0.3,minFloor:0.8,lipT:3.0});
   const footHeight=s=>['flat','sleeve'].includes(s.device_mount)?Math.max(0,...(s.feet||[]).map(f=>+f.h||0)):0;
   const pocketDepth=s=>footHeight(s)+FOOT.extraDepth;
@@ -12,7 +12,10 @@
   function sleeve(s){if(s.device_mount!=='sleeve')return null;
     const turned=[90,270].includes(+s.dev_rot),w=+(turned?s.dev_d:s.dev_w),d=+(turned?s.dev_w:s.dev_d),x=+(s.dev_off_x||0),bottom=3.5,half=w/2+SLEEVE.side,top=bottom+deviceCaseHeight(s)+SLEEVE.top;
     const lipT=footHeight(s)?FOOT.lipT:SLEEVE.lipT;
-    return {x,half,bottom,top,width:half*2,height:top-bottom,outside:w+2*(SLEEVE.side+SLEEVE.wall),lip:top+lipT<=(+s.u||1)*RACK_PITCH?lipT:0,rear:-4+d,stop_end:-4+d+SLEEVE.stopT,joints:[x-half-SLEEVE.wall/2,x+half+SLEEVE.wall/2],joint_z:[bottom+3,top-3]};
+    const out={x,half,bottom,top,width:half*2,height:top-bottom,outside:w+2*(SLEEVE.side+SLEEVE.wall),lip:top+lipT<=(+s.u||1)*RACK_PITCH?lipT:0,rear:-4+d,stop_end:-4+d+SLEEVE.stopT,joints:[x-half-SLEEVE.wall/2,x+half+SLEEVE.wall/2],joint_z:[bottom+3,top-3]};
+    if(s.hidden_joint===true){const reach=half+SLEEVE.wall+SLEEVE.hiddenGap+SLEEVE.hiddenHalf; // hidden joint: no plate screw holes; joint outside the walls
+      Object.assign(out,{joints:[x-reach,x+reach],joint_z:[],hidden:true,outside:w+2*(SLEEVE.side+SLEEVE.wall+SLEEVE.hiddenGap+2*SLEEVE.hiddenHalf)});}
+    return out;
   }
   function sleevePorts(ports,s){const w=frontWindow(s),kept=[],dropped=[],errors=[];if(!w)return {ports:ports||[],dropped,errors};
     for(const p of ports||[]){const x0=p.x-p.w/2,x1=p.x+p.w/2,z0=p.z-p.h/2,z1=p.z+p.h/2;

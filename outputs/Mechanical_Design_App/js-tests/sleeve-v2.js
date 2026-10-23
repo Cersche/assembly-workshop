@@ -34,3 +34,26 @@ test('sleeve v2 control labels and source hooks are wired without persistence',(
  const ui=fs.readFileSync(path.join(__dirname,'../tray-placement.js'),'utf8');for(const label of ['Top play (mm)','Feet:','Grooves','Cable opening in floor','Stronger insert bosses'])assert.ok(ui.includes(label),label);
  const scad=fs.readFileSync(path.join(__dirname,'../equipment_tray.scad'),'utf8');assert.doesNotMatch(scad,/if\(sleeve&&feet_style=="grooves"\)sleeve_v2_cut\(\);/);assert.match(scad,/module device_features_cut\(\)\{\r?\n sleeve_v2_cut\(\);/);assert.match(scad,/sl_joints=.*sl_pilot_offset/);
 });
+
+// Task 41: opt-in hidden faceplate screws (analytical only; fit and strength UNKNOWN).
+const hidden={name:'HJ',dev_w:120,dev_d:100,dev_h:30,u:1,device_mount:'sleeve',joint:'screw',rear_support:false,dev_rot:0,holes:[],ports:[],keystones:[]};
+test('hidden joint moves the screws outside the sleeve walls and removes the plate holes',()=>{
+ const off=T.values(hidden),on=T.values(hidden,{hidden_joint:true}),w=T.sleeveGeometry({...hidden,...on});
+ assert.equal(off.hidden_joint,false);assert.deepEqual(T.diff(hidden,on),{hidden_joint:true});assert.deepEqual(T.problems(hidden,on),[]);
+ assert.deepEqual(w.joints,[-77.5,77.5]);assert.deepEqual(w.joint_z,[]);assert.equal(w.hidden,true);close(w.outside,173);close(T.layout(hidden,on).tray_w,173);
+ assert.deepEqual(T.sleeveGeometry({...hidden,...off}).joint_z.length,2);close(T.layout(hidden,off).tray_w,T.layout(hidden,T.values(hidden,{hidden_joint:false})).tray_w);
+ assert.deepEqual(require('../port-openings.js').sleeve({...hidden,hidden_joint:true}).joint_z,[]);
+});
+test('hidden joint limits: width, combinations, openings in front of the joint',()=>{
+ const wide={...hidden,dev_w:160};assert.match(T.widthProblem(wide,T.values(wide,{hidden_joint:true})),/204[\s\S]*hidden screw joint/);
+ close(T.layout({...hidden,dev_w:150},T.values({...hidden,dev_w:150},{hidden_joint:true})).tray_w,203);assert.equal(T.widthProblem({...hidden,dev_w:150},T.values({...hidden,dev_w:150},{hidden_joint:true})),'');
+ assert.match(T.problems(hidden,T.values(hidden,{hidden_joint:true,insert_bosses:true})).join(' '),/cannot be combined/);
+ const flat={...hidden,device_mount:'inserts',holes:[[5,5]]};assert.match(T.problems(flat,T.values(flat,{hidden_joint:true})).join(' '),/need a sleeve/);
+ assert.ok(T.problems(hidden,T.values(hidden,{hidden_joint:'yes'})).length);
+ const low={...hidden,ports:[{x:77.5,z:12,w:8,h:5,r:1,label:'P'}]},high={...hidden,ports:[{x:77.5,z:30,w:8,h:5,r:1,label:'P'}]};
+ assert.match(T.problems(low,T.values(low,{hidden_joint:true})).join(' '),/hidden screw joint/);assert.deepEqual(T.problems(high,T.values(high,{hidden_joint:true})),[]);
+});
+test('hidden joint control and template hooks exist',()=>{
+ const ui=fs.readFileSync(path.join(__dirname,'../tray-placement.js'),'utf8');assert.ok(ui.includes('Hidden screws'));
+ const scad=fs.readFileSync(path.join(__dirname,'../equipment_tray.scad'),'utf8');for(const hook of ['hidden_joint=false;','function jon(r)','function jxs(r)','if(jon(rear))','&&!hidden_joint)for(x=sl_joints'])assert.ok(scad.includes(hook),hook);
+});

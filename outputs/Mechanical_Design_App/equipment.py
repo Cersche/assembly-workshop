@@ -63,7 +63,7 @@ def _port_id(port, face, index):
 # library specs still carry them, and those values stay the defaults when an allocation has none.
 PLACEMENT_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'standoff', 'insert_pilot', 'board_t',
                   'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size',
-                  'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses')
+                  'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint')
 
 
 def export_quality(s):
@@ -92,7 +92,7 @@ def placement_settings(value):
             if not isinstance(v, list) or len(v) > 12 or any(type(x) not in (int, float) or isinstance(x, bool) for x in v):
                 raise ValueError('Keystones must be a list of positions.')
             v = list(v)
-        elif key in ('rear_support', 'rear_openings', 'rear_floor_opening', 'insert_bosses'):
+        elif key in ('rear_support', 'rear_openings', 'rear_floor_opening', 'insert_bosses', 'hidden_joint'):
             if type(v) is not bool:
                 raise ValueError('Rear support must be true or false.')
         elif key == 'feet_style':
@@ -331,7 +331,7 @@ INSERT_BOSS_R = (PILOT_RADIUS+INSERT_OUTSIDE)/math.cos(math.pi/BOSS_FACETS)
 FLOOR_OPEN_W, FLOOR_OPEN_D, FLOOR_OPEN_R, FLOOR_OPEN_MIN = 60, 30, 2, 10
 FLOOR_STOP_CLEAR, FLOOR_JOINT_CLEAR, FLOOR_WALL_CLEAR = 4, 3, 5
 REAR_FLOOR_JOINT_REACH = 11.3
-V2_DEFAULTS = dict(sleeve_top=.3, feet_style='pockets', rear_floor_opening=False, insert_bosses=False)
+V2_DEFAULTS = dict(sleeve_top=.3, feet_style='pockets', rear_floor_opening=False, insert_bosses=False, hidden_joint=False)
 SLEEVE_HEADER = '// PROPOSED sleeve defaults (mm); independent design, fit and strength UNKNOWN.\n'
 # The v2 parameters sit before their first use: OpenSCAD evaluates a variable where it is first assigned.
 V2_PARAMS = (
@@ -355,6 +355,33 @@ V2_REPLACEMENTS = {
         'if(feet_style!="grooves"&&foot_h>0&&(device_mount=="flat"||sleeve))for(f=feet)',
 }
 
+# Hidden faceplate joint (Brian, 2026-10-22, task 41): opt-in; the sleeve's faceplate screws leave the plate front and
+# the proven tongue/boss/upright joint moves outside the sleeve walls. Pairs are (without, with): specs without
+# hidden_joint get the "without" text, so their generated sources stay byte-identical. Fit/strength UNKNOWN.
+HJ_REPLACEMENTS = (
+    ('rear_floor_joint_half=9; rear_floor_joint_reach=11.3;\n',
+     'rear_floor_joint_half=9; rear_floor_joint_reach=11.3;\nhidden_joint=false; hj_gap=2; hj_half=9;\n'),
+    ('insert_bosses?sl_side+sl_pilot_offset+sl_boss_r:0)',
+     'insert_bosses?sl_side+sl_pilot_offset+sl_boss_r:0,hidden_joint?sl_side+sl_wall+hj_gap+2*hj_half:0)'),
+    ('sl_joint_z=[sl_bottom+3,sl_window_top-3];',
+     'sl_joint_z=[sl_bottom+3,sl_window_top-3];\n'
+     'hj_x=[dev_off_x-sl_half-sl_wall-hj_gap-hj_half,dev_off_x+sl_half+sl_wall+hj_gap+hj_half];  // hidden joint centres (outside the sleeve walls)\n'
+     'function jon(r)=joint=="screw"&&(!sleeve||r||hidden_joint);  // is the tongue/boss joint built here?\n'
+     'function jxs(r)=(hidden_joint&&!r)?hj_x:joint_x;  // front joint X (the rear bracket keeps joint_x)'),
+    ('if(joint=="screw"&&(!sleeve||rear)){\n  for(x=joint_x)translate([x-tongue_w/2', 'if(jon(rear)){\n  for(x=jxs(rear))translate([x-tongue_w/2'),
+    ('  for(x=joint_x)translate([x,0,tray_z+14])rotate([-90,0,0])cylinder(d=boss_d', '  for(x=jxs(rear))translate([x,0,tray_z+14])rotate([-90,0,0])cylinder(d=boss_d'),
+    ('module plate_joint_cut(rear=false){if(joint=="screw"&&(!sleeve||rear))for(x=joint_x)translate', 'module plate_joint_cut(rear=false){if(jon(rear))for(x=jxs(rear))translate'),
+    ('if(sleeve&&joint=="screw")for(x=sl_joints,z=sl_joint_z)', 'if(sleeve&&joint=="screw"&&!hidden_joint)for(x=sl_joints,z=sl_joint_z)'),
+    ('if(joint=="screw"&&(!sleeve||rear)){\n  for(x=joint_x) translate([x-9,0,tray_z+tray_t])cube([18,8,5]);\n  for(x=joint_x)translate([x-7,8.3,tray_z+3])cube([14,3,19]);\n  for(x=joint_x) for(side=[-1,1])',
+     'if(jon(rear)){\n  for(x=jxs(rear)) translate([x-9,0,tray_z+tray_t])cube([18,8,5]);\n  for(x=jxs(rear))translate([x-7,8.3,tray_z+3])cube([14,3,19]);\n  for(x=jxs(rear)) for(side=[-1,1])'),
+    ('if(joint=="screw"&&(!sleeve||rear)){\n  for(x=joint_x)translate([x-(tongue_w+slot_clear)/2', 'if(jon(rear)){\n  for(x=jxs(rear))translate([x-(tongue_w+slot_clear)/2'),
+    ('  for(x=joint_x)translate([x,11.4,tray_z+14])', '  for(x=jxs(rear))translate([x,11.4,tray_z+14])'),
+    ('// @sleeve-v2-end\n',
+     '// @sleeve-v2-end\n'
+     'assert(!hidden_joint||(sleeve&&joint=="screw"&&!insert_bosses),"Hidden joint needs a sleeve with a screw joint and no insert bosses");\n'
+     'assert(!hidden_joint||max([for(x=hj_x)abs(x)])+hj_half<=118.2625-5-3,"Hidden joint must keep 3 mm from the rack slots");\n'),
+)
+
 
 def window_spec(spec):
     """Adapt the shared opening planner without changing its legacy API or sources."""
@@ -377,7 +404,7 @@ def tray_width(spec):
     fw = spec['dev_d'] if spec.get('dev_rot') in (90, 270) else spec['dev_w']
     win = sleeve_geometry(spec)
     half = fw/2 + (max(MARGIN, port_openings.SLEEVE_SIDE+port_openings.SLEEVE_WALL) if win else MARGIN)
-    if win and spec.get('insert_bosses'): half = max(half, win['outside']/2)
+    if win and (spec.get('insert_bosses') or win.get('hidden')): half = max(half, win['outside']/2)
     return 2*(abs(spec.get('dev_off_x', 0))+half)
 
 
@@ -659,6 +686,8 @@ def template_source(spec):
         for old, new in DRIVE_REPLACEMENTS.items(): text = text.replace(new, old)
     if not spec.get('faceplate_only'):
         for old,new in KEYSTONE_Z_REPLACEMENTS.items(): text=text.replace(new,old)
+    if not spec.get('hidden_joint'):
+        for old, new in HJ_REPLACEMENTS: text = text.replace(new, old)
     if not any(k in spec for k in V2_DEFAULTS):
         text = text.split('// @sleeve-v2-begin\n')[0]
         for old, new in V2_REPLACEMENTS.items(): text = text.replace(new, old)
@@ -761,6 +790,13 @@ def clean(spec):
         raise ValueError('Foot grooves need a flat or sleeve mount with feet.')
     if s.get('insert_bosses') and (s['device_mount'] != 'sleeve' or s['joint'] != 'screw'):
         raise ValueError('Stronger insert bosses need a sleeve with a screw joint.')
+    if s.get('hidden_joint'):
+        if s['device_mount'] != 'sleeve' or s['joint'] != 'screw':
+            raise ValueError('Hidden screws need a sleeve with a screw joint.')
+        if s.get('insert_bosses'):
+            raise ValueError('Hidden screws and stronger insert bosses cannot be combined.')
+        if spec.get('tray_follow') is True:
+            raise ValueError('Hidden screws and a tray that follows the device cannot be combined.')
     if s.get('rear_floor_opening') and spec.get('rear_support') is not True:
         raise ValueError('Cable opening in floor needs rear support.')
     raw_zones = spec.get('protrusions', [])
@@ -819,10 +855,13 @@ def clean(spec):
     fp_w, fp_d = (s['dev_d'], s['dev_w']) if s['dev_rot'] in (90, 270) else (s['dev_w'], s['dev_d'])
     win = sleeve_geometry(s)
     border = max(MARGIN, port_openings.SLEEVE_SIDE + port_openings.SLEEVE_WALL) if win else MARGIN
+    if win and win.get('hidden'):
+        border = port_openings.SLEEVE_SIDE + port_openings.SLEEVE_WALL + port_openings.HIDDEN_GAP + 2 * port_openings.HIDDEN_HALF
     width = tray_width(s)
     if width > MAX_TRAY:
         hint = ' Too wide this way round; it fits if you press Rotate 90°.' if 2 * abs(s['dev_off_x']) + fp_d + 2 * border <= MAX_TRAY else ''
-        raise ValueError(f'This tray is {width:g} mm wide but the rack opening allows {MAX_TRAY:g} mm ({RACK_INNER_W:g} mm minus {SIDE_CLEAR:g} mm each side). Move the device less far sideways.' + hint)
+        raise ValueError(f'This tray is {width:g} mm wide but the rack opening allows {MAX_TRAY:g} mm ({RACK_INNER_W:g} mm minus {SIDE_CLEAR:g} mm each side). Move the device less far sideways.' + hint
+                         + (' The hidden screw joint adds about 20 mm of tray beside each sleeve wall; turn it off for a wider device.' if win and win.get('hidden') else ''))
     validate_foot_pockets(s, width)
     if not win and s['rear_support'] and FRONT_GAP + s['dev_off_y'] + fp_d + MARGIN > 240:
         raise ValueError('The device is moved past the rear posts; reduce the front/back offset.')
@@ -864,11 +903,11 @@ def clean(spec):
     if any(b - a < 21 for a, b in zip(xs, xs[1:])):
         raise ValueError('Keystones must be at least 21 mm apart.')
     # Keystone collars (golden SG108 copy and v2 fallback: 19.8 mm wide) reach 10.4 mm behind the plate, so they must clear the tray.
-    tray_half = width/2 if s.get('insert_bosses') else abs(s['dev_off_x']) + fp_w / 2 + MARGIN
+    tray_half = width/2 if s.get('insert_bosses') or s.get('hidden_joint') else abs(s['dev_off_x']) + fp_w / 2 + MARGIN
     # Opt-in (Brian, 2026-10-22): the sleeve tray follows the device sideways instead of staying centred,
     # freeing plate room on the other side (e.g. for a keystone). Fit/strength UNKNOWN.
     if spec.get('tray_follow') is True:
-        if s['device_mount'] != 'sleeve' or s['rear_support'] or s.get('insert_bosses') or s.get('feet_style') == 'grooves':
+        if s['device_mount'] != 'sleeve' or s['rear_support'] or s.get('insert_bosses') or s.get('hidden_joint') or s.get('feet_style') == 'grooves':
             raise ValueError('Tray follows device needs a sleeve without rear support, insert bosses or foot grooves.')
         if s['dev_off_x']:
             s['tray_follow'] = True
@@ -903,7 +942,11 @@ def clean(spec):
     # Brian, 2026-10-19 (option 3): each tray screw joint sits where it clears the openings (an opening in front of it
     # would be blocked, and can fail to render) and keystones (16 mm, as before). joint_x is derived, never taken from
     # input, and kept only when a joint moved, so designs whose default joints were clear build exactly as before.
-    if win and s['joint'] == 'screw':
+    if win and win.get('hidden'):
+        for p in s['ports']:
+            if any(abs(p['x']-x) < port_openings.JOINT_HALF+port_openings.JOINT_CLEAR+p['w']/2 and p['z']-p['h']/2 < port_openings.HIDDEN_TOP+port_openings.JOINT_CLEAR for x in win['joints']):
+                raise ValueError('A front opening sits in front of the hidden screw joint; move or remove it.')
+    elif win and s['joint'] == 'screw':
         for p in s['ports']:
             if any(abs(p['x']-x) < port_openings.SLEEVE_WALL/2+p['w']/2 and p['z']+p['h']/2 > win['bottom'] and p['z']-p['h']/2 < win['top'] for x in win['joints']):
                 raise ValueError('A front opening overlaps a sleeve wall joint; move or remove it.')

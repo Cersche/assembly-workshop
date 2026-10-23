@@ -746,3 +746,64 @@ class SleeveV2Tests(unittest.TestCase):
                 expected=old.source(before).encode('utf-8')
                 self.assertEqual(eq.source(after).encode('utf-8'),expected)
                 self.assertEqual(eq.source(eq.clean(dict(raw,**eq.V2_DEFAULTS))).encode('utf-8'),expected)
+
+
+class HiddenJointTests(unittest.TestCase):
+    """Task 41: opt-in hidden faceplate screws. Fit, thread engagement and strength UNKNOWN."""
+    def raw(self, **kw):
+        return dict(dict(name='HJ', dev_w=120, dev_d=100, dev_h=30, u=1, device_mount='sleeve', joint='screw', rear_support=False, dev_rot=0), **kw)
+
+    def test_default_off_and_round_trip(self):
+        self.assertNotIn('hidden_joint', eq.clean(self.raw()))
+        self.assertNotIn('hidden_joint', eq.clean(self.raw(hidden_joint=False)))
+        s = eq.clean(self.raw(hidden_joint=True))
+        self.assertIs(s['hidden_joint'], True)
+        self.assertEqual(eq.clean(s), s)
+        self.assertEqual(eq.placement_settings({'hidden_joint': True}), {'hidden_joint': True})
+        with self.assertRaises(ValueError): eq.placement_settings({'hidden_joint': 'yes'})
+
+    def test_joints_move_outside_walls_and_plate_holes_go(self):
+        s = eq.clean(self.raw(hidden_joint=True)); w = eq.sleeve_geometry(s)
+        self.assertEqual(w['joints'], [-77.5, 77.5]); self.assertEqual(w['joint_z'], [])
+        self.assertAlmostEqual(eq.tray_width(s), 173)
+        self.assertAlmostEqual(eq.tray_width(eq.clean(self.raw())), 2 * (60 + eq.MARGIN))
+        src = eq.source(s)
+        self.assertIn('hidden_joint=true;', src)
+        self.assertIn('function jon(r)', src)
+        self.assertNotIn('hidden_joint', eq.source(eq.clean(self.raw())))
+
+    def test_unsupported_combinations_and_width(self):
+        for kw, message in [(dict(hidden_joint=True, insert_bosses=True), 'cannot be combined'),
+                            (dict(hidden_joint=True, device_mount='inserts', holes=[[5, 5]]), 'sleeve'),
+                            (dict(hidden_joint=True, joint='single', rear_support=False), 'sleeve with a screw'),
+                            (dict(hidden_joint=True, dev_w=160), 'hidden screw joint'),
+                            (dict(hidden_joint=True, tray_follow=True, dev_off_x=2), 'follows')]:
+            with self.subTest(kw=kw):
+                with self.assertRaisesRegex(ValueError, message): eq.clean(self.raw(**kw))
+        eq.clean(self.raw(hidden_joint=True, dev_w=150))   # widest supported: tray 203 mm
+        with self.assertRaisesRegex(ValueError, 'hidden screw joint'):
+            eq.clean(self.raw(hidden_joint=True, ports=[dict(x=77.5, z=12, w=8, h=5, r=1, label='P')]))
+        eq.clean(self.raw(hidden_joint=True, ports=[dict(x=77.5, z=30, w=8, h=5, r=1, label='P')]))
+
+    def test_print_in_color_keep_out_has_no_screw_holes(self):
+        import faceplate_color as fc
+        plain = fc.openings(eq.clean(self.raw()))
+        hidden = fc.openings(eq.clean(self.raw(hidden_joint=True)))
+        self.assertEqual(len([o for o in plain if o['w'] == 3.4]), 4)
+        self.assertEqual(len([o for o in hidden if o['w'] == 3.4]), 0)
+
+    def test_exact_render_closed_and_joint_axes_align(self):
+        import re, tempfile
+        import mesh_revision
+        try: mesh_revision.compiler()
+        except Exception: self.skipTest('OpenSCAD not available')
+        with tempfile.TemporaryDirectory() as d:
+            final = eq.render(self.raw(hidden_joint=True), d)
+            def verts(name): return [tuple(map(float, m.split())) for m in re.findall(r'^\s*vertex\s+(.+)$', (final / name).read_text(encoding='utf-8'), re.M)]
+            tray, plate = verts('tray.stl'), verts('faceplate.stl')
+            self.assertAlmostEqual(min(v[0] for v in tray), -86.5, 2); self.assertAlmostEqual(max(v[0] for v in tray), 86.5, 2)
+            # no screw-hole circle in the plate front (old position x = +/-63.5, z = 6.5)
+            self.assertFalse([v for v in plate if abs(v[1] + 4) < 1e-3 and abs(abs(v[0]) - 63.5) < 1.9 and abs(v[2] - 6.5) < 1.9])
+            # plate boss pilot and tray clearance hole share the axis x = +/-77.5, z = 14.5
+            self.assertTrue([v for v in plate if abs(abs(v[0]) - 77.5) < 2.1 and abs(v[2] - 14.5) < 2.1 and -0.01 <= v[1] <= 8.01])
+            self.assertTrue([v for v in tray if abs(abs(v[0]) - 77.5) < 1.8 and abs(v[2] - 14.5) < 1.8 and 8 < v[1] < 11.4])

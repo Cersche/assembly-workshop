@@ -9,6 +9,8 @@ RACK_PITCH, PLATE_GAP, LEGACY_SLOT_OFFSET = 44.45, 0.05, 1.225
 SLEEVE_SIDE, SLEEVE_TOP, SLEEVE_WALL = 0.5, 0.3, 6
 SLEEVE_LIP_W, SLEEVE_LIP_T, SLEEVE_BAND = 10, 1.5, 1.5
 SLEEVE_STOP_T, SLEEVE_STOP_H = 4, 6
+HIDDEN_TOP = 22.5   # tray_z 0.5 + 3 + 19: top of the joint upright
+HIDDEN_GAP, HIDDEN_HALF = 2, 9   # opt-in hidden_joint (Task 41): joint block half-width and gap beyond the sleeve wall
 FOOT_CLEARANCE, FOOT_EXTRA_DEPTH, FOOT_MIN_FLOOR = 0.5, 0.3, 0.8
 FOOT_LIP_T = 3.0
 
@@ -35,11 +37,17 @@ def sleeve(spec):
     top = bottom + case_height(spec) + SLEEVE_TOP
     lip_t = FOOT_LIP_T if foot_height(spec) else SLEEVE_LIP_T
     lip = lip_t if top + lip_t <= float(spec.get('u', 1)) * RACK_PITCH else 0
-    return dict(x=x, half=half, bottom=bottom, top=top, width=half*2,
-                height=top-bottom, outside=w+2*(SLEEVE_SIDE+SLEEVE_WALL),
-                lip=lip, rear=-4+d, stop_end=-4+d+SLEEVE_STOP_T,
-                joints=[x-half-SLEEVE_WALL/2, x+half+SLEEVE_WALL/2],
-                joint_z=[bottom+3, top-3])
+    out = dict(x=x, half=half, bottom=bottom, top=top, width=half*2,
+               height=top-bottom, outside=w+2*(SLEEVE_SIDE+SLEEVE_WALL),
+               lip=lip, rear=-4+d, stop_end=-4+d+SLEEVE_STOP_T,
+               joints=[x-half-SLEEVE_WALL/2, x+half+SLEEVE_WALL/2],
+               joint_z=[bottom+3, top-3])
+    if spec.get('hidden_joint') is True:
+        # Hidden joint: no screw holes through the plate; the tongue/boss joint sits outside the walls.
+        reach = half+SLEEVE_WALL+HIDDEN_GAP+HIDDEN_HALF
+        out.update(joints=[x-reach, x+reach], joint_z=[], hidden=True,
+                   outside=w+2*(SLEEVE_SIDE+SLEEVE_WALL+HIDDEN_GAP+2*HIDDEN_HALF))
+    return out
 
 
 def sleeve_ports(ports, spec):
