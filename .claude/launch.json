@@ -293,6 +293,19 @@
       ],
       "port": 8845,
       "autoPort": false
+    },
+    {
+      "name": "Test data – drive tray",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--port",
+        "8847",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\D--Projects-assembly-workshop\\670ff7ef-7768-4a59-8310-301723e8de73\\scratchpad\\drive-tray-data"
+      ],
+      "port": 8847,
+      "autoPort": false
     }
   ]
 }
