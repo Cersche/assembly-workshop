@@ -9,6 +9,12 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 - **Loose ends:** [task 40](work/codex-tasks/40-nine-u-faceplates.md) (A switch/keystone alignment, B Pi + Hue USB slot and hidden HDMI exit) is ready for Codex (prompt in docs/prompts/codex/). C (3U screen plate) is blocked on Brian's measurements of the Hosyond screen; D (cooling) is blocked on his photo of the 7010's back/right vents. Answers: HDD by USB-SATA adapter; one 80 mm exhaust fan at U1–U2 rear for now.
 - Housekeeping: committed `data/normal-use/equipment-library.json` and the Hue + Pi revision folder (Brian's saved item); deleted two empty `work/gui-refinement/checks-*` temp folders.
 
+## 2026-10-22 Task 40 Parts A+B done by Claude (read first)
+
+- Brian had Claude run task 40 itself (Codex recovering). [Report](work/codex-tasks/40-nine-u-faceplates-REPORT.md); scripts/evidence in `work/nine-u-faceplates/`. No app code changed; nothing saved to the library or printed.
+- **Finding:** in the saved Hue + Pi item the Pi's USB/Ethernet face the REAR and there are no Pi front openings. Proposed variant (Pi turned 270°, Hue 6 mm left, openings + 12 × 9 USB cable slot, HDMI exits into a 10 mm gap) renders closed; not in the library.
+- **Switch:** the TL-SG108 STEP is unreliable (9 overlapping jacks at 14.2 mm), so Part A is waiting on Brian's measurements (listed in the report). U8 item with the switch +15 mm right renders closed (tray X −72…+102).
+
 ## 2026-10-22 TL-SG108E switch tray; tray_follow + engraved labels (read first)
 
 - Delivered `outputs/STL_Deliveries/2026-10-22_TL-SG108E/`: 1U sleeve, ports facing out, shifted 15 mm left, golden keystone at +88 (moved in from +102 after Brian saw it crowd the right post) with "UPLINK" engraved below. Not opened in a slicer; not saved to the library.

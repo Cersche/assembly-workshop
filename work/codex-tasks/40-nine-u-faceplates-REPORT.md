@@ -1,0 +1,23 @@
+# Task 40 report — Parts A and B (done by Claude, not Codex; 2026-10-22)
+
+PROPOSED — UNVALIDATED. Nothing printed, nothing saved to the library or `data/normal-use`; no app code changed, so the existing library items and all checks are untouched (no regression run needed; last full run: 195 Python + all JS pass). Scripts and evidence: `work/nine-u-faceplates/`.
+
+## Part A — U8 switch vs U7 keystone panel
+- **STEP result (`TP-Link TL-SG108.stp`, read in place, converted with FreeCAD into scratch only):** case 158.0 × 26.5 × 101 mm, front cavity 128 mm wide. It contains **9** RJ45 jack bodies at **14.2 mm pitch**, each 17 mm wide, so they overlap each other. That is physically impossible for an 8-port switch, so the STEP's port pitch and port numbering cannot be trusted. **Real port pitch, first-port offset and which end is port 1: UNKNOWN until Brian measures** (list below).
+- **10-keystone panel:** `faceplateSpacing(10)` gives X = (i − 4.5) × 21.5. The four Ethernet keystones (4th–7th) are at X = −32.25, −10.75, +10.75, +32.25.
+- **Alignment** (`work/nine-u-faceplates/part_a_alignment.py [pitch …]`, assumes 8 ports centred on the case, port 1 on the left): for ports 2–5 the best offset equals the port pitch (≈ +15 to +16 mm to the right), because ports 2–5 sit one pitch left of centre. Worst misalignment between port and keystone, by pitch: 14.2 → 10.95 mm; 15 → 9.75; 15.9 → 8.4; 16 → 8.25 (inner pair ≈ 2.8, outer pair ≈ 8.4 at 15.9). With a flat +15: 9.3 mm worst at 15.9. Keystones must be ≥ 21 mm apart, so they cannot be tightened to the switch pitch: the 15 cm jumpers fan in by about 8 mm at the ends. The plan's "+15 mm" is within ~1 mm of the optimum for any plausible pitch.
+- **U8 item built** (`part_a_build.py`): 1U sleeve, screw joint, `tray_follow`, device shifted +15 mm, no keystones, no UPLINK. Exact OpenSCAD render: faceplate and tray closed (0 open edges, 1 body each). Tray spans X −72…+102 mm, i.e. 2 mm inside the ±104 mm rack opening — close to the right post; clearance to the post UNKNOWN. Case size 158 × 101 × 25 is nominal (not measured). Not saved to the library (waiting on your measurements).
+
+## Part B — U6 Pi 4 + Hue tray
+- **Finding:** in your saved item (Pi turned 90°, at +46) the app's own port model puts the Pi's USB and Ethernet facing the **rear** (y ≈ 101 mm) and USB-C/HDMI/audio on its right side. The item also has no front openings for the Pi at all. So the plan's "Pi USB/Ethernet face front" needs a change.
+- **Proposed variant** (`part_b_build.py`, spec in `hue-pi-usb-front.spec.json`): Pi turned **270°** (USB/Ethernet → front, HDMI/USB-C/audio → its left side), Pi stays on the right (+46), Hue moves 6 mm left (−36), opening a 10 mm gap beside the Pi's HDMI side. Front openings: USB 2.0 stack 13.5 × 17 at X 27, USB 3.0 stack 13.5 × 17 at X 45, Ethernet 17 × 14 at X 63.7, plus the **USB cable slot 12 × 9 mm (r 2.5) at X 27, Z 10.4**, below the USB 2.0 stack (plug size ≈ 17 × 8 mm is an assumption). Positions come from the app's cable-ports model; the stacks' Z (25.4) is the mean of its lower/upper centres.
+- **Pi on the left was tried and rejected:** the opening cluster then blocks every position for the left screw joint ("cannot be placed clear"). On the right, the joints land at −40 and +10 (the USB-stack width was trimmed to 13.5 mm so +10 clears; the +10 joint sits above the 10 mm gap, to be eyeballed).
+- **HDMI exit:** no new geometry. The right-angle micro-HDMI plug leaves into the 10 mm gap and the cable runs back along it; the tray rear is open. Bend radius and plug size UNKNOWN. No new spec key was needed (existing per-device openings), so every other item is byte-identical by construction.
+- **Render (exact, OpenSCAD):** faceplate 1 body, 0 open edges; tray 0 open edges; `mesh_study holes` finds the keystone, 3 Pi openings, the slot and the 4 rack slots at the expected positions. Tray 176 × 109 mm.
+- No Place-on-tray screenshot taken (no browser session started).
+
+## Measurements needed from Brian (switch)
+Standing in front, ports facing you: (1) centre-to-centre of two neighbouring RJ45 ports (or port 1 centre to port 8 centre), (2) distance from the case's left edge to port 1's centre, (3) case width, depth, height, (4) which end is port 1. Then re-run `part_a_alignment.py <pitch>` and `part_a_build.py <dir> <offset>`.
+
+## UNKNOWN
+Real port pitch/numbering, switch case size, clearance of the +102 mm tray edge to the post, cable-slot size vs the real plug, HDMI plug/bend space, joint at +10 beside both devices, fit, retention, strength, airflow. Parts C (screen plate) and D (cooling) remain blocked specs.

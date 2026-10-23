@@ -1,0 +1,98 @@
+{
+ "name": "Hue Bridge + Pi 4 (USB front) PROPOSED",
+ "dev_w": 88.0,
+ "dev_d": 88.0,
+ "dev_h": 26.0,
+ "hole_d": 2.7,
+ "standoff": 6.0,
+ "insert_pilot": 3.2,
+ "board_t": 1.6,
+ "u": 1,
+ "device_mount": "clips",
+ "joint": "screw",
+ "rear_support": false,
+ "dev_rot": 0,
+ "dev_off_x": -36.0,
+ "dev_off_y": 1.0,
+ "coupon": [],
+ "holes": [],
+ "keystones": [
+  -100.0
+ ],
+ "ports": [],
+ "rear_ports": [],
+ "second": {
+  "name": "Raspberry Pi 4 (example)",
+  "dev_w": 85.0,
+  "dev_d": 56.0,
+  "dev_h": 20.0,
+  "hole_d": 2.7,
+  "standoff": 6.0,
+  "insert_pilot": 3.2,
+  "board_t": 1.6,
+  "holes": [
+   [
+    3.5,
+    3.5
+   ],
+   [
+    61.5,
+    3.5
+   ],
+   [
+    3.5,
+    52.5
+   ],
+   [
+    61.5,
+    52.5
+   ]
+  ],
+  "device_mount": "inserts",
+  "dev_off_x": 46.0,
+  "dev_off_y": 1.0,
+  "dev_rot": 270,
+  "ports": [
+   {
+    "id": "front-1",
+    "label": "USB 2.0 stack",
+    "type": "usb-a",
+    "x": 27.0,
+    "z": 25.4,
+    "w": 13.5,
+    "h": 17,
+    "r": 1
+   },
+   {
+    "id": "front-2",
+    "label": "USB 3.0 stack",
+    "type": "usb-a",
+    "x": 45.0,
+    "z": 25.4,
+    "w": 13.5,
+    "h": 17,
+    "r": 1
+   },
+   {
+    "id": "front-3",
+    "label": "Ethernet",
+    "type": "rj45",
+    "x": 63.7,
+    "z": 24.4,
+    "w": 17,
+    "h": 14,
+    "r": 1
+   },
+   {
+    "id": "front-4",
+    "label": "USB cable slot",
+    "type": "other",
+    "x": 27.0,
+    "z": 10.4,
+    "w": 12,
+    "h": 9,
+    "r": 2.5
+   }
+  ]
+ }
+}
