@@ -470,8 +470,7 @@
   function editFaceplate(placement){
     if(!capable||!leaveAssembly())return;
     const rack=active(),slot=placement?.slot||selectedSlot;if(!rack||!slot)return;
-    showInspector('Setup');const host=byId('mountWizard');host.hidden=false;host.replaceChildren();
-    const P=LabRaxPortOpenings;
+    showInspector('Setup');const host=byId('mountWizard');host.hidden=false;host.replaceChildren();    const P=LabRaxPortOpenings;
     let draft=JSON.parse(JSON.stringify(placement?.tray?.faceplate||{u:1,layout:'blank'}));
     let busy=false;
     const title=paragraph('FACEPLATE ONLY · SLOT '+slot,'section-eyebrow');
@@ -516,6 +515,7 @@
       window.EquipmentRackView?.refresh();status.textContent='Faceplate render ready. Apply to draft to see it in the rack; Save keeps the allocation. Fit/strength UNKNOWN.';
     }catch(e){status.textContent=e.message;}finally{busy=false;fields.inert=details.inert=false;apply.disabled=preview.disabled=exportButton.disabled=valid().errors.length>0;}}
     host.append(title,limits,fields,details,status,apply,preview,exportButton,button('Cancel',()=>{host.hidden=true;},'secondary'));drawDetails();update();
+    host.scrollIntoView({block:'nearest'});  // stacked layout (≤1100 px) puts the inspector below the rack
   }
 
   function startWizard(){
