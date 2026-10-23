@@ -23,6 +23,8 @@ Idea from `work/notes/2026-10-22-feet-floor-and-wall-box-wizard.md`: an indoor, 
 - **Photos (Brian, 2026-10-23):** [splitter](photos/splitter-bridgelink-220-SP1XD-001.jpg), [ECB7250 top](photos/screenbeam-ecb7250-top.jpg).
   - ECB7250: **Coax In on the left end; Ethernet and Power on the right end** (matches the box: coax in left, power/Ethernet out right). Vent grille on the top face, so mount it top towards the lid and give the lid vents over it. LEDs (Power, Coax) on the front long edge.
   - Splitter: **Bridgelink 220-SP1XD-001**, 2-way, 5-1670 MHz. IN on one long side, both OUTs on the opposite side; two mounting ears with screw holes; ground screw on one end. Its dimensions are UNKNOWN until measured (not taken from the photo).
+- **Layout concept 3 (2026-10-23, scratch renders only):** outer ~240 x 75 x 175; splitter IN joined straight to the left keystone F coupler with an F male-male adapter, splitter low near the bottom vents; right-angle F on splitter OUT 1 and on the ECB7250 coax; OUT 2 straight along the bottom to the modem keystone (same height); right-angle Ethernet and barrel plugs. Brian likes the direction; height may shrink.
+- **Jumper candidate (Brian, 2026-10-23):** NECABLES RG179 F-male/F-male, 6 in for OUT 1 -> ECB7250 and 8 in for OUT 2 -> modem keystone (Claude's suggestion). Thin and flexible; loss over these lengths and MoCA performance UNKNOWN until tried.
 - **Look:** friendlier for indoor use; five style concepts shown 2026-10-22 (soft slab, louvre, picture frame, pill, two-tier); Brian has not picked one yet.
 
 ## Still open
