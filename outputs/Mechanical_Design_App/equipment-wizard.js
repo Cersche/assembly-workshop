@@ -200,8 +200,11 @@
     // Device ghost: imported model if any, else its bounding box, sitting where the tray holds it.
     const lift=window.LabRaxPortOpenings.deviceLift(spec),ox=-spec.dev_w/2,oy=spec.device_mount==='sleeve'?-4:12;let dv=[];
     if(imported){const v=transformed(),mn=[1e9,1e9,1e9];for(let i=0;i<v.length;i++)mn[i%3]=Math.min(mn[i%3],v[i]);for(let i=0;i<v.length;i+=3)dv.push(v[i]-(importOrigin||mn)[0]+ox,v[i+1]-(importOrigin||mn)[1]+oy,v[i+2]-(importOrigin||mn)[2]+lift);}
-    else{const[x0,y0,z0,x1,y1,z1]=[ox,oy,lift,ox+ +spec.dev_w,oy+ +spec.dev_d,lift+ +spec.dev_h],c=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
-      for(const f of[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]])for(const i of f)dv.push(...c[i]);}
+    else{const box=(x0,y0,z0,x1,y1,z1)=>{const c=[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]];
+        for(const f of[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]])for(const i of f)dv.push(...c[i]);};
+      // Drive trays: one box per drive at its SCAD position, resting on the 3 mm pads (equipment_tray.scad drive_add).
+      if(spec.drives?.length)for(const[t,x,y]of spec.drives){const[w,d,hh]=t==='3.5'?[101.6,147,26.1]:[69.85,100,+spec.ssd_h];box(x,12+y,lift+3,x+w,12+y+d,lift+3+hh);}
+      else box(ox,oy,lift,ox+ +spec.dev_w,oy+ +spec.dev_d,lift+ +spec.dev_h);}
     sets.push({v:dv,color:[230,195,92],alpha:0.55});
     view.sets=sets;const cv=document.getElementById('ewView');cv.hidden=false;
     if(!cv.ewBound){cv.ewBound=true;bindView(cv,view,draw3D);}
