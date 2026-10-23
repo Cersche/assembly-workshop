@@ -55,7 +55,7 @@ class WallBoxSpecTests(unittest.TestCase):
         self.assertIn('UNKNOWN', self.problems(spec(cutouts=[{'wall': 'lid', 'type': 'preset', 'preset': 'screenbeam_ecb7250', 'u': 0, 'v': 0}])))
         self.assertIn('no known size', self.problems(spec(cutouts=[{'wall': 'lid', 'type': 'preset', 'preset': 'barrel_jack', 'u': 0, 'v': 0}])))
         parts = wb.load_parts()
-        self.assertIsNone(parts['screenbeam_ecb7250']['size'])
+        self.assertEqual(parts['screenbeam_ecb7250']['size'], [120, 65, 30])
 
     def test_standoffs(self):
         ok = wb.validate(spec(standoffs=[{'x': -20, 'z': 0, 'height': 6, 'hole': 2.5}]))

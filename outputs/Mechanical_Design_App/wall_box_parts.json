@@ -11,6 +11,6 @@
     "note": "Panel cutouts differ by model: measure yours, then use a rect cutout."},
   "rocker_switch": {"name": "Rocker switch", "kind": "cutout", "cutout": null,
     "note": "Snap-in cutouts differ by model: measure yours, then use a rect cutout."},
-  "screenbeam_ecb7250": {"name": "ScreenBeam ECB7250 MoCA adapter", "kind": "device", "size": null, "ports": null,
-    "note": "Dimensions and port positions UNKNOWN until Brian measures the unit (or an official datasheet gives them)."}
+  "screenbeam_ecb7250": {"name": "ScreenBeam ECB7250 MoCA adapter", "kind": "device", "size": [120, 65, 30], "ports": null,
+    "note": "Size 120 x 65 x 30 mm including rubber feet, measured by Brian 2026-10-23 (which axis is which is not recorded yet). Port positions UNKNOWN."}
 }
