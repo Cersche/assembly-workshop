@@ -241,6 +241,12 @@
   // flat triangle lists in equipment_tray.scad coordinates, the same frame as the rendered STLs.
   // Openings are dark blocks where the SCAD cuts keystones (ks_w x ks_h = 14.8 x 16.6, centred) and ports.
   function rackSketch(spec,tray,second){
+    if(spec.faceplate_only){const s=PO().faceplateSpec(tray?.faceplate),holes=[];
+      for(const k of s.keystones){const x=Array.isArray(k)?k[0]:k,z=Array.isArray(k)&&k.length>1?k[1]:s.u*PITCH/2;holes.push(...box(x-7.4,-4.2,z-8.3,x+7.4,.2,z+8.3));}
+      for(const p of s.ports)holes.push(...box(p.x-p.w/2,-4.2,p.z-p.h/2,p.x+p.w/2,.2,p.z+p.h/2));
+      return {faceplate:box(-126,-4,.025,126,0,s.u*PITCH-.025),...(holes.length?{openings:holes}:{})};
+    }
+
     const v=values(spec,tray),Pr=second&&root.TrayPair,v2=Pr?Pr.values(second.spec,second.tray):null,L=Pr?Pr.layout(spec,v,second.spec,v2):layout(spec,v),
       sets=Pr?Pr.schematic(spec,v,second.spec,v2):schematic(spec,v),out={faceplate:sets[0].v,tray:sets[1].v};
     const holes=[];

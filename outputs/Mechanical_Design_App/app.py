@@ -635,7 +635,7 @@ def make_handler(store, token):
                     return self.send({'error': 'Local reference unavailable: ' + str(exc)}, 409)
 
             if self.path == '/api/equipment-library':
-                return self.send(equipment.library(Path(store.path).parent))
+                return self.send(equipment.library(Path(store.path).parent) + [equipment.faceplate_item()])
 
             if self.path == '/api/equipment-template-status':
                 data_dir = Path(store.path).parent

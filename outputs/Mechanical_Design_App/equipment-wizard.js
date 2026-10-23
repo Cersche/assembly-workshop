@@ -474,7 +474,7 @@
     const notice=h('p',{class:'ew-note',role:'status'},libraryNotice);
     const empty=failed?h('div',{class:'empty-library'},'Couldn’t load your equipment library.'):
       h('div',{class:'empty-library'},'No custom equipment yet.',h('br'),h('small',{},'Use + New equipment from dimensions; saved items appear here. Fit UNKNOWN.'));
-    host.replaceChildren(h('p',{class:'section-eyebrow'},'MY EQUIPMENT'),notice,...(items.length?[]:[empty]),...items.map(it=>{
+    host.replaceChildren(h('p',{class:'section-eyebrow'},'MY EQUIPMENT'),notice,...(items.length?[]:[empty]),...items.filter(it=>!it.spec.faceplate_only).map(it=>{
       const display=it.display_name||it.name;
       const b=h('button',{type:'button',class:'equipment-card ew-item',title:'Select an empty slot, then click to place'},h('b',{},display),h('span',{class:'ew-note'},` ${it.spec.dev_w}×${it.spec.dev_d}×${it.spec.dev_h} mm · ${it.span}U`),
         h('span',{class:'ew-note'},` ${it.status||'PROPOSED — UNVALIDATED'} · Fit UNKNOWN`));
@@ -539,7 +539,7 @@
   const secondOf=a=>{const s=a?.second&&items.find(i=>i.id===a.second.equipment);return s?{spec:s.spec,tray:a.second.tray}:null;};
   // Library spec with the slot's tray choices on top (equipment.allocation_spec; TrayPlacement.values fills defaults).
   // Front openings follow the device's offset and standoff (port-openings.js), as equipment.allocation_spec() cuts them.
-  function effectiveSpec(spec,tray){const T=window.TrayPlacement,out=T?{...spec,...T.values(spec,tray)}:{...spec,...tray},P=window.LabRaxPortOpenings;
+  function effectiveSpec(spec,tray){if(spec.faceplate_only)return window.LabRaxPortOpenings.faceplateSpec(tray?.faceplate);const T=window.TrayPlacement,out=T?{...spec,...T.values(spec,tray)}:{...spec,...tray},P=window.LabRaxPortOpenings;
     if(P&&tray&&spec.ports)out.ports=P.frontOpenings(spec,tray).ports;return out;}
   function lookup(it,a){
     const key=it.build+'|'+JSON.stringify(a.tray)+(a.second?'|'+JSON.stringify(a.second):'');
@@ -584,7 +584,7 @@
     const P=window.LabRaxPortOpenings,s=spec||{},sw=P.frontWindow(s),sl=P.sleeve(s),grow=s.bezel&&s.bezel!=='none'?+(s.bezel_size??1):0;
     return [...(sw?[{x:sw.x,z:(sw.bottom+sw.top)/2,w:sw.width+2*grow,h:sw.height+2*grow}]:[]),
             ...(sl&&s.joint==='screw'?sl.joints.flatMap(x=>sl.joint_z.map(z=>({x,z,w:3.4,h:3.4}))):[]), // m3_clear sleeve joint holes
-            ...(s.keystones||[]).map(x=>({x:+x,z:z0+plateH/2+1.75,w:21,h:33.5})), // golden keystone block (ks_box_cut)
+            ...(s.keystones||[]).map(x=>({x:+(Array.isArray(x)?x[0]:x),z:(Array.isArray(x)&&x.length>1?x[1]:z0+plateH/2)+1.75,w:21,h:33.5})), // golden keystone block (ks_box_cut)
             ...(s.ports||[]).map(p=>({x:+p.x,z:+p.z,w:+p.w+2*grow,h:+p.h+2*grow}))].filter(o=>[o.x,o.z,o.w,o.h].every(Number.isFinite));
   }
   function frontFace(mesh,spec){

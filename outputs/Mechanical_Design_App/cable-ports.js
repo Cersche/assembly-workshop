@@ -38,13 +38,13 @@
   function PO(){if(root.LabRaxPortOpenings)return root.LabRaxPortOpenings;
     if(typeof module!=='undefined'&&typeof require==='function'){try{return require('./port-openings.js');}catch(e){}}return null;}
   function wizardPorts(spec,tray){
-    if(!spec)return [];const s={...spec,...(tray||{})},out=[],plateCenter=(+s.u||1)*PITCH/2,P=PO();
+    if(!spec)return [];const P=PO(),s=spec.faceplate_only?P.faceplateSpec(tray?.faceplate):{...spec,...(tray||{})},out=[],plateCenter=(+s.u||1)*PITCH/2;
     (P&&tray?P.frontOpenings(spec,tray).ports:s.ports||[]).forEach((p,i)=>out.push({id:p.id||'front-'+(i+1),label:p.label||'Port '+(i+1),type:TYPES[p.type]?p.type:'other',face:'front',x:+p.x,y:-WIZ.plateT,z:+p.z,points:'front',opening:true}));
     (s.rear_ports||[]).forEach((p,i)=>out.push({id:p.id||'rear-'+(i+1),label:p.label||'Rear port '+(i+1),type:TYPES[p.type]?p.type:'other',face:'rear',...rearPort(spec,s,p)}));
     // Keystones are pass-through ports: one front face and one rear face, paired by passThrough.
-    (s.keystones||[]).forEach((x,i)=>{const id='ks-'+(i+1);
-      out.push({id:id+'-front',label:'Keystone '+(i+1)+' · front',type:'keystone',face:'front',x:+x,y:-WIZ.plateT,z:plateCenter,points:'front',passThrough:id+'-rear'});
-      out.push({id:id+'-rear',label:'Keystone '+(i+1)+' · rear',type:'keystone',face:'rear',x:+x,y:0,z:plateCenter,points:'rear',passThrough:id+'-front'});});
+    (s.keystones||[]).forEach((position,i)=>{const id='ks-'+(i+1),x=Array.isArray(position)?position[0]:position,z=Array.isArray(position)&&position.length>1?position[1]:plateCenter;
+      out.push({id:id+'-front',label:'Keystone '+(i+1)+' · front',type:'keystone',face:'front',x:+x,y:-WIZ.plateT,z,points:'front',passThrough:id+'-rear'});
+      out.push({id:id+'-rear',label:'Keystone '+(i+1)+' · rear',type:'keystone',face:'rear',x:+x,y:0,z,points:'rear',passThrough:id+'-front'});});
     for(const p of spec.planning_ports||[]){
       const angle=(+s.dev_rot||0)*Math.PI/180,dx=p.x-(+spec.dev_off_x||0),dy=p.y-((spec.device_mount==='sleeve'?-WIZ.plateT:12+(+spec.dev_off_y||0))+spec.dev_d/2);
       out.push({...p,x:(+s.dev_off_x||0)+dx*Math.cos(angle)-dy*Math.sin(angle),

@@ -1,0 +1,56 @@
+{
+  "blank2": {
+    "check": {
+      "ok": true,
+      "u": 2,
+      "warnings": []
+    },
+    "preview": {
+      "id": "345cfe7db3a91419b342aff47b05c0fa94b17b5fa8fe5ace611aa42a2c08c504",
+      "parts": [
+        "faceplate"
+      ]
+    },
+    "zip_stls": [
+      "faceplate.stl"
+    ],
+    "color": {
+      "exportable": true,
+      "warnings": [],
+      "size_mm": [
+        108.0,
+        27.0
+      ],
+      "style": "inlay"
+    }
+  },
+  "reference10": {
+    "check": {
+      "ok": true,
+      "u": 1,
+      "warnings": [
+        "thin wall, fit/strength UNKNOWN"
+      ]
+    },
+    "preview": {
+      "id": "344ee62e2460a1c9b526ccf4c0974e1a0d61398e67d431a9feb908f485f42616",
+      "parts": [
+        "faceplate"
+      ]
+    },
+    "zip_stls": [
+      "faceplate.stl"
+    ],
+    "color": {
+      "exportable": false,
+      "warnings": [
+        "Only the base color remains; there is nothing to print in a second color."
+      ],
+      "size_mm": [
+        2.4,
+        0.6
+      ],
+      "style": "inlay"
+    }
+  }
+}

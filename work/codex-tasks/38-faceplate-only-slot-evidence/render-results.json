@@ -1,0 +1,132 @@
+{
+  "blank1": {
+    "bounds": [
+      [
+        -126.0,
+        -4.0,
+        0.0249939
+      ],
+      [
+        126.0,
+        0.0,
+        44.425
+      ]
+    ],
+    "signed_volume_mm3": 43783.534621922794,
+    "source_sha256": "0b26a27d36c0ca6a1e168ed2f22ee59aa67595c4c97517d09fd5fc380e2cd1bf",
+    "parts": [
+      "faceplate"
+    ],
+    "nudge_mm": {
+      "faceplate": 0
+    },
+    "source_hash": "37de9848c08753bdc88d624a3c0615aa66412defb78c942c9b0f053d4fbef9f8",
+    "triangles": 1020,
+    "through_holes_euler_genus": 4.0
+  },
+  "blank3": {
+    "bounds": [
+      [
+        -126.0,
+        -4.0,
+        0.0249939
+      ],
+      [
+        126.0,
+        0.0,
+        133.325
+      ]
+    ],
+    "signed_volume_mm3": 131494.7410831228,
+    "source_sha256": "273bd3bab7fc9a01fb30a7a02c530970f51f448fb9a6587ff0184e3cc59f37ba",
+    "parts": [
+      "faceplate"
+    ],
+    "nudge_mm": {
+      "faceplate": 0
+    },
+    "source_hash": "eae0078c88b88ec399c5f5bc9a36b55b2ef605c1eaee6b96977b774c753a3e16",
+    "triangles": 2652,
+    "through_holes_euler_genus": 12.0
+  },
+  "reference10": {
+    "bounds": [
+      [
+        -126.0,
+        -4.07999,
+        0.0249939
+      ],
+      [
+        126.0,
+        6.31999,
+        44.425
+      ]
+    ],
+    "signed_volume_mm3": 45023.29546625099,
+    "source_sha256": "b364af8fbff8544236f248d8fd36fe86cd6ca600d8ab506bb84966cd442a3a0b",
+    "parts": [
+      "faceplate"
+    ],
+    "nudge_mm": {
+      "faceplate": 0
+    },
+    "source_hash": "2a641ad48c0a91ea8649abebe33a2d6b3ce556039f36bb23b2d3af4d4b173635",
+    "triangles": 7180,
+    "reference_volume": 45023.29546625099,
+    "volume_relative_error": 0.0,
+    "reference_bounds": [
+      [
+        -126.0,
+        -4.07999,
+        0.0249939
+      ],
+      [
+        126.0,
+        6.31999,
+        44.425
+      ]
+    ]
+  },
+  "two_rows": {
+    "bounds": [
+      [
+        -126.0,
+        -4.07999,
+        0.0249939
+      ],
+      [
+        126.0,
+        6.31999,
+        88.875
+      ]
+    ],
+    "signed_volume_mm3": 88878.90216183309,
+    "source_sha256": "491d9136f1ce0c246fc0ea679dff4ab54971943e8d70b4d63ade444bbef79c23",
+    "parts": [
+      "faceplate"
+    ],
+    "nudge_mm": {
+      "faceplate": 0
+    },
+    "source_hash": "c911e616d0014fec3e94a8b0010557ee554eb0ab055ca3639ea29e7eeda58dbd",
+    "triangles": 7996
+  },
+  "legacy_source": {
+    "byte_identical": true,
+    "sha256": "b45c259cd5c15ab1b25af1b60d37b5e3f90f151e1fd92654439af7f5b5d06907"
+  },
+  "legacy_tray": {
+    "raw_bytes_identical": false,
+    "triangle_coordinates_identical": true,
+    "bounds_identical": true,
+    "before_volume": 26027.3836194832,
+    "after_volume": 26027.3836194832
+  },
+  "legacy_faceplate": {
+    "raw_bytes_identical": false,
+    "triangle_coordinates_identical": true,
+    "bounds_identical": true,
+    "before_volume": 45099.51475593765,
+    "after_volume": 45099.51475593765
+  }
+}

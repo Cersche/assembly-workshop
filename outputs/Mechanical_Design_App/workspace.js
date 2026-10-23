@@ -161,6 +161,7 @@
     return true;
   }
   async function openAssembly(placement){
+    if(placement.equipment===LabRaxPortOpenings.FACEPLATE_ID){editFaceplate(placement);return;}
     // Wizard-made equipment: this slot's tray choices open in the Place on tray window (tray-placement.js);
     // The library item itself is edited from there or from the Equipment list.
     if(String(placement.equipment).startsWith('eq-')){if(window.openTrayPlacement)window.openTrayPlacement(active()?.id,placement);else window.openCustomEquipment?.(placement);return;}
@@ -197,7 +198,7 @@
     const p=assigned(active(),slot);slotMenu.replaceChildren();
     const action=(label,fn)=>{const b=button(label,()=>{closeSlotMenu();fn();});b.setAttribute('role','menuitem');slotMenu.append(b);};
     if(p){action('Open assembly',()=>openAssembly(p));action('Edit slot allocation',()=>editAllocation(p));action('Colors & faceplate image',()=>showInspector('Appearance'));action('Release slots',()=>releasePlacement(p));}
-    else action('Create assembly',startWizard);
+    else {action('Create assembly',startWizard);action('Faceplate only',()=>editFaceplate(null));}
     action('Rack colors',()=>{showInspector('Appearance');byId('rackAppearance').open=true;byId('rackAppearance').scrollIntoView({block:'nearest'});});
     anchor=byId('rackTree').querySelector('[aria-label="More actions for slot '+slot+'"]')||anchor;const box=anchor.getBoundingClientRect();slotMenu.style.left=Math.max(8,Math.min(innerWidth-238,box.right))+'px';slotMenu.style.top=Math.max(8,Math.min(innerHeight-240,box.top))+'px';slotMenu.hidden=false;slotMenu.querySelector('button')?.focus();
   }
@@ -294,8 +295,8 @@
     const p=assigned(rack,selectedSlot);if(!p)return;p.assembly.appearance ||= {};
     // Print in color works for wizard-made (library) faceplates: faceplate_color.py rebuilds this slot's own plate.
     const hasColorExport=String(p.equipment||'').startsWith('eq-');
-    const artDetails=document.createElement('details');artDetails.open=true;artDetails.id='assemblyAppearance';const sum=document.createElement('summary');sum.textContent='Tray & faceplate colors & image';artDetails.append(sum);
-    const colorKeys=[['tray','Tray','#4d8e6e'],['faceplate','Faceplate','#4e75a3']];
+    const artDetails=document.createElement('details');artDetails.open=true;artDetails.id='assemblyAppearance';const sum=document.createElement('summary');sum.textContent=p.equipment===LabRaxPortOpenings.FACEPLATE_ID?'Faceplate colors & image':'Tray & faceplate colors & image';artDetails.append(sum);
+    const colorKeys=p.equipment===LabRaxPortOpenings.FACEPLATE_ID?[['faceplate','Faceplate','#4e75a3']]:[['tray','Tray','#4d8e6e'],['faceplate','Faceplate','#4e75a3']];
     for(const [key,title,defaultColor] of colorKeys)colorField(artDetails,title,p.assembly.appearance[key]||defaultColor,v=>{p.assembly.appearance[key]=v;markChanged();applyAssemblyAppearance(p);if(key==='faceplate')refreshFilament();});
     const art=p.assembly.appearance.artwork;
     // The native file input always reads "No file chosen" after a re-render, so a button drives a hidden input.
@@ -422,13 +423,14 @@
     const title=document.createElement('h2');title.textContent=selectedSlot?'Slot '+String(selectedSlot).padStart(2,'0'):rack.name;host.append(title);
     if(!selectedSlot){host.append(paragraph(rack.slots+' slots · '+rack.placements.length+' assigned assemblies'),button('Edit rack settings',()=>openRackDialog(true),'secondary'));appendExtensionControls(host,rack);appendGuideControls(host,rack);appendCableSetup(host,rack);appendRackStlExport(host,rack);appendReleaseUndo(host,rack);return;}
     const placement=assigned(rack,selectedSlot);
-    if(placement){host.append(paragraph((placement.assembly?.name||'Untitled assembly')+' · slots '+placement.slot+'–'+(placement.slot+placement.span-1)),paragraph('Reference allocation. Installed fit, service access and load capacity are UNKNOWN.'),button(String(placement.equipment).startsWith('eq-')?'Place on tray':'Open assembly',()=>openAssembly(placement),'primary'),button('Slot actions ⋯',e=>showSlotMenu(selectedSlot,e.currentTarget),'secondary'));if(traySketch(placement))host.append(paragraph(TRAY_SKETCH,'notice'));const jw=jointWarning(rack,placement.slot,placement.span);if(jw)host.append(paragraph('⚠ '+jw,'notice'));}
-    else{host.append(paragraph('An open slot in your rack. Choose equipment to begin a guided assembly.'),button('Create assembly',startWizard,'primary'));}
+    if(placement){host.append(paragraph((placement.assembly?.name||'Untitled assembly')+' · slots '+placement.slot+'–'+(placement.slot+placement.span-1)),paragraph('Reference allocation. Installed fit, service access and load capacity are UNKNOWN.'),button(placement.equipment===LabRaxPortOpenings.FACEPLATE_ID?'Edit faceplate':String(placement.equipment).startsWith('eq-')?'Place on tray':'Open assembly',()=>openAssembly(placement),'primary'),button('Slot actions ⋯',e=>showSlotMenu(selectedSlot,e.currentTarget),'secondary'));if(placement.equipment===LabRaxPortOpenings.FACEPLATE_ID){for(const note of LabRaxPortOpenings.faceplateCheck(placement.tray?.faceplate||{}).warnings)host.append(paragraph(note,'notice'));if(traySketch(placement))host.append(paragraph('Faceplate sketch. Edit faceplate → Render exact faceplate preview for the exact shape.','notice'));}else if(traySketch(placement))host.append(paragraph(TRAY_SKETCH,'notice'));const jw=jointWarning(rack,placement.slot,placement.span);if(jw)host.append(paragraph('⚠ '+jw,'notice'));}
+    else{host.append(paragraph('An open slot in your rack. Choose equipment to begin a guided assembly.'),button('Create assembly',startWizard,'primary'),button('Faceplate only',()=>editFaceplate(null),'secondary'));}
     if(placement&&!String(placement.equipment).startsWith('eq-')&&!persistedAssemblyIds.has(placement.assembly.id)){host.querySelector('button.primary').disabled=true;host.append(paragraph('Use Save to keep this allocation before opening its hardware editor.'));}
     if(placement)appendPortControls(host,rack,placement);
     appendReleaseUndo(host,rack);
   }
   function editAllocation(placement){
+    if(placement.equipment===LabRaxPortOpenings.FACEPLATE_ID){editFaceplate(placement);return;}
     showInspector('Setup');
     const rack=active(),wizard=byId('mountWizard');wizard.hidden=false;wizard.replaceChildren();wizard.append(paragraph('EDIT SLOT ALLOCATION','section-eyebrow'));
     for(const [id,label,value] of [['allocationStart','Starting slot',placement.slot],['allocationSpan','Number of slots to reserve',placement.span]]){const caption=document.createElement('label');caption.htmlFor=id;caption.textContent=label;const input=document.createElement('input');input.id=id;input.type='number';input.min='1';input.max=String(rack.slots);input.step='1';input.value=String(value);wizard.append(caption,input);}
@@ -465,13 +467,64 @@
     selectedSlot=placement.slot;markChanged();render();
     notify('Tray placement applied to the draft. Save to keep it. Fit, retention and strength are UNKNOWN.');
   };
+  function editFaceplate(placement){
+    if(!capable||!leaveAssembly())return;
+    const rack=active(),slot=placement?.slot||selectedSlot;if(!rack||!slot)return;
+    showInspector('Setup');const host=byId('mountWizard');host.hidden=false;host.replaceChildren();
+    const P=LabRaxPortOpenings;
+    let draft=JSON.parse(JSON.stringify(placement?.tray?.faceplate||{u:1,layout:'blank'}));
+    let busy=false;
+    const title=paragraph('FACEPLATE ONLY · SLOT '+slot,'section-eyebrow');
+    const limits=paragraph('PROPOSED — UNVALIDATED. Printed fit and strength UNKNOWN. Apply changes to the draft, then Save.','notice');
+    const fields=document.createElement('div'),details=document.createElement('div'),status=paragraph('','notice');status.setAttribute('role','status');status.id='faceplateStatus';
+    function number(parent,label,value,change,min,max,step=1){const row=document.createElement('label');row.textContent=label;const el=document.createElement('input');el.type='number';el.value=value;el.min=min;el.max=max;el.step=step;el.setAttribute('aria-label',label);el.onchange=()=>{change(Number(el.value));update();};row.append(el);parent.append(row);return el;}
+    function regenerate(){delete draft.keystones;try{draft.keystones=P.faceplateSpacing(draft.count||1,draft.rows||draft.u,draft.u);}catch(e){}}
+    number(fields,'Height (U)',draft.u,v=>{draft.u=v;if(draft.layout==='keystones'){draft.rows=v;regenerate();}drawDetails();},1,5);
+    const label=document.createElement('label');label.textContent='Layout';const select=document.createElement('select');select.setAttribute('aria-label','Faceplate layout');
+    for(const [value,text]of [['blank','Blank'],['keystones','Keystones'],['custom','Custom openings']]){const o=document.createElement('option');o.value=value;o.textContent=text;select.append(o);}select.value=draft.layout;
+    select.onchange=()=>{draft.layout=select.value;delete draft.keystones;delete draft.ports;if(draft.layout==='keystones'){draft.count=1;draft.rows=draft.u;regenerate();}if(draft.layout==='custom')draft.ports=[];drawDetails();update();};label.append(select);fields.append(label);
+    function drawDetails(){details.replaceChildren();
+      if(draft.layout==='keystones'){
+        number(details,'Keystones per row',draft.count||1,v=>{draft.count=v;regenerate();drawDetails();},1,10);
+        number(details,'Rows',draft.rows||draft.u,v=>{draft.rows=v;regenerate();drawDetails();},1,draft.u);
+        details.append(paragraph('Up to 10 per row; equal pitch capped at 48 mm. Adjust individual centres below.'));
+        (draft.keystones||[]).forEach((k,i)=>{const row=document.createElement('div');number(row,'Keystone '+(i+1)+' X',k[0],v=>k[0]=v,-125,125,.1);number(row,'Keystone '+(i+1)+' Z',k[1],v=>k[1]=v,0,draft.u*44.45,.1);details.append(row);});
+      }
+      if(draft.layout==='custom'){
+        (draft.ports||[]).forEach((p,i)=>{const row=document.createElement('div');row.append(paragraph('Opening '+(i+1)));
+          for(const [key,text,min,max]of [['x','X',-125,125],['z','Z',0,draft.u*44.45],['w','Width',1,200],['h','Height',1,220],['r','Corner radius',0,50]])number(row,'Opening '+(i+1)+' '+text,p[key]||0,v=>p[key]=v,min,max,.1);
+          row.append(button('Remove opening '+(i+1),()=>{draft.ports.splice(i,1);drawDetails();update();},'secondary'));details.append(row);});
+        details.append(button('Add opening',()=>{(draft.ports??=[]).push({x:0,z:22.225,w:16,h:13.5,r:1,type:'other'});drawDetails();update();},'secondary'));
+      }
+    }
+    function request(){return {item:P.FACEPLATE_ID,tray:{faceplate:draft}};}
+    async function post(path){const response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json','X-App-Token':token},body:JSON.stringify(request())});if(!response.ok)throw Error((await response.json()).error||'Request failed');return response;}
+    function valid(){const result=P.faceplateCheck(draft);if(active()?.id!==rack.id)result.errors.push('Select the original rack.');if(slot+draft.u-1>rack.slots||rack.placements.some(p=>p.id!==placement?.id&&p.slot<slot+draft.u&&p.slot+p.span>slot))result.errors.push('This height overlaps another allocation or exceeds the rack.');return result;}
+    function update(){fields.inert=details.inert=busy;const result=valid();status.textContent=[...result.errors,...result.warnings].join(' · ')||'Checks pass digitally. Fit/strength UNKNOWN.';apply.disabled=preview.disabled=exportButton.disabled=busy||result.errors.length>0;}
+    const apply=button('Apply faceplate to draft',async()=>{busy=true;update();try{
+      if(valid().errors.length)throw Error(valid().errors[0]);const checked=await (await post('/api/equipment-placement-check')).json();if(!checked.ok)throw Error(checked.error);if(valid().errors.length)throw Error(valid().errors[0]);
+      const panel=JSON.parse(JSON.stringify(draft));
+      if(placement){RackLayout.change(rack,placement.id,slot,panel.u);const target=rack.placements.find(p=>p.id===placement.id);target.tray={faceplate:panel};}
+      else{const assembly=newAssembly();assembly.name='Faceplate only';assembly.project.name=assembly.name;rack.placements.push({assembly,id:uid(),equipment:P.FACEPLATE_ID,slot,span:panel.u,geometry:'equipment-library',fit:'UNKNOWN',tray:{faceplate:panel}});}
+      host.hidden=true;markChanged();render();notify('Faceplate applied to draft. Save to keep it. Fit/strength UNKNOWN.');
+    }catch(e){status.textContent=e.message;}finally{busy=false;fields.inert=details.inert=false;apply.disabled=false;}},'primary');
+    const preview=button('Render exact faceplate preview',()=>build(false),'secondary');
+    const exportButton=button('Export faceplate STL',()=>build(true),'secondary');
+    async function build(download){busy=true;update();status.textContent='Rendering faceplate with OpenSCAD…';try{
+      if(valid().errors.length)throw Error(valid().errors[0]);const response=await post(download?'/api/equipment-build':'/api/equipment-preview');
+      if(download){const url=URL.createObjectURL(await response.blob()),a=document.createElement('a');a.href=url;a.download='faceplate-slot-'+slot+'.zip';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}else await response.json();
+      window.EquipmentRackView?.refresh();status.textContent='Faceplate render ready. Apply to draft to see it in the rack; Save keeps the allocation. Fit/strength UNKNOWN.';
+    }catch(e){status.textContent=e.message;}finally{busy=false;fields.inert=details.inert=false;apply.disabled=preview.disabled=exportButton.disabled=valid().errors.length>0;}}
+    host.append(title,limits,fields,details,status,apply,preview,exportButton,button('Cancel',()=>{host.hidden=true;},'secondary'));drawDetails();update();
+  }
+
   function startWizard(){
     if(!capable){notify('Wait for the updated workspace to load.',true);return;}
     const rack=active();if(!rack||!selectedSlot||assigned(rack,selectedSlot)){notify('Select an empty rack slot first.');return;}
     showInspector('Setup');const wizard=byId('mountWizard');wizard.hidden=false;wizard.replaceChildren();
     wizard.append(paragraph('CREATE ASSEMBLY · SLOT '+selectedSlot,'section-eyebrow'),paragraph('Choose equipment from My Equipment, then reserve its slot span.'));
     const choice=document.createElement('select'),empty=document.createElement('option');empty.value='';empty.textContent='Choose equipment…';choice.append(empty);
-    for(const item of window.equipmentLibraryItems?.()||[]){const o=document.createElement('option');o.value=item.id;o.textContent=item.name;choice.append(o);}
+    for(const item of (window.equipmentLibraryItems?.()||[]).filter(i=>!i.spec.faceplate_only)){const o=document.createElement('option');o.value=item.id;o.textContent=item.name;choice.append(o);}
     const input=document.createElement('input');input.id='allocationSpan';input.type='number';input.min='1';input.max=String(rack.slots-selectedSlot+1);input.value='1';
     choice.onchange=()=>{input.value=String((window.equipmentLibraryItems?.()||[]).find(i=>i.id===choice.value)?.span||1);};
     const label=document.createElement('label');label.textContent='Slots to reserve';label.htmlFor=input.id;
@@ -486,6 +539,7 @@
     const library=window.equipmentLibraryItems?.()||[],screen=window.WorkshopClearance?.screen,labels={ok:'SCREENED OK',tight:'TIGHT',over:'OVER',unknown:'UNKNOWN',reference:'REFERENCE'};
     for(const p of rack.placements){
       const where=(p.assembly?.name||'Untitled assembly')+' · slots '+p.slot+'–'+(p.slot+p.span-1);
+      if(p.equipment===LabRaxPortOpenings.FACEPLATE_ID){const check=LabRaxPortOpenings.faceplateCheck(p.tray?.faceplate||{});host.append(paragraph(where+' · Faceplate only · PROPOSED — UNVALIDATED. Fit/strength UNKNOWN.'),...check.errors.map(t=>paragraph(t,'fail')),...check.warnings.map(t=>paragraph(t,'notice')));continue;}
       if(!screen){host.append(paragraph(where+' · screening unavailable; rack fit UNKNOWN.'));continue;}
       const r=screen(rack,p,library.find(i=>i.id===p.equipment));
       const box=document.createElement('div');box.className='clearance-result clearance-'+r.level;

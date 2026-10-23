@@ -37,6 +37,7 @@
   // Historical public lift is relative to the old floor top (10 mm); differences include the new floor.
   function lift(spec){return ['flat','sleeve'].includes(spec.device_mount)?deviceLift(spec)-(7+LEGACY_SLOT_OFFSET+3):spec.device_mount==='straps'?0:+(spec.standoff??6);}
   function frontOpenings(libSpec,tray){
+    if(libSpec.faceplate_only)return {ports:faceplateSpec(tray?.faceplate).ports,dx:0,dz:0,follows:false,rotation:0,message:null};
     const eff={...libSpec};
     for(const k of ['dev_off_x','dev_rot','device_mount','standoff'])if(tray&&k in tray)eff[k]=tray[k];
     const rotation=+(eff.dev_rot||0),follows=rotation===0;
@@ -109,6 +110,40 @@
       const size=Math.max(0,Math.floor((available+1e-9)*1000)/1000);if(size<requested-1e-6)notes.push(p.label+' bezel '+(size===0?'omitted':'reduced to '+size+' mm')+' to keep a 2 mm web; existing openings are unchanged.');return {...p,size};});return {openings,notes};
   }
 
-  const api={FRONT_POSITIONS,BEZELS,BEZEL_WEB,BEZEL_STEPS,deviceY,frontWindow,positionProblems,bezelPlan,SLEEVE,FOOT,footHeight,pocketDepth,deviceCaseHeight,sleeve,sleevePorts,RACK_PITCH,PLATE_GAP,plateBottom,plateHeight,floorZ,usesStandoffs,deviceLift,neededHeight,autoU,flatHint,DEFAULT_SIZES,SIZE_NOTE,JOINT_HALF,JOINT_TOP,JOINT_CLEAR,jointPositions,defaultSize,lift,frontOpenings,problems};
+  const FACEPLATE_ID='eq-000000000038', FACEPLATE_PITCH_CAP=48;
+  function faceplateSpacing(count,rows,u){
+    if(![count,rows,u].every(Number.isInteger)||u<1||u>5||rows<1||rows>u)throw Error('Choose 1–5U and between 1 and U rows.');
+    if(count<1||count>10)throw Error('Maximum 10 keystones per row (minimum 1).');
+    const pitch=count>1?Math.min(FACEPLATE_PITCH_CAP,193.5/(count-1)):0;
+    return Array.from({length:rows},(_,r)=>Array.from({length:count},(_,i)=>[Math.round((i-(count-1)/2)*pitch*1000)/1000,Math.round((r+.5)*44.45*1000)/1000])).flat();
+  }
+  function faceplateSpec(raw={}){
+    const s={faceplate_only:true,u:raw.u??1,layout:raw.layout||'blank',joint:'none',device_mount:'straps',ports:[],keystones:[]};
+    if(s.layout==='keystones'){s.count=raw.count??1;s.rows=raw.rows??s.u;s.keystones=raw.keystones||faceplateSpacing(s.count,s.rows,s.u);}
+    if(s.layout==='custom')s.ports=raw.ports||[];
+    return s;
+  }
+  function faceplateCheck(raw){
+    let s;try{s=faceplateSpec(raw);}catch(e){return {errors:[e.message],warnings:[]};}
+    const errors=[],warnings=[],shapes=[];
+    if(!Number.isInteger(s.u)||s.u<1||s.u>5)errors.push('Choose a height from 1U to 5U.');
+    if(!['blank','keystones','custom'].includes(s.layout))errors.push('Choose Blank, Keystones or Custom openings.');
+    if(s.layout==='keystones'){
+      try{faceplateSpacing(s.count,s.rows,s.u);}catch(e){errors.push(e.message);}
+      if(s.keystones.length!==s.count*s.rows)errors.push('Keystone positions must match count × rows.');
+      for(const k of s.keystones){const x=Array.isArray(k)?k[0]:k,z=Array.isArray(k)&&k.length>1?k[1]:s.u*44.45/2;shapes.push([x-10.5,x+10.5,z-15,z+18.5]);}
+    }
+    if(s.ports.length>20)errors.push('Maximum 20 custom openings.');
+    for(const p of s.ports){if(![p.x,p.z,p.w,p.h,p.r??0].every(Number.isFinite)||p.w<1||p.w>200||p.h<1||p.h>220||(p.r??0)<0||(p.r??0)>50)errors.push('Enter valid opening dimensions.');shapes.push([p.x-p.w/2,p.x+p.w/2,p.z-p.h/2,p.z+p.h/2]);}
+    const slots=[];for(let i=0;i<s.u&&i<5;i++)for(const x of [-118.2625,118.2625])for(const dz of [-15.902,15.902]){const z=i*44.45+22.225+dz;slots.push([x-5,x+5,z-3.5,z+3.5]);}
+    const gap=(a,b)=>Math.max(a[0]-b[1],b[0]-a[1],a[2]-b[3],b[2]-a[3]);let thin=false;
+    const inside=(x,z)=>Math.max(Math.abs(x)-123.5,0)**2+Math.max(2.525-z,z-(s.u*44.45-2.525),0)**2<=2.25+1e-9;
+    shapes.forEach((a,i)=>{if(!a.every(Number.isFinite)||![a[0],a[1]].every(x=>[a[2],a[3]].every(z=>inside(x,z))))errors.push('Keep every opening/block at least 1 mm inside the plate outline.');
+      if(slots.some(b=>gap(a,b)<=0))errors.push('An opening/block overlaps a rack slot.');
+      shapes.slice(0,i).forEach(b=>{const g=gap(a,b);if(g<0)errors.push('Openings/keystone blocks overlap (negative web).');if(g<2)thin=true;});});
+    if(thin)warnings.push('thin wall, fit/strength UNKNOWN');return {errors:[...new Set(errors)],warnings};
+  }
+
+  const api={FACEPLATE_ID,FACEPLATE_PITCH_CAP,faceplateSpacing,faceplateSpec,faceplateCheck,FRONT_POSITIONS,BEZELS,BEZEL_WEB,BEZEL_STEPS,deviceY,frontWindow,positionProblems,bezelPlan,SLEEVE,FOOT,footHeight,pocketDepth,deviceCaseHeight,sleeve,sleevePorts,RACK_PITCH,PLATE_GAP,plateBottom,plateHeight,floorZ,usesStandoffs,deviceLift,neededHeight,autoU,flatHint,DEFAULT_SIZES,SIZE_NOTE,JOINT_HALF,JOINT_TOP,JOINT_CLEAR,jointPositions,defaultSize,lift,frontOpenings,problems};
   root.LabRaxPortOpenings=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(globalThis);

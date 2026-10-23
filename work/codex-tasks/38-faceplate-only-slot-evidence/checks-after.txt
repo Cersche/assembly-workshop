@@ -1,0 +1,587 @@
+== Python (work/gui-refinement/check_python.py) ==
+test_assignment_retains_unknown_fit (test_rack_workspace.RackWorkspaceTests) ... ok
+test_cable_guides_round_trip_and_reject_invalid (test_rack_workspace.RackWorkspaceTests) ... ok
+test_empty_read_has_no_side_effect (test_rack_workspace.RackWorkspaceTests) ... ok
+test_history_lists_and_restores_draft_without_writing (test_rack_workspace.RackWorkspaceTests) ... ok
+test_invalid_dimensions_and_equipment (test_rack_workspace.RackWorkspaceTests) ... ok
+test_malformed_history_generation_cannot_be_used_as_path (test_rack_workspace.RackWorkspaceTests) ... ok
+test_overlap_and_out_of_range_rejected (test_rack_workspace.RackWorkspaceTests) ... ok
+test_round_trip_unknown_dimensions_and_historical_recovery (test_rack_workspace.RackWorkspaceTests) ... ok
+test_stale_writer_rejected_without_changes (test_rack_workspace.RackWorkspaceTests) ... ok
+test_example_is_generic_and_library_read_has_no_side_effect (test_rack_workspace.RetiredEquipmentMigrationTests) ... ok
+test_history_disagreement_blocks_migration_without_overwrite (test_rack_workspace.RetiredEquipmentMigrationTests) ... ok
+test_saved_shape_migrates_as_unsaved_draft_with_exact_history (test_rack_workspace.RetiredEquipmentMigrationTests) ... ok
+test_every_component_retains_exact_source_coordinates_and_indices (test_rack_references.RackReferenceTests) ... ok
+test_reference_route_never_accesses_hardware_store (test_rack_references.RackReferenceTests) ... ok
+test_served_page_scripts_match_the_manifest (test_rack_references.RackReferenceTests) ... ok
+test_tampering_is_rejected_and_unknown_paths_are_not_served (test_rack_references.RackReferenceTests) ... ok
+test_appearance_does_not_change_hardware_identity (test_assembly_records.AssemblyRecordTests) ... ok
+test_artwork_allows_1024_pixels_and_auto_filament_colors (test_assembly_records.AssemblyRecordTests) ... ok
+test_artwork_is_local_verified_png_and_tamper_is_blocked (test_assembly_records.AssemblyRecordTests) ... ok
+test_layout_cannot_overwrite_hardware_and_old_client_is_rejected (test_assembly_records.AssemblyRecordTests) ... ok
+test_old_shared_editor_cannot_mutate_independent_workspace (test_assembly_records.AssemblyRecordTests) ... ok
+test_routes_scope_state_save_bom_and_check_to_instance (test_assembly_records.AssemblyRecordTests) ... ok
+test_saved_release_undo_retains_latest_hardware_revision (test_assembly_records.AssemblyRecordTests) ... ok
+test_stale_save_rejected_and_noop_does_not_bump_revision (test_assembly_records.AssemblyRecordTests) ... ok
+test_two_instances_are_isolated_and_legacy_db_is_unchanged (test_assembly_records.AssemblyRecordTests) ... ok
+test_v1_read_migrates_only_in_memory (test_assembly_records.AssemblyRecordTests) ... ok
+test_wrong_or_stale_instance_bundle_is_rejected_without_render (test_assembly_records.AssemblyRecordTests) ... ok
+test_appearance_only_preserves_hardware_revision (test_studio_save.StudioSaveTests) ... ok
+test_atomic_save_route_and_capability (test_studio_save.StudioSaveTests) ... ok
+test_combined_save_is_one_workspace_commit (test_studio_save.StudioSaveTests) ... ok
+test_invalid_hardware_leaves_layout_and_appearance_unsaved (test_studio_save.StudioSaveTests) ... ok
+test_stale_generation_is_rejected_without_partial_save (test_studio_save.StudioSaveTests) ... ok
+test_unscoped_hardware_tampering_is_rejected (test_studio_save.StudioSaveTests) ... ok
+test_port_edits_rejected (test_cable_ports.CablePortTests) ... ok
+test_port_edits_round_trip (test_cable_ports.CablePortTests) ... ok
+test_rejections (test_cable_ports.WizardPortTests) ... ok
+test_source_ignores_planning_fields (test_cable_ports.WizardPortTests) ... ok
+test_type_ids_and_rear_ports (test_cable_ports.WizardPortTests) ... ok
+test_changed_original_during_render_is_not_published (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_copy_normal_edit_persists_display_rename_without_source_name_suffix (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_copy_preserves_original_build_records_placements_and_planning_ports (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_corrupt_current_target_blocks_reuse_without_overwrite (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_current_source_reports_unknown_pipeline_and_still_rebuilds_copy (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_duplicate_and_double_click_requests_append_one_copy (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_invalid_snap_and_keystone_specs_need_review_without_substitution (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_missing_malformed_and_tampered_evidence_are_separate_states (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_old_keystone_and_arbitrary_source_flag_without_inventing_reason (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_planning_only_metadata_does_not_change_source_name_only_change_does (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_render_failure_or_index_failure_preserves_original_index (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_stale_missing_or_invalid_identity_rejected_before_render (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_status_and_rebuild_routes_preserve_array_contract_and_token_guard (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_status_is_read_only_legacy_array_older_source (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_wrong_source_hash_and_manifest_id_are_integrity_problems (test_equipment_rebuild.EquipmentRebuildTests) ... ok
+test_rejections (test_cable_plan.CablePlanTests) ... ok
+test_round_trip_and_legacy (test_cable_plan.CablePlanTests) ... ok
+test_suggestion_field_rejections (test_cable_plan.CablePlanTests) ... ok
+test_suggestion_fields_round_trip (test_cable_plan.CablePlanTests) ... ok
+test_unknown_guide_fields_rejected (test_cable_plan.CablePlanTests) ... ok
+test_valid_boundaries_and_defaults (test_cable_plan.CablePlanTests) ... ok
+test_allocation_values_override_library_defaults (test_allocation_tray.AllocationTray) ... ok
+test_keys_split_between_library_and_allocation (test_allocation_tray.AllocationTray) ... ok
+test_library_allocation_keeps_tray (test_allocation_tray.AllocationTray) ... ok
+test_no_tray_settings_gives_identical_source (test_allocation_tray.AllocationTray) ... ok
+test_older_documents_validate_unchanged (test_allocation_tray.AllocationTray) ... ok
+test_rack_document_keeps_tray_per_allocation (test_allocation_tray.AllocationTray) ... ok
+test_unknown_keys_dropped_and_bad_values_rejected (test_allocation_tray.AllocationTray) ... ok
+test_custom_openings_and_unknowns (test_faceplate_slot.FaceplateSlotTests) ... ok
+test_disposable_roundtrip_per_slot_and_color (test_faceplate_slot.FaceplateSlotTests) ... ok
+test_failures_block_render_before_compiler (test_faceplate_slot.FaceplateSlotTests) ... ok
+test_legacy_source_hash_and_blank_only_parts (test_faceplate_slot.FaceplateSlotTests) ... ok
+test_multirow_and_color_keepout (test_faceplate_slot.FaceplateSlotTests) ... ok
+test_reference_spacing_and_warning (test_faceplate_slot.FaceplateSlotTests) ... ok
+test_flat_joint_clearance (test_tray_placement.FlatFloorTests) ... ok
+test_front_openings_follow_floor_both_directions (test_tray_placement.FlatFloorTests) ... ok
+test_height_boundaries_all_mounts (test_tray_placement.FlatFloorTests) ... ok
+test_new_source_uses_slot_bottom_standard (test_tray_placement.FlatFloorTests) ... ok
+test_optiplex_budget_and_no_holes (test_tray_placement.FlatFloorTests) ... ok
+test_js_sketch_markers_and_warnings_agree_with_the_build (test_tray_placement.FrontOpeningsFollowTheDevice) ... ok
+test_moved_openings_are_still_guarded (test_tray_placement.FrontOpeningsFollowTheDevice) ... ok
+test_slot_source_cuts_moved_openings (test_tray_placement.FrontOpeningsFollowTheDevice) ... ok
+test_app_routes_window_requests (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_check_reports_plain_message_without_writing (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_js_window_checks_agree_with_python (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_python_checks_block_the_same_cases (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_request_merges_library_facts_and_slot_tray (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_unknown_item_and_bad_payload_are_rejected (test_tray_placement.PlaceOnTrayRequests) ... ok
+test_invalid_settings_or_item_give_no_render (test_tray_placement.RackViewLookup) ... ok
+test_js_rack_sketch_matches_python_tray_size (test_tray_placement.RackViewLookup) ... ok
+test_lookup_finds_existing_render_and_never_renders (test_tray_placement.RackViewLookup) ... ok
+test_width_and_rotation_boundaries (test_tray_placement.RackWidthTests) ... ok
+test_boolean_and_placement_roundtrip (test_tray_placement.RearOpeningsTests) ... ok
+test_geometry_clearance_contract (test_tray_placement.RearOpeningsTests) ... ok
+test_old_sources_byte_identical_and_new_opt_in (test_tray_placement.RearOpeningsTests) ... ok
+test_slv_b_reference (test_tray_placement.RearOpeningsTests) ... ok
+test_geometry_all_styles_all_units (test_tray_placement.RearStyleTests) ... ok
+test_legacy_open_exact_source_and_style_precedence (test_tray_placement.RearStyleTests) ... ok
+test_task31_dense_vents (test_tray_placement.RearStyleTests) ... ok
+test_task31_lip_clearances (test_tray_placement.RearStyleTests) ... ok
+test_task31_unchanged_sources_and_specs (test_tray_placement.RearStyleTests) ... ok
+test_validation_and_disabled_support (test_tray_placement.RearStyleTests) ... ok
+test_short_depth_and_narrow_screw_height_are_guarded (test_tray_placement.SleeveGuardTests) ... ok
+test_sleeve_parameters_match_scad (test_tray_placement.SleeveGuardTests) ... ok
+test_optiplex_budgets_and_rear_support (test_tray_placement.SleeveTests) ... ok
+test_python_js_sleeve_agree (test_tray_placement.SleeveTests) ... ok
+test_source_keeps_rear_joint_and_has_sleeve_window (test_tray_placement.SleeveTests) ... ok
+test_window_drops_only_contained_openings_without_mutating_input (test_tray_placement.SleeveTests) ... ok
+test_flat_and_rotated_tracks_and_interference (test_tray_placement.SleeveV2Tests) ... ok
+test_legacy_specs_and_sources_byte_identical (test_tray_placement.SleeveV2Tests) ... ok
+test_optiplex_tracks_floor_and_45_degree_dips (test_tray_placement.SleeveV2Tests) ... ok
+test_optiplex_window_bosses_width_and_cable_clearances (test_tray_placement.SleeveV2Tests) ... ok
+test_validation_and_settings_round_trip (test_tray_placement.SleeveV2Tests) ... ok
+test_js_ports_and_screening_use_the_allocation_spec (test_tray_placement.SlotTrayConsumers) ... ok
+test_blocked_cases_have_plain_messages (test_tray_pair.TwoDevicesOnOneTray) ... ok
+test_js_window_checks_agree_with_python (test_tray_pair.TwoDevicesOnOneTray) ... ok
+test_library_delete_counts_the_second_device_as_in_use (test_tray_pair.TwoDevicesOnOneTray) ... ok
+test_one_device_source_is_unchanged (test_tray_pair.TwoDevicesOnOneTray) ... ok
+test_pair_source_has_both_devices_and_a_wider_tray (test_tray_pair.TwoDevicesOnOneTray) ... ok
+test_rack_document_keeps_the_second_device (test_tray_pair.TwoDevicesOnOneTray) ... ok
+test_second_tray_keeps_only_its_own_keys (test_tray_pair.TwoDevicesOnOneTray) ... ok
+test_slot_export_request_carries_quality (test_export_quality.ExportQualityRequests) ... ok
+test_zip_records_export_quality (test_export_quality.ExportQualityRequests) ... ok
+test_draft_and_fine_add_only_one_fn_line (test_export_quality.ExportQualitySource) ... ok
+test_quality_is_not_a_tray_setting (test_export_quality.ExportQualitySource) ... ok
+test_standard_is_byte_identical_to_before (test_export_quality.ExportQualitySource) ... ok
+test_standard_spec_and_build_id_unchanged (test_export_quality.ExportQualitySource) ... ok
+test_template_default_is_standard (test_export_quality.ExportQualitySource) ... ok
+test_unknown_quality_is_refused (test_export_quality.ExportQualitySource) ... ok
+test_keystone_faceplates_pass_the_mesh_check_without_nudge (test_keystone_mesh.KeystoneRenderTests) ... skipped 'set AW_RENDER_TESTS=1 to render with OpenSCAD'
+test_block_is_clipped_by_the_same_box_as_the_plate_opening (test_keystone_mesh.StaticKeystoneTests) ... FAIL
+test_golden_table_and_tightness_unchanged (test_keystone_mesh.StaticKeystoneTests) ... ok
+test_plate_flush_depths_land_on_the_2d_grid (test_keystone_mesh.StaticKeystoneTests) ... ok
+test_bezel_web_reduction_pair_edge_slots_and_keystone (test_port_openings.FrontPositionBezelTests) ... ok
+test_defaults_are_byte_identical_for_four_existing_shapes (test_port_openings.FrontPositionBezelTests) ... ok
+test_geometry_is_only_front_opening_edges (test_port_openings.FrontPositionBezelTests) ... ok
+test_position_and_flush_window (test_port_openings.FrontPositionBezelTests) ... ok
+test_ranges_unknown_values_and_allocation_round_trip (test_port_openings.FrontPositionBezelTests) ... ok
+test_foot_case_budget_and_optiplex_sleeve_values (test_port_openings.PortOpenings) ... ok
+test_foot_pocket_joint_strap_and_rear_stop_guards (test_port_openings.PortOpenings) ... ok
+test_joint_positions (test_port_openings.PortOpenings) ... ok
+test_movement_and_preservation (test_port_openings.PortOpenings) ... ok
+test_no_feet_preserves_height_and_mount_defaults (test_port_openings.PortOpenings) ... ok
+test_no_hole_flat_device_cleans (test_port_openings.PortOpenings) ... ok
+test_problems (test_port_openings.PortOpenings) ... ok
+test_rotation (test_port_openings.PortOpenings) ... ok
+test_sizes (test_port_openings.PortOpenings) ... ok
+test_sleeve_scad_assignments_are_not_commented_out (test_port_openings.PortOpenings) ... ok
+test_joint_boss_pilot_and_plate_edge (test_port_openings.ProtrusionPolishTests) ... ok
+test_merged_window_leaves_2_1_mm_and_does_not_change_spec_or_source (test_port_openings.ProtrusionPolishTests) ... ok
+test_numeric_slot_edge_corner_vent_and_other_zone_gaps (test_port_openings.ProtrusionPolishTests) ... ok
+test_task34_legacy_specs_and_source_bytes_unchanged (test_port_openings.ProtrusionPolishTests) ... ok
+test_rotated_keep_clear_zone_hits_rear (test_port_openings.ProtrusionTests) ... ok
+test_validation_round_trip_and_legacy_bytes (test_port_openings.ProtrusionTests) ... ok
+test_bodies_and_closure (test_mesh_study.MeshStudyTests) ... ok
+test_finds_the_groove (test_mesh_study.MeshStudyTests) ... ok
+test_overlapping_bodies_merge_into_one_solid (test_mesh_study.MeshStudyTests) ... ok
+test_section_shows_the_groove (test_mesh_study.MeshStudyTests) ... ok
+test_groove_is_not_a_through_hole (test_mesh_study.ThroughHoleTests) ... ok
+test_round_hole_in_a_washer (test_mesh_study.ThroughHoleTests) ... ok
+test_square_hole_between_overlapping_bodies (test_mesh_study.ThroughHoleTests) ... ok
+test_auto_colors_stay_automatic (test_faceplate_color.FaceplateColorTests) ... ok
+test_color_only_change_changes_export_identity (test_faceplate_color.FaceplateColorTests) ... ok
+test_color_stays_clear_of_openings_and_rack_holes (test_faceplate_color.FaceplateColorTests) ... ok
+test_opaque_image_keeps_faceplate_as_base (test_faceplate_color.FaceplateColorTests) ... ok
+test_openings_match_the_template (test_faceplate_color.FaceplateColorTests) ... ok
+test_placement_matches_the_rack_view (test_faceplate_color.FaceplateColorTests) ... ok
+test_png_round_trip_with_filters (test_faceplate_color.FaceplateColorTests) ... ok
+test_preview_reduces_and_cleans (test_faceplate_color.FaceplateColorTests) ... ok
+test_same_filament_merges_bodies (test_faceplate_color.FaceplateColorTests) ... ok
+test_scad_uses_the_generic_plate (test_faceplate_color.FaceplateColorTests) ... ok
+test_settings_validation (test_faceplate_color.FaceplateColorTests) ... ok
+test_slot_spec_uses_library_item_and_slot_tray_settings (test_faceplate_color.FaceplateColorTests) ... ok
+test_window_follows_the_44_4_mm_plate (test_faceplate_color.FaceplateColorTests) ... ok
+test_atomic_immutable_import_and_pinning (test_app.Tests) ... ok
+test_axial_geometry_and_open_insert_overrun (test_app.Tests) ... ok
+test_draft_preview_never_changes_saved_project (test_app.Tests) ... ok
+test_hardware_envelopes_follow_actual_joint_axes (test_app.Tests) ... ok
+test_invalid_dimensions (test_app.Tests) ... ok
+test_maximum_hole_is_not_exact_recommendation (test_app.Tests) ... ok
+test_mesh_validation_and_bundle_path_rejection (test_app.Tests) ... ok
+test_model_uploads_get_a_larger_request_limit (test_app.Tests) ... ok
+test_reach_bottoming_and_unknowns (test_app.Tests) ... ok
+test_starter_catalog_is_idempotent_and_keeps_selection (test_app.Tests) ... ok
+test_thread_mismatch_and_missing_selection (test_app.Tests) ... ok
+
+======================================================================
+FAIL: test_block_is_clipped_by_the_same_box_as_the_plate_opening (test_keystone_mesh.StaticKeystoneTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Projects\assembly-workshop\outputs\Mechanical_Design_App\test_keystone_mesh.py", line 47, in test_block_is_clipped_by_the_same_box_as_the_plate_opening
+    self.assertTrue(cut)
+AssertionError: None is not true
+
+----------------------------------------------------------------------
+Ran 183 tests in 23.925s
+
+FAILED (failures=1, skipped=1)
+== JavaScript (js-tests/run.js) ==
+feet detector: 50,000 triangles in 115.2 ms
+protrusions: 50k triangles 167.2 ms
+✔ viewer button actions and strict four pixel threshold (2.1586ms)
+✔ cursor anchor is invariant across zoom and existing pan (0.2092ms)
+✔ GPU projection, projected labels and inverse picking agree (0.2408ms)
+✔ subthreshold clicks, pan versus orbit, and cancel retain selection semantics (0.7992ms)
+✔ shortcuts are scoped, do not consume typing/undo, and rebinding is idempotent (0.4791ms)
+✔ pinch zooms and never emits a click after either finger lifts (0.1838ms)
+✔ faceplate reference spacing, capacity and thin web (0.8359ms)
+✔ two rows have separate port pairs and no tray sketch (0.9304ms)
+✔ blank and custom panels have no device or hidden cutouts (0.3368ms)
+✔ wizard mount selector retains inserts default and explicitly selects all mount choices (7.3701ms)
+✔ wizard Save blocks no-hole inserts and pegs with pointer; flat reaches Save unchanged (2.7657ms)
+✔ mount changes use shared autoU, retain entered port Z, and protect typed or saved U (2.2657ms)
+✔ flat hint points to Ports and wizard note uses current device lift without moving heights (0.9319ms)
+✔ every app script parses (13.7961ms)
+✔ every script index.html loads from /rack-references/ is in the asset manifest (0.4619ms)
+✔ RackLayout.checkRange rejects out-of-range and overlapping ranges (0.3027ms)
+✔ RackLayout.change moves an allocation and resets fit to UNKNOWN (0.1434ms)
+✔ RackLayout.release and restore round-trip; restore keeps fit UNKNOWN (0.2391ms)
+✔ WorkshopCatalog.filter: latest revision, kind, exact diameter, unknown material, length bounds (0.3026ms)
+✔ WorkshopCatalog.changes lists changed fields with their effect (0.6022ms)
+✔ LabRaxScene.frame stacks posts in levels of at most 5U that sum to the rack height (0.5444ms)
+✔ LabRaxScene.guidePose puts the cable guide plate flat on the post face at the slot hole pair (1.9643ms)
+✔ WorkshopClearance.screen grades height, width and depth against nominal rack numbers (0.7261ms)
+✔ WorkshopClearance.screen keeps unspecified rack numbers UNKNOWN and flags span mismatch (0.1202ms)
+✔ WorkshopClearance.screen uses the slot tray placement (offset, rotation, standoff, rear support, U) (0.3438ms)
+✔ LabRaxStudio.artworkRect stays inside the 216 x 34 mm faceplate field (0.2092ms)
+✔ LabRaxStudio.artworkWindow generalizes the reference window to wizard faceplates of any U span (0.3238ms)
+✔ LabRaxStudio.artworkRect keeps wizard images clear of port and keystone openings (2.1546ms)
+✔ LabRaxStudio.artworkRect gives the placement Print in color uses (test_faceplate_color.py asserts the same numbers) (0.3544ms)
+✔ LabRaxStudio.selectionRect follows the plate front at any U height (0.1932ms)
+✔ LabRaxPorts library planning ports: nine ports, face UNKNOWN, front-edge ports point front and USB/Ethernet right (0.5353ms)
+✔ LabRaxPorts wizard ports: front openings, rear ports and keystone pass-through pairs (0.2534ms)
+✔ LabRaxPorts wizard ports follow the slot tray placement (placement.tray wins over the library spec) (0.6475ms)
+✔ LabRaxPorts overrides merge, reset, custom ports and prune (0.6474ms)
+✔ LabRaxPorts marker rotations are proper rotations and parts sit at the allocation base (0.4284ms)
+✔ LabRaxPorts marker meshes exist for every connector type (4.5664ms)
+✔ LabRaxCableView tube follows the path, is finite and has closed end caps (1.2412ms)
+✔ LabRaxCableView sag dips between points and stays put on vertical runs (0.1372ms)
+✔ LabRaxCableView bundles cables side by side through a guide without overlap (7.9175ms)
+✔ LabRaxCableView exit grommets face outward with proper rotations (1.9786ms)
+✔ first-run UI has no retired equipment card, wording or implicit allocation (1.7868ms)
+✖ root front-end assets match their hashes (13.0522ms)
+✔ new placements use the chosen library item and omit historical reference metadata (1.2739ms)
+✔ height rule and auto-U use the actual floor and only real standoffs (0.1892ms)
+✔ wizard import actually uses shared auto-U and shows the flat hint without changing mount (1.0617ms)
+✔ flat placement fits 1U, sketch floor and device agree, joints remain guarded (1.0548ms)
+✔ front, rear and custom cable ports track the lower floor and preserve library input (0.2163ms)
+✔ slot-bottom standard: 1U/2U bounds, rack holes, preserved non-flat rack heights (0.9792ms)
+✔ sleeve sketch contains a real window and walls/lips/stop in the shared coordinate frame (0.8685ms)
+✔ detects four lower feet on separate overlapping bodies and ignores a plain case (3.2273ms)
+✔ orientation and quarter-turn transform foot locations in the device frame (2.8906ms)
+✔ 50,000 triangle import stays responsive (126.8587ms)
+✔ flat and sleeve use case height, rotated pockets and unchanged legacy specs (0.5951ms)
+✔ pockets colliding with joints or straps block placement (0.4132ms)
+✔ touching plug cylinders merge transitively into one editable union question (14.7379ms)
+✔ flat front-position message appears once with the newer advice (0.8858ms)
+✔ merge stays on one face and does not bridge through empty union-box corners (6.0785ms)
+✔ band warning measures 2.1 mm, names merged windows and joint cuts without blocking (1.3519ms)
+✔ band and style cut geometry mirror Python across styles mounts U rotations and moved joints (178.5197ms)
+✔ back cylinder separate (2.329ms)
+✔ back cylinder fused (4.6181ms)
+✔ feet excluded; sub-2mm bumps and internal solids excluded (13.1959ms)
+✔ left plug answers keep the case origin and mandatory unanswered guard (3.656ms)
+✔ front and bottom plug origin stays stable for holes feet and ports (6.3168ms)
+✔ warnings rotate zones and include real bend-space limits (0.2841ms)
+✔ screening performance 50k triangles (177.068ms)
+✔ unflagged short bumps and large separate case bodies remain in the size (1.6397ms)
+✔ actual wizard frame sync rebases holes feet and both port lists for left front bottom (2.7774ms)
+✔ flush flat with a screw joint gives one front-gap message (Claude review 34) (0.3333ms)
+✔ front position layout window and holes follow the front-face measurement (1.1516ms)
+✔ plain-language blocks: near-front screws, flat stops, sleeve set back, bands, standoffs and clips (0.5085ms)
+✔ slot values diff and inactive fields are validated without changing default allocation (0.2672ms)
+✔ bezel minimum webs against ports, plate edge, slots, keystone and sleeve joint holes (0.5785ms)
+✔ wizard transition guards execute for unanswered questions on tab, next and Save (1.2069ms)
+✔ second-device values and diff keep only its own keys (0.1928ms)
+✔ pair layout spans both devices and stays centred (0.7005ms)
+✔ rack sketch draws the wider tray and both devices’ openings (0.4249ms)
+✔ cable planner lists the second device’s ports with d2- ids and its name (0.2132ms)
+✔ screening uses the shared tray width (0.1767ms)
+✔ window, workspace and rack view are wired for a second device (0.9798ms)
+✔ sleeve v2 OptiPlex dimensions, floor, dip ramps and boss widths (0.6655ms)
+✔ sleeve v2 cable rectangle clears stop, walls, grooves and conservative joints (0.1801ms)
+✔ sleeve v2 defaults and explicit draft round trip (0.5751ms)
+✔ sleeve v2 blocks invalid dimensions and unsupported combinations (0.3183ms)
+✔ sleeve v2 control labels and source hooks are wired without persistence (0.475ms)
+✔ small preview GPU matrix matches the original painter camera within half a pixel (0.7287ms)
+✔ small preview switch, context restore and ten-frame quality budget boundaries (0.2571ms)
+✔ small preview uploads once for camera changes and equal recreated tray arrays (0.3999ms)
+✔ feature edges: cube has twelve, subdivided flat square has four (0.7142ms)
+✔ painter coalesces demand frames, stays idle, falls back, disposes and restores (1.6539ms)
+✔ rack floor helper follows the lowest finite part bound and falls back for no parts (0.1093ms)
+✔ world bounds follow rotations and translations, ignore empty meshes and unused vertices (0.2752ms)
+✔ real rack feet never fall below the floor at several heights, with panels and without feet (180.4413ms)
+✔ renderer updates floor placement and depth/shadow caches as feet and scene height change (36.8802ms)
+ℹ tests 94
+ℹ suites 0
+ℹ pass 93
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 890.8637
+
+✖ failing tests:
+
+test at outputs\Mechanical_Design_App\js-tests\run.js:444:1
+✖ root front-end assets match their hashes (13.0522ms)
+  AssertionError [ERR_ASSERTION]: cable-inventory.js
+  + actual - expected
+  
+  + 'e1175a21bc94854914a5d8b0f0ef6bb0e0f3e3e9859b953fdf4db292ef222169'
+  - 'ceb151fa81427250aadc21546c734beb5b4f95d32c5bfecd09d0222f2a938adf'
+  
+      at TestContext.<anonymous> (D:\Projects\assembly-workshop\outputs\Mechanical_Design_App\js-tests\run.js:448:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'e1175a21bc94854914a5d8b0f0ef6bb0e0f3e3e9859b953fdf4db292ef222169',
+    expected: 'ceb151fa81427250aadc21546c734beb5b4f95d32c5bfecd09d0222f2a938adf',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+== JavaScript page logic (js-tests/page-logic.js) ==
+✔ page Save: layout/hardware dirty status enables Save without persistence (2.508ms)
+✔ page Save: one atomic request commits layout, appearance and hardware then clears dirty state (1.5391ms)
+✔ page Save: rejected request keeps draft and hardware, reports error and permits retry (0.8129ms)
+✔ page Save: edits during in-flight Save remain dirty and double Save is rejected (0.9656ms)
+✔ page Save: precondition capable=false blocks writes (0.5918ms)
+✔ page Save: precondition openingAssembly=true blocks writes (0.5395ms)
+✔ page Save: precondition artworkPending=1 blocks writes (1.2905ms)
+✔ page Save: precondition byId("mountWizard").hidden=false blocks writes (0.5971ms)
+✔ page Save: precondition byId("rackDialog").open=true blocks writes (0.649ms)
+✔ page check: dirty guard blocks action without silently saving (3.1199ms)
+✔ page bom: dirty guard blocks action without silently saving (1.3585ms)
+✔ page project: dirty guard blocks action without silently saving (1.2095ms)
+✔ page designExport: dirty guard blocks action without silently saving (1.5864ms)
+✔ page buildRevision: dirty guard blocks action without silently saving (1.8653ms)
+✔ page checks and BOM: clean actions use saved state without issuing Save (1.6425ms)
+✔ viewer startup: actual script loads, binds events and paints its first frame (16.5026ms)
+✔ viewer startup: missing reports error without drawing or unhandled rejection (0.8532ms)
+✔ viewer startup: network reports error without drawing or unhandled rejection (1.1524ms)
+✔ viewer startup: bad-json reports error without drawing or unhandled rejection (0.6417ms)
+✔ viewer startup: no-canvas reports error without drawing or unhandled rejection (0.6052ms)
+✔ viewer startup: failed studio renderer falls back with a visible reason (1.4023ms)
+✔ rack viewer startup: required and optional meshes load then schedule both views (2.8222ms)
+✔ rack viewer startup: optional-404 keeps required meshes usable (0.8669ms)
+✔ rack viewer startup: optional-network keeps required meshes usable (0.8346ms)
+✔ rack viewer startup: required failure retains diagnostic (0.6746ms)
+✔ rack viewer startup: renderer failure retains diagnostic (0.5379ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 52.1582
+== JavaScript rack BOM (js-tests/rack-bom.js) ==
+✔ rack BOM worked example: 5U default (4.1019ms)
+✔ rack BOM worked example: 5U custom (0.8004ms)
+✔ rack BOM worked example: 9U default (0.7335ms)
+✔ rack BOM worked example: 9U custom (0.7264ms)
+✔ rack BOM worked example: 14U default (0.6919ms)
+✔ rack BOM worked example: 14U custom (0.7088ms)
+✔ rack BOM missing side defaults only the missing stack; 1U has no joints (0.9524ms)
+✔ rack BOM rejects explicitly invalid stacks and heights without fabricated parts (1.5517ms)
+✔ rack BOM locked and unlocked stacks count identically (0.812ms)
+✔ rack BOM side panels toggle only segmented panels, never top/bottom (0.8184ms)
+✔ rack BOM ignores cable guides, ports and artwork (0.7242ms)
+✔ rack BOM agrees with real rackFrame source placements and all fixed parts (2.0204ms)
+✔ rack BOM requires extensions independently of missing preview assets (1.0768ms)
+✔ rack setup height edits retain chosen saved stacks only at unchanged height, clamp at 14U and do not mutate (1.127ms)
+✔ rack BOM shows explicit allowances/UNKNOWNs and invalid layout error (0.7022ms)
+✔ moving a support refreshes a visible editing BOM; locked layout stays unchanged (0.8399ms)
+✖ multi-U plate across a support extension warns (never blocks); 1U and clear spans stay quiet (1.0583ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 16
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25.1611
+
+✖ failing tests:
+
+test at outputs\Mechanical_Design_App\js-tests\rack-bom.js:92:1
+✖ multi-U plate across a support extension warns (never blocks); 1U and clear spans stay quiet (1.0583ms)
+  evalmachine.<anonymous>:10
+    window.extensionJointWarning=(slot,span)=>jointWarning(active(),slot,span);
+    ^
+  
+  ReferenceError: window is not defined
+      at evalmachine.<anonymous>:10:3
+      at Script.runInContext (node:vm:149:12)
+      at Object.runInContext (node:vm:301:6)
+      at TestContext.<anonymous> (D:\Projects\assembly-workshop\outputs\Mechanical_Design_App\js-tests\rack-bom.js:94:6)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+== JavaScript equipment rebuild (js-tests/equipment-rebuild.js) ==
+✔ equipment list: read-only status on list/focus/open keeps both drafts and grouping (3.7425ms)
+✔ equipment list: explicit rebuild posts original identity once and preserves placed item lookup/drafts (1.2956ms)
+✔ equipment list: double click and focus refresh while rebuilding do not duplicate requests (1.0381ms)
+✔ equipment list: an item built from the current template says so plainly and offers no rebuild (Brian, 2026-10-19) (0.8414ms)
+✔ equipment list: needs_review has no rebuild and performs no write (0.7403ms)
+✔ equipment list: unknown_evidence has no rebuild and performs no write (0.6711ms)
+✔ equipment list: integrity_problem has no rebuild and performs no write (0.6197ms)
+✔ equipment list: rebuild failure keeps drafts and permits retry with exact error text (0.9861ms)
+✔ equipment copy: normal Edit changes separate display name without changing source-producing spec.name (1.2486ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17.371
+== JavaScript equipment wizard steps (js-tests/equipment-wizard-steps.js) ==
+✔ wizard has three fact steps (0.8158ms)
+✔ tray choices keep their defaults but are no longer edited in the wizard (0.278ms)
+✔ save, preview and build buttons remain on the last step (0.1648ms)
+✔ last-step summary counts front openings and rear ports separately (0.3346ms)
+✔ last-step summary counts feet and leaves them out when there are none (0.3227ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7.5601
+== JavaScript Place on tray window (js-tests/tray-placement.js) ==
+✔ values: slot tray wins, then the library spec, then template defaults (1.4775ms)
+✔ diff keeps only choices that differ from the library item (0.3152ms)
+✔ layout and hole positions follow equipment_tray.scad (rotation swaps width and depth) (1.5447ms)
+✔ SCAD assert errors show as plain messages (3.3484ms)
+✔ snap rounds to whole millimetres; live sketch is whole triangles (0.6446ms)
+✔ Apply to draft changes only the rack draft and the slot span when U changes (1.9256ms)
+✔ wiring: window opens on place/edit, blocks while a problem shows, never saves (1.5993ms)
+✔ rack view draws each slot's own tray: exact render if one exists, else a box sketch; never renders (2026-10-19) (1.4277ms)
+✔ rackSketch follows the slot tray settings in equipment_tray.scad coordinates (1.2352ms)
+✔ 204 mm hard width budget includes margin and offsets, with explicit rotate advice (0.6718ms)
+✔ rear cable openings preserve saved defaults and roundtrip explicit choices (0.5833ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21.3941
+== JavaScript front openings (js-tests/port-openings.js) ==
+✔ opening movement fixtures and input preservation (2.0381ms)
+✔ turned openings stay as entered with exact warning (0.3212ms)
+✔ starting sizes are editable copies (0.7777ms)
+✔ opening bounds, priority, keystone and finite fixtures (0.6935ms)
+✔ joint positions: default kept when clear, nearest clear spot per side, else a plain problem (Brian, 2026-10-19) (1.628ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10.7104
+== JavaScript cable routes (js-tests/cable-routes.js) ==
+✔ exact API exports and browser load without window/DOM/fetch (3.1501ms)
+✔ port anchors use actual Pi and generic wizard data, pointing offsets and base Z (3.0969ms)
+✔ end faces keep UNKNOWN separate from rear fallback (0.3836ms)
+✔ auto routing chooses one post and orders guides from from to to (1.8081ms)
+✔ multi-U endpoint slots come from anchor Z, not allocation start (0.3077ms)
+✔ exit selection preserves an existing choice and otherwise scores nearest route point (0.5882ms)
+✔ endpoint exit slot determines guide interval in either end direction (0.3011ms)
+✔ path preserves specified point order, manual order and all scene anchor coordinates (0.3985ms)
+✔ length is straight segments plus service loops per connected port, rounded up (0.5956ms)
+✔ rounding handles exact tenths and a value truly above a tenth (0.3805ms)
+✔ keystone pair lookup, port occupancy and lowest unused cable number (0.449ms)
+✔ guide load counts cables once and crowding is strictly above user setting (0.3817ms)
+✔ manual upkeep drops missing references, retains order and is idempotent (0.5194ms)
+✔ manual moved guide is retained and marked until acknowledged (0.3559ms)
+✔ automatic upkeep follows equipment movement and removed guides (0.6056ms)
+✔ upkeep disconnects removed allocations, ports and outside endpoints without deleting cables (0.5679ms)
+✔ warnings include unconnected, missing exit, UNKNOWN face, route changed and crowding (0.9135ms)
+✔ read-only helpers never modify rack or cable fixtures (0.7458ms)
+✔ connector mismatches respect saved overrides and never mutate inputs (1.4268ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23.9578
+== JavaScript cable suggestions (js-tests/cable-suggest.js) ==
+✔ exact API and standalone browser global without DOM, window or fetch (2.7435ms)
+✔ carries defaults, USB label/id at either end, overrides and post settings (3.3877ms)
+✔ power-post wrong rear side, crossing, reverse interval, front exclusion and no target (6.2857ms)
+✔ missing-guide merges cables, rounds midpoint, skips occupied spots, short gaps and multiple posts (1.7753ms)
+✔ missing-guide uses anchors, front/mean-X post, exit slots and absent endpoint fallback (2.2291ms)
+✔ one-exit prefers non-top even with fewer users; ties follow exit order; all-top fallback (2.0672ms)
+✔ top-exit most-used alternative, first unused alternative, no alternative and unused top (1.9173ms)
+✔ keystone and service-loop positive and negative rules (2.7186ms)
+✔ short-run strictly less than U, with two known port anchors and guides (1.3451ms)
+✔ bend right-angle math, tight guide mapping, straight line, threshold and generic factor (1.979ms)
+✔ crowded uses user threshold and UNKNOWN, one-ended and aggregated unused ports (2.3283ms)
+✔ move-post and drop-guides apply keep exits, make manual and pass real Python validation (264.5279ms)
+✔ add-guide applies to auto routes, leaves manual guides alone, validates, refuses occupied spot (259.3804ms)
+✔ set-exit apply keeps guides and passes real schema for one-exit and top-exit (257.8832ms)
+✔ every apply kind refuses stale involved cable, guide and exit without mutation (0.6336ms)
+✔ apply refuses stale action targets/retained routes, duplicate ids and invalid spots; upkeep failure is atomic (0.6378ms)
+✔ signatures stable, 8-hex, change for every specified involved field (4.4094ms)
+✔ ignore includes matching sig only, unignore cleans empty key, pruning changes/disappearance (2.5145ms)
+✔ ignore replaces and caps at 500 dropping oldest; saved shape accepted (131.9048ms)
+✔ suggestion shapes, rule/subject sorting, idempotence and no input mutation (1.1346ms)
+✔ adapter advice is info only, exact, ignorable and pruned when resolved (2.8775ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 961.9428
+== JavaScript cable sheet (js-tests/cable-sheet.js) ==
+✔ exact exports, constants and isolated global load without browser APIs or Date (18.0803ms)
+✔ numeric sorting returns a new array and breaks ties by id (0.4198ms)
+✔ all long and short names, saved overrides and name fallbacks (2.7304ms)
+✔ face selection requires two front ports (0.9701ms)
+✔ schedule has every field, route order, estimates, warning arrays and reciprocal links (6.0268ms)
+✔ carries uses optional suggestions and raw type fallback (1.8018ms)
+✔ CSV BOM, CRLF records, metadata quoting, field order and embedded newline (1.9774ms)
+✔ CSV guards formula prefixes before quoting, preserving whitespace (3.522ms)
+✔ labels include both connected ends in order and keystone face detail (0.9091ms)
+✔ notes contain each warning in cable order without standing limits (0.5294ms)
+✔ adapter warning flows to schedule, CSV warnings column and notes (0.8124ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43.9551
+== JavaScript cable inventory (js-tests/cable-inventory.js) ==
+✔ frozen API and browser-independent global load (2.8882ms)
+✔ stock boundaries and nonfinite values (0.2257ms)
+✔ groups by type and stock; numeric cable sort and custom maximum (11.231ms)
+✔ incomplete ends are counted and flagged once even when estimate says complete (0.4962ms)
+✔ keystone pairs counted once per placement and guides counted separately (0.2673ms)
+✔ real routing estimate and slot keystone settings (1.62ms)
+✔ unknown labels and tie sorting (0.2948ms)
+✔ CSV quotes every field, guards formulas, BOM, CRLF and trailing notes (0.8858ms)
+✔ adapter group note is unique and follows incomplete regardless of cable order (1.7194ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25.4353
+== JavaScript wiring sheet drawing (js-tests/cable-sheet-view.js) ==
+✔ exact exports; loads in a bare context without window or DOM (2.5042ms)
+✔ cable points: endpoint ends run out of the exit, in drawing order (2.2181ms)
+✔ sheet SVG: well-formed text, both faces, escaped names, tags, exits, endpoints and notes (11.8876ms)
+✔ rear elevation is mirrored; tall racks shrink to fit; empty rack still draws (1.9097ms)
+✔ many warnings are cut to whole notes with a pointer to the CSV (3.8559ms)
+✔ printable pages: paper size, orientation, 3D page only when given, labels grid and escaping (1.6877ms)
+✔ top and side exits: endpoint arrows go round the outside of the rack, bottom exits point straight down (1.264ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 31.8604
+RESULT: FAILED or incomplete

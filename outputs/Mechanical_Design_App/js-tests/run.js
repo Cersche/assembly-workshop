@@ -7,6 +7,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 require('./viewer-controls.js');
+require('./faceplate-slot.js');
 require('./wizard-mount-default.js');
 
 const APP = path.resolve(__dirname, '..');

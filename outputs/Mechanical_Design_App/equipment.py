@@ -146,10 +146,13 @@ def faceplate_check(s):
     slots = [(x-5,x+5,i*44.45+22.225+dz-3.5,i*44.45+22.225+dz+3.5)
              for i in range(s['u']) for x in (-118.2625,118.2625) for dz in (-15.902,15.902)]
     gap = lambda a,b: max(a[0]-b[1],b[0]-a[1],a[2]-b[3],b[2]-a[3])
+    def inside(x,z):
+        dx=max(abs(x)-123.5,0);dz=max(2.525-z,z-(s['u']*44.45-2.525),0)
+        return dx*dx+dz*dz <= 1.5*1.5+1e-9
     thin = False
     shapes = boxes + ports
     for i,a in enumerate(shapes):
-        if a[0] < -125 or a[1] > 125 or a[2] < 1.025 or a[3] > s['u']*44.45-1.025:
+        if not all(inside(x,z) for x in (a[0],a[1]) for z in (a[2],a[3])):
             raise ValueError('Keep every opening/block at least 1 mm inside the plate outline.')
         if any(gap(a,b) <= 0 for b in slots):
             raise ValueError('An opening/block overlaps a rack slot.')
@@ -1092,6 +1095,7 @@ def source(s):
         over['tray_w'] = round(2 * pair_tray_half(s), 4)
         if not s['rear_support']:
             over['tray_d'] = round(max(f[3] for f in map(footprint, tray_devices(s))) + MARGIN, 4)
+    if s.get('faceplate_only'): over['part'] = 'faceplate'
     lines = ['', '// ---- wizard overrides: ' + re.sub(r'[\r\n]', ' ', s['name'])] + [f'{k}={lit(v)};' for k, v in over.items()]
     if style in ('reinforced', 'vents'):
         lines.extend('// '+note for note in dict.fromkeys(geometry.get('notes', [])))

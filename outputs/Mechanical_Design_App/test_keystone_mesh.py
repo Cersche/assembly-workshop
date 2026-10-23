@@ -43,10 +43,10 @@ class StaticKeystoneTests(unittest.TestCase):
         self.assertNotIn('[0,0,1,-4.08]', self.text)
 
     def test_block_is_clipped_by_the_same_box_as_the_plate_opening(self):
-        cut = re.search(r'module ks_box_cut\(\)\{for\(x=keystones\)translate\(\[x-10\.5,[^,]+,plate_center-15\]\)cube\(\[21,[^,]+,33\.5\]\)', self.text)
+        cut = re.search(r'module ks_box_cut\(\)\{for\(k=keystones\)let\([^\n]+?\)translate\(\[x-10\.5,[^,]+,kz-15\]\)cube\(\[21,[^,]+,33\.5\]\)', self.text)
         self.assertTrue(cut)
         golden = re.search(r'module ks_golden\(\)\{.*?\n\}\}', self.text, re.S).group(0)
-        self.assertIn('translate([x-10.5,-plate_t-1,plate_center-15])cube([21,plate_t+16,33.5]);', golden)
+        self.assertIn('translate([x-10.5,-plate_t-1,kz-15])cube([21,plate_t+16,33.5]);', golden)
 
 
 @unittest.skipUnless(os.environ.get('AW_RENDER_TESTS') == '1', 'set AW_RENDER_TESTS=1 to render with OpenSCAD')

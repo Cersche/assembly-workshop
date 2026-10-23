@@ -86,3 +86,6 @@ class AllocationTray(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+# Registered here because run_checks loads this module; no renders.
+from test_faceplate_slot import FaceplateSlotTests
