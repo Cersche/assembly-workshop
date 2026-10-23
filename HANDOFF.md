@@ -4,8 +4,9 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 
 ## 2026-10-22 TL-SG108E switch tray; tray_follow + engraved labels (read first)
 
-- Delivered `outputs/STL_Deliveries/2026-10-22_TL-SG108E/`: 1U sleeve, ports facing out, shifted 10 mm left, golden keystone at +102 with "UPLINK" engraved below. Not opened in a slicer; not saved to the library.
+- Delivered `outputs/STL_Deliveries/2026-10-22_TL-SG108E/`: 1U sleeve, ports facing out, shifted 15 mm left, golden keystone at +88 (moved in from +102 after Brian saw it crowd the right post) with "UPLINK" engraved below. Not opened in a slicer; not saved to the library.
 - New opt-in spec keys in `equipment.py` (absent = byte-identical sources; verified on all saved/example items): `tray_follow` (sleeve only: tray moves sideways with the device; keystone collar check uses the real tray span) and `labels` (engraved text, 0.6 mm). Tests: `test_tray_follow.py`. Not yet in the wizard/Place on tray UI; the rack-view tray preview and Print in color don't know about them.
+- Open issue: the generic keystone limit (±102 mm) lets a keystone block reach ±112.5 mm, past the ±104 mm rack opening, so it can crowd a post. Not changed yet.
 
 ## 2026-10-22 Print-layout 3MF in every equipment export (read first)
 
