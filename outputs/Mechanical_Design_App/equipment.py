@@ -695,10 +695,18 @@ def template_source(spec):
         code+=BEZEL_SCAD
         code+='\n'+'\n'.join('// '+n for n in plan['notes'])+'\n'
         text=text.replace('   plate_joint_cut();','   plate_joint_cut();bezel_cuts();')+code
+    if spec.get('labels'):
+        text = text.replace('   if(ks_style=="v2")ks_cut(); else ks_box_cut();', '   if(ks_style=="v2")ks_cut(); else ks_box_cut();\n   label_cut();') + LABEL_SCAD
     if spec.get('second'):
         text = second_device_source(text)
     return text
 
+
+LABEL_SCAD = r"""
+// Engraved front-face text [text, x, z centre, size]; 0.6 mm deep. Printed legibility UNKNOWN.
+labels=[]; label_depth=0.6;
+module label_cut(){for(l=labels)translate([l[1],-plate_t-0.1,l[2]])rotate([90,0,0])mirror([0,0,1])linear_extrude(height=label_depth+0.1)text(l[0],size=l[3],font="Liberation Sans:style=Bold",halign="center",valign="center");}
+"""
 
 BEZEL_SCAD = r"""
 function bezel_out(b,t)=bezel_rounded?b-sqrt(max(0,b*b-(b-t)*(b-t))):b-t;
@@ -857,7 +865,18 @@ def clean(spec):
         raise ValueError('Keystones must be at least 21 mm apart.')
     # Keystone collars (golden SG108 copy and v2 fallback: 19.8 mm wide) reach 10.4 mm behind the plate, so they must clear the tray.
     tray_half = width/2 if s.get('insert_bosses') else abs(s['dev_off_x']) + fp_w / 2 + MARGIN
-    if any(abs(x) - 9.9 < tray_half + 0.5 for x in s['keystones']):
+    # Opt-in (Brian, 2026-10-22): the sleeve tray follows the device sideways instead of staying centred,
+    # freeing plate room on the other side (e.g. for a keystone). Fit/strength UNKNOWN.
+    if spec.get('tray_follow') is True:
+        if s['device_mount'] != 'sleeve' or s['rear_support'] or s.get('insert_bosses') or s.get('feet_style') == 'grooves':
+            raise ValueError('Tray follows device needs a sleeve without rear support, insert bosses or foot grooves.')
+        if s['dev_off_x']:
+            s['tray_follow'] = True
+    if s.get('tray_follow'):
+        lo, hi = s['dev_off_x'] - width/2 + abs(s['dev_off_x']), s['dev_off_x'] + width/2 - abs(s['dev_off_x'])
+        if any(x + 9.9 > lo - 0.5 and x - 9.9 < hi + 0.5 for x in s['keystones']):
+            raise ValueError(f'A keystone collar would hit the tray (tray spans {lo:g} to {hi:g} mm); keep keystones 10.4 mm clear of it.')
+    elif any(abs(x) - 9.9 < tray_half + 0.5 for x in s['keystones']):
         raise ValueError(f'A keystone collar would hit the tray; keep keystones at least {tray_half + 10.4:g} mm from centre.')
     s['ports'] = []
     input_ports, dropped_ports, window_errors = port_openings.sleeve_ports((spec.get('ports') or [])[:20], window_spec(s)) if port_openings.front_window(s) else ((spec.get('ports') or [])[:20], [], [])
@@ -897,6 +916,19 @@ def clean(spec):
     ids = [p['id'] for p in s['ports'] + s['rear_ports']]
     if len(ids) != len(set(ids)):
         raise ValueError('Each port needs its own id.')
+    # Engraved faceplate text (Brian, 2026-10-22), 0.6 mm deep into the front face. Readability when printed UNKNOWN.
+    raw_labels = spec.get('labels') or []
+    if not isinstance(raw_labels, list) or len(raw_labels) > 8:
+        raise ValueError('Labels must be a list of at most 8 entries.')
+    if raw_labels:
+        s['labels'] = []
+        for l in raw_labels:
+            text = str((l or {}).get('text') or '').strip() if isinstance(l, dict) else ''
+            if not re.fullmatch(r'[A-Za-z0-9 .-]{1,16}', text):
+                raise ValueError('Label text must be 1-16 letters, digits, spaces, dots or dashes.')
+            s['labels'].append({'text': text, 'x': num(l.get('x'), 'Label X', -PLATE_HALF + 3, PLATE_HALF - 3),
+                                'z': num(l.get('z'), 'Label Z', 1.5, s['u'] * RACK_PITCH - 1.5),
+                                'size': num(l.get('size', 4.5), 'Label size', 3, 10)})
     if 'planning_ports' in spec:
         s['planning_ports'] = cable_ports.planning_ports(spec['planning_ports'], s['u'])
     rear_floor_geometry(s)
@@ -1086,6 +1118,11 @@ def source(s):
     for k in ('dev_off_x', 'dev_off_y', 'dev_rot', 'joint_x'):
         if s.get(k):
             over[k] = s[k]
+    if s.get('tray_follow'):
+        w = round(tray_width(s) - 2 * abs(s['dev_off_x']), 4)
+        over.update(tray_w=w, tray_x=round(s['dev_off_x'] - w / 2, 4))
+    if s.get('labels'):
+        over['labels'] = [[l['text'], l['x'], l['z'], l['size']] for l in s['labels']]
     over['ports'] = [[p['x'], p['z'], p['w'], p['h'], p['r']] for p in s['ports']]
     # Export quality: only a non-standard level overrides the template's $fn=48 (last assignment wins in OpenSCAD).
     if s.get('quality', DEFAULT_QUALITY) != DEFAULT_QUALITY:

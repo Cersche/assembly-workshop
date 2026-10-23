@@ -2,6 +2,11 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-22 TL-SG108E switch tray; tray_follow + engraved labels (read first)
+
+- Delivered `outputs/STL_Deliveries/2026-10-22_TL-SG108E/`: 1U sleeve, ports facing out, shifted 10 mm left, golden keystone at +102 with "UPLINK" engraved below. Not opened in a slicer; not saved to the library.
+- New opt-in spec keys in `equipment.py` (absent = byte-identical sources; verified on all saved/example items): `tray_follow` (sleeve only: tray moves sideways with the device; keystone collar check uses the real tray span) and `labels` (engraved text, 0.6 mm). Tests: `test_tray_follow.py`. Not yet in the wizard/Place on tray UI; the rack-view tray preview and Print in color don't know about them.
+
 ## 2026-10-22 Print-layout 3MF in every equipment export (read first)
 
 - Brian's direction: every "Generate STL files" zip now also holds `<name>_print-layout.3mf`: all parts flat on the bed, side by side, each its own object (tray as-is, faceplate front face down 10 mm in front, rear bracket 10 mm behind). `print_layout.py`; tests in `test_print_layout.py`. A multi-body STL was tried first, but Bambu Studio loads it as one object, so 3MF it is. Cached revisions are untouched; the separate part STLs stay in the zip.
