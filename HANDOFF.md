@@ -2,6 +2,10 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-22 Portable zip for personal use (read first)
+
+Brian authorized a personal portable package. `tools/make_portable_zip.ps1` builds `outputs/Portable_Packages/AssemblyWorkshop_Portable_<stamp>.zip`: the app (no data/, js-tests, caches), a `Start Assembly Workshop.bat` and a README; first run creates a fresh starter library in `user-data\` next to it. No user data is included. It contains licensed Lab Rax parts: personal use only, never share. Zips are git-ignored (rebuild with the script). Smoke-tested from an unzipped copy (page + JS served, library created); GUI click-through and STL export from the zip not tested. The other PC needs Python 3.10+ and OpenSCAD.
+
 ## 2026-10-22 Task 35 reviewed: WebGL small previews (read first)
 
 - **Codex task 35 done, reviewed by Claude, committed.** The wizard and Place on tray previews now draw with WebGL (`LabRaxStudio.PreviewRenderer`, same shaders as the rack view). The old 2D painter stays as `EquipmentPainter.paint2d` fallback, with a one-line "Simple preview — …" note (no WebGL, lost context, Canvas preference `assemblyWorkshop.previewRenderer=canvas`, frame budget). `EquipmentPainter.stats` reports renderer/triangles/ms. Preview only: no STL/SCAD/data change.
