@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>9U Rack Plan</title>
+<style>
+:root{--bg:#faf9f5;--fg:#2c2c2a;--mut:#5f5e5a;--line:#b4b2a9;--card:#fff;--net:#1D9E75;--cmp:#7F77DD;--drv:#BA7517;--scr:#2C2C2A;--sp:#d3d1c7;--sl:#D85A30;--eth:#378ADD;--usb:#EF9F27;--blank:#888780;--hdmi:#D4537E}
+@media (prefers-color-scheme:dark){:root{--bg:#1f1e1c;--fg:#f1efe8;--mut:#b4b2a9;--line:#5f5e5a;--card:#2c2c2a;--sp:#444441;--scr:#0b0b0b}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:24px;font-weight:600;margin:0 0 4px}h2{font-size:18px;font-weight:600;margin:32px 0 8px}
+p,li{color:var(--mut)}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left}
+.k{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 10px}
+svg text{fill:var(--fg);font:12px system-ui,sans-serif}svg .w{fill:#fff}
+.note{font-size:13px;border-left:3px solid var(--usb);padding:4px 10px;margin-top:16px}
+</style></head><body><main>
+<h1>9U rack plan</h1>
+<p>Lab Rax, 9U including the extension. Router on the roof. All cables enter from below in one sleeve, rear left. Revised 2026-10-22: Pi + Hue moved up to U6, 7" touch dashboard in U5–U3, TL-SG108E switch, wall-mount cooling plan. <b>U1 = bottom, U9 = top</b> (standard rack counting; the app still counts top-down until that fix lands). Planning only: not saved in the app; fit, cable lengths, airflow and screen size untested.</p>
+
+<h2>1. Spin it (3D)</h2>
+<div class="card"><div id="v" style="width:100%;height:440px;cursor:grab;touch-action:none"></div>
+<div style="font-size:13px;color:var(--mut)"><span class="k" style="background:var(--net);margin-left:0"></span>Network<span class="k" style="background:var(--cmp)"></span>Computers<span class="k" style="background:var(--scr)"></span>Dashboard<span class="k" style="background:var(--drv)"></span>Drive<span class="k" style="background:var(--sl)"></span>Sleeve + coupler · drag to spin</div></div>
+
+<h2>2. What goes where</h2>
+<div class="tw"><table><tr><th>Slot</th><th>Equipment</th><th>Why</th></tr>
+<tr><td>Roof</td><td>Router</td><td>Wi-Fi in the open</td></tr>
+<tr><td>U9</td><td>Modem</td><td>Internet coupler on the rear-left post at this height; tiny hop to the router</td></tr>
+<tr><td>U8</td><td>TP-Link TL-SG108E (8 port, fanless)</td><td>Hub, ~4 W; sits ~15 mm right of centre so ports 2–5 line up under the Ethernet keystones</td></tr>
+<tr><td>U7</td><td>Keystone panel (10)</td><td>3 USB · 4 Ethernet · 3 blank</td></tr>
+<tr><td>U6</td><td>Pi 4 + Hue tray</td><td>Front Ethernet/USB; jumpers straight up to the switch, short cables down to the screen</td></tr>
+<tr><td>U5–U3</td><td>7" touch dashboard (Hosyond 1024×600 HDMI)</td><td>Home Assistant on the Pi right above it</td></tr>
+<tr><td>U2</td><td>Drive tray (HDD now, SSD pad empty)</td><td>Shortest cable to the OptiPlex</td></tr>
+<tr><td>U1</td><td>OptiPlex</td><td>Heaviest, at the power entry</td></tr></table></div>
+
+<h2>3. Front view</h2>
+<div class="card"><svg viewBox="0 0 680 560" width="100%">
+<rect x="220" y="10" width="240" height="34" rx="6" fill="var(--net)"/><text class="w" x="340" y="31" text-anchor="middle">Router (roof)</text>
+<rect x="160" y="52" width="360" height="420" rx="4" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+<rect x="170" y="58" width="340" height="38" rx="4" fill="var(--net)"/><text class="w" x="182" y="81">U9 modem</text>
+<rect x="170" y="104" width="340" height="38" rx="4" fill="var(--net)"/><text class="w" x="182" y="127">U8</text>
+<g fill="#2C2C2A"><rect x="250" y="114" width="22" height="18" rx="2"/><rect x="280" y="114" width="22" height="18" rx="2"/><rect x="310" y="114" width="22" height="18" rx="2"/><rect x="340" y="114" width="22" height="18" rx="2"/><rect x="370" y="114" width="22" height="18" rx="2"/><rect x="400" y="114" width="22" height="18" rx="2"/><rect x="430" y="114" width="22" height="18" rx="2"/><rect x="460" y="114" width="22" height="18" rx="2"/></g>
+<rect x="170" y="150" width="340" height="38" rx="4" fill="var(--sp)"/>
+<g fill="var(--usb)"><rect x="186" y="160" width="20" height="18" rx="2"/><rect x="218" y="160" width="20" height="18" rx="2"/><rect x="250" y="160" width="20" height="18" rx="2"/></g>
+<g fill="var(--eth)"><rect x="282" y="160" width="20" height="18" rx="2"/><rect x="314" y="160" width="20" height="18" rx="2"/><rect x="346" y="160" width="20" height="18" rx="2"/><rect x="378" y="160" width="20" height="18" rx="2"/></g>
+<g fill="var(--blank)"><rect x="410" y="160" width="20" height="18" rx="2"/><rect x="442" y="160" width="20" height="18" rx="2"/><rect x="474" y="160" width="20" height="18" rx="2"/></g>
+<rect x="170" y="196" width="340" height="38" rx="4" fill="var(--cmp)"/><text class="w" x="182" y="219">U6</text>
+<rect x="380" y="200" width="48" height="30" rx="3" fill="#534AB7"/><rect x="432" y="200" width="74" height="30" rx="3" fill="#534AB7"/>
+<rect x="402" y="206" width="18" height="16" rx="2" fill="#2C2C2A"/><rect x="432" y="206" width="18" height="16" rx="2" fill="#2C2C2A"/>
+<rect x="462" y="208" width="12" height="14" rx="2" fill="var(--usb)"/><rect x="480" y="208" width="12" height="14" rx="2" fill="var(--usb)"/>
+<text class="w" x="300" y="219" text-anchor="middle">Hue · Pi →</text>
+<rect x="170" y="242" width="340" height="134" rx="4" fill="var(--sp)"/>
+<rect x="225" y="252" width="230" height="114" rx="4" fill="var(--scr)"/>
+<text class="w" x="340" y="305" text-anchor="middle">7" dashboard</text><text class="w" x="340" y="322" text-anchor="middle">Home Assistant</text>
+<rect x="170" y="384" width="340" height="38" rx="4" fill="var(--drv)"/><text class="w" x="340" y="407" text-anchor="middle">U2 drive tray (HDD)</text>
+<rect x="170" y="430" width="340" height="38" rx="4" fill="var(--cmp)"/><text class="w" x="340" y="453" text-anchor="middle">U1 OptiPlex</text>
+<g fill="none" stroke="var(--eth)" stroke-width="3.5" stroke-linecap="round"><path d="M292 160 C292 148 291 144 291 132"/><path d="M324 160 C324 148 321 144 321 132"/><path d="M356 160 C356 148 351 144 351 132"/><path d="M388 160 C388 148 381 144 381 132"/><path d="M411 206 L411 132"/><path d="M441 206 L441 132"/></g>
+<path d="M486 222 L486 262 L470 262" fill="none" stroke="var(--usb)" stroke-width="3" stroke-linecap="round"/>
+<g fill="none" stroke="var(--eth)" stroke-width="1.5" stroke-dasharray="5 3"><path d="M261 114 L261 101 L130 101 L130 27 L218 27"/><path d="M471 114 L471 99 L140 99 L140 449 L168 449"/></g>
+<g fill="none" stroke="var(--usb)" stroke-width="1.5" stroke-dasharray="5 3"><path d="M196 178 L196 191 L118 191 L118 455 L168 455"/><path d="M228 178 L228 193 L124 193 L124 461 L168 461"/><path d="M260 178 L260 192 L514 192 L514 214 L506 214"/><path d="M168 403 L156 403 L156 443 L168 443"/></g>
+<path d="M506 226 L516 226 L516 300 L512 300" fill="none" stroke="var(--hdmi)" stroke-width="1.5" stroke-dasharray="5 3"/>
+<rect x="96" y="52" width="10" height="440" rx="3" fill="var(--sl)" opacity=".75"/>
+<text x="528" y="81">Internet in</text><text x="528" y="127">8 ports, all used</text><text x="528" y="173">USB · LAN · blank</text><text x="528" y="219">Jumpers straight up</text><text x="528" y="300">USB + HDMI from Pi</text><text x="528" y="407">USB to OptiPlex*</text><text x="528" y="453">1 LAN + 3 USB</text>
+<line x1="30" y1="508" x2="54" y2="508" stroke="var(--eth)" stroke-width="3.5"/><text x="60" y="512">Front jumper</text>
+<line x1="150" y1="508" x2="174" y2="508" stroke="var(--usb)" stroke-width="3"/><text x="180" y="512">Front USB (down-angled)</text>
+<line x1="330" y1="508" x2="354" y2="508" stroke="var(--eth)" stroke-width="1.5" stroke-dasharray="5 3"/><text x="360" y="512">Rear Ethernet</text>
+<line x1="450" y1="508" x2="474" y2="508" stroke="var(--usb)" stroke-width="1.5" stroke-dasharray="5 3"/><text x="480" y="512">Rear USB</text>
+<line x1="30" y1="536" x2="54" y2="536" stroke="var(--hdmi)" stroke-width="1.5" stroke-dasharray="5 3"/><text x="60" y="540">Hidden HDMI</text>
+<rect x="150" y="530" width="10" height="12" fill="var(--sl)"/><text x="168" y="540">Sleeve (left rear)</text>
+<text x="330" y="540">Schematic, not to scale</text>
+</svg></div>
+
+<h2>4. Cooling (right side view, wall-mounted)</h2>
+<div class="card"><svg viewBox="0 0 680 500" width="100%">
+<rect x="470" y="40" width="14" height="420" fill="var(--sp)"/><text x="492" y="60">Wall</text>
+<rect x="200" y="50" width="240" height="400" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+<text x="200" y="40">Front (room)</text><text x="440" y="40" text-anchor="end">Rear</text>
+<rect x="204" y="55" width="150" height="36" rx="3" fill="var(--net)"/><text class="w" x="214" y="77">U9 modem</text>
+<rect x="204" y="100" width="158" height="25" rx="3" fill="var(--net)"/><text class="w" x="214" y="117">U8 switch</text>
+<rect x="204" y="144" width="40" height="36" rx="3" fill="var(--sp)"/><text x="250" y="166">U7 keystones</text>
+<rect x="204" y="190" width="120" height="34" rx="3" fill="var(--cmp)"/><text class="w" x="214" y="211">U6 Pi + Hue</text>
+<rect x="204" y="234" width="20" height="124" rx="3" fill="var(--scr)"/><text x="232" y="300">U5–U3 screen (back open)</text>
+<rect x="204" y="368" width="150" height="34" rx="3" fill="var(--drv)"/><text class="w" x="214" y="389">U2 HDD</text>
+<rect x="204" y="412" width="194" height="34" rx="3" fill="var(--cmp)"/><text class="w" x="214" y="433">U1 OptiPlex</text>
+<line x1="428" y1="405" x2="428" y2="450" stroke="var(--fg)" stroke-width="3"/><text x="420" y="472" text-anchor="end">Rear bracket</text>
+<circle cx="400" cy="405" r="40" fill="none" stroke="var(--eth)" stroke-width="2"/><circle cx="400" cy="405" r="6" fill="var(--eth)"/>
+<circle cx="400" cy="95" r="40" fill="none" stroke="var(--eth)" stroke-width="2" stroke-dasharray="5 3"/><circle cx="400" cy="95" r="6" fill="var(--eth)"/>
+<rect x="215" y="454" width="120" height="8" rx="2" fill="var(--eth)" opacity=".6"/>
+<g fill="none" stroke="var(--eth)" stroke-width="1.5"><path d="M160 430 L198 430"/><path d="M160 300 L198 300"/><path d="M275 490 L275 466"/><path d="M398 430 L420 418"/></g>
+<g fill="none" stroke="var(--sl)" stroke-width="1.5"><path d="M300 250 L360 150 L385 115"/><path d="M380 360 L390 375"/></g>
+<text x="40" y="434">Cool air in</text><text x="40" y="304">(front, vented)</text>
+<text x="20" y="480">Filtered intake, front</text>
+<text x="540" y="400">Fan 1: U1–U2 rear</text><text x="540" y="416">pulls OptiPlex</text><text x="540" y="432">+ HDD heat out</text><text x="540" y="448">the side</text>
+<text x="540" y="90">Fan 2 (optional):</text><text x="540" y="106">U8–U9, top exhaust</text>
+<text x="540" y="250">Open the tray side</text><text x="540" y="266">behind the PC so</text><text x="540" y="282">the pocket can</text><text x="540" y="298">reach Fan 1</text>
+</svg></div>
+<ul><li><b>Fan 1 (must-have):</b> 80 mm 5 V PWM on the right side panel, rear, U1–U2. Pulls the OptiPlex's exhaust out of the ~34 mm pocket behind it before it hits the wall, and cools the HDD.</li>
+<li><b>Tray-side opening:</b> slots or a window on the right side of the OptiPlex tray behind the PC (Y ~195–228 mm), lined up with Fan 1. The faceplate, orientation and sleeve mounting stay as settled.</li>
+<li><b>Fan 2 (optional):</b> same fan, high on the right side at U8–U9, for the modem, switch and Pi.</li>
+<li><b>Intake (optional):</b> filtered, at the bottom <i>front</i>, never under the rear floor opening, where it would push against the PC's exhaust.</li>
+<li><b>Side panels:</b> vented on the right, mostly solid on the left (sleeve side). Keep 3–5 cm behind the rack if the wall mount allows.</li>
+<li><b>Control:</b> DS18B20 sensors in the OptiPlex pocket and up high, fans on Pi GPIO PWM, Home Assistant curve (off below ~30 °C, full at ~45 °C), shown on the dashboard. Fans run off their own 5 V supply.</li>
+<li><b>Check:</b> HDD temp via smartctl, Pi via vcgencmd. Target HDD under ~45 °C.</li></ul>
+
+<h2>5. Wiring list</h2>
+<div class="tw"><table><tr><th>From</th><th>To</th><th>Cable</th><th>Where</th></tr>
+<tr><td>Internet line</td><td>Coupler (rear-left post, U9)</td><td>Up the sleeve</td><td>Rear</td></tr>
+<tr><td>Coupler</td><td>Modem</td><td>Short</td><td>Rear</td></tr>
+<tr><td>Modem</td><td>Router WAN</td><td>Ethernet, ~0.5 m</td><td>Up through the top</td></tr>
+<tr><td>Router LAN</td><td>Switch port 1</td><td>Ethernet, ~0.5 m</td><td>Rear left</td></tr>
+<tr><td>Ethernet keystones 4–7</td><td>Switch ports 2–5</td><td>15 cm slim jumpers</td><td>Front</td></tr>
+<tr><td>Hue (U6)</td><td>Switch port 6</td><td>~20 cm slim jumper</td><td>Front, straight up</td></tr>
+<tr><td>Pi (U6)</td><td>Switch port 7</td><td>~20 cm slim jumper</td><td>Front, straight up</td></tr>
+<tr><td>Switch port 8</td><td>OptiPlex</td><td>Ethernet, ~1 m</td><td>Rear left</td></tr>
+<tr><td>Pi front USB</td><td>Screen touch/power</td><td>Down-angled USB-A to micro-USB, ~30 cm</td><td>Front, a few cm, tucks into a slot</td></tr>
+<tr><td>Pi micro-HDMI (side)</td><td>Screen HDMI</td><td>Right-angle micro-HDMI to HDMI, ~30 cm</td><td>Hidden behind the plates</td></tr>
+<tr><td>USB keystones 1–2</td><td>OptiPlex</td><td>USB</td><td>Rear left</td></tr>
+<tr><td>USB keystone 3</td><td>Pi</td><td>USB, short</td><td>Rear</td></tr>
+<tr><td>HDD (U2)</td><td>OptiPlex</td><td>USB-SATA adapter*</td><td>Rear, short</td></tr>
+<tr><td>Power strip (bottom of sleeve)</td><td>OptiPlex, Pi, Hue, HDD 12 V, switch, modem, router</td><td>Power</td><td>Up the left side; router is the longest</td></tr></table></div>
+
+<h2>6. Shopping and to-do</h2>
+<ul><li>TP-Link TL-SG108E (have it; all 8 ports used)</li>
+<li>1–2× 80 mm 5 V PWM fans (e.g. Noctua NF-A8 5V PWM), 5 V supply, 2× DS18B20 sensors, dust filter if adding an intake</li>
+<li>Photo of the OptiPlex 7010's back and right side vents, so the openings line up</li>
+<li>Hosyond 7" 1024×600 HDMI touch screen (~$46). Measure it on arrival: outside size, visible area, ear hole positions, which micro-USB port is touch.</li>
+<li>Right-angle micro-HDMI to HDMI cable, ~30 cm</li>
+<li>Down-angled USB-A to micro-USB cable, ~30 cm</li>
+<li>4× 15 cm + 2× 20 cm slim Ethernet patch cables, one color</li>
+<li>3× blank keystone inserts</li>
+<li>HDD 12 V power adapter, if the USB-SATA adapter doesn't include one</li>
+<li>Replacement 2.5" SSD, later. Leave a cable loop by the empty SSD pad.</li>
+<li>Faceplates to design later: switch (U8) and keystone (U7) lined up, Pi + Hue tray (U6) with the USB slot, 3U screen plate (U5–U3). Needs the switch model and screen measurements.</li></ul>
+<p class="note">*Not confirmed yet: the HDD connection (plan assumes USB), switch model and port spacing, screen dimensions. Physical fit, cable lengths and screen mounting strength are untested. If the Pi struggles to power the screen (low-voltage warning, flicker), move the screen to its own power adapter.</p>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const el=document.getElementById('v'),W=el.clientWidth,H=440,dark=matchMedia('(prefers-color-scheme: dark)').matches;
+const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(W,H);r.setPixelRatio(devicePixelRatio);el.appendChild(r.domElement);
+const s=new THREE.Scene(),c=new THREE.PerspectiveCamera(35,W/H,.1,100);c.position.set(0,2.2,9.5);c.lookAt(0,2.2,0);
+s.add(new THREE.AmbientLight(0xffffff,.65));const d=new THREE.DirectionalLight(0xffffff,.6);d.position.set(3,6,5);s.add(d);
+const g=new THREE.Group();s.add(g);const P=.4445,Wd=2.08,D=2.4,Ht=9*P;
+function box(w,h,dp,col,x,y,z,op){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,dp),new THREE.MeshLambertMaterial({color:col,transparent:op<1,opacity:op}));m.position.set(x,y,z);g.add(m);const e=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:0x444441,transparent:true,opacity:.5}));e.position.copy(m.position);g.add(e)}
+const post=dark?0x888780:0x5F5E5A;[[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([a,b])=>box(.12,Ht,.12,post,a*Wd/2,Ht/2,b*D/2,1));
+box(Wd+.12,.06,D+.12,post,0,0,0,1);box(Wd+.12,.06,D+.12,post,0,Ht,0,1);
+const net=0x1D9E75,cmp=0x7F77DD,drv=0xBA7517;
+[[9,net],[8,net],[7,net],[6,cmp],[2,drv],[1,cmp]].forEach(([u,col])=>box(Wd-.1,P*.86,D*.85,col,0,(u-.5)*P,0,1));
+box(Wd-.1,3*P*.95,.05,dark?0x444441:0xD3D1C7,0,3.5*P,D*.43,1);
+box(1.65,1.15,.12,0x2C2C2A,0,3.5*P,D*.36,1);
+const kc=[0xEF9F27,0xEF9F27,0xEF9F27,0x378ADD,0x378ADD,0x378ADD,0x378ADD,0x888780,0x888780,0x888780];
+kc.forEach((k,i)=>box(.13,.13,.04,k,-.85+i*.19,6.5*P,D*.43,1));
+box(1.6,.22,1.2,net,0,Ht+.15,0,1);[-.5,.5].forEach(x=>box(.04,.5,.04,net,x,Ht+.5,-.4,1));
+[[1,1],[8,.6]].forEach(([u,op])=>{const f=new THREE.Mesh(new THREE.CylinderGeometry(.4,.4,.06,24),new THREE.MeshLambertMaterial({color:0x378ADD,transparent:op<1,opacity:op}));f.rotation.z=Math.PI/2;f.position.set(Wd/2+.06,u*P,-D/2+.55);g.add(f)});
+const sl=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,Ht+1.2,16),new THREE.MeshLambertMaterial({color:0xD85A30}));sl.position.set(-Wd/2-.18,(Ht-1.2)/2,-D/2+.05);g.add(sl);
+const cp=new THREE.Mesh(new THREE.SphereGeometry(.13,16,16),new THREE.MeshLambertMaterial({color:0xD85A30}));cp.position.set(-Wd/2,8.5*P,-D/2);g.add(cp);
+g.rotation.y=-.6;let dn=false,lx=0,ly=0;
+el.onpointerdown=e=>{dn=true;lx=e.clientX;ly=e.clientY;el.setPointerCapture(e.pointerId)};
+el.onpointermove=e=>{if(!dn)return;g.rotation.y+=(e.clientX-lx)*.01;g.rotation.x=Math.max(-.6,Math.min(.6,g.rotation.x+(e.clientY-ly)*.005));lx=e.clientX;ly=e.clientY};
+el.onpointerup=()=>dn=false;(function a(){if(!dn)g.rotation.y+=.003;r.render(s,c);requestAnimationFrame(a)})();
+</script></body></html>

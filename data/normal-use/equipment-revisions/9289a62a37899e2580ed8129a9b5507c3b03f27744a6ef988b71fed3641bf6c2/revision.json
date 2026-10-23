@@ -1,0 +1,85 @@
+{
+  "nudge_mm": {
+    "tray": 0,
+    "faceplate": 0
+  },
+  "export_quality": {
+    "level": "standard",
+    "$fn": 48
+  },
+  "status": "PROPOSED \u2014 UNVALIDATED",
+  "spec": {
+    "name": "Philips Hue Bridge v2",
+    "dev_w": 88.0,
+    "dev_d": 88.0,
+    "dev_h": 26.0,
+    "hole_d": 2.7,
+    "standoff": 6.0,
+    "insert_pilot": 3.2,
+    "board_t": 1.6,
+    "u": 1,
+    "device_mount": "clips",
+    "joint": "screw",
+    "rear_support": false,
+    "dev_rot": 0,
+    "dev_off_x": -30.0,
+    "dev_off_y": 1.0,
+    "coupon": [],
+    "holes": [],
+    "keystones": [
+      -100.0
+    ],
+    "ports": [],
+    "rear_ports": [],
+    "second": {
+      "name": "Raspberry Pi 4 (example)",
+      "dev_w": 85.0,
+      "dev_d": 56.0,
+      "dev_h": 20.0,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "holes": [
+        [
+          3.5,
+          3.5
+        ],
+        [
+          61.5,
+          3.5
+        ],
+        [
+          3.5,
+          52.5
+        ],
+        [
+          61.5,
+          52.5
+        ]
+      ],
+      "device_mount": "inserts",
+      "dev_off_x": 46.0,
+      "dev_off_y": 1.0,
+      "dev_rot": 90
+    }
+  },
+  "parts": [
+    "tray",
+    "faceplate"
+  ],
+  "id": "9289a62a37899e2580ed8129a9b5507c3b03f27744a6ef988b71fed3641bf6c2",
+  "template": "equipment_tray.scad",
+  "limitations": [
+    "PROPOSED \u2014 UNVALIDATED. Printed fit, strength, rack clearance and keystone retention are UNKNOWN.",
+    "Mesh closure and successful rendering are not physical approval."
+  ],
+  "sha256": {
+    "tray.stl": "b3eab2614e8eeb16f66b1ffe22d12b964560f2cfc048694f626006ba1e76c401",
+    "faceplate.stl": "9632e29c2732efe43e2c1a2eff1ac36cf01809f4af3ee18263808703d903a5ff"
+  },
+  "logs": {
+    "tray": "WARNING: dev_w was assigned on line 9 of \"equipment.scad\" but was overwritten in file equipment.scad, line 320\nWARNING: dev_d was assigned on line 9 of \"equipment.scad\" but was overwritten in file equipment.scad, line 321\nWARNING: dev_h was assigned on line 9 of \"equipment.scad\" but was overwritten in file equipment.scad, line 322\nWARNING: hole_d was assigned on line 12 of \"equipment.scad\" but was overwritten in file equipment.scad, line 323\nWARNING: standoff was assigned on line 14 of \"equipment.scad\" but was overwritten in file equipment.scad, line 324\nWARNING: insert_pilot was assigned on line 15 of \"equipment.scad\" but was overwritten in file equipment.scad, line 325\nWARNING: board_t was assigned on line 16 of \"equipment.scad\" but was overwritten in file equipment.scad, line 326\nWARNING: u was assigned on line 18 of \"equipment.scad\" but was overwritten in file equipment.scad, line 327\nWARNING: holes was assigned on line 11 of \"equipment.scad\" but was overwritten in file equipment.scad, line 328\nWARNING: keystones was assigned on line 19 of \"equipment.scad\" but was overwritten in file equipment.scad, line 329\nWARNING: device_mount was assigned on line 13 of \"equipment.scad\" but was overwritten in file equipment.scad, line 330\nWARNING: joint was assigned on line 17 of \"equipment.scad\" but was overwritten in file equipment.scad, line 331\nWARNING: rear_support was assigned on line 31 of \"equipment.scad\" but was overwritten in file equipment.scad, line 332\nWARNING: coupon was assigned on line 32 of \"equipment.scad\" but was overwritten in file equipment.scad, line 333\nWARNING: dev_off_x was assigned on line 28 of \"equipment.scad\" but was overwritten in file equipment.scad, line 334\nWARNING: dev_off_y was assigned on line 29 of \"equipment.scad\" but was overwritten in file equipment.scad, line 335\nWARNING: ports was assigned on line 25 of \"equipment.scad\" but was overwritten in file equipment.scad, line 336\nWARNING: dev2_w was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 337\nWARNING: dev2_d was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 338\nWARNING: dev2_h was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 339\nWARNING: dev2_hole_d was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 340\nWARNING: dev2_standoff was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 341\nWARNING: dev2_insert_pilot was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 342\nWARNING: dev2_board_t was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 343\nWARNING: dev2_holes was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 344\nWARNING: dev2_mount was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 345\nWARNING: dev2_off_x was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 346\nWARNING: dev2_off_y was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 347\nWARNING: dev2_rot was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 348\nWARNING: dev2_feet was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 349\nWARNING: tray_w was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 350\nWARNING: tray_d was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 351\nGeometries in cache: 49\nGeometry cache size in bytes: 133152\nCGAL Polyhedrons in cache: 18\nCGAL cache size in bytes: 4273408\nTotal rendering time: 0:00:04.442\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     1106\n   Halfedges:    3318\n   Edges:        1659\n   Halffacets:   1150\n   Facets:        575\n   Volumes:         4\n",
+    "faceplate": "WARNING: dev_w was assigned on line 9 of \"equipment.scad\" but was overwritten in file equipment.scad, line 320\nWARNING: dev_d was assigned on line 9 of \"equipment.scad\" but was overwritten in file equipment.scad, line 321\nWARNING: dev_h was assigned on line 9 of \"equipment.scad\" but was overwritten in file equipment.scad, line 322\nWARNING: hole_d was assigned on line 12 of \"equipment.scad\" but was overwritten in file equipment.scad, line 323\nWARNING: standoff was assigned on line 14 of \"equipment.scad\" but was overwritten in file equipment.scad, line 324\nWARNING: insert_pilot was assigned on line 15 of \"equipment.scad\" but was overwritten in file equipment.scad, line 325\nWARNING: board_t was assigned on line 16 of \"equipment.scad\" but was overwritten in file equipment.scad, line 326\nWARNING: u was assigned on line 18 of \"equipment.scad\" but was overwritten in file equipment.scad, line 327\nWARNING: holes was assigned on line 11 of \"equipment.scad\" but was overwritten in file equipment.scad, line 328\nWARNING: keystones was assigned on line 19 of \"equipment.scad\" but was overwritten in file equipment.scad, line 329\nWARNING: device_mount was assigned on line 13 of \"equipment.scad\" but was overwritten in file equipment.scad, line 330\nWARNING: joint was assigned on line 17 of \"equipment.scad\" but was overwritten in file equipment.scad, line 331\nWARNING: rear_support was assigned on line 31 of \"equipment.scad\" but was overwritten in file equipment.scad, line 332\nWARNING: coupon was assigned on line 32 of \"equipment.scad\" but was overwritten in file equipment.scad, line 333\nWARNING: dev_off_x was assigned on line 28 of \"equipment.scad\" but was overwritten in file equipment.scad, line 334\nWARNING: dev_off_y was assigned on line 29 of \"equipment.scad\" but was overwritten in file equipment.scad, line 335\nWARNING: ports was assigned on line 25 of \"equipment.scad\" but was overwritten in file equipment.scad, line 336\nWARNING: dev2_w was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 337\nWARNING: dev2_d was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 338\nWARNING: dev2_h was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 339\nWARNING: dev2_hole_d was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 340\nWARNING: dev2_standoff was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 341\nWARNING: dev2_insert_pilot was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 342\nWARNING: dev2_board_t was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 343\nWARNING: dev2_holes was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 344\nWARNING: dev2_mount was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 345\nWARNING: dev2_off_x was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 346\nWARNING: dev2_off_y was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 347\nWARNING: dev2_rot was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 348\nWARNING: dev2_feet was assigned on line 264 of \"equipment.scad\" but was overwritten in file equipment.scad, line 349\nWARNING: tray_w was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 350\nWARNING: tray_d was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 351\nGeometries in cache: 71\nGeometry cache size in bytes: 475696\nCGAL Polyhedrons in cache: 13\nCGAL cache size in bytes: 7361344\nTotal rendering time: 0:00:04.533\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     1210\n   Halfedges:    3688\n   Edges:        1844\n   Halffacets:   1286\n   Facets:        643\n   Volumes:         2\n"
+  }
+}

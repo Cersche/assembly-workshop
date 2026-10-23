@@ -22,6 +22,7 @@ A local app that runs on this PC. You configure a Lab Rax rack, pick a slot, and
 
 ## Now — make what exists dependable
 
+- **9U rack build-out** (Brian, 2026-10-22): U1 = bottom now; rack saved as 9U with the Hue + Pi tray at U6. Next: save the OptiPlex, drive tray, keystone panel, TL-SG108E and screen plate as library items and place them; Codex [task 40](work/codex-tasks/40-nine-u-faceplates.md) (switch/keystone alignment, Pi USB slot); screen plate and cooling wait for Brian's measurements and photo. Plan: [work/rack-plan/Rack_Plan_9U.html](work/rack-plan/Rack_Plan_9U.html).
 - **Wall-mount box wizard** (Brian moved it ahead of v1, 2026-10-22): separate wizard for indoor wall boxes; [scope](work/wall-box-wizard/Scope.md). Codex task 38 builds the box template first.
 
 0. **Cable management Steps 1–5 built** (views and guides, ports, cables and exits, suggestions, wiring sheet); see `work/cable-management/`. Equipment wizard Option 1 steps 1–4 and quality sliders committed (6f4f26c).
