@@ -481,8 +481,8 @@
         },
         {
           "assembly": {
-            "id": "asm-cd5cebc3ef82d7258f95cb0fb0f48813",
-            "name": "Modem ECB7250 (placeholder) (U9)",
+            "id": "asm-24daf4610f056d302b055d08d9a11f55",
+            "name": "Netgear CM1000 (bracket: faceplate + rails v2) (U9)",
             "revision": 1,
             "project": {
               "selections": {
@@ -540,15 +540,15 @@
                 "bottom_allowance": 0.5
               },
               "notes": "Clearance v2 baseline. Insert pilot is provisional. Physical testing pending.",
-              "id": "asm-cd5cebc3ef82d7258f95cb0fb0f48813",
-              "name": "Modem ECB7250 (placeholder) (U9)",
+              "id": "asm-24daf4610f056d302b055d08d9a11f55",
+              "name": "Netgear CM1000 (bracket: faceplate + rails v2) (U9)",
               "units": "mm"
             },
             "appearance": {},
             "fit": "UNKNOWN"
           },
-          "id": "u9-c374022fea31",
-          "equipment": "eq-c374022fea31",
+          "id": "u9-385647c2ad65",
+          "equipment": "eq-385647c2ad65",
           "slot": 1,
           "span": 1,
           "geometry": "equipment-library",
@@ -567,5 +567,5 @@
       }
     }
   ],
-  "generation": "4317ba57-0405-45c8-b455-6776c896fc86"
+  "generation": "e3693994-94f8-495f-b00d-f215bb2bbbe3"
 }

@@ -26,8 +26,9 @@ SPECS = {
     8: dict(name='TP-Link TL-SG108E', dev_w=158, dev_d=100, dev_h=25, u=1, device_mount='sleeve', joint='screw',
             rear_support=False, dev_rot=0, dev_off_x=-15, dev_off_y=0, holes=[], ports=[], rear_ports=[], keystones=[88],
             tray_follow=True, sleeve_top=0.85, labels=[{'text': 'UPLINK', 'x': 88, 'z': 3.8, 'size': 4.5}]),
-    9: dict(name='Modem ECB7250 (placeholder)', dev_w=120, dev_d=65, dev_h=30, u=1, device_mount='straps', joint='screw',
-            rear_support=False, holes=[], ports=[], rear_ports=[], keystones=[]),
+    # Netgear CM1000 in its 3-piece bracket (faceplate + rails v2, outputs/STL_Deliveries/2026-10-16_CM1000_bracket).
+    # Finished meshes can't be a wizard item, so the app shows a 1U plate standing in for the bracket.
+    9: dict(name='Netgear CM1000 (bracket: faceplate + rails v2)', faceplate_only=True, layout='blank', u=1),
 }
 store = app.Store(data / 'library.sqlite3')
 seed = store.project()

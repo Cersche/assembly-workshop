@@ -1,0 +1,46 @@
+{
+  "nudge_mm": {
+    "faceplate": 0
+  },
+  "export_quality": {
+    "level": "standard",
+    "$fn": 48
+  },
+  "status": "PROPOSED \u2014 UNVALIDATED",
+  "spec": {
+    "name": "Faceplate only",
+    "faceplate_only": true,
+    "layout": "blank",
+    "u": 1,
+    "dev_w": 5.0,
+    "dev_d": 5.0,
+    "dev_h": 1.0,
+    "hole_d": 2.7,
+    "standoff": 0.0,
+    "insert_pilot": 3.2,
+    "board_t": 1.6,
+    "device_mount": "straps",
+    "joint": "none",
+    "rear_support": false,
+    "coupon": [],
+    "holes": [],
+    "ports": [],
+    "rear_ports": [],
+    "keystones": []
+  },
+  "parts": [
+    "faceplate"
+  ],
+  "id": "37de9848c08753bdc88d624a3c0615aa66412defb78c942c9b0f053d4fbef9f8",
+  "template": "equipment_tray.scad",
+  "limitations": [
+    "PROPOSED \u2014 UNVALIDATED. Printed fit, strength, rack clearance and keystone retention are UNKNOWN.",
+    "Mesh closure and successful rendering are not physical approval."
+  ],
+  "sha256": {
+    "faceplate.stl": "0b26a27d36c0ca6a1e168ed2f22ee59aa67595c4c97517d09fd5fc380e2cd1bf"
+  },
+  "logs": {
+    "faceplate": "WARNING: dev_w was assigned on line 9 of \"equipment.scad\" but was overwritten in file equipment.scad, line 263\nWARNING: dev_d was assigned on line 9 of \"equipment.scad\" but was overwritten in file equipment.scad, line 264\nWARNING: dev_h was assigned on line 9 of \"equipment.scad\" but was overwritten in file equipment.scad, line 265\nWARNING: hole_d was assigned on line 12 of \"equipment.scad\" but was overwritten in file equipment.scad, line 266\nWARNING: standoff was assigned on line 14 of \"equipment.scad\" but was overwritten in file equipment.scad, line 267\nWARNING: insert_pilot was assigned on line 15 of \"equipment.scad\" but was overwritten in file equipment.scad, line 268\nWARNING: board_t was assigned on line 16 of \"equipment.scad\" but was overwritten in file equipment.scad, line 269\nWARNING: u was assigned on line 18 of \"equipment.scad\" but was overwritten in file equipment.scad, line 270\nWARNING: holes was assigned on line 11 of \"equipment.scad\" but was overwritten in file equipment.scad, line 271\nWARNING: keystones was assigned on line 19 of \"equipment.scad\" but was overwritten in file equipment.scad, line 272\nWARNING: device_mount was assigned on line 13 of \"equipment.scad\" but was overwritten in file equipment.scad, line 273\nWARNING: joint was assigned on line 17 of \"equipment.scad\" but was overwritten in file equipment.scad, line 274\nWARNING: rear_support was assigned on line 31 of \"equipment.scad\" but was overwritten in file equipment.scad, line 275\nWARNING: coupon was assigned on line 32 of \"equipment.scad\" but was overwritten in file equipment.scad, line 276\nWARNING: ports was assigned on line 25 of \"equipment.scad\" but was overwritten in file equipment.scad, line 277\nWARNING: part was assigned on line 7 of \"equipment.scad\" but was overwritten in file equipment.scad, line 278\nGeometries in cache: 22\nGeometry cache size in bytes: 317328\nCGAL Polyhedrons in cache: 2\nCGAL cache size in bytes: 1356960\nTotal rendering time: 0:00:00.153\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      504\n   Halfedges:    1512\n   Edges:         756\n   Halffacets:    508\n   Facets:        254\n   Volumes:         2\n"
+  }
+}

@@ -518,5 +518,37 @@
     ],
     "status": "PROPOSED \u2014 UNVALIDATED",
     "display_name": "Modem ECB7250 (placeholder)"
+  },
+  {
+    "id": "eq-385647c2ad65",
+    "name": "Netgear CM1000 (bracket: faceplate + rails v2)",
+    "span": 1,
+    "spec": {
+      "name": "Faceplate only",
+      "faceplate_only": true,
+      "layout": "blank",
+      "u": 1,
+      "dev_w": 5.0,
+      "dev_d": 5.0,
+      "dev_h": 1.0,
+      "hole_d": 2.7,
+      "standoff": 0.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "device_mount": "straps",
+      "joint": "none",
+      "rear_support": false,
+      "coupon": [],
+      "holes": [],
+      "ports": [],
+      "rear_ports": [],
+      "keystones": []
+    },
+    "build": "37de9848c08753bdc88d624a3c0615aa66412defb78c942c9b0f053d4fbef9f8",
+    "parts": [
+      "faceplate"
+    ],
+    "status": "PROPOSED \u2014 UNVALIDATED",
+    "display_name": "Netgear CM1000 (bracket: faceplate + rails v2)"
   }
 ]
