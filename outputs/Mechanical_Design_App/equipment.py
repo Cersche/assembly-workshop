@@ -16,6 +16,7 @@ import subprocess
 import tempfile
 import threading
 import zipfile
+import print_layout
 
 import cable_ports
 import port_openings
@@ -1356,6 +1357,11 @@ def build(spec, data_dir):
         for f in sorted(final.iterdir()):
             z.write(f, f.name)
         z.writestr('export.json', json.dumps(trace, indent=2))
+        # All parts as separate bodies in one file, flat on the bed (built here; the cached revision stays untouched).
+        meshes = {f.stem: f.read_text(encoding='utf-8') for f in final.glob('*.stl')}
+        if meshes:
+            stem = re.sub(r'[^\w-]+', '_', s['name'] or 'equipment').strip('_') + '_print-layout'
+            z.writestr(stem + '.3mf', print_layout.layout_3mf(meshes))  # opens as separate objects in slicers
     return stream.getvalue()
 
 

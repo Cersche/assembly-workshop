@@ -2,6 +2,12 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-22 Print-layout 3MF in every equipment export (read first)
+
+- Brian's direction: every "Generate STL files" zip now also holds `<name>_print-layout.3mf`: all parts flat on the bed, side by side, each its own object (tray as-is, faceplate front face down 10 mm in front, rear bracket 10 mm behind). `print_layout.py`; tests in `test_print_layout.py`. A multi-body STL was tried first, but Bambu Studio loads it as one object, so 3MF it is. Cached revisions are untouched; the separate part STLs stay in the zip.
+- Not covered: PRINT THE RACK (`/api/rack-stl`) and Print in color (its color STLs must stay aligned). Not yet opened in a slicer by Claude; Brian checks in Bambu Studio.
+- Hand-made deliveries: `tools/plate_layout_stl.py tray.stl faceplate.stl out.3mf`, saved under `outputs/STL_Deliveries/<date>_<Item>/`.
+
 ## 2026-10-22 Task 39: drive tray, 3.5" HDD + 2.5" SSD (read first)
 
 - Wizard button "Drives (3.5" + 2.5")" makes a 1U tray with a blank plate holding both drives side by side (195.45 mm wide, 184 mm deep). Mount: bottom screws only (4 × 6-32 + 4 × M3); Brian dropped the tool-free sleeve. The wizard goes straight to Save, and the 3D preview shows both drives. SFF-spec positions; PROPOSED — UNVALIDATED.
