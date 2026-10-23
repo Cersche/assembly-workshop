@@ -11,6 +11,8 @@
     "note": "Panel cutouts differ by model: measure yours, then use a rect cutout."},
   "rocker_switch": {"name": "Rocker switch", "kind": "cutout", "cutout": null,
     "note": "Snap-in cutouts differ by model: measure yours, then use a rect cutout."},
-  "screenbeam_ecb7250": {"name": "ScreenBeam ECB7250 MoCA adapter", "kind": "device", "size": [120, 65, 30], "ports": null,
-    "note": "Size 120 x 65 x 30 mm including rubber feet, measured by Brian 2026-10-23 (which axis is which is not recorded yet). Port positions UNKNOWN."}
+  "screenbeam_ecb7250": {"name": "ScreenBeam ECB7250 MoCA adapter", "kind": "device", "size": [120, 65, 30], "ports": {"left_end": ["coax_in"], "right_end": ["ethernet", "power"], "top": ["vent_grille"]},
+    "note": "Size 120 x 65 x 30 mm including rubber feet, measured by Brian 2026-10-23 (assumed long x wide x tall). Port faces from Brian's photo; port heights UNKNOWN."},
+  "splitter_bridgelink_220_sp1xd_001": {"name": "Bridgelink 2-way coax splitter 220-SP1XD-001", "kind": "device", "size": null, "ports": {"one_long_side": ["in"], "opposite_long_side": ["out", "out"]},
+    "note": "From Brian's photo 2026-10-23: two mounting ears with screw holes, ground screw on one end. Dimensions UNKNOWN until measured."}
 }
