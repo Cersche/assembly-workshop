@@ -12,8 +12,8 @@ faceplate). Hand-patched (`build.py` on the app's generated source), not an app 
   The switch and window sit 3.5 mm higher than with a 3 mm floor (still 1U).
 - **Assembly:** screw the faceplate on, slide the switch in from the front (ports out) until it clicks over the bumps
   and touches the rear stop.
-- Sleeve height clearance 0.8 mm. Layout: 15 mm left, keystone at +88, "UPLINK" with a separate inlay part
+- Sleeve inside height **25.85 mm** (25 mm switch + 0.85 mm, Brian). Layout: 15 mm left, keystone at +88, "UPLINK" with a separate inlay part
   (3MF faceplate object = `faceplate` + `UPLINK label`).
 - UNKNOWN: thick-floor version unprinted (KD-E), exact keyhole position, arm spring/fatigue, fit, strength.
 
-Source revision: 151cccb37788878415b720d7806eb9b4b3b659b400a279192379f2bd7a2775f2 (`.scad` is the patched source).
+Source revision: a638a339de9c72a29acae977d8e90da583999c19861f2ff2dd7ddbdeae9a7f64 (`.scad` is the patched source).

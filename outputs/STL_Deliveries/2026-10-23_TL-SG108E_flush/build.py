@@ -4,7 +4,7 @@ import sys, json
 sys.path.insert(0, r'D:/Projects/assembly-workshop/outputs/Mechanical_Design_App')
 import equipment
 SPEC = {'name':'TP-Link TL-SG108E','dev_w':158,'dev_d':100,'dev_h':25,'u':1,'device_mount':'sleeve','joint':'screw','rear_support':False,
-        'dev_rot':0,'dev_off_x':-15,'dev_off_y':0,'holes':[],'ports':[],'rear_ports':[],'keystones':[88],'tray_follow':True,'sleeve_top':0.8,
+        'dev_rot':0,'dev_off_x':-15,'dev_off_y':0,'holes':[],'ports':[],'rear_ports':[],'keystones':[88],'tray_follow':True,'sleeve_top':0.85,
         'labels':[{'text':'UPLINK','x':88,'z':3.8,'size':4.5}]}
 # Brian's measurements: keyhole round parts 48.5 mm behind the port face, centred on the width, 110 mm apart, ~8-9 mm across.
 KEY_Y, KEY_PITCH = 48.5, 110
