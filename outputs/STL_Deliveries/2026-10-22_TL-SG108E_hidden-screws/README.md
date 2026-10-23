@@ -5,6 +5,7 @@ PROPOSED — UNVALIDATED. Hand-made variant (`build.py`), not an app feature. Sa
 
 Why hand-made: the app's hidden joint sits outside the sleeve walls and only fits devices up to 150 mm; this switch is 158 mm.
 What `build.py` changes on the app's generated source:
+- Sleeve height clearance 0.8 mm (app default 0.3; Brian: first tray too tight top to bottom).
 - The switch sits **17 mm back** inside the sleeve (tray 17 mm deeper, 122 mm). The two hidden joints (tongue, plate boss,
   tray upright, same dimensions as task 41) sit **in front of the switch**, at X = -91 and +61 mm.
 - The faceplate window is narrowed to **130 mm** (the 128 mm port cavity from the STEP + 1 mm each side, assumed centred),

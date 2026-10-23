@@ -334,6 +334,7 @@ device_mount="sleeve";
 joint="screw";
 rear_support=false;
 coupon=[];
+sleeve_top=0.8;
 hidden_joint=true;
 dev_off_x=-15.0;
 tray_w=171.0;

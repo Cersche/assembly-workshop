@@ -15,7 +15,7 @@ import equipment as eq
 SETBACK = 17      # device front moves from y=-4 to y=13 (joint upright ends at 11.3)
 WIN_HALF = 65     # plate window half-width: 128 mm port cavity (centred, from STEP) + 1 mm
 SPEC = {"dev_w": 158, "dev_d": 101, "dev_h": 25, "u": 1, "device_mount": "sleeve", "joint": "screw",
-        "dev_off_x": -15, "keystones": [88], "tray_follow": True,
+        "dev_off_x": -15, "keystones": [88], "tray_follow": True, "sleeve_top": 0.8,
         "labels": [{"text": "UPLINK", "x": 88, "z": 3.8, "size": 4.5}]}
 PATCHES = [
     # tray no longer widens for joints outside the walls
