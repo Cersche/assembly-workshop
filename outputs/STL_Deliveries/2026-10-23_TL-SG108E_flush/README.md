@@ -7,7 +7,7 @@ faceplate). Hand-patched (`build.py` on the app's generated source), not an app 
 - **Ports flush:** switch front at the faceplate front (Y = −4). Nothing covers the switch face.
 - **Back:** solid rear stop across the sleeve (tray Y 96–100 mm).
 - **Front:** two spring detents in the tray floor catch the switch's wall-mount keyholes (Brian: round parts 48.5 mm
-  behind the port face, centred on the width, 110 mm apart). Bump **3 mm** high (coupon KD-D locked very nicely); floor
+  behind the port face, centred on the width, 110 mm apart). Bump **2 mm** high (Brian, after coupon KD-D at 3 mm locked very nicely); floor
   **6.5 mm** (coupon KD-E) so the 8 × 26 × 1.8 mm arm bends into a pocket inside the floor instead of out the bottom.
   The switch and window sit 3.5 mm higher than with a 3 mm floor (still 1U).
 - **Hidden screws:** no holes through the faceplate front. Two 9 mm bosses on the plate back above the window
@@ -15,8 +15,8 @@ faceplate). Hand-patched (`build.py` on the app's generated source), not an app 
   sleeve's top lips, 0.3 mm behind the bosses. **2 × M3 ~12 mm**, driven from behind over the top of the switch.
 - **Assembly:** set the faceplate against the sleeve front, screw it on from behind, then slide the switch in from the
   front (ports out) until it clicks over the bumps and touches the rear stop.
-- Sleeve inside height **25.85 mm** (25 mm switch + 0.85 mm, Brian). Layout: 15 mm left, keystone at +88, "UPLINK" with a separate inlay part
+- Sleeve inside height **26.35 mm** (25 mm switch + 1.35 mm, Brian). Layout: 15 mm left, keystone at +88, "UPLINK" with a separate inlay part
   (3MF faceplate object = `faceplate` + `UPLINK label`).
 - UNKNOWN: thick-floor version unprinted (KD-E), exact keyhole position, arm spring/fatigue, fit, strength.
 
-Source revision: 05d39b8aa121b44e20d34e549e45f1bce89e3d48626fa0c447a966cfb7e21853 (`.scad` is the patched source).
+Source revision: 8996fd7e4dbfd993e97bdee6d7720fe838209e5a9291b36f9a3b5827d70f50d5 (`.scad` is the patched source).
