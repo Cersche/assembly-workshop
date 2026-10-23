@@ -9,3 +9,10 @@ Fit, retention, strength, keystone retention, label legibility and cable bend sp
 Source revision: 042f4cd20c369a47cabb263db77e1e24d2a643bf31d9f2547d899fc6d4f94398
 Spec: {"dev_w":158,"dev_d":101,"dev_h":25,"u":1,"device_mount":"sleeve","joint":"screw","dev_off_x":-15,
 "keystones":[88],"tray_follow":true,"labels":[{"text":"UPLINK","x":88,"z":3.8,"size":4.5}]}
+
+## Colored label (added 2026-10-22)
+The 3MF's faceplate is one object with two parts: `faceplate` and `UPLINK label`, a 0.6 mm inlay that exactly fills
+the engraving. In Bambu Studio, select the `UPLINK label` part in the object list and give it a different filament.
+The faceplate prints front face down, so the label sits in the first layers (0.08–0.68 mm). The inlay is also
+supplied as `…_UPLINK-label-inlay.stl` (rack coordinates) with its source `UPLINK-label-inlay.scad`.
+Printed color result and legibility UNKNOWN.
