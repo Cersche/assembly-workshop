@@ -40,13 +40,13 @@ test('all long and short names, saved overrides and name fallbacks',()=>{
   const cases=[
     [null,'Unconnected','unconnected'],[{endpoint:'modem'},'Modem (outside)','Modem'],[{endpoint:'gone'},'Removed endpoint','removed'],
     [port('gone','x'),'Removed equipment','removed'],[port('w','gone'),'Box · removed port','removed'],
-    [port('pi','ethernet'),'Board example · Ethernet (U01, face UNKNOWN)','Board example'],
-    [port('w','rear'),'Box · Ethernet (U02 rear)','Box'],[port('w','front'),'Box · USB (U02 front)','Box'],
-    [port('w','ks-1-rear'),'Box · Keystone 1 · rear (U02)','K1'],[port('w','ks-1-front'),'Box · Keystone 1 · front (U02)','K1'],
-    [port('w2','front'),'Library box · USB (U05 front)','Library box']];
+    [port('pi','ethernet'),'Board example · Ethernet (U06, face UNKNOWN)','Board example'],
+    [port('w','rear'),'Box · Ethernet (U05 rear)','Box'],[port('w','front'),'Box · USB (U05 front)','Box'],
+    [port('w','ks-1-rear'),'Box · Keystone 1 · rear (U05)','K1'],[port('w','ks-1-front'),'Box · Keystone 1 · front (U05)','K1'],
+    [port('w2','front'),'Library box · USB (U02 front)','Library box']];
   for(const [end,long,short] of cases){assert.equal(call('endName',rack,end,ctx),long);assert.equal(call('shortName',rack,end,ctx),short);}
   rack.cabling.ports=[{allocation:'pi',port:'ethernet',face:'rear'}];
-  assert.equal(call('endName',rack,port('pi','ethernet'),ctx),'Board example · Ethernet (U01 rear)');
+  assert.equal(call('endName',rack,port('pi','ethernet'),ctx),'Board example · Ethernet (U06 rear)');
   ctx.library[0].name='';assert.equal(call('shortName',rack,port('pi','ethernet'),ctx),'Equipment');
   rack.cabling.ports.push({allocation:'w',port:'front',type:'keystone'});
   assert.equal(call('shortName',rack,port('w','front'),ctx),'Box');
@@ -58,14 +58,14 @@ test('face selection requires two front ports',()=>{
 });
 test('schedule has every field, route order, estimates, warning arrays and reciprocal links',()=>{
   const {rack,ctx}=fixture(),rows=call('schedule',rack,ctx);
-  assert.deepEqual(rows[0],{id:'front',number:'C2',face:'rear',from:'Box · Keystone 1 · front (U02)',to:'Modem (outside)',type:'RJ45 (Ethernet)',carries:'data',colour:'#123456',route:'direct',exit:'Bottom rear',length_m:0.4,to_exit:true,length:'0.4 to exit',service_loop_m:0,linked:'C10 via K1',warnings:[],note:''});
-  assert.deepEqual(rows[1],{id:'loose',number:'C3',face:'rear',from:'Box · Power (U02 rear)',to:'Unconnected',type:'IEC power inlet',carries:'power',colour:'#ff6b6b',route:'direct',exit:'',length_m:null,to_exit:false,length:'',service_loop_m:0.2,linked:'',warnings:['Unconnected cable end.'],note:''});
-  const rear=rows[2];assert.equal(rear.route,'RR U03 → RL U02 (manual)');assert.equal(rear.linked,'C2 via K1');
+  assert.deepEqual(rows[0],{id:'front',number:'C2',face:'rear',from:'Box · Keystone 1 · front (U05)',to:'Modem (outside)',type:'RJ45 (Ethernet)',carries:'data',colour:'#123456',route:'direct',exit:'Bottom rear',length_m:0.4,to_exit:true,length:'0.4 to exit',service_loop_m:0,linked:'C10 via K1',warnings:[],note:''});
+  assert.deepEqual(rows[1],{id:'loose',number:'C3',face:'rear',from:'Box · Power (U05 rear)',to:'Unconnected',type:'IEC power inlet',carries:'power',colour:'#ff6b6b',route:'direct',exit:'',length_m:null,to_exit:false,length:'',service_loop_m:0.2,linked:'',warnings:['Unconnected cable end.'],note:''});
+  const rear=rows[2];assert.equal(rear.route,'RR U04 → RL U05 (manual)');assert.equal(rear.linked,'C2 via K1');
   assert.equal(rear.length_m,C.estimate(rack,rack.cabling.cables[0],ctx).length_m);
   assert.equal(rear.length,rear.length_m.toFixed(1));assert.equal(rear.note,'Line 1, "quoted"\nLine 2');
   assert.deepEqual(rear.warnings,['Port face UNKNOWN; routing uses the rear by default.']);
   const c=rack.cabling.cables[1];
-  for(const [id,label] of [['left','Left side U04'],['right','Right side U05'],['gone','']]){c.route.exit=id;assert.equal(call('schedule',rack,ctx)[0].exit,label);}
+  for(const [id,label] of [['left','Left side U03'],['right','Right side U02'],['gone','']]){c.route.exit=id;assert.equal(call('schedule',rack,ctx)[0].exit,label);}
   c.route.mode='manual';c.route.guides=['gone'];assert.equal(call('schedule',rack,ctx)[0].route,'direct (manual)');
   delete rack.cabling.settings;assert.equal(call('schedule',rack,ctx)[1].service_loop_m,0.15);
   ctx.cables={...C,linkedCable:()=> 'missing'};assert.equal(call('schedule',rack,ctx)[0].linked,'');

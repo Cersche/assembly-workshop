@@ -75,7 +75,7 @@
     for(let slot=1;slot<=rack.slots;slot++){
       const yTop=Y((rack.slots-slot+1)*U),yBot=Y((rack.slots-slot)*U);
       if(slot<rack.slots)out.push(`<line x1="${n1(l)}" y1="${n1(yBot)}" x2="${n1(r)}" y2="${n1(yBot)}" stroke="${COLORS.line}" stroke-width="0.4" stroke-dasharray="2 3"/>`);
-      if((slot-1)%every===0)out.push(`<text x="${n1(l-8)}" y="${n1((yTop+yBot)/2+3)}" text-anchor="end" font-size="9" fill="${COLORS.muted}">U${pad(slot)}</text>`);
+      if((rack.slots-slot)%every===0)out.push(`<text x="${n1(l-8)}" y="${n1((yTop+yBot)/2+3)}" text-anchor="end" font-size="9" fill="${COLORS.muted}">U${pad(rack.slots-slot+1)}</text>`);
     }
     for(const p of rack.placements||[]){
       const yTop=Y((rack.slots-p.slot+1)*U)+1.5,yBot=Y((rack.slots-p.slot-p.span+1)*U)-1.5,x0=Math.min(X(-104),X(104)),x1=Math.max(X(-104),X(104));

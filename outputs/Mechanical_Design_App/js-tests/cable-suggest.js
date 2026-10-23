@@ -62,7 +62,7 @@ test('missing-guide merges cables, rounds midpoint, skips occupied spots, short 
   // Keystone X=0 would choose RR; make this cable explicitly follow RL.
   rack.cabling.cables[1].route.guides=[guide(rack,'RL',2)];
   let s=one(f,'missing-guide');assert.equal(s.id,'missing-guide:RL:4');assert.deepEqual(s.involves.cables,['c1','c2']);
-  assert.match(s.title,/RL U04/);guide(rack,'RL',4);assert.equal(rule(rack,ctx,'missing-guide').length,0);
+  assert.match(s.title,/RL U03/);guide(rack,'RL',4);assert.equal(rule(rack,ctx,'missing-guide').length,0);
   rack.cabling.guides=[];rack.cabling.cables=[c];c.route.guides=[guide(rack,'RL',2),guide(rack,'RR',3)];
   assert.equal(rule(rack,ctx,'missing-guide').length,0);c.route.guides=[];rack.placements[2].slot=4;
   assert.equal(rule(rack,ctx,'missing-guide').length,0);

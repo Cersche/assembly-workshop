@@ -390,7 +390,7 @@
     const exp=h('button',{type:'button',id:'tpExport'},'Generate proposed STL files');
     exp.onclick=async()=>{if(current().length){update();return;}exp.disabled=true;setStatus('Checking, then rendering with OpenSCAD…');
       try{await serverCheck();const r=await post('/api/equipment-build',exportRequest());if(!r.ok)throw Error((await r.json()).error||'Build failed');
-        const url=URL.createObjectURL(await r.blob()),a=document.createElement('a');a.href=url;a.download=(name||'equipment').replace(/[^\w-]+/g,'_')+'-slot-'+state.slot+'-stl.zip';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);window.EquipmentRackView?.refresh();
+        const url=URL.createObjectURL(await r.blob()),a=document.createElement('a');a.href=url;a.download=(name||'equipment').replace(/[^\w-]+/g,'_')+'-'+(window.rackUText?window.rackUText(state.slot,state.span).replace('–','-'):'slot-'+state.slot)+'-stl.zip';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);window.EquipmentRackView?.refresh();
         setStatus(`Done (${exportNote()}). PROPOSED — UNVALIDATED STLs for these window values; export.json in the zip records the quality.`+' The rack draft is unchanged until you Apply and Save.');}
       catch(e){setStatus('Problem: '+e.message);}finally{update();}};
     const apply=h('button',{type:'button',id:'tpApply',class:'primary'},'Apply to draft');
@@ -413,7 +413,7 @@
     const position=h('div',{class:'ew-row'},h('span',{},'Front position:'),chips({today:'As today',flush:'Flush with faceplate',setback:'Set back'},v.front_position,k=>{v.front_position=k;}),...(v.front_position==='setback'?[field('Set back (mm)',()=>v.front_setback,x=>v.front_setback=x,{min:'0',max:'100',step:'.1'})]:[]));
     const bezel=h('div',{class:'ew-row'},h('span',{},'Bezel:'),chips({none:'None',chamfer:'Chamfer',rounded:'Rounded'},v.bezel,k=>v.bezel=k),...(v.bezel!=='none'?[field('Bezel size (mm)',()=>v.bezel_size,x=>v.bezel_size=x,{min:'.5',max:'1.5',step:'.1'})]:[]));
     d.replaceChildren(
-      h('div',{class:'tp-head'},h('div',{},h('p',{class:'section-eyebrow'},'PLACE ON TRAY · SLOT '+state.slot+(state.span>1?'–'+(state.slot+state.span-1):'')),h('h2',{},state.tab===2&&state.second?state.second.item.display_name||state.second.item.name:name)),lib),
+      h('div',{class:'tp-head'},h('div',{},h('p',{class:'section-eyebrow'},'PLACE ON TRAY · '+(window.rackUText?window.rackUText(state.slot,state.span):'SLOT '+state.slot)),h('h2',{},state.tab===2&&state.second?state.second.item.display_name||state.second.item.name:name)),lib),
       h('p',{class:'ew-note'},`${dspec.dev_w} × ${dspec.dev_d} × ${dspec.dev_h} mm, ${(dspec.holes||[]).length} mounting hole(s). These choices belong to this slot only; the library item is not changed.`),tabs,
       h('div',{class:'tp-grid'},
         h('div',{class:'tp-pane'},h('h3',{},'Top view'),document.createElementNS(NS,'svg'),

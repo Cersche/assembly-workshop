@@ -4,6 +4,9 @@
   const LIMITS='Lengths are planning estimates. Guide capacity, cable fit, bend tolerance and strength are UNKNOWN.';
   const CSV_COLUMNS=['Number','From','To','Type','Carries','Colour','Route','Exit','Length estimate (m)','Service loop (m)','Linked to','Warnings','Note'];
   const pad=n=>String(n).padStart(2,'0');
+  // U counts from the bottom; stored slots count from the top.
+  const uNo=(rack,slot)=>rack.slots-slot+1;
+  const uOf=(rack,p)=>p.span>1?pad(uNo(rack,p.slot+p.span-1))+'–U'+pad(uNo(rack,p.slot)):pad(uNo(rack,p.slot));
   const list=(rack,key)=>rack.cabling?.[key]||[];
   const outside=end=>typeof end?.endpoint==='string';
   const portEnd=end=>end&&typeof end.allocation==='string'&&typeof end.port==='string';
@@ -25,7 +28,7 @@
     if(!placement)return 'Removed equipment';
     if(!port)return name+' · removed port';
     const face=ctx.cables.endFace(rack,end,ctx);
-    return name+' · '+port.label+' (U'+pad(placement.slot)+(keystone(port)?'':face==='front'||face==='rear'?' '+face:', face UNKNOWN')+')';
+    return name+' · '+port.label+' (U'+uOf(rack,placement)+(keystone(port)?'':face==='front'||face==='rear'?' '+face:', face UNKNOWN')+')';
   }
   function shortName(rack,end,ctx){
     if(end==null)return 'unconnected';
@@ -51,8 +54,8 @@
       return {id:cable.id,number:cable.number,face:faceOf(rack,cable,ctx),
         from:endName(rack,cable.from,ctx),to:endName(rack,cable.to,ctx),type:typeName(cable,ctx),
         carries:ctx.suggest?ctx.suggest.carries(rack,cable,ctx):(cable.carries||''),colour:ctx.cables.cableColor(cable),
-        route:(guides.map(g=>g.post+' U'+pad(g.slot)).join(' → ')||'direct')+(cable.route?.mode==='manual'?' (manual)':''),
-        exit:exit?ctx.cables.EXIT_POSITIONS[exit.position]+(['left','right'].includes(exit.position)?' U'+pad(exit.slot):''):'',
+        route:(guides.map(g=>g.post+' U'+pad(uNo(rack,g.slot))).join(' → ')||'direct')+(cable.route?.mode==='manual'?' (manual)':''),
+        exit:exit?ctx.cables.EXIT_POSITIONS[exit.position]+(['left','right'].includes(exit.position)?' U'+pad(uNo(rack,exit.slot)):''):'',
         length_m,to_exit:estimate.to_exit,length:length_m===null?'':length_m.toFixed(1)+(estimate.to_exit?' to exit':''),
         service_loop_m:cable.service_loop_m??rack.cabling?.settings?.service_loop_m??0.15,
         linked:other?other.number+' via '+shortName(rack,linkedEnd||[cable.from,cable.to].find(e=>portEnd(e)&&keystone(info(rack,e,ctx).port)),ctx):'',

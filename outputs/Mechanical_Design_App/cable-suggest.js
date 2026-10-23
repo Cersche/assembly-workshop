@@ -16,7 +16,7 @@
   const portKeys=c=>[c.from,c.to].filter(portEnd).map(e=>e.allocation+'/'+e.port);
   const powerPost=rack=>rack.cabling?.settings?.power_post||'RR';
   const dataPost=rack=>powerPost(rack)==='RR'?'RL':'RR';
-  const label=g=>g.post+' U'+String(g.slot).padStart(2,'0');
+  const label=(g,rack)=>g.post+' U'+String(rack.slots-g.slot+1).padStart(2,'0');
   function portsFor(rack,placement,ctx){
     return ctx.ports.portsFor(rack,placement,(ctx.library||[]).find(i=>i.id===placement.equipment))||[];
   }
@@ -121,7 +121,7 @@
         {...involved,guides:bendGuides},null,null,'guidance');
       if(c.from==null||c.to==null)add('one-ended',c.id,'Connect the other end of '+c.number,'This cable has an unconnected end.',involved);
     }
-    for(const [key,m] of missing)add('missing-guide',key,'Add a guide at '+label(m),
+    for(const [key,m] of missing)add('missing-guide',key,'Add a guide at '+label(m,rack),
       'The planned run spans more than two U between supports. Guide fit is UNKNOWN.',m,{kind:'add-guide',post:m.post,slot:m.slot},'Add guide');
     const used=cables.filter(c=>c.route?.exit&&[c.from,c.to].some(outside));
     const count=e=>used.filter(c=>c.route.exit===e.id).length;
@@ -130,7 +130,7 @@
     if(usedExits.length>1){
       const target=mostUsed(usedExits.filter(e=>e.position!=='top-rear'))||mostUsed(usedExits);
       const moving=used.filter(c=>c.route.exit!==target.id);
-      add('one-exit','all','Use one cabinet exit','Bring outside runs together at the '+((ctx.cables.EXIT_POSITIONS||{})[target.position]||target.position).toLowerCase()+' exit (U'+String(target.slot).padStart(2,'0')+').',
+      add('one-exit','all','Use one cabinet exit','Bring outside runs together at the '+((ctx.cables.EXIT_POSITIONS||{})[target.position]||target.position).toLowerCase()+' exit (U'+String(rack.slots-target.slot+1).padStart(2,'0')+').',
         {cables:used.map(c=>c.id),exits:usedExits.map(e=>e.id),ports:used.flatMap(portKeys)},
         {kind:'set-exit',cables:moving.map(c=>c.id),exit:target.id},'Use this exit');
     }
@@ -146,13 +146,13 @@
     const load=ctx.cables.guideLoad(rack);
     for(const id of ctx.cables.crowded(rack)){
       const g=guideMap.get(id);if(!g)continue;
-      add('crowded',id,'Crowding at '+label(g),load[id]+' cables exceeds your setting of '+(rack.cabling?.settings?.guide_warn_above??6)+'. Capacity is UNKNOWN.',
+      add('crowded',id,'Crowding at '+label(g,rack),load[id]+' cables exceeds your setting of '+(rack.cabling?.settings?.guide_warn_above??6)+'. Capacity is UNKNOWN.',
         {guides:[id],cables:cables.filter(c=>c.route?.guides?.includes(id)).map(c=>c.id)});
     }
     for(const placement of rack.placements||[]){
       const ports=portsFor(rack,placement,ctx),unused=ports.filter(p=>!ctx.cables.portInUse(rack,placement.id,p.id));
       if(!unused.length)continue;
-      const item=(ctx.library||[]).find(i=>i.id===placement.equipment),name=(placement.assembly?.name||item?.name||'Equipment')+' (U'+String(placement.slot).padStart(2,'0')+')';
+      const item=(ctx.library||[]).find(i=>i.id===placement.equipment),name=(placement.assembly?.name||item?.name||'Equipment')+' (U'+String(rack.slots-(placement.slot+(placement.span||1)-1)+1).padStart(2,'0')+((placement.span||1)>1?'–U'+String(rack.slots-placement.slot+1).padStart(2,'0'):'')+')';
       add('unused-ports',placement.id,name+': '+unused.length+' of '+ports.length+' ports unused','These ports have no planned cable.',
         {ports:unused.map(p=>p.key)},null,null,'info');
     }

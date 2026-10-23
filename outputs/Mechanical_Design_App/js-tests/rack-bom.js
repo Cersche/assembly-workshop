@@ -91,13 +91,13 @@ test('moving a support refreshes a visible editing BOM; locked layout stays unch
 });
 test('multi-U plate across a support extension warns (never blocks); 1U and clear spans stay quiet',()=>{
   const {box}=harness();
-  vm.runInContext(section('  // Slots taken by a 1U support extension','  function guideLabel(').replace(/  window\.extensionJointWarning=.*\n/,'')+'\nglobalThis.jw=jointWarning;',box);
+  vm.runInContext("const uNum=(rack,slot)=>rack.slots-slot+1,uPad=n=>'U'+String(n).padStart(2,'0'),uText=(rack,slot,span=1)=>span>1?uPad(uNum(rack,slot+span-1))+'–'+uPad(uNum(rack,slot)):uPad(uNum(rack,slot));"+section('  // Slots taken by a 1U support extension','  function guideLabel(').replace(/  window\.extensionJointWarning=.*\n/,'')+'\nglobalThis.jw=jointWarning;',box);
   // 10U, posts 5U + extension + 4U on both sides: the extension is slot 5.
   const rack={slots:10,post_levels:{left:[5,4],right:[5,4]}};
-  assert.match(box.jw(rack,4,2),/crosses the 1U support extension at slot 5 \(both sides\).*UNKNOWN.*Warning only/);
+  assert.match(box.jw(rack,4,2),/crosses the 1U support extension at U06 \(both sides\).*UNKNOWN.*Warning only/);
   assert.equal(box.jw(rack,5,1),null);
   assert.equal(box.jw(rack,6,3),null);
   assert.equal(box.jw(rack,1,4),null);
-  assert.match(box.jw({slots:10,post_levels:{left:[5,4],right:[4,5]}},5,2),/slot 5 \(left side\) and slot 6 \(right side\)/);
+  assert.match(box.jw({slots:10,post_levels:{left:[5,4],right:[4,5]}},5,2),/U06 \(left side\) and U05 \(right side\)/);
   assert.equal(box.jw(null,4,2),null);
 });
