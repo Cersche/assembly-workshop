@@ -78,6 +78,11 @@ def placement_settings(value):
     if not isinstance(value, dict):
         raise ValueError('Tray settings must be an object.')
     out = {}
+    if 'faceplate' in value:
+        if set(value) != {'faceplate'} or not isinstance(value['faceplate'],dict):
+            raise ValueError('Faceplate settings cannot be mixed with tray settings.')
+        panel = clean_faceplate(value['faceplate'])
+        return {'faceplate': {k:panel[k] for k in ('u','layout','count','rows','keystones','ports') if k in panel}}
     for key in PLACEMENT_KEYS:
         if key not in value:
             continue
@@ -114,6 +119,82 @@ def placement_settings(value):
     return out
 
 
+# Reserved built-in identity: no library write or device is needed for a panel.
+FACEPLATE_ID = 'eq-000000000038'
+FACEPLATE_PITCH_CAP = 48.0
+
+
+def faceplate_item():
+    return {'id': FACEPLATE_ID, 'name': 'Faceplate only', 'span': 1,
+            'spec': {'faceplate_only': True, 'u': 1, 'ports': [], 'keystones': []},
+            'parts': ['faceplate'], 'status': 'PROPOSED — UNVALIDATED'}
+
+
+def faceplate_spacing(count, rows, u):
+    if any(type(v) is not int for v in (count, rows, u)) or not 1 <= u <= 5 or not 1 <= rows <= u:
+        raise ValueError('Choose 1–5U and between 1 and U rows.')
+    if not 1 <= count <= 10:
+        raise ValueError('Maximum 10 keystones per row (minimum 1).')
+    pitch = min(FACEPLATE_PITCH_CAP, 193.5 / (count - 1)) if count > 1 else 0
+    return [[round((i-(count-1)/2)*pitch, 3), round((r+.5)*44.45, 3)]
+            for r in range(rows) for i in range(count)]
+
+
+def faceplate_check(s):
+    boxes = [(x-10.5, x+10.5, z-15, z+18.5) for x,z in s['keystones']]
+    ports = [(p['x']-p['w']/2,p['x']+p['w']/2,p['z']-p['h']/2,p['z']+p['h']/2) for p in s['ports']]
+    slots = [(x-5,x+5,i*44.45+22.225+dz-3.5,i*44.45+22.225+dz+3.5)
+             for i in range(s['u']) for x in (-118.2625,118.2625) for dz in (-15.902,15.902)]
+    gap = lambda a,b: max(a[0]-b[1],b[0]-a[1],a[2]-b[3],b[2]-a[3])
+    thin = False
+    shapes = boxes + ports
+    for i,a in enumerate(shapes):
+        if a[0] < -125 or a[1] > 125 or a[2] < 1.025 or a[3] > s['u']*44.45-1.025:
+            raise ValueError('Keep every opening/block at least 1 mm inside the plate outline.')
+        if any(gap(a,b) <= 0 for b in slots):
+            raise ValueError('An opening/block overlaps a rack slot.')
+        for b in shapes[:i]:
+            g = gap(a,b)
+            if g < 0: raise ValueError('Openings/keystone blocks overlap (negative web).')
+            if g < 2: thin = True
+    return ['thin wall, fit/strength UNKNOWN'] if thin else []
+
+
+def clean_faceplate(spec):
+    u = spec.get('u', 1)
+    if type(u) is not int or not 1 <= u <= 5: raise ValueError('Choose a height from 1U to 5U.')
+    layout = spec.get('layout', 'blank')
+    if layout not in ('blank','keystones','custom'): raise ValueError('Choose Blank, Keystones or Custom openings.')
+    s = dict(name='Faceplate only', faceplate_only=True, layout=layout, u=u,
+             dev_w=5.0, dev_d=5.0, dev_h=1.0, hole_d=2.7, standoff=0.0, insert_pilot=3.2,
+             board_t=1.6, device_mount='straps', joint='none', rear_support=False,
+             coupon=[], holes=[], ports=[], rear_ports=[], keystones=[])
+    q=spec.get('quality',DEFAULT_QUALITY)
+    if q not in EXPORT_QUALITY: raise ValueError('Invalid export quality.')
+    if q != DEFAULT_QUALITY:s['quality']=q
+    if layout=='keystones':
+        count,rows=spec.get('count',1),spec.get('rows',u)
+        positions=faceplate_spacing(count,rows,u)
+        raw=spec.get('keystones',positions)
+        if not isinstance(raw,list) or len(raw)!=count*rows: raise ValueError('Keystone positions must match count × rows.')
+        s.update(count=count,rows=rows)
+        for point in raw:
+            if isinstance(point,(int,float)) and not isinstance(point,bool): point=[point,u*44.45/2]
+            if not isinstance(point,list) or len(point) not in (1,2): raise ValueError('Each keystone needs X or [X,Z].')
+            s['keystones'].append([num(point[0],'Keystone X',-125,125),num(point[1] if len(point)>1 else u*44.45/2,'Keystone Z',0,u*44.45)])
+    if layout=='custom':
+        raw=spec.get('ports',[])
+        if not isinstance(raw,list) or len(raw)>20: raise ValueError('Maximum 20 custom openings.')
+        for i,p in enumerate(raw):
+            if not isinstance(p,dict): raise ValueError('Each opening needs X, Z, width and height.')
+            s['ports'].append(dict(x=num(p.get('x'),'Opening X',-125,125),z=num(p.get('z'),'Opening Z',0,u*44.45),
+                w=num(p.get('w'),'Opening width',1,200),h=num(p.get('h'),'Opening height',1,220),
+                r=num(p.get('r',0),'Corner radius',0,50),label=str(p.get('label') or 'Opening '+str(i+1))[:30],
+                type=cable_ports.port_type(p.get('type')),id='front-'+str(i+1)))
+    faceplate_check(s)
+    return s
+
+
 def device_facts(spec):
     """The library-item part of a spec: everything except the per-allocation tray choices."""
     return {k: v for k, v in spec.items() if k not in PLACEMENT_KEYS}
@@ -138,6 +219,10 @@ def allocation_request(data_dir, payload):
     if not isinstance(payload, dict):
         raise ValueError('Placement request must be an object.')
     ident = payload.get('item')
+    if ident == FACEPLATE_ID:
+        if payload.get('second') is not None: raise ValueError('A faceplate-only slot has no devices.')
+        settings = placement_settings(payload.get('tray'))
+        return clean_faceplate(dict(settings.get('faceplate',{}), **({'quality':payload['quality']} if 'quality' in payload else {})))
     item = next((i for i in library(data_dir) if i.get('id') == ident), None) if isinstance(ident, str) else None
     if item is None:
         raise ValueError('This equipment is no longer in the library.')
@@ -183,7 +268,7 @@ def check_allocation(data_dir, payload):
         s = allocation_request(data_dir, payload)
     except ValueError as exc:
         return {'ok': False, 'error': str(exc)}
-    return {'ok': True, 'u': s['u']}
+    return {'ok': True, 'u': s['u'], **({'warnings':faceplate_check(s)} if s.get('faceplate_only') else {})}
 
 
 RACK_PITCH, PLATE_GAP, LEGACY_SLOT_OFFSET = port_openings.RACK_PITCH, port_openings.PLATE_GAP, port_openings.LEGACY_SLOT_OFFSET
@@ -559,9 +644,14 @@ def keep_clear_bands(s):
     return out
 
 
+KEYSTONE_Z_REPLACEMENTS = {'for(x=keystones)': 'for(k=keystones)let(x=is_list(k)?k[0]:k,kz=is_list(k)&&len(k)>1?k[1]:plate_center)', 'translate([x-ks_ow/2,-plate_t,plate_center])': 'translate([x-ks_ow/2,-plate_t,kz])', 'translate([x-ks_w/2,-plate_t,plate_center])': 'translate([x-ks_w/2,-plate_t,kz])', 'translate([x,0,plate_center])': 'translate([x,0,kz])', 'translate([x-10.5,-plate_t-1,plate_center-15])': 'translate([x-10.5,-plate_t-1,kz-15])', 'translate([x-10.5,-plate_t-0.01,plate_center-15])': 'translate([x-10.5,-plate_t-0.01,kz-15])'}
+
+
 def template_source(spec):
     # New builds always use the current slot-bottom template; saved revisions remain immutable.
     text = TEMPLATE.read_text(encoding='utf-8')
+    if not spec.get('faceplate_only'):
+        for old,new in KEYSTONE_Z_REPLACEMENTS.items(): text=text.replace(new,old)
     if not any(k in spec for k in V2_DEFAULTS):
         text = text.split('// @sleeve-v2-begin\n')[0]
         for old, new in V2_REPLACEMENTS.items(): text = text.replace(new, old)
@@ -613,6 +703,8 @@ module bezel_cuts(){for(p=bezel_shapes)let(n=bezel_rounded?8:1)for(i=[0:n-1])hul
 def clean(spec):
     if not isinstance(spec, dict):
         raise ValueError('Equipment spec must be an object.')
+    if spec.get('faceplate_only') is True:
+        return clean_faceplate(spec)
     if spec.get('second') is not None:
         return clean_pair(spec)
     name = str(spec.get('name') or 'Equipment').strip()[:60] or 'Equipment'
@@ -1265,7 +1357,7 @@ def preview(spec, data_dir):
 def render(spec, data_dir):
     s = clean(spec)
     src = source(s)
-    parts = ['combined'] if s['joint'] == 'single' else ['tray', 'faceplate'] + (['rear_bracket'] if s['rear_support'] else [])
+    parts = ['faceplate'] if s.get('faceplate_only') else ['combined'] if s['joint'] == 'single' else ['tray', 'faceplate'] + (['rear_bracket'] if s['rear_support'] else [])
     identity = hashlib.sha256(src.encode('utf-8')).hexdigest()
     final = Path(data_dir) / 'equipment-revisions' / identity
     with LOCK:

@@ -154,11 +154,11 @@ module plate_joint_add(rear=false){
 }
 // Keystone collar behind the plate, and the jack-shaped cut through plate + collar.
 // Profile in (d = depth behind front face, z from opening centre); X width is ks_w throughout.
-module ks_collar(){for(x=keystones)translate([x-ks_ow/2,-plate_t,plate_center]){
+module ks_collar(){for(k=keystones)let(x=is_list(k)?k[0]:k,kz=is_list(k)&&len(k)>1?k[1]:plate_center)translate([x-ks_ow/2,-plate_t,kz]){
  translate([0,0,-ks_ob])cube([ks_ow,ks_od,ks_ob+ks_ot]);
  translate([0,0,-ks_ob])cube([ks_ow,ks_lip,ks_ob-ks_h/2]);
 }}
-module ks_cut(){for(x=keystones)translate([x-ks_w/2,-plate_t,plate_center])rotate([90,0,90])linear_extrude(height=ks_w)
+module ks_cut(){for(k=keystones)let(x=is_list(k)?k[0]:k,kz=is_list(k)&&len(k)>1?k[1]:plate_center)translate([x-ks_w/2,-plate_t,kz])rotate([90,0,90])linear_extrude(height=ks_w)
  polygon([[-1,-ks_h/2],[5.8,-ks_h/2],[5.8,-9.9],[9.2,-9.9],[9.2,-ks_h/2],[11,-ks_h/2],[11,11.6],[8.2,11.6],
           [8.2,ks_ot+1],[7.2,ks_ot+1],[7.2,13.6],[0.6,ks_h/2],[-1,ks_h/2]]);}
 // Golden keystone (Brian, 2026-10-19): exact cross-sections of the keystone on Brian's SG108 faceplate, which fits
@@ -183,15 +183,15 @@ KS_GOLD=[
 // non-manifold sliver edge. Shifted, those faces sit at exactly 0 and 4.0 (on the grid); the shape is unchanged.
 // The block is cut 0.1 mm oversize in height, then clipped in rack coordinates by the same box as ks_box_cut, so its
 // top/bottom faces are the very same numbers as the plate opening (the transform alone landed them a hair off).
-module ks_golden(){for(x=keystones)intersection(){
- translate([x,0,plate_center])multmatrix([[1,0,0,0],[0,0,1,-4],[0,-1,0,25.09],[0,0,0,1]])intersection(){
+module ks_golden(){for(k=keystones)let(x=is_list(k)?k[0]:k,kz=is_list(k)&&len(k)>1?k[1]:plate_center)intersection(){
+ translate([x,0,kz])multmatrix([[1,0,0,0],[0,0,1,-4],[0,-1,0,25.09],[0,0,0,1]])intersection(){
   union()for(b=KS_GOLD)translate([b[0],0,0])rotate([90,0,90])linear_extrude(height=b[1])for(pg=b[2])
    translate([b[1]>10&&min([for(q=pg)q[0]])>30?-ks_tight:0,0])polygon([for(q=pg)[q[0],q[1]-0.08]]);  // opening band, hook side
   translate([-10.5,25.09-18.6,-0.09])cube([21,33.7,10.42]);
  }
- translate([x-10.5,-plate_t-1,plate_center-15])cube([21,plate_t+16,33.5]);
+ translate([x-10.5,-plate_t-1,kz-15])cube([21,plate_t+16,33.5]);
 }}
-module ks_box_cut(){for(x=keystones)translate([x-10.5,-plate_t-0.01,plate_center-15])cube([21,plate_t+0.02,33.5]);}
+module ks_box_cut(){for(k=keystones)let(x=is_list(k)?k[0]:k,kz=is_list(k)&&len(k)>1?k[1]:plate_center)translate([x-10.5,-plate_t-0.01,kz-15])cube([21,plate_t+0.02,33.5]);}
 module plate_joint_cut(rear=false){if(joint=="screw"&&(!sleeve||rear))for(x=joint_x)translate([x,-0.1,tray_z+14])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.2);}
 
 module faceplate(){

@@ -24,7 +24,7 @@ Standing rules in [README.md](README.md) apply. PROPOSED, UNVALIDATED: printed f
 
 ## May change
 
-`equipment.py`, `equipment_tray.scad` (keystone Z only, backward-compatible), `equipment-wizard.js`, `tray-placement.js`, `port-openings.js`/`port_openings.py`, `workspace.js`, `rack-studio.js`, `faceplate_color.py`, `app.py` (routes only if needed), `index.html`/CSS for the new controls, `js-tests/` (register in `js-tests/run.js`), Python tests, `asset-manifest.json`. Do not touch saved data, old revisions, `data/normal-use`, historical outputs or the reference folder.
+`equipment.py`, `equipment_tray.scad` (keystone Z only, backward-compatible), `equipment-wizard.js`, `tray-placement.js`, `port-openings.js`/`port_openings.py`, `cable-ports.js` (keystone → front/rear port pairs only), `workspace.js`, `rack-studio.js`, `faceplate_color.py`, `app.py` (routes only if needed), `index.html`/CSS for the new controls, `js-tests/` (register in `js-tests/run.js`), Python tests, `asset-manifest.json`. Do not touch saved data, old revisions, `data/normal-use`, historical outputs or the reference folder.
 
 ## Tests
 

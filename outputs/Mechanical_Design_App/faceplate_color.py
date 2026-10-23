@@ -177,7 +177,7 @@ def openings(s):
     if sleeve and s.get('joint') == 'screw':
         out += [{'x': x, 'z': z, 'w': SLEEVE_JOINT_D, 'h': SLEEVE_JOINT_D} for x in sleeve['joints'] for z in sleeve['joint_z']]
     centre = s['u'] * RACK_PITCH / 2
-    out += [{'x': float(x), 'z': centre + KS_BLOCK_DZ, 'w': KS_BLOCK_W, 'h': KS_BLOCK_H} for x in s.get('keystones') or []]
+    out += [{'x': float(x[0] if isinstance(x,list) else x), 'z': (x[1] if isinstance(x,list) and len(x)>1 else centre) + KS_BLOCK_DZ, 'w': KS_BLOCK_W, 'h': KS_BLOCK_H} for x in s.get('keystones') or []]
     out += [{'x': p['x'], 'z': p['z'], 'w': p['w'] + 2 * grow, 'h': p['h'] + 2 * grow} for p in s.get('ports') or []]
     return out
 
