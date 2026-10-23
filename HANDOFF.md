@@ -19,6 +19,10 @@ Brian: faceplate screws must be used but not seen. New sleeve-only key `hidden_j
 - **Finding:** in the saved Hue + Pi item the Pi's USB/Ethernet face the REAR and there are no Pi front openings. Proposed variant (Pi turned 270°, Hue 6 mm left, openings + 12 × 9 USB cable slot, HDMI exits into a 10 mm gap) renders closed; not in the library.
 - **Switch:** the TL-SG108 STEP is unreliable (9 overlapping jacks at 14.2 mm), so Part A is waiting on Brian's measurements (listed in the report). U8 item with the switch +15 mm right renders closed (tray X −72…+102).
 
+## 2026-10-22 Fit findings log
+
+- New [docs/Fit_Findings.md](docs/Fit_Findings.md): every printed-fit result goes there. Pattern: two sleeves (OptiPlex SLV-A, first TL-SG108E tray) were ~0.5 mm too tight in height; app default `sleeve_top` 0.3, raising it is undecided.
+
 ## 2026-10-22 TL-SG108E hidden-screw variant
 
 - Delivered `outputs/STL_Deliveries/2026-10-22_TL-SG108E_hidden-screws/` (hand-made `build.py` patches the generated source): switch set back 17 mm, hidden joints in front of it at X -91/+61, plate window narrowed to 130 mm, no rear stop (loads from the rear). Meshes closed and probed; not sliced. App hidden_joint still limited to 150 mm devices; making this an app option is open.
