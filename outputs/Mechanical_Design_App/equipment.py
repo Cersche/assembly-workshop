@@ -653,6 +653,9 @@ KEYSTONE_Z_REPLACEMENTS = {'for(x=keystones)': 'for(k=keystones)let(x=is_list(k)
 def template_source(spec):
     # New builds always use the current slot-bottom template; saved revisions remain immutable.
     text = TEMPLATE.read_text(encoding='utf-8')
+    if not spec.get('drives'):
+        text = re.sub(r'// @drives-begin\n.*?// @drives-end\n', '', text, flags=re.S)
+        for old, new in DRIVE_REPLACEMENTS.items(): text = text.replace(new, old)
     if not spec.get('faceplate_only'):
         for old,new in KEYSTONE_Z_REPLACEMENTS.items(): text=text.replace(new,old)
     if not any(k in spec for k in V2_DEFAULTS):
@@ -706,6 +709,8 @@ module bezel_cuts(){for(p=bezel_shapes)let(n=bezel_rounded?8:1)for(i=[0:n-1])hul
 def clean(spec):
     if not isinstance(spec, dict):
         raise ValueError('Equipment spec must be an object.')
+    if 'drives' in spec and spec['drives'] != []:
+        return clean_drives(spec)
     if spec.get('faceplate_only') is True:
         return clean_faceplate(spec)
     if spec.get('second') is not None:
@@ -1095,6 +1100,9 @@ def source(s):
         over['tray_w'] = round(2 * pair_tray_half(s), 4)
         if not s['rear_support']:
             over['tray_d'] = round(max(f[3] for f in map(footprint, tray_devices(s))) + MARGIN, 4)
+    if s.get('drives'):
+        over.update(drives=s['drives'], drive_mount=s['drive_mount'], ssd_h=s['ssd_h'],
+                    tray_w=s['dev_w']+16, tray_d=s['dev_d']+12+25)
     if s.get('faceplate_only'): over['part'] = 'faceplate'
     lines = ['', '// ---- wizard overrides: ' + re.sub(r'[\r\n]', ' ', s['name'])] + [f'{k}={lit(v)};' for k, v in over.items()]
     if style in ('reinforced', 'vents'):
@@ -1407,6 +1415,47 @@ def render(spec, data_dir):
                           'template': 'equipment_tray.scad', 'limitations': LIMITS,
                           'sha256': {n + '.stl': hashlib.sha256((folder / (n + '.stl')).read_bytes()).hexdigest() for n in parts},
                           'logs': logs}
+                if s.get('drives'): report.update(drive_hardware=drive_hardware(s), limitations=LIMITS+DRIVE_LIMITS)
                 (folder / 'revision.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
                 folder.rename(final)
     return final
+
+
+# Drive assembly is an opt-in branch of the generic adapter; empty drives change no source bytes.
+DRIVE_REPLACEMENTS = {'   device_features_add();': '   if(len(drives)>0)drive_add();else device_features_add();', '  device_features_cut();': '  if(len(drives)>0)drive_cut();else device_features_cut();'}
+DRIVE_LIMITS = ['PROPOSED — UNVALIDATED. Drive fit, peg retention, tab fatigue, vibration, strength, airflow/temperature and usable rack depth UNKNOWN.',
+ 'Nominal SFF dimensions only; actual drive holes, thread depth, screw heads/torque and cable bend space must be checked. 7 mm SSD bottom holes are optional.']
+
+def clean_drives(spec):
+    ds=spec.get('drives')
+    if not isinstance(ds,list) or len(ds)!=2 or sorted(str(d[0]) for d in ds if isinstance(d,list) and len(d)==3)!=['2.5','3.5']:
+        raise ValueError('Drive tray needs one 3.5 and one 2.5 drive [type,x_off,y_off].')
+    mode=spec.get('drive_mount','screws')
+    if mode not in ('screws','sleeve'): raise ValueError('Choose screws or sleeve for drives.')
+    sh=num(spec.get('ssd_h',7),'SSD height',7,9.5)
+    if sh not in (7,9.5): raise ValueError('SSD height must be 7 or 9.5 mm.')
+    if spec.get('second') or spec.get('faceplate_only') or spec.get('feet') or spec.get('ports') or spec.get('keystones') or spec.get('rear_support') or spec.get('coupon'):
+        raise ValueError('Drive tray requires a blank faceplate, no feet, second item, coupon or rear bracket.')
+    if spec.get('u',1)!=1 or spec.get('joint','screw')!='screw' or spec.get('device_mount','flat')!='flat' or spec.get('front_position','today')!='today' or spec.get('bezel','none')!='none' or any(spec.get(k,0) for k in ('dev_rot','dev_off_x','dev_off_y')):
+        raise ValueError('Drive tray uses fixed 1U placement, a blank faceplate and the existing screw joint.')
+    out=[];boxes=[]
+    for typ,x,y in ds:
+        x=num(x,'Drive X',-100,100);y=num(y,'Drive Y',0,50)
+        w,dep=(101.6,147) if typ=='3.5' else (69.85,100)
+        out.append([typ,x,y]);boxes.append((x,x+w,12+y,12+y+dep))
+    a,b=boxes
+    if max(a[0]-b[1],b[0]-a[1])<8: raise ValueError('Drives need an 8 mm side gap for independent rails/tabs.')
+    width=round(2*max(abs(v) for b in boxes for v in b[:2])+16,3)
+    depth=max(b[3] for b in boxes)+25
+    if width>204: raise ValueError('Drive tray exceeds the 204 mm maximum width.')
+    if depth>240: raise ValueError('Drive tray needs 25 mm rear connector space within 240 mm nominal depth.')
+    base=dict(name=spec.get('name','Drives (3.5" + 2.5")'),dev_w=width-16,dev_d=depth-37,dev_h=29.1,
+              device_mount='flat',joint='screw',standoff=0,holes=[],ports=[],keystones=[],u=1)
+    if 'quality' in spec:base['quality']=spec['quality']
+    s=clean(base);s.update(drives=out,drive_mount=mode,ssd_h=sh)
+    return s
+
+def drive_hardware(s):
+    if not s.get('drives') or s.get('drive_mount')!='screws':return []
+    return [{'quantity':4,'description':'6-32 x 1/4 inch (drive screws; head/torque UNKNOWN)'},
+            {'quantity':4,'description':'M3 x 4 mm (drive screws; head/torque UNKNOWN)'}]

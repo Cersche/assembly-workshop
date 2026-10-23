@@ -1,0 +1,196 @@
+{
+  "Router": {
+    "spec": {
+      "name": "Router",
+      "dev_w": 80.0,
+      "dev_d": 60.0,
+      "dev_h": 20.0,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "inserts",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 0.0,
+      "coupon": [],
+      "holes": [
+        [
+          5.0,
+          5.0
+        ],
+        [
+          75.0,
+          55.0
+        ]
+      ],
+      "keystones": [],
+      "ports": [
+        {
+          "label": "LAN",
+          "x": 0.0,
+          "z": 20.0,
+          "w": 16.0,
+          "h": 14.0,
+          "r": 0.0,
+          "type": "other",
+          "id": "front-1"
+        }
+      ],
+      "rear_ports": [
+        {
+          "id": "rear-1",
+          "label": "Power",
+          "type": "other",
+          "x": 0.0,
+          "z": 15.0
+        }
+      ]
+    },
+    "source": "26644a31d0f2dad951a4e5afb744c73646ee997eb01412f790c5d172de6d36d3",
+    "stl": {
+      "tray": "86041faf061133bdc92ef9c91e7e2d3e6dc9175d77945b10fb901e980b41f123",
+      "faceplate": "e4c230ff073022438b048aeeb10433151db90e92958a3a84a5326b265919a841"
+    }
+  },
+  "Switch": {
+    "spec": {
+      "name": "Switch",
+      "dev_w": 70.0,
+      "dev_d": 50.0,
+      "dev_h": 25.0,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "straps",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 0.0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [],
+      "ports": [
+        {
+          "label": "USB",
+          "x": 0.0,
+          "z": 20.0,
+          "w": 14.0,
+          "h": 8.0,
+          "r": 0.0,
+          "type": "other",
+          "id": "front-1"
+        }
+      ],
+      "rear_ports": []
+    },
+    "source": "4a925c7b47f5b9d42c483f40dcc1dfa7e991c455b96a628be72120602a43163c",
+    "stl": {
+      "tray": "f1b88d248ae067b0e94f02204c85e2f5ef41ecbc817ecfce17e9c126df8a7e19",
+      "faceplate": "da56476354db8047040e244aa77440a2c7d27561e662603aca1cad6f1b44646e"
+    }
+  },
+  "Window": {
+    "spec": {
+      "name": "Window test box",
+      "dev_w": 85.0,
+      "dev_d": 56.0,
+      "dev_h": 20.0,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "inserts",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 0.0,
+      "coupon": [],
+      "holes": [
+        [
+          3.5,
+          3.5
+        ],
+        [
+          61.5,
+          49.5
+        ]
+      ],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": []
+    },
+    "source": "093a29760823848a1fa96278e3dad4663dc7300062e4e6391f4eb0513cfffe43",
+    "stl": {
+      "tray": "318a1c9340c6d10203b9f49c758eda291c1b316987d7418adbdeb08fe7dc5135",
+      "faceplate": "dfa0725c0d23dbf1f2e87df36118544bc1c86e4fa979d9d3d198ca3c8fa55e66"
+    }
+  },
+  "Sleeve": {
+    "spec": {
+      "name": "OptiPlex regression",
+      "dev_w": 182.0,
+      "dev_d": 178.0,
+      "dev_h": 36.0,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "sleeve",
+      "joint": "screw",
+      "feet": [
+        {
+          "x": 15.0,
+          "y": 18.0,
+          "w": 10.0,
+          "d": 10.0,
+          "h": 2.75
+        },
+        {
+          "x": 15.0,
+          "y": 153.0,
+          "w": 10.0,
+          "d": 10.0,
+          "h": 2.75
+        },
+        {
+          "x": 163.0,
+          "y": 18.0,
+          "w": 10.0,
+          "d": 10.0,
+          "h": 2.75
+        },
+        {
+          "x": 163.0,
+          "y": 153.0,
+          "w": 10.0,
+          "d": 10.0,
+          "h": 2.75
+        }
+      ],
+      "rear_support": true,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": []
+    },
+    "source": "0146577d4dc70852b95ab5de39305a224e1966f18af8d15e712b9a0f92f44598",
+    "stl": {
+      "tray": "3820abbebe7d58c639ab255e99d9f4551aeac2d012be50b156670447ea000e79",
+      "faceplate": "5dc475062d74e3451c8c0b9296e2217108eacffa099a98b3c606f3fe19b6e1b1"
+    }
+  }
+}

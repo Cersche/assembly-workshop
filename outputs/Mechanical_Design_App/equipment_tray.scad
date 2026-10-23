@@ -1,3 +1,35 @@
+// @drives-begin
+// Task 39: nominal SFF-8301/8201 geometry; PROPOSED — UNVALIDATED.
+// Coordinates: tray X, Y offset from front_gap; connectors face +Y.
+drives=[]; drive_mount="screws"; ssd_h=7;
+function drive_w(d)=d[0]=="3.5"?101.6:69.85;
+function drive_d(d)=d[0]=="3.5"?147:100;
+function drive_ys(d)=d[0]=="3.5"?[29.52,61.27,105.72]:[9.4,86];
+function drive_xs(d)=d[0]=="3.5"?[3.18,98.43]:[4.07,65.79];
+function drive_side_y(d)=d[0]=="3.5"?118.5:86;
+function drive_side_z(d)=d[0]=="3.5"?6.35:3;
+module drive_add(){for(d=drives)let(w=drive_w(d),dep=drive_d(d),sy=drive_side_y(d),sz=drive_side_z(d))translate([d[1],front_gap+d[2],floor_top]){
+ for(x=drive_xs(d),y=drive_ys(d))translate([x,y,-0.1])cylinder(d=8,h=3.1);
+ if(drive_mount=="sleeve"){
+  // Open rear; 0.5 mm side/front play, 2 mm rails. One rear flexing tab per side.
+  translate([-2.5,-2.5,-0.1])cube([w+5,2,8.1]);
+  for(side=[0,1])let(x=side?w+0.5:-2.5){
+   translate([x,-1,-0.1])cube([2,sy-19,3+sz+2.1]);
+   translate([x,sy-21,3+sz-2])cube([2,25,4]);
+   // Smooth proposed peg, not a threaded fastener. Insertion/fatigue UNKNOWN.
+   translate([side?w+2.5:-2.5,sy,3+sz])rotate([0,side?-90:90,0])cylinder(d=2.4,h=3.5,$fn=32);
+  }
+ }
+}}
+module drive_cut(){for(d=drives)translate([d[1],front_gap+d[2],tray_z]){
+ if(drive_mount=="screws")for(x=drive_xs(d),y=drive_ys(d)){
+  translate([x,y,-0.1])cylinder(d=d[0]=="3.5"?3.8:3.4,h=6.2);
+  // 6 mm floor+pad stack: nominal penetration 2.85 mm HDD / 1.5 mm SSD.
+  translate([x,y,-0.1])cylinder(d=d[0]=="3.5"?7:6,h=d[0]=="3.5"?2.6:3.6);
+ }
+ if(d[0]=="3.5")for(x=[14:12:86],y=[18:12:126])translate([x-2.5,y-3,-0.1])cube([5,6,tray_t+0.2]);
+}}
+// @drives-end
 // Lab Rax generic equipment tray + faceplate (wizard template).
 // Faceplate derived from the Pi4 baseline; rack holes follow the four-corner layout of the user-supplied
 // 1U blank plate (faceplate_mounting.json): EVERY rack unit gets 4 holes, never a single centre pair.
@@ -286,11 +318,11 @@ module tray(){
    translate([tray_x,tray_y,tray_z])cube([tray_w,tray_d,tray_t]);
    tray_joint_add();
    if(rear_support)to_rear()tray_joint_add(true);
-   device_features_add();
+   if(len(drives)>0)drive_add();else device_features_add();
   }
   tray_joint_cut();
   if(rear_support)to_rear()tray_joint_cut(true);
-  device_features_cut();
+  if(len(drives)>0)drive_cut();else device_features_cut();
  }
 }
 

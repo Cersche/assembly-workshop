@@ -1,0 +1,33 @@
+WARNING: dev_w was assigned on line 41 of "source.scad" but was overwritten in file source.scad, line 295
+WARNING: dev_d was assigned on line 41 of "source.scad" but was overwritten in file source.scad, line 296
+WARNING: dev_h was assigned on line 41 of "source.scad" but was overwritten in file source.scad, line 297
+WARNING: hole_d was assigned on line 44 of "source.scad" but was overwritten in file source.scad, line 298
+WARNING: standoff was assigned on line 46 of "source.scad" but was overwritten in file source.scad, line 299
+WARNING: insert_pilot was assigned on line 47 of "source.scad" but was overwritten in file source.scad, line 300
+WARNING: board_t was assigned on line 48 of "source.scad" but was overwritten in file source.scad, line 301
+WARNING: u was assigned on line 50 of "source.scad" but was overwritten in file source.scad, line 302
+WARNING: holes was assigned on line 43 of "source.scad" but was overwritten in file source.scad, line 303
+WARNING: keystones was assigned on line 51 of "source.scad" but was overwritten in file source.scad, line 304
+WARNING: device_mount was assigned on line 45 of "source.scad" but was overwritten in file source.scad, line 305
+WARNING: joint was assigned on line 49 of "source.scad" but was overwritten in file source.scad, line 306
+WARNING: rear_support was assigned on line 63 of "source.scad" but was overwritten in file source.scad, line 307
+WARNING: coupon was assigned on line 64 of "source.scad" but was overwritten in file source.scad, line 308
+WARNING: ports was assigned on line 57 of "source.scad" but was overwritten in file source.scad, line 309
+WARNING: drives was assigned on line 4 of "source.scad" but was overwritten in file source.scad, line 310
+WARNING: drive_mount was assigned on line 4 of "source.scad" but was overwritten in file source.scad, line 311
+WARNING: ssd_h was assigned on line 4 of "source.scad" but was overwritten in file source.scad, line 312
+WARNING: tray_w was assigned on line 83 of "source.scad" but was overwritten in file source.scad, line 313
+WARNING: tray_d was assigned on line 83 of "source.scad" but was overwritten in file source.scad, line 314
+Geometries in cache: 32
+Geometry cache size in bytes: 302432
+CGAL Polyhedrons in cache: 7
+CGAL cache size in bytes: 4216784
+Total rendering time: 0:00:01.845
+   Top level object is a 3D object:
+   Simple:        yes
+   Vertices:      904
+   Halfedges:    2712
+   Edges:        1356
+   Halffacets:    920
+   Facets:        460
+   Volumes:         2
