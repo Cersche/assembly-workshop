@@ -8,7 +8,8 @@ key_y=44.5;                        // keyhole centre (48.5 behind the port face,
 stop_y=96; stop_t=4; stop_h=8;     // rear stop face at 96 (switch depth 100)
 w=34; y0=10;                       // coupon width / front edge
 arm_end=key_y+5; arm_root=arm_end-arm_l;
-bump_base=arm_t; bump_top=tray_t+bump_up; bump_hh=bump_top-bump_base;
+arm_z0=tray_t-1.2-arm_t;          // arm hangs 1.2 below the floor top; pocket under it (0 for a 3 mm floor)
+bump_base=arm_z0+arm_t; bump_top=tray_t+bump_up; bump_hh=bump_top-bump_base;
 difference(){
  union(){
   translate([-w/2,y0,0])cube([w,stop_y+stop_t-y0,tray_t]);
@@ -17,6 +18,7 @@ difference(){
  difference(){translate([-arm_w/2-arm_gap,arm_root,-0.1])cube([arm_w+2*arm_gap,arm_l+arm_gap,tray_t+0.2]);
   translate([-arm_w/2,arm_root-0.1,-0.2])cube([arm_w,arm_l+0.1,tray_t+0.4]);}
  translate([-arm_w/2-0.01,arm_root+3,bump_base])cube([arm_w+0.02,arm_l-3+0.01,tray_t]);
+ if(arm_z0>0)translate([-arm_w/2-0.01,arm_root+3,-0.1])cube([arm_w+0.02,arm_l-3+0.01,arm_z0+0.1]);
  // ID engraved 0.6 mm into the floor top, in front of the arm
  translate([0,y0+5,tray_t-0.6])linear_extrude(1)text(id,size=5,font="Liberation Sans:style=Bold",halign="center",valign="center");
  translate([0,stop_y-4,tray_t-0.6])linear_extrude(1)text(str(bump_up),size=4,font="Liberation Sans:style=Bold",halign="center",valign="center");

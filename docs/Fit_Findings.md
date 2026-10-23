@@ -16,6 +16,8 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 | 2026-10-22 | TL-SG108E sleeve, first delivery (`2026-10-22_TL-SG108E`) | Too tight top to bottom | Hidden-screw version uses `sleeve_top: 0.8` (+0.5 mm), unprinted |
 | 2026-10-23 | TL-SG108E (Brian printed; version not confirmed, hidden-screw build sets it 17 mm back) | Ports not flush with the rack front; rear retention needed | `2026-10-23_TL-SG108E_flush`: measured depth 100 mm, ports flush, rear stop, keyhole spring detents (0.6 mm bumps), `sleeve_top` 0.8, unprinted |
 
+| 2026-10-23 | KD-D keyhole-detent coupon (3 mm bump, 3 mm floor) | Locks very nicely; arm sticks out the bottom when bent | KD-E + tray: 6.5 mm floor, arm over a pocket, unprinted |
+
 ## Other fit results (see HANDOFF.md for details)
 
 | Date | Part | Result |

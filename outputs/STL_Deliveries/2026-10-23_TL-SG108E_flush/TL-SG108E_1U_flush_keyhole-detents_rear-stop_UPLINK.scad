@@ -316,15 +316,17 @@ labels=[]; label_depth=0.6;
 module label_cut(){for(l=labels)translate([l[1],-plate_t-0.1,l[2]])rotate([90,0,0])mirror([0,0,1])linear_extrude(height=label_depth+0.1)text(l[0],size=l[3],font="Liberation Sans:style=Bold",halign="center",valign="center");}
 
 // Keyhole detents (Brian, 2026-10-23). Arm: 8 mm wide, 1.8 mm thick, 26 mm long, root toward the front, 1.2 mm slot around it.
-// Bump: 5 mm wide, stands 0.6 mm above the floor (keyholes are shallow); 45 deg ramp facing the front (switch rides over going in),
+// Bump: 5 mm wide, stands 3 mm above the floor (KD-D locked well; KD-E floor so the arm stays inside it); 45 deg ramp facing the front (switch rides over going in),
 // 60 deg face toward the rear (catches the keyhole edge), 4 mm flat top centred on the keyhole.
+// KD-E: 6.5 mm floor, arm hangs over a pocket so it stays inside the floor when bent.
 key_y=-plate_t+48.5; key_x=[dev_off_x-55.0,dev_off_x+55.0];
 arm_w=8; arm_t=1.8; arm_l=26; arm_gap=1.2; arm_end=key_y+5; arm_root=arm_end-arm_l;
-bump_w=5; bump_up=0.6; bump_flat=4; bump_base=tray_z+arm_t; bump_top=floor_top+bump_up; bump_hh=bump_top-bump_base;
+bump_w=5; bump_up=3; bump_flat=4; tray_t=6.5; arm_z0=tray_t-1.2-arm_t; bump_base=tray_z+arm_z0+arm_t; bump_top=floor_top+bump_up; bump_hh=bump_top-bump_base;
 module detent_cut(){for(x=key_x){
  difference(){translate([x-arm_w/2-arm_gap,arm_root,tray_z-0.1])cube([arm_w+2*arm_gap,arm_l+arm_gap,tray_t+0.2]);
   translate([x-arm_w/2,arm_root-0.1,tray_z-0.2])cube([arm_w,arm_l+0.1,tray_t+0.4]);}
- translate([x-arm_w/2-0.01,arm_root+3,bump_base])cube([arm_w+0.02,arm_l-3+0.01,tray_t]);}}
+ translate([x-arm_w/2-0.01,arm_root+3,bump_base])cube([arm_w+0.02,arm_l-3+0.01,tray_t]);
+ translate([x-arm_w/2-0.01,arm_root+3,tray_z-0.1])cube([arm_w+0.02,arm_l-3+0.01,arm_z0+0.1]);}}
 module detent_add(){for(x=key_x)translate([x-bump_w/2,0,0])rotate([90,0,90])linear_extrude(height=bump_w)
  polygon([[key_y-bump_flat/2-bump_hh,bump_base],[key_y-bump_flat/2,bump_top],[key_y+bump_flat/2,bump_top],[key_y+bump_flat/2+bump_hh*tan(30),bump_base]]);}
 
