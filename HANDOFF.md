@@ -4,7 +4,7 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 
 ## 2026-10-22 Task 39: drive tray, 3.5" HDD + 2.5" SSD (read first)
 
-- Wizard button "Drives (3.5" + 2.5")" makes a 1U tray with a blank plate holding both drives side by side (195.45 mm wide, 184 mm deep). Mount: bottom screws (default, 4 × 6-32 + 4 × M3) or an experimental tool-free sleeve with peg tabs. SFF-spec positions; PROPOSED — UNVALIDATED.
+- Wizard button "Drives (3.5" + 2.5")" makes a 1U tray with a blank plate holding both drives side by side (195.45 mm wide, 184 mm deep). Mount: bottom screws only (4 × 6-32 + 4 × M3); Brian dropped the tool-free sleeve. The wizard goes straight to Save, and the 3D preview shows both drives. SFF-spec positions; PROPOSED — UNVALIDATED.
 - Codex started it, Claude finished it. Checks pass (187 Python), 4 existing items regress identical, both modes render closed. Not yet viewed in the rack GUI. [Report](work/codex-tasks/39-drive-tray-REPORT.md).
 
 ## 2026-10-22 Portable zip for personal use

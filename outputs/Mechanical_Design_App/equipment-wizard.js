@@ -343,11 +343,10 @@
     if(spec.drives?.length){
       const generic=h('button',{type:'button',style:'background:none;border:none;color:inherit;text-decoration:underline;padding:0;cursor:pointer;width:auto'},'← Back to generic equipment');generic.onclick=()=>{reset();render();};
       return [h('b',{},'Drives (3.5" + 2.5") — blank 1U faceplate'),
-        h('label',{class:'ew-field'},'Drive mounting',select({screws:'Bottom screws (default)',sleeve:'Tool-free sleeve (experimental)'},spec.drive_mount,v=>{spec.drive_mount=v;render();})),
         h('label',{class:'ew-field'},'SSD height',select({'7':'7 mm','9.5':'9.5 mm'},String(spec.ssd_h),v=>{spec.ssd_h=Number(v);render();})),
-        h('p',{},spec.drive_mount==='screws'?'Drive hardware: 4 × 6-32 × 1/4 inch + 4 × M3 × 4 mm. Use four of the six HDD holes matching your drive.':'Drive retention hardware: none. Rack/faceplate joint hardware remains required.'),
+        h('p',{},'Drives screw in from underneath: 4 × 6-32 × 1/4 inch (HDD) + 4 × M3 × 4 mm (SSD). Use four of the six HDD holes matching your drive.'),
         h('p',{class:'ew-note'},'195.45 mm tray width; 184 mm depth includes 25 mm behind the HDD for SATA/power. Connectors face rear. Standard-derived positions; 7 mm SSD bottom holes are optional.'),
-        h('p',{class:'ew-note ew-warn'},'PROPOSED — UNVALIDATED. Fit, peg retention, tab fatigue, vibration, airflow, strength and usable depth UNKNOWN. Confirm actual holes, screw heads and thread engagement.'),generic,...finish()];
+        h('p',{class:'ew-note ew-warn'},'PROPOSED — UNVALIDATED. Fit, vibration, airflow, strength and usable depth UNKNOWN. Confirm actual holes, screw heads and thread engagement.'),generic,...finish()];
     }
     if(step===0){
       const name=h('input',{type:'text',value:spec.display_name??spec.name,placeholder:'e.g. Network switch'});name.oninput=()=>{if(spec.display_name!==undefined)spec.display_name=name.value;else spec.name=name.value;};

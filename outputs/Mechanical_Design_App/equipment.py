@@ -1423,7 +1423,7 @@ def render(spec, data_dir):
 
 # Drive assembly is an opt-in branch of the generic adapter; empty drives change no source bytes.
 DRIVE_REPLACEMENTS = {'   device_features_add();': '   if(len(drives)>0)drive_add();else device_features_add();', '  device_features_cut();': '  if(len(drives)>0)drive_cut();else device_features_cut();'}
-DRIVE_LIMITS = ['PROPOSED — UNVALIDATED. Drive fit, peg retention, tab fatigue, vibration, strength, airflow/temperature and usable rack depth UNKNOWN.',
+DRIVE_LIMITS = ['PROPOSED — UNVALIDATED. Drive fit, vibration, strength, airflow/temperature and usable rack depth UNKNOWN.',
  'Nominal SFF dimensions only; actual drive holes, thread depth, screw heads/torque and cable bend space must be checked. 7 mm SSD bottom holes are optional.']
 
 def clean_drives(spec):
@@ -1431,7 +1431,7 @@ def clean_drives(spec):
     if not isinstance(ds,list) or len(ds)!=2 or sorted(str(d[0]) for d in ds if isinstance(d,list) and len(d)==3)!=['2.5','3.5']:
         raise ValueError('Drive tray needs one 3.5 and one 2.5 drive [type,x_off,y_off].')
     mode=spec.get('drive_mount','screws')
-    if mode not in ('screws','sleeve'): raise ValueError('Choose screws or sleeve for drives.')
+    if mode!='screws': raise ValueError('Drives mount with bottom screws (the tool-free sleeve was dropped, Brian 2026-10-22).')
     sh=num(spec.get('ssd_h',7),'SSD height',7,9.5)
     if sh not in (7,9.5): raise ValueError('SSD height must be 7 or 9.5 mm.')
     if spec.get('second') or spec.get('faceplate_only') or spec.get('feet') or spec.get('ports') or spec.get('keystones') or spec.get('rear_support') or spec.get('coupon'):

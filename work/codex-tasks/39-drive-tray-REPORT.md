@@ -22,3 +22,6 @@ Codex wrote most of the implementation, then ran out of usage mid-regression. Cl
 
 ## UNKNOWN
 Fit on real drives, peg retention and tab fatigue, screw engagement and torque, vibration, airflow and temperature, strength, usable rack depth. Nothing printed. Any test print needs a modeled ID (e.g. DRV39-A).
+
+## Update 2026-10-22: tool-free sleeve removed (Brian)
+Brian dropped the tool-free sleeve. Drives mount with bottom screws only; `drive_mount="sleeve"` is rejected and the sleeve SCAD code is gone. The renders in `sleeve/` are history. Screws-only tray re-rendered closed (`screws-only/`); checks pass (187). The OptiPlex `device_mount="sleeve"` is unrelated and untouched.

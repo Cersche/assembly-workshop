@@ -7,7 +7,7 @@ PRESET = dict(name='Drives', drives=[['3.5', -89.725, 0], ['2.5', 19.875, 0]])
 
 class DriveTrayTests(unittest.TestCase):
     def test_preset_fits_width_and_depth(self):
-        for mode in ('screws', 'sleeve'):
+        for mode in ('screws',):
             s = eq.clean(dict(PRESET, drive_mount=mode))
             self.assertEqual(s['drive_mount'], mode)
             self.assertLessEqual(s['dev_w'] + 16, 204)
@@ -17,10 +17,9 @@ class DriveTrayTests(unittest.TestCase):
 
     def test_hardware_only_for_screws(self):
         self.assertEqual(len(eq.drive_hardware(eq.clean(dict(PRESET, drive_mount='screws')))), 2)
-        self.assertEqual(eq.drive_hardware(eq.clean(dict(PRESET, drive_mount='sleeve'))), [])
 
     def test_rejects_bad_specs(self):
-        bad = [dict(PRESET, drive_mount='glue'), dict(PRESET, ssd_h=8),
+        bad = [dict(PRESET, drive_mount='glue'), dict(PRESET, drive_mount='sleeve'), dict(PRESET, ssd_h=8),
                dict(PRESET, drives=[['3.5', -89.725, 0]]),
                dict(PRESET, drives=[['3.5', -89.725, 0], ['2.5', 13, 0]]),   # side gap < 8 mm
                dict(PRESET, drives=[['3.5', -100, 0], ['2.5', 30, 0]]),      # wider than 204 mm

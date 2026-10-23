@@ -6,20 +6,8 @@ function drive_w(d)=d[0]=="3.5"?101.6:69.85;
 function drive_d(d)=d[0]=="3.5"?147:100;
 function drive_ys(d)=d[0]=="3.5"?[29.52,61.27,105.72]:[9.4,86];
 function drive_xs(d)=d[0]=="3.5"?[3.18,98.43]:[4.07,65.79];
-function drive_side_y(d)=d[0]=="3.5"?118.5:86;
-function drive_side_z(d)=d[0]=="3.5"?6.35:3;
-module drive_add(){for(d=drives)let(w=drive_w(d),dep=drive_d(d),sy=drive_side_y(d),sz=drive_side_z(d))translate([d[1],front_gap+d[2],floor_top]){
+module drive_add(){for(d=drives)translate([d[1],front_gap+d[2],floor_top]){
  for(x=drive_xs(d),y=drive_ys(d))translate([x,y,-0.1])cylinder(d=8,h=3.1);
- if(drive_mount=="sleeve"){
-  // Open rear; 0.5 mm side/front play, 2 mm rails. One rear flexing tab per side.
-  translate([-2.5,-2.5,-0.1])cube([w+5,2,8.1]);
-  for(side=[0,1])let(x=side?w+0.5:-2.5){
-   translate([x,-1,-0.1])cube([2,sy-19,3+sz+2.1]);
-   translate([x,sy-21,3+sz-2])cube([2,25,4]);
-   // Smooth proposed peg, not a threaded fastener. Insertion/fatigue UNKNOWN.
-   translate([side?w+2.5:-2.5,sy,3+sz])rotate([0,side?-90:90,0])cylinder(d=2.4,h=3.5,$fn=32);
-  }
- }
 }}
 module drive_cut(){for(d=drives)translate([d[1],front_gap+d[2],tray_z]){
  if(drive_mount=="screws")for(x=drive_xs(d),y=drive_ys(d)){
