@@ -20,5 +20,6 @@ clearance holes open, window open, no rear stop. Not opened in a slicer by Claud
 UNKNOWN: port cavity width/centring (from STEP, not measured), 158 × 101 × 25 case (nominal), whether 17 mm of cable
 recess suits the RJ45 latches, fit, retention, strength, driver access.
 
-Files: `…_tray.stl`, `…_faceplate.stl`, `…_2-parts-print-layout.3mf` (both parts flat, separate objects; no colored UPLINK
-inlay in this one, the engraving is still there), `TL-SG108E_hidden-screws.scad` (patched source).
+Files: `…_tray.stl`, `…_faceplate.stl`, `…_2-parts-print-layout.3mf` (tray + faceplate flat; the faceplate object has two
+parts, `faceplate` and `UPLINK label`: give the label part a second filament; it sits at 0.08–0.68 mm), `…_UPLINK-label-inlay.stl`
+(same engraving as the first delivery, reused), `label_3mf.py` (makes the 3MF), `TL-SG108E_hidden-screws.scad` (patched source).
