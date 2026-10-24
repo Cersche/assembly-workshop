@@ -1,0 +1,22 @@
+[
+  {
+    "name": "none",
+    "assertion": "Open sides",
+    "passed": true
+  },
+  {
+    "name": "all",
+    "assertion": "Open sides",
+    "passed": true
+  },
+  {
+    "name": "unknown",
+    "assertion": "Open sides",
+    "passed": true
+  },
+  {
+    "name": "clash",
+    "assertion": "wall would hit",
+    "passed": true
+  }
+]

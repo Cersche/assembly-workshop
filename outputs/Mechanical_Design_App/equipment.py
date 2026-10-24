@@ -24,7 +24,7 @@ import mesh_revision
 
 ROOT = Path(__file__).resolve().parent
 TEMPLATE = ROOT / 'equipment_tray.scad'
-MOUNTS = ('inserts', 'pegs', 'clips', 'straps', 'flat', 'sleeve')
+MOUNTS = ('wall', 'inserts', 'pegs', 'clips', 'straps', 'flat', 'sleeve')
 JOINTS = ('screw', 'single')
 # Snap-fit faceplate-to-tray joint retired by Brian 2026-10-19: the printed coupon was too brittle to carry the tray.
 # equipment_tray.scad keeps its geometry as history only; new specs cannot choose it.
@@ -61,7 +61,7 @@ def _port_id(port, face, index):
 # Option 1 data model (Brian, 2026-10-19): the library item keeps facts about the equipment (name, size,
 # model file, holes, ports); these tray choices belong to each slot allocation's "tray" settings. Older
 # library specs still carry them, and those values stay the defaults when an allocation has none.
-PLACEMENT_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'standoff', 'insert_pilot', 'board_t',
+PLACEMENT_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'wall_open', 'standoff', 'insert_pilot', 'board_t',
                   'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size',
                   'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint')
 
@@ -88,7 +88,9 @@ def placement_settings(value):
         if key not in value:
             continue
         v = value[key]
-        if key == 'keystones':
+        if key == 'wall_open':
+            v = wall_open(v)
+        elif key == 'keystones':
             if not isinstance(v, list) or len(v) > 12 or any(type(x) not in (int, float) or isinstance(x, bool) for x in v):
                 raise ValueError('Keystones must be a list of positions.')
             v = list(v)
@@ -282,13 +284,55 @@ MAX_TRAY = RACK_INNER_W - 2 * SIDE_CLEAR
 FRONT_GAP, MARGIN = 12, 8  # mirror front_gap / margin in equipment_tray.scad
 
 
+
+WALL_SIDES = ('front', 'rear', 'left', 'right')
+WALL_MESSAGE = 'The wall would hit the faceplate joint; set the device back or move it sideways.'
+
+def wall_open(value):
+    if not isinstance(value, list) or not value or any(not isinstance(x, str) or x not in WALL_SIDES for x in value) or len(set(value)) == 4:
+        raise ValueError('Open sides must name Front, Rear, Left or Right; leave at least one open and one closed.')
+    return [x for x in WALL_SIDES if x in value]
+
+def wall_rectangles(s):
+    """Actual wall boxes [x0,y0,x1,y1,height], including returns and finger notches."""
+    if s.get('device_mount') != 'wall': return []
+    w,d,h = s['dev_w'],s['dev_d'],min(12,s['dev_h']-2)
+    result=[]
+    for side in WALL_SIDES:
+        horizontal=side in ('front','rear'); length=w if horizontal else d
+        opened=side in s.get('wall_open',['rear'])
+        if opened and length<30: continue
+        spans=[(-2.5,9.5,h),(length-9.5,length+2.5,h)] if opened else ([(-2.5,length/2-10,h),(length/2-10,length/2+10,min(4,h)),(length/2+10,length+2.5,h)] if not horizontal and length>=40 else [(-2.5,length+2.5,h)])
+        cross=(-2.5,-.5) if side in ('front','left') else ((d+.5,d+2.5) if horizontal else (w+.5,w+2.5))
+        for a,b,z in spans:
+            q=[a,cross[0],b,cross[1]] if horizontal else [cross[0],a,cross[1],b]
+            pts=[]
+            for x,y in ((q[0],q[1]),(q[2],q[3])):
+                rot=s.get('dev_rot',0)
+                p=(d-y,x) if rot==90 else (w-x,d-y) if rot==180 else (y,w-x) if rot==270 else (x,y)
+                pts.append(p)
+            fx,_,fy,_=footprint(s)
+            result.append([fx+min(p[0] for p in pts),fy+min(p[1] for p in pts),fx+max(p[0] for p in pts),fy+max(p[1] for p in pts),z])
+    return result
+
+def validate_wall(s, joints=None):
+    if s.get('device_mount') != 'wall': return
+    if s['dev_h'] <= 2: raise ValueError('A wall needs a device taller than 2 mm.')
+    if joints is None:
+        half=tray_width(s)/2
+        joints=s.get('joint_x',[-min(40,half-12),min(40,half-12)])
+    for x0,y0,x1,y1,h in wall_rectangles(s):
+        if y0 < 0 or (s['joint']=='screw' and any(x0<x+9 and x1>x-9 and ((y0<11.3 and y1>0) or (y0<22 and y1>9 and any(x0<x+side*6+1 and x1>x+side*6-1 for side in (-1,1)))) for x in joints)):
+            raise ValueError(WALL_MESSAGE)
+
+
 def floor_z(spec):
     return 0.5 if spec.get('device_mount') in ('flat', 'sleeve') else 7 + LEGACY_SLOT_OFFSET
 
 
 def device_lift(spec):
     feet = port_openings.foot_height(spec)
-    return floor_z(spec) + 3 + (0 if spec.get('device_mount') in ('straps', 'flat', 'sleeve') else float(spec.get('standoff', 6))) - feet  # case on the floor top; feet hang in their pockets
+    return floor_z(spec) + 3 + (0 if spec.get('device_mount') in ('straps', 'wall', 'flat', 'sleeve') else float(spec.get('standoff', 6))) - feet  # case on the floor top; feet hang in their pockets
 
 
 def needed_height(spec):
@@ -681,6 +725,9 @@ KEYSTONE_Z_REPLACEMENTS = {'for(x=keystones)': 'for(k=keystones)let(x=is_list(k)
 def template_source(spec):
     # New builds always use the current slot-bottom template; saved revisions remain immutable.
     text = TEMPLATE.read_text(encoding='utf-8')
+    if not (spec.get('device_mount') == 'wall' or (spec.get('second') or {}).get('device_mount') == 'wall'):
+        text = re.sub(r'// @wall-begin\n.*?// @wall-end\n\n', '', text, flags=re.S)
+        text = text.replace('\n wall_add();', '')
     if not spec.get('drives'):
         text = re.sub(r'// @drives-begin\n.*?// @drives-end\n', '', text, flags=re.S)
         for old, new in DRIVE_REPLACEMENTS.items(): text = text.replace(new, old)
@@ -769,6 +816,8 @@ def clean(spec):
     s['joint'] = spec.get('joint') if spec.get('joint') in JOINTS else None
     if not s['device_mount'] or not s['joint']:
         raise ValueError('Choose a device mounting option and a tray joint.')
+    if s['device_mount'] == 'wall':
+        s['wall_open'] = wall_open(spec.get('wall_open', ['rear']))
     raw_feet = spec.get('feet') or []
     if not isinstance(raw_feet, list) or len(raw_feet) > 32:
         raise ValueError('Feet must be a list of at most 32 footprints.')
@@ -975,18 +1024,19 @@ def clean(spec):
     if 'planning_ports' in spec:
         s['planning_ports'] = cable_ports.planning_ports(spec['planning_ports'], s['u'])
     rear_floor_geometry(s)
+    if not spec.get('_pair'): validate_wall(s)
     return s
 
 
 # Two devices on one tray (Brian, 2026-10-20): "space permitting". The first device keeps the slot's tray settings;
 # the second has its own position, rotation and mounting (SECOND_KEYS) and shares everything else (rack units, joint,
 # keystones, rear support, bezel). Fit, retention and strength of both stay UNKNOWN.
-SECOND_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'standoff', 'insert_pilot', 'board_t')
+SECOND_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'wall_open', 'standoff', 'insert_pilot', 'board_t')
 PAIR_GAP = 4  # PROPOSED minimum gap between the two footprints
 # How far each mounting's printed features reach outside the footprint (equipment_tray.scad device_features_*).
-PAIR_REACH = {'inserts': 0, 'pegs': 0, 'clips': 2.5, 'straps': 5.5, 'flat': 6.2}
+PAIR_REACH = {'inserts': 0, 'pegs': 0, 'clips': 2.5, 'straps': 5.5, 'wall': 2.5, 'flat': 6.2}
 SECOND_FIELDS = ('name', 'dev_w', 'dev_d', 'dev_h', 'hole_d', 'standoff', 'insert_pilot', 'board_t', 'holes',
-                 'device_mount', 'dev_off_x', 'dev_off_y', 'dev_rot', 'feet')
+                 'device_mount', 'dev_off_x', 'dev_off_y', 'dev_rot', 'feet', 'wall_open')
 
 
 def second_settings(value):
@@ -1093,6 +1143,8 @@ def clean_pair(spec):
             raise ValueError(placed['problem'])
         if placed['moved']:
             s['joint_x'] = placed['joints']
+    for device in tray_devices(s):
+        validate_wall(device, s.get('joint_x', [-min(40,half-12),min(40,half-12)]))
     ids = [p['id'] for p in s['ports'] + s['rear_ports']]
     if len(ids) != len(set(ids)):
         raise ValueError('Each port needs its own id.')
@@ -1105,6 +1157,7 @@ SECOND_RENAMES = {'dev_x': 'dev2_x', 'dev_y': 'dev2_y', 'fp_w': 'fp2_w', 'fp_d':
                   'dev_h': 'dev2_h', 'dev_rot': 'dev2_rot', 'dev_off_x': 'dev2_off_x', 'holes': 'dev2_holes', 'hole_d': 'dev2_hole_d',
                   'standoff': 'dev2_standoff', 'insert_pilot': 'dev2_insert_pilot', 'board_t': 'dev2_board_t',
                   'device_mount': 'dev2_mount', 'feet': 'dev2_feet', 'foot_h': 'dev2_foot_h', 'dp': 'dp2',
+                  'wall_open': 'dev2_wall_open', 'wall_h': 'dev2_wall_h', 'wall_spans': 'wall2_spans', 'wall_local': 'wall2_local', 'wall_rects': 'wall2_rects', 'wall_add': 'wall2_add',
                   'device_features_add': 'device2_features_add', 'device_features_cut': 'device2_features_cut'}
 SECOND_SCAD = """
 // ---- Second device on this tray (Brian, 2026-10-20). PROPOSED; fit, retention and strength UNKNOWN.
@@ -1137,6 +1190,7 @@ def source(s):
         return json.dumps(v)
     over = {k: s[k] for k in ('dev_w', 'dev_d', 'dev_h', 'hole_d', 'standoff', 'insert_pilot', 'board_t', 'u',
                               'holes', 'keystones', 'device_mount', 'joint', 'rear_support', 'coupon')}
+    if s.get('device_mount') == 'wall': over['wall_open'] = s['wall_open']
     for key in V2_DEFAULTS:
         if key in s: over[key] = s[key]
     if s.get('feet_style') == 'grooves':
@@ -1177,6 +1231,7 @@ def source(s):
                     dev2_holes=d2['holes'], dev2_mount=d2['device_mount'], dev2_off_x=d2.get('dev_off_x', 0),
                     dev2_off_y=d2.get('dev_off_y', 0), dev2_rot=d2.get('dev_rot', 0),
                     dev2_feet=[[f['x'], f['y'], f['w'], f['d'], f['h']] for f in d2.get('feet', [])])
+        if d2['device_mount'] == 'wall': over['dev2_wall_open'] = d2['wall_open']
         # The tray spans both devices (still centred); the template's own formula only knows the first.
         over['tray_w'] = round(2 * pair_tray_half(s), 4)
         if not s['rear_support']:

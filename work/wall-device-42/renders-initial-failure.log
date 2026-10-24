@@ -1,0 +1,20 @@
+Rendering single
+Traceback (most recent call last):
+  File "C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\task42_render.py", line 18, in <module>
+    s=eq.clean(raw);folder=eq.render(raw,out/'render-data')
+  File "D:\Projects\assembly-workshop\outputs\Mechanical_Design_App\equipment.py", line 1539, in render
+    raise ValueError('OpenSCAD failed for ' + name + ': ' + r.stderr[-1200:])
+ValueError: OpenSCAD failed for tray: n line 31 of "equipment.scad" but was overwritten in file equipment.scad, line 288
+WARNING: coupon was assigned on line 32 of "equipment.scad" but was overwritten in file equipment.scad, line 289
+WARNING: wall_open was assigned on line 222 of "equipment.scad" but was overwritten in file equipment.scad, line 290
+WARNING: dev_off_y was assigned on line 29 of "equipment.scad" but was overwritten in file equipment.scad, line 291
+WARNING: ports was assigned on line 25 of "equipment.scad" but was overwritten in file equipment.scad, line 292
+ERROR: Assertion '((device_mount != "wall") || (((is_list(wall_open) && (len(wall_open) > 0)) && (len([for(s = ["front", "rear", "left", "right"]) (if((len(search([s], wall_open)) > 0)) (s))]) < 4)) && (len([for(s = wall_open) (if(((((s != "front") && (s != "rear")) && (s != "left")) && (s != "right"))) (s))]) == 0)))' failed: "Open sides must leave at least one open and one closed" in file equipment.scad, line 227
+TRACE: called by 'assert' in file equipment.scad, line 227
+Geometries in cache: 1
+Geometry cache size in bytes: 0
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:00.000
+Current top level object is empty.
+

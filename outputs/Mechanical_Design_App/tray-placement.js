@@ -5,10 +5,10 @@
 (function(root){
   'use strict';
   // ---- Pure logic (Node-testable). Mirrors equipment.PLACEMENT_KEYS, clean() and equipment_tray.scad asserts.
-  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','rear_style','u','front_position','front_setback','bezel','bezel_size','sleeve_top','feet_style','rear_floor_opening','insert_bosses','hidden_joint'];
-  const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,rear_openings:false,u:1,front_position:'today',front_setback:16,bezel:'none',bezel_size:1,sleeve_top:.3,feet_style:'pockets',rear_floor_opening:false,insert_bosses:false,hidden_joint:false};
+  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','wall_open','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','rear_style','u','front_position','front_setback','bezel','bezel_size','sleeve_top','feet_style','rear_floor_opening','insert_bosses','hidden_joint'];
+  const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',wall_open:['rear'],standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,rear_openings:false,u:1,front_position:'today',front_setback:16,bezel:'none',bezel_size:1,sleeve_top:.3,feet_style:'pockets',rear_floor_opening:false,insert_bosses:false,hidden_joint:false};
   const FRONT_GAP=12,MARGIN=8,RACK_INNER_W=208,SIDE_CLEAR=2,MAX_TRAY=RACK_INNER_W-2*SIDE_CLEAR,RACK_DEPTH=240,PITCH=44.45,PLATE_HALF=126,PLATE_T=4,TRAY_T=3;
-  const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
+  const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap',wall:'Wall',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
   const REAR_STYLES={solid:['Solid','Plain plate'],open:['Open','Original cable windows'],reinforced:['Reinforced','Wider bands and inner top/end lips; ends shorten to clear rear joints'],slots:['Cable slots','Rounded upper and centre cable slots'],vents:['Vents','Dense round vents, centre cable slot and inner top/end lips; ends shorten to clear rear joints']};
   const rearStyle=v=>v.rear_style||(v.rear_openings?'open':'solid');
   const JOINTS={screw:'Screw joint',single:'Single printed piece'};
@@ -44,6 +44,18 @@
   function dp(spec,rot,p){const w=+spec.dev_w,d=+spec.dev_d;
     return rot===90?[d-p[1],p[0]]:rot===180?[w-p[0],d-p[1]]:rot===270?[p[1],w-p[0]]:[p[0],p[1]];}
   function holes(spec,v){const L=layout(spec,v);return (spec.holes||[]).map(p=>{const q=dp(spec,v.dev_rot,p);return [L.dev_x+q[0],L.dev_y+q[1]];});}
+
+  const WALL_SIDES=['front','rear','left','right'],WALL_MESSAGE='The wall would hit the faceplate joint; set the device back or move it sideways.';
+  function wallBoxes(spec,v){
+    if(v.device_mount!=='wall')return [];
+    const L=layout(spec,v),w=+spec.dev_w,d=+spec.dev_d,h=Math.min(12,+spec.dev_h-2),out=[];
+    for(const side of WALL_SIDES){const hz=['front','rear'].includes(side),len=hz?w:d,opened=(v.wall_open||['rear']).includes(side);if(opened&&len<30)continue;
+      const spans=opened?[[-2.5,9.5,h],[len-9.5,len+2.5,h]]:!hz&&len>=40?[[-2.5,len/2-10,h],[len/2-10,len/2+10,Math.min(4,h)],[len/2+10,len+2.5,h]]:[[-2.5,len+2.5,h]],c=['front','left'].includes(side)?-2.5:(hz?d:w)+.5;
+      for(const [a,b,z] of spans){const q=hz?[a,c,b,c+2]:[c,a,c+2,b],p=dp(spec,v.dev_rot,[q[0],q[1]]),r=dp(spec,v.dev_rot,[q[2],q[3]]);out.push([L.dev_x+Math.min(p[0],r[0]),L.dev_y+Math.min(p[1],r[1]),L.dev_x+Math.max(p[0],r[0]),L.dev_y+Math.max(p[1],r[1]),z]);}
+    }return out;
+  }
+  function wallProblem(spec,v,xs){if(v.device_mount!=='wall')return '';xs=xs||joints(spec,v)?.joints||[];return wallBoxes(spec,v).some(q=>q[1]<0||v.joint==='screw'&&xs.some(x=>q[0]<x+9&&q[2]>x-9&&(q[1]<11.3&&q[3]>0||q[1]<22&&q[3]>9&&[-1,1].some(side=>q[0]<x+side*6+1&&q[2]>x+side*6-1))))?WALL_MESSAGE:'';}
+
   function footPockets(spec,v){if(!['flat','sleeve'].includes(v.device_mount))return [];const L=layout(spec,v),F=PO().FOOT;
     return (spec.feet||[]).map(f=>{const pts=[[f.x,f.y],[f.x+f.w,f.y],[f.x,f.y+f.d],[f.x+f.w,f.y+f.d]].map(p=>dp(spec,v.dev_rot,p));const depth=+f.h+F.extraDepth;
       return {x0:L.dev_x+Math.min(...pts.map(p=>p[0]))-F.clearance,x1:L.dev_x+Math.max(...pts.map(p=>p[0]))+F.clearance,y0:L.dev_y+Math.min(...pts.map(p=>p[1]))-F.clearance,y1:L.dev_y+Math.max(...pts.map(p=>p[1]))+F.clearance,depth,through:depth>TRAY_T-F.minFloor};});}
@@ -77,11 +89,12 @@
   function openings(spec,v){const P=PO();return P?P.frontOpenings(spec,v):{ports:(spec.ports||[]).map(p=>({...p})),dx:0,dz:0,follows:false,rotation:+v.dev_rot||0,message:null};}
   const mm=x=>Math.round(x*10)/10;
   // Plain-language versions of the SCAD asserts and the build checks. Any message blocks Apply and export.
-  function problems(spec,v){
+  function problems(spec,v,pair=false){
     const out=[];
     if(![0,90,180,270].includes(v.dev_rot))return ['Rotation must be 0, 90, 180 or 270 degrees.'];
     if(!fin(v.dev_off_x)||!fin(v.dev_off_y))return ['Enter numbers for the left/right offset and the front gap.'];
     if(!Number.isInteger(v.u)||v.u<1||v.u>5)out.push('Faceplate height must be a whole number of rack units from 1 to 5.');
+    if(v.device_mount==='wall'){if(!Array.isArray(v.wall_open)||!v.wall_open.length||v.wall_open.some(s=>!WALL_SIDES.includes(s))||new Set(v.wall_open).size===4)out.push('Open sides must name Front, Rear, Left or Right; leave at least one open and one closed.');if(+spec.dev_h<=2)out.push('A wall needs a device taller than 2 mm.');}
     if(!MOUNTS[v.device_mount])out.push('Choose how the device attaches to the tray.');
     if(!JOINTS[v.joint])out.push('Choose how the tray joins the faceplate.');
     if(!fin(v.standoff)||v.standoff<0||v.standoff>30)out.push('Standoff must be between 0 and 30 mm.');
@@ -140,6 +153,7 @@
         if(sw.hidden&&filtered.ports.some(p=>sw.joints.some(x=>Math.abs(p.x-x)<P.JOINT_HALF+P.JOINT_CLEAR+p.w/2&&p.z-p.h/2<P.SLEEVE.hiddenTop+P.JOINT_CLEAR)))out.push('A front opening sits in front of the hidden screw joint; move or remove it.');
         if(!sw.hidden&&v.joint==='screw'&&filtered.ports.some(p=>sw.joints.some(x=>Math.abs(p.x-x)<P.SLEEVE.wall/2+p.w/2&&p.z+p.h/2>sw.bottom&&p.z-p.h/2<sw.top)))out.push('A front opening overlaps a sleeve wall joint; move or remove it.');}
       out.push(...P.problems(filtered.ports,v.u,ks));const j=joints(spec,v);if(j&&j.problem)out.push(j.problem);}
+    const wp=pair?'':wallProblem(spec,v);if(wp)out.push(wp);
     return out;
   }
   // Plain-language warnings that never block (Brian, 2026-10-19).
@@ -214,6 +228,7 @@
     const L=layout(spec,v),floor=PO().floorZ(v)+TRAY_T,tray=box(-L.tray_w/2,0,PO().floorZ(v),L.tray_w/2,L.tray_d,floor);
     const posts=[];
     if(v.device_mount==='inserts'||v.device_mount==='pegs')for(const[x,y]of holes(spec,v))posts.push(...box(x-3,y-3,floor,x+3,y+3,floor+ +v.standoff));
+    if(v.device_mount==='wall')for(const q of wallBoxes(spec,v))posts.push(...box(q[0],q[1],floor,q[2],q[3],floor+q[4]));
     if(v.device_mount==='flat'){
       const h=Math.min(6,PO().deviceCaseHeight({...spec,...v})),w=Math.min(6,L.fp_w),d=Math.min(6,L.fp_d);
       for(const x of [L.dev_x-6.2,L.dev_x+L.fp_w+0.2])for(const y of [L.dev_y,L.dev_y+L.fp_d-d])posts.push(...box(x,y,floor,x+6,y+d,floor+h));
@@ -237,7 +252,7 @@
     const sets=[{v:plate,color:[78,117,163],alpha:1},{v:tray.concat(posts),color:[77,142,110],alpha:1},
       ...(pocketSketch.length?[{v:pocketSketch,color:[28,42,36],alpha:1}]:[]),{v:box(L.dev_x,L.dev_y,L.lift,L.dev_x+L.fp_w,L.dev_y+L.fp_d,L.lift+ +spec.dev_h),color:[230,195,92],alpha:0.55,device:true},
       // Orange = the device's front face (same convention as the wizard's model view).
-      {v:box(L.dev_x,L.dev_y-0.2,L.lift,L.dev_x+L.fp_w,L.dev_y+0.8,L.lift+ +spec.dev_h),color:[230,140,60],alpha:0.9,device:true}];
+      {v:(()=>{const p=dp(spec,v.dev_rot,[0,-.2]),q=dp(spec,v.dev_rot,[+spec.dev_w,.8]);return box(L.dev_x+Math.min(p[0],q[0]),L.dev_y+Math.min(p[1],q[1]),L.lift,L.dev_x+Math.max(p[0],q[0]),L.dev_y+Math.max(p[1],q[1]),L.lift+ +spec.dev_h);})(),color:[230,140,60],alpha:0.9,device:true}];
     if(jacks.length)sets.push({v:jacks,color:[30,32,36],alpha:1});
     return sets;
   }
@@ -260,7 +275,7 @@
     if(v.rear_support)out.rear_bracket=box(-PLATE_HALF,RACK_DEPTH,PO().plateBottom,PLATE_HALF,RACK_DEPTH+PLATE_T,PO().plateBottom+L.plate_h); // to_rear(): plate mirrored about mid-depth
     return out;
   }
-  const api={V2,windowSpec,sleeveGeometry,footGrooves,rearFloorGeometry,RACK_INNER_W,SIDE_CLEAR,MAX_TRAY,widthProblem,KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,footPockets,openings,joints,rearCutGeometry,keepClearBands,problems,warnings,snap,schematic,box,rackSketch};
+  const api={wallBoxes,wallProblem,WALL_MESSAGE,V2,windowSpec,sleeveGeometry,footGrooves,rearFloorGeometry,RACK_INNER_W,SIDE_CLEAR,MAX_TRAY,widthProblem,KEYS,DEFAULTS,MOUNTS,JOINTS,FRONT_GAP,values,diff,layout,holes,footPockets,openings,joints,rearCutGeometry,keepClearBands,problems,warnings,snap,schematic,box,rackSketch};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   root.TrayPlacement=api;
   if(typeof document==='undefined')return;
@@ -273,7 +288,7 @@
   let state=null; // {placement id, rack id, item, v (working values), prevU, exact (rendered meshes for this json), second: null | {item, v}, tab: 1 | 2}
   const view={yaw:2.5,pitch:0.5,zoom:1.6,sets:[],quality:'placement'}; // seen from behind and above, so the faceplate does not hide the device
   // Two devices (tray-pair.js, Brian 2026-10-20): the first device's own joint placement is replaced by the shared one.
-  function current(){if(!state)return null;const own=problems(state.item.spec,state.v);if(!state.second)return own;
+  function current(){if(!state)return null;const own=problems(state.item.spec,state.v,!!state.second);if(!state.second)return own;
     if([state.v,state.second.v,state.second.item.spec].some(s=>s.feet_style==='grooves'||s.rear_floor_opening))own.push('Foot grooves and the cable floor opening need a single-device tray.');return [...new Set([...own.filter(t=>!/screw joints? cannot be placed/.test(t)),...TrayPair.problems(state.item.spec,state.v,state.second.item.spec,state.second.v)])];}
   const pairLayout=()=>state.second?TrayPair.layout(state.item.spec,state.v,state.second.item.spec,state.second.v):layout(state.item.spec,state.v);
   // The device whose position and mounting the window is editing (tab), as spec + full values.
@@ -372,6 +387,7 @@
     const spec=state.item.spec,v=state.v,name=state.item.display_name||state.item.name,E=editing(),dv=E.v,dspec=E.spec;
     const rot=h('div',{class:'ew-choices',role:'group','aria-label':'Rotation'},...[0,90,180,270].map(r=>{const b=h('button',{type:'button',class:'ew-chip'+(dv.dev_rot===r?' on':''),'aria-pressed':String(dv.dev_rot===r)},r+'°');b.onclick=()=>{dv.dev_rot=r;render();};return b;}));
     const centre=h('button',{type:'button',class:'ew-chip'},'Centre');centre.onclick=()=>{dv.dev_off_x=0;syncFields();update();};
+    const wallOpts=dv.device_mount==='wall'?[h('p',{},'Open sides (cables):'),h('div',{class:'ew-row'},...WALL_SIDES.map(side=>{const input=h('input',{type:'checkbox'});input.checked=(dv.wall_open||['rear']).includes(side);input.onchange=()=>{dv.wall_open=WALL_SIDES.filter(s=>s===side?input.checked:(dv.wall_open||['rear']).includes(s));render();};return h('label',{class:'ew-chip'},input,' '+side[0].toUpperCase()+side.slice(1));})),h('p',{class:'ew-note'},'Device sits on the floor inside a 2 mm wall, open where you tick. Fit and retention UNKNOWN.')]:[];
     const mountOpts=PO().usesStandoffs(dv)?[field('Standoff (mm)',()=>dv.standoff,x=>dv.standoff=x,{step:'0.5',min:'0',max:'30'})]:[h('p',{class:'ew-note'},dv.device_mount==='sleeve'?'Low floor, side walls, top lips when space permits, rear stop and optional straps. Front flush; fit/retention/strength UNKNOWN.':v.device_mount==='flat'?'Rests on the low floor with corner stops and optional strap slots. Retention UNKNOWN.':'Rests on the tray floor; no standoffs.')];
     if(dv.device_mount==='inserts')mountOpts.push(field('Insert pilot hole (mm)',()=>dv.insert_pilot,x=>dv.insert_pilot=x,{step:'0.1'}));
     if(dv.device_mount==='pegs'||dv.device_mount==='clips')mountOpts.push(field(dv.device_mount==='pegs'?'Board thickness (mm)':'Edge thickness clipped (mm)',()=>dv.board_t,x=>dv.board_t=x,{step:'0.1'}));
@@ -425,7 +441,7 @@
           h('p',{class:'ew-note'},(state.second?'Yellow = device 1, blue = device 2; drag either. They need at least '+TrayPair.GAP+' mm between them (more for clips, straps and flat stops). ':'')+'Drag the device (snaps to 1 mm). Orange edge = device front. Blue dots = screw/hole positions. Dashed outline = the '+MAX_TRAY+' mm tray limit (rack opening minus side clearance).'),
           h('h3',{},'Position'+(state.second?' · device '+state.tab:'')),h('div',{class:'ew-row'},offX,centre),...(v.front_position==='today'?[h('div',{class:'ew-row'},gap)]:[]),
           ...(state.tab===1?[position,h('p',{class:'ew-note'},'Flush and Set back are measured from the outside front face. Set back: 0–100 mm. Near the plate, use Sleeve or a single printed piece; flat corner stops need at least 10.2 mm set back.')]:[h('p',{class:'ew-note'},'Both devices use the As today front position. Faceplate height, joint, keystones and rear support are shared by the whole tray.')]),h('div',{class:'ew-row'},'Rotate ',rot),
-          h('h3',{},'Mounting'+(state.second?' · device '+state.tab:'')),chips(MOUNTS,dv.device_mount,k=>dv.device_mount=k),h('div',{class:'ew-row'},...mountOpts)),
+          h('h3',{},'Mounting'+(state.second?' · device '+state.tab:'')),chips(MOUNTS,dv.device_mount,k=>dv.device_mount=k),h('div',{class:'ew-row'},...mountOpts),...wallOpts),
         h('div',{class:'tp-pane'},h('h3',{},'Live 3D preview'),cv,h('p',{id:'tpViewNote',class:'ew-note'}),h('div',{class:'ew-row'},exact,window.RenderQuality?.previewSlider('placement',draw3D)||''),
           h('h3',{},'Faceplate'),bezel,h('p',{class:'ew-note'},'Bezel softens front opening edges only. Size 0.5–1.5 mm; reduced or omitted to preserve 2 mm webs. Rounded prints best with the front face up; Chamfer prints either way.'),h('div',{class:'ew-row'},field('Height (rack units)',()=>v.u,x=>v.u=x,{min:'1',max:'5'})),keystones(),
           h('p',{},'Tray joint'),chips(JOINTS,v.joint,k=>v.joint=k),

@@ -1,0 +1,33 @@
+{
+  "cases": 48,
+  "result": "all coordinates agree within 1e-8 mm",
+  "dimensions": [
+    [
+      90.7,
+      90.4,
+      25.4
+    ],
+    [
+      29,
+      39,
+      8
+    ],
+    [
+      30,
+      40,
+      3
+    ]
+  ],
+  "rotations": [
+    0,
+    90,
+    180,
+    270
+  ],
+  "open_sides": [
+    "front",
+    "rear",
+    "left",
+    "right"
+  ]
+}

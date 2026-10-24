@@ -1,0 +1,9 @@
+Rendering single
+single {'inner_width_mm': 91.7, 'front_inner_y_mm': -0.5, 'inner_depth_mm': 91.4, 'rear_gap_mm': 71.7, 'wall_height_mm': 12.0, 'x_section': [-2.5, -0.5, 91.2, 93.2], 'y_section': [-2.5, -0.5], 'rear_section': [-2.5, 9.5, 81.2, 93.2], 'note': 'Inner depth uses front inner STL plane and rear return inner plane; rear is open at centre.', 'rear_inner_planes': [90.9]}
+Rendering pair
+pair {'inner_width_mm': 91.7, 'front_inner_y_mm': -0.5, 'inner_depth_mm': 91.4, 'rear_gap_mm': 71.7, 'wall_height_mm': 12.0, 'x_section': [-2.5, -0.5, 91.2, 93.2], 'y_section': [-2.5, -0.5], 'rear_section': [-2.5, 9.5, 81.2, 93.2], 'note': 'Inner depth uses front inner STL plane and rear return inner plane; rear is open at centre.', 'rear_inner_planes': [90.9]}
+Rendering pair90
+pair90 {'inner_width_mm': 91.7, 'front_inner_y_mm': -0.5, 'inner_depth_mm': 91.4, 'rear_gap_mm': 71.7, 'wall_height_mm': 12.0, 'x_section': [-2.5, -0.5, 91.2, 93.2], 'y_section': [-2.5, -0.5], 'rear_section': [-2.5, 9.5, 81.2, 93.2], 'note': 'Inner depth uses front inner STL plane and rear return inner plane; rear is open at centre.', 'rear_inner_planes': [90.9]}
+Rendering second-wall
+second-wall {'inner_width_mm': 91.7, 'front_inner_y_mm': -0.5, 'inner_depth_mm': 91.4, 'rear_gap_mm': 71.7, 'wall_height_mm': 12.0, 'x_section': [-2.5, -0.5, 91.2, 93.2], 'y_section': [-2.5, -0.5], 'rear_section': [-2.5, 9.5, 81.2, 93.2], 'note': 'Inner depth uses front inner STL plane and rear return inner plane; rear is open at centre.', 'rear_inner_planes': [90.9]}
+done

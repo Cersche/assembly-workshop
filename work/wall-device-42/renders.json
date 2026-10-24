@@ -1,0 +1,586 @@
+[
+  {
+    "label": "requested pair",
+    "blocked": "The wall would hit the faceplate joint; set the device back or move it sideways."
+  },
+  {
+    "label": "requested pair rotated",
+    "blocked": "The wall would hit the faceplate joint; set the device back or move it sideways."
+  },
+  {
+    "label": "single",
+    "spec": {
+      "name": "Hue Bridge test",
+      "dev_w": 90.7,
+      "dev_d": 90.4,
+      "dev_h": 25.4,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "wall",
+      "joint": "screw",
+      "wall_open": [
+        "rear"
+      ],
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 13.0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": []
+    },
+    "folder": "work\\wall-device-42\\render-data\\equipment-revisions\\496069362e260916ed89eb1af79b352a09a9c08dbfd67edb8d948c6cc8dd2661",
+    "parts": {
+      "tray": {
+        "bounds": [
+          [
+            -53.35,
+            0.0,
+            8.225
+          ],
+          [
+            53.35,
+            123.4,
+            30.225
+          ]
+        ],
+        "volume": 48755.29888696001,
+        "triangles": 628,
+        "closed": true
+      },
+      "faceplate": {
+        "bounds": [
+          [
+            -126.0,
+            -4.0,
+            0.0249939
+          ],
+          [
+            126.0,
+            8.0,
+            44.425
+          ]
+        ],
+        "volume": 45099.51475593765,
+        "triangles": 1820,
+        "closed": true
+      }
+    },
+    "nudge_mm": {
+      "tray": 0,
+      "faceplate": 0
+    },
+    "measurements": {
+      "inner_width_mm": 91.7,
+      "front_inner_y_mm": -0.5,
+      "inner_depth_mm": 91.4,
+      "rear_gap_mm": 71.7,
+      "wall_height_mm": 12.0,
+      "x_section": [
+        -2.5,
+        -0.5,
+        91.2,
+        93.2
+      ],
+      "y_section": [
+        -2.5,
+        -0.5
+      ],
+      "rear_section": [
+        -2.5,
+        9.5,
+        81.2,
+        93.2
+      ],
+      "note": "Inner depth uses front inner STL plane and rear return inner plane; rear is open at centre.",
+      "rear_inner_planes": [
+        90.9
+      ]
+    }
+  },
+  {
+    "label": "pair",
+    "spec": {
+      "name": "Hue Bridge test",
+      "dev_w": 90.7,
+      "dev_d": 90.4,
+      "dev_h": 25.4,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "wall",
+      "joint": "screw",
+      "wall_open": [
+        "rear"
+      ],
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": -30.0,
+      "dev_off_y": 13.0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [
+        -100.0
+      ],
+      "ports": [],
+      "rear_ports": [],
+      "second": {
+        "name": "Raspberry Pi 4 (example)",
+        "dev_w": 85.0,
+        "dev_d": 56.0,
+        "dev_h": 20.0,
+        "hole_d": 2.7,
+        "standoff": 6.0,
+        "insert_pilot": 3.2,
+        "board_t": 1.6,
+        "holes": [
+          [
+            3.5,
+            3.5
+          ],
+          [
+            61.5,
+            3.5
+          ],
+          [
+            3.5,
+            52.5
+          ],
+          [
+            61.5,
+            52.5
+          ]
+        ],
+        "device_mount": "inserts",
+        "dev_off_x": 48.0,
+        "dev_off_y": 1.0,
+        "dev_rot": 90
+      }
+    },
+    "folder": "work\\wall-device-42\\render-data\\equipment-revisions\\e1e1e9139c0d3acfd10cd46878fe25ad35e10c782be81ff97ba4200bb5ad57b5",
+    "parts": {
+      "tray": {
+        "bounds": [
+          [
+            -84.0,
+            0.0,
+            8.225
+          ],
+          [
+            84.0,
+            123.4,
+            30.225
+          ]
+        ],
+        "volume": 72177.4083520064,
+        "triangles": 2164,
+        "closed": true
+      },
+      "faceplate": {
+        "bounds": [
+          [
+            -126.0,
+            -4.07999,
+            0.0249939
+          ],
+          [
+            126.0,
+            8.0,
+            44.425
+          ]
+        ],
+        "volume": 45223.490840370476,
+        "triangles": 2436,
+        "closed": true
+      }
+    },
+    "nudge_mm": {
+      "tray": 0,
+      "faceplate": 0
+    },
+    "measurements": {
+      "inner_width_mm": 91.7,
+      "front_inner_y_mm": -0.5,
+      "inner_depth_mm": 91.4,
+      "rear_gap_mm": 71.7,
+      "wall_height_mm": 12.0,
+      "x_section": [
+        -2.5,
+        -0.5,
+        91.2,
+        93.2
+      ],
+      "y_section": [
+        -2.5,
+        -0.5
+      ],
+      "rear_section": [
+        -2.5,
+        9.5,
+        81.2,
+        93.2
+      ],
+      "note": "Inner depth uses front inner STL plane and rear return inner plane; rear is open at centre.",
+      "rear_inner_planes": [
+        90.9
+      ]
+    }
+  },
+  {
+    "label": "pair90",
+    "spec": {
+      "name": "Hue Bridge test",
+      "dev_w": 90.7,
+      "dev_d": 90.4,
+      "dev_h": 25.4,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "wall",
+      "joint": "screw",
+      "wall_open": [
+        "rear"
+      ],
+      "rear_support": false,
+      "dev_rot": 90,
+      "dev_off_x": -30.0,
+      "dev_off_y": 13.0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [
+        -100.0
+      ],
+      "ports": [],
+      "rear_ports": [],
+      "second": {
+        "name": "Raspberry Pi 4 (example)",
+        "dev_w": 85.0,
+        "dev_d": 56.0,
+        "dev_h": 20.0,
+        "hole_d": 2.7,
+        "standoff": 6.0,
+        "insert_pilot": 3.2,
+        "board_t": 1.6,
+        "holes": [
+          [
+            3.5,
+            3.5
+          ],
+          [
+            61.5,
+            3.5
+          ],
+          [
+            3.5,
+            52.5
+          ],
+          [
+            61.5,
+            52.5
+          ]
+        ],
+        "device_mount": "inserts",
+        "dev_off_x": 48.0,
+        "dev_off_y": 1.0,
+        "dev_rot": 90
+      }
+    },
+    "folder": "work\\wall-device-42\\render-data\\equipment-revisions\\6d08ea58c37fbdc4cd4fd6a76c4d47dc905a82ca90d3cf16fe4fc8dd76657d68",
+    "parts": {
+      "tray": {
+        "bounds": [
+          [
+            -84.0,
+            0.0,
+            8.225
+          ],
+          [
+            84.0,
+            123.7,
+            30.225
+          ]
+        ],
+        "volume": 72328.60835200641,
+        "triangles": 2164,
+        "closed": true
+      },
+      "faceplate": {
+        "bounds": [
+          [
+            -126.0,
+            -4.07999,
+            0.0249939
+          ],
+          [
+            126.0,
+            8.0,
+            44.425
+          ]
+        ],
+        "volume": 45223.490840370476,
+        "triangles": 2436,
+        "closed": true
+      }
+    },
+    "nudge_mm": {
+      "tray": 0,
+      "faceplate": 0
+    },
+    "measurements": {
+      "inner_width_mm": 91.7,
+      "front_inner_y_mm": -0.5,
+      "inner_depth_mm": 91.4,
+      "rear_gap_mm": 71.7,
+      "wall_height_mm": 12.0,
+      "x_section": [
+        -2.5,
+        -0.5,
+        91.2,
+        93.2
+      ],
+      "y_section": [
+        -2.5,
+        -0.5
+      ],
+      "rear_section": [
+        -2.5,
+        9.5,
+        81.2,
+        93.2
+      ],
+      "note": "Inner depth uses front inner STL plane and rear return inner plane; rear is open at centre.",
+      "rear_inner_planes": [
+        90.9
+      ]
+    }
+  },
+  {
+    "label": "second-wall",
+    "spec": {
+      "name": "Raspberry Pi 4 (example)",
+      "dev_w": 85.0,
+      "dev_d": 56.0,
+      "dev_h": 20.0,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "inserts",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_rot": 90,
+      "dev_off_x": -48.0,
+      "dev_off_y": 13.0,
+      "coupon": [],
+      "holes": [
+        [
+          3.5,
+          3.5
+        ],
+        [
+          61.5,
+          3.5
+        ],
+        [
+          3.5,
+          52.5
+        ],
+        [
+          61.5,
+          52.5
+        ]
+      ],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": [],
+      "planning_ports": [
+        {
+          "id": "usb-c-power",
+          "label": "USB-C power",
+          "type": "usb-c",
+          "face": null,
+          "points": "front",
+          "x": -32.8,
+          "y": 11.5,
+          "z": 18.8
+        },
+        {
+          "id": "hdmi0",
+          "label": "Micro-HDMI 0",
+          "type": "micro-hdmi",
+          "face": null,
+          "points": "front",
+          "x": -18.05,
+          "y": 11.2,
+          "z": 18.8
+        },
+        {
+          "id": "hdmi1",
+          "label": "Micro-HDMI 1",
+          "type": "micro-hdmi",
+          "face": null,
+          "points": "front",
+          "x": -4.55,
+          "y": 11.2,
+          "z": 18.8
+        },
+        {
+          "id": "audio",
+          "label": "Audio / composite 3.5 mm",
+          "type": "other",
+          "face": null,
+          "points": "front",
+          "x": 10.0,
+          "y": 10.6,
+          "z": 20.6
+        },
+        {
+          "id": "usb2-lower",
+          "label": "USB 2.0 (lower)",
+          "type": "usb-a",
+          "face": null,
+          "points": "right",
+          "x": 45.0,
+          "y": 22.0,
+          "z": 21.4
+        },
+        {
+          "id": "usb2-upper",
+          "label": "USB 2.0 (upper)",
+          "type": "usb-a",
+          "face": null,
+          "points": "right",
+          "x": 45.0,
+          "y": 22.0,
+          "z": 29.4
+        },
+        {
+          "id": "usb3-lower",
+          "label": "USB 3.0 (lower)",
+          "type": "usb-a",
+          "face": null,
+          "points": "right",
+          "x": 44.6,
+          "y": 40.0,
+          "z": 21.4
+        },
+        {
+          "id": "usb3-upper",
+          "label": "USB 3.0 (upper)",
+          "type": "usb-a",
+          "face": null,
+          "points": "right",
+          "x": 44.6,
+          "y": 40.0,
+          "z": 29.4
+        },
+        {
+          "id": "ethernet",
+          "label": "Ethernet",
+          "type": "rj45",
+          "face": null,
+          "points": "right",
+          "x": 44.2,
+          "y": 58.75,
+          "z": 24.4
+        }
+      ],
+      "second": {
+        "name": "Hue Bridge test",
+        "dev_w": 90.7,
+        "dev_d": 90.4,
+        "dev_h": 25.4,
+        "hole_d": 2.7,
+        "standoff": 6.0,
+        "insert_pilot": 3.2,
+        "board_t": 1.6,
+        "holes": [],
+        "device_mount": "wall",
+        "dev_off_x": 30.0,
+        "dev_off_y": 13.0,
+        "dev_rot": 0,
+        "wall_open": [
+          "rear"
+        ]
+      }
+    },
+    "folder": "work\\wall-device-42\\render-data\\equipment-revisions\\15dfaebf03d4a97be5e1d7027172dcd7b70238cef46322b56a1c02143e7cd976",
+    "parts": {
+      "tray": {
+        "bounds": [
+          [
+            -84.0,
+            0.0,
+            8.225
+          ],
+          [
+            84.0,
+            123.4,
+            30.225
+          ]
+        ],
+        "volume": 72177.4083520064,
+        "triangles": 2164,
+        "closed": true
+      },
+      "faceplate": {
+        "bounds": [
+          [
+            -126.0,
+            -4.0,
+            0.0249939
+          ],
+          [
+            126.0,
+            8.0,
+            44.425
+          ]
+        ],
+        "volume": 45099.51475593765,
+        "triangles": 1820,
+        "closed": true
+      }
+    },
+    "nudge_mm": {
+      "tray": 0,
+      "faceplate": 0
+    },
+    "measurements": {
+      "inner_width_mm": 91.7,
+      "front_inner_y_mm": -0.5,
+      "inner_depth_mm": 91.4,
+      "rear_gap_mm": 71.7,
+      "wall_height_mm": 12.0,
+      "x_section": [
+        -2.5,
+        -0.5,
+        91.2,
+        93.2
+      ],
+      "y_section": [
+        -2.5,
+        -0.5
+      ],
+      "rear_section": [
+        -2.5,
+        9.5,
+        81.2,
+        93.2
+      ],
+      "note": "Inner depth uses front inner STL plane and rear return inner plane; rear is open at centre.",
+      "rear_inner_planes": [
+        90.9
+      ]
+    }
+  }
+]

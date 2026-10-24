@@ -20,10 +20,10 @@
     // equipment.allocation_spec(). Rotation swaps width and depth; offsets widen the tray and push the device back.
     const tray=placement.tray||{},s={...item.spec,...tray},checks=[];
     const turned=+s.dev_rot===90||+s.dev_rot===270,fpW=turned?+s.dev_d:+s.dev_w,fpD=turned?+s.dev_w:+s.dev_d;
-    const lift=FLOOR+(s.device_mount==='straps'?0:(+s.standoff||0));
+    const lift=FLOOR+(['straps','wall'].includes(s.device_mount)?0:(+s.standoff||0));
     // Two devices on one tray (Brian, 2026-10-20): the taller and deeper device and the shared tray width count.
     const it2=placement.second&&(root.equipmentLibraryItems?.()||[]).find(i=>i.id===placement.second.equipment),s2=it2?{...s,...it2.spec,...(placement.second.tray||{})}:null;
-    const turned2=s2&&(+s2.dev_rot===90||+s2.dev_rot===270),lift2=s2?FLOOR+(s2.device_mount==='straps'?0:(+s2.standoff||0)):0;
+    const turned2=s2&&(+s2.dev_rot===90||+s2.dev_rot===270),lift2=s2?FLOOR+(['straps','wall'].includes(s2.device_mount)?0:(+s2.standoff||0)):0;
     const Pr=root.TrayPair,Tp=root.TrayPlacement,pairW=s2&&Pr&&Tp?Pr.layout(item.spec,Tp.values(item.spec,tray),it2.spec,Pr.values(it2.spec,placement.second.tray)).tray_w:null;
     checks.push(grade('height',`Height in ${placement.span}U`,Math.max(lift+(+s.dev_h),s2?lift2+(+s2.dev_h):0),placement.span*(rack.pitch_mm||PITCH)));
     checks.push(grade('width','Tray width vs internal width',pairW??fpW+TRAY_SIDES+2*Math.abs(+s.dev_off_x||0),rack.width_mm));

@@ -32,6 +32,8 @@ if ($node) {
     Write-Host '== JavaScript Place on tray window (js-tests/tray-placement.js) =='
     & $node --test-reporter=spec (Join-Path $app 'js-tests\tray-placement.js')
     if ($LASTEXITCODE) { $failed = $true }
+    & $node --test-reporter=spec (Join-Path $app 'js-tests\wall-mount.js')
+    if ($LASTEXITCODE) { $failed = $true }
     Write-Host '== JavaScript front openings (js-tests/port-openings.js) =='
     & $node --test-reporter=spec (Join-Path $app 'js-tests\port-openings.js')
     if ($LASTEXITCODE) { $failed = $true }

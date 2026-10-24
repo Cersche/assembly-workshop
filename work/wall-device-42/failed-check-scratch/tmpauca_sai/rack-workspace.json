@@ -1,0 +1,65 @@
+{
+  "version": 2,
+  "racks": [
+    {
+      "id": "rack-1",
+      "name": "Test rack",
+      "slots": 5,
+      "appearance": {},
+      "width_mm": null,
+      "depth_mm": null,
+      "pitch_mm": null,
+      "placements": [
+        {
+          "assembly": {
+            "id": "asm-f0b77c2f6fd2ee3a7263012a4a76c676",
+            "name": "Untitled assembly",
+            "revision": 1,
+            "project": {
+              "id": "asm-f0b77c2f6fd2ee3a7263012a4a76c676",
+              "name": "Untitled assembly",
+              "units": "mm",
+              "selections": {},
+              "inputs": {}
+            },
+            "appearance": {},
+            "fit": "UNKNOWN"
+          },
+          "id": "a",
+          "equipment": "eq-0123456789ab",
+          "slot": 1,
+          "span": 2,
+          "geometry": "equipment-library",
+          "fit": "UNKNOWN",
+          "tray": {
+            "dev_off_x": 4,
+            "standoff": 7
+          }
+        },
+        {
+          "assembly": {
+            "id": "asm-31231fe5b1d97b806defd352901c890c",
+            "name": "Untitled assembly",
+            "revision": 1,
+            "project": {
+              "id": "asm-31231fe5b1d97b806defd352901c890c",
+              "name": "Untitled assembly",
+              "units": "mm",
+              "selections": {},
+              "inputs": {}
+            },
+            "appearance": {},
+            "fit": "UNKNOWN"
+          },
+          "id": "b",
+          "equipment": "eq-0123456789ab",
+          "slot": 3,
+          "span": 2,
+          "geometry": "equipment-library",
+          "fit": "UNKNOWN"
+        }
+      ]
+    }
+  ],
+  "generation": "89770446-3a93-4a3e-aaab-d79201600077"
+}

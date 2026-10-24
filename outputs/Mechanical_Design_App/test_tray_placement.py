@@ -445,7 +445,7 @@ class RearOpeningsTests(unittest.TestCase):
     def test_old_sources_byte_identical_and_new_opt_in(self):
         archive = HERE.parents[1] / 'docs/archive/codex/2026-10-20/task29/equipment_tray.scad'
         old = archive.read_text(encoding='utf-8')
-        for mount in eq.MOUNTS:
+        for mount in (m for m in eq.MOUNTS if m != 'wall'):  # archived templates predate wall
             for u in range(1, 6):
                 s = eq.clean(dict(name='Rear test', holes=[[20,20]], dev_w=85, dev_d=100, dev_h=20,
                                   device_mount=mount, joint="screw", rear_support=True, u=u))
@@ -734,7 +734,7 @@ class SleeveV2Tests(unittest.TestCase):
         fixtures=[]
         for name,day in [('SLV-B','2026-10-20'),('SLV-D','2026-10-20'),('SLV-E','2026-10-21')]:
             fixtures.append(json.loads((self.ROOT/f'outputs/Physical_Test_Coupons_{day}_{name}/{name}_spec.json').read_text(encoding='utf-8')))
-        for mount in eq.MOUNTS:
+        for mount in (m for m in eq.MOUNTS if m != 'wall'):  # archived templates predate wall
             for joint in eq.JOINTS:
                 for units in (1,2,5):
                     for style in ('solid','open','reinforced','slots','vents'):

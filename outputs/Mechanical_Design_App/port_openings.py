@@ -88,7 +88,7 @@ def default_size(type=None):
 
 def lift(spec):
     return (0.5 + 3 - (7 + LEGACY_SLOT_OFFSET + 3) - foot_height(spec) if spec.get('device_mount') in ('flat', 'sleeve') else
-            0 if spec.get('device_mount') == 'straps' else float(spec.get('standoff', 6)))
+            0 if spec.get('device_mount') in ('straps','wall') else float(spec.get('standoff', 6)))
 
 
 def front_openings(lib_spec, tray=None):
@@ -198,7 +198,7 @@ def front_window(s):
     if existing:return existing
     if s.get('front_position','today')=='today' or device_y(s)>0:return None
     w=float(s['dev_d'] if s.get('dev_rot',0) in (90,270) else s['dev_w'])
-    bottom=11.225+(0 if s.get('device_mount')=='straps' else float(s.get('standoff',6)))
+    bottom=11.225+(0 if s.get('device_mount') in ('straps','wall') else float(s.get('standoff',6)))
     if s.get('device_mount')=='flat':bottom=3.5
     half=w/2+SLEEVE_SIDE;top=bottom+case_height(s)+SLEEVE_TOP
     return dict(x=float(s.get('dev_off_x',0)),half=half,bottom=bottom,top=top,width=half*2,height=top-bottom)

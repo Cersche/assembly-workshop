@@ -29,7 +29,7 @@
   function defaultSize(type){return {...(Object.prototype.hasOwnProperty.call(DEFAULT_SIZES,type)?DEFAULT_SIZES[type]:DEFAULT_SIZES.other)};}
   // Shared height rule for the wizard, placement sketches and cable markers; mirrors equipment.py.
   const floorZ=spec=>['flat','sleeve'].includes(spec.device_mount)?0.5:7+LEGACY_SLOT_OFFSET;
-  const usesStandoffs=spec=>!['straps','flat','sleeve'].includes(spec.device_mount);
+  const usesStandoffs=spec=>!['straps','wall','flat','sleeve'].includes(spec.device_mount);
   const deviceLift=spec=>floorZ(spec)+3+(usesStandoffs(spec)?+(spec.standoff===undefined?6:spec.standoff):0)-footHeight(spec);  // case on the floor top; feet hang in their pockets
   const neededHeight=spec=>{const m=spec.device_mount,extra=['pegs','clips'].includes(m)?+(spec.board_t??1.6)+(m==='pegs'?1.6:2.5):0;return Math.max(deviceLift(spec)+Math.max(+spec.dev_h,extra),(spec.joint||'screw')==='screw'?floorZ(spec)+22:0);};
   const autoU=spec=>Math.min(5,Math.max(1,Math.ceil(neededHeight(spec)/RACK_PITCH)));
@@ -38,7 +38,7 @@
     return u>=1&&u<=5&&u<Math.ceil(neededHeight(spec)/RACK_PITCH)?`Fits ${u}U if it sits flat (no standoffs): ${Math.round(neededHeight(flat)*100)/100} mm needed / ${Math.round(u*RACK_PITCH*100)/100} mm available. Choose 'Sits flat' as the tray default mount on the Ports step, or under Mounting in Place on tray per slot.`:'';
   }
   // Historical public lift is relative to the old floor top (10 mm); differences include the new floor.
-  function lift(spec){return ['flat','sleeve'].includes(spec.device_mount)?deviceLift(spec)-(7+LEGACY_SLOT_OFFSET+3):spec.device_mount==='straps'?0:+(spec.standoff??6);}
+  function lift(spec){return ['flat','sleeve'].includes(spec.device_mount)?deviceLift(spec)-(7+LEGACY_SLOT_OFFSET+3):['straps','wall'].includes(spec.device_mount)?0:+(spec.standoff??6);}
   function frontOpenings(libSpec,tray){
     if(libSpec.faceplate_only)return {ports:faceplateSpec(tray?.faceplate).ports,dx:0,dz:0,follows:false,rotation:0,message:null};
     const eff={...libSpec};
@@ -89,7 +89,7 @@
   const FRONT_POSITIONS=['today','flush','setback'],BEZELS=['none','chamfer','rounded'],BEZEL_WEB=2,BEZEL_STEPS=8;
   function deviceY(s){return s.front_position==='flush'?-4:s.front_position==='setback'?-4+ +(s.front_setback??16):s.device_mount==='sleeve'?-4:12+ +(s.dev_off_y||0);}
   function frontWindow(s){const win=sleeve(s);if(win)return win;if(!s.front_position||s.front_position==='today'||deviceY(s)>0)return null;
-    const w=+([90,270].includes(+s.dev_rot)?s.dev_d:s.dev_w),bottom=s.device_mount==='flat'?3.5:11.225+(s.device_mount==='straps'?0:+(s.standoff??6)),half=w/2+SLEEVE.side,top=bottom+deviceCaseHeight(s)+SLEEVE.top;
+    const w=+([90,270].includes(+s.dev_rot)?s.dev_d:s.dev_w),bottom=s.device_mount==='flat'?3.5:11.225+(['straps','wall'].includes(s.device_mount)?0:+(s.standoff??6)),half=w/2+SLEEVE.side,top=bottom+deviceCaseHeight(s)+SLEEVE.top;
     return {x:+(s.dev_off_x||0),half,bottom,top,width:half*2,height:top-bottom};}
   function positionProblems(s){if(!s.front_position||s.front_position==='today')return [];const out=[],y=deviceY(s),win=frontWindow(s);
     if(s.device_mount==='sleeve'&&Math.abs(y+4)>1e-9)out.push('Sleeve set back is not supported: its front wall joints and strap slots assume a flush case. Choose As today or Flush with faceplate, or change the mount.');

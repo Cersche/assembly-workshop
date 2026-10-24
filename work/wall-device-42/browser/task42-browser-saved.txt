@@ -1,0 +1,133 @@
+Browser tab: 1, Title: "Assembly Workshop · Lab Rax Studio", URL: "http://127.0.0.1:8872/".
+1 AXWebArea Assembly Workshop · Lab Rax Studio, URL: 127.0.0.1:8872/
+	2 container studio
+		3 container
+			4 button Description: Project dashboard, ID: homeStudio
+				5 text AW
+				6 text Assembly Workshop
+				7 text LAB RAX STUDIO
+			131 text Task 42 disposable
+			132 text Saved locally
+			10 button (disabled) Save, ID: saveLayout
+			11 button Description: Keyboard shortcuts, ID: shortcutHelp
+		12 container Workspace
+			13 text LOCAL WORKSPACE
+			14 checkbox 01 Rack, Value: 1
+			15 checkbox 02 Assemble, Value: 0
+			16 checkbox 03 Review, Value: 0
+			17 checkbox 04 Prepare, Value: 0
+			18 button Rack settings, ID: configureRack
+			19 button History, ID: rackHistory
+			20 button (expanded) Hide inspector, ID: toggleInspector, Secondary Actions: Collapse
+		21 container
+			22 container racksSection
+				23 button (expanded) Racks & slots, Secondary Actions: Collapse
+					24 text Racks & slots
+				25 text PROJECT
+				26 button Description: New rack, ID: newRack
+				27 text Rack layout
+				28 pop up button (collapsed, settable) Rack layout, Value: Task 42 disposable, ID: rackChoice, Secondary Actions: Expand
+					29 menu
+						133 (selected) Task 42 disposable
+				31 container explorerPane
+					32 container rackTree
+						134 text 5 SLOTS · 1 ASSEMBLY
+						135 checkbox Description: U05 · Untitled assembly, Value: 1
+							136 text 05
+							137 text Untitled assembly
+							138 text Fit UNKNOWN
+						139 button More actions for U05
+						140 checkbox Description: U04 · Empty, Value: 0
+							141 text 04
+							142 text Empty slot
+							143 text Available
+						144 button More actions for U04
+						145 checkbox Description: U03 · Empty, Value: 0
+							146 text 03
+							147 text Empty slot
+							148 text Available
+						149 button More actions for U03
+						150 checkbox Description: U02 · Empty, Value: 0
+							151 text 02
+							152 text Empty slot
+							153 text Available
+						154 button More actions for U02
+						155 checkbox Description: U01 · Empty, Value: 0
+							156 text 01
+							157 text Empty slot
+							158 text Available
+						159 button More actions for U01
+					59 container
+						60 text Select a slot to place equipment.
+						61 text U1 is at the bottom.
+			62 button (collapsed) Equipment, Secondary Actions: Expand
+				63 text Equipment
+			64 button (collapsed) Hardware library, Secondary Actions: Expand
+				65 text Hardware library
+		66 container
+			160 text RACK DESIGN
+			68 heading Task 42 disposable, Value: 1, ID: contextTitle
+				161 text Task 42 disposable
+			70 button Parts catalog, Help: Browse the original Lab Rax part models, ID: openRackReferences
+			162 text Rack preview
+			72 container rackView
+				163 text 5U rack · 208 × 240 mm
+				74 container Camera
+					75 text VIEW
+					76 checkbox 3D, Help: Angled 3D view you can orbit, Value: 1, ID: resetRackView
+					77 checkbox Front, Help: Straight-on front view, Value: 0, ID: frontRackView
+					78 checkbox Rear, Help: Straight-on rear view, looking at the back of the rack, Value: 0, ID: rearRackView
+				79 container Show
+					80 text SHOW
+					81 checkbox Side panels, Value: 0, ID: toggleRackPanels
+						82 text Side panels
+					83 checkbox Back labels, Value: 0, ID: toggleRearLabels
+						84 text Back labels
+					85 checkbox Cables, Help: Hide the panels and see through the frame to the equipment, ports and cable guides, Value: 0, ID: toggleCablesView
+						86 text Cables
+					87 checkbox Cable runs, Help: Show cable runs in the normal views (they always show in Cables mode and the Rear view), Value: 0, ID: toggleCableRuns
+						88 text Cable runs
+				89 checkbox Shadows, Help: Soft shadows and shading. Turn off if the view feels slow., Value: 1, ID: renderQuality
+					90 text Shadows
+				91 container Preview quality: Low is faster, High is sharper. Display only; saved in this browser for this view.
+					92 text Preview quality
+					93 slider (settable, integer) Description: Preview quality, Value: 1
+					94 text Medium
+				95 image Help: Left drag: orbit · Right/middle drag: pan · Wheel: zoom at cursor · Z: fit · 0–7: views, ID: rackCanvas, Description: Lab Rax source meshes. Left-drag orbits, right-drag pans, scroll zooms at the cursor, Z fits; select a slot in Explorer.
+				96 container Camera views
+					97 button Iso
+					98 button Top
+					99 button Front
+					100 button Fit
+				101 text X Y Z  Left-drag orbit · right-drag pan · scroll zoom · Z fit · click a slot
+				164 text Perspective · depth-tested · 115,894 triangles
+			165 text Task 42 disposable / Slot 1
+			104 button View rack, ID: backToRack
+			166 text Saved rack, hardware and appearance locally.
+		106 container studioInspector
+			107 container
+				108 text INSPECTOR
+				167 text U05
+			110 tab group Inspector
+				111 tab (selected, settable, boolean) Setup, Value: 1, ID: tabSetup
+				112 tab (selectable, settable, boolean) Hardware, Value: 0, ID: tabHardware
+				113 tab (selectable, settable, boolean) Appearance, Value: 0, ID: tabAppearance
+			114 container Description: Setup, ID: panelSetup
+				115 container slotProperties
+					168 text CURRENT SELECTION
+					169 heading U05, Value: 2
+						170 text U05
+					171 text Untitled assembly · U05
+					172 text Reference allocation. Installed fit, service access and load capacity are UNKNOWN.
+					173 button Place on tray
+					174 button Slot actions ⋯
+					175 text Rack view shows a box sketch of this slot’s tray settings (position, rotation, height, keystones, ports). Place on tray → Render exact preview draws the exact shape here.
+					176 button (collapsed) Ports (0), Secondary Actions: Expand
+						177 text Ports (0)
+				126 button (collapsed) Project status & limitations, Secondary Actions: Expand
+					127 text Project status & limitations
+		128 container
+			129 text Local rack layout · no cloud connection required
+			130 text Millimeters · physical fit UNKNOWN
+
+The focused UI element is 1 AXWebArea Assembly Workshop · Lab Rax Studio, URL: 127.0.0.1:8872/

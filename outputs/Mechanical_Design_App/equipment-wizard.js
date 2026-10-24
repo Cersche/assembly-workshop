@@ -3,7 +3,7 @@
 // (tray-placement.js). New items keep the template defaults below; older items keep their saved values as defaults.
 (function(){
   const PLATE_W=252,STEPS=['Device','Holes','Ports'];
-  const MOUNTS={inserts:'Heat-set inserts + screws',pegs:'Printed standoffs / pegs',clips:'Snap-fit clips',straps:'Strap / zip-tie slots',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
+  const MOUNTS={inserts:'Heat-set inserts + screws',pegs:'Printed standoffs / pegs',clips:'Snap-fit clips',straps:'Strap / zip-tie slots',wall:'Thin wall around it (boxes)',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
   const JOINTS={screw:'Screw joint',single:'Single printed piece'};
   let uExplicit=false;
   let spec,step,imported=null,orient=0,turn=0,importMsg='',found=[],foundFeet=[],foundPorts=[];

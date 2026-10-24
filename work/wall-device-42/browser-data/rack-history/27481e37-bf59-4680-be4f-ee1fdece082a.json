@@ -1,0 +1,50 @@
+{
+  "version": 2,
+  "racks": [
+    {
+      "id": "wall-rack",
+      "name": "Task 42 disposable",
+      "slots": 5,
+      "appearance": {},
+      "width_mm": null,
+      "depth_mm": null,
+      "pitch_mm": null,
+      "placements": [
+        {
+          "assembly": {
+            "id": "asm-7744a3f7bf4ffd7dc335a117eb4a00e1",
+            "name": "Untitled assembly",
+            "revision": 1,
+            "project": {
+              "selections": {},
+              "inputs": {
+                "stack": 3.3,
+                "pocket": 8,
+                "boss_diameter": 9,
+                "pilot": 4.2,
+                "minimum_engagement": 3,
+                "bottom_allowance": 0.5
+              },
+              "notes": "Fit and strength UNKNOWN.",
+              "id": "asm-7744a3f7bf4ffd7dc335a117eb4a00e1",
+              "name": "Untitled assembly",
+              "units": "mm"
+            },
+            "appearance": {},
+            "fit": "UNKNOWN"
+          },
+          "id": "wall-pair",
+          "equipment": "eq-000000004200",
+          "slot": 1,
+          "span": 1,
+          "geometry": "equipment-library",
+          "fit": "UNKNOWN",
+          "second": {
+            "equipment": "eq-000000004201"
+          }
+        }
+      ]
+    }
+  ],
+  "generation": "27481e37-bf59-4680-be4f-ee1fdece082a"
+}
