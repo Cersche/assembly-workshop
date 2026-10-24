@@ -19,7 +19,7 @@ Same order and orientation as before: keystone far left, Hue in the middle-left,
 | Hue cradle posts (base plate cut off) | centre X -34.5, Y 70.2; posts X -81.9 to +12.9 | centre X -42 |
 | Cable lane (Pi power, HDMI, audio) | X +12.9 to +46: **33 mm** | 20.5 mm |
 | Pi 4 board (ports at the plate) | X 46 to 102, Y 0 to 85 | X 26 to 82 |
-| Pi plate openings | USB X 55 / 73, Ethernet 91.7, cable slot 55 | 35 / 53 / 71.7 |
+| Pi plate openings | USB X 55 / 73, Ethernet 91.7 (the 12 x 9 "USB cable slot" was removed at Brian's request) | 35 / 53 / 71.7, plus the slot |
 | Tray floor | X -82.5 to +102 (184.5 mm), Y 0 to 123.4 | -89.6 to +102 |
 | Tray joints (hidden screws) | X -58, -12, +29.5 | -40, +16, +93 |
 | Cable-tie slots | two 3 x 12 mm slots across the lane, Y 96 to 108 | none |
