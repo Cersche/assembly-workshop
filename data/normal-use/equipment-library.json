@@ -500,12 +500,15 @@
       "device_mount": "wall",
       "joint": "screw",
       "wall_open": [
-        "rear"
+        "front",
+        "rear",
+        "left",
+        "right"
       ],
       "rear_support": false,
       "dev_rot": 0,
       "dev_off_x": -30.0,
-      "dev_off_y": 13.0,
+      "dev_off_y": 2.5,
       "coupon": [],
       "holes": [],
       "keystones": [
@@ -546,7 +549,7 @@
         "dev_rot": 90
       }
     },
-    "build": "6b49c5b581bad7d83606978c194b8ef353967e89b91c1bb5807cc47229dff13c",
+    "build": "a9d706913e20e313aed44020250df824b77606ae60d526ad1b1e7491b9d9485d",
     "parts": [
       "tray",
       "faceplate"

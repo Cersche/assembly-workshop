@@ -289,8 +289,8 @@ WALL_SIDES = ('front', 'rear', 'left', 'right')
 WALL_MESSAGE = 'The wall would hit the faceplate joint; set the device back or move it sideways.'
 
 def wall_open(value):
-    if not isinstance(value, list) or not value or any(not isinstance(x, str) or x not in WALL_SIDES for x in value) or len(set(value)) == 4:
-        raise ValueError('Open sides must name Front, Rear, Left or Right; leave at least one open and one closed.')
+    if not isinstance(value, list) or not value or any(not isinstance(x, str) or x not in WALL_SIDES for x in value):
+        raise ValueError('Open sides must name Front, Rear, Left or Right; leave at least one open.')
     return [x for x in WALL_SIDES if x in value]
 
 def wall_rectangles(s):
@@ -300,9 +300,10 @@ def wall_rectangles(s):
     result=[]
     for side in WALL_SIDES:
         horizontal=side in ('front','rear'); length=w if horizontal else d
-        opened=side in s.get('wall_open',['rear'])
+        opened=side in s.get('wall_open',['rear']); corners=len(set(s.get('wall_open',['rear'])))==4  # all open = corner posts only
+        ret=min(24.5,length/2-5) if corners else 9.5
         if opened and length<30: continue
-        spans=[(-2.5,9.5,h),(length-9.5,length+2.5,h)] if opened else ([(-2.5,length/2-10,h),(length/2-10,length/2+10,min(4,h)),(length/2+10,length+2.5,h)] if not horizontal and length>=40 else [(-2.5,length+2.5,h)])
+        spans=[(-2.5,ret,h),(length-ret,length+2.5,h)] if opened else ([(-2.5,length/2-10,h),(length/2-10,length/2+10,min(4,h)),(length/2+10,length+2.5,h)] if not horizontal and length>=40 else [(-2.5,length+2.5,h)])
         cross=(-2.5,-.5) if side in ('front','left') else ((d+.5,d+2.5) if horizontal else (w+.5,w+2.5))
         for a,b,z in spans:
             q=[a,cross[0],b,cross[1]] if horizontal else [cross[0],a,cross[1],b]
@@ -1157,7 +1158,7 @@ SECOND_RENAMES = {'dev_x': 'dev2_x', 'dev_y': 'dev2_y', 'fp_w': 'fp2_w', 'fp_d':
                   'dev_h': 'dev2_h', 'dev_rot': 'dev2_rot', 'dev_off_x': 'dev2_off_x', 'holes': 'dev2_holes', 'hole_d': 'dev2_hole_d',
                   'standoff': 'dev2_standoff', 'insert_pilot': 'dev2_insert_pilot', 'board_t': 'dev2_board_t',
                   'device_mount': 'dev2_mount', 'feet': 'dev2_feet', 'foot_h': 'dev2_foot_h', 'dp': 'dp2',
-                  'wall_open': 'dev2_wall_open', 'wall_h': 'dev2_wall_h', 'wall_spans': 'wall2_spans', 'wall_local': 'wall2_local', 'wall_rects': 'wall2_rects', 'wall_add': 'wall2_add',
+                  'wall_open': 'dev2_wall_open', 'wall_h': 'dev2_wall_h', 'wall_spans': 'wall2_spans', 'wall_local': 'wall2_local', 'wall_rects': 'wall2_rects', 'wall_add': 'wall2_add', 'wall_corners': 'wall2_corners', 'wall_ret': 'wall2_ret',
                   'device_features_add': 'device2_features_add', 'device_features_cut': 'device2_features_cut'}
 SECOND_SCAD = """
 // ---- Second device on this tray (Brian, 2026-10-20). PROPOSED; fit, retention and strength UNKNOWN.

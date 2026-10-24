@@ -2,6 +2,11 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-24 Corner posts (Brian: "use the 4 corners to hold the hue, it will be dropped in place")
+
+- Wall mounting: ticking all four sides open now means corner posts only, with 25 mm returns (min(24.5, side/2-5)) so they reach past rounded case corners onto the flat sides; mixed open/closed keeps 10 mm returns, so earlier wall sources are unchanged. Python/SCAD/JS + tests updated by Claude; run_checks pass (217 Py, 2 skipped; all JS).
+- Hue + Pi item eq-de5e30c93309 rebuilt: Hue on 4 corner posts (12 mm tall), dev_off_y 2.5, build a9d706913e20. Files: outputs/Hue_Pi4_Keystone_Corners_2026-10-24/. The Swanky Rottis cradle (Downloads) was only used to read its corner radius (~17-18 mm); not imported. Fit UNKNOWN.
+
 ## 2026-10-24 Task 42: thin device wall (reviewed by Claude)
 
 - **Reviewed and committed by Claude.** `run_checks.ps1` rerun: 216 Python (2 skipped) + all JS pass. Accepted the Hue set-back (`dev_off_y=13`). The real Hue + Pi item `eq-de5e30c93309` is rebuilt with the Hue on `wall`, rear open (build 6b49c5b581ba); its 9U rack slot uses library defaults, so it follows. Files: outputs/Hue_Pi4_Keystone_Wall_2026-10-24/. Library backup before the change: %TEMP%\equipment-library.before-wall.json. Fit/retention UNKNOWN; not printed.

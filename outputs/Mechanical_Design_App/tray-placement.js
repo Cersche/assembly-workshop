@@ -49,8 +49,8 @@
   function wallBoxes(spec,v){
     if(v.device_mount!=='wall')return [];
     const L=layout(spec,v),w=+spec.dev_w,d=+spec.dev_d,h=Math.min(12,+spec.dev_h-2),out=[];
-    for(const side of WALL_SIDES){const hz=['front','rear'].includes(side),len=hz?w:d,opened=(v.wall_open||['rear']).includes(side);if(opened&&len<30)continue;
-      const spans=opened?[[-2.5,9.5,h],[len-9.5,len+2.5,h]]:!hz&&len>=40?[[-2.5,len/2-10,h],[len/2-10,len/2+10,Math.min(4,h)],[len/2+10,len+2.5,h]]:[[-2.5,len+2.5,h]],c=['front','left'].includes(side)?-2.5:(hz?d:w)+.5;
+    for(const side of WALL_SIDES){const hz=['front','rear'].includes(side),len=hz?w:d,opened=(v.wall_open||['rear']).includes(side),ret=new Set(v.wall_open||['rear']).size===4?Math.min(24.5,len/2-5):9.5;if(opened&&len<30)continue;
+      const spans=opened?[[-2.5,ret,h],[len-ret,len+2.5,h]]:!hz&&len>=40?[[-2.5,len/2-10,h],[len/2-10,len/2+10,Math.min(4,h)],[len/2+10,len+2.5,h]]:[[-2.5,len+2.5,h]],c=['front','left'].includes(side)?-2.5:(hz?d:w)+.5;
       for(const [a,b,z] of spans){const q=hz?[a,c,b,c+2]:[c,a,c+2,b],p=dp(spec,v.dev_rot,[q[0],q[1]]),r=dp(spec,v.dev_rot,[q[2],q[3]]);out.push([L.dev_x+Math.min(p[0],r[0]),L.dev_y+Math.min(p[1],r[1]),L.dev_x+Math.max(p[0],r[0]),L.dev_y+Math.max(p[1],r[1]),z]);}
     }return out;
   }
@@ -94,7 +94,7 @@
     if(![0,90,180,270].includes(v.dev_rot))return ['Rotation must be 0, 90, 180 or 270 degrees.'];
     if(!fin(v.dev_off_x)||!fin(v.dev_off_y))return ['Enter numbers for the left/right offset and the front gap.'];
     if(!Number.isInteger(v.u)||v.u<1||v.u>5)out.push('Faceplate height must be a whole number of rack units from 1 to 5.');
-    if(v.device_mount==='wall'){if(!Array.isArray(v.wall_open)||!v.wall_open.length||v.wall_open.some(s=>!WALL_SIDES.includes(s))||new Set(v.wall_open).size===4)out.push('Open sides must name Front, Rear, Left or Right; leave at least one open and one closed.');if(+spec.dev_h<=2)out.push('A wall needs a device taller than 2 mm.');}
+    if(v.device_mount==='wall'){if(!Array.isArray(v.wall_open)||!v.wall_open.length||v.wall_open.some(s=>!WALL_SIDES.includes(s)))out.push('Open sides must name Front, Rear, Left or Right; leave at least one open.');if(+spec.dev_h<=2)out.push('A wall needs a device taller than 2 mm.');}
     if(!MOUNTS[v.device_mount])out.push('Choose how the device attaches to the tray.');
     if(!JOINTS[v.joint])out.push('Choose how the tray joins the faceplate.');
     if(!fin(v.standoff)||v.standoff<0||v.standoff>30)out.push('Standoff must be between 0 and 30 mm.');
@@ -387,7 +387,7 @@
     const spec=state.item.spec,v=state.v,name=state.item.display_name||state.item.name,E=editing(),dv=E.v,dspec=E.spec;
     const rot=h('div',{class:'ew-choices',role:'group','aria-label':'Rotation'},...[0,90,180,270].map(r=>{const b=h('button',{type:'button',class:'ew-chip'+(dv.dev_rot===r?' on':''),'aria-pressed':String(dv.dev_rot===r)},r+'°');b.onclick=()=>{dv.dev_rot=r;render();};return b;}));
     const centre=h('button',{type:'button',class:'ew-chip'},'Centre');centre.onclick=()=>{dv.dev_off_x=0;syncFields();update();};
-    const wallOpts=dv.device_mount==='wall'?[h('p',{},'Open sides (cables):'),h('div',{class:'ew-row'},...WALL_SIDES.map(side=>{const input=h('input',{type:'checkbox'});input.checked=(dv.wall_open||['rear']).includes(side);input.onchange=()=>{dv.wall_open=WALL_SIDES.filter(s=>s===side?input.checked:(dv.wall_open||['rear']).includes(s));render();};return h('label',{class:'ew-chip'},input,' '+side[0].toUpperCase()+side.slice(1));})),h('p',{class:'ew-note'},'Device sits on the floor inside a 2 mm wall, open where you tick. Fit and retention UNKNOWN.')]:[];
+    const wallOpts=dv.device_mount==='wall'?[h('p',{},'Open sides (cables):'),h('div',{class:'ew-row'},...WALL_SIDES.map(side=>{const input=h('input',{type:'checkbox'});input.checked=(dv.wall_open||['rear']).includes(side);input.onchange=()=>{dv.wall_open=WALL_SIDES.filter(s=>s===side?input.checked:(dv.wall_open||['rear']).includes(s));render();};return h('label',{class:'ew-chip'},input,' '+side[0].toUpperCase()+side.slice(1));})),h('p',{class:'ew-note'},'Device sits on the floor inside a 2 mm wall, open where you tick. Tick all four for corner posts only (drop in). Fit and retention UNKNOWN.')]:[];
     const mountOpts=PO().usesStandoffs(dv)?[field('Standoff (mm)',()=>dv.standoff,x=>dv.standoff=x,{step:'0.5',min:'0',max:'30'})]:[h('p',{class:'ew-note'},dv.device_mount==='sleeve'?'Low floor, side walls, top lips when space permits, rear stop and optional straps. Front flush; fit/retention/strength UNKNOWN.':v.device_mount==='flat'?'Rests on the low floor with corner stops and optional strap slots. Retention UNKNOWN.':'Rests on the tray floor; no standoffs.')];
     if(dv.device_mount==='inserts')mountOpts.push(field('Insert pilot hole (mm)',()=>dv.insert_pilot,x=>dv.insert_pilot=x,{step:'0.1'}));
     if(dv.device_mount==='pegs'||dv.device_mount==='clips')mountOpts.push(field(dv.device_mount==='pegs'?'Board thickness (mm)':'Edge thickness clipped (mm)',()=>dv.board_t,x=>dv.board_t=x,{step:'0.1'}));

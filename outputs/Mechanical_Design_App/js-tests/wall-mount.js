@@ -9,8 +9,8 @@ test('Wall accepted; floor, ports and placement round trip',()=>{
  assert.deepEqual(Pair.diff(spec,Pair.values(spec,{wall_open:['left']})),{wall_open:['left']});
  const ports=C.wizardPorts({...spec,rear_ports:[{id:'r',x:0,z:20}]},{standoff:29});assert.equal(ports[0].z,20);
 });
-test('Wall rejects missing cable access, all open and unknown sides',()=>{
- for(const wall_open of [[],['front','rear','left','right'],['back'],'rear',null])assert(T.problems(spec,T.values(spec,{wall_open})).some(x=>x.includes('Open sides')));
+test('Wall rejects missing cable access and unknown sides',()=>{
+ for(const wall_open of [[],['back'],'rear',null])assert(T.problems(spec,T.values(spec,{wall_open})).some(x=>x.includes('Open sides')));
  assert(T.problems({...spec,dev_h:2},T.values(spec)).some(x=>x.includes('taller than 2')));
 });
 test('Wall clash and rotated preview geometry',()=>{

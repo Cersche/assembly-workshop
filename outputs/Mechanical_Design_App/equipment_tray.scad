@@ -289,11 +289,13 @@ module device_features_cut(){
 
 // @wall-begin
 wall_open=["rear"]; wall_clear=0.5; wall_t=2; wall_h=min(12,dev_h-2);
-function wall_spans(l,opened,notch)=opened?(l<30?[]:[[-2.5,9.5,wall_h],[l-9.5,l+2.5,wall_h]]):notch&&l>=40?[[-2.5,l/2-10,wall_h],[l/2-10,l/2+10,min(4,wall_h)],[l/2+10,l+2.5,wall_h]]:[[-2.5,l+2.5,wall_h]];
+wall_corners=len([for(s=["front","rear","left","right"])if(len([for(o=wall_open)if(o==s)o])>0)s])==4;  // all open = corner posts, 25 mm returns
+function wall_ret(l)=wall_corners?min(24.5,l/2-5):9.5;
+function wall_spans(l,opened,notch)=opened?(l<30?[]:[[-2.5,wall_ret(l),wall_h],[l-wall_ret(l),l+2.5,wall_h]]):notch&&l>=40?[[-2.5,l/2-10,wall_h],[l/2-10,l/2+10,min(4,wall_h)],[l/2+10,l+2.5,wall_h]]:[[-2.5,l+2.5,wall_h]];
 function wall_local()=[for(side=["front","rear","left","right"])let(hz=side=="front"||side=="rear",l=hz?dev_w:dev_d,c=side=="front"||side=="left"?-2.5:(hz?dev_d:dev_w)+.5)for(a=wall_spans(l,len([for(o=wall_open)if(o==side)o])>0,!hz))hz?[a[0],c,a[1],c+2,a[2]]:[c,a[0],c+2,a[1],a[2]]];
 function wall_rects()=[for(q=wall_local())let(a=dp([q[0],q[1]]),b=dp([q[2],q[3]]))[dev_x+min(a[0],b[0]),dev_y+min(a[1],b[1]),dev_x+max(a[0],b[0]),dev_y+max(a[1],b[1]),q[4]]];
 module wall_add(){if(device_mount=="wall")for(q=wall_rects())translate([q[0],q[1],floor_top-.01])cube([q[2]-q[0],q[3]-q[1],q[4]+.01]);}
-assert(device_mount!="wall"||(is_list(wall_open)&&len(wall_open)>0&&len([for(s=["front","rear","left","right"])if(len([for(o=wall_open)if(o==s)o])>0)s])<4&&len([for(s=wall_open)if(s!="front"&&s!="rear"&&s!="left"&&s!="right")s])==0),"Open sides must leave at least one open and one closed");
+assert(device_mount!="wall"||(is_list(wall_open)&&len(wall_open)>0&&len([for(s=["front","rear","left","right"])if(len([for(o=wall_open)if(o==s)o])>0)s])<=4&&len([for(s=wall_open)if(s!="front"&&s!="rear"&&s!="left"&&s!="right")s])==0),"Open sides must leave at least one open");
 assert(device_mount!="wall"||dev_h>2,"A wall needs a device taller than 2 mm");
 assert(device_mount!="wall"||len([for(q=wall_rects())if(q[1]<0||(joint=="screw"&&len([for(x=joint_x)if(q[0]<x+9&&q[2]>x-9&&(q[1]<11.3&&q[3]>0||q[1]<22&&q[3]>9&&len([for(side=[-1,1])if(q[0]<x+side*6+1&&q[2]>x+side*6-1)side])>0))x])>0))q])==0,"The wall would hit the faceplate joint; set the device back or move it sideways.");
 // @wall-end

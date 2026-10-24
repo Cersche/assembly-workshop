@@ -15,10 +15,18 @@ class WallTests(unittest.TestCase):
         self.assertEqual(eq.PAIR_REACH['wall'],2.5)
 
     def test_bad_sides_and_height(self):
-        for sides in ([],['front','rear','left','right'],['back'],'rear',[None],None):
+        for sides in ([],['back'],'rear',[None],None):
             with self.subTest(sides=sides),self.assertRaisesRegex(ValueError,'Open sides'):
                 eq.clean(self.raw(wall_open=sides))
         with self.assertRaisesRegex(ValueError,'taller than 2'):eq.clean(self.raw(dev_h=2))
+
+    def test_all_open_is_corner_posts(self):
+        # Brian 2026-10-24: tick all four = drop-in corner posts with 25 mm returns (past rounded case corners).
+        s=eq.clean(self.raw(wall_open=['front','rear','left','right'],dev_w=90.7,dev_d=90.4,dev_off_y=30))
+        boxes=eq.wall_rectangles(s)
+        self.assertEqual(len(boxes),8)
+        self.assertEqual(sorted({round(b[2]-b[0],3) for b in boxes}|{round(b[3]-b[1],3) for b in boxes}),[2.0,27.0])
+        self.assertIn('wall_corners', eq.source(s))
 
     def test_clash_actual_returns_and_rotations(self):
         for rot in (0,90,180,270):
