@@ -140,74 +140,6 @@
     "provenance": "Historical board dimensions and 58 \u00d7 49 mm hole pitch; connector centres from local reference mesh, \u00b12 mm. No reference mesh redistributed. Face, cable access, fit and strength UNKNOWN."
   },
   {
-    "id": "eq-de5e30c93309",
-    "name": "Philips Hue Bridge + Raspberry Pi 4 (keystone)",
-    "span": 1,
-    "spec": {
-      "name": "Philips Hue Bridge v2",
-      "dev_w": 88.0,
-      "dev_d": 88.0,
-      "dev_h": 26.0,
-      "hole_d": 2.7,
-      "standoff": 6.0,
-      "insert_pilot": 3.2,
-      "board_t": 1.6,
-      "u": 1,
-      "device_mount": "clips",
-      "joint": "screw",
-      "rear_support": false,
-      "dev_rot": 0,
-      "dev_off_x": -30.0,
-      "dev_off_y": 1.0,
-      "coupon": [],
-      "holes": [],
-      "keystones": [
-        -100.0
-      ],
-      "ports": [],
-      "rear_ports": [],
-      "second": {
-        "name": "Raspberry Pi 4 (example)",
-        "dev_w": 85.0,
-        "dev_d": 56.0,
-        "dev_h": 20.0,
-        "hole_d": 2.7,
-        "standoff": 6.0,
-        "insert_pilot": 3.2,
-        "board_t": 1.6,
-        "holes": [
-          [
-            3.5,
-            3.5
-          ],
-          [
-            61.5,
-            3.5
-          ],
-          [
-            3.5,
-            52.5
-          ],
-          [
-            61.5,
-            52.5
-          ]
-        ],
-        "device_mount": "inserts",
-        "dev_off_x": 46.0,
-        "dev_off_y": 1.0,
-        "dev_rot": 90
-      }
-    },
-    "build": "9289a62a37899e2580ed8129a9b5507c3b03f27744a6ef988b71fed3641bf6c2",
-    "parts": [
-      "tray",
-      "faceplate"
-    ],
-    "status": "PROPOSED \u2014 UNVALIDATED",
-    "display_name": "Philips Hue Bridge + Raspberry Pi 4 (keystone)"
-  },
-  {
     "id": "eq-c0e8f57fdaf5",
     "name": "Dell OptiPlex Micro 7010 (sleeve)",
     "span": 1,
@@ -550,5 +482,73 @@
     ],
     "status": "PROPOSED \u2014 UNVALIDATED",
     "display_name": "Netgear CM1000 (bracket: faceplate + rails v2)"
+  },
+  {
+    "id": "eq-de5e30c93309",
+    "name": "Philips Hue Bridge + Raspberry Pi 4 (keystone)",
+    "span": 1,
+    "spec": {
+      "name": "Philips Hue Bridge v2",
+      "dev_w": 90.7,
+      "dev_d": 90.4,
+      "dev_h": 25.4,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "clips",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": -30.0,
+      "dev_off_y": 1.0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [
+        -100.0
+      ],
+      "ports": [],
+      "rear_ports": [],
+      "second": {
+        "name": "Raspberry Pi 4 (example)",
+        "dev_w": 85.0,
+        "dev_d": 56.0,
+        "dev_h": 20.0,
+        "hole_d": 2.7,
+        "standoff": 6.0,
+        "insert_pilot": 3.2,
+        "board_t": 1.6,
+        "holes": [
+          [
+            3.5,
+            3.5
+          ],
+          [
+            61.5,
+            3.5
+          ],
+          [
+            3.5,
+            52.5
+          ],
+          [
+            61.5,
+            52.5
+          ]
+        ],
+        "device_mount": "inserts",
+        "dev_off_x": 48.0,
+        "dev_off_y": 1.0,
+        "dev_rot": 90
+      }
+    },
+    "build": "e11808e70687dbb850d2bbf75b26f76dc3c57f4f42750ce9f682f1428218cc59",
+    "parts": [
+      "tray",
+      "faceplate"
+    ],
+    "status": "PROPOSED \u2014 UNVALIDATED",
+    "display_name": "Philips Hue Bridge + Raspberry Pi 4 (keystone)"
   }
 ]
