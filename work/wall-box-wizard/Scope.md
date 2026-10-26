@@ -35,6 +35,7 @@ Idea from `work/notes/2026-10-22-feet-floor-and-wall-box-wizard.md`: an indoor, 
   - Two OUT ports on one long side, **22–24 mm apart** centre to centre (the photos disagree; calipers needed). IN on the opposite side, centred on the body length. Each port sticks out about 11–13 mm; IN tip to OUT tip about 50 mm.
   - Ears: open split rings flush with the back face, about 9 mm tall, holes about 5 mm, at diagonally opposite corners; hole centres about 48 mm apart lengthwise and 13 mm sideways. Overall length ear to ear about 56 mm.
   - Ground screw block on the same end as one ear, on the OUT side, level with the body top.
+- **Concept 6 re-rendered with the splitter estimates (2026-10-26, [renders and source](concept6/)):** splitter back face on two slotted standoffs ~14.5 mm off the left wall, one under each ear, so its port axis sits 26 mm from the wall and lines up with the keystone adapters. Splitter plus ports span about 47 mm of height; it clears the ScreenBeam by ~18 mm. The IN right-angle needs a ~30 mm downward leg (a long right-angle or an added barrel); real adapter sizes are UNKNOWN. Box size unchanged (~240 x 75 x 165). `body.scad` is the wall_box template output used for the box; render with OpenSCAD.exe from that folder (needs `body.stl` built from `body.scad`).
 - **Look:** friendlier for indoor use; five style concepts shown 2026-10-22 (soft slab, louvre, picture frame, pill, two-tier); Brian has not picked one yet.
 
 ## Still open
