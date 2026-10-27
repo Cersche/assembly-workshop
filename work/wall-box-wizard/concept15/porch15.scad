@@ -7,15 +7,16 @@
 //   after the cable is on clamps the wall against the splitter body. No coax keystone.
 // - Modem coax leaves through an open-top window in the right wall. The Ethernet keystone is on the box's right wall
 //   (body15.scad), off the porch.
-// - No extra box features: two M3 x ~40 screws from below go through the porch towers, the splitter ears and the
-//   box floor slots into nuts inside, so the same screws hold the splitter and the porch. Shift the splitter with
+// - Two M3 x 40 screws from below go through the porch towers, the splitter ears and the box floor slots into
+//   captive nut sliders inside the box (c15.scad nut_slider, keyed in 6 mm floor slots), so the same screws hold
+//   the splitter and the porch and the nuts stay put during assembly. Shift the splitter with
 //   sx (box slots allow +-8; keep sx in -8..0 so the porch stays on the flat part of the box bottom).
 // Render the assembly from this folder; it needs body15.stl built from body15.scad.
 include <../concepts12-14/parts.scad>
 use <c15.scad>
 
-pick=0;          // 0 assembly, 1 porch, 2 nut (for -D on the command line)
-part=pick==1?"porch":pick==2?"nut":"assembly";
+pick=0;          // 0 assembly, 1 porch, 2 nut, 3 nut slider (for -D on the command line)
+part=pick==1?"porch":pick==2?"nut":pick==3?"slider":"assembly";
 sx=0;            // splitter + porch shift along X
 t=2.5;           // porch wall
 h=33;            // porch depth below the box
@@ -70,13 +71,14 @@ module bezel_nut(){
 
 if(part=="porch")porch15();
 else if(part=="nut")bezel_nut();
+else if(part=="slider")rotate([180,0,0])nut_slider();   // print pocket-down, key up (from c15.scad)
 else {
  translate([sx,0,0]){
   porch15();
   translate([px0,in_y,in_z])rotate([0,-90,0])bezel_nut();
   splitter_hang([52.5,38,-11],2);
   rod([76,49.5,-11],[88,49.5,-11]);rod([88,49.5,-11],[88,49.5,10]);   // right-angle F up through the floor slot
-  for(e=ears)color("silver")translate([e[0],e[1],-h-0.5])cylinder(d=3,h=h+5,$fn=16);
+  for(e=ears)color("silver")translate([e[0],e[1],-h+cb_h])cylinder(d=3,h=40,$fn=16);   // M3 x 40
   color([0.95,0.95,0.95]){run([[29,in_y,in_z],[0,in_y,in_z],[-25,in_y,-16]]);run([[76,26.5,-11],[100,26.5,-11],[130,26.5,-16]]);}
  }
  color([0.15,0.15,0.15])run([[15,49,-6],[13,58,-20],[0,62,-24],[-25,62,-26]],4);    // power lead

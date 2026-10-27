@@ -8,6 +8,7 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 - Render `c15.scad` from its folder; it needs `../concepts12-14/porch_body.stl` built from `porch_body.scad` (STL not committed).
 - Porch part done as a scratch design: [porch15.scad](work/wall-box-wizard/concept15/porch15.scad) (`pick=1` porch, `pick=2` bezel nut, `0` assembly). Rounded tray, splitter IN clamped to the left wall by a threaded bezel nut (no coax keystone), cables out an open-top right window, held by the two splitter-ear screws (no new box features). Brian: box is ok for now, focus is the porch; ~1/4 in of IN post free after the cable is on.
 - Ethernet keystone moved off the porch to the box's right wall, low (Brian, 2026-10-27); box copy is `concept15/body15.scad`, build `body15.stl` from it before rendering `c15.scad` / `porch15.scad`.
+- Captive nut sliders for the two M3 x 40 porch/splitter screws (Brian asked, 2026-10-27): `nut_slider()` in c15.scad, `pick=3` in porch15.scad; ear slots widened to 6 mm for the slider key.
 - Next: Brian's review of the porch look; calipers on the splitter; later move the floor slots into the wall_box template. Scratch renders only; nothing printed; splitter sizes are photo estimates (calipers still needed); fit, travel and adapter sizes UNKNOWN.
 
 ## 2026-10-26 MoCA wall box: flat-splitter porch concepts 12-14 (superseded by concept 15 above)

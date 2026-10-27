@@ -25,12 +25,24 @@ module porch(){
 }
 // floor cutouts: one slot per splitter ear (M3 into a nut/insert inside) and a slot for the right-angle F
 module floor_cuts(){
- for(e=[[59,62],[46,14]])translate([e[0],e[1],-1])linear_extrude(floor_t+2)slot(2*adj);
+ // 6 mm wide so the nut slider's key rides in it; long enough for the key (10) plus +-adj of travel
+ for(e=[[59,62],[46,14]])translate([e[0],e[1],-1])linear_extrude(floor_t+2)
+  hull(){translate([-(adj+5)+3,0])circle(d=6,$fn=24);translate([adj+5-3,0])circle(d=6,$fn=24);}
  translate([88,49.5,-1])linear_extrude(floor_t+2)hull(){translate([-adj,0])circle(d=13,$fn=32);translate([adj,0])circle(d=13,$fn=32);}
+}
+// Captive nut slider (one per ear screw), sits on the box floor inside. Its key rides in the 6 mm floor slot so it
+// slides along X but cannot turn; an M3 nut drops into the hex pocket on top. Z=0 is the floor's top face.
+module nut_slider(){
+ color([0.55,0.75,0.6])difference(){
+  union(){translate([-7,-6,0])cube([14,12,4]);translate([-5,-2.8,-2])cube([10,5.6,2.01]);}
+  translate([0,0,-3])cylinder(d=3.4,h=10,$fn=24);
+  translate([0,0,4-2.6])cylinder(d=5.8/cos(30),h=3,$fn=6);   // M3 nut 5.5 AF x 2.4, pocket 5.8 AF x 2.6
+ }
 }
 // box contents as in parts.scad, with the cut floor and the jumper starting above the floor
 module contents(){
  color([0.92,0.91,0.87])difference(){import("body15.stl");floor_cuts();}
+ for(e=[[59,62],[46,14]])translate([e[0]+sx,e[1],floor_t])nut_slider();
  color([0.2,0.4,0.9])translate([102.5-14,30-8.5,35-8])cube([14,17,16]);   // Ethernet keystone rear, right wall
  screenbeam([17.5,34,62]);
  rod([37.5,49,182],[37.5,49,194]);rod([37.5,49,194],[49.5,49,194]);
