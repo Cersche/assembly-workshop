@@ -55,11 +55,15 @@ cr_y=SB[1]+30;          // plate front face (ScreenBeam back)
 cr_t=4;                 // plate thickness; bosses fill cr_y+cr_t .. back wall
 cr_slots=[[8,70],[97,70],[8,136],[97,136]];   // slot centres (X, Z at cz=0)
 module cradle15(){translate([0,0,cz])color([0.55,0.75,0.6])difference(){
+ // Printed back face down: plate on the bed with a 0.6 mm elephant-foot chamfer, pads stand up as walls with 45 deg
+ // gussets underneath; the front lips are the only overhang, kept to a 4 mm ledge.
  union(){
-  translate([4,cr_y,56])cube([97,cr_t,94]);                                   // back plate
+  hull(){translate([4,cr_y,48])cube([97,cr_t-0.6,102]);translate([4.6,cr_y,48.6])cube([95.8,cr_t,100.8]);}   // back plate
   translate([14.5,cr_y-8,56])cube([3,8,94]);translate([82.5,cr_y-8,56])cube([2,8,94]);   // side lips (right one thin: jumper beside it)
   for(x=[[14.5,36],[70,85.5]])translate([x[0],SB[1]-3,SB[2]-4])cube([x[1]-x[0],cr_y-SB[1]+3,4]);   // shelf pads
-  for(x=[[14.5,36],[70,85.5]])translate([x[0],SB[1]-3,SB[2]-0.01])cube([x[1]-x[0],3,6]);           // front lips
+  for(x=[[14.5,36],[70,85.5]])translate([x[0],SB[1]-3,SB[2]-0.01])cube([x[1]-x[0],3,4]);           // front lips (4 mm ledge)
+  for(x=[[14.5,36],[70,85.5]])translate([x[0],cr_y,SB[2]-4])rotate([0,90,0])linear_extrude(x[1]-x[0])
+   polygon([[0,0],[10,0],[0,-10]]);                                                                // 45 deg gussets under the pads
  }
  for(s=cr_slots)translate([s[0],cr_y-1,s[1]])rotate([-90,0,0])linear_extrude(cr_t+2)
   hull(){translate([0,-cz_adj])circle(d=3.4,$fn=20);translate([0,cz_adj])circle(d=3.4,$fn=20);}

@@ -35,6 +35,8 @@ win=[19,34,-19];         // right-wall coax window: Y from, Y to, bottom Z (mode
 
 module profile(o)hull(){
  for(x=[px0+rb,px1-rb])translate([x,-h+rb])circle(r=rb-o,$fn=72);
+ // outside only: the round meets the bed at 45 degrees (no curl-under overhang when printed floor-down)
+ if(o==0)translate([px0+rb-0.4142*rb,-h])square([px1-px0-2*rb+2*0.4142*rb,0.01]);
  translate([px0+o,-h+rb])square([px1-px0-2*o,h-rb+(o>0?2:0)]);
 }
 module along_y(y0,y1)translate([0,y1,0])rotate([90,0,0])linear_extrude(y1-y0)children();
