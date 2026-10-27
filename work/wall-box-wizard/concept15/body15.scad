@@ -133,6 +133,9 @@ module hinge_part(body){for(z0=hinge_sets())let(top=z0>ho/2)for(i=[0:2])if((i!=1
  }}
 // Louvre style (Brian, 2026-10-27): two bands of slots across the lid, top and bottom, each slot sloping up 45 deg
 // from the outer face so the inside is hidden from eye level. Lid prints face-down: the sloped faces need no support.
+// louv_rise: how far each slot climbs through the wall (wall+0.2 = 45 deg). 0 = straight through (Brian 2026-10-27:
+// the angled slots looked good but were not practical to print).
+louv_rise=0;
 lid_louvres=true; louv_n=4; louv_h=3; louv_pitch=6; louv_side=22; louv_top=30; louv_bot=22;
 // Body louvres (Brian, 2026-10-27: same look as the lid) replace the straight slots on the walls in `vents`.
 // Sides: horizontal slots along the depth, sloping up 45 deg inward; top band level with the lid's, lower band at
@@ -144,17 +147,17 @@ module body_louvre_cut(){
  for(s=["left","right"])if(search([s],vents)[0]!=[])for(z=zs)
   translate([s=="left"?0:wo,louv_side_y1,0])mirror([s=="left"?0:1,0,0])rotate([90,0,0])
    linear_extrude(height=louv_side_y1-louv_side_y0)
-    polygon([[-0.1,z],[-0.1,z+louv_h],[wall+0.1,z+louv_h+wall+0.2],[wall+0.1,z+wall+0.2]]);
+    polygon([[-0.1,z],[-0.1,z+louv_h],[wall+0.1,z+louv_h+louv_rise],[wall+0.1,z+louv_rise]]);
  if(search(["top"],vents)[0]!=[])let(n=floor((di-2*vent_inset-louv_h)/louv_pitch)+1,y0=di/2-((n-1)*louv_pitch+louv_h)/2)
   for(i=[0:n-1])let(y=y0+i*louv_pitch)translate([wall+vent_inset,0,0])rotate([90,0,90])
    linear_extrude(height=wo-2*wall-2*vent_inset)
-    polygon([[y,ho+0.1],[y+louv_h,ho+0.1],[y+louv_h+wall+0.2,ho-wall-0.1],[y+wall+0.2,ho-wall-0.1]]);
+    polygon([[y,ho+0.1],[y+louv_h,ho+0.1],[y+louv_h+louv_rise,ho-wall-0.1],[y+louv_rise,ho-wall-0.1]]);
 }
 
 module lid_louvre_cut(){if(lid_louvres)for(z=concat([for(i=[0:louv_n-1])louv_bot+i*louv_pitch],
   [for(i=[0:louv_n-1])ho-louv_top-i*louv_pitch]))
  translate([louv_side,0,0])rotate([90,0,90])linear_extrude(height=wo-2*louv_side)
-  polygon([[-wall-0.1,z],[-wall-0.1,z+louv_h],[0.1,z+louv_h+wall+0.2],[0.1,z+wall+0.2]]);}
+  polygon([[-wall-0.1,z],[-wall-0.1,z+louv_h],[0.1,z+louv_h+louv_rise],[0.1,z+louv_rise]]);}
 // Magnet catch (concept 15): a disc magnet in each right-hand corner of the body and a facing one in the lid,
 // 0.3 mm apart when closed. Pockets open towards each other: press/glue magnets in, opposite poles facing.
 // Body blocks print back-down: a 45 deg gusset into the corner carries them, no supports.
@@ -194,6 +197,12 @@ module mounts(){
 module mount_cuts(){if(mount_style=="keyhole")for(p=key_pos())on_wall("back")translate([p[0],-0.1,p[1]])rotate([-90,0,0])
  linear_extrude(height=wall+0.2)mirror([0,1,0])keyhole_2d();}
 
+// Porch ear-screw slots in the floor (Brian 2026-10-27: missing from the first printed sleeve). Same as c15.scad
+// floor_cuts: 6 mm wide so the nut slider's key rides in it, key 10 + +-8 travel. The F hole stays the round cutout.
+ear_slots=[[59,62],[46,14]]; ear_adj=8;
+module ear_slots(){for(e=ear_slots)translate([e[0],e[1],-1])linear_extrude(wall+2)
+ hull(){translate([-(ear_adj+5)+3,0])circle(d=6,$fn=24);translate([ear_adj+5-3,0])circle(d=6,$fn=24);}}
+
 module body(){
  union(){
   difference(){
@@ -204,7 +213,7 @@ module body(){
     }
     bosses();standoff_add();if(lid_style=="hinge")mag_body_add();
    }
-   boss_pilots();standoff_cut();mount_cuts();if(lid_style=="hinge")mag_body_cut();
+   boss_pilots();standoff_cut();mount_cuts();ear_slots();if(lid_style=="hinge")mag_body_cut();
    if(lid_style=="snap")snap_grooves();
    for(c=cutouts)if(c[0]!="lid")on_wall(c[0])cutout_shape(c);
    if(lid_louvres)body_louvre_cut();else for(w=vents)if(w!="lid")on_wall(w)vent_cut(w);

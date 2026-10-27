@@ -2,7 +2,14 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
-## 2026-10-27 MoCA wall box: box finished as a concept, print file ready (read first)
+## 2026-10-27 MoCA wall box rev B: ear-screw slots + straight louvres (read first)
+
+- Brian printed the first sleeve and found no holes for the porch screws: the two 6 mm ear-screw slots were only in the c15.scad preview, never in body15.scad. Now `ear_slots()` in [body15.scad](work/wall-box-wizard/concept15/body15.scad) (X59 Y62, X46 Y14, ±8 travel). The right-angle F hole (round 14 mm, X88 Y49.5) was already there.
+- Angled louvres weren't practical to print (Brian): `louv_rise=0` makes every slot (lid, sides, top) straight through; `wall+0.2` restores 45°.
+- New `outputs/MoCA_Box_2026-10-27/MoCA_box_and_porch.3mf` + README (rev B, same 8 parts and sizes, closed meshes); first build kept in `previous_2026-10-27/`. Brian will reprint the sleeve (and lid for straight louvres). Not printed yet; fit/strength UNKNOWN.
+- Rebuild: OpenSCAD.exe `-D part="sleeve|back|lid"` on body15.scad and `-D pick=1..4` on porch15.scad as ASCII STL; sleeve/back rotated back face down (x,z,-y), lid front face down (x,-z,y); pack side by side with print_layout.layout_3mf (one-off packer in the session scratchpad).
+
+## 2026-10-27 MoCA wall box: box finished as a concept, print file ready
 
 - **Print file:** `outputs/MoCA_Box_2026-10-27/MoCA_box_and_porch.3mf` (untracked, like other outputs) with README (parts, orientations, hardware). 8 parts: sleeve, back plate, lid, porch, cradle, bezel nut, 2 nut sliders; all closed meshes, print-oriented, support-free by design. Rebuild: export each part STL (body15.scad `sleeve()`/`back_plate()`/`lid()` rotated as in the README; porch15.scad `pick=1..4`), then pack (the packing script was a one-off in the session scratchpad; any STL-to-3MF packer will do).
 - **Box decisions (Brian, 2026-10-27), all in [body15.scad](work/wall-box-wizard/concept15/body15.scad):** height kept at 210 (room for ±6 mm cradle travel); hinge lid on two M3 screw + heat-set insert hinge sets (no filament pin); magnet catch for 6 x 1.6 mm discs; louvre style on lid, sides and top; body split into back plate + sleeve (6 M3 insert blocks, countersunk screws from the back, 6 mm alignment lip); raised port labels PWR/LAN (box) and IN/MODEM (porch). Lid art and a maker's mark were tried and dropped. Details in [Scope](work/wall-box-wizard/Scope.md).
