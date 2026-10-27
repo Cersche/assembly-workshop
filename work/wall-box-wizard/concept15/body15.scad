@@ -14,7 +14,7 @@ inner_w=100; inner_d=70; inner_h=205;
 wall=2.5;
 corner_r=10;
 lid_style="hinge";
-lid_magnets=[6,3];   // disc magnet d x t closing the hinge lid (placeholder, Brian's magnet size UNKNOWN); [] = latch arm instead
+lid_magnets=[6,1.6];   // Brian's disc magnets, 6 mm dia x 1.6 mm (2026-10-27); [] = latch arm instead
 mount_style="keyhole";
 vents=["top","left","right"];
 cutouts=[["left","round",-15,-88,13,0],["right","keystone",-5,-70,0,0],["bottom","round",-35.5,14.5,14,0]];
@@ -38,7 +38,7 @@ $fn=48;
 // Shared constants; wall_box.py keeps the same numbers (test_wall_box checks they match).
 boss_r=5; boss_inset=4; boss_len=10; insert_pilot=4.0; insert_depth=8.2; m3_clear=3.4;
 lid_clear=0.3; lip_t=1.6; lip_h=6; snap_y=4; snap_r=0.6; groove_r=0.8;
-hinge_r=4; hinge_gap=0.4; hinge_pin=2.0; hinge_segments=5;
+hinge_r=5; hinge_gap=0.4; hinge_pin=2.0; hinge_segments=5;   // concept 15: r5 knuckles hold an M3 insert; pin/segments unused
 latch_w=18; latch_arm=2; latch_reach=7;
 key_head=9; key_slot=4.5; key_rise=9; key_from_top=20; key_from_side=15; key_max_x=60;
 tab_w=20; tab_len=16; tab_t=4; tab_hole=4.5;
@@ -111,21 +111,33 @@ module boss_pilots(){if(lid_style=="screw")for(x=[wall+boss_inset,wo-wall-boss_i
 module standoff_add(){for(s=standoffs)translate([wo/2+s[0],di+0.01,ho/2+s[1]])rotate([90,0,0])cylinder(d=s[4],h=s[2]+0.01);}
 module standoff_cut(){for(s=standoffs)translate([wo/2+s[0],di+0.02,ho/2+s[1]])rotate([90,0,0])cylinder(d=s[3],h=s[2]+0.1);}
 
-hinge_x=-hinge_r-hinge_gap; hinge_y=-wall/2;
+hinge_x=-hinge_r-hinge_gap-1; hinge_y=-wall+4.1;   // axis 4.1 behind the lid face so the M3 counterbore stays inside the flat-cut knuckle
 // Concept 15: knuckles stop short of the rounded corners and are cut flush with the lid face (y=-wall), so the lid
 // prints face-down flat and nothing stands proud at the front. Body knuckle flank is ~45 deg printed back-down.
-// Pin: a length of 1.75 mm filament through the 2.0 mm hole (fit UNKNOWN).
-hinge_z0=corner_r; hinge_len=ho-2*corner_r;
-function seg_len()=(hinge_len-(hinge_segments-1)*hinge_gap)/hinge_segments;
-module hinge_part(body){L=seg_len();for(i=[0:hinge_segments-1])if((i%2==0)==body)translate([0,0,hinge_z0+i*(L+hinge_gap)])
- difference(){
-  linear_extrude(height=L)intersection(){
+// No filament pin (Brian, 2026-10-27): two short hinge sets, bottom and top, each body-lid-body knuckles on an M3
+// screw. The screw goes in from the box end (head in a counterbore in the outer body knuckle) and threads into an M3
+// heat-set insert pressed into the inner body knuckle from its free end. The lid turns on the screw shank; undo two
+// screws to take the lid off. Screw length ~M3 x 30 (thread/insert engagement, play and wear UNKNOWN).
+hinge_kn=10; hinge_head_d=6.2; hinge_head_h=3.2;
+function hinge_sets()=[corner_r, ho-corner_r-(3*hinge_kn+2*hinge_gap)];
+module hinge_part(body){for(z0=hinge_sets())let(top=z0>ho/2)for(i=[0:2])if((i!=1)==body)
+ translate([0,0,z0+i*(hinge_kn+hinge_gap)])difference(){
+  linear_extrude(height=hinge_kn)intersection(){
    hull(){translate([hinge_x,hinge_y])circle(r=hinge_r);
-    if(body)translate([-0.6,hinge_gap])square([wall+0.6,2*hinge_r]);else translate([0,-wall])square([2*hinge_r,wall]);}
-   translate([-20,-wall])square([40,30]);}
-  translate([hinge_x,hinge_y,-0.1])cylinder(d=hinge_pin,h=L+0.2);
+    if(body)translate([-0.6,hinge_gap])square([wall+0.6,3*hinge_r+1]);   // long flank: ~40 deg printed back-down
+    else translate([hinge_x-hinge_r,-wall])square([hinge_r-hinge_x,wall]);}   // lid: flat foot on the bed, no overhang
+   translate([-30,-wall])square([60,40]);}
+  outer=(i==0&&!top)||(i==2&&top);
+  translate([hinge_x,hinge_y,-0.1])cylinder(d=body&&!outer?insert_pilot:m3_clear,h=hinge_kn+0.2);
+  if(body&&outer)translate([hinge_x,hinge_y,top?hinge_kn-hinge_head_h:-0.1])cylinder(d=hinge_head_d,h=hinge_head_h+0.1);
  }}
-// Magnet catch (concept 15): a disc magnet in each right-hand corner of the body and a facing one in the lid,
+// Louvre style (Brian, 2026-10-27): two bands of slots across the lid, top and bottom, each slot sloping up 45 deg
+// from the outer face so the inside is hidden from eye level. Lid prints face-down: the sloped faces need no support.
+lid_louvres=true; louv_n=4; louv_h=3; louv_pitch=6; louv_side=22; louv_top=30; louv_bot=22;
+module lid_louvre_cut(){if(lid_louvres)for(z=concat([for(i=[0:louv_n-1])louv_bot+i*louv_pitch],
+  [for(i=[0:louv_n-1])ho-louv_top-i*louv_pitch]))
+ translate([louv_side,0,0])rotate([90,0,90])linear_extrude(height=wo-2*louv_side)
+  polygon([[-wall-0.1,z],[-wall-0.1,z+louv_h],[0.1,z+louv_h+wall+0.2],[0.1,z+wall+0.2]]);}// Magnet catch (concept 15): a disc magnet in each right-hand corner of the body and a facing one in the lid,
 // 0.3 mm apart when closed. Pockets open towards each other: press/glue magnets in, opposite poles facing.
 // Body blocks print back-down: a 45 deg gusset into the corner carries them, no supports.
 mag_c=6+wall; mag_gap=0.3; mag_lid_h=2;
@@ -203,7 +215,7 @@ module lid(){
    }
    if(lid_style=="screw")for(x=[wall+boss_inset,wo-wall-boss_inset],z=[wall+boss_inset,ho-wall-boss_inset])
     translate([x,-wall-0.1,z])rotate([-90,0,0])cylinder(d=m3_clear,h=wall+0.2);
-   if(lid_style=="hinge")mag_lid_cut();
+   if(lid_style=="hinge")mag_lid_cut();lid_louvre_cut();
    for(c=cutouts)if(c[0]=="lid")on_wall("lid")cutout_shape(c);
    for(w=vents)if(w=="lid")on_wall("lid")vent_cut("lid");
   }
