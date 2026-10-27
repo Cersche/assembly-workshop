@@ -51,7 +51,13 @@ module contents(){
  color([0.55,0.75,0.6])difference(){translate([8,42,4])cube([14,14,9]);translate([15,49,0])cylinder(d=4.5,h=20,$fn=16);}
  rj45ra([60.5,49,55]);
  color([0.15,0.15,0.15])run([[67.5,49,55],[78,42,42],[88.5,30,35]],6);
- color([0.95,0.95,0.95])run([[88+sx,49.5,ra_top],[88+sx,49.5,20],[93,52,30],[93,52,160],[93,40,192],[70,28,198],[49.5,49,194]]);
+ // Brian's braided jumper (photo 2026-10-27, ~220 mm): F female end on an F male-male barrel screwed onto the
+ // right-angle's jack above the floor, up the ScreenBeam's right side (strapped), right-angle F male onto Coax In on
+ // top. Barrel and connector lengths are photo estimates / UNKNOWN.
+ color([0.85,0.7,0.3])translate([88+sx,49.5,ra_top])cylinder(d=11,h=12,$fn=6);   // male-male barrel
+ color("silver")translate([88+sx,49.5,ra_top+12])cylinder(d=10,h=9,$fn=24);      // jumper F female body
+ color([0.1,0.1,0.1])translate([88+sx,49.5,ra_top+21])cylinder(d=9,h=11,$fn=24);  // strain relief
+ color([0.45,0.45,0.45])run([[88+sx,49.5,ra_top+32],[88,49.5,160],[82,49.5,186],[64,49,196],[49.5,49,194]],7);
 }
 
 translate([0,0,-exploded])porch();
