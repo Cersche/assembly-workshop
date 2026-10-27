@@ -134,10 +134,28 @@ module hinge_part(body){for(z0=hinge_sets())let(top=z0>ho/2)for(i=[0:2])if((i!=1
 // Louvre style (Brian, 2026-10-27): two bands of slots across the lid, top and bottom, each slot sloping up 45 deg
 // from the outer face so the inside is hidden from eye level. Lid prints face-down: the sloped faces need no support.
 lid_louvres=true; louv_n=4; louv_h=3; louv_pitch=6; louv_side=22; louv_top=30; louv_bot=22;
+// Body louvres (Brian, 2026-10-27: same look as the lid) replace the straight slots on the walls in `vents`.
+// Sides: horizontal slots along the depth, sloping up 45 deg inward; top band level with the lid's, lower band at
+// Z60-80 (clear of the keystone and power hole), Y20..di-12 (clear of the hinge knuckles). Printed back-down the
+// sloped faces stand vertical. Top: slots across the width, sloping back 45 deg inward (45 deg ceiling printed).
+louv_side_y0=20; louv_side_y1=di-12; louv_low=60;
+module body_louvre_cut(){
+ zs=concat([for(i=[0:louv_n-1])louv_low+i*louv_pitch],[for(i=[0:louv_n-1])ho-louv_top-i*louv_pitch]);
+ for(s=["left","right"])if(search([s],vents)[0]!=[])for(z=zs)
+  translate([s=="left"?0:wo,louv_side_y1,0])mirror([s=="left"?0:1,0,0])rotate([90,0,0])
+   linear_extrude(height=louv_side_y1-louv_side_y0)
+    polygon([[-0.1,z],[-0.1,z+louv_h],[wall+0.1,z+louv_h+wall+0.2],[wall+0.1,z+wall+0.2]]);
+ if(search(["top"],vents)[0]!=[])let(n=floor((di-2*vent_inset-louv_h)/louv_pitch)+1,y0=di/2-((n-1)*louv_pitch+louv_h)/2)
+  for(i=[0:n-1])let(y=y0+i*louv_pitch)translate([wall+vent_inset,0,0])rotate([90,0,90])
+   linear_extrude(height=wo-2*wall-2*vent_inset)
+    polygon([[y,ho+0.1],[y+louv_h,ho+0.1],[y+louv_h+wall+0.2,ho-wall-0.1],[y+wall+0.2,ho-wall-0.1]]);
+}
+
 module lid_louvre_cut(){if(lid_louvres)for(z=concat([for(i=[0:louv_n-1])louv_bot+i*louv_pitch],
   [for(i=[0:louv_n-1])ho-louv_top-i*louv_pitch]))
  translate([louv_side,0,0])rotate([90,0,90])linear_extrude(height=wo-2*louv_side)
-  polygon([[-wall-0.1,z],[-wall-0.1,z+louv_h],[0.1,z+louv_h+wall+0.2],[0.1,z+wall+0.2]]);}// Magnet catch (concept 15): a disc magnet in each right-hand corner of the body and a facing one in the lid,
+  polygon([[-wall-0.1,z],[-wall-0.1,z+louv_h],[0.1,z+louv_h+wall+0.2],[0.1,z+wall+0.2]]);}
+// Magnet catch (concept 15): a disc magnet in each right-hand corner of the body and a facing one in the lid,
 // 0.3 mm apart when closed. Pockets open towards each other: press/glue magnets in, opposite poles facing.
 // Body blocks print back-down: a 45 deg gusset into the corner carries them, no supports.
 mag_c=6+wall; mag_gap=0.3; mag_lid_h=2;
@@ -189,7 +207,7 @@ module body(){
    boss_pilots();standoff_cut();mount_cuts();if(lid_style=="hinge")mag_body_cut();
    if(lid_style=="snap")snap_grooves();
    for(c=cutouts)if(c[0]!="lid")on_wall(c[0])cutout_shape(c);
-   for(w=vents)if(w!="lid")on_wall(w)vent_cut(w);
+   if(lid_louvres)body_louvre_cut();else for(w=vents)if(w!="lid")on_wall(w)vent_cut(w);
   }
   for(c=cutouts)if(c[0]!="lid"&&c[1]=="keystone")on_wall(c[0])ks_gold_one(c[2],c[3]);
  }

@@ -60,7 +60,7 @@ Idea from `work/notes/2026-10-22-feet-floor-and-wall-box-wizard.md`: an indoor, 
 ## Still open
 
 - Splitter: caliper checks of the photo estimates above, mainly the OUT port spacing and port axis height.
-- Style pick: louvre (Brian, 2026-10-27); side/top vents not yet restyled.
+- Style pick: louvre (Brian, 2026-10-27), on the lid and (same day) the side and top vents: sides have a top band level with the lid's and a lower band at Z60-80 (clear of keystone and power hole), Y20..di-12 (clear of the hinge knuckles); top has one band of slots across the width sloping back 45° ([render](concept15/box15_louvre_side.png)).
 
 - Default wall thickness is a parameter; generic wall guidance stays UNKNOWN.
 - ECB7250: which measurement is which (120 long x 65 wide x 30 tall assumed), port heights on the ends.
