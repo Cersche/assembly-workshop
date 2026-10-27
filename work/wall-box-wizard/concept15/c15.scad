@@ -1,0 +1,53 @@
+// Concept 15 "Detachable boot" v2 (scratch, 2026-10-27): concept 12 layout, porch is a separate part held by two
+// M3 screws up into the box underside. New: the right-angle F on the back OUT passes UP through a slot in the box
+// floor and a short jumper inside goes to the ScreenBeam; the splitter slides left/right on slotted floor mounts and
+// the floor slot moves with it. Splitter/adapter sizes are estimates / UNKNOWN.
+// Render from this folder; needs ../concepts12-14/porch_body.stl built from porch_body.scad (STL not committed).
+include <../concepts12-14/parts.scad>
+exploded=0;     // porch drop for the exploded view
+sx=0;           // splitter shift along X (adjustment range +-adj)
+adj=8;          // slot half-travel
+floor_t=2.5;    // box bottom wall
+ra_top=10;      // height of the right-angle F's top above the box underside
+
+module porch(){
+ color([0.55,0.75,0.6]){
+  translate([5,69,-33])cube([95,3.5,33]);   // back plate
+  translate([5,2,-33])cube([95,70.5,3]);    // floor
+  translate([5,68,-3])cube([95,4.5,3]);     // top lip against the box underside
+ }
+ color([0.92,0.91,0.87,0.35])translate([5,2,-30])cube([95,3,30]); // clip-on front cover
+ for(x=[20,85]){
+  color("silver")translate([x,70.25,-12])cylinder(d=3,h=16,$fn=20);
+  color([0.2,0.2,0.2])translate([x,70.25,-12])cylinder(d=5.5,h=3,$fn=20);
+ }
+}
+// floor cutouts: one slot per splitter ear (M3 into a nut/insert inside) and a slot for the right-angle F
+module floor_cuts(){
+ for(e=[[59,62],[46,14]])translate([e[0],e[1],-1])linear_extrude(floor_t+2)slot(2*adj);
+ translate([88,49.5,-1])linear_extrude(floor_t+2)hull(){translate([-adj,0])circle(d=13,$fn=32);translate([adj,0])circle(d=13,$fn=32);}
+}
+// box contents as in parts.scad, with the cut floor and the jumper starting above the floor
+module contents(){
+ color([0.92,0.91,0.87])difference(){import("../concepts12-14/porch_body.stl");floor_cuts();}
+ ks([90,22.75,2.5],[0.2,0.4,0.9]);
+ screenbeam([17.5,34,62]);
+ rod([37.5,49,182],[37.5,49,194]);rod([37.5,49,194],[49.5,49,194]);
+ plug45([44.5,49,62],[0,0,-1]);
+ color([0.15,0.15,0.15])run([[44.5,49,17],[40,52,11],[15,52,9],[15,49,-6]],4);
+ color([0.55,0.75,0.6])difference(){translate([8,42,4])cube([14,14,9]);translate([15,49,0])cylinder(d=4.5,h=20,$fn=16);}
+ rj45ra([60.5,49,55]);
+ color([0.15,0.15,0.15])run([[67.5,49,55],[80,30,40],[90,23,17]],6);
+ color([0.95,0.95,0.95])run([[88+sx,49.5,ra_top],[88+sx,49.5,20],[93,52,30],[93,52,160],[93,40,192],[70,28,198],[49.5,49,194]]);
+}
+
+translate([0,0,-exploded])porch();
+translate([sx,0,0]){
+ splitter_hang([52.5,38,-11],2);
+ rod([76,49.5,-11],[88,49.5,-11]);rod([88,49.5,-11],[88,49.5,ra_top]);   // right-angle F up through the floor slot
+ for(e=[[59,62],[46,14]])color("silver")translate([e[0],e[1],-4])cylinder(d=3,h=8,$fn=16); // ear screws
+}
+color([0.95,0.95,0.95]){run([[29+sx,38,-11],[5,38,-11],[-25,38,-16]]);run([[76+sx,26.5,-11],[100,26.5,-11],[130,26.5,-16]]);}
+color([0.15,0.15,0.15]){run([[15,49,-6],[13,58,-20],[0,62,-24],[-25,62,-26]],4);
+ run([[90,22.75,-3],[92,16,-20],[100,12,-24],[130,12,-26]],6);}
+contents();

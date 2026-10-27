@@ -2,10 +2,15 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
-## 2026-10-26 MoCA wall box: flat-splitter porch concepts 12-14 (read first)
+## 2026-10-27 MoCA wall box: concept 15 "detachable boot" picked (read first)
 
-- Splitter (Bridgelink) measured from ruler photos; concepts 6-14 rendered, notes in [Scope](work/wall-box-wizard/Scope.md). Brian likes the porch with the splitter lying flat; the from-below views look great. Claude's pick: 12 hanging porch. Brian still to pick 12/13/14.
-- Next: turn the chosen concept into wall_box parameters and a printable porch part. Continue prompt: [docs/prompts/2026-10-26_moca-wall-box-continue.md](docs/prompts/2026-10-26_moca-wall-box-continue.md). Scratch renders only; nothing printed; fit UNKNOWN.
+- Brian's layout (2026-10-27): concept 12 with the porch as a separate part (two M3 screws through its back lip), the back-OUT right-angle F coming up through a floor slot to a short jumper, and the splitter adjustable ±8 mm on slotted ear mounts. Source and renders in [concept15](work/wall-box-wizard/concept15/); notes in [Scope](work/wall-box-wizard/Scope.md). Brian said "layout looks right".
+- Render `c15.scad` from its folder; it needs `../concepts12-14/porch_body.stl` built from `porch_body.scad` (STL not committed).
+- Next: move the floor slots into the wall_box template's cutouts/parameters and make the porch a printable part with inserts. Scratch renders only; nothing printed; splitter sizes are photo estimates (calipers still needed); fit, travel and adapter sizes UNKNOWN.
+
+## 2026-10-26 MoCA wall box: flat-splitter porch concepts 12-14 (superseded by concept 15 above)
+
+- Splitter (Bridgelink) measured from ruler photos; concepts 6-14 rendered, notes in [Scope](work/wall-box-wizard/Scope.md). Brian likes the porch with the splitter lying flat; the from-below views look great.
 
 ## 2026-10-24 Hue + Pi 4 tray: wide cable lane (read first, newest print candidate)
 
