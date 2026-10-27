@@ -63,7 +63,7 @@ module sb_device(){translate([0,0,cz]){
 cr_y=SB[1]+30;          // plate front face (ScreenBeam back)
 cr_t=4;                 // plate thickness; bosses fill cr_y+cr_t .. back wall
 cr_slots=[[8,70],[97,70],[8,136],[97,136]];   // slot centres (X, Z at cz=0); fixed by the back-wall bosses
-cr_pads=[[SB[0]-3,SB[0]+18.5],[SB[0]+52.5,SB[0]+63]];   // shelf pads (X from..to)
+cr_pads=[[SB[0]-3,SB[0]+13],[SB[0]+52.5,SB[0]+63]];   // shelf pads (X from..to); power-side pad 5.5 narrower for plug relief (Brian, 2026-10-27)
 module cradle15(){translate([0,0,cz])color([0.55,0.75,0.6])difference(){
  // Printed back face down: plate on the bed with a 0.6 mm elephant-foot chamfer, pads stand up as walls with 45 deg
  // gussets underneath; the front lips are the only overhang, kept to a 4 mm ledge.

@@ -5,7 +5,7 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 ## 2026-10-27 MoCA box: ScreenBeam cradle rev B (read first)
 
 - Brian printed the box and fitted it. Findings: the ScreenBeam's rubber feet (13 mm across, 2.25 mm proud; centres ~8 mm in from the long edges and ~16 mm in from the short ends) hold it off the cradle plate, and the keystone-side shelf pad hits the Ethernet keystone, so the cradle can't drop and the jumper ends about an inch short of Coax In. Logged in docs/Fit_Findings.md.
-- Cradle rev B in [c15.scad](work/wall-box-wizard/concept15/c15.scad): the ScreenBeam sits 25 mm lower (`sb_dz`) and 3 mm away from the keystone (`sb_dx`). The keystone-side pad is trimmed, there are four 16 x 2.6 foot pockets, the plate extends down to Z21 and the strap slots are moved. The bosses on the back plate are unchanged, so only the cradle needs reprinting. Renders: `cradle_revB_front.png`, `cradle_revB_part.png`.
+- Cradle rev B in [c15.scad](work/wall-box-wizard/concept15/c15.scad): the ScreenBeam sits 25 mm lower (`sb_dz`) and 3 mm away from the keystone (`sb_dx`). The keystone-side pad is trimmed, the power-side pad is 5.5 mm narrower for plug relief (Brian), there are four 16 x 2.6 foot pockets, the plate extends down to Z21 and the strap slots are moved. The bosses on the back plate are unchanged, so only the cradle needs reprinting. Renders: `cradle_revB_front.png`, `cradle_revB_part.png`.
 - Print file: `outputs/MoCA_Box_2026-10-27/cradle_revB/MoCA_cradle_revB.3mf` (+ STL, README). Brian said to assume it all fits: plug room below the lowered ScreenBeam and keystone clearance were not checked against real parts. Not printed; fit UNKNOWN.
 
 ## 2026-10-27 MoCA wall box rev B: ear-screw slots + straight louvres
