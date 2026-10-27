@@ -234,7 +234,7 @@ module lid(){
    }
    if(lid_style=="screw")for(x=[wall+boss_inset,wo-wall-boss_inset],z=[wall+boss_inset,ho-wall-boss_inset])
     translate([x,-wall-0.1,z])rotate([-90,0,0])cylinder(d=m3_clear,h=wall+0.2);
-   if(lid_style=="hinge")mag_lid_cut();lid_louvre_cut();lid_art_cut();
+   if(lid_style=="hinge")mag_lid_cut();lid_louvre_cut();
    for(c=cutouts)if(c[0]=="lid")on_wall("lid")cutout_shape(c);
    for(w=vents)if(w=="lid")on_wall("lid")vent_cut("lid");
   }
@@ -250,31 +250,15 @@ module cleat_rail(){L=wo-2*max(corner_r,0);n=max(2,floor(L/80)+1);
    cylinder(d=cleat_hole,h=cleat_c+0.2);cylinder(d1=cleat_hole+4.4,d2=cleat_hole,h=2.2);}
  }}
 
-// Human touch (Brian, 2026-10-27: "a little whimsy ... some labels"). Lid prints face-down, so its art is cut 0.6 deep
-// (raised art would need support); wall labels stand 0.6 proud (walls print vertical); a maker's mark stands on the
-// inside of the back plate (prints face-up). Font: Liberation Sans (ships with OpenSCAD).
+// Port labels (Brian, 2026-10-27; lid art and maker's mark tried and dropped the same day): raised 0.6 where the walls
+// print vertical. Font: Liberation Sans (ships with OpenSCAD).
 art=true; art_font="Liberation Sans:style=Bold"; art_depth=0.6;
-lid_words=["MoCA","the internet came downstairs","(it took the coax)"];   // Brian 2026-10-27: about bringing it downstairs
-maker_mark="Brian  2026";
-module heart2d(s)scale(s/10)translate([0,-3])rotate(45){square(8,center=true);translate([0,4])circle(r=4);translate([4,0])circle(r=4);}
-module wifi2d(){circle(r=1.8);for(r=[6,11,16])intersection(){difference(){circle(r=r);circle(r=r-2.2);}
- polygon([[0,0],[-r*1.2,r*1.2],[r*1.2,r*1.2]]);}}
-module lid_art2d(){
- translate([0,28])wifi2d();
- translate([0,8])text(lid_words[0],size=14,font=art_font,halign="center",valign="center");
- translate([0,-12])text(lid_words[1],size=4.5,font=art_font,halign="center",valign="center");
- translate([-4,-22])text(lid_words[2],size=4,font=art_font,halign="center",valign="center");
- translate([25,-22])heart2d(4);
-}
-module lid_art_cut(){if(art)on_wall("lid")translate([0,art_depth,0])rotate([90,0,0])linear_extrude(art_depth+0.1)lid_art2d();}
 module wall_label(w,u,v,s,size=5)on_wall(w)translate([u,0.2,v])rotate([90,0,0])linear_extrude(art_depth+0.2)
  text(s,size=size,font=art_font,halign="center",valign="center");
 module body_labels(){if(art){
  wall_label("left",-15,-76,"PWR");            // above the power hole (Y50 Z17)
  wall_label("right",22,-68,"LAN");            // beside the Ethernet keystone
 }}
-module maker_mark3d(){if(art)on_wall("back")translate([0,wall+art_depth,-85])rotate([90,0,0])linear_extrude(art_depth+0.2)
- mirror([1,0])text(maker_mark,size=4,font=art_font,halign="center",valign="center");}   // reads from inside
 // Two-piece body (Brian, 2026-10-27: "print it in pieces ... without it getting flimsy"; picked back plate + sleeve).
 // part="back": flat back plate (keyholes, cradle bosses), prints outer face down. part="sleeve": the four walls with
 // hinge knuckles, magnet blocks and louvres, prints back edge down (same as the one-piece body). Joint: six solid
@@ -298,7 +282,6 @@ module sleeve(){difference(){
 module back_plate(){difference(){
  union(){
   intersection(){body();union(){jt_back_region();jt_standoff_region();}}
-  maker_mark3d();
   difference(){
    rbox(wall+jt_clear,wo-wall-jt_clear,di-jt_lip_h,di+0.01,wall+jt_clear,ho-wall-jt_clear,max(ri-jt_clear,0.5));
    rbox(wall+jt_clear+jt_lip_t,wo-wall-jt_clear-jt_lip_t,di-jt_lip_h-1,di+1,wall+jt_clear+jt_lip_t,ho-wall-jt_clear-jt_lip_t,max(ri-jt_clear-jt_lip_t,0.5));
