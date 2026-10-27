@@ -15,8 +15,8 @@
 include <../concepts12-14/parts.scad>
 use <c15.scad>
 
-pick=0;          // 0 assembly, 1 porch, 2 nut, 3 nut slider (for -D on the command line)
-part=pick==1?"porch":pick==2?"nut":pick==3?"slider":"assembly";
+pick=0;          // 0 assembly, 1 porch, 2 nut, 3 nut slider, 4 ScreenBeam cradle (for -D on the command line)
+part=pick==1?"porch":pick==2?"nut":pick==3?"slider":pick==4?"cradle":"assembly";
 sx=0;            // splitter + porch shift along X
 t=2.5;           // porch wall
 h=33;            // porch depth below the box
@@ -72,6 +72,7 @@ module bezel_nut(){
 if(part=="porch")porch15();
 else if(part=="nut")bezel_nut();
 else if(part=="slider")rotate([180,0,0])nut_slider();   // print pocket-down, key up (from c15.scad)
+else if(part=="cradle")rotate([-90,0,0])translate([0,-62,0])cradle15();   // print back face down (from c15.scad)
 else {
  translate([sx,0,0]){
   porch15();
