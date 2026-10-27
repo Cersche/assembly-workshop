@@ -4,14 +4,15 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 
 ## 2026-10-27 MoCA wall box: concept 15 "detachable boot" picked (read first)
 
-- Brian's layout (2026-10-27): concept 12 with the porch as a separate part (two M3 screws through its back lip), the back-OUT right-angle F coming up through a floor slot to a short jumper, and the splitter adjustable ±8 mm on slotted ear mounts. Source and renders in [concept15](work/wall-box-wizard/concept15/); notes in [Scope](work/wall-box-wizard/Scope.md). Brian said "layout looks right".
-- Render `c15.scad` from its folder; it needs `../concepts12-14/porch_body.stl` built from `porch_body.scad` (STL not committed).
+- Brian's layout (2026-10-27): concept 12 with the porch as a separate part, the back-OUT right-angle F coming up through a floor slot to a short jumper, and the splitter adjustable on slotted ear mounts. Source and renders in [concept15](work/wall-box-wizard/concept15/); notes in [Scope](work/wall-box-wizard/Scope.md). Brian said "layout looks right".
+- Render from `concept15/`; build `body15.stl` from `body15.scad` first (STL not committed).
 - Porch part done as a scratch design: [porch15.scad](work/wall-box-wizard/concept15/porch15.scad) (`pick=1` porch, `pick=2` bezel nut, `0` assembly). Rounded tray, splitter IN clamped to the left wall by a threaded bezel nut (no coax keystone), cables out an open-top right window, held by the two splitter-ear screws (no new box features). Brian: box is ok for now, focus is the porch; ~1/4 in of IN post free after the cable is on.
 - Ethernet keystone moved off the porch to the box's right wall, low (Brian, 2026-10-27); box copy is `concept15/body15.scad`, build `body15.stl` from it before rendering `c15.scad` / `porch15.scad`.
 - Captive nut sliders for the two M3 x 40 porch/splitter screws (Brian asked, 2026-10-27): `nut_slider()` in c15.scad, `pick=3` in porch15.scad; ear slots widened to 6 mm for the slider key.
 - ScreenBeam jumper is Brian's braided ~220 mm right-angle F male / F female lead ([photo](work/wall-box-wizard/photos/screenbeam-jumper-2026-10-27.jpg)); an F male-male barrel joins it to the right-angle's jack above the floor (Brian, 2026-10-27). Power lead now leaves low on the left wall beside the incoming coax (power hole moved off the bottom, Brian 2026-10-27).
 - ScreenBeam cradle (Brian, 2026-10-27): `cradle15()` in c15.scad, `pick=4` in porch15.scad; vertical slots ±6 mm on four back-wall insert bosses, shelf pads + lips + Velcro strap slots.
-- Next: Brian's review of the porch look; calipers on the splitter; later move the floor slots into the wall_box template. Scratch renders only; nothing printed; splitter sizes are photo estimates (calipers still needed); fit, travel and adapter sizes UNKNOWN.
+- Porch and cradle made support-free (2026-10-27). Porch side settled for now.
+- Next (Brian, 2026-10-27): work on the MoCA box itself in a new session. Continue prompt: [docs/prompts/2026-10-27_moca-box-continue.md](docs/prompts/2026-10-27_moca-box-continue.md). Calipers on the splitter still needed; later move the concept 15 box changes into the wall_box template. Scratch renders only; nothing printed; splitter sizes are photo estimates (calipers still needed); fit, travel and adapter sizes UNKNOWN.
 
 ## 2026-10-26 MoCA wall box: flat-splitter porch concepts 12-14 (superseded by concept 15 above)
 
