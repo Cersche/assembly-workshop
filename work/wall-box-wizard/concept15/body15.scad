@@ -13,7 +13,8 @@ part="body";
 inner_w=100; inner_d=70; inner_h=205;
 wall=2.5;
 corner_r=10;
-lid_style="snap";
+lid_style="hinge";
+lid_magnets=[6,3];   // disc magnet d x t closing the hinge lid (placeholder, Brian's magnet size UNKNOWN); [] = latch arm instead
 mount_style="keyhole";
 vents=["top","left","right"];
 cutouts=[["left","round",-15,-88,13,0],["right","keystone",-5,-70,0,0],["bottom","round",-35.5,14.5,14,0]];
@@ -111,13 +112,34 @@ module standoff_add(){for(s=standoffs)translate([wo/2+s[0],di+0.01,ho/2+s[1]])ro
 module standoff_cut(){for(s=standoffs)translate([wo/2+s[0],di+0.02,ho/2+s[1]])rotate([90,0,0])cylinder(d=s[3],h=s[2]+0.1);}
 
 hinge_x=-hinge_r-hinge_gap; hinge_y=-wall/2;
-function seg_len()=(ho-(hinge_segments-1)*hinge_gap)/hinge_segments;
-module hinge_part(body){L=seg_len();for(i=[0:hinge_segments-1])if((i%2==0)==body)translate([0,0,i*(L+hinge_gap)])
+// Concept 15: knuckles stop short of the rounded corners and are cut flush with the lid face (y=-wall), so the lid
+// prints face-down flat and nothing stands proud at the front. Body knuckle flank is ~45 deg printed back-down.
+// Pin: a length of 1.75 mm filament through the 2.0 mm hole (fit UNKNOWN).
+hinge_z0=corner_r; hinge_len=ho-2*corner_r;
+function seg_len()=(hinge_len-(hinge_segments-1)*hinge_gap)/hinge_segments;
+module hinge_part(body){L=seg_len();for(i=[0:hinge_segments-1])if((i%2==0)==body)translate([0,0,hinge_z0+i*(L+hinge_gap)])
  difference(){
-  linear_extrude(height=L)hull(){translate([hinge_x,hinge_y])circle(r=hinge_r);
-   if(body)translate([-0.6,hinge_gap])square([wall+0.6,2*hinge_r]);else translate([0,-wall])square([2*hinge_r,wall]);}
+  linear_extrude(height=L)intersection(){
+   hull(){translate([hinge_x,hinge_y])circle(r=hinge_r);
+    if(body)translate([-0.6,hinge_gap])square([wall+0.6,2*hinge_r]);else translate([0,-wall])square([2*hinge_r,wall]);}
+   translate([-20,-wall])square([40,30]);}
   translate([hinge_x,hinge_y,-0.1])cylinder(d=hinge_pin,h=L+0.2);
  }}
+// Magnet catch (concept 15): a disc magnet in each right-hand corner of the body and a facing one in the lid,
+// 0.3 mm apart when closed. Pockets open towards each other: press/glue magnets in, opposite poles facing.
+// Body blocks print back-down: a 45 deg gusset into the corner carries them, no supports.
+mag_c=6+wall; mag_gap=0.3; mag_lid_h=2;
+function mag_pos()=[[wo-mag_c,mag_c],[wo-mag_c,ho-mag_c]];
+module mag_body_add(){if(len(lid_magnets)==2)let(d=lid_magnets[0]+4,y0=mag_lid_h+mag_gap,y1=y0+lid_magnets[1]+1.2)
+ intersection(){for(p=mag_pos())hull(){translate([p[0],y0,p[1]])rotate([-90,0,0])cylinder(d=d,h=y1-y0);
+   translate([wo-wall-0.5,y1+1.4*d,p[1]<ho/2?wall+0.5:ho-wall-0.5])sphere(r=0.5);}
+  rbox(0,wo,0,db,0,ho,corner_r);}}
+module mag_body_cut(){if(len(lid_magnets)==2)for(p=mag_pos())translate([p[0],mag_lid_h+mag_gap-0.01,p[1]])rotate([-90,0,0])
+ cylinder(d=lid_magnets[0]+0.2,h=lid_magnets[1]+0.2);}
+module mag_lid_add(){if(len(lid_magnets)==2)for(p=mag_pos())translate([p[0],-0.01,p[1]])rotate([-90,0,0])
+ cylinder(d=lid_magnets[0]+4,h=mag_lid_h+0.01);}
+module mag_lid_cut(){if(len(lid_magnets)==2)for(p=mag_pos())translate([p[0],mag_lid_h-lid_magnets[1]-0.2,p[1]])rotate([-90,0,0])
+ cylinder(d=lid_magnets[0]+0.2,h=lid_magnets[1]+0.21);}
 // Latch: a ramped ridge on the right wall; the lid's arm hooks behind it.
 module latch_ridge(){translate([0,0,ho/2-latch_w/2+1])linear_extrude(height=latch_w-2)polygon([[wo-0.01,2],[wo+1,4],[wo+1,5],[wo-0.01,5]]);}
 module latch_arm(){translate([0,0,ho/2-latch_w/2])linear_extrude(height=latch_w)union(){
@@ -147,12 +169,12 @@ module body(){
   difference(){
    union(){
     difference(){
-     union(){rbox(0,wo,0,db,0,ho,corner_r);mounts();if(lid_style=="hinge"){hinge_part(true);latch_ridge();}}
+     union(){rbox(0,wo,0,db,0,ho,corner_r);mounts();if(lid_style=="hinge"){hinge_part(true);if(len(lid_magnets)!=2)latch_ridge();}}
      rbox(wall,wo-wall,-1,di,wall,ho-wall,ri);
     }
-    bosses();standoff_add();
+    bosses();standoff_add();if(lid_style=="hinge")mag_body_add();
    }
-   boss_pilots();standoff_cut();mount_cuts();
+   boss_pilots();standoff_cut();mount_cuts();if(lid_style=="hinge")mag_body_cut();
    if(lid_style=="snap")snap_grooves();
    for(c=cutouts)if(c[0]!="lid")on_wall(c[0])cutout_shape(c);
    for(w=vents)if(w!="lid")on_wall(w)vent_cut(w);
@@ -177,10 +199,11 @@ module lid(){
   difference(){
    union(){rbox(0,wo,-wall,0,0,ho,corner_r);
     if(lid_style=="snap"){lip_ring();intersection(){beads(snap_r,0);rbox(wall-0.5,wo-wall+0.5,0,lip_h,wall-0.5,ho-wall+0.5,ri);}}
-    if(lid_style=="hinge"){hinge_part(false);latch_arm();}
+    if(lid_style=="hinge"){hinge_part(false);if(len(lid_magnets)==2)mag_lid_add();else latch_arm();}
    }
    if(lid_style=="screw")for(x=[wall+boss_inset,wo-wall-boss_inset],z=[wall+boss_inset,ho-wall-boss_inset])
     translate([x,-wall-0.1,z])rotate([-90,0,0])cylinder(d=m3_clear,h=wall+0.2);
+   if(lid_style=="hinge")mag_lid_cut();
    for(c=cutouts)if(c[0]=="lid")on_wall("lid")cutout_shape(c);
    for(w=vents)if(w=="lid")on_wall("lid")vent_cut("lid");
   }
