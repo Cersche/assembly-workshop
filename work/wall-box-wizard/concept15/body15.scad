@@ -254,17 +254,17 @@ module cleat_rail(){L=wo-2*max(corner_r,0);n=max(2,floor(L/80)+1);
 // (raised art would need support); wall labels stand 0.6 proud (walls print vertical); a maker's mark stands on the
 // inside of the back plate (prints face-up). Font: Liberation Sans (ships with OpenSCAD).
 art=true; art_font="Liberation Sans:style=Bold"; art_depth=0.6;
-lid_words=["MoCA","the internet lives here","be nice to it"];
-maker_mark="made with care by Brian  2026";
+lid_words=["MoCA","the internet came downstairs","(it took the coax)"];   // Brian 2026-10-27: about bringing it downstairs
+maker_mark="Brian  2026";
 module heart2d(s)scale(s/10)translate([0,-3])rotate(45){square(8,center=true);translate([0,4])circle(r=4);translate([4,0])circle(r=4);}
 module wifi2d(){circle(r=1.8);for(r=[6,11,16])intersection(){difference(){circle(r=r);circle(r=r-2.2);}
  polygon([[0,0],[-r*1.2,r*1.2],[r*1.2,r*1.2]]);}}
 module lid_art2d(){
  translate([0,28])wifi2d();
  translate([0,8])text(lid_words[0],size=14,font=art_font,halign="center",valign="center");
- translate([0,-12])text(lid_words[1],size=5,font=art_font,halign="center",valign="center");
+ translate([0,-12])text(lid_words[1],size=4.5,font=art_font,halign="center",valign="center");
  translate([-4,-22])text(lid_words[2],size=4,font=art_font,halign="center",valign="center");
- translate([19,-22])heart2d(4);
+ translate([25,-22])heart2d(4);
 }
 module lid_art_cut(){if(art)on_wall("lid")translate([0,art_depth,0])rotate([90,0,0])linear_extrude(art_depth+0.1)lid_art2d();}
 module wall_label(w,u,v,s,size=5)on_wall(w)translate([u,0.2,v])rotate([90,0,0])linear_extrude(art_depth+0.2)
