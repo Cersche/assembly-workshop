@@ -16,7 +16,7 @@ corner_r=10;
 lid_style="hinge";
 lid_magnets=[6,1.6];   // Brian's disc magnets, 6 mm dia x 1.6 mm (2026-10-27); [] = latch arm instead
 mount_style="keyhole";
-vents=["top","left","right"];
+vents=["left","right"];   // no top vents (Brian 2026-10-27: sides are plenty)
 cutouts=[["left","round",-15,-88,13,0],["right","keystone",-5,-70,0,0],["bottom","round",-35.5,14.5,14,0]];
 standoffs=[[-44.5,-35,8,4.0,9],[44.5,-35,8,4.0,9],[-44.5,31,8,4.0,9],[44.5,31,8,4.0,9]];   // cradle bosses, M3 heat-set inserts
 vent_avoid=[];

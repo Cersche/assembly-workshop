@@ -6,6 +6,7 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 
 - Brian printed the first sleeve and found no holes for the porch screws: the two 6 mm ear-screw slots were only in the c15.scad preview, never in body15.scad. Now `ear_slots()` in [body15.scad](work/wall-box-wizard/concept15/body15.scad) (X59 Y62, X46 Y14, ±8 travel). The right-angle F hole (round 14 mm, X88 Y49.5) was already there.
 - Angled louvres weren't practical to print (Brian): `louv_rise=0` makes every slot (lid, sides, top) straight through; `wall+0.2` restores 45°.
+- No top vents (Brian): `vents=["left","right"]`; lid and side louvres stay. 3MF repacked with the new sleeve.
 - New `outputs/MoCA_Box_2026-10-27/MoCA_box_and_porch.3mf` + README (rev B, same 8 parts and sizes, closed meshes); first build kept in `previous_2026-10-27/`. Brian will reprint the sleeve (and lid for straight louvres). Not printed yet; fit/strength UNKNOWN.
 - Rebuild: OpenSCAD.exe `-D part="sleeve|back|lid"` on body15.scad and `-D pick=1..4` on porch15.scad as ASCII STL; sleeve/back rotated back face down (x,z,-y), lid front face down (x,-z,y); pack side by side with print_layout.layout_3mf (one-off packer in the session scratchpad).
 
