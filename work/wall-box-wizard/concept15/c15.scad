@@ -47,8 +47,9 @@ module contents(){
  screenbeam([17.5,34,62]);
  rod([37.5,49,182],[37.5,49,194]);rod([37.5,49,194],[49.5,49,194]);
  plug45([44.5,49,62],[0,0,-1]);
- color([0.15,0.15,0.15])run([[44.5,49,17],[40,52,11],[15,52,9],[15,49,-6]],4);
- color([0.55,0.75,0.6])difference(){translate([8,42,4])cube([14,14,9]);translate([15,49,0])cylinder(d=4.5,h=20,$fn=16);}
+ // power lead: plug straight down, gentle bend left along the floor, out the left-wall hole (Y50 Z17)
+ color([0.15,0.15,0.15])run([[44.5,49,17],[40,50,10],[25,50,11],[14,50,17],[-2,50,17]],4);
+ color([0.55,0.75,0.6])difference(){translate([2.5,43,10])cube([11.5,14,14]);translate([0,50,17])rotate([0,90,0])cylinder(d=4.5,h=20,$fn=16);}   // strain-relief clamp
  rj45ra([60.5,49,55]);
  color([0.15,0.15,0.15])run([[67.5,49,55],[78,42,42],[88.5,30,35]],6);
  // Brian's braided jumper (photo 2026-10-27, ~220 mm): F female end on an F male-male barrel screwed onto the
@@ -67,6 +68,6 @@ translate([sx,0,0]){
  for(e=[[59,62],[46,14]])color("silver")translate([e[0],e[1],-4])cylinder(d=3,h=8,$fn=16); // ear screws
 }
 color([0.95,0.95,0.95]){run([[29+sx,38,-11],[5,38,-11],[-25,38,-16]]);run([[76+sx,26.5,-11],[100,26.5,-11],[130,26.5,-16]]);}
-color([0.15,0.15,0.15]){run([[15,49,-6],[13,58,-20],[0,62,-24],[-25,62,-26]],4);
+color([0.15,0.15,0.15]){run([[-2,50,17],[-14,50,12],[-20,46,-8],[-25,46,-40]],4);   // power lead down beside the coax
  run([[105,30,35],[125,30,30],[140,30,20]],6);}   // Ethernet patch out of the right-wall keystone
 contents();

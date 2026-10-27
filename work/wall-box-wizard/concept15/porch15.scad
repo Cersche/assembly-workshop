@@ -79,8 +79,8 @@ else {
   splitter_hang([52.5,38,-11],2);
   rod([76,49.5,-11],[88,49.5,-11]);rod([88,49.5,-11],[88,49.5,10]);   // right-angle F up through the floor slot
   for(e=ears)color("silver")translate([e[0],e[1],-h+cb_h])cylinder(d=3,h=40,$fn=16);   // M3 x 40
-  color([0.95,0.95,0.95]){run([[29,in_y,in_z],[0,in_y,in_z],[-25,in_y,-16]]);run([[76,26.5,-11],[100,26.5,-11],[130,26.5,-16]]);}
+  color([0.95,0.95,0.95]){run([[29,in_y,in_z],[0,in_y,in_z],[-18,in_y,-18],[-25,in_y,-40]]);run([[76,26.5,-11],[100,26.5,-11],[130,26.5,-16]]);}
  }
- color([0.15,0.15,0.15])run([[15,49,-6],[13,58,-20],[0,62,-24],[-25,62,-26]],4);    // power lead
+ color([0.15,0.15,0.15])run([[-2,50,17],[-14,50,12],[-20,46,-8],[-25,46,-40]],4);   // power lead out the left wall, down beside the coax
  contents();
 }
