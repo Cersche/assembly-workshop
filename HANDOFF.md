@@ -2,7 +2,13 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
-## 2026-10-27 MoCA wall box: concept 15 "detachable boot" picked (read first)
+## 2026-10-27 MoCA wall box: box finished as a concept, print file ready (read first)
+
+- **Print file:** `outputs/MoCA_Box_2026-10-27/MoCA_box_and_porch.3mf` (untracked, like other outputs) with README (parts, orientations, hardware). 8 parts: sleeve, back plate, lid, porch, cradle, bezel nut, 2 nut sliders; all closed meshes, print-oriented, support-free by design. Rebuild: export each part STL (body15.scad `sleeve()`/`back_plate()`/`lid()` rotated as in the README; porch15.scad `pick=1..4`), then pack (the packing script was a one-off in the session scratchpad; any STL-to-3MF packer will do).
+- **Box decisions (Brian, 2026-10-27), all in [body15.scad](work/wall-box-wizard/concept15/body15.scad):** height kept at 210 (room for ±6 mm cradle travel); hinge lid on two M3 screw + heat-set insert hinge sets (no filament pin); magnet catch for 6 x 1.6 mm discs; louvre style on lid, sides and top; body split into back plate + sleeve (6 M3 insert blocks, countersunk screws from the back, 6 mm alignment lip); raised port labels PWR/LAN (box) and IN/MODEM (porch). Lid art and a maker's mark were tried and dropped. Details in [Scope](work/wall-box-wizard/Scope.md).
+- **Not done:** nothing printed (printing is Brian's call); splitter calipers (OUT spacing, port axis height) still needed; box changes not yet in the wall_box template (body15.scad is a hand-edited copy; `part="body"` stays one-piece for porch15 assembly renders). Fit, strength, hinge play, printed thread, magnet hold and screw lengths UNKNOWN.
+- **Next:** Brian prints and reports, or asks for changes. Continue prompt: [docs/prompts/2026-10-27_moca-box-print-continue.md](docs/prompts/2026-10-27_moca-box-print-continue.md).
+## 2026-10-27 MoCA wall box: concept 15 "detachable boot" picked (details)
 
 - Brian's layout (2026-10-27): concept 12 with the porch as a separate part, the back-OUT right-angle F coming up through a floor slot to a short jumper, and the splitter adjustable on slotted ear mounts. Source and renders in [concept15](work/wall-box-wizard/concept15/); notes in [Scope](work/wall-box-wizard/Scope.md). Brian said "layout looks right".
 - Render from `concept15/`; build `body15.stl` from `body15.scad` first (STL not committed).
