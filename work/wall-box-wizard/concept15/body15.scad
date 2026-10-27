@@ -249,8 +249,40 @@ module cleat_rail(){L=wo-2*max(corner_r,0);n=max(2,floor(L/80)+1);
    cylinder(d=cleat_hole,h=cleat_c+0.2);cylinder(d1=cleat_hole+4.4,d2=cleat_hole,h=2.2);}
  }}
 
+// Two-piece body (Brian, 2026-10-27: "print it in pieces ... without it getting flimsy"; picked back plate + sleeve).
+// part="back": flat back plate (keyholes, cradle bosses), prints outer face down. part="sleeve": the four walls with
+// hinge knuckles, magnet blocks and louvres, prints back edge down (same as the one-piece body). Joint: six solid
+// blocks in the sleeve's back corners and top/bottom (8 deep, sit on the bed when printing) take M3 heat-set inserts
+// from the back; countersunk M3 x ~8 screws through the plate sit flush on the wall side. A 6 mm lip on the plate
+// fits inside the sleeve (0.3 clearance) to keep it square and take racking. Bottom block at X22 clears the ear-screw
+// slot and nut slider at the back of the floor. Screw/insert engagement and joint stiffness UNKNOWN until printed.
+jt_blk=9; jt_d=8; jt_lip_h=6; jt_lip_t=2; jt_clear=0.3; jt_csk=6.4;
+function jt_pts()=[[wall+4.5,wall+4.5],[wo-wall-4.5,wall+4.5],[wall+4.5,ho-wall-4.5],[wo-wall-4.5,ho-wall-4.5],
+ [wo/2,ho-wall-4.5],[22,wall+4.5]];
+module jt_blocks(grow=0){intersection(){
+ for(p=jt_pts())translate([p[0]-jt_blk/2-1.5-grow,di-jt_d-grow,p[1]-jt_blk/2-1.5-grow])cube([jt_blk+3+2*grow,jt_d+2*grow,jt_blk+3+2*grow]);
+ rbox(0,wo,-1,di-0.01,0,ho,corner_r);}}   // blocks sink 1.5 into the walls, end exactly at the back face
+module jt_back_region(){translate([-50,di,-50])cube([wo+100,50,ho+100]);}
+module jt_standoff_region(){for(s=standoffs)translate([wo/2+s[0],di+0.1,ho/2+s[1]])rotate([90,0,0])cylinder(d=s[4]+0.1,h=s[2]+0.2);}
+module sleeve(){difference(){
+ union(){intersection(){body();translate([-50,-50,-50])cube([wo+100,di+50-0.01,ho+100]);}jt_blocks();}   // 0.01 short of the plate face: avoids a coplanar cut
+ jt_standoff_region();
+ for(p=jt_pts())translate([p[0],di+0.01,p[1]])rotate([90,0,0])cylinder(d=insert_pilot,h=6);
+}}
+module back_plate(){difference(){
+ union(){
+  intersection(){body();union(){jt_back_region();jt_standoff_region();}}
+  difference(){
+   rbox(wall+jt_clear,wo-wall-jt_clear,di-jt_lip_h,di+0.01,wall+jt_clear,ho-wall-jt_clear,max(ri-jt_clear,0.5));
+   rbox(wall+jt_clear+jt_lip_t,wo-wall-jt_clear-jt_lip_t,di-jt_lip_h-1,di+1,wall+jt_clear+jt_lip_t,ho-wall-jt_clear-jt_lip_t,max(ri-jt_clear-jt_lip_t,0.5));
+   jt_blocks(0.4);
+  }}
+ for(p=jt_pts())translate([p[0],db+0.01,p[1]])rotate([90,0,0]){cylinder(d=m3_clear,h=wall+1);cylinder(d1=jt_csk,d2=m3_clear,h=(jt_csk-m3_clear)/2);}
+}}
 assert(wo<=250&&ho+(mount_style=="tabs"?2*tab_len:0)<=250&&db+wall+(mount_style=="cleat"?cleat_c:0)<=250,"Outer size above 250 mm");
 if(part=="body")body();
 else if(part=="lid")lid();
+else if(part=="sleeve")sleeve();
+else if(part=="back")back_plate();
 else if(part=="cleat")cleat_rail();
 else{body();translate([0,-wall-15,0])lid();if(mount_style=="cleat")translate([0,-wall-45-cleat_c,0])cleat_rail();}
