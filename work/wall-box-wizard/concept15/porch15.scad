@@ -5,11 +5,12 @@
 // - Rounded profile (r10 bottom edges, same as the box), closed tray, no front cover; front flush with the lid face.
 // - Splitter IN goes through an open-top slot in the left wall; a threaded bezel nut on the ~1/4 in of IN post left
 //   after the cable is on clamps the wall against the splitter body. No coax keystone.
-// - Modem coax and the Ethernet lead leave through one open-top window in the right wall.
+// - Modem coax leaves through an open-top window in the right wall. The Ethernet keystone is on the box's right wall
+//   (body15.scad), off the porch.
 // - No extra box features: two M3 x ~40 screws from below go through the porch towers, the splitter ears and the
 //   box floor slots into nuts inside, so the same screws hold the splitter and the porch. Shift the splitter with
 //   sx (box slots allow +-8; keep sx in -8..0 so the porch stays on the flat part of the box bottom).
-// Render the assembly from this folder; it needs ../concepts12-14/porch_body.stl built from porch_body.scad.
+// Render the assembly from this folder; it needs body15.stl built from body15.scad.
 include <../concepts12-14/parts.scad>
 use <c15.scad>
 
@@ -29,7 +30,7 @@ ears=[[59,62],[46,14]];  // splitter ear centres at sx=0
 ear_z=-11;               // ear underside
 tower_d=9; m3=3.4; cb_d=6.2; cb_h=3;
 nut_d=21.5; nut_h=3;     // bezel nut, covers the open-top slot; with the 2.5 wall it uses 5.5 of the ~6.35 mm free post
-win=[15,34,-23];         // right-wall window: Y from, Y to, bottom Z
+win=[19,34,-19];         // right-wall coax window: Y from, Y to, bottom Z (modem coax at Y26.5 Z-11)
 
 module profile(o)hull(){
  for(x=[px0+rb,px1-rb])translate([x,-h+rb])circle(r=rb-o,$fn=72);
@@ -77,7 +78,6 @@ else {
   rod([76,49.5,-11],[88,49.5,-11]);rod([88,49.5,-11],[88,49.5,10]);   // right-angle F up through the floor slot
   for(e=ears)color("silver")translate([e[0],e[1],-h-0.5])cylinder(d=3,h=h+5,$fn=16);
   color([0.95,0.95,0.95]){run([[29,in_y,in_z],[0,in_y,in_z],[-25,in_y,-16]]);run([[76,26.5,-11],[100,26.5,-11],[130,26.5,-16]]);}
-  color([0.15,0.15,0.15])run([[90,22.75,-12],[100,22.75,-18],[130,22.75,-20]],6);   // right-angle Ethernet lead
  }
  color([0.15,0.15,0.15])run([[15,49,-6],[13,58,-20],[0,62,-24],[-25,62,-26]],4);    // power lead
  contents();

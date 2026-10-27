@@ -2,7 +2,8 @@
 // M3 screws up into the box underside. New: the right-angle F on the back OUT passes UP through a slot in the box
 // floor and a short jumper inside goes to the ScreenBeam; the splitter slides left/right on slotted floor mounts and
 // the floor slot moves with it. Splitter/adapter sizes are estimates / UNKNOWN.
-// Render from this folder; needs ../concepts12-14/porch_body.stl built from porch_body.scad (STL not committed).
+// Render from this folder; needs body15.stl built from body15.scad (STL not committed). The Ethernet keystone is on
+// the right wall (2026-10-27), off the porch.
 include <../concepts12-14/parts.scad>
 exploded=0;     // porch drop for the exploded view
 sx=0;           // splitter shift along X (adjustment range +-adj)
@@ -29,15 +30,15 @@ module floor_cuts(){
 }
 // box contents as in parts.scad, with the cut floor and the jumper starting above the floor
 module contents(){
- color([0.92,0.91,0.87])difference(){import("../concepts12-14/porch_body.stl");floor_cuts();}
- ks([90,22.75,2.5],[0.2,0.4,0.9]);
+ color([0.92,0.91,0.87])difference(){import("body15.stl");floor_cuts();}
+ color([0.2,0.4,0.9])translate([102.5-14,30-8.5,35-8])cube([14,17,16]);   // Ethernet keystone rear, right wall
  screenbeam([17.5,34,62]);
  rod([37.5,49,182],[37.5,49,194]);rod([37.5,49,194],[49.5,49,194]);
  plug45([44.5,49,62],[0,0,-1]);
  color([0.15,0.15,0.15])run([[44.5,49,17],[40,52,11],[15,52,9],[15,49,-6]],4);
  color([0.55,0.75,0.6])difference(){translate([8,42,4])cube([14,14,9]);translate([15,49,0])cylinder(d=4.5,h=20,$fn=16);}
  rj45ra([60.5,49,55]);
- color([0.15,0.15,0.15])run([[67.5,49,55],[80,30,40],[90,23,17]],6);
+ color([0.15,0.15,0.15])run([[67.5,49,55],[78,42,42],[88.5,30,35]],6);
  color([0.95,0.95,0.95])run([[88+sx,49.5,ra_top],[88+sx,49.5,20],[93,52,30],[93,52,160],[93,40,192],[70,28,198],[49.5,49,194]]);
 }
 
@@ -49,5 +50,5 @@ translate([sx,0,0]){
 }
 color([0.95,0.95,0.95]){run([[29+sx,38,-11],[5,38,-11],[-25,38,-16]]);run([[76+sx,26.5,-11],[100,26.5,-11],[130,26.5,-16]]);}
 color([0.15,0.15,0.15]){run([[15,49,-6],[13,58,-20],[0,62,-24],[-25,62,-26]],4);
- run([[90,22.75,-3],[92,16,-20],[100,12,-24],[130,12,-26]],6);}
+ run([[105,30,35],[125,30,30],[140,30,20]],6);}   // Ethernet patch out of the right-wall keystone
 contents();
