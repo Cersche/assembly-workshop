@@ -42,7 +42,16 @@ module nut_slider(){
 // ScreenBeam standing, coax end up, vents towards the lid; 6 mm further forward than parts.scad so the cradle bosses
 // on the back wall are deep enough for inserts. cz = vertical adjustment of cradle + ScreenBeam (slots allow +-cz_adj).
 cz=0; cz_adj=6;
-SB=[17.5,28,62];   // ScreenBeam corner (65 x 30 x 120)
+// Cradle rev B (Brian, 2026-10-27, after the first print): the jumper was ~1 in short of Coax In and the cradle could
+// not slide lower because its keystone-side shelf pad hit the Ethernet keystone. ScreenBeam now sits 25 mm lower
+// (sb_dz) and 3 mm away from the keystone (sb_dx, the most before the left lip meets the lower-left screw head); the
+// bosses and slots on the back wall are unchanged. Assumes the plugs and keystone clear (Brian: "assume it all fits").
+sb_dx=-3; sb_dz=-25;
+SB=[17.5+sb_dx,28,62+sb_dz];   // ScreenBeam corner (65 x 30 x 120; measured 118 x 64)
+function sh(p)=p+[sb_dx,0,sb_dz];   // move a rev A ScreenBeam-relative point with the ScreenBeam
+// Rubber feet on the ScreenBeam's back (Brian, 2026-10-27): 13 mm across, 2.25 mm proud, centres ~8 mm in from the
+// long edges and ~16 mm in from the short ends (ruler photos, +-1 mm). Pockets 16 across x 2.6 deep let it sit flat.
+sb_feet=[for(x=[8.5,56.5],z=[16,102])[x,z]]; foot_d=16; foot_dp=2.6;
 module sb_device(){translate([0,0,cz]){
  color([0.12,0.12,0.13])translate(SB)cube([65,30,120]);
  color([0.3,0.3,0.32])translate([SB[0]+12,SB[1]-0.5,SB[2]+30])cube([41,1,60]);
@@ -53,21 +62,25 @@ module sb_device(){translate([0,0,cz]){
 // strap (~20 mm, like Brian's) goes through two plate slots and across the front, also holding the jumper.
 cr_y=SB[1]+30;          // plate front face (ScreenBeam back)
 cr_t=4;                 // plate thickness; bosses fill cr_y+cr_t .. back wall
-cr_slots=[[8,70],[97,70],[8,136],[97,136]];   // slot centres (X, Z at cz=0)
+cr_slots=[[8,70],[97,70],[8,136],[97,136]];   // slot centres (X, Z at cz=0); fixed by the back-wall bosses
+cr_pads=[[SB[0]-3,SB[0]+18.5],[SB[0]+52.5,SB[0]+63]];   // shelf pads (X from..to)
 module cradle15(){translate([0,0,cz])color([0.55,0.75,0.6])difference(){
  // Printed back face down: plate on the bed with a 0.6 mm elephant-foot chamfer, pads stand up as walls with 45 deg
  // gussets underneath; the front lips are the only overhang, kept to a 4 mm ledge.
  union(){
-  hull(){translate([4,cr_y,48])cube([97,cr_t-0.6,102]);translate([4.6,cr_y,48.6])cube([95.8,cr_t,100.8]);}   // back plate
-  translate([14.5,cr_y-8,56])cube([3,8,94]);translate([82.5,cr_y-8,56])cube([2,8,94]);   // side lips (right one thin: jumper beside it)
-  for(x=[[14.5,36],[70,85.5]])translate([x[0],SB[1]-3,SB[2]-4])cube([x[1]-x[0],cr_y-SB[1]+3,4]);   // shelf pads
-  for(x=[[14.5,36],[70,85.5]])translate([x[0],SB[1]-3,SB[2]-0.01])cube([x[1]-x[0],3,4]);           // front lips (4 mm ledge)
-  for(x=[[14.5,36],[70,85.5]])translate([x[0],cr_y,SB[2]-4])rotate([0,90,0])linear_extrude(x[1]-x[0])
-   polygon([[0,0],[10,0],[0,-10]]);                                                                // 45 deg gussets under the pads
+  // back plate, extended down to Z21 (rev A started at Z48) so it still carries the lowered shelf
+  hull(){translate([4,cr_y,21])cube([97,cr_t-0.6,131]);translate([4.6,cr_y,21.6])cube([95.8,cr_t,129.8]);}
+  translate([SB[0]-3,cr_y-8,SB[2]-6])cube([3,8,94]);translate([SB[0]+65,cr_y-8,SB[2]-6])cube([2,8,94]);   // side lips (right one thin: jumper beside it)
+  // shelf pads: the keystone-side pad now ends 2 mm inside the ScreenBeam's edge (rev A ran 3 mm past it, into the keystone)
+  for(x=cr_pads)translate([x[0],SB[1]-3,SB[2]-4])cube([x[1]-x[0],cr_y-SB[1]+3,4]);
+  for(x=cr_pads)translate([x[0],SB[1]-3,SB[2]-0.01])cube([x[1]-x[0],3,4]);           // front lips (4 mm ledge)
+  for(x=cr_pads)translate([x[0],cr_y,SB[2]-4])rotate([0,90,0])linear_extrude(x[1]-x[0])
+   polygon([[0,0],[10,0],[0,-10]]);                                                  // 45 deg gussets under the pads
  }
  for(s=cr_slots)translate([s[0],cr_y-1,s[1]])rotate([-90,0,0])linear_extrude(cr_t+2)
   hull(){translate([0,-cz_adj])circle(d=3.4,$fn=20);translate([0,cz_adj])circle(d=3.4,$fn=20);}
- for(x=[9.5,87.5])translate([x,cr_y-1,100])cube([3,cr_t+2,24]);              // strap slots
+ for(x=[SB[0]-8,SB[0]+70])translate([x,cr_y-1,SB[2]+48])cube([3,cr_t+2,24]);   // strap slots, clear of the screw slots
+ for(f=sb_feet)translate([SB[0]+f[0],cr_y-0.01,SB[2]+f[1]])rotate([-90,0,0])cylinder(d=foot_d,h=foot_dp,$fn=48);   // foot pockets
 }}
 // box contents as in parts.scad, with the cut floor and the jumper starting above the floor
 module contents(){
@@ -76,20 +89,20 @@ module contents(){
  color([0.2,0.4,0.9])translate([102.5-14,30-8.5,35-8])cube([14,17,16]);   // Ethernet keystone rear, right wall
  sb_device();
  cradle15();
- rod([37.5,43,182],[37.5,43,194]);rod([37.5,43,194],[49.5,43,194]);
- plug45([44.5,43,62],[0,0,-1]);
+ rod(sh([37.5,43,182]),sh([37.5,43,194]));rod(sh([37.5,43,194]),sh([49.5,43,194]));
+ plug45(sh([44.5,43,62]),[0,0,-1]);
  // power lead: plug straight down, gentle bend left along the floor, out the left-wall hole (Y50 Z17)
- color([0.15,0.15,0.15])run([[44.5,43,17],[40,47,10],[25,50,11],[14,50,17],[-2,50,17]],4);
+ color([0.15,0.15,0.15])run([[44.5+sb_dx,43,17],[40,47,10],[25,50,11],[14,50,17],[-2,50,17]],4);
  color([0.55,0.75,0.6])difference(){translate([2.5,43,10])cube([11.5,14,14]);translate([0,50,17])rotate([0,90,0])cylinder(d=4.5,h=20,$fn=16);}   // strain-relief clamp
- rj45ra([60.5,43,55]);
- color([0.15,0.15,0.15])run([[67.5,43,55],[78,38,42],[88.5,30,35]],6);
+ rj45ra(sh([60.5,43,55]));
+ color([0.15,0.15,0.15])run([sh([67.5,43,55]),[78,38,42],[88.5,30,35]],6);
  // Brian's braided jumper (photo 2026-10-27, ~220 mm): F female end on an F male-male barrel screwed onto the
  // right-angle's jack above the floor, up the ScreenBeam's right side (strapped), right-angle F male onto Coax In on
  // top. Barrel and connector lengths are photo estimates / UNKNOWN.
  color([0.85,0.7,0.3])translate([88+sx,49.5,ra_top])cylinder(d=11,h=12,$fn=6);   // male-male barrel
  color("silver")translate([88+sx,49.5,ra_top+12])cylinder(d=10,h=9,$fn=24);      // jumper F female body
  color([0.1,0.1,0.1])translate([88+sx,49.5,ra_top+21])cylinder(d=9,h=11,$fn=24);  // strain relief
- color([0.45,0.45,0.45])run([[88+sx,49.5,ra_top+32],[88,49.5,160],[82,49.5,186],[64,43,196],[49.5,43,194]],7);
+ color([0.45,0.45,0.45])run([[88+sx,49.5,ra_top+32],[88,49.5,135],sh([82,49.5,186]),sh([64,43,196]),sh([49.5,43,194])],7);
 }
 
 translate([0,0,-exploded])porch();
