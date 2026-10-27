@@ -41,11 +41,20 @@ module profile(o)hull(){
 }
 module along_y(y0,y1)translate([0,y1,0])rotate([90,0,0])linear_extrude(y1-y0)children();
 
+// Raised 0.6 labels on the outer walls (walls print vertical; Brian 2026-10-27 "some labels"). Left reads from the
+// left (text runs towards the front), right reads from the right.
+module porch_labels(){font="Liberation Sans:style=Bold";
+ translate([px0+0.2,59,-14])multmatrix([[0,0,-1,0],[-1,0,0,0],[0,1,0,0]])linear_extrude(0.8)
+  text("IN",size=6,font=font,halign="center",valign="center");
+ translate([px1-0.2,50,-12])multmatrix([[0,0,1,0],[1,0,0,0],[0,1,0,0]])linear_extrude(0.8)
+  text("MODEM",size=4,font=font,halign="center",valign="center");
+}
 module porch15(){
  color([0.55,0.75,0.6])difference(){
   union(){
    difference(){along_y(py0,py1)profile(0);along_y(py0+t,py1-t)profile(t);}
    for(e=ears)translate([e[0],e[1],-h+t-0.1])cylinder(d=tower_d,h=ear_z+h-t+0.1,$fn=40);
+   porch_labels();
   }
   // IN post slot, open to the top
   translate([px0-1,in_y,0])rotate([0,90,0])linear_extrude(t+2)hull(){translate([-in_z,0])circle(d=post_slot,$fn=40);translate([-2,-post_slot/2])square([1,post_slot]);}
