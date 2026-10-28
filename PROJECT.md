@@ -28,6 +28,8 @@ Selected dark hybrid GUI: 1C/2C/3A/4A/5A/6A/7A/8A, independent slot assemblies, 
 
 **3D preview of print files (2026-10-27):** `python tools/mesh_viewer.py part.3mf other.stl -o work/mesh-viewer/name.html -t "Title"` writes one standalone HTML (own WebGL renderer, no CDN, works offline) to spin, zoom and pan parts; send it with SendUserFile (display "render") to view it in the Claude app panel. 3MF objects become separate parts at their build positions; several STLs are laid side by side (`--as-is` keeps their coordinates). Preview only, changes no geometry. Don't commit viewer HTML that embeds third-party/licensed meshes.
 
+Marking: Pin taps a spot, Circle draws around something; each mark gets a note. "Copy notes" puts text (mm coordinates, part names, notes, view) on the clipboard to paste to Claude; "Copy picture"/"Save picture" give a PNG with the marks. If the panel blocks the clipboard, the notes appear selected in a box for Ctrl+C.
+
 ## Limits and preservation
 
 What's next lives in [ROADMAP](ROADMAP.md); the old numbered-phase plan is retired. Four rack holes per faceplate U and 2.5 mm corner-radius limit are Brian-confirmed design direction; fit/strength UNKNOWN. Each extension takes its own 1U; joints movable. Earlier positive physical fit applies only to the old two-hole/3 mm/square-corner specimen. Snap/clip/peg/strap/keystone/single-piece/rear-support/multi-U features are unprinted. Usable depth, applicable wall/process/load/installation/retention guidance and general strength remain UNKNOWN. Niche insert research is parked; 2C is final. See [Open_Unknowns](docs/housekeeping/Open_Unknowns.md).

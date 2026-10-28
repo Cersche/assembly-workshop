@@ -8,8 +8,18 @@
   :root { --bg:#1e1e1e; --panel:#262626cc; --text:#e6e6e6; --muted:#9a9a9a; --line:#3a3a3a; --accent:#d97757; }
   html, body { margin:0; height:100%; background:var(--bg); color:var(--text);
     font:13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; overflow:hidden; }
-  canvas { display:block; width:100%; height:100%; touch-action:none; cursor:grab; }
+  canvas { position:absolute; inset:0; display:block; width:100%; height:100%; touch-action:none; cursor:grab; }
   canvas:active { cursor:grabbing; }
+  #ov { pointer-events:none; }
+  body.mark canvas { cursor:crosshair; }
+  button.on { background:var(--accent); border-color:var(--accent); color:#1e1e1e; }
+  .note { display:grid; grid-template-columns:auto 1fr auto; gap:4px 6px; align-items:center; padding:4px 0; border-top:1px solid var(--line); }
+  .note b { color:var(--accent); }
+  .note .where { grid-column:1 / 4; color:var(--muted); font-size:11px; }
+  .note input { grid-column:1 / 3; background:#1e1e1e; color:var(--text); border:1px solid var(--line); border-radius:4px; padding:3px 6px; font:inherit; min-width:0; }
+  .note button { padding:2px 7px; }
+  #out { width:100%; box-sizing:border-box; height:110px; margin-top:8px; background:#1e1e1e; color:var(--text); border:1px solid var(--line); font:11px monospace; }
+  #msg { color:var(--accent); font-size:12px; margin-top:6px; min-height:1em; }
   #panel { position:absolute; top:12px; left:12px; max-width:min(320px, calc(100% - 24px)); max-height:calc(100% - 24px);
     overflow:auto; background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:10px 12px;
     backdrop-filter:blur(6px); }
@@ -29,6 +39,7 @@
 </head>
 <body>
 <canvas id="c"></canvas>
+<canvas id="ov"></canvas>
 <details id="panel" open>
   <summary><h1>__TITLE__</h1></summary>
   <div id="parts"></div>
@@ -39,6 +50,21 @@
     <button id="front">Front</button>
   </div>
   <div class="hint">Drag to spin · right-drag or Shift-drag to pan · wheel or pinch to zoom · grid 10 mm, Z=0 bed. Preview only.</div>
+  <div class="row" id="modes">
+    <button data-mode="orbit" class="on">Spin</button>
+    <button data-mode="pin">Pin</button>
+    <button data-mode="draw">Circle</button>
+  </div>
+  <div class="hint">Pin: tap a spot. Circle: draw around something. Type a note on each, then Copy notes and paste it to Claude.</div>
+  <div id="notes"></div>
+  <div class="row">
+    <button id="copyText">Copy notes</button>
+    <button id="copyPic">Copy picture</button>
+    <button id="savePic">Save picture</button>
+    <button id="clear">Clear marks</button>
+  </div>
+  <div id="msg"></div>
+  <textarea id="out" hidden readonly></textarea>
 </details>
 <div id="err"></div>
 <script id="data" type="application/json">__DATA__</script>
@@ -47,7 +73,7 @@
 const PARTS = JSON.parse(document.getElementById("data").textContent);
 const COLORS = ["#d97757", "#6aa6e8", "#8fc46a", "#e2c25b", "#b58ae0", "#5fc9c0", "#e07a9f", "#a8a8a8"];
 const canvas = document.getElementById("c");
-const gl = canvas.getContext("webgl", { antialias: true });
+const gl = canvas.getContext("webgl", { antialias: true, preserveDrawingBuffer: true });
 if (!gl) { const e = document.getElementById("err"); e.style.display = "grid"; e.textContent = "WebGL is not available here."; throw 0; }
 
 function b64(s) { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u.buffer; }
@@ -85,7 +111,7 @@ PARTS.forEach((part, k) => {
     const l = Math.hypot(n[0], n[1], n[2]) || 1;
     [A, B, C].forEach((P, j) => { for (let a = 0; a < 3; a++) { pos[(t + j) * 3 + a] = P[a]; nrm[(t + j) * 3 + a] = n[a] / l; } });
   }
-  part.count = idx.length;
+  part.count = idx.length; part.posArr = pos;
   part.pbuf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, part.pbuf); gl.bufferData(gl.ARRAY_BUFFER, pos, gl.STATIC_DRAW);
   part.nbuf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, part.nbuf); gl.bufferData(gl.ARRAY_BUFFER, nrm, gl.STATIC_DRAW);
   part.color = COLORS[k % COLORS.length]; part.visible = true;
@@ -160,6 +186,7 @@ function render() {
     gl.drawArrays(gl.TRIANGLES, 0, part.count);
   }
   gl.disableVertexAttribArray(mn);
+  lastM = M; drawOverlay();
 }
 
 // ---- part list
@@ -181,11 +208,140 @@ document.getElementById("top").onclick = () => frame(-Math.PI / 2, Math.PI / 2 -
 document.getElementById("front").onclick = () => frame(-Math.PI / 2, 0);
 document.getElementById("all").onclick = () => { PARTS.forEach(p => { p.visible = true; p.cb.checked = true; }); draw(); };
 
+// ---- marks: pins and circles, anchored to 3D points so they follow the view
+const ov = document.getElementById("ov"), ctx = ov.getContext("2d");
+const marks = []; let mode = "orbit", stroke = null, lastM = null, nextId = 1;
+const viewKey = () => [cam.yaw, cam.pitch, cam.dist, ...cam.target, canvas.width, canvas.height].join();
+function ray(sx, sy) {
+  const { e, f, r, u } = basis(), t = Math.tan(Math.PI / 8), W = canvas.clientWidth, H = canvas.clientHeight;
+  const x = (sx / W * 2 - 1) * t * W / H, y = (1 - sy / H * 2) * t;
+  return { o: e, d: norm([0, 1, 2].map(a => f[a] + r[a] * x + u[a] * y)), f };
+}
+function hit(sx, sy) {
+  const { o, d, f } = ray(sx, sy); let best = null;
+  for (const part of PARTS) {
+    if (!part.visible) continue; const P = part.posArr;
+    for (let i = 0; i < P.length; i += 9) {
+      const e1 = [P[i + 3] - P[i], P[i + 4] - P[i + 1], P[i + 5] - P[i + 2]], e2 = [P[i + 6] - P[i], P[i + 7] - P[i + 1], P[i + 8] - P[i + 2]];
+      const h = cross(d, e2), a = dot(e1, h); if (Math.abs(a) < 1e-12) continue;
+      const s = [o[0] - P[i], o[1] - P[i + 1], o[2] - P[i + 2]], uu = dot(s, h) / a; if (uu < 0 || uu > 1) continue;
+      const q = cross(s, e1), vv = dot(d, q) / a; if (vv < 0 || uu + vv > 1) continue;
+      const tt = dot(e2, q) / a; if (tt > 1e-6 && (!best || tt < best.t)) best = { t: tt, part: part.name };
+    }
+  }
+  if (!best && Math.abs(d[2]) > 1e-9 && -o[2] / d[2] > 0) best = { t: -o[2] / d[2], part: "bed (Z=0)" };
+  if (!best) return null;
+  const p = o.map((x, a) => x + d[a] * best.t);
+  return { p, part: best.part, depth: dot(sub(p, o), f) };
+}
+const mmPerPx = depth => 2 * depth * Math.tan(Math.PI / 8) / canvas.clientHeight;
+function project(p) {
+  const M = lastM, w = M[3] * p[0] + M[7] * p[1] + M[11] * p[2] + M[15]; if (w <= 0) return null;
+  const x = (M[0] * p[0] + M[4] * p[1] + M[8] * p[2] + M[12]) / w, y = (M[1] * p[0] + M[5] * p[1] + M[9] * p[2] + M[13]) / w;
+  return [(x + 1) / 2 * canvas.clientWidth, (1 - y) / 2 * canvas.clientHeight, w];
+}
+function addPin(sx, sy) {
+  const h = hit(sx, sy); if (!h || h.part === "bed (Z=0)" && !PARTS.some(p => p.visible)) return;
+  marks.push({ id: nextId++, kind: "Pin", p: h.p, parts: [h.part], note: "" }); listNotes(true); draw();
+}
+function finishStroke() {
+  const s = stroke; stroke = null; if (s.length < 4) { draw(); return; }
+  const xs = s.map(q => q[0]), ys = s.map(q => q[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys), cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+  const hits = [];
+  for (let i = 0; i <= 4; i++) for (let j = 0; j <= 4; j++) { const h = hit(x0 + (x1 - x0) * i / 4, y0 + (y1 - y0) * j / 4); if (h) hits.push(h); }
+  const onPart = hits.filter(h => h.part !== "bed (Z=0)").sort((a, b) => a.depth - b.depth);
+  let center = hit(cx, cy) || hits[0];
+  if (!center) { draw(); return; }
+  if (center.part === "bed (Z=0)" && onPart.length) center = onPart[0];
+  const parts = onPart.length ? [...new Set(onPart.map(h => h.part))] : [center.part];
+  const rPx = Math.max(x1 - x0, y1 - y0) / 2;
+  marks.push({ id: nextId++, kind: "Circle", p: center.p, parts, note: "", rMm: rPx * mmPerPx(center.depth), path: s, key: viewKey() });
+  listNotes(true); draw();
+}
+function drawOverlay() {
+  const dpr = canvas.width / canvas.clientWidth;
+  if (ov.width !== canvas.width || ov.height !== canvas.height) { ov.width = canvas.width; ov.height = canvas.height; }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, ov.width, ov.height);
+  ctx.lineWidth = 2.5; ctx.strokeStyle = "#ff4d4d"; ctx.font = "bold 12px system-ui, sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  const path = s => { ctx.beginPath(); s.forEach((q, i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.stroke(); };
+  const key = viewKey();
+  for (const m of marks) {
+    const s = project(m.p); if (!s) continue;
+    let lx = s[0], ly = s[1];
+    if (m.kind === "Circle") {
+      if (m.key === key) { path(m.path); const ys = m.path.map(q => q[1]); ly = Math.min(...ys) - 12; }
+      else { const r = m.rMm / mmPerPx(s[2]); ctx.setLineDash([6, 4]); ctx.beginPath(); ctx.arc(s[0], s[1], r, 0, 7); ctx.stroke(); ctx.setLineDash([]); ly = s[1] - r - 12; }
+    }
+    ctx.fillStyle = "#ff4d4d"; ctx.beginPath(); ctx.arc(lx, ly, 9, 0, 7); ctx.fill();
+    ctx.fillStyle = "#fff"; ctx.fillText(m.id, lx, ly + 0.5);
+  }
+  if (stroke) path(stroke);
+}
+const fmt = p => "(" + p.map(x => x.toFixed(1)).join(", ") + ") mm";
+const notesEl = document.getElementById("notes");
+function listNotes(focusLast) {
+  notesEl.textContent = "";
+  marks.forEach(m => {
+    const row = document.createElement("div"); row.className = "note";
+    const t = document.createElement("span"); t.innerHTML = "<b>#" + m.id + "</b> " + m.kind;
+    const del = document.createElement("button"); del.textContent = "×"; del.title = "Remove";
+    del.onclick = () => { marks.splice(marks.indexOf(m), 1); listNotes(); draw(); };
+    const where = document.createElement("span"); where.className = "where";
+    where.textContent = m.parts.join(", ") + " · " + fmt(m.p) + (m.rMm ? " · ~" + (2 * m.rMm).toFixed(0) + " mm across" : "");
+    const inp = document.createElement("input"); inp.placeholder = "Note for Claude…"; inp.value = m.note;
+    inp.oninput = () => { m.note = inp.value; };
+    row.append(t, document.createElement("span"), del, where, inp); notesEl.append(row);
+    if (focusLast && m === marks[marks.length - 1]) setTimeout(() => inp.focus({ preventScroll: true }), 0);
+  });
+  if (window.innerWidth >= 500) document.getElementById("panel").open = true;
+}
+function notesText() {
+  const deg = x => (x * 180 / Math.PI).toFixed(0);
+  const lines = ["3D viewer notes: " + document.title,
+    "View: yaw " + deg(cam.yaw) + "°, pitch " + deg(cam.pitch) + "°, target " + fmt(cam.target) + ", distance " + cam.dist.toFixed(0) + " mm",
+    "Shown: " + PARTS.filter(p => p.visible).map(p => p.name).join(", ")];
+  for (const m of marks) lines.push("#" + m.id + " " + m.kind + (m.rMm ? " ~" + (2 * m.rMm).toFixed(0) + " mm across" : "") +
+    " at " + fmt(m.p) + " on " + m.parts.join(" + ") + (m.note ? ": " + m.note : ""));
+  if (!marks.length) lines.push("(no marks)");
+  return lines.join("\n");
+}
+const msg = t => { document.getElementById("msg").textContent = t; };
+function picture() {
+  render(); const c = document.createElement("canvas"); c.width = canvas.width; c.height = canvas.height;
+  const g = c.getContext("2d"); g.drawImage(canvas, 0, 0); g.drawImage(ov, 0, 0); return c;
+}
+function fallbackText(t) { const o = document.getElementById("out"); o.hidden = false; o.value = t; o.focus(); o.select(); }
+document.getElementById("copyText").onclick = async () => {
+  const t = notesText();
+  try { await navigator.clipboard.writeText(t); msg("Notes copied. Paste them into the chat."); }
+  catch { fallbackText(t); msg("Clipboard blocked here: the notes are selected below, press Ctrl+C."); }
+};
+document.getElementById("copyPic").onclick = () => picture().toBlob(async b => {
+  try { await navigator.clipboard.write([new ClipboardItem({ "image/png": b })]); msg("Picture copied. Paste it into the chat."); }
+  catch { msg("Clipboard blocked here: use Save picture instead."); }
+});
+document.getElementById("savePic").onclick = () => {
+  const a = document.createElement("a"); a.href = picture().toDataURL("image/png");
+  a.download = (document.title || "view").replace(/[^\w.-]+/g, "_") + "_marked.png"; a.click(); msg("Picture saved to Downloads.");
+};
+document.getElementById("clear").onclick = () => { marks.length = 0; nextId = 1; listNotes(); draw(); };
+document.querySelectorAll("#modes button").forEach(b => b.onclick = () => {
+  mode = b.dataset.mode; document.querySelectorAll("#modes button").forEach(x => x.classList.toggle("on", x === b));
+  document.body.classList.toggle("mark", mode !== "orbit");
+});
+
 // ---- mouse and touch
 const pts = new Map(); let last = null;
 canvas.addEventListener("contextmenu", e => e.preventDefault());
-canvas.addEventListener("pointerdown", e => { canvas.setPointerCapture(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]); last = null; });
-canvas.addEventListener("pointerup", e => { pts.delete(e.pointerId); last = null; });
+canvas.addEventListener("pointerdown", e => {
+  canvas.setPointerCapture(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]); last = null;
+  if (pts.size === 1 && e.button === 0 && !e.shiftKey) {
+    if (mode === "pin") { pts.delete(e.pointerId); addPin(e.clientX, e.clientY); }
+    else if (mode === "draw") stroke = [[e.clientX, e.clientY]];
+  } else stroke = null;
+});
+canvas.addEventListener("pointerup", e => { pts.delete(e.pointerId); last = null; if (stroke) finishStroke(); });
 canvas.addEventListener("pointercancel", e => { pts.delete(e.pointerId); last = null; });
 function pan(dx, dy) {
   const { r, u } = basis(), s = 2 * cam.dist * Math.tan(Math.PI / 8) / canvas.clientHeight;
@@ -193,6 +349,7 @@ function pan(dx, dy) {
 }
 canvas.addEventListener("pointermove", e => {
   if (!pts.has(e.pointerId)) return;
+  if (stroke) { stroke.push([e.clientX, e.clientY]); pts.set(e.pointerId, [e.clientX, e.clientY]); draw(); return; }
   const prev = pts.get(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]);
   if (pts.size === 2) {
     const [a, b] = [...pts.values()], mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], d = Math.hypot(a[0] - b[0], a[1] - b[1]);

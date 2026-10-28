@@ -69,3 +69,7 @@ The whole project, including outputs/, data/normal-use/, archives and licensed t
 ## 44.4 mm faceplate standard — Brian, 2026-10-20
 
 Brian printed plate-height coupons FP44-A..D (outputs/Physical_Test_Coupons_2026-10-20_FP44_plate_height/) and reports a perfect fit: the 44.4 mm-per-1U plate is the new standard, replacing 42 mm. Width 252, thickness 4, 2.5 mm corners and the four-corner slots (±118.2625, ±15.902 about each U centre) are unchanged. The plate is centred in its slot; Z=0 is the slot bottom. Implementation is Codex task 25 (work/codex-tasks/25-faceplate-44-standard.md). Fit applies to those specimens on Brian's rack only; strength stays UNKNOWN. Old saved revisions stay immutable.
+
+## 3D viewer for every part — Brian, 2026-10-27
+
+Whenever work produces, changes or examines STL/3MF files, run `python tools/mesh_viewer.py <files...> -o work/mesh-viewer/<name>.html -t "<title>"` and send the page with SendUserFile (display "render") without being asked. Brian can Pin and Circle things and paste back "3D viewer notes" (mm coordinates in the file's own frame, part names as in the file) or a marked picture. The viewer is preview-only and changes no geometry. Don't commit generated viewer pages unless asked, and never commit ones that embed third-party/licensed meshes. Usage: PROJECT.md.
