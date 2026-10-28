@@ -23,7 +23,7 @@ vents=["left","right"];   // no top vents (Brian 2026-10-27: sides are plenty)
 // hole there, the cord turns inside the porch lobe. Splitter (ear slots, right-angle F hole) and keystone moved 8 mm
 // to the front so the IN coax clears the plug. Bottom round at X88 Y41.5 = right-angle F. Keystone up the right wall
 // at Z121.5, midway between the louvre sets (Z81 / Z162), Y18.5 (3.5 further forward 2026-10-28: the inserted jack was in the way; front edge 2 mm behind the 6 mm lid lip).
-cutouts=[["right","keystone",-16.5,16.5,0,0],["bottom","round",-35.5,6.5,14,0],["bottom","round",14,8,10,0]];
+cutouts=[["right","keystone",-16.5,16.5,0,0],["bottom","slot",-30.5,6.5,24,14],["bottom","round",14,8,10,0]];
 standoffs=[[-44.5,-35,8,4.0,9],[44.5,-35,8,4.0,9],[-44.5,31,8,4.0,9],[44.5,31,8,4.0,9]];   // cradle bosses, M3 heat-set inserts
 vent_avoid=[];
 // @@END@@
@@ -207,14 +207,16 @@ module mount_cuts(){if(mount_style=="keyhole")for(p=key_pos())on_wall("back")tra
 
 // Porch ear-screw slots in the floor (Brian 2026-10-27: missing from the first printed sleeve). Same as c15.scad
 // floor_cuts: 6 mm wide so the nut slider's key rides in it, key 10 + +-8 travel. The F hole stays the round cutout.
-ear_slots=[[59,54],[46,6]];   // 8 mm forward 2026-10-28 ear_adj=8;
+ear_slots=[[59,54],[46,6]];   // 8 mm forward 2026-10-28
+ear_adj=8;
 module ear_slots(){for(e=ear_slots)translate([e[0],e[1],-1])linear_extrude(wall+2)
  hull(){translate([-(ear_adj+5)+3,0])circle(d=6,$fn=24);translate([ear_adj+5-3,0])circle(d=6,$fn=24);}}
 
 // Porch rev 2 fixings (Brian 2026-10-27): the porch gets its own two M3 screws from below into heat-set inserts in
 // floor bosses, so it comes off without touching the splitter (whose ears keep their slots and nut sliders). Clear of
 // the sliders' travel, the F hole and the X98 joint block; sleeve-only, the back plate is unchanged.
-porch_screws=[[18,42],[78,5],[86,62]];   // 2026-10-28: lobe, front-right lug, back porch_boss_d=9; porch_boss_h=8;
+porch_screws=[[18,42],[78,5],[86,62]];   // 2026-10-28: lobe, front-right lug, back
+porch_boss_d=9; porch_boss_h=8;
 module porch_bosses(){for(p=porch_screws)translate([p[0],p[1],wall-0.01])cylinder(d=porch_boss_d,h=porch_boss_h-wall+0.01,$fn=32);}
 module porch_pilots(){for(p=porch_screws)translate([p[0],p[1],-0.01])cylinder(d=insert_pilot,h=insert_depth,$fn=24);}
 
