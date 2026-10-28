@@ -30,3 +30,5 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 | 2026-10-28 | CM1000 bracket: faceplate + rails v2 (screw access bays) | Fits (Brian) |
 | 2026-10-28 | TL-SG108E `2026-10-23_TL-SG108E_flush` | Printed and tested; fit acceptable (Brian) |
 | 2026-10-27 | MoCA porch15 + printed bezel nut | Fits, but nut too tall (above the rim), too thick and too tight; empty corner past the OUTs and closed modem side get in the way (porch rev 2, porch16.scad). Splitter calipered |
+
+- 2026-10-28 TL-SG108E flush (2026-10-23 print): switch face ~1.3 mm proud of the faceplate; ~1 mm spare clearance above the switch in the opening (Brian: 1 mm is already forgiving). Fixed in SG8-M6-B.

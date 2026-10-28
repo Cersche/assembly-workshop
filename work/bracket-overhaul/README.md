@@ -9,4 +9,4 @@ One bracket per fresh session; this file holds what applies to all of them.
 
 Order: HDD/SSD tray → CM1000 → TL-SG108E → Hue + Pi 4 → OptiPlex SLV-F (printed baseline: HANDOFF.md).
 
-Progress: HDT-M6-A done; CM6A and TL-SG108E SG8-M6-A (`outputs/TL-SG108E_M6_2026-10-28/`) built, waiting for Brian's review. Sleeve brackets can't use `m6_joint` yet.
+Progress: HDT-M6-A done; CM6A and TL-SG108E SG8-M6-B (`outputs/TL-SG108E_M6_2026-10-28/`) built, waiting for Brian's review. Sleeve brackets can't use `m6_joint` yet.
