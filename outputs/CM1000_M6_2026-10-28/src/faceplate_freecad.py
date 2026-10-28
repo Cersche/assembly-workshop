@@ -11,7 +11,6 @@ def solid(name, mat=None):
     return Part.makeSolid(Part.makeShell(s.Faces))
 joint_x, joint_z = [22.6, 231.4], [8.6, 35.85]
 pilot_d, pilot_y = 7.6, (9.0, 16.5)
-mid_dz = 22.225 - 6.35
 # ear fills: X 0..16.9 -> 0.05..17.3 (0.4 into the plate), Y 0..3 -> 0.05..2.95, Z 0..44.45 -> 0.05..44.40.
 # Faces coplanar with the plate left cracks/non-manifold edges in the export; a 0.05 inset is below one layer.
 def fit(lo, hi, nlo, nhi):
@@ -22,8 +21,6 @@ kx, ox = fit(237.1, 254, 236.7, 253.95)
 fr = solid('fp_17_normal_part.stl', App.Matrix(kx, 0, 0, ox, 0, ky, 0, oy, 0, 0, kz, oz, 0, 0, 0, 1))
 body = solid('fp_1_normal_part.stl').fuse([fl, fr])
 cuts = [solid('fp_%d_negative_part.stl' % n) for n in (18, 19, 20, 21)]
-for n in (18, 20):
-    s = solid('fp_%d_negative_part.stl' % n); s.translate(V(0, 0, mid_dz)); cuts.append(s)
 for x in joint_x:
     for z in joint_z:
         cuts.append(Part.makeCylinder(pilot_d / 2, pilot_y[1] - pilot_y[0], V(x, pilot_y[0], z), V(0, 1, 0)))
