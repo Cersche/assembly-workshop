@@ -320,6 +320,20 @@
       ],
       "port": 8847,
       "autoPort": false
+    },
+    {
+      "name": "Mesh viewer pages",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8861",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "work/mesh-viewer"
+      ],
+      "port": 8861
     }
   ]
 }

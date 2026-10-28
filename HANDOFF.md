@@ -2,7 +2,13 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
-## 2026-10-28 Faceplate/bracket overhaul: printed baseline (read first)
+## 2026-10-28 Faceplate/bracket overhaul (read first)
+
+**Status (end of 2026-10-28):** 2 of 5 brackets redesigned for M6, both unprinted (fit/strength UNKNOWN): HDD/SSD tray **HDT-M6-A** (approved by Brian) and CM1000 **CM6A** (waiting for Brian's review). The generator has an opt-in `m6_joint` option (non-sleeve trays only). Shared rules and Brian's post-hole photo: [work/bracket-overhaul/README.md](work/bracket-overhaul/README.md). Order: HDD/SSD ✔ → CM1000 (review) → **TL-SG108E** → Hue + Pi 4 → OptiPlex SLV-F (needs a sleeve M6 design).
+
+**Unfinished:** (1) Brian reviews CM6A (`outputs/CM1000_M6_2026-10-28/`); (2) TL-SG108E, Hue + Pi 4, OptiPlex not started; (3) `m6_joint` untested on any bracket other than the drive tray, and no sleeve support; (4) the empty middle post hole is not used yet (see the rack-post bullet); (5) Print in color pixelates SVG art and Export color STLs fails silently with unsaved changes (in IDEAS.md); (6) 4 sliver non-manifold edges on the HDT-M6-A tab coves. Nothing printed.
+
+**Exact next step:** new fresh session for the TL-SG108E switch bracket. Baseline `outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/` (hand-patched by `build.py`, hidden screws, keyhole detents, rear stop, flush ports; fit acceptable). Swap M3 → M6 (7.6 mm bores, M6 x 8 button heads), try `m6_joint` first, keep every existing feature, ask Brian before dropping any, and keep the faceplate to the four corner rack slots. Offload big mechanical edits to Codex (spec in `work/codex-tasks/`, full prompt for Brian).
 
 Brian is redesigning the printed brackets one at a time, each in its own prompt. These are the versions he printed (confirmed 2026-10-28); review page `work/mesh-viewer/printed_brackets_review_2026-10-28.html` (not committed):
 - CM1000: `outputs/STL_Deliveries/2026-10-16_CM1000_bracket/` faceplate + `rails_v2` (access bays). Fits.

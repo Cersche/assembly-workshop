@@ -244,7 +244,21 @@
               "name": "Drive tray (3.5\" HDD + 2.5\" SSD) (U2)",
               "units": "mm"
             },
-            "appearance": {},
+            "appearance": {
+              "artwork": {
+                "sha256": "8330262e3b41730fcf037fbe7e092c7e51956867edb24b448d4b280b76b38845",
+                "name": "database.png",
+                "mode": "preview-only",
+                "x": 0.08,
+                "y": 0.5,
+                "scale": 0.65,
+                "filament": {
+                  "count": 2,
+                  "style": "inlay",
+                  "colors": []
+                }
+              }
+            },
             "fit": "UNKNOWN"
           },
           "id": "u2-90c95fdb9fce",
@@ -567,5 +581,5 @@
       }
     }
   ],
-  "generation": "e3693994-94f8-495f-b00d-f215bb2bbbe3"
+  "generation": "8bce2fc5-a42f-4da8-ab63-c5557cceef17"
 }
