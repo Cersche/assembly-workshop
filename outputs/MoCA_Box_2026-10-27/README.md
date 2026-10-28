@@ -5,6 +5,8 @@ M3 x 40 screws and nut sliders; missing from the first printed sleeve), every lo
 slot instead of 45 deg (`louv_rise=0`), and the top has no vents. Reprint the sleeve and lid; back plate, porch, cradle, nut and sliders are
 unchanged. The first build is in `previous_2026-10-27/`.
 
+**Complete set (2026-10-28):** `MoCA_box_complete_2026-10-28.3mf` has every current part, each its own object in print orientation: sleeve rev 2, back plate, lid, cradle rev B, porch rev 2, bezel nut rev 2, 2 nut sliders (back plate, lid and sliders copied unchanged from `MoCA_box_and_porch.3mf`). Not printed; fit and strength UNKNOWN.
+
 **Porch rev 2 (2026-10-27):** new porch, bezel nut and sleeve in `porch_rev2/` replace those parts below.
 
 `MoCA_box_and_porch.3mf`: every part (2 nut sliders) in its print orientation, flat face on the bed, laid out side by side
