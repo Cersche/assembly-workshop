@@ -22,6 +22,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 NS = "{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}"
+PNS = "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}"
 GAP = 10.0  # mm between STL parts when laid out side by side
 
 
@@ -82,22 +83,32 @@ def compose(a, b):
 def read_3mf(path):
     """Return [(name, vertices, triangles)], one per build item."""
     with zipfile.ZipFile(path) as z:
-        model = next((n for n in z.namelist() if n.lower() == "3d/3dmodel.model"), None)
+        names = z.namelist()
+        model = next((n for n in names if n.lower() == "3d/3dmodel.model"), None)
         if model is None:
             raise ValueError(f"{path}: no 3D/3dmodel.model")
         root = ET.fromstring(z.read(model))
+        # Objects are keyed by (model part, id): Bambu/Prusa 3MFs keep meshes in
+        # 3D/Objects/*.model and point at them with the production p:path attribute.
+        main = "/" + model
+        trees = {main: root}
+        for n in names:
+            if n.lower().startswith("3d/") and n.lower().endswith(".model") and n != model:
+                trees["/" + n] = ET.fromstring(z.read(n))
     objects = {}
-    for obj in root.iter(NS + "object"):
-        mesh = obj.find(NS + "mesh")
-        entry = {"name": obj.get("name") or f"object {obj.get('id')}", "verts": [], "tris": [], "comps": []}
-        if mesh is not None:
-            entry["verts"] = [(float(v.get("x")), float(v.get("y")), float(v.get("z")))
-                              for v in mesh.iter(NS + "vertex")]
-            entry["tris"] = [(int(t.get("v1")), int(t.get("v2")), int(t.get("v3")))
-                             for t in mesh.iter(NS + "triangle")]
-        for c in obj.iter(NS + "component"):
-            entry["comps"].append((c.get("objectid"), parse_transform(c.get("transform"))))
-        objects[obj.get("id")] = entry
+    for part, tree in trees.items():
+        for obj in tree.iter(NS + "object"):
+            mesh = obj.find(NS + "mesh")
+            entry = {"name": obj.get("name") or f"object {obj.get('id')}", "verts": [], "tris": [], "comps": []}
+            if mesh is not None:
+                entry["verts"] = [(float(v.get("x")), float(v.get("y")), float(v.get("z")))
+                                  for v in mesh.iter(NS + "vertex")]
+                entry["tris"] = [(int(t.get("v1")), int(t.get("v2")), int(t.get("v3")))
+                                 for t in mesh.iter(NS + "triangle")]
+            for c in obj.iter(NS + "component"):
+                ref = c.get(PNS + "path") or part
+                entry["comps"].append(((ref, c.get("objectid")), parse_transform(c.get("transform"))))
+            objects[(part, obj.get("id"))] = entry
 
     def flatten(oid, m, depth=0):
         o = objects[oid]
@@ -114,9 +125,9 @@ def read_3mf(path):
     build = root.find(NS + "build")
     items = list(build.iter(NS + "item")) if build is not None else []
     if not items:
-        items = [ET.Element("item", objectid=k) for k in objects]
+        items = [ET.Element("item", objectid=k[1]) for k in objects if k[0] == main]
     for it in items:
-        oid = it.get("objectid")
+        oid = (main, it.get("objectid"))
         verts, tris = flatten(oid, parse_transform(it.get("transform")))
         if tris:
             parts.append((objects[oid]["name"], verts, tris))
