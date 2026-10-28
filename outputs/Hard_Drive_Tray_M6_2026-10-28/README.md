@@ -13,6 +13,9 @@ Redesign of the printed baseline `outputs/Hard_Drive_Tray_2026-10-25/` (kept unc
 
 Both meshes are closed (every edge shared by exactly two faces). The faceplate/tray intersection renders empty.
 
+## Color version (database icon)
+`HDT-M6-A_drive_tray_color.3mf`: the tray, plus the faceplate as one object with two parts, "faceplate base (orange)" and "database icon inlay (black)". Brian's icon (data/normal-use/artwork/8330262e...png) is redrawn as vector shapes in `HDT-M6-A_art.scad`: smooth edges, not the app's 0.4 mm Print in color grid. 30 mm tall, centred, 0.6 mm inlay flush with the front face (print face down). Separate STLs: `HDT-M6-A_faceplate_base_color.stl`, `HDT-M6-A_faceplate_icon_inlay.stl`. Thinnest feature is about 1.0 mm. Printed color result UNKNOWN. Copy given to Brian in his Downloads folder.
+
 ## Changes from the baseline
 - **Insert holes:** 7.6 mm bore, copied from the rack posts' M6 insert holes (Lab Rax 1U post mesh: 7.60 mm, 6 mm deep). Brian: those holes fit the inserts perfectly. Faceplate bosses are 14 mm across, 8 mm deep.
 - **Joints:** 4 faceplate-to-tray joints (X ±40 and ±87.2). The outer two have 2 screws each (Z 16.5 and 32.5); the inner two have only the upper screw. Total: 6 inserts, 6 screws. The screws go in from behind the faceplate and stay hidden.

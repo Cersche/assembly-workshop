@@ -293,7 +293,7 @@ clip_coupon(){
  else if(part=="tray")tray();
  else if(part=="rear_bracket")rear_bracket();
  else if(part=="combined")union(){faceplate();translate([tray_x,-0.01,tray_z])cube([tray_w,0.02+0.01,tray_t]);tray();if(rear_support)rear_bracket();}
- else {color("steelblue")faceplate();color("silver")tray();if(rear_support)color("steelblue")rear_bracket();
+ else if(part=="assembly"){color("steelblue")faceplate();color("silver")tray();if(rear_support)color("steelblue")rear_bracket();
   %translate([dev_x,dev_y,floor_top+(device_mount=="inserts"||device_mount=="pegs"||device_mount=="clips"?standoff:0)-foot_h])cube([fp_w,fp_d,dev_h]);}
 }
 
