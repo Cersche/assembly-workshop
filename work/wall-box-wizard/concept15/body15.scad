@@ -18,11 +18,12 @@ lid_magnets=[6,1.6];   // Brian's disc magnets, 6 mm dia x 1.6 mm (2026-10-27); 
 mount_style="keyhole";
 vents=["left","right"];   // no top vents (Brian 2026-10-27: sides are plenty)
 // Power now enters from below through the porch (Brian 2026-10-27, porch rev 2): left-wall hole closed, floor hole
-// for the plug. 2026-10-28 (Brian: barrel plug a tight fit, give it breathing room): 12 mm round -> 22 x 15 slot at
-// X12..34 Y46.25..61.25, 0.75 in front of the X22 joint block and inside the porch lobe (plug size UNKNOWN).
-// Bottom round at X88 Y49.5 = right-angle F. Keystone moved up between the two right-wall louvre sets (Brian,
-// 2026-10-28: too easily in the way down low): Z121.5, midway between Z81 and Z162.
-cutouts=[["right","keystone",-5,16.5,0,0],["bottom","round",-35.5,14.5,14,0],["bottom","slot",29.5,18.75,22,15]];
+// for the plug. 2026-10-28 (Brian): the barrel plug (7.75 dia, 35 below the ScreenBeam) sticks out through the floor
+// straight under the jack (24 mm from the ScreenBeam's left side: X38.5 Y43, jack position partly ASSUMED): 10 mm
+// hole there, the cord turns inside the porch lobe. Splitter (ear slots, right-angle F hole) and keystone moved 8 mm
+// to the front so the IN coax clears the plug. Bottom round at X88 Y41.5 = right-angle F. Keystone up the right wall
+// at Z121.5, midway between the louvre sets (Z81 / Z162), Y22.
+cutouts=[["right","keystone",-13,16.5,0,0],["bottom","round",-35.5,6.5,14,0],["bottom","round",14,8,10,0]];
 standoffs=[[-44.5,-35,8,4.0,9],[44.5,-35,8,4.0,9],[-44.5,31,8,4.0,9],[44.5,31,8,4.0,9]];   // cradle bosses, M3 heat-set inserts
 vent_avoid=[];
 // @@END@@
@@ -206,14 +207,14 @@ module mount_cuts(){if(mount_style=="keyhole")for(p=key_pos())on_wall("back")tra
 
 // Porch ear-screw slots in the floor (Brian 2026-10-27: missing from the first printed sleeve). Same as c15.scad
 // floor_cuts: 6 mm wide so the nut slider's key rides in it, key 10 + +-8 travel. The F hole stays the round cutout.
-ear_slots=[[59,62],[46,14]]; ear_adj=8;
+ear_slots=[[59,54],[46,6]];   // 8 mm forward 2026-10-28 ear_adj=8;
 module ear_slots(){for(e=ear_slots)translate([e[0],e[1],-1])linear_extrude(wall+2)
  hull(){translate([-(ear_adj+5)+3,0])circle(d=6,$fn=24);translate([ear_adj+5-3,0])circle(d=6,$fn=24);}}
 
 // Porch rev 2 fixings (Brian 2026-10-27): the porch gets its own two M3 screws from below into heat-set inserts in
 // floor bosses, so it comes off without touching the splitter (whose ears keep their slots and nut sliders). Clear of
 // the sliders' travel, the F hole and the X98 joint block; sleeve-only, the back plate is unchanged.
-porch_screws=[[65,5],[86,62]]; porch_boss_d=9; porch_boss_h=8;
+porch_screws=[[18,42],[78,5],[86,62]];   // 2026-10-28: lobe, front-right lug, back porch_boss_d=9; porch_boss_h=8;
 module porch_bosses(){for(p=porch_screws)translate([p[0],p[1],wall-0.01])cylinder(d=porch_boss_d,h=porch_boss_h-wall+0.01,$fn=32);}
 module porch_pilots(){for(p=porch_screws)translate([p[0],p[1],-0.01])cylinder(d=insert_pilot,h=insert_depth,$fn=24);}
 
@@ -279,7 +280,7 @@ art=true; art_font="Liberation Sans:style=Bold"; art_depth=0.6;
 module wall_label(w,u,v,s,size=5)on_wall(w)translate([u,0.2,v])rotate([90,0,0])linear_extrude(art_depth+0.2)
  text(s,size=size,font=art_font,halign="center",valign="center");
 module body_labels(){if(art){
- wall_label("right",22,18.5,"LAN");            // beside the Ethernet keystone
+ wall_label("right",14,18.5,"LAN");            // beside the Ethernet keystone
 }}
 // Two-piece body (Brian, 2026-10-27: "print it in pieces ... without it getting flimsy"; picked back plate + sleeve).
 // part="back": flat back plate (keyholes, cradle bosses), prints outer face down. part="sleeve": the four walls with

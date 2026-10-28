@@ -23,7 +23,7 @@ part=pick==1?"porch":pick==2?"nut":"assembly";
 sp_l=38.75; sp_w=23; sp_base=7.5; sp_h=15.9; sp_axis=7.5; sp_out=22; sp_in_end=18.5; sp_port=13; sp_port_d=9.5;
 sp_ear_l=48.5; sp_ear_s=14; sp_ear_hole=5; sp_ear_d=10; sp_ear_t=9; sp_gnd=8;
 ra_reach=18.6; ra_tip=38.2;   // right-angle F: body OUT face to leg centre; port axis to barrel tip
-ra_x=88; ra_y=49.5;           // the leg stands in the existing round floor hole, which sets the splitter position
+ra_x=88; ra_y=41.5;   // 8 mm forward (Brian 2026-10-28) so the IN coax clears the power plug           // the leg stands in the existing round floor hole, which sets the splitter position
 in_face=ra_x-ra_reach-sp_w; out_x=in_face+sp_w; xc=in_face+sp_w/2;
 yc=ra_y-sp_out/2; y0=yc-sp_l/2;
 in_y=y0+sp_in_end;            // measured from the front end; if it is the other end IN moves 1.75 (slot takes it)
@@ -35,24 +35,25 @@ h=sp_h+gap+fl;               // porch depth below the box
 rb=6; rc=3;                  // bottom-edge round (45 deg to the bed), convex plan-corner round
 x_in=in_face-t;              // IN wall outer face, clamped against the splitter body
 x_out=out_x+1+t;             // front part's right wall (1 mm off the ground block); the modem OUT passes through it
-y_step=40.5;                 // front part (Y<y_step) stops at x_out, back part runs to x_back
+y_step=32.5;                 // front part (Y<y_step) stops at x_out, back part runs to x_back
 // Step wall between the two OUT posts (Brian, 2026-10-28: more clearance): 0.5 toward the modem post and thinned to
 // step_t above the bottom round, so its inner face is 1 mm off the right-angle F nut (7/16 hex assumed, size UNKNOWN).
 step_t=1.6;
 x_back=98;                   // box bottom flat ends at X95; 0.5 gap under the box curve (as porch15)
-x_lobe=11; y_lobe=46;        // power lobe behind the incoming coax
+x_lobe=11; y_lobe=37;        // power lobe behind the incoming coax; reaches forward over the plug (0.4 off the bezel nut)
+x_lug=83.5; y_lug=11;        // front-right lug for the front porch screw (the ground block fills the front part)
 py0=-2.5; py1=72.5;
 port_slot=10;
 in_slot=11;                  // IN post slot (Brian, 2026-10-28: more clearance at the IN post / bezel nut), 0.75 a side on the 9.5 post
-porch_screws=[[65,5],[86,62]]; tower_d=9; m3=3.4; cb_d=6.2; cb_h=3;   // same points as body15.scad
-pwr_hole=[23,53.75];   // centre of the sleeve floor slot (22 x 15, 2026-10-28)
- cord=[3.55,1.75]; slit_w=2.3; slit_y=66; slit_x1=36;
+porch_screws=[[18,42],[78,5],[86,62]]; tower_d=9; m3=3.4; cb_d=6.2; cb_h=3;   // same points as body15.scad
+pwr_hole=[38.5,43];   // plug under the ScreenBeam jack, 10 mm floor hole (2026-10-28)
+cord=[3.55,1.75]; slit_w=2.3; slit_y=66; slit_x1=36;
 pwr_posts=[[31,61.5],[25,64.5]]; post_d=5;
 nut_d=14; nut_h=2;           // top edge 0.5 below the box underside
 
 module fp()offset(r=rc)offset(delta=-rc)   // inside corners stay sharp: rounding them eats the splitter clearance
 
- polygon([[x_in,py0],[x_out,py0],[x_out,y_step],[x_back,y_step],[x_back,py1],[x_lobe,py1],[x_lobe,y_lobe],[x_in,y_lobe]]);
+ polygon([[x_in,py0],[x_lug,py0],[x_lug,y_lug],[x_out,y_lug],[x_out,y_step],[x_back,y_step],[x_back,py1],[x_lobe,py1],[x_lobe,y_lobe],[x_in,y_lobe]]);
 // inset of the outer skin at height z above the porch bottom: r8 round, finishing in a 45 deg flat at the bed
 function ins(z)=let(z0=rb*(1-sqrt(0.5)),d0=rb-sqrt(rb*rb-(rb-z0)*(rb-z0)))
  z>=rb?0:z>=z0?rb-sqrt(rb*rb-(rb-z)*(rb-z)):d0+(z0-z);
@@ -72,7 +73,7 @@ module porch_labels(){font="Liberation Sans:style=Bold";zl=-(h-rb)/2;
   text("IN",size=5,font=font,halign="center",valign="center");
  translate([x_lobe+0.2,56,zl])multmatrix([[0,0,-1,0],[-1,0,0,0],[0,1,0,0]])linear_extrude(0.8)
   text("PWR",size=5,font=font,halign="center",valign="center");
- translate([x_out-0.2,12,zl])multmatrix([[0,0,1,0],[1,0,0,0],[0,1,0,0]])linear_extrude(0.8)
+ translate([63,py0+0.2,zl])rotate([90,0,0])linear_extrude(0.8)   // front face (the lug took the old spot)
   text("MODEM",size=4,font=font,halign="center",valign="center");
 }
 module porch16(){
@@ -127,12 +128,12 @@ else {
  translate([x_in,in_y,-sp_axis])rotate([0,-90,0])bezel_nut();
  splitter16();
  rod([out_x+sp_port-4,ra_y,-sp_axis],[ra_x,ra_y,-sp_axis]);rod([ra_x,ra_y,-sp_axis],[ra_x,ra_y,ra_tip-sp_axis]);
- slot_y=[62,14];   // body15 ear_slots; the screw sits on the slot line, inside the 5 mm ear hole (0.75 off centre)
+ slot_y=[54,6];   // body15 ear_slots; the screw sits on the slot line, inside the 5 mm ear hole (0.75 off centre)
  for(i=[0,1]){color("silver")translate([ears[i][0],slot_y[i],-sp_ear_t-2])cylinder(d=3,h=16,$fn=16);   // M3 x 16
   translate([ears[i][0],slot_y[i],2.5])nut_slider();}
  for(p=porch_screws)color("silver")translate([p[0],p[1],-h+cb_h])cylinder(d=3,h=20,$fn=16);  // M3 x 20, porch to insert
  if(show_box){color([0.92,0.91,0.87])import("body15.stl");
-  color([0.2,0.4,0.9])translate([102.5-14,30-8.5,121.5-8])cube([14,17,16]);   // Ethernet keystone rear
+  color([0.2,0.4,0.9])translate([102.5-14,22-8.5,121.5-8])cube([14,17,16]);   // Ethernet keystone rear
   sb_device();cradle15();}
  color([0.95,0.95,0.95]){
   run([[in_face-sp_port-12,in_y,-sp_axis],[0,in_y,-sp_axis],[-15,in_y,-18],[-20,in_y,-45]]);     // incoming coax
@@ -140,6 +141,7 @@ else {
  }
  // power: up the wall, sideways into the slit, around the two posts, up through the floor hole to the ScreenBeam
  color([0.15,0.15,0.15])run([[slit_x1-1,slit_y,-60],[slit_x1-1,slit_y,-h+fl+1],[31,58.5,-h+fl+1.5],[25,67.5,-h+fl+1.5],
-  [pwr_hole[0],pwr_hole[1],-h+fl+2],[pwr_hole[0],pwr_hole[1],10],[30,46,25],sh([41.5,43,30])],3);
+  [pwr_hole[0],pwr_hole[1],-h+fl+2],[pwr_hole[0],pwr_hole[1],2]],3);
+ color([0.1,0.1,0.1])translate([pwr_hole[0],pwr_hole[1],2])cylinder(d=7.75,h=35,$fn=32);   // barrel plug, 35 below the jack
  if(show_box)color([0.45,0.45,0.45])run([[ra_x,ra_y,ra_tip-sp_axis],[ra_x,ra_y,135],sh([82,49.5,186]),sh([64,43,196]),sh([49.5,43,194])],7);
 }

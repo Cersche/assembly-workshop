@@ -64,6 +64,7 @@ Idea from `work/notes/2026-10-22-feet-floor-and-wall-box-wizard.md`: an indoor, 
     - **Sleeve (body15.scad):** Brian OK'd a reprint and asked to stay compatible with the back plate: only the floor bosses, floor power hole and closed left hole change; the joint blocks and back plate are untouched.
     - **UNKNOWN:** plug size through the 12 mm hole, cord grip, printed thread, fit, strength; which body end the IN 18.5 is measured from (±1.75, inside the slot); the ScreenBeam power jack position and whether the 45 mm plug fits above the floor (rev B cradle note) are unchecked.
 - **2026-10-28 (Brian):** power floor hole -> 22 x 15 slot (barrel plug breathing room, plug size UNKNOWN); Ethernet keystone moved up the right wall to Z121.5 between the louvre sets (too easily in the way low down); porch step wall 1.6, IN slot 11.
+- **2026-10-28 later (Brian):** plug 7.75 x 35 (after insertion; 44.5 with tip), jack 24 mm from the ScreenBeam's left side. Plug through a 10 mm floor hole under the jack; splitter + keystone 8 mm forward; porch lobe over the plug; 3 porch screws.
 - **Look:** friendlier for indoor use; five style concepts shown 2026-10-22 (soft slab, louvre, picture frame, pill, two-tier); Brian has not picked one yet.
 
 ## Still open
