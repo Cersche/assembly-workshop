@@ -10,7 +10,7 @@ Brian is redesigning the printed brackets one at a time, each in its own prompt.
 - Hue + Pi 4: `outputs/Hue_Pi4_WideLane_2026-10-24/`.
 - OptiPlex: `outputs/Physical_Test_Coupons_2026-10-21_SLV-F/` PLATE + TRAY + **REAR-O** (Open rear bracket).
 - 3.5" HDD + 2.5" SSD: `outputs/Hard_Drive_Tray_2026-10-25/` (not the 10-22 delivery). Uncommitted edits in `equipment_tray.scad` / `test_drive_tray.py` are untouched.
-No redesign started yet.
+Hardware for every redesign: rack M6 heat-set inserts + M6 x 8 button-head screws (AGENTS.md). First redesign: HDD/SSD tray, started 2026-10-28 in its own session.
 
 ## 2026-10-27 MoCA box: porch rev 2 drawn (read first)
 

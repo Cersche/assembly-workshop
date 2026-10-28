@@ -73,3 +73,7 @@ Brian printed plate-height coupons FP44-A..D (outputs/Physical_Test_Coupons_2026
 ## 3D viewer for every part — Brian, 2026-10-27
 
 Whenever work produces, changes or examines STL/3MF files, run `python tools/mesh_viewer.py <files...> -o work/mesh-viewer/<name>.html -t "<title>"` and send the page with SendUserFile (display "render") without being asked. Brian can Pin and Circle things and paste back "3D viewer notes" (mm coordinates in the file's own frame, part names as in the file) or a marked picture. The viewer is preview-only and changes no geometry. Don't commit generated viewer pages unless asked, and never commit ones that embed third-party/licensed meshes. Usage: PROJECT.md.
+
+## M6 bracket hardware — Brian, 2026-10-28
+
+Faceplate/bracket overhaul: every bracket redesign replaces all M3 heat-set inserts with the same M6 heat-set inserts used in the rack posts, fastened with the same M6 x 8 button-head screws as the shelf (one-item BOM; M3 lacked rigidity for heavy items). Redesigns go one bracket per fresh session; printed baseline is listed in HANDOFF.md. Insert bore/OD/length come from Brian or a measured part; until then they are UNKNOWN. Already-printed revisions stay immutable. This supersedes the M3 x 0.5 limit for new bracket designs only; fit and strength stay UNKNOWN.
