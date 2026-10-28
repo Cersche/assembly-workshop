@@ -17,9 +17,12 @@ lid_style="hinge";
 lid_magnets=[6,1.6];   // Brian's disc magnets, 6 mm dia x 1.6 mm (2026-10-27); [] = latch arm instead
 mount_style="keyhole";
 vents=["left","right"];   // no top vents (Brian 2026-10-27: sides are plenty)
-// Power now enters from below through the porch (Brian 2026-10-27, porch rev 2): left-wall hole closed, 12 mm floor
-// hole at X20 Y54.5 (the plug passes up through it; plug size UNKNOWN). Bottom round at X88 Y49.5 = right-angle F.
-cutouts=[["right","keystone",-5,-70,0,0],["bottom","round",-35.5,14.5,14,0],["bottom","round",32.5,19.5,12,0]];
+// Power now enters from below through the porch (Brian 2026-10-27, porch rev 2): left-wall hole closed, floor hole
+// for the plug. 2026-10-28 (Brian: barrel plug a tight fit, give it breathing room): 12 mm round -> 22 x 15 slot at
+// X12..34 Y46.25..61.25, 0.75 in front of the X22 joint block and inside the porch lobe (plug size UNKNOWN).
+// Bottom round at X88 Y49.5 = right-angle F. Keystone moved up between the two right-wall louvre sets (Brian,
+// 2026-10-28: too easily in the way down low): Z121.5, midway between Z81 and Z162.
+cutouts=[["right","keystone",-5,16.5,0,0],["bottom","round",-35.5,14.5,14,0],["bottom","slot",29.5,18.75,22,15]];
 standoffs=[[-44.5,-35,8,4.0,9],[44.5,-35,8,4.0,9],[-44.5,31,8,4.0,9],[44.5,31,8,4.0,9]];   // cradle bosses, M3 heat-set inserts
 vent_avoid=[];
 // @@END@@
@@ -87,6 +90,8 @@ module cutout_shape(c){k=c[1];u=c[2];v=c[3];
  if(k=="keystone")ks_box(u,v);
  else if(k=="gland"||k=="round")translate([u,-0.1,v])rotate([-90,0,0])cylinder(d=c[4],h=wall+0.2);
  else if(k=="rect")translate([u-c[4]/2,-0.1,v-c[5]/2])cube([c[4],wall+0.2,c[5]]);
+ else if(k=="slot")translate([0,-0.1,0])rotate([-90,0,0])linear_extrude(wall+0.2)hull()   // c[4] long along u, c[5] wide
+  for(s=[-1,1])translate([u+s*(c[4]-c[5])/2,-v])circle(d=c[5],$fn=40);
 }
 
 // Vent slots run along v, inside the wall's usable area less vent_inset, minus every keep-out.
@@ -274,7 +279,7 @@ art=true; art_font="Liberation Sans:style=Bold"; art_depth=0.6;
 module wall_label(w,u,v,s,size=5)on_wall(w)translate([u,0.2,v])rotate([90,0,0])linear_extrude(art_depth+0.2)
  text(s,size=size,font=art_font,halign="center",valign="center");
 module body_labels(){if(art){
- wall_label("right",22,-68,"LAN");            // beside the Ethernet keystone
+ wall_label("right",22,18.5,"LAN");            // beside the Ethernet keystone
 }}
 // Two-piece body (Brian, 2026-10-27: "print it in pieces ... without it getting flimsy"; picked back plate + sleeve).
 // part="back": flat back plate (keyholes, cradle bosses), prints outer face down. part="sleeve": the four walls with

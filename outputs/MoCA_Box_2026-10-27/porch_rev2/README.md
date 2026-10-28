@@ -9,7 +9,7 @@ here as single STLs. All three are closed meshes. Source: `work/wall-box-wizard/
 
 | Part | Size on bed (mm) | Orientation | What changed |
 |---|---|---|---|
-| sleeve | 117 x 210 x 72.5 | back edge down (as before) | two porch screw bosses (M3 heat-set inserts) in the floor, 12 mm power hole at X20 Y54.5, left-wall power hole and PWR label removed |
+| sleeve | 117 x 210 x 72.5 | back edge down (as before) | two porch screw bosses (M3 heat-set inserts) in the floor; power slot 22 x 15 at X12..34 Y46.25..61.25 (2026-10-28, was a 12 mm hole); left-wall power hole and PWR label removed; Ethernet keystone + LAN label moved up the right wall to Z121.5, between the two louvre sets (2026-10-28) |
 | porch | 87.6 x 75 x 19.6 | floor down, open top up | sized to the calipered splitter; modem OUT outside; step wall between the OUT posts moved 0.5 and thinned to 1.6 (2026-10-28, 1 mm off the right-angle nut, nut size assumed); IN post slot 11 wide (was 10); own two screws; power lobe with slit and two posts; IN / PWR / MODEM labels |
 | bezel_nut | 13.9 x 13.9 x 2 | flat | 14 x 2 (was 21.5 x 3), thread bore 0.4 mm looser |
 
