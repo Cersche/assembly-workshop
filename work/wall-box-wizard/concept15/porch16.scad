@@ -43,6 +43,7 @@ x_back=98;                   // box bottom flat ends at X95; 0.5 gap under the b
 x_lobe=11; y_lobe=46;        // power lobe behind the incoming coax
 py0=-2.5; py1=72.5;
 port_slot=10;
+in_slot=11;                  // IN post slot (Brian, 2026-10-28: more clearance at the IN post / bezel nut), 0.75 a side on the 9.5 post
 porch_screws=[[65,5],[86,62]]; tower_d=9; m3=3.4; cb_d=6.2; cb_h=3;   // same points as body15.scad
 pwr_hole=[20,54.5]; cord=[3.55,1.75]; slit_w=2.3; slit_y=66; slit_x1=36;
 pwr_posts=[[31,61.5],[25,64.5]]; post_d=5;
@@ -62,8 +63,8 @@ module skin(extra,z_from){
   offset(delta=-(extra+(extra>0?ins_c(zm):ins(zm))))fp();
  translate([0,0,-h+max(rb,z_from)])linear_extrude(h-max(rb,z_from)+(extra>0?1:0))offset(delta=-extra)fp();
 }
-module side_slot(x0,x1,y)translate([x0,y,0])rotate([0,90,0])linear_extrude(x1-x0)
- hull(){translate([sp_axis,0])circle(d=port_slot,$fn=40);translate([-2,-port_slot/2])square([1,port_slot]);}
+module side_slot(x0,x1,y,w=port_slot)translate([x0,y,0])rotate([0,90,0])linear_extrude(x1-x0)
+ hull(){translate([sp_axis,0])circle(d=w,$fn=40);translate([-2,-w/2])square([1,w]);}
 
 module porch_labels(){font="Liberation Sans:style=Bold";zl=-(h-rb)/2;
  translate([x_in+0.2,in_y-17,zl])multmatrix([[0,0,-1,0],[-1,0,0,0],[0,1,0,0]])linear_extrude(0.8)
@@ -82,7 +83,7 @@ module porch16(){
    porch_labels();
   }
   translate([x_out-t-0.01,y_step+step_t,-h+rb-0.3])cube([x_back-x_out+0.02,t-step_t+0.01,h]);   // thin step wall
-  side_slot(x_in-1,in_face+0.5,in_y);          // IN post, open to the top
+  side_slot(x_in-1,in_face+0.5,in_y,in_slot);          // IN post, open to the top
   side_slot(out_x-0.5,x_out+1,mod_y);          // modem OUT post, open to the top
   for(e=ears)translate([e[0],e[1],-sp_ear_t-1])cylinder(d=sp_ear_d+1,h=sp_ear_t+2,$fn=40);   // ear relief
   for(p=porch_screws){translate([p[0],p[1],-h-1])cylinder(d=m3,h=h+2,$fn=24);translate([p[0],p[1],-h-1])cylinder(d=cb_d,h=cb_h+1,$fn=32);}
