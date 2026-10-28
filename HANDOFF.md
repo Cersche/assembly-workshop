@@ -11,6 +11,8 @@ Brian is redesigning the printed brackets one at a time, each in its own prompt.
 - OptiPlex: `outputs/Physical_Test_Coupons_2026-10-21_SLV-F/` PLATE + TRAY + **REAR-O** (Open rear bracket).
 - 3.5" HDD + 2.5" SSD: `outputs/Hard_Drive_Tray_2026-10-25/` (not the 10-22 delivery). Uncommitted edits in `equipment_tray.scad` / `test_drive_tray.py` are untouched.
 Hardware for every redesign: rack M6 heat-set inserts + M6 x 8 button-head screws (AGENTS.md). First redesign: HDD/SSD tray, started 2026-10-28 in its own session.
+- **Rack post M6 holes (measured, creator 1U post mesh):** 7.60 mm bore, 6 mm deep through the post's 6 mm front flange, 3 per U at the U centre and ±15.9. Brian: these fit the inserts perfectly, so use a 7.6 mm bore for every new insert. Faceplates keep only the 4 corner screws (Brian); the empty middle hole could take a tray tie from behind, but a one-piece tray ear can't pass the flanges (gap ±111 vs ear ±124). Not used yet.
+- **HDD/SSD tray done: `outputs/Hard_Drive_Tray_M6_2026-10-28/` (ID HDT-M6-A, approved by Brian, not printed).** 6 M6 inserts in faceplate bosses, 4 joints (outer 2 screws, inner 1), rounded tabs with button-head counterbores, edge stiffening walls, drives 3.5 mm back. README has the details. It's a one-off `HDT-M6-A.scad`; the generator option is still to do (Codex candidate). run_checks: 1 failure, `test_wall_mount` legacy drive-tray SHA, caused by the uncommitted HDD-rail edit in `equipment_tray.scad` (still uncommitted, Brian's call). Next for this tray: Brian paints the faceplate (Print in color), then exports the 3MF to his folder.
 
 ## 2026-10-27 MoCA box: porch rev 2 drawn (read first)
 
