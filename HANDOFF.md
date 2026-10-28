@@ -2,7 +2,13 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
-## 2026-10-27 MoCA box: ScreenBeam cradle rev B (read first)
+## 2026-10-27 MoCA box: porch rev 2 drawn (read first)
+
+- Brian's notes on the printed porch15 and his splitter calipers are in [Scope](work/wall-box-wizard/Scope.md) (porch rev 2). New [porch16.scad](work/wall-box-wizard/concept15/porch16.scad) (`pick=1` porch, `2` bezel nut, `0` assembly, `show_box=false` hides the box): 19.6 deep, form-fitting, modem OUT fully outside, porch on its own two M3 x 20 screws into floor inserts, power up through a slit + two posts + 12 mm floor hole near the left wall, nut 14 x 2 with a looser thread. porch15 stays as printed history.
+- Sleeve edits in [body15.scad](work/wall-box-wizard/concept15/body15.scad): porch insert bosses, floor power hole, left-wall hole and PWR label removed; back plate unchanged (Brian: reprint OK, stay compatible). Rebuild `body15.stl` (`part="body"`) before rendering.
+- Not printed, no print file yet; Brian reviews the renders `porch16_open_top.png`, `porch16_part.png`, `porch16_assembly_below.png`. Plug size, cord grip, thread, fit and strength UNKNOWN.
+
+## 2026-10-27 MoCA box: ScreenBeam cradle rev B
 
 - Brian printed the box and fitted it. Findings: the ScreenBeam's rubber feet (13 mm across, 2.25 mm proud; centres ~8 mm in from the long edges and ~16 mm in from the short ends) hold it off the cradle plate, and the keystone-side shelf pad hits the Ethernet keystone, so the cradle can't drop and the jumper ends about an inch short of Coax In. Logged in docs/Fit_Findings.md.
 - Cradle rev B in [c15.scad](work/wall-box-wizard/concept15/c15.scad): the ScreenBeam sits 25 mm lower (`sb_dz`) and 3 mm away from the keystone (`sb_dx`). The keystone-side pad is trimmed, the power-side pad is 5.5 mm narrower for plug relief and the holder has 0.5 mm more ScreenBeam clearance (`sb_clr`; Brian), there are four 16 x 2.6 foot pockets, the plate extends down to Z21 and the strap slots are moved. The bosses on the back plate are unchanged, so only the cradle needs reprinting. Renders: `cradle_revB_front.png`, `cradle_revB_part.png`.

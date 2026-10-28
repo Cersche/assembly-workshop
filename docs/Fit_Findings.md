@@ -27,3 +27,4 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 | 2026-10-20 | FP44 plate-height coupons | Perfect; 44.4 mm/U is the standard |
 | 2026-10-20 | SLV-A OptiPlex sleeve | Slid in, feet in pockets (later: 0.5 mm tight in height, above) |
 | 2026-10-27 | MoCA box first print: sleeve rev A, cradle rev A | Sleeve had no porch screw slots (fixed in rev B). Cradle: ScreenBeam feet (13 mm, 2.25 proud) hold it off the plate; keystone-side pad hits the keystone, so the jumper is ~1 in short of Coax In (cradle rev B) |
+| 2026-10-27 | MoCA porch15 + printed bezel nut | Fits, but nut too tall (above the rim), too thick and too tight; empty corner past the OUTs and closed modem side get in the way (porch rev 2, porch16.scad). Splitter calipered |

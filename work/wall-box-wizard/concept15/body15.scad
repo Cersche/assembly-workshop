@@ -17,7 +17,9 @@ lid_style="hinge";
 lid_magnets=[6,1.6];   // Brian's disc magnets, 6 mm dia x 1.6 mm (2026-10-27); [] = latch arm instead
 mount_style="keyhole";
 vents=["left","right"];   // no top vents (Brian 2026-10-27: sides are plenty)
-cutouts=[["left","round",-15,-88,13,0],["right","keystone",-5,-70,0,0],["bottom","round",-35.5,14.5,14,0]];
+// Power now enters from below through the porch (Brian 2026-10-27, porch rev 2): left-wall hole closed, 12 mm floor
+// hole at X20 Y54.5 (the plug passes up through it; plug size UNKNOWN). Bottom round at X88 Y49.5 = right-angle F.
+cutouts=[["right","keystone",-5,-70,0,0],["bottom","round",-35.5,14.5,14,0],["bottom","round",32.5,19.5,12,0]];
 standoffs=[[-44.5,-35,8,4.0,9],[44.5,-35,8,4.0,9],[-44.5,31,8,4.0,9],[44.5,31,8,4.0,9]];   // cradle bosses, M3 heat-set inserts
 vent_avoid=[];
 // @@END@@
@@ -203,6 +205,13 @@ ear_slots=[[59,62],[46,14]]; ear_adj=8;
 module ear_slots(){for(e=ear_slots)translate([e[0],e[1],-1])linear_extrude(wall+2)
  hull(){translate([-(ear_adj+5)+3,0])circle(d=6,$fn=24);translate([ear_adj+5-3,0])circle(d=6,$fn=24);}}
 
+// Porch rev 2 fixings (Brian 2026-10-27): the porch gets its own two M3 screws from below into heat-set inserts in
+// floor bosses, so it comes off without touching the splitter (whose ears keep their slots and nut sliders). Clear of
+// the sliders' travel, the F hole and the X98 joint block; sleeve-only, the back plate is unchanged.
+porch_screws=[[65,5],[86,62]]; porch_boss_d=9; porch_boss_h=8;
+module porch_bosses(){for(p=porch_screws)translate([p[0],p[1],wall-0.01])cylinder(d=porch_boss_d,h=porch_boss_h-wall+0.01,$fn=32);}
+module porch_pilots(){for(p=porch_screws)translate([p[0],p[1],-0.01])cylinder(d=insert_pilot,h=insert_depth,$fn=24);}
+
 module body(){
  union(){
   difference(){
@@ -211,9 +220,9 @@ module body(){
      union(){rbox(0,wo,0,db,0,ho,corner_r);mounts();if(lid_style=="hinge"){hinge_part(true);if(len(lid_magnets)!=2)latch_ridge();}}
      rbox(wall,wo-wall,-1,di,wall,ho-wall,ri);
     }
-    bosses();standoff_add();if(lid_style=="hinge")mag_body_add();
+    bosses();standoff_add();porch_bosses();if(lid_style=="hinge")mag_body_add();
    }
-   boss_pilots();standoff_cut();mount_cuts();ear_slots();if(lid_style=="hinge")mag_body_cut();
+   boss_pilots();standoff_cut();mount_cuts();ear_slots();porch_pilots();if(lid_style=="hinge")mag_body_cut();
    if(lid_style=="snap")snap_grooves();
    for(c=cutouts)if(c[0]!="lid")on_wall(c[0])cutout_shape(c);
    if(lid_louvres)body_louvre_cut();else for(w=vents)if(w!="lid")on_wall(w)vent_cut(w);
@@ -265,7 +274,6 @@ art=true; art_font="Liberation Sans:style=Bold"; art_depth=0.6;
 module wall_label(w,u,v,s,size=5)on_wall(w)translate([u,0.2,v])rotate([90,0,0])linear_extrude(art_depth+0.2)
  text(s,size=size,font=art_font,halign="center",valign="center");
 module body_labels(){if(art){
- wall_label("left",-15,-76,"PWR");            // above the power hole (Y50 Z17)
  wall_label("right",22,-68,"LAN");            // beside the Ethernet keystone
 }}
 // Two-piece body (Brian, 2026-10-27: "print it in pieces ... without it getting flimsy"; picked back plate + sleeve).
