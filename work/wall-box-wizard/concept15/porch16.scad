@@ -35,7 +35,10 @@ h=sp_h+gap+fl;               // porch depth below the box
 rb=6; rc=3;                  // bottom-edge round (45 deg to the bed), convex plan-corner round
 x_in=in_face-t;              // IN wall outer face, clamped against the splitter body
 x_out=out_x+1+t;             // front part's right wall (1 mm off the ground block); the modem OUT passes through it
-y_step=41;                   // front part (Y<y_step) stops at x_out, back part runs to x_back
+y_step=40.5;                 // front part (Y<y_step) stops at x_out, back part runs to x_back
+// Step wall between the two OUT posts (Brian, 2026-10-28: more clearance): 0.5 toward the modem post and thinned to
+// step_t above the bottom round, so its inner face is 1 mm off the right-angle F nut (7/16 hex assumed, size UNKNOWN).
+step_t=1.6;
 x_back=98;                   // box bottom flat ends at X95; 0.5 gap under the box curve (as porch15)
 x_lobe=11; y_lobe=46;        // power lobe behind the incoming coax
 py0=-2.5; py1=72.5;
@@ -78,6 +81,7 @@ module porch16(){
    for(p=pwr_posts)translate([p[0],p[1],-h+fl-0.1])cylinder(d=post_d,h=9,$fn=32);
    porch_labels();
   }
+  translate([x_out-t-0.01,y_step+step_t,-h+rb-0.3])cube([x_back-x_out+0.02,t-step_t+0.01,h]);   // thin step wall
   side_slot(x_in-1,in_face+0.5,in_y);          // IN post, open to the top
   side_slot(out_x-0.5,x_out+1,mod_y);          // modem OUT post, open to the top
   for(e=ears)translate([e[0],e[1],-sp_ear_t-1])cylinder(d=sp_ear_d+1,h=sp_ear_t+2,$fn=40);   // ear relief
