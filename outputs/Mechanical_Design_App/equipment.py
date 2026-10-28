@@ -63,7 +63,7 @@ def _port_id(port, face, index):
 # library specs still carry them, and those values stay the defaults when an allocation has none.
 PLACEMENT_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'wall_open', 'standoff', 'insert_pilot', 'board_t',
                   'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size',
-                  'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint')
+                  'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint', 'm6_joint')
 
 
 def export_quality(s):
@@ -94,7 +94,7 @@ def placement_settings(value):
             if not isinstance(v, list) or len(v) > 12 or any(type(x) not in (int, float) or isinstance(x, bool) for x in v):
                 raise ValueError('Keystones must be a list of positions.')
             v = list(v)
-        elif key in ('rear_support', 'rear_openings', 'rear_floor_opening', 'insert_bosses', 'hidden_joint'):
+        elif key in ('rear_support', 'rear_openings', 'rear_floor_opening', 'insert_bosses', 'hidden_joint', 'm6_joint'):
             if type(v) is not bool:
                 raise ValueError('Rear support must be true or false.')
         elif key == 'feet_style':
@@ -427,6 +427,36 @@ HJ_REPLACEMENTS = (
      'assert(!hidden_joint||max([for(x=hj_x)abs(x)])+hj_half<=118.2625-5-3,"Hidden joint must keep 3 mm from the rack slots");\n'),
 )
 
+# M6 bracket hardware (Brian, 2026-10-28; reproduces HDT-M6-A): opt-in m6_joint. The @m6 block of equipment_tray.scad
+# is kept only then, and these (legacy, M6) pairs hook it into the legacy joint text, so sources without m6_joint stay
+# byte-identical. Non-sleeve screw joint without rear bracket or second device. Fit/strength UNKNOWN.
+M6_FRONT_GAP, M6_TAB_HALF, M6_TAB_TOP = 15.5, 10, 42  # tab top: upper screw 32 + tab radius 10 above tray_z
+M6_HOOKS = (
+    ('front_gap=12;', 'front_gap=15.5;'),
+    ('jx=min(40,tray_w/2-12); joint_x=[-jx,jx];',
+     'jx=min(40,tray_w/2-12); jo=tray_w/2-10.5; joint_x=jo-jx<24?[-jo,jo]:[-jo,-jx,jx,jo];  // M6: inner pair + one at each tray edge'),
+    ('slot_clear=0.3; boss_d=9; m3_clear=3.4; joint_pilot=4.0;', 'slot_clear=0.3; boss_d=14; m3_clear=6.6; joint_pilot=7.6;'),
+    ('  for(x=joint_x)translate([x,0,tray_z+14])rotate([-90,0,0])cylinder(d=boss_d,h=8);',
+     '  for(x=joint_x,zz=jzx(x))translate([x,0,tray_z+zz])rotate([-90,0,0])cylinder(d=boss_d,h=8);'),
+    ('for(x=joint_x)translate([x,-0.1,tray_z+14])', 'for(x=joint_x,zz=jzx(x))translate([x,-0.1,tray_z+zz])'),
+    ('  for(x=joint_x) translate([x-9,0,tray_z+tray_t])cube([18,8,5]);\n'
+     '  for(x=joint_x)translate([x-7,8.3,tray_z+3])cube([14,3,19]);\n'
+     '  for(x=joint_x) for(side=[-1,1]) translate([x+side*6-1,0,0])\n'
+     '    hull(){translate([0,9,tray_z+2.7])cube([2,2,0.5]);\n'
+     '           translate([0,9,tray_z+8])cube([2,2,0.5]);\n'
+     '           translate([0,(device_mount=="flat"||sleeve)?9.5:20,tray_z+2.7])cube([2,2,0.5]);}\n',
+     '  m6_tray_joint_add();\n'),
+    ('  for(x=joint_x)translate([x,11.4,tray_z+14])rotate([90,0,0])cylinder(d=m3_clear,h=12);\n', '  m6_tray_joint_cut();\n'),
+    ('   translate([tray_x,tray_y,tray_z])cube([tray_w,tray_d,tray_t]);',
+     '   translate([tray_x,tray_y,tray_z])linear_extrude(tray_t)hull(){square([tray_w,1]);for(px=[floor_r,tray_w-floor_r])translate([px,tray_d-floor_r])circle(r=floor_r);}  // rounded rear corners'),
+)
+
+
+def m6_joints(tray_half):
+    """Joint X list the M6 template computes (joint_x with m6_joint)."""
+    jx, jo = min(40, tray_half-12), tray_half-10.5
+    return [-jo, jo] if jo-jx < 24 else [-jo, -jx, jx, jo]
+
 
 def window_spec(spec):
     """Adapt the shared opening planner without changing its legacy API or sources."""
@@ -736,6 +766,12 @@ def template_source(spec):
         for old,new in KEYSTONE_Z_REPLACEMENTS.items(): text=text.replace(new,old)
     if not spec.get('hidden_joint'):
         for old, new in HJ_REPLACEMENTS: text = text.replace(new, old)
+    if spec.get('m6_joint'):
+        for old, new in M6_HOOKS:
+            assert text.count(old) == 1, old
+            text = text.replace(old, new)
+    else:
+        text = re.sub(r'// @m6-begin\n.*?// @m6-end\n', '', text, flags=re.S)
     if not any(k in spec for k in V2_DEFAULTS):
         text = text.split('// @sleeve-v2-begin\n')[0]
         for old, new in V2_REPLACEMENTS.items(): text = text.replace(new, old)
@@ -847,6 +883,16 @@ def clean(spec):
             raise ValueError('Hidden screws and stronger insert bosses cannot be combined.')
         if spec.get('tray_follow') is True:
             raise ValueError('Hidden screws and a tray that follows the device cannot be combined.')
+    if placement_settings({'m6_joint': spec['m6_joint']} if 'm6_joint' in spec else {}).get('m6_joint'):
+        if s['device_mount'] in ('sleeve', 'wall') or s['joint'] != 'screw':
+            raise ValueError('M6 hardware needs a screw joint and a mount other than sleeve or wall.')
+        if spec.get('rear_support') or spec.get('second') or spec.get('_pair') or spec.get('front_position', 'today') != 'today':
+            raise ValueError('M6 hardware cannot yet be combined with a rear bracket, a second device or a moved front position.')
+        if float(spec.get('dev_off_y', 0) or 0) < 0:
+            raise ValueError('M6 hardware needs the device at least 15.5 mm behind the faceplate (front/back offset 0 or more).')
+        if (0.5 if s['device_mount'] == 'flat' else 8.225) + M6_TAB_TOP > s['u'] * RACK_PITCH - PLATE_GAP / 2:
+            raise ValueError('The M6 joint tabs are too tall for %dU with this mount; pick more rack units.' % s['u'])
+        s['m6_joint'] = True
     if s.get('rear_floor_opening') and spec.get('rear_support') is not True:
         raise ValueError('Cable opening in floor needs rear support.')
     raw_zones = spec.get('protrusions', [])
@@ -1000,7 +1046,11 @@ def clean(spec):
         for p in s['ports']:
             if any(abs(p['x']-x) < port_openings.SLEEVE_WALL/2+p['w']/2 and p['z']+p['h']/2 > win['bottom'] and p['z']-p['h']/2 < win['top'] for x in win['joints']):
                 raise ValueError('A front opening overlaps a sleeve wall joint; move or remove it.')
-    if s['joint'] == 'screw' and not win and not spec.get('_pair'):  # a pair places its joints in clean_pair()
+    if s.get('m6_joint'):  # M6 tabs/bosses are fixed; an opening or keystone in front of one blocks the build
+        for j in m6_joints(tray_half):
+            if any(abs(p['x']-j) < p['w']/2+M6_TAB_HALF+2 for p in s['ports']) or any(abs(k-j) < 9.9+M6_TAB_HALF+2 for k in s['keystones']):
+                raise ValueError('A front opening or keystone sits in front of an M6 joint at X = %g mm; move or remove it.' % round(j, 2))
+    elif s['joint'] == 'screw' and not win and not spec.get('_pair'):  # a pair places its joints in clean_pair()
         placed = port_openings.joint_positions(s['ports'], s['keystones'], tray_half)
         if placed['problem']:
             raise ValueError(placed['problem'])
@@ -1594,6 +1644,7 @@ def clean_drives(spec):
     base=dict(name=spec.get('name','Drives (3.5" + 2.5")'),dev_w=width-16,dev_d=depth-37,dev_h=29.1,
               device_mount='flat',joint='screw',standoff=0,holes=[],ports=[],keystones=[],u=1)
     if 'quality' in spec:base['quality']=spec['quality']
+    if 'm6_joint' in spec:base['m6_joint']=spec['m6_joint']
     s=clean(base);s.update(drives=out,drive_mount=mode,ssd_h=sh)
     return s
 

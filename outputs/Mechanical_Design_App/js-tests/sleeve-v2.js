@@ -57,3 +57,12 @@ test('hidden joint control and template hooks exist',()=>{
  const ui=fs.readFileSync(path.join(__dirname,'../tray-placement.js'),'utf8');assert.ok(ui.includes('Hidden screws'));
  const scad=fs.readFileSync(path.join(__dirname,'../equipment_tray.scad'),'utf8');for(const hook of ['hidden_joint=false;','function jon(r)','function jxs(r)','if(jon(rear))','&&!hidden_joint)for(x=sl_joints'])assert.ok(scad.includes(hook),hook);
 });
+
+// M6 bracket hardware (Brian, 2026-10-28; HDT-M6-A): opt-in switch, analytical only.
+test('M6 hardware switch: default off, saved only when on, limits',()=>{
+ const flat={name:'M6',dev_w:150,dev_d:120,dev_h:30,u:1,device_mount:'flat',joint:'screw',rear_support:false,dev_rot:0,holes:[],ports:[],keystones:[]};
+ const off=T.values(flat),on=T.values(flat,{m6_joint:true});
+ assert.equal(off.m6_joint,false);assert.deepEqual(T.diff(flat,on),{m6_joint:true});assert.deepEqual(T.problems(flat,on),[]);
+ assert.match(T.problems(hidden,T.values(hidden,{m6_joint:true})).join(' '),/M6 hardware needs a screw joint/);
+ assert.match(T.problems(flat,T.values(flat,{m6_joint:true,dev_off_y:-3})).join(' '),/15\.5 mm/);
+});

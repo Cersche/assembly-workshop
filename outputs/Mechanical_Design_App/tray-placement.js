@@ -5,8 +5,8 @@
 (function(root){
   'use strict';
   // ---- Pure logic (Node-testable). Mirrors equipment.PLACEMENT_KEYS, clean() and equipment_tray.scad asserts.
-  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','wall_open','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','rear_style','u','front_position','front_setback','bezel','bezel_size','sleeve_top','feet_style','rear_floor_opening','insert_bosses','hidden_joint'];
-  const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',wall_open:['rear'],standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,rear_openings:false,u:1,front_position:'today',front_setback:16,bezel:'none',bezel_size:1,sleeve_top:.3,feet_style:'pockets',rear_floor_opening:false,insert_bosses:false,hidden_joint:false};
+  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','wall_open','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','rear_style','u','front_position','front_setback','bezel','bezel_size','sleeve_top','feet_style','rear_floor_opening','insert_bosses','hidden_joint','m6_joint'];
+  const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',wall_open:['rear'],standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,rear_openings:false,u:1,front_position:'today',front_setback:16,bezel:'none',bezel_size:1,sleeve_top:.3,feet_style:'pockets',rear_floor_opening:false,insert_bosses:false,hidden_joint:false,m6_joint:false};
   const FRONT_GAP=12,MARGIN=8,RACK_INNER_W=208,SIDE_CLEAR=2,MAX_TRAY=RACK_INNER_W-2*SIDE_CLEAR,RACK_DEPTH=240,PITCH=44.45,PLATE_HALF=126,PLATE_T=4,TRAY_T=3;
   const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap',wall:'Wall',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
   const REAR_STYLES={solid:['Solid','Plain plate'],open:['Open','Original cable windows'],reinforced:['Reinforced','Wider bands and inner top/end lips; ends shorten to clear rear joints'],slots:['Cable slots','Rounded upper and centre cable slots'],vents:['Vents','Dense round vents, centre cable slot and inner top/end lips; ends shorten to clear rear joints']};
@@ -106,13 +106,16 @@
     if(!fin(v.bezel_size)||v.bezel_size<.5||v.bezel_size>1.5)out.push('Bezel size must be 0.5 to 1.5 mm.');
     if(!fin(v.sleeve_top)||v.sleeve_top<V2.topDefault||v.sleeve_top>V2.topMax)out.push('Top play must be 0.3 to 2 mm.');
     if(!['pockets','grooves'].includes(v.feet_style))out.push('Feet must be pockets or grooves.');
-    for(const k of ['rear_floor_opening','insert_bosses','hidden_joint'])if(typeof v[k]!=='boolean')out.push(k+' must be true or false.');
+    for(const k of ['rear_floor_opening','insert_bosses','hidden_joint','m6_joint'])if(typeof v[k]!=='boolean')out.push(k+' must be true or false.');
     if(v.sleeve_top!==V2.topDefault&&v.device_mount!=='sleeve')out.push('Top play is only available for a sleeve.');
     if(v.feet_style==='grooves'&&(!['flat','sleeve'].includes(v.device_mount)||!(spec.feet||[]).length))out.push('Foot grooves need a flat or sleeve mount with feet.');
     if(v.insert_bosses&&(v.device_mount!=='sleeve'||v.joint!=='screw'))out.push('Stronger insert bosses need a sleeve with a screw joint.');
     if(v.hidden_joint&&(v.device_mount!=='sleeve'||v.joint!=='screw'))out.push('Hidden screws need a sleeve with a screw joint.');
     if(v.hidden_joint&&v.insert_bosses)out.push('Hidden screws and stronger insert bosses cannot be combined.');
     if(v.rear_floor_opening&&!v.rear_support)out.push('Cable opening in floor needs rear support.');
+    if(v.m6_joint&&(['sleeve','wall'].includes(v.device_mount)||v.joint!=='screw'))out.push('M6 hardware needs a screw joint and a mount other than sleeve or wall.');
+    if(v.m6_joint&&(v.rear_support||v.front_position!=='today'))out.push('M6 hardware cannot yet be combined with a rear bracket, a second device or a moved front position.');
+    if(v.m6_joint&&v.dev_off_y<0)out.push('M6 hardware needs the device at least 15.5 mm behind the faceplate (front/back offset 0 or more).');
     if(out.length)return out;
     try{footGrooves(spec,v);rearFloorGeometry(spec,v);}catch(e){return [e.message];}
     out.push(...PO().positionProblems({...spec,...v}));
@@ -393,6 +396,8 @@
     if(dv.device_mount==='pegs'||dv.device_mount==='clips')mountOpts.push(field(dv.device_mount==='pegs'?'Board thickness (mm)':'Edge thickness clipped (mm)',()=>dv.board_t,x=>dv.board_t=x,{step:'0.1'}));
     const rs=h('input',{type:'checkbox'});rs.checked=!!v.rear_support;rs.onchange=()=>{v.rear_support=rs.checked;if(rs.checked&&!v.rear_style)v.rear_style='reinforced';if(!rs.checked)delete v.rear_style;render();};
     const toggleV2=(key,label,hint)=>{const c=h('input',{type:'checkbox'});c.checked=v[key];c.onchange=()=>{v[key]=c.checked;update();};return h('label',{class:'ew-chip'},c,' '+label,h('small',{},' '+hint));};
+    // M6 bracket hardware (Brian, 2026-10-28; HDT-M6-A): the live sketch keeps the old joint boxes; Render exact preview shows the M6 tabs.
+    const m6Controls=!['sleeve','wall'].includes(v.device_mount)&&v.joint==='screw'?[toggleV2('m6_joint','M6 hardware','Rack M6 inserts + M6 x 8 button heads, 4 joints, edge walls; device 15.5 mm back; fit/strength UNKNOWN.')]:[];
     const sleeveControls=v.device_mount==='sleeve'?[
       field('Top play (mm)',()=>v.sleeve_top,x=>v.sleeve_top=x,{min:'.3',max:'2',step:'.1'}),
       h('div',{class:'ew-row'},'Feet:',chips({pockets:'Pockets',grooves:'Grooves'},v.feet_style,k=>v.feet_style=k)),
@@ -446,7 +451,7 @@
           h('h3',{},'Faceplate'),bezel,h('p',{class:'ew-note'},'Bezel softens front opening edges only. Size 0.5–1.5 mm; reduced or omitted to preserve 2 mm webs. Rounded prints best with the front face up; Chamfer prints either way.'),h('div',{class:'ew-row'},field('Height (rack units)',()=>v.u,x=>v.u=x,{min:'1',max:'5'})),keystones(),
           h('p',{},'Tray joint'),chips(JOINTS,v.joint,k=>v.joint=k),
           h('label',{class:'ew-chip'},rs,' Rear support (tray runs to the back posts)'),
-          ...sleeveControls,
+          ...sleeveControls,...m6Controls,
           ...(v.rear_support?[styles,h('p',{class:'ew-note'},REAR_STYLES[rearStyle(v)][1]+'; stiffness/airflow UNKNOWN')]:[]),
           h('p',{class:'tp-unknown'},'Fit, retention, strength: UNKNOWN'))),
       h('p',{id:'tpSummary',class:'ew-note'}),

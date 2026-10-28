@@ -1,0 +1,35 @@
+diff --git a/outputs/Mechanical_Design_App/equipment_tray.scad b/outputs/Mechanical_Design_App/equipment_tray.scad
+index 7738a4a..d9c596e 100644
+--- a/outputs/Mechanical_Design_App/equipment_tray.scad
++++ b/outputs/Mechanical_Design_App/equipment_tray.scad
+@@ -2,12 +2,14 @@
+ // Task 39: nominal SFF-8301/8201 geometry; PROPOSED — UNVALIDATED.
+ // Coordinates: tray X, Y offset from front_gap; connectors face +Y.
+ drives=[]; drive_mount="screws"; ssd_h=7;
++hdd_h=26.1; hdd_rail_t=2; hdd_rail_gap=0.5;   // 3.5" side rails: 2 mm wall, 0.5 mm clearance, full drive height
+ function drive_w(d)=d[0]=="3.5"?101.6:69.85;
+ function drive_d(d)=d[0]=="3.5"?147:100;
+ function drive_ys(d)=d[0]=="3.5"?[29.52,61.27,105.72]:[9.4,86];
+ function drive_xs(d)=d[0]=="3.5"?[3.18,98.43]:[4.07,65.79];
+ module drive_add(){for(d=drives)translate([d[1],front_gap+d[2],floor_top]){
+  for(x=drive_xs(d),y=drive_ys(d))translate([x,y,-0.1])cylinder(d=8,h=3.1);
++ if(d[0]=="3.5")for(s=[-1,1])translate([s<0?-hdd_rail_gap-hdd_rail_t:drive_w(d)+hdd_rail_gap,0,0])cube([hdd_rail_t,drive_d(d),hdd_h]);
+ }}
+ module drive_cut(){for(d=drives)translate([d[1],front_gap+d[2],tray_z]){
+  if(drive_mount=="screws")for(x=drive_xs(d),y=drive_ys(d)){
+diff --git a/outputs/Mechanical_Design_App/test_drive_tray.py b/outputs/Mechanical_Design_App/test_drive_tray.py
+index 9c13f8b..57a6e26 100644
+--- a/outputs/Mechanical_Design_App/test_drive_tray.py
++++ b/outputs/Mechanical_Design_App/test_drive_tray.py
+@@ -15,6 +15,11 @@ class DriveTrayTests(unittest.TestCase):
+             self.assertIn('drive_mount="%s";' % mode, src)
+             self.assertIn('drive_add();else device_features_add();', src)
+ 
++    def test_hdd_side_rails_in_source(self):
++        src = eq.source(eq.clean(dict(PRESET, drive_mount='screws')))
++        self.assertIn('hdd_rail_t=2;', src)
++        self.assertIn('for(s=[-1,1])translate([s<0?-hdd_rail_gap-hdd_rail_t:drive_w(d)+hdd_rail_gap,0,0])', src)
++
+     def test_hardware_only_for_screws(self):
+         self.assertEqual(len(eq.drive_hardware(eq.clean(dict(PRESET, drive_mount='screws')))), 2)
+ 

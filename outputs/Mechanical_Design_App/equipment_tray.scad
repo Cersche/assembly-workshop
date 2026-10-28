@@ -105,6 +105,32 @@ assert(!sleeve||joint!="screw"||sl_window_top-sl_bottom>=10,"Sleeve screw joint 
 jx=min(40,tray_w/2-12); joint_x=[-jx,jx];
 tongue_w=12; tongue_depth=7; tongue_h=3; tongue_z=tray_z+3.5;
 slot_clear=0.3; boss_d=9; m3_clear=3.4; joint_pilot=4.0;  // 4.0 = the printed, well-fitting Pi4 trial
+// @m6-begin
+// M6 bracket hardware (Brian, 2026-10-28; reproduces the approved HDT-M6-A drive tray). Opt-in m6_joint: equipment.py
+// switches it on (front_gap 15.5, boss 14, insert bore 7.6 = the rack posts' M6 insert holes, 6.6 clearance) and kept
+// only then. Joints: inner pair + one at each tray edge (edge pair only on narrow trays); edge joints 2 screws, inner the
+// upper one. Tabs: rounded-top 20 x 6 plate with the tongue-slot foot, 4 mm floor coves, 11.5 x 3.5 counterbore so the
+// M6 x 8 button head sits below the rear face. PROPOSED — UNVALIDATED: fit and strength UNKNOWN.
+function jzx(x)=abs(x)<jo-1?[32]:[16,32];  // screw heights above tray_z
+side_wall_t=2.5; side_wall_h=15; up_t=6; cb_d=11.5; cb_depth=3.5; tab_w=20; tab_foot_h=5; fil_r=4; floor_r=6; wall_r=6;
+module m6_tray_joint_add(){
+ ft=tray_z+tray_t;  // floor top
+ for(x=joint_x)intersection(){
+  union(){
+   translate([0,8.3+up_t,0])rotate([90,0,0])linear_extrude(up_t)hull(){translate([x-tab_w/2,ft-0.01])square([tab_w,1]);translate([x,tray_z+max(jzx(x))])circle(d=tab_w);}
+   hull(){translate([x-tab_w/2,0,ft-0.01])cube([tab_w,8.3+up_t,1]);translate([x-tab_w/2,8.3,ft-0.01])cube([tab_w,0.01,tab_foot_h]);
+         translate([x-tab_w/2,1.5,ft+tab_foot_h-1.5])rotate([0,90,0])cylinder(r=1.5,h=tab_w);translate([x-tab_w/2,0,ft-0.01])cube([tab_w,0.01,tab_foot_h-1.5]);}
+   for(sd=[-1,1])translate([x+sd*tab_w/2-(sd<0?fil_r:0),8.3,ft-0.01])difference(){cube([fil_r,up_t,fil_r]);translate([sd<0?0:fil_r,-0.1,fil_r])rotate([-90,0,0])cylinder(r=fil_r,h=up_t+0.2);}
+  }
+  translate([tray_x,-1,0])cube([tray_w,tray_d+2,60]);
+ }
+ // edge stiffening walls with rounded ends, stopping short of the rounded rear floor corners
+ for(sx=[0,1])translate([sx?tray_x+tray_w-side_wall_t:tray_x,0,ft-0.01])rotate([90,0,90])linear_extrude(side_wall_t)hull(){
+   square([1,side_wall_h]);translate([tray_d-floor_r-wall_r,side_wall_h-wall_r])circle(r=wall_r);translate([tray_d-floor_r-wall_r,0])square([wall_r,1]);}
+}
+module m6_tray_joint_cut(){for(x=joint_x,zz=jzx(x)){translate([x,8.3+up_t+0.1,tray_z+zz])rotate([90,0,0])cylinder(d=m3_clear,h=up_t+9);
+ translate([x,8.3+up_t+0.1,tray_z+zz])rotate([90,0,0])cylinder(d=cb_d,h=cb_depth+0.1);}}
+// @m6-end
 
 // @rear-openings-begin
 // PROPOSED clearances; bracket stiffness, fit and strength UNKNOWN.
