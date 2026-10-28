@@ -32,3 +32,4 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 | 2026-10-27 | MoCA porch15 + printed bezel nut | Fits, but nut too tall (above the rim), too thick and too tight; empty corner past the OUTs and closed modem side get in the way (porch rev 2, porch16.scad). Splitter calipered |
 
 - 2026-10-28 TL-SG108E flush (2026-10-23 print): switch face ~1.3 mm proud of the faceplate; ~1 mm spare clearance above the switch in the opening (Brian: 1 mm is already forgiving). Fixed in SG8-M6-B.
+- 2026-10-28 SG8-C1 (SG8-M6-B left hidden-screw joint coupon): Brian: fitment great; M6 x 8 button head and head recess good to go. Boss/insert test (SG8-C2) still to do.
