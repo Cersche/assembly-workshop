@@ -2,6 +2,16 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-28 Faceplate/bracket overhaul: printed baseline (read first)
+
+Brian is redesigning the printed brackets one at a time, each in its own prompt. These are the versions he printed (confirmed 2026-10-28); review page `work/mesh-viewer/printed_brackets_review_2026-10-28.html` (not committed):
+- CM1000: `outputs/STL_Deliveries/2026-10-16_CM1000_bracket/` faceplate + `rails_v2` (access bays). Fits.
+- TL-SG108E: `outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/`. Fit acceptable.
+- Hue + Pi 4: `outputs/Hue_Pi4_WideLane_2026-10-24/`.
+- OptiPlex: `outputs/Physical_Test_Coupons_2026-10-21_SLV-F/` PLATE + TRAY + **REAR-O** (Open rear bracket).
+- 3.5" HDD + 2.5" SSD: `outputs/Hard_Drive_Tray_2026-10-25/` (not the 10-22 delivery). Uncommitted edits in `equipment_tray.scad` / `test_drive_tray.py` are untouched.
+No redesign started yet.
+
 ## 2026-10-27 MoCA box: porch rev 2 drawn (read first)
 
 - Brian's notes on the printed porch15 and his splitter calipers are in [Scope](work/wall-box-wizard/Scope.md) (porch rev 2). New [porch16.scad](work/wall-box-wizard/concept15/porch16.scad) (`pick=1` porch, `2` bezel nut, `0` assembly, `show_box=false` hides the box): 19.6 deep, form-fitting, modem OUT fully outside, porch on its own two M3 x 20 screws into floor inserts, power up through a slit + two posts + 12 mm floor hole near the left wall, nut 14 x 2 with a looser thread. porch15 stays as printed history.
