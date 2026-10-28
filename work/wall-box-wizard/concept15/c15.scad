@@ -52,6 +52,7 @@ function sh(p)=p+[sb_dx,0,sb_dz];   // move a rev A ScreenBeam-relative point wi
 // Rubber feet on the ScreenBeam's back (Brian, 2026-10-27): 13 mm across, 2.25 mm proud, centres ~8 mm in from the
 // long edges and ~16 mm in from the short ends (ruler photos, +-1 mm). Pockets 16 across x 2.6 deep let it sit flat.
 sb_feet=[for(x=[8.5,56.5],z=[16,102])[x,z]]; foot_d=16; foot_dp=2.6;
+sb_clr=0.5;   // extra ScreenBeam clearance (Brian, 2026-10-27: tight squeeze going in): side lips 0.25 out each, front lips 0.5 forward
 module sb_device(){translate([0,0,cz]){
  color([0.12,0.12,0.13])translate(SB)cube([65,30,120]);
  color([0.3,0.3,0.32])translate([SB[0]+12,SB[1]-0.5,SB[2]+30])cube([41,1,60]);
@@ -70,10 +71,10 @@ module cradle15(){translate([0,0,cz])color([0.55,0.75,0.6])difference(){
  union(){
   // back plate, extended down to Z21 (rev A started at Z48) so it still carries the lowered shelf
   hull(){translate([4,cr_y,21])cube([97,cr_t-0.6,131]);translate([4.6,cr_y,21.6])cube([95.8,cr_t,129.8]);}
-  translate([SB[0]-3,cr_y-8,SB[2]-6])cube([3,8,94]);translate([SB[0]+65,cr_y-8,SB[2]-6])cube([2,8,94]);   // side lips (right one thin: jumper beside it)
+  translate([SB[0]-3-sb_clr/2,cr_y-8,SB[2]-6])cube([3,8,94]);translate([SB[0]+65+sb_clr/2,cr_y-8,SB[2]-6])cube([2,8,94]);   // side lips (right one thin: jumper beside it)
   // shelf pads: the keystone-side pad now ends 2 mm inside the ScreenBeam's edge (rev A ran 3 mm past it, into the keystone)
-  for(x=cr_pads)translate([x[0],SB[1]-3,SB[2]-4])cube([x[1]-x[0],cr_y-SB[1]+3,4]);
-  for(x=cr_pads)translate([x[0],SB[1]-3,SB[2]-0.01])cube([x[1]-x[0],3,4]);           // front lips (4 mm ledge)
+  for(x=cr_pads)translate([x[0],SB[1]-3-sb_clr,SB[2]-4])cube([x[1]-x[0],cr_y-SB[1]+3+sb_clr,4]);
+  for(x=cr_pads)translate([x[0],SB[1]-3-sb_clr,SB[2]-0.01])cube([x[1]-x[0],3,4]);           // front lips (4 mm ledge)
   for(x=cr_pads)translate([x[0],cr_y,SB[2]-4])rotate([0,90,0])linear_extrude(x[1]-x[0])
    polygon([[0,0],[10,0],[0,-10]]);                                                  // 45 deg gussets under the pads
  }
