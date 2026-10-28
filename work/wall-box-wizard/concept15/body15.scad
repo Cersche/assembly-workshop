@@ -217,7 +217,10 @@ module ear_slots(){for(e=ear_slots)translate([e[0],e[1],-1])linear_extrude(wall+
 // the sliders' travel, the F hole and the X98 joint block; sleeve-only, the back plate is unchanged.
 porch_screws=[[18,42],[78,5],[86,62]];   // 2026-10-28: lobe, front-right lug, back
 porch_boss_d=9; porch_boss_h=8;
-module porch_bosses(){for(p=porch_screws)translate([p[0],p[1],wall-0.01])cylinder(d=porch_boss_d,h=porch_boss_h-wall+0.01,$fn=32);}
+// 45 deg ramp on the +Y side (Brian 2026-10-28): the sleeve prints back edge down, so +Y is down on the bed and the
+// boss would otherwise start as a 5.5 mm unsupported ledge
+module porch_bosses(grow=0){bh=porch_boss_h-wall+0.01+grow;for(p=porch_screws)translate([p[0],p[1],wall-0.01])
+ hull(){cylinder(d=porch_boss_d+2*grow,h=bh,$fn=32);translate([0,bh,0])cylinder(d=porch_boss_d+2*grow,h=0.01,$fn=32);}}
 module porch_pilots(){for(p=porch_screws)translate([p[0],p[1],-0.01])cylinder(d=insert_pilot,h=insert_depth,$fn=24);}
 
 module body(){
@@ -311,6 +314,7 @@ module back_plate(){difference(){
    rbox(wall+jt_clear,wo-wall-jt_clear,di-jt_lip_h,di+0.01,wall+jt_clear,ho-wall-jt_clear,max(ri-jt_clear,0.5));
    rbox(wall+jt_clear+jt_lip_t,wo-wall-jt_clear-jt_lip_t,di-jt_lip_h-1,di+1,wall+jt_clear+jt_lip_t,ho-wall-jt_clear-jt_lip_t,max(ri-jt_clear-jt_lip_t,0.5));
    jt_blocks(0.4);
+   porch_bosses(0.4);   // notch the lip around the back porch boss (2026-10-28)
   }}
  for(p=jt_pts())translate([p[0],db+0.01,p[1]])rotate([90,0,0]){cylinder(d=m3_clear,h=wall+1);cylinder(d1=jt_csk,d2=m3_clear,h=(jt_csk-m3_clear)/2);}
 }}
