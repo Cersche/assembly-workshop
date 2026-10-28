@@ -87,7 +87,7 @@ module cradle15(){translate([0,0,cz])color([0.55,0.75,0.6])difference(){
 module contents(){
  color([0.92,0.91,0.87])difference(){import("body15.stl");floor_cuts();}
  for(e=[[59,62],[46,14]])translate([e[0]+sx,e[1],floor_t])nut_slider();
- color([0.2,0.4,0.9])translate([102.5-14,22-8.5,121.5-8])cube([14,17,16]);   // Ethernet keystone rear, right wall (Z121.5 since 2026-10-28)
+ color([0.2,0.4,0.9])translate([102.5-14,18.5-8.5,121.5-8])cube([14,17,16]);   // Ethernet keystone rear, right wall (Z121.5 since 2026-10-28)
  sb_device();
  cradle15();
  rod(sh([37.5,43,182]),sh([37.5,43,194]));rod(sh([37.5,43,194]),sh([49.5,43,194]));
@@ -114,5 +114,5 @@ translate([sx,0,0]){
 }
 color([0.95,0.95,0.95]){run([[29+sx,38,-11],[5,38,-11],[-25,38,-16]]);run([[76+sx,26.5,-11],[100,26.5,-11],[130,26.5,-16]]);}
 color([0.15,0.15,0.15]){run([[-2,50,17],[-14,50,12],[-20,46,-8],[-25,46,-40]],4);   // power lead down beside the coax
- run([[105,22,121.5],[125,22,116],[140,22,100]],6);}   // Ethernet patch out of the right-wall keystone
+ run([[105,18.5,121.5],[125,18.5,116],[140,18.5,100]],6);}   // Ethernet patch out of the right-wall keystone
 contents();

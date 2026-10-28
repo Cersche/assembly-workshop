@@ -22,8 +22,8 @@ vents=["left","right"];   // no top vents (Brian 2026-10-27: sides are plenty)
 // straight under the jack (24 mm from the ScreenBeam's left side: X38.5 Y43, jack position partly ASSUMED): 10 mm
 // hole there, the cord turns inside the porch lobe. Splitter (ear slots, right-angle F hole) and keystone moved 8 mm
 // to the front so the IN coax clears the plug. Bottom round at X88 Y41.5 = right-angle F. Keystone up the right wall
-// at Z121.5, midway between the louvre sets (Z81 / Z162), Y22.
-cutouts=[["right","keystone",-13,16.5,0,0],["bottom","round",-35.5,6.5,14,0],["bottom","round",14,8,10,0]];
+// at Z121.5, midway between the louvre sets (Z81 / Z162), Y18.5 (3.5 further forward 2026-10-28: the inserted jack was in the way; front edge 2 mm behind the 6 mm lid lip).
+cutouts=[["right","keystone",-16.5,16.5,0,0],["bottom","round",-35.5,6.5,14,0],["bottom","round",14,8,10,0]];
 standoffs=[[-44.5,-35,8,4.0,9],[44.5,-35,8,4.0,9],[-44.5,31,8,4.0,9],[44.5,31,8,4.0,9]];   // cradle bosses, M3 heat-set inserts
 vent_avoid=[];
 // @@END@@

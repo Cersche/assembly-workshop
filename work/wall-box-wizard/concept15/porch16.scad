@@ -133,7 +133,7 @@ else {
   translate([ears[i][0],slot_y[i],2.5])nut_slider();}
  for(p=porch_screws)color("silver")translate([p[0],p[1],-h+cb_h])cylinder(d=3,h=20,$fn=16);  // M3 x 20, porch to insert
  if(show_box){color([0.92,0.91,0.87])import("body15.stl");
-  color([0.2,0.4,0.9])translate([102.5-14,22-8.5,121.5-8])cube([14,17,16]);   // Ethernet keystone rear
+  color([0.2,0.4,0.9])translate([102.5-14,18.5-8.5,121.5-8])cube([14,17,16]);   // Ethernet keystone rear
   sb_device();cradle15();}
  color([0.95,0.95,0.95]){
   run([[in_face-sp_port-12,in_y,-sp_axis],[0,in_y,-sp_axis],[-15,in_y,-18],[-20,in_y,-45]]);     // incoming coax
