@@ -1,0 +1,42 @@
+{
+  "l": {
+    "triangles": 992,
+    "closed": true,
+    "components": 1,
+    "bounds": [
+      [
+        16.767,
+        16.0,
+        0.028656
+      ],
+      [
+        35.0293,
+        137.62,
+        44.421
+      ]
+    ],
+    "volume": 41061.161606156056,
+    "reference_volume": 41246.062829992916,
+    "volume_error_percent": -0.44828817867775816
+  },
+  "r": {
+    "triangles": 1136,
+    "closed": true,
+    "components": 1,
+    "bounds": [
+      [
+        218.971,
+        16.0,
+        0.0289459
+      ],
+      [
+        237.233,
+        137.62,
+        44.4219
+      ]
+    ],
+    "volume": 41448.21304900001,
+    "reference_volume": 41896.16025685473,
+    "volume_error_percent": -1.0691843956784353
+  }
+}

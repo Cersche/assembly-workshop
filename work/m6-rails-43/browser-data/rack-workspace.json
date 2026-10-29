@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "racks": [
+    {
+      "id": "7af8f5a2-9c73-4cb3-a819-fe2cf3b835ad",
+      "name": "Task 43 disposable rack",
+      "slots": 5,
+      "appearance": {},
+      "width_mm": 208,
+      "depth_mm": 240,
+      "pitch_mm": 44.45,
+      "placements": [
+        {
+          "assembly": {
+            "id": "asm-6f2373c3-4a54-4f0b-9cad-2b594d9ae9e1",
+            "name": "Task 43 switch fixture",
+            "revision": 1,
+            "project": {
+              "selections": {},
+              "inputs": {
+                "stack": 3.3,
+                "pocket": 8,
+                "boss_diameter": 9,
+                "pilot": 4.2,
+                "minimum_engagement": 3,
+                "bottom_allowance": 0.5
+              },
+              "notes": "Fit and strength UNKNOWN.",
+              "id": "asm-6f2373c3-4a54-4f0b-9cad-2b594d9ae9e1",
+              "name": "Task 43 switch fixture",
+              "units": "mm"
+            },
+            "appearance": {},
+            "fit": "UNKNOWN"
+          },
+          "id": "cf9ee27d-7ffa-4a39-a5cb-daf345b954e7",
+          "equipment": "eq-0000000043b1",
+          "slot": 1,
+          "span": 1,
+          "geometry": "equipment-library",
+          "fit": "UNKNOWN"
+        }
+      ]
+    }
+  ],
+  "generation": "dd03ac07-d778-495a-b458-84b0f5e3ced0"
+}

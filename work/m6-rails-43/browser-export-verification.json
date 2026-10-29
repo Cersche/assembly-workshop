@@ -1,0 +1,29 @@
+{
+  "members": [
+    "equipment.scad",
+    "faceplate.stl",
+    "rail_l.stl",
+    "rail_r.stl",
+    "revision.json",
+    "export.json",
+    "CM6B_CM1000_generated_split_rails_print-layout.3mf"
+  ],
+  "stls": [
+    "faceplate.stl",
+    "rail_l.stl",
+    "rail_r.stl"
+  ],
+  "three_mfs": [
+    "CM6B_CM1000_generated_split_rails_print-layout.3mf"
+  ],
+  "export": {
+    "export_quality": {
+      "level": "standard",
+      "$fn": 48
+    },
+    "source_sha256": "dcc2abafa360892b9c57e0f98ea68bcb4442f93d770a73720b37b55c3a9a7590",
+    "source": "equipment.scad",
+    "status": "PROPOSED \u2014 UNVALIDATED",
+    "note": "Curve resolution only; printed fit and strength stay UNKNOWN."
+  }
+}

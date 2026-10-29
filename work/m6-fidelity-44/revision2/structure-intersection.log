@@ -1,0 +1,18 @@
+ERROR: CGAL error in CGAL_Nef_polyhedron3(): CGAL ERROR: assertion violation!
+Expr: e_below != SHalfedge_handle()
+File: /mxe/usr/x86_64-w64-mingw32.static.posix/include/CGAL/Nef_3/SNC_FM_decorator.h
+Line: 426
+ERROR: CGAL error in CGAL_Nef_polyhedron3(): CGAL ERROR: assertion violation!
+Expr: e_below != SHalfedge_handle()
+File: /mxe/usr/x86_64-w64-mingw32.static.posix/include/CGAL/Nef_3/SNC_FM_decorator.h
+Line: 426
+ERROR: CGAL error in CGAL_Nef_polyhedron3(): CGAL ERROR: assertion violation!
+Expr: e_below != SHalfedge_handle()
+File: /mxe/usr/x86_64-w64-mingw32.static.posix/include/CGAL/Nef_3/SNC_FM_decorator.h
+Line: 426
+Geometries in cache: 6
+Geometry cache size in bytes: 4953920
+CGAL Polyhedrons in cache: 0
+CGAL cache size in bytes: 0
+Total rendering time: 0:00:05.180
+Current top level object is empty.

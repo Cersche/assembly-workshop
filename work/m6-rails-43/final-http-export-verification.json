@@ -1,0 +1,16 @@
+{
+  "parts": [
+    "faceplate",
+    "rail_l",
+    "rail_r"
+  ],
+  "all_stls_match_delivery": true,
+  "matches": {
+    "faceplate": true,
+    "rail_l": true,
+    "rail_r": true
+  },
+  "source_matches": true,
+  "source_sha256": "c122c1b6a85491c8280890edf21cf17abcea09a7dfe1db6facb10ed0eabacab6",
+  "objects_in_3mf": 3
+}

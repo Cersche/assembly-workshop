@@ -1,0 +1,134 @@
+{
+  "nudge_mm": {
+    "faceplate": 0,
+    "rail_l": 0,
+    "rail_r": 0
+  },
+  "export_quality": {
+    "level": "standard",
+    "$fn": 48
+  },
+  "status": "PROPOSED \u2014 UNVALIDATED",
+  "spec": {
+    "name": "CM6B CM1000 generated split rails",
+    "dev_w": 212.6,
+    "dev_d": 136.0,
+    "dev_h": 38.0,
+    "hole_d": 2.7,
+    "standoff": 0.0,
+    "insert_pilot": 3.2,
+    "board_t": 1.6,
+    "u": 1,
+    "device_mount": "flat",
+    "joint": "screw",
+    "rear_support": false,
+    "dev_rot": 0,
+    "dev_off_x": 0.0,
+    "dev_off_y": 0.0,
+    "coupon": [],
+    "holes": [],
+    "keystones": [],
+    "ports": [],
+    "rear_ports": [],
+    "m6_rails": true,
+    "m6_joint": true,
+    "m6_rail_t": 3.3,
+    "m6_joint_x": [
+      -104.4,
+      104.4
+    ],
+    "m6_joint_z": [
+      8.6,
+      35.85
+    ],
+    "m6_pocket_profile": [
+      [
+        -106.3,
+        19.125
+      ],
+      [
+        -97.0,
+        19.125
+      ],
+      [
+        -95.0,
+        6.225
+      ],
+      [
+        -93.0,
+        3.225
+      ],
+      [
+        93.0,
+        3.225
+      ],
+      [
+        95.0,
+        6.225
+      ],
+      [
+        97.0,
+        19.125
+      ],
+      [
+        106.3,
+        19.125
+      ],
+      [
+        106.3,
+        25.325
+      ],
+      [
+        97.0,
+        25.325
+      ],
+      [
+        95.0,
+        38.225
+      ],
+      [
+        93.0,
+        41.225
+      ],
+      [
+        -93.0,
+        41.225
+      ],
+      [
+        -95.0,
+        38.225
+      ],
+      [
+        -97.0,
+        25.325
+      ],
+      [
+        -106.3,
+        25.325
+      ]
+    ],
+    "m6_usable_depth": 240.0,
+    "test_id": "CM6B"
+  },
+  "parts": [
+    "faceplate",
+    "rail_l",
+    "rail_r"
+  ],
+  "id": "a10197881775dc7c82196d441fa1b78e5e16bc324cb3b8b1cc3ec1349ef8f89e",
+  "template": "equipment_tray.scad",
+  "limitations": [
+    "PROPOSED \u2014 UNVALIDATED. Printed fit, strength, rack clearance and keystone retention are UNKNOWN.",
+    "Mesh closure and successful rendering are not physical approval."
+  ],
+  "sha256": {
+    "faceplate.stl": "610b579931f84e949e161c2997e86aa99560fe6ce77f223fa5cdefa1bfcf3173",
+    "rail_l.stl": "388e5b194c2db76afa34b7b17d7f100bf8013442600e0493ad7cbd984f32597f",
+    "rail_r.stl": "7af37ec20f6abdfb3974f43d6c34985320319ac0c2a2df833d6c1dc9b057a78a"
+  },
+  "logs": {
+    "faceplate": "WARNING: dev_w was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 299\nWARNING: dev_d was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 300\nWARNING: dev_h was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 301\nWARNING: hole_d was assigned on line 46 of \"equipment.scad\" but was overwritten in file equipment.scad, line 302\nWARNING: standoff was assigned on line 48 of \"equipment.scad\" but was overwritten in file equipment.scad, line 303\nWARNING: insert_pilot was assigned on line 49 of \"equipment.scad\" but was overwritten in file equipment.scad, line 304\nWARNING: board_t was assigned on line 50 of \"equipment.scad\" but was overwritten in file equipment.scad, line 305\nWARNING: u was assigned on line 52 of \"equipment.scad\" but was overwritten in file equipment.scad, line 306\nWARNING: holes was assigned on line 45 of \"equipment.scad\" but was overwritten in file equipment.scad, line 307\nWARNING: keystones was assigned on line 53 of \"equipment.scad\" but was overwritten in file equipment.scad, line 308\nWARNING: device_mount was assigned on line 47 of \"equipment.scad\" but was overwritten in file equipment.scad, line 309\nWARNING: joint was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 310\nWARNING: rear_support was assigned on line 65 of \"equipment.scad\" but was overwritten in file equipment.scad, line 311\nWARNING: coupon was assigned on line 66 of \"equipment.scad\" but was overwritten in file equipment.scad, line 312\nWARNING: ports was assigned on line 59 of \"equipment.scad\" but was overwritten in file equipment.scad, line 313\nWARNING: m6_rails was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 314\nWARNING: m6_rail_t was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 315\nWARNING: m6_joint_x was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 316\nWARNING: m6_joint_z was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 317\nWARNING: m6_pocket_profile was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 318\nWARNING: test_id was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 320\nWARNING: mr_end was assigned on line 5 of \"equipment.scad\" but was overwritten in file equipment.scad, line 321\nWARNING: mr_length was assigned on line 5 of \"equipment.scad\" but was overwritten in file equipment.scad, line 322\nWARNING: max_tray was assigned on line 84 of \"equipment.scad\" but was overwritten in file equipment.scad, line 323\nGeometries in cache: 38\nGeometry cache size in bytes: 687456\nCGAL Polyhedrons in cache: 7\nCGAL cache size in bytes: 6250208\nTotal rendering time: 0:00:06.763\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     1808\n   Halfedges:    5424\n   Edges:        2712\n   Halffacets:   1838\n   Facets:        919\n   Volumes:         2\n",
+    "rail_l": "WARNING: dev_w was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 299\nWARNING: dev_d was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 300\nWARNING: dev_h was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 301\nWARNING: hole_d was assigned on line 46 of \"equipment.scad\" but was overwritten in file equipment.scad, line 302\nWARNING: standoff was assigned on line 48 of \"equipment.scad\" but was overwritten in file equipment.scad, line 303\nWARNING: insert_pilot was assigned on line 49 of \"equipment.scad\" but was overwritten in file equipment.scad, line 304\nWARNING: board_t was assigned on line 50 of \"equipment.scad\" but was overwritten in file equipment.scad, line 305\nWARNING: u was assigned on line 52 of \"equipment.scad\" but was overwritten in file equipment.scad, line 306\nWARNING: holes was assigned on line 45 of \"equipment.scad\" but was overwritten in file equipment.scad, line 307\nWARNING: keystones was assigned on line 53 of \"equipment.scad\" but was overwritten in file equipment.scad, line 308\nWARNING: device_mount was assigned on line 47 of \"equipment.scad\" but was overwritten in file equipment.scad, line 309\nWARNING: joint was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 310\nWARNING: rear_support was assigned on line 65 of \"equipment.scad\" but was overwritten in file equipment.scad, line 311\nWARNING: coupon was assigned on line 66 of \"equipment.scad\" but was overwritten in file equipment.scad, line 312\nWARNING: ports was assigned on line 59 of \"equipment.scad\" but was overwritten in file equipment.scad, line 313\nWARNING: m6_rails was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 314\nWARNING: m6_rail_t was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 315\nWARNING: m6_joint_x was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 316\nWARNING: m6_joint_z was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 317\nWARNING: m6_pocket_profile was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 318\nWARNING: test_id was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 320\nWARNING: mr_end was assigned on line 5 of \"equipment.scad\" but was overwritten in file equipment.scad, line 321\nWARNING: mr_length was assigned on line 5 of \"equipment.scad\" but was overwritten in file equipment.scad, line 322\nWARNING: max_tray was assigned on line 84 of \"equipment.scad\" but was overwritten in file equipment.scad, line 323\nGeometries in cache: 22\nGeometry cache size in bytes: 431168\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 1853648\nTotal rendering time: 0:00:03.212\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     1130\n   Halfedges:    3392\n   Edges:        1696\n   Halffacets:   1150\n   Facets:        575\n   Volumes:         2\n",
+    "rail_r": "WARNING: dev_w was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 299\nWARNING: dev_d was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 300\nWARNING: dev_h was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 301\nWARNING: hole_d was assigned on line 46 of \"equipment.scad\" but was overwritten in file equipment.scad, line 302\nWARNING: standoff was assigned on line 48 of \"equipment.scad\" but was overwritten in file equipment.scad, line 303\nWARNING: insert_pilot was assigned on line 49 of \"equipment.scad\" but was overwritten in file equipment.scad, line 304\nWARNING: board_t was assigned on line 50 of \"equipment.scad\" but was overwritten in file equipment.scad, line 305\nWARNING: u was assigned on line 52 of \"equipment.scad\" but was overwritten in file equipment.scad, line 306\nWARNING: holes was assigned on line 45 of \"equipment.scad\" but was overwritten in file equipment.scad, line 307\nWARNING: keystones was assigned on line 53 of \"equipment.scad\" but was overwritten in file equipment.scad, line 308\nWARNING: device_mount was assigned on line 47 of \"equipment.scad\" but was overwritten in file equipment.scad, line 309\nWARNING: joint was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 310\nWARNING: rear_support was assigned on line 65 of \"equipment.scad\" but was overwritten in file equipment.scad, line 311\nWARNING: coupon was assigned on line 66 of \"equipment.scad\" but was overwritten in file equipment.scad, line 312\nWARNING: ports was assigned on line 59 of \"equipment.scad\" but was overwritten in file equipment.scad, line 313\nWARNING: m6_rails was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 314\nWARNING: m6_rail_t was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 315\nWARNING: m6_joint_x was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 316\nWARNING: m6_joint_z was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 317\nWARNING: m6_pocket_profile was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 318\nWARNING: test_id was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 320\nWARNING: mr_end was assigned on line 5 of \"equipment.scad\" but was overwritten in file equipment.scad, line 321\nWARNING: mr_length was assigned on line 5 of \"equipment.scad\" but was overwritten in file equipment.scad, line 322\nWARNING: max_tray was assigned on line 84 of \"equipment.scad\" but was overwritten in file equipment.scad, line 323\nGeometries in cache: 22\nGeometry cache size in bytes: 479584\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 1999056\nTotal rendering time: 0:00:03.332\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:     1238\n   Halfedges:    3716\n   Edges:        1858\n   Halffacets:   1260\n   Facets:        630\n   Volumes:         2\n"
+  }
+}

@@ -1,0 +1,4 @@
+faceplate {'triangles': 3620, 'closed': True, 'components': 1, 'bounds': [[-126.0, -4.0, 0.0249939], [126.0, 12.0, 44.425]], 'volume': 53721.75493334591}
+rail_l {'triangles': 2272, 'closed': True, 'components': 1, 'bounds': [[-110.2, 12.05, 0.0249996], [-88.3, 150.05, 44.425]], 'volume': 34233.43250237071}
+rail_r {'triangles': 2488, 'closed': True, 'components': 1, 'bounds': [[88.3, 12.05, 0.0249996], [110.2, 150.05, 44.425]], 'volume': 34232.42959717147}
+source identical True intersection empty True

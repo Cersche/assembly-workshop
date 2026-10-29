@@ -62,12 +62,14 @@ def layout_3mf(parts):
                 idx[v] = len(verts); verts.append(v)
             return idx[v]
         faces = [tuple(vid(v) for v in t) for t in tris]
-        objs.append(f'<object id="{i}" name="{name}" type="model"><mesh><vertices>'
+        material = ' pid="1000" pindex="1"' if name.startswith(('pipe_','vector_')) else ' pid="1000" pindex="0"' if any(n.startswith('pipe_') for n in parts) else ''
+        objs.append(f'<object id="{i}" name="{name}" type="model"{material}><mesh><vertices>'
                     + ''.join('<vertex x="%.6f" y="%.6f" z="%.6f"/>' % v for v in verts) + '</vertices><triangles>'
                     + ''.join(f'<triangle v1="{a}" v2="{b}" v3="{c}"/>' for a, b, c in faces) + '</triangles></mesh></object>')
         items.append(f'<item objectid="{i}"/>')
     model = ('<?xml version="1.0" encoding="UTF-8"?><model unit="millimeter" xml:lang="en-US" '
              'xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02"><resources>'
+             + ('<basematerials id="1000"><base name="Body" displaycolor="#303238FF"/><base name="Inlays and pipes" displaycolor="#EEEEEEFF"/></basematerials>' if any(n.startswith('pipe_') for n in parts) else '')
              + ''.join(objs) + '</resources><build>' + ''.join(items) + '</build></model>')
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as z:
@@ -82,7 +84,8 @@ def layout_3mf(parts):
 
 def place(parts):
     placed = []
-    for name in ('tray', 'combined', 'faceplate', 'rear_bracket'):
+    names = ('faceplate', 'rail_l', 'rail_r') if 'rail_l' in parts or 'rail_r' in parts else ('tray', 'combined', 'faceplate', 'rear_bracket')
+    for name in names:
         if name not in parts:
             continue
         tris = facets(parts[name])
@@ -94,7 +97,14 @@ def place(parts):
             dy = (plo[1] - GAP - hi[1]) if name == 'faceplate' else (phi[1] + GAP - lo[1])
         else:
             dy = 0
+        if name == 'faceplate':
+            plate_dy, plate_z = dy, lo[2]
         placed.append((name, move(tris, lambda v, dy=dy, z=lo[2]: (v[0], v[1] + dy, v[2] - z))))
+    for name in parts:
+        if name.startswith(('pipe_','vector_')):
+            if 'faceplate' not in parts:raise ValueError('Colour objects need a faceplate for their shared placement.')
+            tris=facets(parts[name])
+            placed.append((name,move(tris,lambda v:(v[0],-v[2]+plate_dy,v[1]-plate_z))))
     if not placed:
         raise ValueError('No parts to lay out.')
     return placed

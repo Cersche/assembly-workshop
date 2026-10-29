@@ -29,7 +29,9 @@ class AllocationTray(unittest.TestCase):
         for key in eq.PLACEMENT_KEYS:
             self.assertNotIn(key, facts)
         self.assertEqual(set(eq.PLACEMENT_KEYS), {'dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'wall_open', 'standoff',
-                                                  'insert_pilot', 'board_t', 'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size', 'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint', 'm6_joint'})
+                                                  'insert_pilot', 'board_t', 'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size', 'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint', 'm6_joint',
+                                                  'm6_rails','m6_rail_t','m6_joint_x','m6_joint_z','m6_pocket_profile','m6_usable_depth','test_id',
+                                                  'm6_rail_len','m6_bay_h','m6_bay_d','m6_rail_profiles','m6_side_windows','m6_stub_sections','m6_edge_radius','m6_retention_slot','m6_light_pipes','m6_vectors','m6_nose_bridge'})
 
     def test_no_tray_settings_gives_identical_source(self):
         expected = eq.source(eq.clean(OLD_SPEC))

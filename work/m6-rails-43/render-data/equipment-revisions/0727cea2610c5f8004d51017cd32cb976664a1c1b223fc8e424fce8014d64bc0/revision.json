@@ -1,0 +1,134 @@
+{
+  "nudge_mm": {
+    "faceplate": 0,
+    "rail_l": 0,
+    "rail_r": 0
+  },
+  "export_quality": {
+    "level": "standard",
+    "$fn": 48
+  },
+  "status": "PROPOSED \u2014 UNVALIDATED",
+  "spec": {
+    "name": "CM6B CM1000 generated split rails",
+    "dev_w": 212.6,
+    "dev_d": 136.0,
+    "dev_h": 38.0,
+    "hole_d": 2.7,
+    "standoff": 0.0,
+    "insert_pilot": 3.2,
+    "board_t": 1.6,
+    "u": 1,
+    "device_mount": "flat",
+    "joint": "screw",
+    "rear_support": false,
+    "dev_rot": 0,
+    "dev_off_x": 0.0,
+    "dev_off_y": 0.0,
+    "coupon": [],
+    "holes": [],
+    "keystones": [],
+    "ports": [],
+    "rear_ports": [],
+    "m6_rails": true,
+    "m6_joint": true,
+    "m6_rail_t": 3.3,
+    "m6_joint_x": [
+      -104.4,
+      104.4
+    ],
+    "m6_joint_z": [
+      8.6,
+      35.85
+    ],
+    "m6_pocket_profile": [
+      [
+        -106.3,
+        19.125
+      ],
+      [
+        -97.0,
+        19.125
+      ],
+      [
+        -95.0,
+        6.225
+      ],
+      [
+        -93.0,
+        3.225
+      ],
+      [
+        93.0,
+        3.225
+      ],
+      [
+        95.0,
+        6.225
+      ],
+      [
+        97.0,
+        19.125
+      ],
+      [
+        106.3,
+        19.125
+      ],
+      [
+        106.3,
+        25.325
+      ],
+      [
+        97.0,
+        25.325
+      ],
+      [
+        95.0,
+        38.225
+      ],
+      [
+        93.0,
+        41.225
+      ],
+      [
+        -93.0,
+        41.225
+      ],
+      [
+        -95.0,
+        38.225
+      ],
+      [
+        -97.0,
+        25.325
+      ],
+      [
+        -106.3,
+        25.325
+      ]
+    ],
+    "m6_usable_depth": 240.0,
+    "test_id": "CM6B"
+  },
+  "parts": [
+    "faceplate",
+    "rail_l",
+    "rail_r"
+  ],
+  "id": "0727cea2610c5f8004d51017cd32cb976664a1c1b223fc8e424fce8014d64bc0",
+  "template": "equipment_tray.scad",
+  "limitations": [
+    "PROPOSED \u2014 UNVALIDATED. Printed fit, strength, rack clearance and keystone retention are UNKNOWN.",
+    "Mesh closure and successful rendering are not physical approval."
+  ],
+  "sha256": {
+    "faceplate.stl": "b02e5da81f4931f925b85a0bc90f4309089052399e4e0dc9693aafeed3fde6e7",
+    "rail_l.stl": "bf07a52fc5a5a69c9a7f89bd7c43ae36dbc4c1e0e2ee6778f64aec462845e35d",
+    "rail_r.stl": "21902517f674603f941b77e8c744fa5a532fd478b0b7f9e8408822d78b9966b1"
+  },
+  "logs": {
+    "faceplate": "WARNING: dev_w was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 299\nWARNING: dev_d was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 300\nWARNING: dev_h was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 301\nWARNING: hole_d was assigned on line 46 of \"equipment.scad\" but was overwritten in file equipment.scad, line 302\nWARNING: standoff was assigned on line 48 of \"equipment.scad\" but was overwritten in file equipment.scad, line 303\nWARNING: insert_pilot was assigned on line 49 of \"equipment.scad\" but was overwritten in file equipment.scad, line 304\nWARNING: board_t was assigned on line 50 of \"equipment.scad\" but was overwritten in file equipment.scad, line 305\nWARNING: u was assigned on line 52 of \"equipment.scad\" but was overwritten in file equipment.scad, line 306\nWARNING: holes was assigned on line 45 of \"equipment.scad\" but was overwritten in file equipment.scad, line 307\nWARNING: keystones was assigned on line 53 of \"equipment.scad\" but was overwritten in file equipment.scad, line 308\nWARNING: device_mount was assigned on line 47 of \"equipment.scad\" but was overwritten in file equipment.scad, line 309\nWARNING: joint was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 310\nWARNING: rear_support was assigned on line 65 of \"equipment.scad\" but was overwritten in file equipment.scad, line 311\nWARNING: coupon was assigned on line 66 of \"equipment.scad\" but was overwritten in file equipment.scad, line 312\nWARNING: ports was assigned on line 59 of \"equipment.scad\" but was overwritten in file equipment.scad, line 313\nWARNING: m6_rails was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 314\nWARNING: m6_rail_t was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 315\nWARNING: m6_joint_x was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 316\nWARNING: m6_joint_z was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 317\nWARNING: m6_pocket_profile was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 318\nWARNING: test_id was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 320\nWARNING: max_tray was assigned on line 84 of \"equipment.scad\" but was overwritten in file equipment.scad, line 321\nWARNING: Ignoring unknown variable 'u' in file equipment.scad, line 5\nWARNING: undefined operation (undefined * number) in file equipment.scad, line 5\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 5\nWARNING: Ignoring unknown variable 'dev_d' in file equipment.scad, line 5\nWARNING: undefined operation (undefined + number) in file equipment.scad, line 5\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 9\nWARNING: Unable to convert cube(size=[11.6, 12.01, undef], ...) parameter to a number or a vec3 of numbers in file equipment.scad, line 9\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 9\nWARNING: Unable to convert cube(size=[11.6, 12.01, undef], ...) parameter to a number or a vec3 of numbers in file equipment.scad, line 9\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 13\nWARNING: Unable to convert translate([0, -2, undef]) parameter to a vec3 or vec2 of numbers in file equipment.scad, line 13\nGeometries in cache: 38\nGeometry cache size in bytes: 687456\nCGAL Polyhedrons in cache: 7\nCGAL cache size in bytes: 3949152\nTotal rendering time: 0:00:06.954\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      954\n   Halfedges:    2862\n   Edges:        1431\n   Halffacets:    966\n   Facets:        483\n   Volumes:         2\n",
+    "rail_l": "WARNING: dev_w was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 299\nWARNING: dev_d was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 300\nWARNING: dev_h was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 301\nWARNING: hole_d was assigned on line 46 of \"equipment.scad\" but was overwritten in file equipment.scad, line 302\nWARNING: standoff was assigned on line 48 of \"equipment.scad\" but was overwritten in file equipment.scad, line 303\nWARNING: insert_pilot was assigned on line 49 of \"equipment.scad\" but was overwritten in file equipment.scad, line 304\nWARNING: board_t was assigned on line 50 of \"equipment.scad\" but was overwritten in file equipment.scad, line 305\nWARNING: u was assigned on line 52 of \"equipment.scad\" but was overwritten in file equipment.scad, line 306\nWARNING: holes was assigned on line 45 of \"equipment.scad\" but was overwritten in file equipment.scad, line 307\nWARNING: keystones was assigned on line 53 of \"equipment.scad\" but was overwritten in file equipment.scad, line 308\nWARNING: device_mount was assigned on line 47 of \"equipment.scad\" but was overwritten in file equipment.scad, line 309\nWARNING: joint was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 310\nWARNING: rear_support was assigned on line 65 of \"equipment.scad\" but was overwritten in file equipment.scad, line 311\nWARNING: coupon was assigned on line 66 of \"equipment.scad\" but was overwritten in file equipment.scad, line 312\nWARNING: ports was assigned on line 59 of \"equipment.scad\" but was overwritten in file equipment.scad, line 313\nWARNING: m6_rails was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 314\nWARNING: m6_rail_t was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 315\nWARNING: m6_joint_x was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 316\nWARNING: m6_joint_z was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 317\nWARNING: m6_pocket_profile was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 318\nWARNING: test_id was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 320\nWARNING: max_tray was assigned on line 84 of \"equipment.scad\" but was overwritten in file equipment.scad, line 321\nWARNING: Ignoring unknown variable 'u' in file equipment.scad, line 5\nWARNING: undefined operation (undefined * number) in file equipment.scad, line 5\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 5\nWARNING: Ignoring unknown variable 'dev_d' in file equipment.scad, line 5\nWARNING: undefined operation (undefined + number) in file equipment.scad, line 5\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 22\nWARNING: Unable to convert cube(size=[3.3, undef, undef], ...) parameter to a number or a vec3 of numbers in file equipment.scad, line 22\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 23\nWARNING: Unable to convert cube(size=[21.9, undef, 3.3], ...) parameter to a number or a vec3 of numbers in file equipment.scad, line 23\nWARNING: Unable to convert translate([-110.2, 12, undef]) parameter to a vec3 or vec2 of numbers in file equipment.scad, line 23\nWARNING: Unable to convert cube(size=[21.9, undef, 3.3], ...) parameter to a number or a vec3 of numbers in file equipment.scad, line 23\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 24\nWARNING: Unable to convert cube(size=[11.6, 4, undef], ...) parameter to a number or a vec3 of numbers in file equipment.scad, line 24\nWARNING: undefined operation (undefined + number) in file equipment.scad, line 26\nWARNING: undefined operation (number + undefined) in file equipment.scad, line 6\nWARNING: Unable to convert translate([0, undef, 0]) parameter to a vec3 or vec2 of numbers in file equipment.scad, line 6\nWARNING: undefined operation (undefined * number) in file equipment.scad, line 31\nWARNING: undefined operation (number + undefined) in file equipment.scad, line 31\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 13\nWARNING: Unable to convert translate([-104.4, undef, undef]) parameter to a vec3 or vec2 of numbers in file equipment.scad, line 13\nGeometries in cache: 22\nGeometry cache size in bytes: 431168\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 472576\nTotal rendering time: 0:00:02.738\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:      104\n   Halfedges:     312\n   Edges:         156\n   Halffacets:    112\n   Facets:         56\n   Volumes:         3\n",
+    "rail_r": "WARNING: dev_w was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 299\nWARNING: dev_d was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 300\nWARNING: dev_h was assigned on line 43 of \"equipment.scad\" but was overwritten in file equipment.scad, line 301\nWARNING: hole_d was assigned on line 46 of \"equipment.scad\" but was overwritten in file equipment.scad, line 302\nWARNING: standoff was assigned on line 48 of \"equipment.scad\" but was overwritten in file equipment.scad, line 303\nWARNING: insert_pilot was assigned on line 49 of \"equipment.scad\" but was overwritten in file equipment.scad, line 304\nWARNING: board_t was assigned on line 50 of \"equipment.scad\" but was overwritten in file equipment.scad, line 305\nWARNING: u was assigned on line 52 of \"equipment.scad\" but was overwritten in file equipment.scad, line 306\nWARNING: holes was assigned on line 45 of \"equipment.scad\" but was overwritten in file equipment.scad, line 307\nWARNING: keystones was assigned on line 53 of \"equipment.scad\" but was overwritten in file equipment.scad, line 308\nWARNING: device_mount was assigned on line 47 of \"equipment.scad\" but was overwritten in file equipment.scad, line 309\nWARNING: joint was assigned on line 51 of \"equipment.scad\" but was overwritten in file equipment.scad, line 310\nWARNING: rear_support was assigned on line 65 of \"equipment.scad\" but was overwritten in file equipment.scad, line 311\nWARNING: coupon was assigned on line 66 of \"equipment.scad\" but was overwritten in file equipment.scad, line 312\nWARNING: ports was assigned on line 59 of \"equipment.scad\" but was overwritten in file equipment.scad, line 313\nWARNING: m6_rails was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 314\nWARNING: m6_rail_t was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 315\nWARNING: m6_joint_x was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 316\nWARNING: m6_joint_z was assigned on line 3 of \"equipment.scad\" but was overwritten in file equipment.scad, line 317\nWARNING: m6_pocket_profile was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 318\nWARNING: test_id was assigned on line 4 of \"equipment.scad\" but was overwritten in file equipment.scad, line 320\nWARNING: max_tray was assigned on line 84 of \"equipment.scad\" but was overwritten in file equipment.scad, line 321\nWARNING: Ignoring unknown variable 'u' in file equipment.scad, line 5\nWARNING: undefined operation (undefined * number) in file equipment.scad, line 5\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 5\nWARNING: Ignoring unknown variable 'dev_d' in file equipment.scad, line 5\nWARNING: undefined operation (undefined + number) in file equipment.scad, line 5\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 22\nWARNING: Unable to convert cube(size=[3.3, undef, undef], ...) parameter to a number or a vec3 of numbers in file equipment.scad, line 22\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 23\nWARNING: Unable to convert cube(size=[21.9, undef, 3.3], ...) parameter to a number or a vec3 of numbers in file equipment.scad, line 23\nWARNING: Unable to convert translate([88.3, 12, undef]) parameter to a vec3 or vec2 of numbers in file equipment.scad, line 23\nWARNING: Unable to convert cube(size=[21.9, undef, 3.3], ...) parameter to a number or a vec3 of numbers in file equipment.scad, line 23\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 24\nWARNING: Unable to convert cube(size=[11.6, 4, undef], ...) parameter to a number or a vec3 of numbers in file equipment.scad, line 24\nWARNING: undefined operation (undefined + number) in file equipment.scad, line 26\nWARNING: undefined operation (number + undefined) in file equipment.scad, line 6\nWARNING: Unable to convert translate([0, undef, 0]) parameter to a vec3 or vec2 of numbers in file equipment.scad, line 6\nWARNING: undefined operation (undefined * number) in file equipment.scad, line 31\nWARNING: undefined operation (number + undefined) in file equipment.scad, line 31\nWARNING: undefined operation (undefined - number) in file equipment.scad, line 13\nWARNING: Unable to convert translate([104.4, undef, undef]) parameter to a vec3 or vec2 of numbers in file equipment.scad, line 13\nGeometries in cache: 22\nGeometry cache size in bytes: 479584\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 432256\nTotal rendering time: 0:00:02.647\n   Top level object is a 3D object:\n   Simple:        yes\n   Vertices:       74\n   Halfedges:     222\n   Edges:         111\n   Halffacets:     82\n   Facets:         41\n   Volumes:         3\n"
+  }
+}

@@ -1,0 +1,1 @@
+intersection(){import("C:/Users/brian/Documents/Codex/2026-10-17/Assembly Workshop/work/m6-fidelity-44/current-render/faceplate.stl");union(){import("C:/Users/brian/Documents/Codex/2026-10-17/Assembly Workshop/work/m6-fidelity-44/current-render/rail_l.stl");import("C:/Users/brian/Documents/Codex/2026-10-17/Assembly Workshop/work/m6-fidelity-44/current-render/rail_r.stl");}}

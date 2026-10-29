@@ -5,9 +5,11 @@
 (function(root){
   'use strict';
   // ---- Pure logic (Node-testable). Mirrors equipment.PLACEMENT_KEYS, clean() and equipment_tray.scad asserts.
-  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','wall_open','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','rear_style','u','front_position','front_setback','bezel','bezel_size','sleeve_top','feet_style','rear_floor_opening','insert_bosses','hidden_joint','m6_joint'];
+  const RAIL_KEYS=['m6_rails','m6_rail_t','m6_joint_x','m6_joint_z','m6_pocket_profile','m6_usable_depth','test_id','m6_rail_len','m6_bay_h','m6_bay_d','m6_rail_profiles','m6_side_windows','m6_stub_sections','m6_edge_radius','m6_retention_slot','m6_light_pipes','m6_vectors','m6_nose_bridge'];
+  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','wall_open','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','rear_style','u','front_position','front_setback','bezel','bezel_size','sleeve_top','feet_style','rear_floor_opening','insert_bosses','hidden_joint','m6_joint',...RAIL_KEYS];
   const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',wall_open:['rear'],standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,rear_openings:false,u:1,front_position:'today',front_setback:16,bezel:'none',bezel_size:1,sleeve_top:.3,feet_style:'pockets',rear_floor_opening:false,insert_bosses:false,hidden_joint:false,m6_joint:false};
   const FRONT_GAP=12,MARGIN=8,RACK_INNER_W=208,SIDE_CLEAR=2,MAX_TRAY=RACK_INNER_W-2*SIDE_CLEAR,RACK_DEPTH=240,PITCH=44.45,PLATE_HALF=126,PLATE_T=4,TRAY_T=3;
+  Object.assign(DEFAULTS,{m6_rails:false,m6_rail_t:3.3,m6_joint_x:[-65.8,65.8],m6_joint_z:[8.6,35.825],m6_pocket_profile:undefined,m6_usable_depth:240,test_id:''});
   const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap',wall:'Wall',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
   const REAR_STYLES={solid:['Solid','Plain plate'],open:['Open','Original cable windows'],reinforced:['Reinforced','Wider bands and inner top/end lips; ends shorten to clear rear joints'],slots:['Cable slots','Rounded upper and centre cable slots'],vents:['Vents','Dense round vents, centre cable slot and inner top/end lips; ends shorten to clear rear joints']};
   const rearStyle=v=>v.rear_style||(v.rear_openings?'open':'solid');
@@ -36,6 +38,7 @@
   }
   // PROPOSED nominal opening and 2 mm clearance per side; never rotates the device.
   function widthProblem(spec,v=values(spec)){
+    if(v.m6_rails)return railProblems(spec,v).find(p=>p.includes('too wide'))||'';
     const L=layout(spec,v);if(L.tray_w<=MAX_TRAY)return '';
     const hint=2*Math.abs(v.dev_off_x)+L.fp_d+2*(v.device_mount==='sleeve'?Math.max(MARGIN,PO().SLEEVE.side+PO().SLEEVE.wall,v.insert_bosses?PO().SLEEVE.side+V2.pilotOffset+V2.bossR:0,v.hidden_joint?PO().SLEEVE.side+PO().SLEEVE.wall+PO().SLEEVE.hiddenGap+2*PO().SLEEVE.hiddenHalf:0):MARGIN)<=MAX_TRAY?' Too wide this way round; it fits if you press Rotate 90°.':'';
     return `This tray is ${mm(L.tray_w)} mm wide but the rack opening allows ${MAX_TRAY} mm (${RACK_INNER_W} mm minus ${SIDE_CLEAR} mm each side).`+(v.dev_off_x?' Move the device less far sideways.':'')+hint+(v.hidden_joint&&v.device_mount==='sleeve'?' The hidden screw joint adds about 20 mm of tray beside each sleeve wall; turn it off for a wider device.':'');
@@ -88,9 +91,44 @@
   // This slot's front openings: moved with the offset and standoff, or as entered when the device is turned.
   function openings(spec,v){const P=PO();return P?P.frontOpenings(spec,v):{ports:(spec.ports||[]).map(p=>({...p})),dx:0,dz:0,follows:false,rotation:+v.dev_rot||0,message:null};}
   const mm=x=>Math.round(x*10)/10;
+  // Mirrors m6_rails.py. Joint coordinates and the shaped pocket are explicit saved settings.
+  function railProblems(spec,v){
+    const out=[],top=v.u*44.45-.025,w=+spec.dev_w,d=+spec.dev_d,h=+spec.dev_h,t=v.m6_rail_t,off=v.dev_off_x;
+    if(!v.m6_joint)out.push('Split rails need M6 hardware turned on.');
+    if(v.device_mount!=='flat'||v.joint!=='screw')out.push('Split rails need Sits flat and a screw joint.');
+    if(v.rear_support||spec.second||v.front_position!=='today')out.push('Split rails cannot be combined with a rear bracket, a second device or a moved front position.');
+    if(v.bezel!=='none')out.push('Split rails do not yet support a front-edge bezel.');
+    if(v.dev_off_y||v.dev_rot||(spec.feet||[]).length||(spec.drives||[]).length||(spec.coupon||[]).length||(spec.protrusions||[]).length||(spec.labels||[]).length)out.push('Split rails need an unrotated device without feet, drives, coupons, keep-clear zones or faceplate labels; front/back offset must be zero.');
+    if(!fin(t)||t<2.5||t>8)out.push('Rail thickness must be between 2.5 and 8 mm.');
+    if(!fin(v.m6_usable_depth)||v.m6_usable_depth<40||v.m6_usable_depth>300)out.push('Usable depth must be between 40 and 300 mm.');
+    if((v.m6_rail_len??d+2)>v.m6_usable_depth)out.push('The rails are longer than the usable depth; use a shorter device or more usable depth.');
+    for(const [k,lo,hi] of [['m6_rail_len',38,280],['m6_bay_h',6,30],['m6_bay_d',10,100],['m6_edge_radius',0,3]])if(v[k]!==undefined&&(!fin(v[k])||v[k]<lo||v[k]>hi))out.push(k+' is outside its supported range.');
+    if(2*(v.m6_bay_h??12)+2*2.575+2.5>top-.025)out.push('Access bays need at least 2.5 mm of floor and top.');
+    if(d+2<38)out.push('Split rails need at least 38 mm of rail length for the screw access bays.');
+    const xs=v.m6_joint_x,zs=v.m6_joint_z;
+    for(const [key,a,lo,hi] of [['m6_joint_x',xs,-125,125],['m6_joint_z',zs,0,top]])if(!Array.isArray(a)||a.length!==2||a.some(x=>!fin(x)||x<lo||x>hi)||a[0]>=a[1])out.push(key+' must contain two increasing positions in generator coordinates.');
+    if(out.length)return out;
+    if(xs[1]-xs[0]<24||xs.some(x=>Math.abs(x)+5.8>111.2625)||Math.max(Math.abs(off-w/2),Math.abs(off+w/2))+t>111.2625)out.push('The device is too wide for split-rail stubs and rack slot clearance.');
+    const poly=v.m6_pocket_profile||[[off-w/2,t+.025],[off+w/2,t+.025],[off+w/2,t+h+.025],[off-w/2,t+h+.025]];
+    if(!Array.isArray(poly)||poly.length<4||poly.length>32||poly.some(p=>!Array.isArray(p)||p.length!==2||!p.every(fin)||Math.abs(p[0])>110||p[1]<2.525||p[1]>top-2.5))return out.concat('The split-rail pocket needs 4 to 32 valid X/Z points inside the plate.');
+    const edges=poly.map((a,i)=>[a,poly[(i+1)%poly.length]]),dist=(p,a,b)=>{const dx=b[0]-a[0],dz=b[1]-a[1],den=dx*dx+dz*dz;if(!den)return 0;const q=Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dz)/den));return Math.hypot(p[0]-a[0]-q*dx,p[1]-a[1]-q*dz);};
+    const orient=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
+    if(edges.some(([a,b])=>a[0]===b[0]&&a[1]===b[1]))out.push('Pocket points must be distinct.');
+    for(let i=0;i<edges.length;i++)for(let j=i+2;j<edges.length;j++){if(i===0&&j===edges.length-1)continue;const [a,b]=edges[i],[c,e]=edges[j];if(orient(a,b,c)*orient(a,b,e)<=0&&orient(c,e,a)*orient(c,e,b)<=0&&Math.max(Math.min(a[0],b[0]),Math.min(c[0],e[0]))<=Math.min(Math.max(a[0],b[0]),Math.max(c[0],e[0]))&&Math.max(Math.min(a[1],b[1]),Math.min(c[1],e[1]))<=Math.min(Math.max(a[1],b[1]),Math.max(c[1],e[1])))out.push('Pocket outline must not cross or touch itself.');}
+    if(Math.max(...poly.map(p=>p[0]))-Math.min(...poly.map(p=>p[0]))>w+.001||Math.max(...poly.map(p=>p[1]))-Math.min(...poly.map(p=>p[1]))>h+.001)out.push('Pocket profile exceeds the device envelope.');
+    const inside=p=>{let odd=false;for(const [a,b]of edges)if((a[1]>p[1])!==(b[1]>p[1])&&p[0]<(b[0]-a[0])*(p[1]-a[1])/(b[1]-a[1])+a[0])odd=!odd;return odd;};
+    if(xs.some(x=>zs.some(z=>inside([x,z])||edges.some(([a,b])=>dist([x,z],a,b)-3.8<2-1e-8)||z-3.8<2.025||top-z-3.8<2)))out.push('Each M6 pilot needs at least 2 mm of wall to the pocket and plate edge, and clearance from the rack slots.');
+    if(zs[0]-6<2.525-1e-9||top-zs[1]-6<2.5-1e-9||zs[1]-zs[0]<14)out.push('Screw access bays must keep at least 2.5 mm of floor, top and connecting wall.');
+    if(xs.some(x=>(spec.ports||[]).some(p=>Math.abs(+p.x+off-x)<+p.w/2+7.8)||(v.keystones||[]).some(k=>Math.abs(k-x)<18.3)))out.push('A front opening or keystone sits in front of a split-rail stub; move or remove it.');
+    if(typeof v.test_id!=='string'||v.test_id&&!/^[A-Za-z0-9-]{1,16}$/.test(v.test_id))out.push('Test ID must be at most 16 letters, numbers or hyphens.');
+    if(v.test_id&&(t<3||Math.max(...poly.map(p=>p[1]))>top-3))out.push('Engraved rail IDs need at least 3 mm of top material before engraving.');
+    return out;
+  }
   // Plain-language versions of the SCAD asserts and the build checks. Any message blocks Apply and export.
   function problems(spec,v,pair=false){
     const out=[];
+    if(typeof v.m6_rails!=='boolean')return ['Split rails must be true or false.'];
+    if(v.m6_rails)return railProblems(spec,v).concat(!Number.isInteger(v.u)||v.u<1||v.u>5?['Choose a height from 1U to 5U.']:[]);
     if(![0,90,180,270].includes(v.dev_rot))return ['Rotation must be 0, 90, 180 or 270 degrees.'];
     if(!fin(v.dev_off_x)||!fin(v.dev_off_y))return ['Enter numbers for the left/right offset and the front gap.'];
     if(!Number.isInteger(v.u)||v.u<1||v.u>5)out.push('Faceplate height must be a whole number of rack units from 1 to 5.');
@@ -228,6 +266,7 @@
     return v;
   }
   function schematic(spec,v){
+    if(v.m6_rails){const top=v.u*PITCH-.025,xs=v.m6_joint_x||[v.dev_off_x-spec.dev_w/2-5.8,v.dev_off_x+spec.dev_w/2+5.8],plate=box(-126,-4,.025,126,0,top);for(const x of xs)plate.push(...box(x-5.8,0,.025,x+5.8,12,top));return [{v:plate,color:[78,117,163],alpha:1},...xs.map((x,i)=>({v:box(x-5.8,12,.025,x+5.8,14+ +spec.dev_d,top),color:i?[90,160,120]:[77,142,110],alpha:1}))];}
     const L=layout(spec,v),floor=PO().floorZ(v)+TRAY_T,tray=box(-L.tray_w/2,0,PO().floorZ(v),L.tray_w/2,L.tray_d,floor);
     const posts=[];
     if(v.device_mount==='inserts'||v.device_mount==='pegs')for(const[x,y]of holes(spec,v))posts.push(...box(x-3,y-3,floor,x+3,y+3,floor+ +v.standoff));
@@ -263,6 +302,7 @@
   // flat triangle lists in equipment_tray.scad coordinates, the same frame as the rendered STLs.
   // Openings are dark blocks where the SCAD cuts keystones (ks_w x ks_h = 14.8 x 16.6, centred) and ports.
   function rackSketch(spec,tray,second){
+    const railValues=values(spec,tray);if(railValues.m6_rails){const sets=schematic(spec,railValues);return {faceplate:sets[0].v,rail_l:sets[1].v,rail_r:sets[2].v};}
     if(spec.faceplate_only){const s=PO().faceplateSpec(tray?.faceplate),holes=[];
       for(const k of s.keystones){const x=Array.isArray(k)?k[0]:k,z=Array.isArray(k)&&k.length>1?k[1]:s.u*PITCH/2;holes.push(...box(x-7.4,-4.2,z-8.3,x+7.4,.2,z+8.3));}
       for(const p of s.ports)holes.push(...box(p.x-p.w/2,-4.2,p.z-p.h/2,p.x+p.w/2,.2,p.z+p.h/2));
@@ -349,6 +389,7 @@
     view.sets=state.exact&&state.exact.key===key?state.exact.sets.concat(sketch.filter(s=>s.device)):sketch;
     const note=document.getElementById('tpViewNote');
     if(note)note.textContent=state.exact&&state.exact.key===key?`Exact OpenSCAD render of these settings at export quality ${exportNote()} (not saved). Translucent box = the device, orange = its front.`:'Live sketch: boxes for the tray, faceplate, standoffs and device (translucent; orange = device front). Left-drag turns, right-drag moves, scroll zooms.';
+    if(note&&state.v.m6_rails)note.textContent=state.exact&&state.exact.key===key?`Exact OpenSCAD preview: 3 structural parts and ${(state.v.m6_light_pipes?.length||0)+(state.v.m6_vectors?.length||0)} colour parts. Nothing saved.`:'Live sketch: 3 structural parts — faceplate and two rails. Pocket, holes, access bays and colour parts appear in Render exact preview. Fit and strength UNKNOWN.';
     if(note&&state.v.rear_support)note.textContent+=' Rear bracket: '+REAR_STYLES[rearStyle(state.v)][0]+'. This box sketch does not show the cutouts or flanges; stiffness/airflow UNKNOWN';
     P.draw(cv,view);
   }
@@ -363,6 +404,7 @@
       warn.replaceChildren(...ws.map(t=>h('li',{},t)));warn.hidden=!ws.length;}
     const L=pairLayout(),sum=document.getElementById('tpSummary');
     if(sum)sum.textContent=`Tray ${mm(L.tray_w)} × ${mm(L.tray_d)} mm · device ${mm(L.fp_w)} × ${mm(L.fp_d)} mm`+(L.second?` and ${mm(L.second.fp_w)} × ${mm(L.second.fp_d)} mm`:'')+` on the tray · ${state.v.u}U faceplate.`;
+    if(sum&&state.v.m6_rails)sum.textContent=`3 structural pieces · rails ${mm(state.v.m6_rail_len??(+state.item.spec.dev_d+2))} mm nominal length · ${state.v.m6_rail_t} mm nominal rail thickness · ${state.v.u}U faceplate. Usable depth is a nominal planning limit; rack fit UNKNOWN.`;
   }
   function keystones(){
     const v=state.v,x=h('input',{type:'number',step:'1',value:String(v.keystones.length?Math.min(100,v.keystones.at(-1)+25):-100),style:'width:70px','aria-label':'Keystone X position (mm)'});
@@ -395,9 +437,13 @@
     if(dv.device_mount==='inserts')mountOpts.push(field('Insert pilot hole (mm)',()=>dv.insert_pilot,x=>dv.insert_pilot=x,{step:'0.1'}));
     if(dv.device_mount==='pegs'||dv.device_mount==='clips')mountOpts.push(field(dv.device_mount==='pegs'?'Board thickness (mm)':'Edge thickness clipped (mm)',()=>dv.board_t,x=>dv.board_t=x,{step:'0.1'}));
     const rs=h('input',{type:'checkbox'});rs.checked=!!v.rear_support;rs.onchange=()=>{v.rear_support=rs.checked;if(rs.checked&&!v.rear_style)v.rear_style='reinforced';if(!rs.checked)delete v.rear_style;render();};
-    const toggleV2=(key,label,hint)=>{const c=h('input',{type:'checkbox'});c.checked=v[key];c.onchange=()=>{v[key]=c.checked;update();};return h('label',{class:'ew-chip'},c,' '+label,h('small',{},' '+hint));};
+    const toggleV2=(key,label,hint)=>{const c=h('input',{type:'checkbox'});c.checked=v[key];c.onchange=()=>{v[key]=c.checked;if(key==='m6_joint'&&!c.checked)v.m6_rails=false;if(key==='m6_joint'||key==='m6_rails')render();else update();};return h('label',{class:'ew-chip'},c,' '+label,h('small',{},' '+hint));};
     // M6 bracket hardware (Brian, 2026-10-28; HDT-M6-A): the live sketch keeps the old joint boxes; Render exact preview shows the M6 tabs.
     const m6Controls=!['sleeve','wall'].includes(v.device_mount)&&v.joint==='screw'?[toggleV2('m6_joint','M6 hardware','Rack M6 inserts + M6 x 8 button heads, 4 joints, edge walls; device 15.5 mm back; fit/strength UNKNOWN.')]:[];
+    if(v.m6_joint)m6Controls.push(toggleV2('m6_rails','Split rails (3 pieces)','Faceplate and two separate rails; fit, retention and strength UNKNOWN.'));
+    if(v.m6_rails){m6Controls.push(field('Rail wall / floor (mm)',()=>v.m6_rail_t,x=>v.m6_rail_t=x,{min:'2.5',max:'8',step:'.1'}));
+      for(const [key,labels] of [['m6_joint_x',['Left joint X (mm)','Right joint X (mm)']],['m6_joint_z',['Lower joint Z (mm)','Upper joint Z (mm)']]])for(let i=0;i<2;i++)m6Controls.push(field(labels[i],()=>v[key]?.[i]??DEFAULTS[key][i],x=>{v[key]=[...(v[key]||DEFAULTS[key])];v[key][i]=x;},{step:'.1'}));
+    }
     const sleeveControls=v.device_mount==='sleeve'?[
       field('Top play (mm)',()=>v.sleeve_top,x=>v.sleeve_top=x,{min:'.3',max:'2',step:'.1'}),
       h('div',{class:'ew-row'},'Feet:',chips({pockets:'Pockets',grooves:'Grooves'},v.feet_style,k=>v.feet_style=k)),
@@ -411,7 +457,7 @@
     exact.onclick=async()=>{exact.disabled=true;setStatus('Rendering with OpenSCAD… this can take a minute. Nothing is saved.');
       try{if(current().length)throw Error('Fix the problems listed first.');const key=exactKey(),r=await post('/api/equipment-preview',exportRequest()),out=await r.json();if(!r.ok)throw Error(out.error||'Preview failed');
         const sets=[];for(const p of out.parts){const buf=await (await fetch(`/api/equipment-mesh/${out.id}/${p}.stl`)).arrayBuffer();sets.push({v:window.EquipmentPainter.parseStl(buf),color:p==='tray'?[77,142,110]:[78,117,163],alpha:1});}
-        state.exact={key,sets};draw3D();window.EquipmentRackView?.refresh();setStatus('Exact preview ready. Change any value to go back to the live sketch.');}
+        state.exact={key,sets};draw3D();window.EquipmentRackView?.refresh();setStatus(`Exact preview ready: ${out.parts.length} parts (${out.parts.join(', ')}). Change any value to go back to the live sketch.`);}
       catch(e){setStatus('Problem: '+e.message);}finally{exact.disabled=false;}};
     const exp=h('button',{type:'button',id:'tpExport'},'Generate proposed STL files');
     exp.onclick=async()=>{if(current().length){update();return;}exp.disabled=true;setStatus('Checking, then rendering with OpenSCAD…');

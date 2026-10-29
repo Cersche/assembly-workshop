@@ -1,0 +1,123 @@
+[
+  {
+    "id": "eq-0000000043b0",
+    "name": "CM6B CM1000 generated split rails",
+    "spec": {
+      "name": "CM6B CM1000 generated split rails",
+      "dev_w": 212.6,
+      "dev_d": 136,
+      "dev_h": 38,
+      "device_mount": "flat",
+      "joint": "screw",
+      "standoff": 0,
+      "u": 1,
+      "m6_joint": true,
+      "m6_rails": true,
+      "m6_rail_t": 3.3,
+      "m6_joint_x": [
+        -104.4,
+        104.4
+      ],
+      "m6_joint_z": [
+        8.6,
+        35.85
+      ],
+      "m6_pocket_profile": [
+        [
+          -106.3,
+          19.125
+        ],
+        [
+          -97,
+          19.125
+        ],
+        [
+          -95,
+          6.225
+        ],
+        [
+          -93,
+          3.225
+        ],
+        [
+          93,
+          3.225
+        ],
+        [
+          95,
+          6.225
+        ],
+        [
+          97,
+          19.125
+        ],
+        [
+          106.3,
+          19.125
+        ],
+        [
+          106.3,
+          25.325
+        ],
+        [
+          97,
+          25.325
+        ],
+        [
+          95,
+          38.225
+        ],
+        [
+          93,
+          41.225
+        ],
+        [
+          -93,
+          41.225
+        ],
+        [
+          -95,
+          38.225
+        ],
+        [
+          -97,
+          25.325
+        ],
+        [
+          -106.3,
+          25.325
+        ]
+      ],
+      "m6_usable_depth": 240,
+      "test_id": "CM6B"
+    },
+    "span": 1,
+    "build": "c122c1b6a85491c8280890edf21cf17abcea09a7dfe1db6facb10ed0eabacab6",
+    "parts": [
+      "faceplate",
+      "rail_l",
+      "rail_r"
+    ],
+    "status": "PROPOSED \u2014 UNVALIDATED"
+  },
+  {
+    "id": "eq-0000000043b1",
+    "name": "Task 43 switch fixture",
+    "spec": {
+      "name": "Task 43 switch fixture",
+      "dev_w": 120,
+      "dev_d": 80,
+      "dev_h": 30,
+      "device_mount": "flat",
+      "standoff": 0,
+      "joint": "screw",
+      "u": 1
+    },
+    "span": 1,
+    "parts": [
+      "tray",
+      "faceplate"
+    ],
+    "status": "PROPOSED \u2014 UNVALIDATED"
+  }
+]

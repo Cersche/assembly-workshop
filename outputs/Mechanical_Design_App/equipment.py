@@ -17,6 +17,7 @@ import tempfile
 import threading
 import zipfile
 import print_layout
+import m6_rails
 
 import cable_ports
 import port_openings
@@ -63,7 +64,7 @@ def _port_id(port, face, index):
 # library specs still carry them, and those values stay the defaults when an allocation has none.
 PLACEMENT_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'wall_open', 'standoff', 'insert_pilot', 'board_t',
                   'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size',
-                  'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint', 'm6_joint')
+                  'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint', 'm6_joint') + m6_rails.KEYS
 
 
 def export_quality(s):
@@ -88,7 +89,15 @@ def placement_settings(value):
         if key not in value:
             continue
         v = value[key]
-        if key == 'wall_open':
+        if key in m6_rails.KEYS:
+            if key == 'm6_rails' and type(v) is not bool:
+                raise ValueError('Split rails must be true or false.')
+            if key != 'm6_rails':
+                # Complete value checks happen against the device and plate in clean().
+                if key in ('m6_joint_x','m6_joint_z','m6_pocket_profile') and not isinstance(v,list):
+                    raise ValueError(key+' must be a list of positions.')
+                if key == 'test_id' and not isinstance(v,str):raise ValueError('Test ID must be text.')
+        elif key == 'wall_open':
             v = wall_open(v)
         elif key == 'keystones':
             if not isinstance(v, list) or len(v) > 12 or any(type(x) not in (int, float) or isinstance(x, bool) for x in v):
@@ -756,6 +765,8 @@ KEYSTONE_Z_REPLACEMENTS = {'for(x=keystones)': 'for(k=keystones)let(x=is_list(k)
 def template_source(spec):
     # New builds always use the current slot-bottom template; saved revisions remain immutable.
     text = TEMPLATE.read_text(encoding='utf-8')
+    if not spec.get('m6_rails'):
+        text = re.sub(r'// @m6-rails-begin\n.*?// @m6-rails-end\n', '', text, flags=re.S)
     if not (spec.get('device_mount') == 'wall' or (spec.get('second') or {}).get('device_mount') == 'wall'):
         text = re.sub(r'// @wall-begin\n.*?// @wall-end\n\n', '', text, flags=re.S)
         text = text.replace('\n wall_add();', '')
@@ -766,12 +777,17 @@ def template_source(spec):
         for old,new in KEYSTONE_Z_REPLACEMENTS.items(): text=text.replace(new,old)
     if not spec.get('hidden_joint'):
         for old, new in HJ_REPLACEMENTS: text = text.replace(new, old)
-    if spec.get('m6_joint'):
+    if spec.get('m6_joint') and not spec.get('m6_rails'):
         for old, new in M6_HOOKS:
             assert text.count(old) == 1, old
             text = text.replace(old, new)
     else:
         text = re.sub(r'// @m6-begin\n.*?// @m6-end\n', '', text, flags=re.S)
+    if spec.get('m6_rails'):
+        for old,new in [('    plate_joint_add();\n','    mr_stubs();\n'),('   plate_joint_cut();\n','   mr_pilots();\n'),
+                        ('clip_coupon(){\n if(part=="faceplate")','if(false)clip_coupon(){\n if(part=="faceplate")')]:
+            assert text.count(old)==1,old
+            text=text.replace(old,new)
     if not any(k in spec for k in V2_DEFAULTS):
         text = text.split('// @sleeve-v2-begin\n')[0]
         for old, new in V2_REPLACEMENTS.items(): text = text.replace(new, old)
@@ -812,6 +828,19 @@ def template_source(spec):
         text = text.replace('   if(ks_style=="v2")ks_cut(); else ks_box_cut();', '   if(ks_style=="v2")ks_cut(); else ks_box_cut();\n   label_cut();') + LABEL_SCAD
     if spec.get('second'):
         text = second_device_source(text)
+    if spec.get('m6_rails'):
+        if spec.get('m6_rail_profiles'):
+            text=text.replace('module mr_stubs(){','module mr_old_stubs(){').replace('module mr_rail(side){','module mr_old_rail(side){')
+            text=text.replace('faceplate();mr_id("-F",0,-2);','faceplate();mr_id("-F",0,-2);mf_colours_cut();')
+            text+=m6_rails.m6_fidelity.modules(spec)+'\nmodule mr_stubs(){mf_stubs();}\nmodule mr_rail(s){mf_rail(s);}\n'
+            text+='if(part=="light_pipes")for(i=[0:len(m6_light_pipes)-1])mf_pipe(i);\n'
+            text+='if(part=="pipe"&&!is_undef(colour_index))mf_pipe(colour_index);\nif(part=="vector"&&!is_undef(colour_index))mf_vector(colour_index);\n'
+            for kind,key,func in [('pipe','m6_light_pipes','mf_pipe'),('vector','m6_vectors','mf_vector')]:
+                for i in range(len(spec.get(key,[]))):text+=f'if(part=="{kind}_{i+1}"){func}({i});\n'
+        else:
+            text=text.replace('cube([hi-lo+0.2,34,12]);','cube([hi-lo+0.2,'+str(spec.get('m6_bay_d',34))+','+str(spec.get('m6_bay_h',12))+']);')
+            text=text.replace('y+mr_flange,z-6]','y+mr_flange,z-'+str(spec.get('m6_bay_h',12)/2)+']')
+        text += '\nif(part=="faceplate")mr_faceplate();else if(part=="rail_l")mr_rail(0);else if(part=="rail_r")mr_rail(1);else if(part=="assembly"){mr_faceplate();mr_rail(0);mr_rail(1);}\n'
     return text
 
 
@@ -831,6 +860,10 @@ module bezel_cuts(){for(p=bezel_shapes)let(n=bezel_rounded?8:1)for(i=[0:n-1])hul
 def clean(spec):
     if not isinstance(spec, dict):
         raise ValueError('Equipment spec must be an object.')
+    if 'm6_rails' in spec and type(spec['m6_rails']) is not bool:
+        raise ValueError('Split rails must be true or false.')
+    if spec.get('m6_rails'):
+        return m6_rails.clean(spec, __import__(__name__))
     if 'drives' in spec and spec['drives'] != []:
         return clean_drives(spec)
     if spec.get('faceplate_only') is True:
@@ -1291,6 +1324,11 @@ def source(s):
         over.update(drives=s['drives'], drive_mount=s['drive_mount'], ssd_h=s['ssd_h'],
                     tray_w=s['dev_w']+16, tray_d=s['dev_d']+12+25)
     if s.get('faceplate_only'): over['part'] = 'faceplate'
+    if s.get('m6_rails'):
+        over.update({k:s[k] for k in m6_rails.KEYS if k in s})
+        over.update(mr_end=round(s['u']*44.45-.025,3),mr_length=round(s.get('m6_rail_len',s['dev_d']+2),3))
+        # The split rail validator replaces the full rectangular tray-width rule only in this opt-in source.
+        over['max_tray'] = 1000
     lines = ['', '// ---- wizard overrides: ' + re.sub(r'[\r\n]', ' ', s['name'])] + [f'{k}={lit(v)};' for k, v in over.items()]
     if style in ('reinforced', 'vents'):
         lines.extend('// '+note for note in dict.fromkeys(geometry.get('notes', [])))
@@ -1332,9 +1370,8 @@ def template_status(data_dir, item):
         if not isinstance(report, dict):
             return unknown
         parts = report.get('parts')
-        allowed = {'tray', 'faceplate', 'combined', 'rear_bracket'}
         if (not isinstance(parts, list) or not parts or
-                any(not isinstance(p, str) or p not in allowed for p in parts) or len(set(parts)) != len(parts)):
+                any(not mesh_part_name(p) for p in parts) or len(set(parts)) != len(parts)):
             return unknown
         hashes = report.get('sha256')
         if not isinstance(hashes, dict):
@@ -1466,8 +1503,12 @@ def delete_item(ident, data_dir, in_use):
     return {'deleted': ident}
 
 
+def mesh_part_name(part):
+    return isinstance(part,str) and (part in ('tray','faceplate','combined','rear_bracket','rail_l','rail_r') or bool(re.fullmatch(r'(?:pipe|vector)_[1-9][0-9]{0,3}',part)))
+
+
 def mesh_file(data_dir, identity, part):
-    if not re.fullmatch('[0-9a-f]{64}', identity or '') or part not in ('tray', 'faceplate', 'combined', 'rear_bracket'):
+    if not re.fullmatch('[0-9a-f]{64}', identity or '') or not mesh_part_name(part):
         raise ValueError('Invalid equipment mesh request.')
     return (Path(data_dir) / 'equipment-revisions' / identity / (part + '.stl')).read_bytes()
 
@@ -1561,7 +1602,10 @@ def preview(spec, data_dir):
 def render(spec, data_dir):
     s = clean(spec)
     src = source(s)
-    parts = ['faceplate'] if s.get('faceplate_only') else ['combined'] if s['joint'] == 'single' else ['tray', 'faceplate'] + (['rear_bracket'] if s['rear_support'] else [])
+    parts = ['faceplate', 'rail_l', 'rail_r'] if s.get('m6_rails') else ['faceplate'] if s.get('faceplate_only') else ['combined'] if s['joint'] == 'single' else ['tray', 'faceplate'] + (['rear_bracket'] if s['rear_support'] else [])
+    if s.get('m6_rails'):
+        parts += [f'pipe_{i+1}' for i in range(len(s.get('m6_light_pipes',[])))]
+        parts += [f'vector_{i+1}' for i in range(len(s.get('m6_vectors',[])))]
     identity = hashlib.sha256(src.encode('utf-8')).hexdigest()
     final = Path(data_dir) / 'equipment-revisions' / identity
     with LOCK:
@@ -1574,7 +1618,7 @@ def render(spec, data_dir):
                 for name in parts:
                     # OpenSCAD 2021 sometimes emits a zero-area sliver; retry with the faceplate's
                     # pocket/corner sizes nudged by a few hundredths of a mm (recorded in the report).
-                    for nudge in (0, 0.011, 0.023, 0.037, 0.051):
+                    for nudge in ((0,) if s.get('m6_rails') else (0, 0.011, 0.023, 0.037, 0.051)):
                         text = src + (f'nudge={nudge};\n' if nudge else '')
                         (folder / 'equipment.scad').write_text(text, encoding='utf-8', newline='\n')
                         try:
@@ -1588,15 +1632,19 @@ def render(spec, data_dir):
                             break  # test coupon slice doesn't touch this part
                         if r.returncode or 'ERROR:' in r.stderr:
                             raise ValueError('OpenSCAD failed for ' + name + ': ' + r.stderr[-1200:])
+                        if s.get('m6_rails') and ('unknown variable' in r.stderr or 'undefined operation' in r.stderr or 'Unable to convert' in r.stderr):
+                            raise ValueError('OpenSCAD reported an undefined split-rail dimension: '+r.stderr[-1200:])
                         try:
                             mesh_revision.normalize_collinear_faces(folder / (name + '.stl'))
                         except ValueError:
                             pass  # optional tidy-up; read_mesh below still enforces a closed, valid mesh
                         try:
-                            mesh_revision.read_mesh(folder / (name + '.stl'), name)
+                            checked = mesh_revision.read_mesh(folder / (name + '.stl'), name)
+                            if s.get('m6_rails'):
+                                m6_rails.check_connected(checked)
                             break
                         except ValueError:
-                            if nudge == 0.051:
+                            if s.get('m6_rails') or nudge == 0.051:
                                 raise
                     nudges[name] = nudge
                     if nudge:

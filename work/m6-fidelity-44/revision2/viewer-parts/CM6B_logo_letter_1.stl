@@ -1,0 +1,198 @@
+solid CM6B_logo_letter_1
+facet normal 0 1 0
+outer loop
+vertex 56.819800 -3.800000 23.549300
+vertex 56.817100 -3.800000 19.834300
+vertex 55.490300 -3.800000 19.835200
+endloop
+endfacet
+facet normal 0 1 0
+outer loop
+vertex 55.493000 -3.800000 23.550300
+vertex 54.236000 -3.800000 23.551200
+vertex 54.236800 -3.800000 24.598700
+endloop
+endfacet
+facet normal -0 1 0
+outer loop
+vertex 56.819800 -3.800000 23.549300
+vertex 58.077500 -3.800000 24.595800
+vertex 58.076800 -3.800000 23.548400
+endloop
+endfacet
+facet normal 0 1 -0
+outer loop
+vertex 56.819800 -3.800000 23.549300
+vertex 54.236800 -3.800000 24.598700
+vertex 58.077500 -3.800000 24.595800
+endloop
+endfacet
+facet normal 0 1 0
+outer loop
+vertex 55.490300 -3.800000 19.835200
+vertex 55.493000 -3.800000 23.550300
+vertex 56.819800 -3.800000 23.549300
+endloop
+endfacet
+facet normal -0 1 -0
+outer loop
+vertex 55.493000 -3.800000 23.550300
+vertex 54.236800 -3.800000 24.598700
+vertex 56.819800 -3.800000 23.549300
+endloop
+endfacet
+facet normal 0 -1 0
+outer loop
+vertex 55.490300 -4.000000 19.835200
+vertex 56.817100 -4.000000 19.834300
+vertex 56.819800 -4.000000 23.549300
+endloop
+endfacet
+facet normal 0 -1 -0
+outer loop
+vertex 54.236800 -4.000000 24.598700
+vertex 54.236000 -4.000000 23.551200
+vertex 55.493000 -4.000000 23.550300
+endloop
+endfacet
+facet normal 0 -1 0
+outer loop
+vertex 58.076800 -4.000000 23.548400
+vertex 58.077500 -4.000000 24.595800
+vertex 56.819800 -4.000000 23.549300
+endloop
+endfacet
+facet normal -0 -1 0
+outer loop
+vertex 58.077500 -4.000000 24.595800
+vertex 54.236800 -4.000000 24.598700
+vertex 56.819800 -4.000000 23.549300
+endloop
+endfacet
+facet normal -0 -1 0
+outer loop
+vertex 56.819800 -4.000000 23.549300
+vertex 55.493000 -4.000000 23.550300
+vertex 55.490300 -4.000000 19.835200
+endloop
+endfacet
+facet normal 0 -1 0
+outer loop
+vertex 56.819800 -4.000000 23.549300
+vertex 54.236800 -4.000000 24.598700
+vertex 55.493000 -4.000000 23.550300
+endloop
+endfacet
+facet normal 1 0 -0.000726783
+outer loop
+vertex 56.819800 -3.800000 23.549300
+vertex 56.817100 -4.000000 19.834300
+vertex 56.817100 -3.800000 19.834300
+endloop
+endfacet
+facet normal 1 0 -0.000726783
+outer loop
+vertex 56.819800 -3.800000 23.549300
+vertex 56.819800 -4.000000 23.549300
+vertex 56.817100 -4.000000 19.834300
+endloop
+endfacet
+facet normal -0.00071599 0 -1
+outer loop
+vertex 58.076800 -3.800000 23.548400
+vertex 56.819800 -4.000000 23.549300
+vertex 56.819800 -3.800000 23.549300
+endloop
+endfacet
+facet normal -0.00071599 -0 -1
+outer loop
+vertex 58.076800 -3.800000 23.548400
+vertex 58.076800 -4.000000 23.548400
+vertex 56.819800 -4.000000 23.549300
+endloop
+endfacet
+facet normal 1 0 -0.000668321
+outer loop
+vertex 58.077500 -3.800000 24.595800
+vertex 58.076800 -4.000000 23.548400
+vertex 58.076800 -3.800000 23.548400
+endloop
+endfacet
+facet normal 1 0 -0.000668321
+outer loop
+vertex 58.077500 -3.800000 24.595800
+vertex 58.077500 -4.000000 24.595800
+vertex 58.076800 -4.000000 23.548400
+endloop
+endfacet
+facet normal 0.00075507 0 1
+outer loop
+vertex 54.236800 -3.800000 24.598700
+vertex 58.077500 -4.000000 24.595800
+vertex 58.077500 -3.800000 24.595800
+endloop
+endfacet
+facet normal 0.00075507 0 1
+outer loop
+vertex 54.236800 -3.800000 24.598700
+vertex 54.236800 -4.000000 24.598700
+vertex 58.077500 -4.000000 24.595800
+endloop
+endfacet
+facet normal -1 0 0.000763723
+outer loop
+vertex 54.236000 -3.800000 23.551200
+vertex 54.236800 -4.000000 24.598700
+vertex 54.236800 -3.800000 24.598700
+endloop
+endfacet
+facet normal -1 0 0.000763723
+outer loop
+vertex 54.236000 -3.800000 23.551200
+vertex 54.236000 -4.000000 23.551200
+vertex 54.236800 -4.000000 24.598700
+endloop
+endfacet
+facet normal -0.00071599 0 -1
+outer loop
+vertex 55.493000 -3.800000 23.550300
+vertex 54.236000 -4.000000 23.551200
+vertex 54.236000 -3.800000 23.551200
+endloop
+endfacet
+facet normal -0.00071599 -0 -1
+outer loop
+vertex 55.493000 -3.800000 23.550300
+vertex 55.493000 -4.000000 23.550300
+vertex 54.236000 -4.000000 23.551200
+endloop
+endfacet
+facet normal -1 0 0.000726764
+outer loop
+vertex 55.490300 -3.800000 19.835200
+vertex 55.493000 -4.000000 23.550300
+vertex 55.493000 -3.800000 23.550300
+endloop
+endfacet
+facet normal -1 0 0.000726764
+outer loop
+vertex 55.490300 -3.800000 19.835200
+vertex 55.490300 -4.000000 19.835200
+vertex 55.493000 -4.000000 23.550300
+endloop
+endfacet
+facet normal -0.000678324 0 -1
+outer loop
+vertex 56.817100 -3.800000 19.834300
+vertex 55.490300 -4.000000 19.835200
+vertex 55.490300 -3.800000 19.835200
+endloop
+endfacet
+facet normal -0.000678324 -0 -1
+outer loop
+vertex 56.817100 -3.800000 19.834300
+vertex 56.817100 -4.000000 19.834300
+vertex 55.490300 -4.000000 19.835200
+endloop
+endfacet
+endsolid CM6B_logo_letter_1

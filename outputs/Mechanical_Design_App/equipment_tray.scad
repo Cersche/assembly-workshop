@@ -1,3 +1,38 @@
+// @m6-rails-begin
+// Opt-in generated split rails; removed byte-for-byte from legacy sources.
+m6_rails=true; m6_rail_t=3.3; m6_joint_x=[-65.8,65.8]; m6_joint_z=[8.6,35.8];
+m6_pocket_profile=[[-60,3.3],[60,3.3],[60,33.3],[-60,33.3]]; test_id="";
+mr_end=44.425; mr_start=0.025; mr_stub=12; mr_flange=4; mr_length=138;
+module mr_profile(y0,d){translate([0,y0+d,0])rotate([90,0,0])linear_extrude(d)polygon(m6_pocket_profile);}
+module mr_yhole(x,z,d,y0,depth){translate([x,y0,z])rotate([-90,0,0])cylinder(d=d,h=depth);}
+module mr_stubs(){difference(){
+ for(x=m6_joint_x)translate([x-5.8,-0.01,mr_start])cube([11.6,mr_stub+0.01,mr_end-mr_start]);
+ mr_profile(-0.1,mr_stub+0.2);
+}}
+module mr_pilots(){for(x=m6_joint_x,z=m6_joint_z)mr_yhole(x,z,7.6,mr_stub-7,7.1);}
+module mr_id(s,x,y,angle=0,sz=3){if(test_id!="")translate([x,y,mr_end-0.5])rotate([0,0,angle])linear_extrude(0.6)
+ text(str(test_id,s),size=sz,font="Liberation Sans:style=Bold",halign="center",valign="center");}
+module mr_faceplate(){difference(){faceplate();mr_id("-F",0,-2);}}
+module mr_rail(side){
+ y=mr_stub+0.05; // Explicit separation: coplanar STL contact otherwise exports a zero-thickness intersection.
+ x=m6_joint_x[side]; outer=side==0?min(x-5.8,min([for(p=m6_pocket_profile)p[0]])-m6_rail_t):max(x+5.8,max([for(p=m6_pocket_profile)p[0]])+m6_rail_t);
+ inner=side==0?min([for(p=m6_pocket_profile)p[0]])+18:max([for(p=m6_pocket_profile)p[0]])-18;
+ lo=min(outer,inner); hi=max(outer,inner);
+ difference(){
+  union(){
+   translate([side==0?outer:outer-m6_rail_t,y,mr_start])cube([m6_rail_t,mr_length,mr_end-mr_start]);
+   for(z=[mr_start,mr_end-m6_rail_t])translate([lo,y,z])cube([hi-lo,mr_length,m6_rail_t]);
+   translate([x-5.8,y,mr_start])cube([11.6,mr_flange,mr_end-mr_start]);
+  }
+  mr_profile(y-0.1,mr_length+0.2);
+  for(z=m6_joint_z){
+   mr_yhole(x,z,6.6,y-0.1,mr_flange+0.2);
+   translate([lo-0.1,y+mr_flange,z-6])cube([hi-lo+0.2,34,12]);
+  }
+  mr_id(side==0?"-L":"-R",x,y+mr_length/2,90,min(3,(mr_length-8)/(1.1*(len(test_id)+2))));
+ }
+}
+// @m6-rails-end
 // @drives-begin
 // Task 39: nominal SFF-8301/8201 geometry; PROPOSED — UNVALIDATED.
 // Coordinates: tray X, Y offset from front_gap; connectors face +Y.

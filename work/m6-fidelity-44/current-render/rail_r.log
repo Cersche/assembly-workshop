@@ -1,0 +1,37 @@
+WARNING: dev_w was assigned on line 44 of "current.scad" but was overwritten in file current.scad, line 300
+WARNING: dev_d was assigned on line 44 of "current.scad" but was overwritten in file current.scad, line 301
+WARNING: dev_h was assigned on line 44 of "current.scad" but was overwritten in file current.scad, line 302
+WARNING: hole_d was assigned on line 47 of "current.scad" but was overwritten in file current.scad, line 303
+WARNING: standoff was assigned on line 49 of "current.scad" but was overwritten in file current.scad, line 304
+WARNING: insert_pilot was assigned on line 50 of "current.scad" but was overwritten in file current.scad, line 305
+WARNING: board_t was assigned on line 51 of "current.scad" but was overwritten in file current.scad, line 306
+WARNING: u was assigned on line 53 of "current.scad" but was overwritten in file current.scad, line 307
+WARNING: holes was assigned on line 46 of "current.scad" but was overwritten in file current.scad, line 308
+WARNING: keystones was assigned on line 54 of "current.scad" but was overwritten in file current.scad, line 309
+WARNING: device_mount was assigned on line 48 of "current.scad" but was overwritten in file current.scad, line 310
+WARNING: joint was assigned on line 52 of "current.scad" but was overwritten in file current.scad, line 311
+WARNING: rear_support was assigned on line 66 of "current.scad" but was overwritten in file current.scad, line 312
+WARNING: coupon was assigned on line 67 of "current.scad" but was overwritten in file current.scad, line 313
+WARNING: ports was assigned on line 60 of "current.scad" but was overwritten in file current.scad, line 314
+WARNING: m6_rails was assigned on line 3 of "current.scad" but was overwritten in file current.scad, line 315
+WARNING: m6_rail_t was assigned on line 3 of "current.scad" but was overwritten in file current.scad, line 316
+WARNING: m6_joint_x was assigned on line 3 of "current.scad" but was overwritten in file current.scad, line 317
+WARNING: m6_joint_z was assigned on line 3 of "current.scad" but was overwritten in file current.scad, line 318
+WARNING: m6_pocket_profile was assigned on line 4 of "current.scad" but was overwritten in file current.scad, line 319
+WARNING: test_id was assigned on line 4 of "current.scad" but was overwritten in file current.scad, line 321
+WARNING: mr_end was assigned on line 5 of "current.scad" but was overwritten in file current.scad, line 322
+WARNING: mr_length was assigned on line 5 of "current.scad" but was overwritten in file current.scad, line 323
+WARNING: max_tray was assigned on line 85 of "current.scad" but was overwritten in file current.scad, line 324
+Geometries in cache: 22
+Geometry cache size in bytes: 479584
+CGAL Polyhedrons in cache: 4
+CGAL cache size in bytes: 1999056
+Total rendering time: 0:00:03.601
+   Top level object is a 3D object:
+   Simple:        yes
+   Vertices:     1238
+   Halfedges:    3716
+   Edges:        1858
+   Halffacets:   1260
+   Facets:        630
+   Volumes:         2

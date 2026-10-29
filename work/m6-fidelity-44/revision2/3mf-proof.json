@@ -1,0 +1,95 @@
+{
+  "objects": 17,
+  "structural_objects": 3,
+  "pipes": 5,
+  "logo_letters": 7,
+  "details": 2,
+  "colour_materials": 2,
+  "mesh_parity": [
+    {
+      "part": "faceplate",
+      "triangles": 31220,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "rail_l",
+      "triangles": 3000,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "rail_r",
+      "triangles": 3356,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "pipe_1",
+      "triangles": 188,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "pipe_2",
+      "triangles": 188,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "pipe_3",
+      "triangles": 188,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "pipe_4",
+      "triangles": 188,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "pipe_5",
+      "triangles": 188,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "vector_1",
+      "triangles": 28,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "vector_2",
+      "triangles": 40,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "vector_3",
+      "triangles": 44,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "vector_4",
+      "triangles": 64,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "vector_5",
+      "triangles": 44,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "vector_6",
+      "triangles": 344,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "vector_7",
+      "triangles": 180,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "vector_8",
+      "triangles": 60,
+      "identical_after_layout_and_6dp_encoding": true
+    },
+    {
+      "part": "vector_9",
+      "triangles": 68,
+      "identical_after_layout_and_6dp_encoding": true
+    }
+  ]
+}

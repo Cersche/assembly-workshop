@@ -1,0 +1,656 @@
+{
+  "source_cases": [
+    {
+      "label": "example-0-Raspberry Pi 4 (example)",
+      "before": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec",
+      "after": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec",
+      "identical": true
+    },
+    {
+      "label": "library-copy-0-Raspberry Pi 4 (example)",
+      "before": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec",
+      "after": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec",
+      "identical": true
+    },
+    {
+      "label": "library-copy-1-Dell OptiPlex Micro 7010 (sleeve)",
+      "before": "fcb9dff6521aaa19ec3753e7781fd80968556b0f70d6663181bfcef44be751e3",
+      "after": "fcb9dff6521aaa19ec3753e7781fd80968556b0f70d6663181bfcef44be751e3",
+      "identical": true
+    },
+    {
+      "label": "library-copy-2-Drive tray (3.5\" HDD + 2.5\" SSD)",
+      "before": "3297879222e50ed29b4a51dcc9ea8518a326ef2e217f4fc07f27b30240562a4e",
+      "after": "3297879222e50ed29b4a51dcc9ea8518a326ef2e217f4fc07f27b30240562a4e",
+      "identical": true
+    },
+    {
+      "label": "library-copy-3-7\" touch screen plate (placeholder)",
+      "before": "2046c1b868b97fee6086d32a6624dffc2ccdf1685b9c15af4d2708fa05a25745",
+      "after": "2046c1b868b97fee6086d32a6624dffc2ccdf1685b9c15af4d2708fa05a25745",
+      "identical": true
+    },
+    {
+      "label": "library-copy-4-Keystone panel, 10 (3 USB, 4 LAN, 3 blank)",
+      "before": "2a641ad48c0a91ea8649abebe33a2d6b3ce556039f36bb23b2d3af4d4b173635",
+      "after": "2a641ad48c0a91ea8649abebe33a2d6b3ce556039f36bb23b2d3af4d4b173635",
+      "identical": true
+    },
+    {
+      "label": "library-copy-5-TP-Link TL-SG108E",
+      "before": "8252da3ca3388b62cc2033c067866604e6f9efb072810d4c19ac83ae31beb26b",
+      "after": "8252da3ca3388b62cc2033c067866604e6f9efb072810d4c19ac83ae31beb26b",
+      "identical": true
+    },
+    {
+      "label": "library-copy-6-Modem ECB7250 (placeholder)",
+      "before": "733df8f95e2d357cfd9848858db6b9c3e20abf346619d0150108599493efdb77",
+      "after": "733df8f95e2d357cfd9848858db6b9c3e20abf346619d0150108599493efdb77",
+      "identical": true
+    },
+    {
+      "label": "library-copy-7-Netgear CM1000 (bracket: faceplate + rails v2)",
+      "before": "37de9848c08753bdc88d624a3c0615aa66412defb78c942c9b0f053d4fbef9f8",
+      "after": "37de9848c08753bdc88d624a3c0615aa66412defb78c942c9b0f053d4fbef9f8",
+      "identical": true
+    },
+    {
+      "label": "library-copy-8-Philips Hue Bridge + Raspberry Pi 4 (keystone)",
+      "before": "a9d706913e20e313aed44020250df824b77606ae60d526ad1b1e7491b9d9485d",
+      "after": "a9d706913e20e313aed44020250df824b77606ae60d526ad1b1e7491b9d9485d",
+      "identical": true
+    },
+    {
+      "label": "HDT-M6-A",
+      "before": "5c95b78d4e34bc1214a90c1211bd29aafa9ab146d777f32b6ffa094b67e3e117",
+      "after": "5c95b78d4e34bc1214a90c1211bd29aafa9ab146d777f32b6ffa094b67e3e117",
+      "identical": true
+    },
+    {
+      "label": "flat",
+      "before": "0af470dbcf9c5329c5d357f95f637ac9d600c31ff8f2198cf55c833f31aac456",
+      "after": "0af470dbcf9c5329c5d357f95f637ac9d600c31ff8f2198cf55c833f31aac456",
+      "identical": true
+    },
+    {
+      "label": "sleeve",
+      "before": "bb538705be18bedcda86387540f93509ae2192adaf492992abc5b28f369a5113",
+      "after": "bb538705be18bedcda86387540f93509ae2192adaf492992abc5b28f369a5113",
+      "identical": true
+    },
+    {
+      "label": "two-device-pair",
+      "before": "fda9389e0f7d4113f432a783aac5f9a54cd9159aff34d23ea8e27aa2a6c8564c",
+      "after": "fda9389e0f7d4113f432a783aac5f9a54cd9159aff34d23ea8e27aa2a6c8564c",
+      "identical": true
+    }
+  ],
+  "files": [
+    {
+      "path": "HANDOFF.md",
+      "before": "c6c76c0a58696e9f269350d46109f83b2f70af1f65ad448c3249e531e6f42bb8",
+      "after": "c6c76c0a58696e9f269350d46109f83b2f70af1f65ad448c3249e531e6f42bb8",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\CM6A_CM1000_M6_bracket_set.3mf",
+      "before": "6acf520ce495491a14da73f980c546b31fa95645faa6bc53b1339aca7c77e7b6",
+      "after": "6acf520ce495491a14da73f980c546b31fa95645faa6bc53b1339aca7c77e7b6",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\CM6A_faceplate.stl",
+      "before": "5ea11b22e47c29ccbb7ed0c8f02eade738cd1c2978f3dd0e8e49f9e9e7370784",
+      "after": "5ea11b22e47c29ccbb7ed0c8f02eade738cd1c2978f3dd0e8e49f9e9e7370784",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\CM6A_rail_l.stl",
+      "before": "428f1363b5af8bff90d078ea4f9c40e440458cd76e234ba221e4278b793db2ea",
+      "after": "428f1363b5af8bff90d078ea4f9c40e440458cd76e234ba221e4278b793db2ea",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\CM6A_rail_r.stl",
+      "before": "85d95a05183ea372d577675305954f51076c5d42df15f95f0d0d7a6f6fdf37fd",
+      "after": "85d95a05183ea372d577675305954f51076c5d42df15f95f0d0d7a6f6fdf37fd",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\README.md",
+      "before": "2c23e299c7ed6acfb101869cfb6b2da114b932c806bca025c3f3a31dc707ea77",
+      "after": "2c23e299c7ed6acfb101869cfb6b2da114b932c806bca025c3f3a31dc707ea77",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\cm1000_m6.scad",
+      "before": "f6ec695983cfc68edf58ec4a4652e0be8c6a30ae398b26f979baef7148809385",
+      "after": "f6ec695983cfc68edf58ec4a4652e0be8c6a30ae398b26f979baef7148809385",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\extract.py",
+      "before": "a2622c1917bf7a005d4f7b9d02810381b65909786141401c2ae4b837265fa10c",
+      "after": "a2622c1917bf7a005d4f7b9d02810381b65909786141401c2ae4b837265fa10c",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\faceplate_freecad.py",
+      "before": "2e46df52bbe21922b23487b4f43231ea2fae8ed63246e48d28c4b1f586ecd4ea",
+      "after": "2e46df52bbe21922b23487b4f43231ea2fae8ed63246e48d28c4b1f586ecd4ea",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\pack.py",
+      "before": "ee648aa9bfcdc50a0153bfcb20ced4fc2c8359dbe75d8ba860e5a9bfc0e795ed",
+      "after": "ee648aa9bfcdc50a0153bfcb20ced4fc2c8359dbe75d8ba860e5a9bfc0e795ed",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_10_normal_part.stl",
+      "before": "ac9b97eeddccec3f5a03ef91b3301a33a153345301aed49f1c2ceeb06cb1d112",
+      "after": "ac9b97eeddccec3f5a03ef91b3301a33a153345301aed49f1c2ceeb06cb1d112",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_11_normal_part.stl",
+      "before": "783bce99e902d6a979e4ac4df9edaf3ea3b2345c3f3534503201a166bbf672cf",
+      "after": "783bce99e902d6a979e4ac4df9edaf3ea3b2345c3f3534503201a166bbf672cf",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_12_normal_part.stl",
+      "before": "44ea4ef1f2da4545730a7df1569925a918bef66668c160b40d9c023cab07ed40",
+      "after": "44ea4ef1f2da4545730a7df1569925a918bef66668c160b40d9c023cab07ed40",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_13_normal_part.stl",
+      "before": "b7347b4ccd3860abe141e1326654815f143a7e0b817a9e1a2f99bf1e6ed39e23",
+      "after": "b7347b4ccd3860abe141e1326654815f143a7e0b817a9e1a2f99bf1e6ed39e23",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_14_normal_part.stl",
+      "before": "d15a20de7156aadd02f8ef6ad10536b404ae047f9f73f13b35a9321a47dd5898",
+      "after": "d15a20de7156aadd02f8ef6ad10536b404ae047f9f73f13b35a9321a47dd5898",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_15_normal_part.stl",
+      "before": "4a7e540f934a5599f68f93dbcd70e43d7a243eb9cabdf118020c1f72e40d01ce",
+      "after": "4a7e540f934a5599f68f93dbcd70e43d7a243eb9cabdf118020c1f72e40d01ce",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_16_normal_part.stl",
+      "before": "8f4e1f1973f495806524025660ddc93678b0ac272ed999db1d4895a0dc77f1ed",
+      "after": "8f4e1f1973f495806524025660ddc93678b0ac272ed999db1d4895a0dc77f1ed",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_17_normal_part.stl",
+      "before": "74722be69ea56104c4945cd442873f8b6f4b2d2f25b197aa53bb220b478e72bd",
+      "after": "74722be69ea56104c4945cd442873f8b6f4b2d2f25b197aa53bb220b478e72bd",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_18_negative_part.stl",
+      "before": "eebb26da69558c1d24d836a7ba971b5ba60e9643ba25459416a8317e59ae8782",
+      "after": "eebb26da69558c1d24d836a7ba971b5ba60e9643ba25459416a8317e59ae8782",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_19_negative_part.stl",
+      "before": "a3c2e7084fc202f4dd7233a9c2123f660331c5548a6c0c1752ccd51cf3284d9a",
+      "after": "a3c2e7084fc202f4dd7233a9c2123f660331c5548a6c0c1752ccd51cf3284d9a",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_1_normal_part.stl",
+      "before": "3483e97be58405f2f33f8f849adc8b78e3d9842415bed17b2904c2d4901fe16f",
+      "after": "3483e97be58405f2f33f8f849adc8b78e3d9842415bed17b2904c2d4901fe16f",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_20_negative_part.stl",
+      "before": "84a537ba2b67b99a89fa1d156020d99bae0587485ab923c7b0cc253ed957ec82",
+      "after": "84a537ba2b67b99a89fa1d156020d99bae0587485ab923c7b0cc253ed957ec82",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_21_negative_part.stl",
+      "before": "9c3207af851cbe659cf1b830954641300920e35e075c488d1e7bbb9370c9e712",
+      "after": "9c3207af851cbe659cf1b830954641300920e35e075c488d1e7bbb9370c9e712",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_22_negative_part.stl",
+      "before": "303d019c8fa5f1218a27eee65ebc19f8ddebba9d0b31972713b3204e4514a824",
+      "after": "303d019c8fa5f1218a27eee65ebc19f8ddebba9d0b31972713b3204e4514a824",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_23_negative_part.stl",
+      "before": "fafdd89dc1da93139e0a625534e12ac68a5846fba6e308dd7fc1822150177709",
+      "after": "fafdd89dc1da93139e0a625534e12ac68a5846fba6e308dd7fc1822150177709",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_24_negative_part.stl",
+      "before": "2c4a86513f47525bc3ea50e0f728255ba41895035891e8848dee8b44c5e35340",
+      "after": "2c4a86513f47525bc3ea50e0f728255ba41895035891e8848dee8b44c5e35340",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_25_negative_part.stl",
+      "before": "7ba94a1da89e8c6ff60b79617a76dca2e63965fe7445c84d3f4f3562f8da85ce",
+      "after": "7ba94a1da89e8c6ff60b79617a76dca2e63965fe7445c84d3f4f3562f8da85ce",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_2_normal_part.stl",
+      "before": "938091b39aca32b2d122b744d163ed2703ca6a4238c8f1b9f917378e143c2e64",
+      "after": "938091b39aca32b2d122b744d163ed2703ca6a4238c8f1b9f917378e143c2e64",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_3_normal_part.stl",
+      "before": "7bd4a499c64fac5eb55f27891a21430eeac4c9ee3e1a1f46fcfe76a87c80f768",
+      "after": "7bd4a499c64fac5eb55f27891a21430eeac4c9ee3e1a1f46fcfe76a87c80f768",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_4_normal_part.stl",
+      "before": "6030daa79081d7b5e8516d724449af41d897e4c7f452c3ace65d9ecbbfef9d93",
+      "after": "6030daa79081d7b5e8516d724449af41d897e4c7f452c3ace65d9ecbbfef9d93",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_5_normal_part.stl",
+      "before": "5ee6754d3961475e79e49ab7468ab5320085f88a8a618286ed4dfe69f425f9be",
+      "after": "5ee6754d3961475e79e49ab7468ab5320085f88a8a618286ed4dfe69f425f9be",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_6_normal_part.stl",
+      "before": "d954e890b96e7257b8dc39fb28c44ddda686ddbe21585e0e9980d36fe001e9c9",
+      "after": "d954e890b96e7257b8dc39fb28c44ddda686ddbe21585e0e9980d36fe001e9c9",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_7_normal_part.stl",
+      "before": "871ec8c0f6a1d2448f4faf69a4e359d45a94983fe5604c48aaae1773ae3f6de8",
+      "after": "871ec8c0f6a1d2448f4faf69a4e359d45a94983fe5604c48aaae1773ae3f6de8",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_8_normal_part.stl",
+      "before": "7d01b576764a58beb7e574306df8832a1fb60ae8c1f22b93e758850d8e6fd283",
+      "after": "7d01b576764a58beb7e574306df8832a1fb60ae8c1f22b93e758850d8e6fd283",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\fp_9_normal_part.stl",
+      "before": "fc407d65bfaadd953fd4d0f24004a49cbb5b0aab17e873faf5aa3ecf04295c70",
+      "after": "fc407d65bfaadd953fd4d0f24004a49cbb5b0aab17e873faf5aa3ecf04295c70",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\id_F.stl",
+      "before": "bcf7431aa1418b6b0fc7acbfffe46d235a28fc9a1c5e5ba6c58ad9d4644658e4",
+      "after": "bcf7431aa1418b6b0fc7acbfffe46d235a28fc9a1c5e5ba6c58ad9d4644658e4",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\rl_10_negative_part.stl",
+      "before": "54121923665fb4947f87c21faa748ad51267a8395aa3c82c3bb5acfeadb77f14",
+      "after": "54121923665fb4947f87c21faa748ad51267a8395aa3c82c3bb5acfeadb77f14",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\rl_1_normal_part.stl",
+      "before": "f2ea7ab81b39950925c5a26c77d6c3457ac1fbb2bd53f389c8248967770bfb60",
+      "after": "f2ea7ab81b39950925c5a26c77d6c3457ac1fbb2bd53f389c8248967770bfb60",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\rl_2_negative_part.stl",
+      "before": "52ee5c293004783660d73a4045c89528003509c6ff45aeec89a730339911ab17",
+      "after": "52ee5c293004783660d73a4045c89528003509c6ff45aeec89a730339911ab17",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\rl_3_negative_part.stl",
+      "before": "04345a493154c77757eb8e7868f218a5208c25134ca2c260b566b4de06b3b46f",
+      "after": "04345a493154c77757eb8e7868f218a5208c25134ca2c260b566b4de06b3b46f",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\rl_4_negative_part.stl",
+      "before": "7896888d23b1790ee3ceb867404e66078b85854bbd7b26f55a43ec7ac18741ab",
+      "after": "7896888d23b1790ee3ceb867404e66078b85854bbd7b26f55a43ec7ac18741ab",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\rl_5_negative_part.stl",
+      "before": "d666cbe68739f5c743ef2eeb2057df92b837572a75c86f5bf1f171105015f2bb",
+      "after": "d666cbe68739f5c743ef2eeb2057df92b837572a75c86f5bf1f171105015f2bb",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\rl_6_normal_part.stl",
+      "before": "078cb4b7948e6afa8f2cfc7619b4eaa4fbc5705b215ca38bbf74cab49a73a4d3",
+      "after": "078cb4b7948e6afa8f2cfc7619b4eaa4fbc5705b215ca38bbf74cab49a73a4d3",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\rl_7_negative_part.stl",
+      "before": "76c9443ec5fabf6f46c4ab41b0bf346570291c86a03987ba6dde52be1ace3a20",
+      "after": "76c9443ec5fabf6f46c4ab41b0bf346570291c86a03987ba6dde52be1ace3a20",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\rl_8_negative_part.stl",
+      "before": "f108ad48ef95ccb849a5d7fed1674e342d162a5c38ad0ec6f8e1714f8dd61032",
+      "after": "f108ad48ef95ccb849a5d7fed1674e342d162a5c38ad0ec6f8e1714f8dd61032",
+      "identical": true
+    },
+    {
+      "path": "outputs\\CM1000_M6_2026-10-28\\src\\orig\\rl_9_negative_part.stl",
+      "before": "edea10b3410d9878a43303c5faa001da3d2c6151476f61d7087118f70d899574",
+      "after": "edea10b3410d9878a43303c5faa001da3d2c6151476f61d7087118f70d899574",
+      "identical": true
+    },
+    {
+      "path": "outputs\\STL_Deliveries\\2026-10-16_CM1000_bracket\\CM1000_LabRax_faceplate.3mf",
+      "before": "fe780c8a8498b10c024e2f0649ec812d7712e0a3e3d8602e36568820e1d6ed37",
+      "after": "fe780c8a8498b10c024e2f0649ec812d7712e0a3e3d8602e36568820e1d6ed37",
+      "identical": true
+    },
+    {
+      "path": "outputs\\STL_Deliveries\\2026-10-16_CM1000_bracket\\CM1000_LabRax_rails.3mf",
+      "before": "94f800018208eb63f94e2817d44ddb51e41ea553411fd0798974e09a5214087c",
+      "after": "94f800018208eb63f94e2817d44ddb51e41ea553411fd0798974e09a5214087c",
+      "identical": true
+    },
+    {
+      "path": "outputs\\STL_Deliveries\\2026-10-16_CM1000_bracket\\CM1000_LabRax_rails_v2.3mf",
+      "before": "4020ab0814a10fe305b093c0409190a5b7db5d10fce1037983a6676607a28a13",
+      "after": "4020ab0814a10fe305b093c0409190a5b7db5d10fce1037983a6676607a28a13",
+      "identical": true
+    },
+    {
+      "path": "outputs\\STL_Deliveries\\2026-10-16_CM1000_bracket\\README.md",
+      "before": "f82b6cd561f367fdaf36fe98fe5d44d1b39a2ef3ba03b0b05af5c39a69c07375",
+      "after": "f82b6cd561f367fdaf36fe98fe5d44d1b39a2ef3ba03b0b05af5c39a69c07375",
+      "identical": true
+    },
+    {
+      "path": "outputs\\Hard_Drive_Tray_M6_2026-10-28\\HDT-M6-A.scad",
+      "before": "4814ce116d32a6a2da5bb5ebbb6e64caeaf526d9a17647c072e241a9381cdcca",
+      "after": "4814ce116d32a6a2da5bb5ebbb6e64caeaf526d9a17647c072e241a9381cdcca",
+      "identical": true
+    },
+    {
+      "path": "outputs\\Hard_Drive_Tray_M6_2026-10-28\\HDT-M6-A_art.scad",
+      "before": "5e28944e6848c1e0e87d06cd4a7627092f5f500d49b5f7700c60003b4b7efe7d",
+      "after": "5e28944e6848c1e0e87d06cd4a7627092f5f500d49b5f7700c60003b4b7efe7d",
+      "identical": true
+    },
+    {
+      "path": "outputs\\Hard_Drive_Tray_M6_2026-10-28\\HDT-M6-A_drive_tray.3mf",
+      "before": "85195b081c1cba2ebd70aa86f1117d8941fe5f79b048b68b18027badd0cd070b",
+      "after": "85195b081c1cba2ebd70aa86f1117d8941fe5f79b048b68b18027badd0cd070b",
+      "identical": true
+    },
+    {
+      "path": "outputs\\Hard_Drive_Tray_M6_2026-10-28\\HDT-M6-A_drive_tray_color.3mf",
+      "before": "c287b2a6570029a5fa9c03b05cc844753273dcf70ca73e9d34149fd5d942864b",
+      "after": "c287b2a6570029a5fa9c03b05cc844753273dcf70ca73e9d34149fd5d942864b",
+      "identical": true
+    },
+    {
+      "path": "outputs\\Hard_Drive_Tray_M6_2026-10-28\\HDT-M6-A_faceplate.stl",
+      "before": "bdc266909f47d98bd3c062fae42a923b31c41f9eda8f6b67625908ede60eb669",
+      "after": "bdc266909f47d98bd3c062fae42a923b31c41f9eda8f6b67625908ede60eb669",
+      "identical": true
+    },
+    {
+      "path": "outputs\\Hard_Drive_Tray_M6_2026-10-28\\HDT-M6-A_faceplate_base_color.stl",
+      "before": "b2a55b46e7c353fdc7b0a32f943b900b771f8c9e55d1892e6dff4aae1e9a5ef0",
+      "after": "b2a55b46e7c353fdc7b0a32f943b900b771f8c9e55d1892e6dff4aae1e9a5ef0",
+      "identical": true
+    },
+    {
+      "path": "outputs\\Hard_Drive_Tray_M6_2026-10-28\\HDT-M6-A_faceplate_icon_inlay.stl",
+      "before": "573cf11e4861aa45fe3043f7d9e6f833098d0c305201e48a5f3db271034b0dd2",
+      "after": "573cf11e4861aa45fe3043f7d9e6f833098d0c305201e48a5f3db271034b0dd2",
+      "identical": true
+    },
+    {
+      "path": "outputs\\Hard_Drive_Tray_M6_2026-10-28\\HDT-M6-A_tray.stl",
+      "before": "9a932259e84f162dcad2795d14e23dd6902e26c13aa7fd8e7728cac06ff36f63",
+      "after": "9a932259e84f162dcad2795d14e23dd6902e26c13aa7fd8e7728cac06ff36f63",
+      "identical": true
+    },
+    {
+      "path": "outputs\\Hard_Drive_Tray_M6_2026-10-28\\README.md",
+      "before": "86df349b757594fea2db62abaa76b7108a5cedc926cb9783efa2ff04ad200c23",
+      "after": "86df349b757594fea2db62abaa76b7108a5cedc926cb9783efa2ff04ad200c23",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\README.md",
+      "before": "9518acd62a1094d3749448d1d42b323f7f9b3934edf40be3275c000e4a307c0b",
+      "after": "9518acd62a1094d3749448d1d42b323f7f9b3934edf40be3275c000e4a307c0b",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\SG8-M6-B_faceplate.stl",
+      "before": "637150ad134e144567f79eaaa545e3a373b15412057cc3a5c518ff3c3af330c7",
+      "after": "637150ad134e144567f79eaaa545e3a373b15412057cc3a5c518ff3c3af330c7",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\SG8-M6-B_TL-SG108E_M6_set.3mf",
+      "before": "e363661365d4f2e0906468475f47f1c2596b4690101aa4fc7bc09f34e442284a",
+      "after": "e363661365d4f2e0906468475f47f1c2596b4690101aa4fc7bc09f34e442284a",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\SG8-M6-B_tray.stl",
+      "before": "1ca8c9e3c5afc0e1aeff277659bd48a4881679020d19874d2a1538398def0115",
+      "after": "1ca8c9e3c5afc0e1aeff277659bd48a4881679020d19874d2a1538398def0115",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\SG8-M6-B_UPLINK-label-inlay.stl",
+      "before": "2744b49db3a8b70250630382e994aff570da9871c2c365212734f048676ebf1b",
+      "after": "2744b49db3a8b70250630382e994aff570da9871c2c365212734f048676ebf1b",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\coupon_SG8-C1\\README.md",
+      "before": "0d58d3e05f6b73f1205afbefe163d44ac92f805f95c7e83f3036d2ae9d166ab8",
+      "after": "0d58d3e05f6b73f1205afbefe163d44ac92f805f95c7e83f3036d2ae9d166ab8",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\coupon_SG8-C1\\SG8-C1.scad",
+      "before": "856d6a42a71bdff6f8a0f30311dc6719e23e683de1c258978218d494d0ff4005",
+      "after": "856d6a42a71bdff6f8a0f30311dc6719e23e683de1c258978218d494d0ff4005",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\coupon_SG8-C1\\SG8-C1_faceplate.stl",
+      "before": "137948a4f7438ffca6c3fd012b4745abfff97b9371ecb3a34601d8dc9ff8362e",
+      "after": "137948a4f7438ffca6c3fd012b4745abfff97b9371ecb3a34601d8dc9ff8362e",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\coupon_SG8-C1\\SG8-C1_faceplate_src.scad",
+      "before": "a85892e8b309e4cc98fafea2d2338da749a0946a17ec02e66e3ec4cc66d3dcdd",
+      "after": "a85892e8b309e4cc98fafea2d2338da749a0946a17ec02e66e3ec4cc66d3dcdd",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\coupon_SG8-C1\\SG8-C1_screw_joint_coupon.3mf",
+      "before": "cd2d65af436c682d26d44220170a4eb40fdee6aff9de7fb550aa28e5386750fe",
+      "after": "cd2d65af436c682d26d44220170a4eb40fdee6aff9de7fb550aa28e5386750fe",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\coupon_SG8-C1\\SG8-C1_tray.stl",
+      "before": "991a5ad0a002d0cfeb845cc8890576dc1340bad828e0d2f1c5d5575318527fb5",
+      "after": "991a5ad0a002d0cfeb845cc8890576dc1340bad828e0d2f1c5d5575318527fb5",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\coupon_SG8-C2\\README.md",
+      "before": "91dac302310defefb101ec00eb8d04b9d5fa2f84989ea599b3207dd0222aa5c0",
+      "after": "91dac302310defefb101ec00eb8d04b9d5fa2f84989ea599b3207dd0222aa5c0",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\coupon_SG8-C2\\SG8-C2_boss.stl",
+      "before": "c2ff92fa691c82929b71521844dc3620bbc4c95a0c4fac431b564e29b91b0290",
+      "after": "c2ff92fa691c82929b71521844dc3620bbc4c95a0c4fac431b564e29b91b0290",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\coupon_SG8-C2\\SG8-C2_boss_coupon.3mf",
+      "before": "46bdc0687787d24877c0f79afce1e8d6ef0156e6b6e13415b6573daee0958db7",
+      "after": "46bdc0687787d24877c0f79afce1e8d6ef0156e6b6e13415b6573daee0958db7",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\coupon_SG8-C2\\SG8-C2_boss_src.scad",
+      "before": "3e0545c2b489bf304c09c97c0570f1808d9498a0b1b1859f74e6ed6657e2d2ab",
+      "after": "3e0545c2b489bf304c09c97c0570f1808d9498a0b1b1859f74e6ed6657e2d2ab",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\previous_SG8-M6-A\\README.md",
+      "before": "4cfb9dedce5428344609cbc7c0a97450e9b3cb5b29e54a5917b3b47706f9f21a",
+      "after": "4cfb9dedce5428344609cbc7c0a97450e9b3cb5b29e54a5917b3b47706f9f21a",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\previous_SG8-M6-A\\SG8-M6-A_faceplate.stl",
+      "before": "4e734c4dc21b93619365cbffb6ff6c5225f55199b8244f301e59173c2fbed12c",
+      "after": "4e734c4dc21b93619365cbffb6ff6c5225f55199b8244f301e59173c2fbed12c",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\previous_SG8-M6-A\\SG8-M6-A_TL-SG108E_M6_set.3mf",
+      "before": "e1f9638ab0662550953f67aae71dec2458adf4810cbcd7054e5bd4e097219532",
+      "after": "e1f9638ab0662550953f67aae71dec2458adf4810cbcd7054e5bd4e097219532",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\previous_SG8-M6-A\\SG8-M6-A_tray.stl",
+      "before": "17619979eb41835b5d329910fd7d1eb2ff2635dd6479ffe66b0233ecdc34b7e2",
+      "after": "17619979eb41835b5d329910fd7d1eb2ff2635dd6479ffe66b0233ecdc34b7e2",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\previous_SG8-M6-A\\SG8-M6-A_UPLINK-label-inlay.stl",
+      "before": "2744b49db3a8b70250630382e994aff570da9871c2c365212734f048676ebf1b",
+      "after": "2744b49db3a8b70250630382e994aff570da9871c2c365212734f048676ebf1b",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\previous_SG8-M6-A\\src\\label_3mf.py",
+      "before": "a6a0e5456622825feb20ce58640d489c475e813d321feccdbe25e0147dd45d8c",
+      "after": "a6a0e5456622825feb20ce58640d489c475e813d321feccdbe25e0147dd45d8c",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\previous_SG8-M6-A\\src\\SG8-M6-A.scad",
+      "before": "ab81ae93d2b127451cb82a9d06e701d569d0145f2a3e1ae652e1a5a4ef9585d2",
+      "after": "ab81ae93d2b127451cb82a9d06e701d569d0145f2a3e1ae652e1a5a4ef9585d2",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\previous_SG8-M6-A\\src\\SG8-M6-A_build.py",
+      "before": "3c5c8aa94ea0a222939de204680c6be81ef85c003fe75d6149ca6fc7e5a136c5",
+      "after": "3c5c8aa94ea0a222939de204680c6be81ef85c003fe75d6149ca6fc7e5a136c5",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\src\\label_3mf.py",
+      "before": "a6a0e5456622825feb20ce58640d489c475e813d321feccdbe25e0147dd45d8c",
+      "after": "a6a0e5456622825feb20ce58640d489c475e813d321feccdbe25e0147dd45d8c",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\src\\SG8-M6-B.scad",
+      "before": "e0540fad1f7b481dbd8dfac7a77177388206fcb322e98279d35af9d20b19fedd",
+      "after": "e0540fad1f7b481dbd8dfac7a77177388206fcb322e98279d35af9d20b19fedd",
+      "identical": true
+    },
+    {
+      "path": "outputs\\TL-SG108E_M6_2026-10-28\\src\\SG8-M6-B_build.py",
+      "before": "6d1113499757b881751d3a0c1cf36b7506aa5b2004d299cfa1c8e4ea76a0ae6f",
+      "after": "6d1113499757b881751d3a0c1cf36b7506aa5b2004d299cfa1c8e4ea76a0ae6f",
+      "identical": true
+    },
+    {
+      "path": "outputs\\Mechanical_Design_App\\equipment.py",
+      "before": "73642267bb5be5942c708ff87cc4b3552e3ecb553a0fe7c2e3902ec82535e86b",
+      "after": "4df206b39a2fb65941ea2b7bc8a225ce2608f236fefa659bb76840278282566f",
+      "identical": false
+    },
+    {
+      "path": "outputs\\Mechanical_Design_App\\equipment_tray.scad",
+      "before": "28f76e3dd2c42acbb4e22de974dac8788b9656d2f07611747561e953ae37c4c0",
+      "after": "28f76e3dd2c42acbb4e22de974dac8788b9656d2f07611747561e953ae37c4c0",
+      "identical": true
+    },
+    {
+      "path": "outputs/CM1000_M6_generated_2026-10-28/CM6B_CM1000_generated_split_rails.3mf",
+      "before": "30c6446c11d98295af312fc5d16243736be59c7cce82028f6be8f158dc1bff34",
+      "after": "30c6446c11d98295af312fc5d16243736be59c7cce82028f6be8f158dc1bff34",
+      "identical": true
+    },
+    {
+      "path": "outputs/CM1000_M6_generated_2026-10-28/CM6B_faceplate_with_stubs.stl",
+      "before": "23dea068ef06a140c7d08399da95942275ee54ad16ab6d3d937845e477f9181c",
+      "after": "23dea068ef06a140c7d08399da95942275ee54ad16ab6d3d937845e477f9181c",
+      "identical": true
+    },
+    {
+      "path": "outputs/CM1000_M6_generated_2026-10-28/CM6B_rail_left.stl",
+      "before": "54c08ae2008feb26e5303c6646ce83a2143c92a76add1e0eeae29b9362b5462e",
+      "after": "54c08ae2008feb26e5303c6646ce83a2143c92a76add1e0eeae29b9362b5462e",
+      "identical": true
+    },
+    {
+      "path": "outputs/CM1000_M6_generated_2026-10-28/CM6B_rail_right.stl",
+      "before": "eb6d4d5c65f2f7ce84cdbfce7438a54e155ae292bf5a52c4e425af6f37d0f3ce",
+      "after": "eb6d4d5c65f2f7ce84cdbfce7438a54e155ae292bf5a52c4e425af6f37d0f3ce",
+      "identical": true
+    },
+    {
+      "path": "outputs/CM1000_M6_generated_2026-10-28/CM6B_source.scad",
+      "before": "c122c1b6a85491c8280890edf21cf17abcea09a7dfe1db6facb10ed0eabacab6",
+      "after": "c122c1b6a85491c8280890edf21cf17abcea09a7dfe1db6facb10ed0eabacab6",
+      "identical": true
+    },
+    {
+      "path": "outputs/CM1000_M6_generated_2026-10-28/CM6B_spec.json",
+      "before": "f5c29f5e60f1f95d86bcd7491f85642c8b8d48135678ef2b1a91d4c084264033",
+      "after": "f5c29f5e60f1f95d86bcd7491f85642c8b8d48135678ef2b1a91d4c084264033",
+      "identical": true
+    },
+    {
+      "path": "outputs/CM1000_M6_generated_2026-10-28/README.md",
+      "before": "e182c1cbb9536a602897f6e564b445832233e2eef63ee8a472ef452a5593404b",
+      "after": "e182c1cbb9536a602897f6e564b445832233e2eef63ee8a472ef452a5593404b",
+      "identical": true
+    }
+  ],
+  "all_14_identical": true,
+  "protected_identical": false
+}

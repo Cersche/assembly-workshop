@@ -1,0 +1,34 @@
+generated faceplate 0
+generated tray 0
+reference-without-id faceplate 0
+reference-without-id tray 0
+{
+  "executable": "C:\\Program Files\\OpenSCAD\\openscad.exe",
+  "reference_sha256": "4814ce116d32a6a2da5bb5ebbb6e64caeaf526d9a17647c072e241a9381cdcca",
+  "renders": {
+    "generated-faceplate": {
+      "returncode": 0,
+      "exists": true
+    },
+    "generated-tray": {
+      "returncode": 0,
+      "exists": true
+    },
+    "reference-without-id-faceplate": {
+      "returncode": 0,
+      "exists": true
+    },
+    "reference-without-id-tray": {
+      "returncode": 0,
+      "exists": true
+    }
+  },
+  "faceplate": {
+    "triangle_for_triangle": true,
+    "generated_triangles": 3388
+  },
+  "tray": {
+    "triangle_for_triangle": true,
+    "generated_triangles": 10836
+  }
+}

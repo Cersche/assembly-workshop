@@ -1,0 +1,758 @@
+[
+  {
+    "label": "example-0-Raspberry Pi 4 (example)",
+    "spec": {
+      "name": "Raspberry Pi 4 (example)",
+      "dev_w": 85,
+      "dev_d": 56,
+      "dev_h": 20,
+      "hole_d": 2.7,
+      "standoff": 6,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "inserts",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_off_x": -1.5,
+      "dev_off_y": 1,
+      "dev_rot": 0,
+      "holes": [
+        [
+          3.5,
+          3.5
+        ],
+        [
+          61.5,
+          3.5
+        ],
+        [
+          3.5,
+          52.5
+        ],
+        [
+          61.5,
+          52.5
+        ]
+      ],
+      "ports": [],
+      "rear_ports": [],
+      "keystones": [],
+      "planning_ports": [
+        {
+          "id": "usb-c-power",
+          "label": "USB-C power",
+          "type": "usb-c",
+          "x": -32.8,
+          "y": 11.5,
+          "z": 18.8,
+          "points": "front",
+          "face": null
+        },
+        {
+          "id": "hdmi0",
+          "label": "Micro-HDMI 0",
+          "type": "micro-hdmi",
+          "x": -18.05,
+          "y": 11.2,
+          "z": 18.8,
+          "points": "front",
+          "face": null
+        },
+        {
+          "id": "hdmi1",
+          "label": "Micro-HDMI 1",
+          "type": "micro-hdmi",
+          "x": -4.55,
+          "y": 11.2,
+          "z": 18.8,
+          "points": "front",
+          "face": null
+        },
+        {
+          "id": "audio",
+          "label": "Audio / composite 3.5 mm",
+          "type": "other",
+          "x": 10,
+          "y": 10.6,
+          "z": 20.6,
+          "points": "front",
+          "face": null
+        },
+        {
+          "id": "usb2-lower",
+          "label": "USB 2.0 (lower)",
+          "type": "usb-a",
+          "x": 45,
+          "y": 22,
+          "z": 21.4,
+          "points": "right",
+          "face": null
+        },
+        {
+          "id": "usb2-upper",
+          "label": "USB 2.0 (upper)",
+          "type": "usb-a",
+          "x": 45,
+          "y": 22,
+          "z": 29.4,
+          "points": "right",
+          "face": null
+        },
+        {
+          "id": "usb3-lower",
+          "label": "USB 3.0 (lower)",
+          "type": "usb-a",
+          "x": 44.6,
+          "y": 40,
+          "z": 21.4,
+          "points": "right",
+          "face": null
+        },
+        {
+          "id": "usb3-upper",
+          "label": "USB 3.0 (upper)",
+          "type": "usb-a",
+          "x": 44.6,
+          "y": 40,
+          "z": 29.4,
+          "points": "right",
+          "face": null
+        },
+        {
+          "id": "ethernet",
+          "label": "Ethernet",
+          "type": "rj45",
+          "x": 44.2,
+          "y": 58.75,
+          "z": 24.4,
+          "points": "right",
+          "face": null
+        }
+      ]
+    },
+    "sha256": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec"
+  },
+  {
+    "label": "library-copy-0-Raspberry Pi 4 (example)",
+    "spec": {
+      "name": "Raspberry Pi 4 (example)",
+      "dev_w": 85,
+      "dev_d": 56,
+      "dev_h": 20,
+      "hole_d": 2.7,
+      "standoff": 6,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "inserts",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_off_x": -1.5,
+      "dev_off_y": 1,
+      "dev_rot": 0,
+      "holes": [
+        [
+          3.5,
+          3.5
+        ],
+        [
+          61.5,
+          3.5
+        ],
+        [
+          3.5,
+          52.5
+        ],
+        [
+          61.5,
+          52.5
+        ]
+      ],
+      "ports": [],
+      "rear_ports": [],
+      "keystones": [],
+      "planning_ports": [
+        {
+          "id": "usb-c-power",
+          "label": "USB-C power",
+          "type": "usb-c",
+          "x": -32.8,
+          "y": 11.5,
+          "z": 18.8,
+          "points": "front",
+          "face": null
+        },
+        {
+          "id": "hdmi0",
+          "label": "Micro-HDMI 0",
+          "type": "micro-hdmi",
+          "x": -18.05,
+          "y": 11.2,
+          "z": 18.8,
+          "points": "front",
+          "face": null
+        },
+        {
+          "id": "hdmi1",
+          "label": "Micro-HDMI 1",
+          "type": "micro-hdmi",
+          "x": -4.55,
+          "y": 11.2,
+          "z": 18.8,
+          "points": "front",
+          "face": null
+        },
+        {
+          "id": "audio",
+          "label": "Audio / composite 3.5 mm",
+          "type": "other",
+          "x": 10,
+          "y": 10.6,
+          "z": 20.6,
+          "points": "front",
+          "face": null
+        },
+        {
+          "id": "usb2-lower",
+          "label": "USB 2.0 (lower)",
+          "type": "usb-a",
+          "x": 45,
+          "y": 22,
+          "z": 21.4,
+          "points": "right",
+          "face": null
+        },
+        {
+          "id": "usb2-upper",
+          "label": "USB 2.0 (upper)",
+          "type": "usb-a",
+          "x": 45,
+          "y": 22,
+          "z": 29.4,
+          "points": "right",
+          "face": null
+        },
+        {
+          "id": "usb3-lower",
+          "label": "USB 3.0 (lower)",
+          "type": "usb-a",
+          "x": 44.6,
+          "y": 40,
+          "z": 21.4,
+          "points": "right",
+          "face": null
+        },
+        {
+          "id": "usb3-upper",
+          "label": "USB 3.0 (upper)",
+          "type": "usb-a",
+          "x": 44.6,
+          "y": 40,
+          "z": 29.4,
+          "points": "right",
+          "face": null
+        },
+        {
+          "id": "ethernet",
+          "label": "Ethernet",
+          "type": "rj45",
+          "x": 44.2,
+          "y": 58.75,
+          "z": 24.4,
+          "points": "right",
+          "face": null
+        }
+      ]
+    },
+    "sha256": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec"
+  },
+  {
+    "label": "library-copy-1-Dell OptiPlex Micro 7010 (sleeve)",
+    "spec": {
+      "name": "Dell OptiPlex Micro 7010 (sleeve)",
+      "dev_w": 182.5,
+      "dev_d": 194.5,
+      "dev_h": 38.8,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "sleeve",
+      "joint": "screw",
+      "feet": [
+        {
+          "x": 15.0,
+          "y": 18.0,
+          "w": 5.0,
+          "d": 15.0,
+          "h": 2.8
+        },
+        {
+          "x": 163.0,
+          "y": 18.0,
+          "w": 4.0,
+          "d": 15.0,
+          "h": 2.8
+        },
+        {
+          "x": 15.0,
+          "y": 153.0,
+          "w": 5.0,
+          "d": 15.0,
+          "h": 2.8
+        },
+        {
+          "x": 163.0,
+          "y": 153.0,
+          "w": 4.0,
+          "d": 15.0,
+          "h": 2.8
+        }
+      ],
+      "sleeve_top": 0.8,
+      "rear_support": true,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": []
+    },
+    "sha256": "fcb9dff6521aaa19ec3753e7781fd80968556b0f70d6663181bfcef44be751e3"
+  },
+  {
+    "label": "library-copy-2-Drive tray (3.5\" HDD + 2.5\" SSD)",
+    "spec": {
+      "name": "Drive tray (3.5\" HDD + 2.5\" SSD)",
+      "dev_w": 179.45,
+      "dev_d": 147.0,
+      "dev_h": 29.1,
+      "hole_d": 2.7,
+      "standoff": 0.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "flat",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 0.0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": [],
+      "drives": [
+        [
+          "3.5",
+          -89.725,
+          0.0
+        ],
+        [
+          "2.5",
+          19.875,
+          0.0
+        ]
+      ],
+      "drive_mount": "screws",
+      "ssd_h": 7.0
+    },
+    "sha256": "3297879222e50ed29b4a51dcc9ea8518a326ef2e217f4fc07f27b30240562a4e"
+  },
+  {
+    "label": "library-copy-3-7\" touch screen plate (placeholder)",
+    "spec": {
+      "name": "Faceplate only",
+      "faceplate_only": true,
+      "layout": "custom",
+      "u": 3,
+      "dev_w": 5.0,
+      "dev_d": 5.0,
+      "dev_h": 1.0,
+      "hole_d": 2.7,
+      "standoff": 0.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "device_mount": "straps",
+      "joint": "none",
+      "rear_support": false,
+      "coupon": [],
+      "holes": [],
+      "ports": [
+        {
+          "x": 0.0,
+          "z": 66.675,
+          "w": 155.0,
+          "h": 86.0,
+          "r": 2.0,
+          "label": "Screen",
+          "type": "other",
+          "id": "front-1"
+        }
+      ],
+      "rear_ports": [],
+      "keystones": []
+    },
+    "sha256": "2046c1b868b97fee6086d32a6624dffc2ccdf1685b9c15af4d2708fa05a25745"
+  },
+  {
+    "label": "library-copy-4-Keystone panel, 10 (3 USB, 4 LAN, 3 blank)",
+    "spec": {
+      "name": "Faceplate only",
+      "faceplate_only": true,
+      "layout": "keystones",
+      "u": 1,
+      "dev_w": 5.0,
+      "dev_d": 5.0,
+      "dev_h": 1.0,
+      "hole_d": 2.7,
+      "standoff": 0.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "device_mount": "straps",
+      "joint": "none",
+      "rear_support": false,
+      "coupon": [],
+      "holes": [],
+      "ports": [],
+      "rear_ports": [],
+      "keystones": [
+        [
+          -96.75,
+          22.225
+        ],
+        [
+          -75.25,
+          22.225
+        ],
+        [
+          -53.75,
+          22.225
+        ],
+        [
+          -32.25,
+          22.225
+        ],
+        [
+          -10.75,
+          22.225
+        ],
+        [
+          10.75,
+          22.225
+        ],
+        [
+          32.25,
+          22.225
+        ],
+        [
+          53.75,
+          22.225
+        ],
+        [
+          75.25,
+          22.225
+        ],
+        [
+          96.75,
+          22.225
+        ]
+      ],
+      "count": 10,
+      "rows": 1
+    },
+    "sha256": "2a641ad48c0a91ea8649abebe33a2d6b3ce556039f36bb23b2d3af4d4b173635"
+  },
+  {
+    "label": "library-copy-5-TP-Link TL-SG108E",
+    "spec": {
+      "name": "TP-Link TL-SG108E",
+      "dev_w": 158.0,
+      "dev_d": 100.0,
+      "dev_h": 25.0,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "sleeve",
+      "joint": "screw",
+      "sleeve_top": 0.85,
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": -15.0,
+      "dev_off_y": 0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [
+        88.0
+      ],
+      "tray_follow": true,
+      "ports": [],
+      "rear_ports": [],
+      "labels": [
+        {
+          "text": "UPLINK",
+          "x": 88.0,
+          "z": 3.8,
+          "size": 4.5
+        }
+      ]
+    },
+    "sha256": "8252da3ca3388b62cc2033c067866604e6f9efb072810d4c19ac83ae31beb26b"
+  },
+  {
+    "label": "library-copy-6-Modem ECB7250 (placeholder)",
+    "spec": {
+      "name": "Modem ECB7250 (placeholder)",
+      "dev_w": 120.0,
+      "dev_d": 65.0,
+      "dev_h": 30.0,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "straps",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 0.0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": []
+    },
+    "sha256": "733df8f95e2d357cfd9848858db6b9c3e20abf346619d0150108599493efdb77"
+  },
+  {
+    "label": "library-copy-7-Netgear CM1000 (bracket: faceplate + rails v2)",
+    "spec": {
+      "name": "Faceplate only",
+      "faceplate_only": true,
+      "layout": "blank",
+      "u": 1,
+      "dev_w": 5.0,
+      "dev_d": 5.0,
+      "dev_h": 1.0,
+      "hole_d": 2.7,
+      "standoff": 0.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "device_mount": "straps",
+      "joint": "none",
+      "rear_support": false,
+      "coupon": [],
+      "holes": [],
+      "ports": [],
+      "rear_ports": [],
+      "keystones": []
+    },
+    "sha256": "37de9848c08753bdc88d624a3c0615aa66412defb78c942c9b0f053d4fbef9f8"
+  },
+  {
+    "label": "library-copy-8-Philips Hue Bridge + Raspberry Pi 4 (keystone)",
+    "spec": {
+      "name": "Philips Hue Bridge v2",
+      "dev_w": 90.7,
+      "dev_d": 90.4,
+      "dev_h": 25.4,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "wall",
+      "joint": "screw",
+      "wall_open": [
+        "front",
+        "rear",
+        "left",
+        "right"
+      ],
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": -30.0,
+      "dev_off_y": 2.5,
+      "coupon": [],
+      "holes": [],
+      "keystones": [
+        -100.0
+      ],
+      "ports": [],
+      "rear_ports": [],
+      "second": {
+        "name": "Raspberry Pi 4 (example)",
+        "dev_w": 85.0,
+        "dev_d": 56.0,
+        "dev_h": 20.0,
+        "hole_d": 2.7,
+        "standoff": 6.0,
+        "insert_pilot": 3.2,
+        "board_t": 1.6,
+        "holes": [
+          [
+            3.5,
+            3.5
+          ],
+          [
+            61.5,
+            3.5
+          ],
+          [
+            3.5,
+            52.5
+          ],
+          [
+            61.5,
+            52.5
+          ]
+        ],
+        "device_mount": "inserts",
+        "dev_off_x": 48.0,
+        "dev_off_y": 1.0,
+        "dev_rot": 90
+      }
+    },
+    "sha256": "a9d706913e20e313aed44020250df824b77606ae60d526ad1b1e7491b9d9485d"
+  },
+  {
+    "label": "HDT-M6-A",
+    "spec": {
+      "name": "Drives",
+      "dev_w": 179.45,
+      "dev_d": 147.0,
+      "dev_h": 29.1,
+      "hole_d": 2.7,
+      "standoff": 0.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "flat",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": 0.0,
+      "dev_off_y": 0.0,
+      "coupon": [],
+      "holes": [],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": [],
+      "drives": [
+        [
+          "3.5",
+          -89.725,
+          0.0
+        ],
+        [
+          "2.5",
+          19.875,
+          0.0
+        ]
+      ],
+      "drive_mount": "screws",
+      "ssd_h": 7.0,
+      "m6_joint": true
+    },
+    "sha256": "5c95b78d4e34bc1214a90c1211bd29aafa9ab146d777f32b6ffa094b67e3e117"
+  },
+  {
+    "label": "flat",
+    "spec": {
+      "name": "Flat regression",
+      "dev_w": 120,
+      "dev_d": 80,
+      "dev_h": 25,
+      "device_mount": "flat",
+      "standoff": 0,
+      "joint": "screw"
+    },
+    "sha256": "0af470dbcf9c5329c5d357f95f637ac9d600c31ff8f2198cf55c833f31aac456"
+  },
+  {
+    "label": "sleeve",
+    "spec": {
+      "name": "Sleeve regression",
+      "dev_w": 120,
+      "dev_d": 100,
+      "dev_h": 25,
+      "device_mount": "sleeve",
+      "standoff": 0,
+      "joint": "screw"
+    },
+    "sha256": "bb538705be18bedcda86387540f93509ae2192adaf492992abc5b28f369a5113"
+  },
+  {
+    "label": "two-device-pair",
+    "spec": {
+      "name": "Router",
+      "dev_w": 80.0,
+      "dev_d": 60.0,
+      "dev_h": 20.0,
+      "hole_d": 2.7,
+      "standoff": 6.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "u": 1,
+      "device_mount": "inserts",
+      "joint": "screw",
+      "rear_support": false,
+      "dev_rot": 0,
+      "dev_off_x": -45,
+      "dev_off_y": 0.0,
+      "coupon": [],
+      "holes": [
+        [
+          5.0,
+          5.0
+        ],
+        [
+          75.0,
+          55.0
+        ]
+      ],
+      "keystones": [],
+      "ports": [],
+      "rear_ports": [
+        {
+          "id": "rear-1",
+          "label": "Power",
+          "type": "other",
+          "x": 0.0,
+          "z": 15.0
+        }
+      ],
+      "second": {
+        "name": "Switch",
+        "dev_w": 70.0,
+        "dev_d": 50.0,
+        "dev_h": 25.0,
+        "hole_d": 2.7,
+        "standoff": 6.0,
+        "insert_pilot": 3.2,
+        "board_t": 1.6,
+        "u": 1,
+        "device_mount": "straps",
+        "joint": "screw",
+        "rear_support": false,
+        "dev_rot": 0,
+        "dev_off_x": 50,
+        "dev_off_y": 0.0,
+        "coupon": [],
+        "holes": [],
+        "keystones": [],
+        "ports": [],
+        "rear_ports": []
+      }
+    },
+    "sha256": "fda9389e0f7d4113f432a783aac5f9a54cd9159aff34d23ea8e27aa2a6c8564c"
+  }
+]

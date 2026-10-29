@@ -1,0 +1,34 @@
+WARNING: foot_h was assigned on line 86 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 102
+WARNING: dev_w was assigned on line 31 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 299
+WARNING: dev_d was assigned on line 31 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 300
+WARNING: dev_h was assigned on line 31 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 301
+WARNING: hole_d was assigned on line 34 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 302
+WARNING: standoff was assigned on line 36 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 303
+WARNING: insert_pilot was assigned on line 37 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 304
+WARNING: board_t was assigned on line 38 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 305
+WARNING: u was assigned on line 40 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 306
+WARNING: holes was assigned on line 33 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 307
+WARNING: keystones was assigned on line 41 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 308
+WARNING: device_mount was assigned on line 35 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 309
+WARNING: joint was assigned on line 39 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 310
+WARNING: rear_support was assigned on line 53 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 311
+WARNING: coupon was assigned on line 54 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 312
+WARNING: ports was assigned on line 47 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 313
+WARNING: drives was assigned on line 4 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 314
+WARNING: drive_mount was assigned on line 4 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 315
+WARNING: ssd_h was assigned on line 4 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 316
+WARNING: tray_w was assigned on line 73 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 317
+WARNING: tray_d was assigned on line 73 of "reference-without-id.scad" but was overwritten in file reference-without-id.scad, line 318
+Geometries in cache: 42
+Geometry cache size in bytes: 360400
+CGAL Polyhedrons in cache: 7
+CGAL cache size in bytes: 8467664
+Total rendering time: 0:00:06.301
+   Top level object is a 3D object:
+   Simple:        yes
+   Vertices:     1688
+   Halfedges:    5064
+   Edges:        2532
+   Halffacets:   1724
+   Facets:        862
+   Volumes:         2

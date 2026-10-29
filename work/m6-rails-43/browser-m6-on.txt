@@ -1,0 +1,103 @@
+Browser tab: 2, Title: "Assembly Workshop · Lab Rax Studio", URL: "http://127.0.0.1:8819/".
+1 AXWebArea Assembly Workshop · Lab Rax Studio, URL: 127.0.0.1:8819/
+	2 container Description: Place on tray, ID: trayPlacement
+		3 text PLACE ON TRAY · U04
+		4 heading CM6B CM1000 generated split rails, Value: 2
+			5 text CM6B CM1000 generated split rails
+		6 button Edit library item…
+		7 text 212.6 × 136 × 38 mm, 0 mounting hole(s). These choices belong to this slot only; the library item is not changed.
+		8 tab group Devices on this tray
+			9 tab (selected, settable, boolean) CM6B CM1000 generated split rails, Value: 1
+			10 pop up button (collapsed, settable) Description: Second device, Value: + Add a second device…, Secondary Actions: Expand
+				11 menu
+					12 (selected) + Add a second device…
+					13 CM6B CM1000 generated split rails
+					14 Task 43 switch fixture
+					15 Raspberry Pi 4 (example)
+					16 Faceplate only
+		17 heading Top view, Value: 3
+			18 text Top view
+		19 container Description: Top view of the tray and faceplate, ID: tpTop
+		20 text Drag the device (snaps to 1 mm). Orange edge = device front. Blue dots = screw/hole positions. Dashed outline = the 204 mm tray limit (rack opening minus side clearance).
+		21 heading Position, Value: 3
+			22 text Position
+		23 container
+			24 text Left/right offset (mm)
+			25 stepper (settable, integer) Left/right offset (mm), Value: 0, ID: tpOffX
+		26 button Centre
+		27 container
+			28 text Front gap (mm)
+			29 stepper (settable, integer) Front gap (mm), Value: 12, ID: tpGap
+		30 text Front position:
+		31 checkbox As today, Value: 1
+		32 checkbox Flush with faceplate, Value: 0
+		33 checkbox Set back, Value: 0
+		34 text Flush and Set back are measured from the outside front face. Set back: 0–100 mm. Near the plate, use Sleeve or a single printed piece; flat corner stops need at least 10.2 mm set back.
+		35 text Rotate
+		36 container Rotation
+			37 checkbox 0°, Value: 1
+			38 checkbox 90°, Value: 0
+			39 checkbox 180°, Value: 0
+			40 checkbox 270°, Value: 0
+		41 heading Mounting, Value: 3
+			42 text Mounting
+		43 checkbox Screws + inserts, Value: 0
+		44 checkbox Pegs, Value: 0
+		45 checkbox Clips, Value: 0
+		46 checkbox Strap, Value: 0
+		47 checkbox Wall, Value: 0
+		48 checkbox Sits flat on the tray (PCs, boxes), Value: 1
+		49 checkbox Sleeve: boxed in, front flush (PCs, boxes), Value: 0
+		50 text Rests on the low floor with corner stops and optional strap slots. Retention UNKNOWN.
+		51 heading Live 3D preview, Value: 3
+			52 text Live 3D preview
+		53 image Description: Left drag: orbit · Right/middle drag: pan · Wheel: zoom at cursor · Z: fit · 0–7: views, ID: tpView
+		54 container Camera views
+			55 button Iso
+			56 button Top
+			57 button Front
+			58 button Fit
+		59 text Live sketch: boxes for the tray, faceplate, standoffs and device (translucent; orange = device front). Left-drag turns, right-drag moves, scroll zooms.
+		60 button Render exact preview
+		61 container Preview quality: Low is faster, High is sharper. Display only; saved in this browser for this view.
+			62 text Preview quality
+			63 slider (settable, integer) Description: Preview quality, Value: 1
+			64 text Medium
+		65 heading Faceplate, Value: 3
+			66 text Faceplate
+		67 text Bezel:
+		68 checkbox None, Value: 1
+		69 checkbox Chamfer, Value: 0
+		70 checkbox Rounded, Value: 0
+		71 text Bezel softens front opening edges only. Size 0.5–1.5 mm; reduced or omitted to preserve 2 mm webs. Rounded prints best with the front face up; Chamfer prints either way.
+		72 container
+			73 text Height (rack units)
+			74 stepper (settable, integer) Height (rack units), Value: 1
+		75 text Keystones at X
+		76 stepper (settable, integer) Description: Keystone X position (mm), Value: -100
+		77 text mm (0 = centre)
+		78 button + Add keystone
+		79 text Tray joint
+		80 checkbox Screw joint, Value: 1
+		81 checkbox Single printed piece, Value: 0
+		82 checkbox (settable, integer) Description: Rear support (tray runs to the back posts), Value: 0
+		83 container
+			84 checkbox (settable, integer) Value: 1, Description: M6 hardware Rack M6 inserts + M6 x 8 button heads, 4 joints, edge walls; device 15.5 mm back; fit/strength UNKNOWN.
+			85 text  M6 hardware  Rack M6 inserts + M6 x 8 button heads, 4 joints, edge walls; device 15.5 mm back; fit/strength UNKNOWN.
+		86 container
+			87 checkbox (settable, integer) Description: Split rails (3 pieces) Faceplate and two separate rails; fit, retention and strength UNKNOWN., Value: 0
+			88 text  Split rails (3 pieces)  Faceplate and two separate rails; fit, retention and strength UNKNOWN.
+		89 text Fit, retention, strength: UNKNOWN
+		90 text Tray 228.6 × 156 mm · device 212.6 × 136 mm on the tray · 1U faceplate.
+		91 container tpProblems
+			92 text •  This tray is 228.6 mm wide but the rack opening allows 204 mm (208 mm minus 2 mm each side). Too wide this way round; it fits if you press Rotate 90°.
+		93 text Changes stay in this window until you press Apply to draft. Apply changes the rack draft only; use Save to keep it.
+		94 button (disabled) Generate proposed STL files, ID: tpExport
+		95 container Export quality: curve detail of the STL files (OpenSCAD $fn). Standard = $fn 48, as before.
+			96 text Export quality
+			97 slider (settable, integer) Description: Export quality, Value: 1
+			98 text Standard ($fn 48)
+		99 button Cancel
+		100 button (disabled) Apply to draft, ID: tpApply
+
+The focused UI element is 1 AXWebArea Assembly Workshop · Lab Rax Studio, URL: 127.0.0.1:8819/
