@@ -1,0 +1,242 @@
+[
+  {
+    "path": "outputs/Final_3MF/SG8-M6-B_TL-SG108E_M6_set.3mf",
+    "current_sha256": "e363661365d4f2e0906468475f47f1c2596b4690101aa4fc7bc09f34e442284a",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/Hue_Pi4_M6_2026-10-28/HP4-M6-A_Hue_Pi4_M6_set.3mf",
+    "current_sha256": "d3f073bf43a2396c8a018c08df15e912407091d96745de12cc622574d5c96e76",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/Hue_Pi4_M6_2026-10-28/HP4-M6-A_faceplate.stl",
+    "current_sha256": "67a28b28a84aaa54b23dbd4f100092416d5901a7e791c060ce703f82bff06277",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/Hue_Pi4_M6_2026-10-28/HP4-M6-A_tray.stl",
+    "current_sha256": "045df99a1f35c685623f121e476587a16ee08eaa167e2dab218402d66451a902",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/Hue_Pi4_M6_2026-10-28/src/HP4-M6-A.scad",
+    "current_sha256": "fb34104bb960646145d4a3f94034a85d09f72cd38a052ab4021ca2651dd0ab6a",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/Hue_Pi4_M6_2026-10-28/src/HP4-M6-A_build.py",
+    "current_sha256": "e359efed50f2558ca81d8cea86899ab0553d1377e4caa86a68e3ce7df82c15d2",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/README.md",
+    "current_sha256": "11f48eeb5e96490e05069a2a14f1caf7d5e7c5e52d86490f0a86922d739acdc4",
+    "unchanged": true,
+    "proof": "matches clean starting Git blob (checkout line endings normalized)"
+  },
+  {
+    "path": "outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/TL-SG108E_1U_flush-ports_rear-stop_UPLINK.scad",
+    "current_sha256": "9c973e2d67a3629258988cb068db29cab882dffc7e768f2304446dadbc8eaae7",
+    "unchanged": true,
+    "proof": "matches clean starting Git blob (checkout line endings normalized)"
+  },
+  {
+    "path": "outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/TL-SG108E_1U_flush_keyhole-detents_rear-stop_UPLINK.scad",
+    "current_sha256": "8996fd7e4dbfd993e97bdee6d7720fe838209e5a9291b36f9a3b5827d70f50d5",
+    "unchanged": true,
+    "proof": "matches clean starting Git blob (checkout line endings normalized)"
+  },
+  {
+    "path": "outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/TL-SG108E_1U_flush_keyhole-detents_rear-stop_UPLINK_2-parts-print-layout.3mf",
+    "current_sha256": "5b471094cae99a607cb4631a6f710552ea074b5fe8aa7a366483f9b23cc2848b",
+    "unchanged": true,
+    "proof": "matches clean starting Git blob (checkout line endings normalized)"
+  },
+  {
+    "path": "outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/TL-SG108E_1U_flush_keyhole-detents_rear-stop_UPLINK_UPLINK-label-inlay.stl",
+    "current_sha256": "2744b49db3a8b70250630382e994aff570da9871c2c365212734f048676ebf1b",
+    "unchanged": true,
+    "proof": "matches clean starting Git blob (checkout line endings normalized)"
+  },
+  {
+    "path": "outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/TL-SG108E_1U_flush_keyhole-detents_rear-stop_UPLINK_faceplate.stl",
+    "current_sha256": "54e9cc10c2f9cc73e721b721ab50915f3b1fa71c5d63bfdcec2cb6b3481a4682",
+    "unchanged": true,
+    "proof": "matches clean starting Git blob (checkout line endings normalized)"
+  },
+  {
+    "path": "outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/TL-SG108E_1U_flush_keyhole-detents_rear-stop_UPLINK_rear-view.png",
+    "current_sha256": "5bc2536d9255da553815f74c37b22b5fcc3bb2e1b8e61bcc943eb612b3195145",
+    "unchanged": true,
+    "proof": "matches clean starting Git blob (checkout line endings normalized)"
+  },
+  {
+    "path": "outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/TL-SG108E_1U_flush_keyhole-detents_rear-stop_UPLINK_tray.stl",
+    "current_sha256": "194db052540274db525af5b65e8a73252b44e6d3576642bab6962deb3bef4700",
+    "unchanged": true,
+    "proof": "matches clean starting Git blob (checkout line endings normalized)"
+  },
+  {
+    "path": "outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/build.py",
+    "current_sha256": "d65ea4f848f65cbad7a77ada770ce6f63f3d502a7291cb5dd4cee023b7d5479a",
+    "unchanged": true,
+    "proof": "matches clean starting Git blob (checkout line endings normalized)"
+  },
+  {
+    "path": "outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/label_3mf.py",
+    "current_sha256": "81c1b806c777dcf3c6f65d7f567368790c5b3053cb8fb116df0486818ed81270",
+    "unchanged": true,
+    "proof": "matches clean starting Git blob (checkout line endings normalized)"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/SG8-M6-B_TL-SG108E_M6_set.3mf",
+    "current_sha256": "e363661365d4f2e0906468475f47f1c2596b4690101aa4fc7bc09f34e442284a",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/SG8-M6-B_UPLINK-label-inlay.stl",
+    "current_sha256": "2744b49db3a8b70250630382e994aff570da9871c2c365212734f048676ebf1b",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/SG8-M6-B_faceplate.stl",
+    "current_sha256": "c73754b9a336567330ea217655bc1483042924355a4dd2b18bca1485dbef9a56",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/SG8-M6-B_tray.stl",
+    "current_sha256": "1ca8c9e3c5afc0e1aeff277659bd48a4881679020d19874d2a1538398def0115",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/coupon_SG8-C1/README.md",
+    "current_sha256": "ccfa2c6065d4b741c16323a174c4d947880bf522e8dc8612b2bd14d597ae8bfa",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/coupon_SG8-C1/SG8-C1.scad",
+    "current_sha256": "1448f56b32af7e348d670e827681a3687a1d02cce3deb0e7303d06028358012a",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/coupon_SG8-C1/SG8-C1_faceplate.stl",
+    "current_sha256": "137948a4f7438ffca6c3fd012b4745abfff97b9371ecb3a34601d8dc9ff8362e",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/coupon_SG8-C1/SG8-C1_faceplate_src.scad",
+    "current_sha256": "a85892e8b309e4cc98fafea2d2338da749a0946a17ec02e66e3ec4cc66d3dcdd",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/coupon_SG8-C1/SG8-C1_screw_joint_coupon.3mf",
+    "current_sha256": "cd2d65af436c682d26d44220170a4eb40fdee6aff9de7fb550aa28e5386750fe",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/coupon_SG8-C1/SG8-C1_tray.stl",
+    "current_sha256": "991a5ad0a002d0cfeb845cc8890576dc1340bad828e0d2f1c5d5575318527fb5",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/coupon_SG8-C2/README.md",
+    "current_sha256": "f6977b5894fc76ea993f0cc82199361b2781596cc01c964bde73dbdf1365730e",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/coupon_SG8-C2/SG8-C2_boss.stl",
+    "current_sha256": "c2ff92fa691c82929b71521844dc3620bbc4c95a0c4fac431b564e29b91b0290",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/coupon_SG8-C2/SG8-C2_boss_coupon.3mf",
+    "current_sha256": "46bdc0687787d24877c0f79afce1e8d6ef0156e6b6e13415b6573daee0958db7",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/coupon_SG8-C2/SG8-C2_boss_src.scad",
+    "current_sha256": "3e0545c2b489bf304c09c97c0570f1808d9498a0b1b1859f74e6ed6657e2d2ab",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/previous_SG8-M6-A/README.md",
+    "current_sha256": "3553d718b1d669c59ec1a7ae602209c746e3d4deb59f992c14490496e2b1ed71",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/previous_SG8-M6-A/SG8-M6-A_TL-SG108E_M6_set.3mf",
+    "current_sha256": "e1f9638ab0662550953f67aae71dec2458adf4810cbcd7054e5bd4e097219532",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/previous_SG8-M6-A/SG8-M6-A_UPLINK-label-inlay.stl",
+    "current_sha256": "2744b49db3a8b70250630382e994aff570da9871c2c365212734f048676ebf1b",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/previous_SG8-M6-A/SG8-M6-A_faceplate.stl",
+    "current_sha256": "fd5ed9ef2dc3272f65d2eb5fc910fab82b71a0650e99118fa01b555888f6cba1",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/previous_SG8-M6-A/SG8-M6-A_tray.stl",
+    "current_sha256": "17619979eb41835b5d329910fd7d1eb2ff2635dd6479ffe66b0233ecdc34b7e2",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/previous_SG8-M6-A/src/SG8-M6-A.scad",
+    "current_sha256": "93ff529ca6d22c3658173649f9bc7b793dc60314b1a5dacc3430b59f0ce1380a",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/previous_SG8-M6-A/src/SG8-M6-A_build.py",
+    "current_sha256": "3c5c8aa94ea0a222939de204680c6be81ef85c003fe75d6149ca6fc7e5a136c5",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/previous_SG8-M6-A/src/label_3mf.py",
+    "current_sha256": "81c1b806c777dcf3c6f65d7f567368790c5b3053cb8fb116df0486818ed81270",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/src/SG8-M6-B.scad",
+    "current_sha256": "96ed6b861f9e9848db1c3714969cb9ba865790c270e46f874f04d95005763e4c",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  },
+  {
+    "path": "outputs/TL-SG108E_M6_2026-10-28/src/SG8-M6-B_build.py",
+    "current_sha256": "6d1113499757b881751d3a0c1cf36b7506aa5b2004d299cfa1c8e4ea76a0ae6f",
+    "unchanged": true,
+    "proof": "exact starting SHA-256 snapshot"
+  }
+]

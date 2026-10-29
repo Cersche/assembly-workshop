@@ -159,19 +159,72 @@ class SplitRailFidelityTests(unittest.TestCase):
         for value in [True,float('nan'),float('inf')]:
             with self.assertRaises(ValueError):eq.clean(dict(self.spec,m6_light_pipes=[[value,30,8,8.72]]))
 
-    def test_colour_layout_uses_plate_transform(self):
+    def test_colour_parts_are_faceplate_components_at_true_positions(self):
         import print_layout
         import io,zipfile,xml.etree.ElementTree as ET
-        tetra='solid a\n'+''.join('facet normal 0 0 1\nouter loop\n'+''.join('vertex %s %s %s\n'%v for v in tri)+'endloop\nendfacet\n' for tri in [[(0,-4,1),(1,-4,1),(0,-3.8,2)]])+'endsolid a\n'
-        parts={'faceplate':tetra,'rail_l':tetra,'rail_r':tetra,'pipe_1':tetra,'vector_1':tetra}
-        placed=dict(print_layout.place(parts))
-        self.assertEqual(placed['faceplate'],placed['pipe_1'])
-        self.assertEqual(placed['faceplate'],placed['vector_1'])
+        plate=[[(0,-4,1),(1,-4,1),(0,-3,2)]]
+        parts={'faceplate':print_layout.stl([('plate',plate)])}
+        for name in ['rail_l','rail_r']:
+            parts[name]=parts['faceplate']
+        names=[f'pipe_{i}' for i in range(1,6)]+[f'vector_{i}' for i in range(1,10)]
+        original={}
+        for i,name in enumerate(names):
+            tri=[(i*3.1,-4,20+i*.2),(i*3.1+1,-4,20+i*.2),(i*3.1,-3.8,21+i*.2)]
+            original[name]=tri
+            parts[name]=print_layout.stl([(name,[tri])])
         with zipfile.ZipFile(io.BytesIO(print_layout.layout_3mf(parts))) as z:
             root=ET.fromstring(z.read('3D/3dmodel.model'))
         ns={'m':'http://schemas.microsoft.com/3dmanufacturing/core/2015/02'}
-        self.assertEqual(len(root.findall('m:resources/m:object',ns)),5)
-        self.assertEqual(len(root.findall('m:resources/m:basematerials/m:base',ns)),2)
+        self.assertEqual(root.attrib['unit'],'millimeter')
+        objects={o.attrib['id']:o for o in root.findall('m:resources/m:object',ns)}
+        build=root.findall('m:build/m:item',ns)
+        self.assertEqual(len(build),3)
+        parent=objects[build[0].attrib['objectid']]
+        children=parent.findall('m:components/m:component',ns)
+        self.assertEqual(len(children),15)
+        self.assertIsNone(parent.find('m:mesh',ns))
+        indices=set()
+        for c in children:
+            self.assertNotIn('transform',c.attrib)
+            obj=objects[c.attrib['objectid']];name=obj.attrib['name']
+            if name=='faceplate':continue
+            self.assertIn(name,names)
+            self.assertEqual(obj.attrib['pid'],'1000')
+            indices.add(obj.attrib['pindex'])
+            actual=[tuple(float(v.attrib[k]) for k in ('x','y','z')) for v in obj.findall('m:mesh/m:vertices/m:vertex',ns)]
+            expected=[(x,-z,y+4) for x,y,z in original[name]]
+            self.assertEqual(len(actual),len(expected))
+            for av,ev in zip(actual,expected):
+                for aa,ee in zip(av,ev):self.assertLessEqual(abs(aa-ee),.001)
+        self.assertEqual(len(indices),14)
+        self.assertNotIn('0',indices)
+        self.assertEqual(len(root.findall('m:resources/m:basematerials/m:base',ns)),15)
+        for item in build[1:]:
+            rail=objects[item.attrib['objectid']]
+            self.assertEqual(len(rail.findall('m:components/m:component',ns)),1)
+        # Vector-only split rails must take the component path too.
+        vector_only={k:v for k,v in parts.items() if not k.startswith('pipe_')}
+        with zipfile.ZipFile(io.BytesIO(print_layout.layout_3mf(vector_only))) as z:
+            r=ET.fromstring(z.read('3D/3dmodel.model'))
+        self.assertEqual(len(r.findall('m:build/m:item',ns)),3)
+
+    def test_cm6b_rail_top_flat_around_engraved_id(self):
+        # Read delivered meshes only. run_checks never starts a render.
+        import sys
+        root=Path(__file__).resolve().parents[2]
+        sys.path.insert(0,str(root/'work/m6-rails-43'))
+        from measure_reference import mesh_info,crossing_intervals
+        for side,x in [('left',-104.4),('right',104.4)]:
+            v,t,_=mesh_info(root/f'outputs/CM1000_M6_generated_2026-10-28/CM6B_rail_{side}.stl')
+            heights=[]
+            # Strips on both sides of the intentional 3 mm ID lettering.
+            for dx in [-3.8,-2.4,2.4,3.8]:
+                for y in [64.123+i*.5 for i in range(83)]:
+                    intervals=crossing_intervals(v,t,2,[x+dx,y,0])
+                    self.assertTrue(intervals)
+                    heights.append(intervals[-1][1])
+            self.assertLessEqual(max(heights)-min(heights),.001,side)
+            self.assertLessEqual(max(abs(z-44.425) for z in heights),.001,side)
 
 
 if __name__ == '__main__':

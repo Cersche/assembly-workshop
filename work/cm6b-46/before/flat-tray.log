@@ -1,0 +1,28 @@
+WARNING: dev_w was assigned on line 9 of "flat.scad" but was overwritten in file flat.scad, line 263
+WARNING: dev_d was assigned on line 9 of "flat.scad" but was overwritten in file flat.scad, line 264
+WARNING: dev_h was assigned on line 9 of "flat.scad" but was overwritten in file flat.scad, line 265
+WARNING: hole_d was assigned on line 12 of "flat.scad" but was overwritten in file flat.scad, line 266
+WARNING: standoff was assigned on line 14 of "flat.scad" but was overwritten in file flat.scad, line 267
+WARNING: insert_pilot was assigned on line 15 of "flat.scad" but was overwritten in file flat.scad, line 268
+WARNING: board_t was assigned on line 16 of "flat.scad" but was overwritten in file flat.scad, line 269
+WARNING: u was assigned on line 18 of "flat.scad" but was overwritten in file flat.scad, line 270
+WARNING: holes was assigned on line 11 of "flat.scad" but was overwritten in file flat.scad, line 271
+WARNING: keystones was assigned on line 19 of "flat.scad" but was overwritten in file flat.scad, line 272
+WARNING: device_mount was assigned on line 13 of "flat.scad" but was overwritten in file flat.scad, line 273
+WARNING: joint was assigned on line 17 of "flat.scad" but was overwritten in file flat.scad, line 274
+WARNING: rear_support was assigned on line 31 of "flat.scad" but was overwritten in file flat.scad, line 275
+WARNING: coupon was assigned on line 32 of "flat.scad" but was overwritten in file flat.scad, line 276
+WARNING: ports was assigned on line 25 of "flat.scad" but was overwritten in file flat.scad, line 277
+Geometries in cache: 38
+Geometry cache size in bytes: 58768
+CGAL Polyhedrons in cache: 15
+CGAL cache size in bytes: 1718720
+Total rendering time: 0:00:01.360
+   Top level object is a 3D object:
+   Simple:        yes
+   Vertices:      368
+   Halfedges:    1104
+   Edges:         552
+   Halffacets:    396
+   Facets:        198
+   Volumes:         2

@@ -1,0 +1,651 @@
+{
+  "parts": {
+    "faceplate": {
+      "triangles": 31220,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -126.0,
+          -4.0,
+          0.0249939
+        ],
+        [
+          126.0,
+          12.0,
+          44.425
+        ]
+      ]
+    },
+    "rail_l": {
+      "triangles": 3000,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -110.233,
+          12.05,
+          0.0249996
+        ],
+        [
+          -91.9707,
+          133.62,
+          44.425
+        ]
+      ]
+    },
+    "rail_r": {
+      "triangles": 2960,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          91.9714,
+          12.05,
+          0.0249996
+        ],
+        [
+          110.232,
+          133.62,
+          44.425
+        ]
+      ]
+    },
+    "pipe_1": {
+      "triangles": 188,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -27.0002,
+          -4.0,
+          26.2251
+        ],
+        [
+          -19.0002,
+          4.72,
+          34.2251
+        ]
+      ]
+    },
+    "pipe_2": {
+      "triangles": 188,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          18.9998,
+          -4.0,
+          26.2251
+        ],
+        [
+          26.9998,
+          4.72,
+          34.2251
+        ]
+      ]
+    },
+    "pipe_3": {
+      "triangles": 188,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          7.49982,
+          -4.0,
+          26.2251
+        ],
+        [
+          15.4998,
+          4.72,
+          34.2251
+        ]
+      ]
+    },
+    "pipe_4": {
+      "triangles": 188,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -4.00018,
+          -4.0,
+          26.2251
+        ],
+        [
+          3.99982,
+          4.72,
+          34.2251
+        ]
+      ]
+    },
+    "pipe_5": {
+      "triangles": 188,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -15.5,
+          -4.0,
+          26.225
+        ],
+        [
+          -7.50003,
+          4.72,
+          34.225
+        ]
+      ]
+    },
+    "vector_1": {
+      "triangles": 28,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -90.764,
+          -4.0,
+          19.8343
+        ],
+        [
+          -86.9225,
+          -3.8,
+          24.5987
+        ]
+      ]
+    },
+    "vector_2": {
+      "triangles": 40,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -101.102,
+          -4.0,
+          19.8415
+        ],
+        [
+          -96.3357,
+          -3.8,
+          24.6062
+        ]
+      ]
+    },
+    "vector_3": {
+      "triangles": 44,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -80.093,
+          -4.0,
+          19.833
+        ],
+        [
+          -76.9226,
+          -3.8,
+          24.5908
+        ]
+      ]
+    },
+    "vector_4": {
+      "triangles": 64,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -76.1473,
+          -4.0,
+          19.8245
+        ],
+        [
+          -71.1582,
+          -3.8,
+          24.5869
+        ]
+      ]
+    },
+    "vector_5": {
+      "triangles": 44,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -94.8135,
+          -4.0,
+          19.8438
+        ],
+        [
+          -91.6431,
+          -3.8,
+          24.6016
+        ]
+      ]
+    },
+    "vector_6": {
+      "triangles": 344,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -86.3719,
+          -4.0,
+          19.7011
+        ],
+        [
+          -81.2258,
+          -3.8,
+          24.7407
+        ]
+      ]
+    },
+    "vector_7": {
+      "triangles": 180,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -70.362,
+          -4.0,
+          19.8193
+        ],
+        [
+          -66.2042,
+          -3.8,
+          24.5852
+        ]
+      ]
+    },
+    "vector_8": {
+      "triangles": 60,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -9.98337,
+          -4.0,
+          31.3066
+        ],
+        [
+          -8.70299,
+          -3.8,
+          32.3881
+        ]
+      ]
+    },
+    "vector_9": {
+      "triangles": 68,
+      "closed": true,
+      "components": 1,
+      "bounds": [
+        [
+          -14.5879,
+          -4.0,
+          28.7767
+        ],
+        [
+          -13.4069,
+          -3.8,
+          29.9754
+        ]
+      ]
+    }
+  },
+  "packaging": {
+    "build_items": 3,
+    "unit": "millimeter",
+    "object_tree": [
+      {
+        "id": "16",
+        "name": "faceplate assembly",
+        "parts": [
+          "faceplate",
+          "pipe_1",
+          "pipe_2",
+          "pipe_3",
+          "pipe_4",
+          "pipe_5",
+          "vector_1",
+          "vector_2",
+          "vector_3",
+          "vector_4",
+          "vector_5",
+          "vector_6",
+          "vector_7",
+          "vector_8",
+          "vector_9"
+        ]
+      },
+      {
+        "id": "18",
+        "name": "rail L",
+        "parts": [
+          "rail_l"
+        ]
+      },
+      {
+        "id": "20",
+        "name": "rail R",
+        "parts": [
+          "rail_r"
+        ]
+      }
+    ],
+    "colour_parts": 14,
+    "independent_colour_properties": 14,
+    "mesh_parity": [
+      {
+        "part": "faceplate",
+        "triangles": 31220,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "pipe_1",
+        "triangles": 188,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "pipe_2",
+        "triangles": 188,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "pipe_3",
+        "triangles": 188,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "pipe_4",
+        "triangles": 188,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "pipe_5",
+        "triangles": 188,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "vector_1",
+        "triangles": 28,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "vector_2",
+        "triangles": 40,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "vector_3",
+        "triangles": 44,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "vector_4",
+        "triangles": 64,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "vector_5",
+        "triangles": 44,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "vector_6",
+        "triangles": 344,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "vector_7",
+        "triangles": 180,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "vector_8",
+        "triangles": 60,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "vector_9",
+        "triangles": 68,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "rail_l",
+        "triangles": 3000,
+        "positions_equal_to_6dp": true
+      },
+      {
+        "part": "rail_r",
+        "triangles": 2960,
+        "positions_equal_to_6dp": true
+      }
+    ],
+    "position_error_max_mm": 5e-07
+  },
+  "rail_top": {
+    "l": {
+      "samples": 332,
+      "region": {
+        "x_offsets": [
+          -3.8,
+          -2.4,
+          2.4,
+          3.8
+        ],
+        "y": [
+          64.123,
+          105.123
+        ]
+      },
+      "before_z_range": [
+        44.421,
+        44.421
+      ],
+      "after_z_range": [
+        44.425,
+        44.425
+      ],
+      "flatness": 0.0,
+      "CM6A_centre_strip_flatness": 0.0,
+      "CM6A_top_z_range": [
+        44.45,
+        44.45
+      ]
+    },
+    "r": {
+      "samples": 332,
+      "region": {
+        "x_offsets": [
+          -3.8,
+          -2.4,
+          2.4,
+          3.8
+        ],
+        "y": [
+          64.123,
+          105.123
+        ]
+      },
+      "before_z_range": [
+        43.95,
+        44.4215
+      ],
+      "after_z_range": [
+        44.425,
+        44.425
+      ],
+      "flatness": 0.0,
+      "CM6A_centre_strip_flatness": 0.0,
+      "CM6A_top_z_range": [
+        44.45,
+        44.45
+      ]
+    }
+  },
+  "critical_geometry": {
+    "l": {
+      "axis_rays": 190,
+      "max_interval_boundary_change_mm": 0.0,
+      "region_z_below": 43.9,
+      "old_bounds": [
+        [
+          -110.233,
+          12.05,
+          0.0249996
+        ],
+        [
+          -91.9707,
+          133.62,
+          44.425
+        ]
+      ],
+      "new_bounds": [
+        [
+          -110.233,
+          12.05,
+          0.0249996
+        ],
+        [
+          -91.9707,
+          133.62,
+          44.425
+        ]
+      ]
+    },
+    "r": {
+      "axis_rays": 190,
+      "max_interval_boundary_change_mm": 0.0,
+      "region_z_below": 43.9,
+      "old_bounds": [
+        [
+          91.9714,
+          12.05,
+          0.0249996
+        ],
+        [
+          110.232,
+          133.62,
+          44.425
+        ]
+      ],
+      "new_bounds": [
+        [
+          91.9714,
+          12.05,
+          0.0249996
+        ],
+        [
+          110.232,
+          133.62,
+          44.425
+        ]
+      ]
+    }
+  },
+  "unchanged_part_triangles": {
+    "faceplate": true,
+    "pipe_1": true,
+    "pipe_2": true,
+    "pipe_3": true,
+    "pipe_4": true,
+    "pipe_5": true,
+    "vector_1": true,
+    "vector_2": true,
+    "vector_3": true,
+    "vector_4": true,
+    "vector_5": true,
+    "vector_6": true,
+    "vector_7": true,
+    "vector_8": true,
+    "vector_9": true
+  },
+  "legacy_14": [
+    {
+      "label": "example-0-Raspberry Pi 4 (example)",
+      "before": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec",
+      "after": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec",
+      "explicit_false": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec"
+    },
+    {
+      "label": "library-copy-0-Raspberry Pi 4 (example)",
+      "before": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec",
+      "after": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec",
+      "explicit_false": "fe6bff2a485ce7814614000a90da9c6679509ed8b4b69dd5d6dac30023f6baec"
+    },
+    {
+      "label": "library-copy-1-Dell OptiPlex Micro 7010 (sleeve)",
+      "before": "fcb9dff6521aaa19ec3753e7781fd80968556b0f70d6663181bfcef44be751e3",
+      "after": "fcb9dff6521aaa19ec3753e7781fd80968556b0f70d6663181bfcef44be751e3",
+      "explicit_false": "fcb9dff6521aaa19ec3753e7781fd80968556b0f70d6663181bfcef44be751e3"
+    },
+    {
+      "label": "library-copy-2-Drive tray (3.5\" HDD + 2.5\" SSD)",
+      "before": "3297879222e50ed29b4a51dcc9ea8518a326ef2e217f4fc07f27b30240562a4e",
+      "after": "3297879222e50ed29b4a51dcc9ea8518a326ef2e217f4fc07f27b30240562a4e",
+      "explicit_false": "3297879222e50ed29b4a51dcc9ea8518a326ef2e217f4fc07f27b30240562a4e"
+    },
+    {
+      "label": "library-copy-3-7\" touch screen plate (placeholder)",
+      "before": "2046c1b868b97fee6086d32a6624dffc2ccdf1685b9c15af4d2708fa05a25745",
+      "after": "2046c1b868b97fee6086d32a6624dffc2ccdf1685b9c15af4d2708fa05a25745",
+      "explicit_false": "2046c1b868b97fee6086d32a6624dffc2ccdf1685b9c15af4d2708fa05a25745"
+    },
+    {
+      "label": "library-copy-4-Keystone panel, 10 (3 USB, 4 LAN, 3 blank)",
+      "before": "2a641ad48c0a91ea8649abebe33a2d6b3ce556039f36bb23b2d3af4d4b173635",
+      "after": "2a641ad48c0a91ea8649abebe33a2d6b3ce556039f36bb23b2d3af4d4b173635",
+      "explicit_false": "2a641ad48c0a91ea8649abebe33a2d6b3ce556039f36bb23b2d3af4d4b173635"
+    },
+    {
+      "label": "library-copy-5-TP-Link TL-SG108E",
+      "before": "8252da3ca3388b62cc2033c067866604e6f9efb072810d4c19ac83ae31beb26b",
+      "after": "8252da3ca3388b62cc2033c067866604e6f9efb072810d4c19ac83ae31beb26b",
+      "explicit_false": "8252da3ca3388b62cc2033c067866604e6f9efb072810d4c19ac83ae31beb26b"
+    },
+    {
+      "label": "library-copy-6-Modem ECB7250 (placeholder)",
+      "before": "733df8f95e2d357cfd9848858db6b9c3e20abf346619d0150108599493efdb77",
+      "after": "733df8f95e2d357cfd9848858db6b9c3e20abf346619d0150108599493efdb77",
+      "explicit_false": "733df8f95e2d357cfd9848858db6b9c3e20abf346619d0150108599493efdb77"
+    },
+    {
+      "label": "library-copy-7-Netgear CM1000 (bracket: faceplate + rails v2)",
+      "before": "37de9848c08753bdc88d624a3c0615aa66412defb78c942c9b0f053d4fbef9f8",
+      "after": "37de9848c08753bdc88d624a3c0615aa66412defb78c942c9b0f053d4fbef9f8",
+      "explicit_false": "37de9848c08753bdc88d624a3c0615aa66412defb78c942c9b0f053d4fbef9f8"
+    },
+    {
+      "label": "library-copy-8-Philips Hue Bridge + Raspberry Pi 4 (keystone)",
+      "before": "a9d706913e20e313aed44020250df824b77606ae60d526ad1b1e7491b9d9485d",
+      "after": "a9d706913e20e313aed44020250df824b77606ae60d526ad1b1e7491b9d9485d",
+      "explicit_false": "a9d706913e20e313aed44020250df824b77606ae60d526ad1b1e7491b9d9485d"
+    },
+    {
+      "label": "HDT-M6-A",
+      "before": "5c95b78d4e34bc1214a90c1211bd29aafa9ab146d777f32b6ffa094b67e3e117",
+      "after": "5c95b78d4e34bc1214a90c1211bd29aafa9ab146d777f32b6ffa094b67e3e117",
+      "explicit_false": "5c95b78d4e34bc1214a90c1211bd29aafa9ab146d777f32b6ffa094b67e3e117"
+    },
+    {
+      "label": "flat",
+      "before": "0af470dbcf9c5329c5d357f95f637ac9d600c31ff8f2198cf55c833f31aac456",
+      "after": "0af470dbcf9c5329c5d357f95f637ac9d600c31ff8f2198cf55c833f31aac456",
+      "explicit_false": "0af470dbcf9c5329c5d357f95f637ac9d600c31ff8f2198cf55c833f31aac456"
+    },
+    {
+      "label": "sleeve",
+      "before": "bb538705be18bedcda86387540f93509ae2192adaf492992abc5b28f369a5113",
+      "after": "bb538705be18bedcda86387540f93509ae2192adaf492992abc5b28f369a5113",
+      "explicit_false": "bb538705be18bedcda86387540f93509ae2192adaf492992abc5b28f369a5113"
+    },
+    {
+      "label": "two-device-pair",
+      "before": "fda9389e0f7d4113f432a783aac5f9a54cd9159aff34d23ea8e27aa2a6c8564c",
+      "after": "fda9389e0f7d4113f432a783aac5f9a54cd9159aff34d23ea8e27aa2a6c8564c",
+      "explicit_false": "fda9389e0f7d4113f432a783aac5f9a54cd9159aff34d23ea8e27aa2a6c8564c"
+    }
+  ],
+  "protected": {
+    "files": 110,
+    "all_unchanged": true
+  }
+}

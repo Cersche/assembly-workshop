@@ -1,0 +1,41 @@
+{
+  "HDT-M6-A": {
+    "same_input_3mf_byte_identical": true,
+    "same_input_layout_stl_byte_identical": true,
+    "source_byte_identical": true,
+    "fresh_render_triangle_identical": {
+      "faceplate": true,
+      "tray": true
+    },
+    "fresh_raw_STL_bytes_equal": {
+      "faceplate": false,
+      "tray": false
+    },
+    "packer_output_sha256": {
+      "model3mf": "f76a79d9b5f043ab3ecbf09a10a8f3a015afb5a6f1fb4b5552964d24c9447cd4",
+      "layout_stl": "263ac1769ef3b6c8d8633ea09e07b74bebd8d8524d9a0b03bad787125d80a349"
+    }
+  },
+  "flat": {
+    "same_input_3mf_byte_identical": true,
+    "same_input_layout_stl_byte_identical": true,
+    "source_byte_identical": true,
+    "fresh_render_triangle_identical": {
+      "faceplate": true,
+      "tray": true
+    },
+    "fresh_raw_STL_bytes_equal": {
+      "faceplate": false,
+      "tray": false
+    },
+    "packer_output_sha256": {
+      "model3mf": "23c258c9882cb976d7f30a5a756a4339d54de8aae18d5d52e234005c769a3247",
+      "layout_stl": "24f1de5d39bdc64fd85e490ca0dbaadf6ca5621fe7c326be691e4fb05d1dc10c"
+    }
+  },
+  "HDT_triangle_identical": {
+    "faceplate": true,
+    "tray": true
+  },
+  "ZIP_clock": "Fixed 2026-10-28 12:00:00 for both packers; ZIP timestamps otherwise encode run time."
+}
