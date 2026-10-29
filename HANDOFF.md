@@ -1,5 +1,9 @@
 # Assembly Workshop — current handoff
 
+## 2026-10-29 SCR5-C spec (task 50) — screen + Pi + Hue in one 2U
+
+Brian: option with screen left, Pi 4 lower right (USB/Ethernet to front), Hue on a shelf top right extending behind the screen, keystone top right, M6 tray joints; U5 freed. Spec `work/codex-tasks/50-scr5-c-screen-pi-hue-2u.md`, prompt `docs/prompts/codex/50-scr5-c-screen-pi-hue-2u.md`. Waiting for Codex; SCR5-B stays the provisional Final_3MF plate.
+
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
 ## 2026-10-29 SCR5-B task 49 — digital gate PASS; physical validation UNKNOWN
