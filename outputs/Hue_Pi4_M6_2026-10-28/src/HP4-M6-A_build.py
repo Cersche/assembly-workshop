@@ -7,6 +7,7 @@ from pathlib import Path
 from collections import Counter, defaultdict
 import json, os, re, subprocess, sys, tempfile, zipfile
 import xml.etree.ElementTree as ET
+ET.register_namespace('', 'http://schemas.microsoft.com/3dmanufacturing/core/2015/02')  # plain tags: slicers reject ns0: prefixes
 
 ID = 'HP4-M6-A'
 SOURCE = Path(__file__).with_name(ID+'.scad')
