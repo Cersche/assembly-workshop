@@ -1,0 +1,62 @@
+{
+  "objects": [
+    {
+      "name": "SCR5-B plate",
+      "vertices": 2440,
+      "triangles": 4912,
+      "edges": 7368,
+      "bounds": [
+        [
+          0.0,
+          252.0
+        ],
+        [
+          0.0,
+          88.7999849319458
+        ],
+        [
+          0.0,
+          24.0
+        ]
+      ],
+      "shells": 1,
+      "bad_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "degenerate_faces": [],
+      "signed_volume_mm3": 80580.72015120435,
+      "pass": true,
+      "triangle_equivalence": "exact indexed triangles after rigid rotation and translation"
+    },
+    {
+      "name": "SCR5-B rear frame",
+      "vertices": 4486,
+      "triangles": 8988,
+      "edges": 13482,
+      "bounds": [
+        [
+          264.0,
+          401.5
+        ],
+        [
+          0.0,
+          77.69998168945312
+        ],
+        [
+          0.0,
+          11.700000762939453
+        ]
+      ],
+      "shells": 1,
+      "bad_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "degenerate_faces": [],
+      "signed_volume_mm3": 13776.740764568825,
+      "pass": true,
+      "triangle_equivalence": "exact indexed triangles after rigid rotation and translation"
+    }
+  ],
+  "positive_gap_mm": 12.0,
+  "plain_tags": true,
+  "relationships": "pass",
+  "slicer_load": "NOT TESTED"
+}

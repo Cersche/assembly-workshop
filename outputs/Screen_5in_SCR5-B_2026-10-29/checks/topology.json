@@ -1,0 +1,52 @@
+{
+  "SCR5-B plate": {
+    "vertices": 2440,
+    "triangles": 4912,
+    "edges": 7368,
+    "bounds": [
+      [
+        -126.0,
+        126.0
+      ],
+      [
+        -4.0,
+        20.0
+      ],
+      [
+        0.05000591278076172,
+        88.84999084472656
+      ]
+    ],
+    "shells": 1,
+    "bad_edges": 0,
+    "inconsistent_winding_edges": 0,
+    "degenerate_faces": [],
+    "signed_volume_mm3": 80580.72015120558,
+    "pass": true
+  },
+  "SCR5-B rear frame": {
+    "vertices": 4486,
+    "triangles": 8988,
+    "edges": 13482,
+    "bounds": [
+      [
+        -68.75,
+        68.75
+      ],
+      [
+        12.299999237060547,
+        24.0
+      ],
+      [
+        5.600006103515625,
+        83.29998779296875
+      ]
+    ],
+    "shells": 1,
+    "bad_edges": 0,
+    "inconsistent_winding_edges": 0,
+    "degenerate_faces": [],
+    "signed_volume_mm3": 13776.74076456869,
+    "pass": true
+  }
+}

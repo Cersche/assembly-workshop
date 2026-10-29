@@ -1,0 +1,396 @@
+{
+  "slots": [
+    {
+      "centre_xz": [
+        -118.2625,
+        6.323
+      ],
+      "parsed_boundary_bounds": [
+        [
+          -123.26249694824219,
+          -113.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          2.822998046875,
+          9.822998046875
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        -118.2625,
+        38.127
+      ],
+      "parsed_boundary_bounds": [
+        [
+          -123.26249694824219,
+          -113.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          34.62699890136719,
+          41.62699890136719
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        -118.2625,
+        50.773
+      ],
+      "parsed_boundary_bounds": [
+        [
+          -123.26249694824219,
+          -113.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          47.27299499511719,
+          54.27299499511719
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        -118.2625,
+        82.577
+      ],
+      "parsed_boundary_bounds": [
+        [
+          -123.26249694824219,
+          -113.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          79.07699584960938,
+          86.07699584960938
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        118.2625,
+        6.323
+      ],
+      "parsed_boundary_bounds": [
+        [
+          113.26249694824219,
+          123.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          2.822998046875,
+          9.822998046875
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        118.2625,
+        38.127
+      ],
+      "parsed_boundary_bounds": [
+        [
+          113.26249694824219,
+          123.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          34.62699890136719,
+          41.62699890136719
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        118.2625,
+        50.773
+      ],
+      "parsed_boundary_bounds": [
+        [
+          113.26249694824219,
+          123.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          47.27299499511719,
+          54.27299499511719
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        118.2625,
+        82.577
+      ],
+      "parsed_boundary_bounds": [
+        [
+          113.26249694824219,
+          123.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          79.07699584960938,
+          86.07699584960938
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    }
+  ],
+  "scr5_a_slot_boundary_vertices": "exact equality, all eight; original read only",
+  "scr5_a_plate_bounds": "exact parsed equality",
+  "measured_aperture_bounds": [
+    [
+      -57.34999084472656,
+      57.34999084472656
+    ],
+    [
+      -4.0,
+      -4.0
+    ],
+    [
+      8.850006103515625,
+      80.04998779296875
+    ]
+  ],
+  "pilot_axes": [
+    {
+      "axis_xz": [
+        -65.5,
+        22
+      ],
+      "plate_material_hits_y": [
+        -4.0,
+        15.799999237060545,
+        15.799999237060547
+      ],
+      "frame_through_hole": "open"
+    },
+    {
+      "axis_xz": [
+        -65.5,
+        67
+      ],
+      "plate_material_hits_y": [
+        -4.0,
+        15.799999237060545,
+        15.799999237060547
+      ],
+      "frame_through_hole": "open"
+    },
+    {
+      "axis_xz": [
+        65.5,
+        22
+      ],
+      "plate_material_hits_y": [
+        -4.0,
+        15.799999237060547
+      ],
+      "frame_through_hole": "open"
+    },
+    {
+      "axis_xz": [
+        65.5,
+        67
+      ],
+      "plate_material_hits_y": [
+        -4.0,
+        15.799999237060547
+      ],
+      "frame_through_hole": "open"
+    }
+  ],
+  "assembly": {
+    "plate_frame_intersection": {
+      "volume_mm3": 3.1602914729589315e-12,
+      "bounds": [
+        [
+          -68.75,
+          68.75
+        ],
+        [
+          20.0,
+          20.0
+        ],
+        [
+          5.663013935089111,
+          83.23697662353516
+        ]
+      ],
+      "triangles": 1128
+    },
+    "plate_screen_intersection": {
+      "volume_mm3": 0.0,
+      "bounds": [
+        [
+          -60.5,
+          60.5
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          5.84999942779541,
+          83.05000305175781
+        ]
+      ],
+      "triangles": 128
+    },
+    "frame_screen_intersection": {
+      "volume_mm3": 18.614479398961855,
+      "bounds": [
+        [
+          -60.0,
+          60.0
+        ],
+        [
+          12.299999237060547,
+          12.59999942779541
+        ],
+        [
+          12.449999809265137,
+          76.44999694824219
+        ]
+      ],
+      "triangles": 816
+    },
+    "unintended": {
+      "volume_mm3": 0,
+      "result": "empty CGAL intersection"
+    },
+    "intended": {
+      "volume_mm3": 18.614479398961862,
+      "bounds": [
+        [
+          -60.0,
+          60.0
+        ],
+        [
+          12.299999237060547,
+          12.59999942779541
+        ],
+        [
+          12.449999809265137,
+          76.44999694824219
+        ]
+      ],
+      "triangles": 816
+    },
+    "seating_clearance": {
+      "volume_mm3": 0,
+      "result": "empty CGAL intersection"
+    }
+  },
+  "nominal_preload_contact_mm3": 18.614479398961862,
+  "analytic_pad_contact_mm3": 18.620575041173108,
+  "engraving": {
+    "source_text": "SCR5-B",
+    "removed_volume_mm3": 13.441204160222696,
+    "floor_vertices": 1180,
+    "remaining_wall_mm": 3.5
+  },
+  "provisional_component_keepouts": {
+    "touch_keepout": {
+      "box": [
+        [
+          -18,
+          18
+        ],
+        [
+          9,
+          14
+        ],
+        [
+          34,
+          50
+        ]
+      ],
+      "overlapping_triangle_aabbs": 0,
+      "provenance": "provisional only; actual component clearance UNKNOWN"
+    },
+    "fpc_keepout": {
+      "box": [
+        [
+          12,
+          32
+        ],
+        [
+          9,
+          14
+        ],
+        [
+          47,
+          59
+        ]
+      ],
+      "overlapping_triangle_aabbs": 0,
+      "provenance": "provisional only; actual component clearance UNKNOWN"
+    }
+  },
+  "invalid_configurations_rejected": [
+    "long_screw",
+    "short_screw",
+    "deep_seat",
+    "zero_pilot",
+    "nan_clearance",
+    "window_covers_active",
+    "through_id",
+    "boss_hits_screen",
+    "excess_preload",
+    "pad_off_pcb",
+    "access_hits_pad",
+    "negative_radius",
+    "square_pcb_blocked",
+    "boss_unanchored",
+    "button_hits_pad"
+  ],
+  "conditional": [
+    "Square outline rear insertion passes with frame removed; no screen disassembly required",
+    "12.6 total-depth box is an envelope, not actual PCB contact surface",
+    "Actual component-free contact lands, button/finger approach, preload and retention UNKNOWN",
+    "Active registration UNKNOWN; centred assumed rectangle and 0.25 keepout pass",
+    "Numerical self-intersection screen only; no exact-arithmetic certification or slicer test"
+  ]
+}

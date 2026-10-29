@@ -1,0 +1,83 @@
+{
+  "status": "PASS \u2014 conditional digital geometry; no physical approval",
+  "architecture_blockers": [],
+  "active_keepout_xz": [
+    -54.75,
+    54.75,
+    11.300000000000004,
+    77.6
+  ],
+  "aperture_xz": [
+    -57.35,
+    57.35,
+    8.850000000000001,
+    80.05000000000001
+  ],
+  "active_registration": "UNKNOWN; configured offset 0 and 0.25 margin only",
+  "boss_axes_xz": [
+    [
+      -65.5,
+      22
+    ],
+    [
+      -65.5,
+      67
+    ],
+    [
+      65.5,
+      22
+    ],
+    [
+      65.5,
+      67
+    ]
+  ],
+  "boss_radius_mm": 3.25,
+  "boss_to_screen_with_clearance_mm": 1.25,
+  "screen_clearance_outlines": {
+    "glass_x": [
+      -60.85,
+      60.85
+    ],
+    "glass_z": [
+      5.350000000000001,
+      83.55000000000001
+    ],
+    "pcb_x": [
+      -61.0,
+      61.0
+    ],
+    "pcb_z": [
+      5.950000000000003,
+      82.95
+    ]
+  },
+  "pocket_reliefs": "outward circles at square cavity corners; square seating path is a subset",
+  "pad_front_y": 12.299999999999999,
+  "preload_mm": 0.3,
+  "pad_projection_mm": 7.700000000000001,
+  "screw_stack_mm": 4,
+  "screw_length_range_mm": [
+    6.5,
+    7.6
+  ],
+  "selected_length_mm": 7,
+  "nominal_engagement_mm": 3,
+  "insert_tip_reserve_mm": 1,
+  "pilot_floor_mm": 15.8,
+  "engraving_remaining_wall_mm": 3.5,
+  "fixed_rear_y": 20,
+  "frame_rear_y": 24,
+  "screw_head_rear_y": 26.5,
+  "physical_unknowns": {
+    "active_registration": null,
+    "glass_pcb_registration": null,
+    "actual_screen_depth_and_contact_lands": null,
+    "insert_pilot_process_and_usable_engagement": null,
+    "actual_screw_head_and_tool": null,
+    "component_touch_fpc_envelopes": null,
+    "button_positions_and_finger_access": null,
+    "ribbon_connector_bend_and_reach": null,
+    "pad_pressure_preload_retention_fit_strength": null
+  }
+}

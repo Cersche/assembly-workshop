@@ -1,0 +1,18 @@
+{
+  "SCR5-B plate": {
+    "candidate_nonedge_pairs": 51743,
+    "coplanar_pairs": 17261,
+    "intersections": [],
+    "pass": true,
+    "predicate_tolerance_mm": 1e-09,
+    "scope": "AABB sweep, incident edges excluded; coplanar overlap and transverse segment/triangle screen; not exact-arithmetic certification"
+  },
+  "SCR5-B rear frame": {
+    "candidate_nonedge_pairs": 105295,
+    "coplanar_pairs": 39935,
+    "intersections": [],
+    "pass": true,
+    "predicate_tolerance_mm": 1e-09,
+    "scope": "AABB sweep, incident edges excluded; coplanar overlap and transverse segment/triangle screen; not exact-arithmetic certification"
+  }
+}

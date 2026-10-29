@@ -1,0 +1,20 @@
+{
+  "status": "PASS \u2014 --final digital gate; physical validation UNKNOWN",
+  "topology": "pass",
+  "geometry": "pass",
+  "3mf": "independent exact rigid roundtrip pass; two named objects, plain tags",
+  "architecture": "plate bosses -> screws -> removable frame -> edge pads -> screen -> lip; no screen fasteners or interspace access",
+  "unknowns": [
+    "active_registration",
+    "glass_pcb_registration",
+    "actual_screen_depth_and_contact_lands",
+    "insert_pilot_process_and_usable_engagement",
+    "actual_screw_head_and_tool",
+    "component_touch_fpc_envelopes",
+    "button_positions_and_finger_access",
+    "ribbon_connector_bend_and_reach",
+    "pad_pressure_preload_retention_fit_strength"
+  ],
+  "physical": "NOT PRINTED; vendor nominal; fit, preload, retention, access, ribbon reach and strength UNKNOWN",
+  "private_artifact": "private Artifact publishing pending in Claude"
+}

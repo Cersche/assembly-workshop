@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "SCR5-B-index.html",
+    "SCR5-B-review.html",
+    "SCR5-B-assembled.html",
+    "SCR5-B-front.html",
+    "SCR5-B-rear.html",
+    "SCR5-B-print.html",
+    "SCR5-B-probes.html",
+    "SCR5-B-preservation.html"
+  ],
+  "load": "both delivered STLs, final 3MF, all retained probe STLs and original comparison plate parsed by mesh_viewer.py",
+  "interactive_visual_review": "not performed; no desktop control session",
+  "SendUserFile": "not available in this host",
+  "private_artifact": "private Artifact publishing pending in Claude"
+}

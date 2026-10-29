@@ -1,0 +1,79 @@
+{
+  "status": "planning assumptions, NOT a checked cable route",
+  "coordinate_frame": "screen local; rack global Z=local+88.90; U5 local Z=screen local Z-88.90; common plate rear Y=0",
+  "slot_source": "outputs/Hue_Pi4_M6-B_2026-10-28/src/HP4-M6-B.scad dsi_slot_cut; read only, no reference mesh opened",
+  "floor_z_derivation": "U5 tray_z=7+1.225=8.225, tray_t=3; screen-local floor 97.125..100.125",
+  "slot_x": [
+    -86,
+    -62
+  ],
+  "slot_y": [
+    87,
+    95
+  ],
+  "u5_start_screen_local_z": 88.9,
+  "waypoints": [
+    {
+      "label": "screen connector, assumed",
+      "xyz": [
+        -52,
+        13.1,
+        66.45
+      ]
+    },
+    {
+      "label": "top-left exit, assumed",
+      "xyz": [
+        -52,
+        18,
+        87.5
+      ]
+    },
+    {
+      "label": "lateral transition, assumed",
+      "xyz": [
+        -74,
+        25,
+        90
+      ]
+    },
+    {
+      "label": "U5 floor slot underside",
+      "xyz": [
+        -74,
+        91,
+        97.125
+      ]
+    },
+    {
+      "label": "U5 floor slot top",
+      "xyz": [
+        -74,
+        91,
+        100.125
+      ]
+    },
+    {
+      "label": "Pi connector, assumed",
+      "xyz": [
+        -74,
+        81,
+        110.4
+      ]
+    }
+  ],
+  "segment_lengths_mm": [
+    21.612785567806846,
+    23.221757039466244,
+    66.38347403533503,
+    3.0,
+    14.33790866897959
+  ],
+  "polyline_length_mm": 128.5559253115877,
+  "assumed_extra_connector_insertion_mm": 16,
+  "assumed_slack_mm": 15,
+  "assumed_bend_reserve_mm": 10,
+  "illustrative_total_mm": 169.5559253115877,
+  "160mm_reach": "UNKNOWN; illustrative reserved path exceeds 160, coordinates/insertion/bends unmeasured",
+  "obstructions": "Actual component obstacles, connector contact orientation, tool/finger access and bend sweeps UNKNOWN"
+}
