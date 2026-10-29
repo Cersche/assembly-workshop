@@ -66,7 +66,7 @@ Complete manifest: `outputs/Screen_5in_SCR5-B_2026-10-29/checks/hashes.json`; pr
 
 | File | SHA-256 |
 | --- | --- |
-| `src/SCR5-B_build.py` | `cf0829437765fd285f237b0cfeecf6c72a6ea1e73c929097cc289eaeadf490ff` |
+| `src/SCR5-B_build.py` | `17b49f9646754965ee9ed4e946c12d419902e15716128b912f9c58c523275e18` |
 | `src/SCR5-B_geometry_checks.py` | `5a342c28f1bb2067e9fba94aa365936719e85c4c949b52e667c312f07d91bf17` |
 | `src/SCR5-B_review.py` | `af31dc4c3831e7504ffb5f4a6fc9346d68d773876d9fbc1de14413d047f0b8b8` |
 | `src/SCR5-B.scad` | `0686fee448e2207c59980467e2a4be8c6efb8f41e0651dac4e26e367c5d995e6` |

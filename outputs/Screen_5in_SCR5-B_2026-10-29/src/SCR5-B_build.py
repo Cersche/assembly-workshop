@@ -326,5 +326,3 @@ if __name__=='__main__':
     except Exception as exc:
         dump(CHECKS/'acceptance.json',{'status':'FAILED; no validated current export','error':str(exc)})
         raise
-
-
