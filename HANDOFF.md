@@ -2,13 +2,21 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-29 Task 47 - HP4-M6-B digital checks complete
+
+Built the specified translated swap in `outputs/Hue_Pi4_M6-B_2026-10-28/`; HP4-M6-A and its M6 geometry preserved. Pi left, Hue/keystone right, no mirroring or extra features. Tray 7,256 / plate 5,232 triangles, each one closed shell; contact only at Y=0, 0 volume; all five clearance checks pass (full lane joint to Pi 6.5 mm); rear X=-102..102.4. Two-object 3MF has plain vertex/triangle tags, both min Z=0. 376 protected file hashes unchanged. Report: [task 47](work/codex-tasks/47-hue-pi4-m6-b-REPORT.md); local viewers/evidence in `work/hue-pi4-m6-47/`. Next: Brian/Claude review; no Final_3MF copy, printing, commit or push authorized/performed. Fit, strength and DSI ribbon reach UNKNOWN.
+
 ## 2026-10-28 Rack layout and 5" screen plan (Brian)
 
 Rack (data/normal-use, commit 9e35c66): U9 CM1000, U8 TL-SG108E, U7 keystone, U6 HDD/SSD, U5 Hue + Pi 4, U4–U2 empty, U1 OptiPlex. Incoming: Waveshare 5inch DSI LCD (C), ships with 50 mm and 2×160 mm 15-pin DSI cables (one likely 22-pin Pi 5). Brian picked **option A**: 2U screen plate at U4–U3, driven by the U5 Pi over the 160 mm cable; **U2 reserved for cooling** (above the OptiPlex). Screen dimensions, ribbon reach past the HP4-M6-A tray and fit are UNKNOWN until Brian measures the screen. No library item yet.
 
 **Decided 2026-10-28:** screen stays upright and centred; instead the Hue + Pi bracket gets a new revision **HP4-M6-B** with the Pi moved to the left (X negative) and the Hue to the right, so the Pi's DSI connector sits on the screen-connector side. HP4-M6-A stays immutable. Redesign runs in its own fresh session (Codex executes, Claude specs/reviews). Vendor screen dims: work/screen-5in/Dimensions.md.
 
-## 2026-10-28 Task 47 — HP4-M6-B spec written (Pi left, Hue right)
+## 2026-10-29 HP4-M6-B built (task 47) + DSI slot — waiting for Brian
+
+Codex built task 47 (report `work/codex-tasks/47-hue-pi4-m6-b-REPORT.md`, all checks PASS). Brian then asked for the ribbon slot: Claude added `dsi_slot_cut()` (24 x 8 mm, X -86..-62, Y 87..95) to `outputs/Hue_Pi4_M6-B_2026-10-28/src/HP4-M6-B.scad` and rebuilt with the build script (tray 7,276 tris, closed single shell; 3MF plain tags 6,230/12,508, no ns0). Viewer https://claude.ai/artifact/KNLCn5GwbtCxaqgpzE5iuK. Reach ~160 mm (borderline); a longer cable would be a Pi 4 DSI 15-pin 1.0 mm-pitch FFC, same-side contacts (Type A), 200-300 mm. Next: Brian reviews; on approval copy the 3MF to `outputs/Final_3MF/` (replace HP4) and update its README. Not printed; reach/fit UNKNOWN.
+
+### Spec notes (2026-10-28)
 
 Spec [work/codex-tasks/47-hue-pi4-m6-b.md](work/codex-tasks/47-hue-pi4-m6-b.md), prompt `docs/prompts/codex/47-hue-pi4-m6-b.md`. Patch of HP4-M6-A, whole layout swapped and translated, not mirrored (Brian: the keystone belongs to the Hue and moves with it): tray X -102..82.5, Pi X -102..-46, openings X -93/-75/-56.3, lane X -46..-12.9 (33.1 mm kept), Hue cradle X 34.5, keystone X 92.5, ties X -42.5/-19.5, M6 joints X -29.5/11/57, ID HP4-M6-B at X 34.5. Output `outputs/Hue_Pi4_M6-B_2026-10-28/`. **DSI estimate (not measured):** Pi 4 DSI connector near the Pi's rear end (about X -74, Y 81, ~19-24 above the U5 slot bottom), ribbon leaves upward; screen connector about X -52, ~25 mm below U5. A's layout ~270 mm; B over the tray's rear edge ~230 mm (too long for 160); through a floor slot right behind the Pi ~160 mm (borderline). Floor slot NOT in the spec: Brian to decide. Next: Brian runs task 47, then "review codex tasks", viewer, approval, Final_3MF copy. Reach/fit UNKNOWN.
 

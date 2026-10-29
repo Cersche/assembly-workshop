@@ -1,0 +1,25 @@
+{
+  "source_scope_passed": true,
+  "allowed_literal_changes": 11,
+  "ID_comment_rename": "HP4-M6-A -> HP4-M6-B",
+  "mirror_calls_A": 1,
+  "mirror_calls_B": 1,
+  "mirror_usage": "unchanged to_rear helper only; no translated device/keystone uses it",
+  "xml_objects": [
+    {
+      "name": "HP4-M6-B Hue + Pi 4 tray",
+      "plain_vertex_tags": 3620,
+      "plain_triangle_tags": 7256,
+      "stl_vertices": 3620,
+      "stl_triangles": 7256
+    },
+    {
+      "name": "HP4-M6-B Hue + Pi 4 faceplate",
+      "plain_vertex_tags": 2602,
+      "plain_triangle_tags": 5232,
+      "stl_vertices": 2602,
+      "stl_triangles": 5232
+    }
+  ],
+  "ns0_prefixes": 0
+}

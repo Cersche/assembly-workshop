@@ -1,0 +1,294 @@
+{
+  "clearance": {
+    "passed": true,
+    "extra_id_tab_intersection": "empty, OpenSCAD exit 1; overlapping AABBs were inconclusive, exact geometry intersection is empty",
+    "method": "All lengths mm. Positive Euclidean AABB separations are conservative lower bounds, not exact closest mesh distances. Full M6 joint includes low 4 mm coves beyond nominal tab +/-10. Pi/port bounds use triangle-to-box distances from a rendered full joint; rounded ports are inside their boxes. Keystone uses Y>0 rear envelope. Cradle read/cut/rendered in place.",
+    "keystone": {
+      "full_x": [
+        82,
+        103
+      ],
+      "rear_x": [
+        82.6,
+        102.4
+      ],
+      "floor_x_gap_mm": 0.1,
+      "A_floor_x_gap_mm": 0.1,
+      "nominal_full_block_x_overlap_mm": 0.5,
+      "A_nominal_full_block_x_overlap_mm": 0.5,
+      "cradle_y_gap_mm": 16.38001,
+      "right_joint_x_gap_mm": 15.599999999999994
+    },
+    "pi_opening_webs": [
+      {
+        "port_x": -93.0,
+        "left_rack_slot_horizontal_web_mm": 12.762500000000003,
+        "left_plate_edge_web_mm": 25.5,
+        "bottom_web_mm": 18.025000000000002,
+        "top_web_mm": 8.875
+      },
+      {
+        "port_x": -75.0,
+        "left_rack_slot_horizontal_web_mm": 30.762500000000003,
+        "left_plate_edge_web_mm": 43.5,
+        "bottom_web_mm": 18.025000000000002,
+        "top_web_mm": 8.875
+      },
+      {
+        "port_x": -56.3,
+        "left_rack_slot_horizontal_web_mm": 48.212500000000006,
+        "left_plate_edge_web_mm": 60.95,
+        "bottom_web_mm": 18.075000000000003,
+        "top_web_mm": 11.324999999999996
+      }
+    ],
+    "joints": [
+      {
+        "x": -29.5,
+        "conservative_envelope": [
+          [
+            -43.5,
+            0,
+            11.215
+          ],
+          [
+            -15.5,
+            14.3,
+            42.225
+          ]
+        ],
+        "gap_lower_bounds_mm": {
+          "pi_footprint": 6.5,
+          "pi_openings": 8.343671035019595,
+          "cradle_posts": 8.764131445842194,
+          "tie_slots": 81.7,
+          "keystone_rear": 98.1
+        },
+        "smallest_guaranteed_gap_mm": 6.5
+      },
+      {
+        "x": 11,
+        "conservative_envelope": [
+          [
+            -3,
+            0,
+            11.215
+          ],
+          [
+            25,
+            14.3,
+            42.225
+          ]
+        ],
+        "gap_lower_bounds_mm": {
+          "pi_footprint": 43.4179697821075,
+          "pi_openings": 45.83661991246736,
+          "cradle_posts": 8.399999999999999,
+          "tie_slots": 82.80784986944172,
+          "keystone_rear": 57.599999999999994
+        },
+        "smallest_guaranteed_gap_mm": 8.399999999999999
+      },
+      {
+        "x": 57,
+        "conservative_envelope": [
+          [
+            43,
+            0,
+            11.215
+          ],
+          [
+            71,
+            14.3,
+            42.225
+          ]
+        ],
+        "gap_lower_bounds_mm": {
+          "pi_footprint": 89.20269110290339,
+          "pi_openings": 91.189888282638,
+          "cradle_posts": 8.399999999999999,
+          "tie_slots": 101.06997575937179,
+          "keystone_rear": 11.599999999999994
+        },
+        "smallest_guaranteed_gap_mm": 8.399999999999999
+      }
+    ],
+    "cradle": {
+      "bounds": [
+        [
+          -13.0,
+          22.7,
+          11.18
+        ],
+        [
+          82.0,
+          117.7,
+          38.88
+        ]
+      ],
+      "tray_right_inset_mm": 0.5,
+      "tray_left_inset_mm": 89.0,
+      "tray_rear_inset_mm": 5.700000000000003,
+      "tie_x_gap_mm": 3.5,
+      "joint_y_gap_mm": 8.399999999999999
+    },
+    "ids": {
+      "plate-id": {
+        "bounds": [
+          [
+            22.0606,
+            -0.6,
+            7.94577
+          ],
+          [
+            47.1525,
+            0.01,
+            11.8789
+          ]
+        ],
+        "gap_lower_bounds_mm": {
+          "bosses": 13.646488246431755,
+          "pi_openings": 69.8880370132829,
+          "rack_slots": 66.11,
+          "cradle_posts": 22.689999999999998,
+          "tie_slots": 103.44563776380326,
+          "keystone_rear": 35.44749999999999,
+          "tongue_slots": 3.5474999999999994
+        },
+        "smallest_guaranteed_gap_mm": 3.5474999999999994
+      },
+      "tray-id": {
+        "bounds": [
+          [
+            22.0606,
+            118.946,
+            10.625
+          ],
+          [
+            47.1525,
+            122.879,
+            11.235
+          ]
+        ],
+        "gap_lower_bounds_mm": {
+          "bosses": 111.86082098862855,
+          "pi_openings": 137.98882118983408,
+          "rack_slots": 136.08573114033666,
+          "cradle_posts": 1.2459999999999951,
+          "tie_slots": 40.08409645183486,
+          "keystone_rear": 118.07261911539905,
+          "tongue_slots": 111.70250745730823
+        },
+        "smallest_guaranteed_gap_mm": 1.2459999999999951
+      }
+    },
+    "lane_width_mm": 33.1,
+    "pi_translation_mm": -148,
+    "hue_translation_mm": 69,
+    "keystone_translation_mm": 185,
+    "lane_joint_detail": {
+      "nominal_tab_x": [
+        -39.5,
+        -19.5
+      ],
+      "tab_to_pi_x_gap_mm": 6.5,
+      "full_cove_x": [
+        -43.5,
+        -15.5
+      ],
+      "cove_projected_x_gap_mm": 2.5,
+      "cove_top_z_mm": 15.215,
+      "pi_bottom_z_mm": 17.225,
+      "full_joint_to_pi_box_minimum_mm": 6.5,
+      "distance_algorithm": "minimum vertex-to-triangle and edge-to-edge distances on disjoint triangle surfaces; no coordinate rounding"
+    }
+  },
+  "tray": {
+    "triangles": 7276,
+    "vertices": 3628,
+    "edges": 10914,
+    "bad_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_triangles": 1,
+    "shells": 1,
+    "signed_volume_mm3": 86817.10956549748,
+    "minimum": [
+      -102.0,
+      0.0,
+      8.225
+    ],
+    "maximum": [
+      82.5,
+      123.4,
+      42.225
+    ],
+    "behind_plate_x": [
+      -102.0,
+      82.5
+    ],
+    "inherited_assignment_warnings": 35
+  },
+  "faceplate": {
+    "triangles": 5232,
+    "vertices": 2602,
+    "edges": 7848,
+    "bad_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_triangles": 2,
+    "shells": 1,
+    "signed_volume_mm3": 44081.508031243065,
+    "minimum": [
+      -126.0,
+      -4.07999,
+      0.0249939
+    ],
+    "maximum": [
+      126.0,
+      8.0,
+      44.425
+    ],
+    "behind_plate_x": [
+      -36.5,
+      102.4
+    ],
+    "inherited_assignment_warnings": 35
+  },
+  "intersection": "contact only, 0 volume",
+  "contact_triangles": 760,
+  "contact_plane": "Y=0 exactly; no rounding",
+  "3mf_objects": [
+    {
+      "name": "HP4-M6-B Hue + Pi 4 tray",
+      "triangles": 7276,
+      "minimum": [
+        -102.0,
+        0.0,
+        0.0
+      ],
+      "maximum": [
+        82.5,
+        123.4,
+        34.0
+      ]
+    },
+    {
+      "name": "HP4-M6-B Hue + Pi 4 faceplate",
+      "triangles": 5232,
+      "minimum": [
+        -126.0,
+        -54.400006,
+        0.0
+      ],
+      "maximum": [
+        126.0,
+        -10.0,
+        12.07999
+      ]
+    }
+  ],
+  "plain_xml_tags": {
+    "vertices": 6230,
+    "triangles": 12508,
+    "ns0_prefixes": 0
+  }
+}
