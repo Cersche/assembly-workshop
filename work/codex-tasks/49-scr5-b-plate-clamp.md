@@ -12,6 +12,13 @@ SCR5-A (task 48) fastens into a carrier ring between glass and PCB, assuming a 6
 - Frame openings: top-left ribbon pass (connector ~8 mm from the left edge seen from front, upper half) routed toward HP4-M6-B floor slot X -86..-62, Y 87..95; finger access to the top-edge buttons; open centre for cooling/the ribbon. Smooth edges where the ribbon touches.
 - Engrave SCR5-B on the frame rear, positive wall left. Plate keeps no visible engraving on the front.
 
+## Rounded corners (Brian, 2026-10-29, marked on the SCR5-A viewer)
+Round every sharp corner Brian circled; all radii are parameters:
+- Plate front window (aperture) corners: default R4. Check the rounded aperture still leaves the nominal active area (109 x 65.8, centred assumption) uncovered; corner inset is R x 0.414 along the diagonal, so R4 stays well inside the 2.85 mm margin. Keep registration UNKNOWN.
+- Plate rear pocket inner corners: the glass/PCB are square-cornered, so a plain fillet would block them. Use corner reliefs (dog-bone or overcut) or a radius no larger than the configured clearance; prove the nominal glass/PCB still seat on the lip.
+- Clamp frame: outer corners default R3, inner opening corners default R3; round tab/pad corners where practical.
+- Plate outer corners stay 2.5 mm (four-corner standard, unchanged).
+
 ## Deliverables
 New folder `outputs/Screen_5in_SCR5-B_2026-10-29/`: parameterized SCAD (may reuse task 48 source as a base; do not edit task 48 outputs), Python 3.10 stdlib + OpenSCAD.exe builder, parameters JSON, README, checks. `SCR5-B_plate.stl`, `SCR5-B_frame.stl`, `SCR5-B_screen_plate_and_frame.3mf` (two named objects, flat, side by side, min Z 0, plain vertex/triangle tags, no ns0). Report `work/codex-tasks/49-scr5-b-plate-clamp-REPORT.md`.
 
