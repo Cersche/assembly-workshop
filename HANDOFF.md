@@ -2,6 +2,10 @@
 
 Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
 
+## 2026-10-28 Rack layout and 5" screen plan (Brian)
+
+Rack (data/normal-use, commit 9e35c66): U9 CM1000, U8 TL-SG108E, U7 keystone, U6 HDD/SSD, U5 Hue + Pi 4, U4–U2 empty, U1 OptiPlex. Incoming: Waveshare 5inch DSI LCD (C), ships with 50 mm and 2×160 mm 15-pin DSI cables (one likely 22-pin Pi 5). Brian picked **option A**: 2U screen plate at U4–U3, driven by the U5 Pi over the 160 mm cable; **U2 reserved for cooling** (above the OptiPlex). Screen dimensions, ribbon reach past the HP4-M6-A tray and fit are UNKNOWN until Brian measures the screen. No library item yet.
+
 ## 2026-10-28 Task 45 — Hue + Pi 4 HP4-M6-A ready for review
 
 Built `outputs/Hue_Pi4_M6_2026-10-28/`: three M6 joints at unchanged X, screw Z=32.225, 0.6 mm engraved IDs, STLs and two-object 3MF. Baseline/cradle layout, Pi mounts/openings, cable lane/ties and keystone preserved. Exact edge closure and single-shell checks pass; rear X=-102.4..102. Brian accepted the intended Y=0 intersection as **contact only, 0 volume** and prohibited clearance relief. Fit/strength UNKNOWN; not printed. Report: `work/codex-tasks/45-hue-pi4-m6-REPORT.md`. Protected hashes unchanged. No commit/push per Brian. Reviewed by Claude (report checks, viewer https://claude.ai/artifact/9bsoj25nh78R8hy3u2ezkk). Next: Brian reviews HP4-M6-A; Brian finalized it; 3MF copied to `outputs/Final_3MF/`. Then OptiPlex SLV-F. Faceplate painter rework (IDEAS.md) is planned for later.
