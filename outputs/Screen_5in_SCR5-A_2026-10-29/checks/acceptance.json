@@ -1,0 +1,42 @@
+{
+  "status": "INCOMPLETE REVIEW ONLY; final export blocked",
+  "topology": "pass",
+  "plate_bounds": [
+    [
+      -126.0,
+      126.0
+    ],
+    [
+      -4.0,
+      20.0
+    ],
+    [
+      0.05000591278076172,
+      88.84999084472656
+    ]
+  ],
+  "3mf": "independent roundtrip pass",
+  "hardware": "BLOCKED: see conditional-clearance.json",
+  "physical": "NOT PRINTED; fit/retention/access/ribbon reach/strength UNKNOWN",
+  "self_intersection": "numerical triangle screen pass; see self-intersection.json for scope",
+  "assembly_intersection": {
+    "result": "boundary contact only",
+    "volume_mm3": 0.0,
+    "bounds": [
+      [
+        -65.75,
+        65.75
+      ],
+      [
+        3.0,
+        16.0
+      ],
+      [
+        20.450000762939453,
+        68.44999694824219
+      ]
+    ]
+  },
+  "slots_and_engraving": "measured from parsed meshes; see geometry.json",
+  "private_artifact": "private Artifact publishing pending in Claude"
+}

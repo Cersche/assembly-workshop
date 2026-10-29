@@ -1,0 +1,52 @@
+{
+  "SCR5-A plate": {
+    "vertices": 1072,
+    "triangles": 2192,
+    "edges": 3288,
+    "bounds": [
+      [
+        -126.0,
+        126.0
+      ],
+      [
+        -4.0,
+        20.0
+      ],
+      [
+        0.05000591278076172,
+        88.84999084472656
+      ]
+    ],
+    "shells": 1,
+    "bad_edges": 0,
+    "inconsistent_winding_edges": 0,
+    "degenerate_faces": [],
+    "signed_volume_mm3": 79056.11994031284,
+    "pass": true
+  },
+  "SCR5-A rear frame": {
+    "vertices": 3042,
+    "triangles": 6084,
+    "edges": 9126,
+    "bounds": [
+      [
+        -67.75,
+        67.75
+      ],
+      [
+        3.0,
+        18.5
+      ],
+      [
+        5.5999908447265625,
+        83.29998779296875
+      ]
+    ],
+    "shells": 1,
+    "bad_edges": 0,
+    "inconsistent_winding_edges": 0,
+    "degenerate_faces": [],
+    "signed_volume_mm3": 13635.713117164058,
+    "pass": true
+  }
+}

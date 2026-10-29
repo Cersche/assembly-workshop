@@ -1,0 +1,316 @@
+{
+  "slots": [
+    {
+      "centre_xz": [
+        -118.2625,
+        6.323
+      ],
+      "parsed_boundary_bounds": [
+        [
+          -123.26249694824219,
+          -113.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          2.822998046875,
+          9.822998046875
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        -118.2625,
+        38.127
+      ],
+      "parsed_boundary_bounds": [
+        [
+          -123.26249694824219,
+          -113.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          34.62699890136719,
+          41.62699890136719
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        -118.2625,
+        50.773
+      ],
+      "parsed_boundary_bounds": [
+        [
+          -123.26249694824219,
+          -113.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          47.27299499511719,
+          54.27299499511719
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        -118.2625,
+        82.577
+      ],
+      "parsed_boundary_bounds": [
+        [
+          -123.26249694824219,
+          -113.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          79.07699584960938,
+          86.07699584960938
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        118.2625,
+        6.323
+      ],
+      "parsed_boundary_bounds": [
+        [
+          113.26249694824219,
+          123.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          2.822998046875,
+          9.822998046875
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        118.2625,
+        38.127
+      ],
+      "parsed_boundary_bounds": [
+        [
+          113.26249694824219,
+          123.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          34.62699890136719,
+          41.62699890136719
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        118.2625,
+        50.773
+      ],
+      "parsed_boundary_bounds": [
+        [
+          113.26249694824219,
+          123.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          47.27299499511719,
+          54.27299499511719
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    },
+    {
+      "centre_xz": [
+        118.2625,
+        82.577
+      ],
+      "parsed_boundary_bounds": [
+        [
+          113.26249694824219,
+          123.26249694824219
+        ],
+        [
+          -4.0,
+          0.0
+        ],
+        [
+          79.07699584960938,
+          86.07699584960938
+        ]
+      ],
+      "horizontal_10x7": true,
+      "through_at_five_interior_rays": true
+    }
+  ],
+  "measured_aperture_bounds": [
+    [
+      -57.34999084472656,
+      57.34999084472656
+    ],
+    [
+      -4.0,
+      -4.0
+    ],
+    [
+      8.850006103515625,
+      80.04998779296875
+    ]
+  ],
+  "screw_pilots": [
+    {
+      "axis_xz": [
+        -56.5,
+        10.450000000000003
+      ],
+      "pilot_axis_material_hits_y": [
+        3.0,
+        3.799999237060547
+      ]
+    },
+    {
+      "axis_xz": [
+        -56.5,
+        78.45
+      ],
+      "pilot_axis_material_hits_y": [
+        3.0,
+        3.7999992370605464
+      ]
+    },
+    {
+      "axis_xz": [
+        56.5,
+        10.450000000000003
+      ],
+      "pilot_axis_material_hits_y": [
+        3.0000000000000004,
+        3.799999237060547
+      ]
+    },
+    {
+      "axis_xz": [
+        56.5,
+        78.45
+      ],
+      "pilot_axis_material_hits_y": [
+        3.0,
+        3.7999992370605464
+      ]
+    }
+  ],
+  "assembly": {
+    "result": "boundary contact only",
+    "volume_mm3": 0.0,
+    "bounds": [
+      [
+        -65.75,
+        65.75
+      ],
+      [
+        3.0,
+        16.0
+      ],
+      [
+        20.450000762939453,
+        68.44999694824219
+      ]
+    ]
+  },
+  "provisional_component_keepouts": {
+    "touch_keepout": {
+      "box": [
+        [
+          -18,
+          18
+        ],
+        [
+          9,
+          14
+        ],
+        [
+          34,
+          50
+        ]
+      ],
+      "overlapping_triangle_aabbs": 0,
+      "provenance": "assumed, not measured component geometry"
+    },
+    "fpc_keepout": {
+      "box": [
+        [
+          12,
+          32
+        ],
+        [
+          9,
+          14
+        ],
+        [
+          47,
+          59
+        ]
+      ],
+      "overlapping_triangle_aabbs": 0,
+      "provenance": "assumed, not measured component geometry"
+    }
+  },
+  "engraving": {
+    "source_text": "SCR5-A",
+    "removed_volume_mm3": 12.671742425880439,
+    "floor_vertices": 1081,
+    "remaining_wall_mm": 4.5
+  },
+  "invalid_configurations_rejected": [
+    "long_screw",
+    "short_screw",
+    "deep_insert_seat",
+    "zero_pilot",
+    "negative_gap",
+    "nan_clearance",
+    "excess_aperture_radius",
+    "through_engraving",
+    "clip_hits_pcb_when_retracted"
+  ],
+  "self_intersection_screen": "pass",
+  "skipped_or_conditional": [
+    "Physical screen insertion/preassembly/clip deflection unverified",
+    "Actual corner bearing regions/component/tool/access envelopes unverified",
+    "Active registration unknown: centred corners are conditional only",
+    "No exact-arithmetic self-intersection certification or slicer test"
+  ]
+}

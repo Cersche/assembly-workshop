@@ -1,0 +1,86 @@
+{
+  "status": "CONDITIONAL concept arithmetic; not measured hardware",
+  "screw_stack_mm": 1.6,
+  "screw_length_range_mm": [
+    4.1,
+    5.199999999999999
+  ],
+  "selected_screw_length_mm": 5,
+  "nominal_engagement_mm": 3.4,
+  "insert_front_tip_gap_mm": 0.6000000000000001,
+  "pilot_floor_mm": 0.7999999999999998,
+  "engraving_remaining_wall_mm": 4.5,
+  "cavity_half_xz": [
+    65.75,
+    39.6
+  ],
+  "active_keepout_xz": [
+    -54.75,
+    54.75,
+    11.300000000000004,
+    77.6
+  ],
+  "aperture_xz": [
+    -57.35,
+    57.35,
+    8.850000000000001,
+    80.05000000000001
+  ],
+  "centred_assumed_active_corners_inside_rounded_aperture": true,
+  "boss_projection": [
+    {
+      "axis": [
+        -56.5,
+        10.450000000000003
+      ],
+      "radius": 3.25,
+      "signed_projection_gap": -1.3044923541656275
+    },
+    {
+      "axis": [
+        -56.5,
+        78.45
+      ],
+      "radius": 3.25,
+      "signed_projection_gap": -1.3044923541656244
+    },
+    {
+      "axis": [
+        56.5,
+        10.450000000000003
+      ],
+      "radius": 3.25,
+      "signed_projection_gap": -1.3044923541656275
+    },
+    {
+      "axis": [
+        56.5,
+        78.45
+      ],
+      "radius": 3.25,
+      "signed_projection_gap": -1.3044923541656244
+    }
+  ],
+  "glass_to_frame_front_gap_mm": 1,
+  "required_assumed_glass_to_pcb_gap_mm": 6,
+  "clip_nominal_retraction_mm": 2.25,
+  "retracted_clip_to_pcb_edge_mm": 2.0,
+  "blockers": [
+    "Unverified active_registration",
+    "Unverified glass_pcb_registration",
+    "Unverified glass_thickness_and_interposer_gap",
+    "Unverified pcb_plane_thickness_and_corner_bearing_regions",
+    "Unverified corner_hole_plain_or_threaded",
+    "Unverified head_and_tool_envelope",
+    "Unverified insert_pilot_process_and_usable_engagement",
+    "Unverified component_and_touch_fpc_envelopes",
+    "Unverified button_positions",
+    "Unverified ribbon_connector_and_bend_envelope",
+    "Unverified clip_capture_release_and_retention",
+    "Bosses overlap active keepout in projection; behind-glass placement and registration require review"
+  ],
+  "front_projection_clearance_verified": false,
+  "glass_insertion": "Nominal rear-loaded subassembly fits cavity; interposer preassembly access and clip deflection UNKNOWN",
+  "component_clearance": "Only provisional touch/FPC boxes; actual full-board component clearance UNKNOWN",
+  "retention": "Four frame hooks engage pocket windows; clip strain, insertion, release and screen pressure UNKNOWN"
+}
