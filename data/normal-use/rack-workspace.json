@@ -99,7 +99,7 @@
           },
           "id": "u6-pi-hue",
           "equipment": "eq-de5e30c93309",
-          "slot": 4,
+          "slot": 5,
           "span": 1,
           "geometry": "equipment-library",
           "fit": "UNKNOWN"
@@ -263,83 +263,8 @@
           },
           "id": "u2-90c95fdb9fce",
           "equipment": "eq-90c95fdb9fce",
-          "slot": 8,
+          "slot": 4,
           "span": 1,
-          "geometry": "equipment-library",
-          "fit": "UNKNOWN"
-        },
-        {
-          "assembly": {
-            "id": "asm-278463949c82970f096ed529db496fed",
-            "name": "7\" touch screen plate (placeholder) (U3–U5)",
-            "revision": 1,
-            "project": {
-              "selections": {
-                "screw": {
-                  "id": "accu-sscf-m3-8-a2",
-                  "revision": 1,
-                  "name": "Accu M3 × 8 socket cap · A2",
-                  "kind": "screw",
-                  "manufacturer": "Accu",
-                  "part_number": "SSCF-M3-8-A2",
-                  "diameter": 3,
-                  "pitch": 0.5,
-                  "length": 8,
-                  "threaded_length": 8,
-                  "length_convention": "under_head",
-                  "head_diameter": 5.5,
-                  "head_height": 3,
-                  "drive": "2.5 mm hex",
-                  "material": "A2 stainless steel",
-                  "finish": "Natural",
-                  "verification": "documented",
-                  "source": "https://www.accu.co.uk/metric-cap-head-screws/3818-SSCF-M3-8-A2",
-                  "retrieved": "2026-10-17",
-                  "availability": "Not checked",
-                  "cad_status": "Supplier CAD link only; no model downloaded",
-                  "notes": "Nominal dimensions; head diameter tolerance +0/-0.18 mm, height +0/-0.14 mm. Full-thread specification from supplier."
-                },
-                "heatset": {
-                  "id": "mcmaster-94459a140",
-                  "revision": 1,
-                  "name": "McMaster M3 heat-set · 5.7 mm",
-                  "kind": "heatset",
-                  "part_number": "94459A140",
-                  "diameter": 3,
-                  "pitch": 0.5,
-                  "length": 5.7,
-                  "hole_max_diameter": 4,
-                  "hole_profile": "straight",
-                  "end_type": "open",
-                  "material": "Brass",
-                  "verification": "partial",
-                  "source": "https://www.mcmaster.com/products/94459a170/",
-                  "retrieved": "2026-10-17",
-                  "availability": "Not checked",
-                  "cad_status": "No CAD downloaded",
-                  "notes": "Catalog standard-profile brass row. 4 mm is For Max. Hole Dia., not an exact installation target. Outside diameter, usable thread depth and minimum wall remain unverified."
-                }
-              },
-              "inputs": {
-                "stack": 3.3,
-                "pocket": 8,
-                "boss_diameter": 9,
-                "pilot": 4,
-                "minimum_engagement": 3,
-                "bottom_allowance": 0.5
-              },
-              "notes": "Clearance v2 baseline. Insert pilot is provisional. Physical testing pending.",
-              "id": "asm-278463949c82970f096ed529db496fed",
-              "name": "7\" touch screen plate (placeholder) (U3–U5)",
-              "units": "mm"
-            },
-            "appearance": {},
-            "fit": "UNKNOWN"
-          },
-          "id": "u3-6cee544dd821",
-          "equipment": "eq-6cee544dd821",
-          "slot": 5,
-          "span": 3,
           "geometry": "equipment-library",
           "fit": "UNKNOWN"
         },
