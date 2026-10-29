@@ -1,0 +1,85 @@
+{
+  "tray": {
+    "triangles": 6908,
+    "vertices": 3446,
+    "edges": 10362,
+    "bad_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_triangles": 1,
+    "shells": 1,
+    "signed_volume_mm3": 87394.43393980879,
+    "minimum": [
+      -82.5,
+      0.0,
+      8.225
+    ],
+    "maximum": [
+      102.0,
+      123.4,
+      42.225
+    ],
+    "behind_plate_x": [
+      -82.5,
+      102.0
+    ],
+    "inherited_assignment_warnings": 35
+  },
+  "faceplate": {
+    "triangles": 4884,
+    "vertices": 2428,
+    "edges": 7326,
+    "bad_edges": 0,
+    "inconsistent_edges": 0,
+    "degenerate_triangles": 2,
+    "shells": 1,
+    "signed_volume_mm3": 44082.83312459467,
+    "minimum": [
+      -126.0,
+      -4.07999,
+      0.0249939
+    ],
+    "maximum": [
+      126.0,
+      8.0,
+      44.425
+    ],
+    "behind_plate_x": [
+      -102.4,
+      36.5
+    ],
+    "inherited_assignment_warnings": 35
+  },
+  "intersection": "contact only, 0 volume",
+  "contact_triangles": 628,
+  "contact_plane": "Y=0 exactly; no rounding",
+  "3mf_objects": [
+    {
+      "name": "HP4-M6-A Hue + Pi 4 tray",
+      "triangles": 6908,
+      "minimum": [
+        -82.5,
+        0.0,
+        0.0
+      ],
+      "maximum": [
+        102.0,
+        123.4,
+        34.0
+      ]
+    },
+    {
+      "name": "HP4-M6-A Hue + Pi 4 faceplate",
+      "triangles": 4884,
+      "minimum": [
+        -126.0,
+        -54.400006,
+        0.0
+      ],
+      "maximum": [
+        126.0,
+        -10.0,
+        12.07999
+      ]
+    }
+  ]
+}

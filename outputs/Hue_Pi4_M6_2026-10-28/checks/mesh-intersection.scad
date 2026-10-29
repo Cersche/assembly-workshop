@@ -1,0 +1,1 @@
+intersection(){import("D:/Projects/assembly-workshop/outputs/Hue_Pi4_M6_2026-10-28/HP4-M6-A_tray.stl");import("D:/Projects/assembly-workshop/outputs/Hue_Pi4_M6_2026-10-28/HP4-M6-A_faceplate.stl");}
