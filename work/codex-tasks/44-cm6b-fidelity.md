@@ -1,5 +1,12 @@
 # Task 44 — CM6B fidelity: bring the generated CM1000 bracket up to CM6A
 
+**REVISION 2 (Brian, 2026-10-28) — read first; overrides the tolerances and the stop rule below.** The first run stopped at the rail windows (0.94–1.55 mm off vs 0.3). Reuse everything in `work/m6-fidelity-44/` (sections.json, rail_trial.py, measured colour parts) and FINISH all 7 items.
+- **Fit-critical, strict:** pocket boundary ±0.3 mm at the measured stations; joints ±0.1; rail length/rear end ±0.1; access bays: clear opening at least CM6A's 14.36 × 44.68 (larger is fine), floor/top ≥ 2.5; retention slot position ±0.3 and size ±0.5 (a rounded slot / stadium shape through the rail wall is fine).
+- **Cosmetic, loose:** rail windows, scallops and edge rounding: same count and layout, each window within 2 mm, rail volume within 5 %. Extruded side outlines like the trial are acceptable.
+- **Colour parts:** 5 light-pipe holes + pipes at the measured centres/sizes ±0.2 (Ø8, depth 8.72; a flat or simple sloped rear is fine; front symbols optional); 7 logo letters + 2 details as vector shapes, each letter's bounds ±0.3, 0.2 mm inlays; separate colour objects in the 3MF like CM6A. Pixel-perfect letter outlines are not required.
+- **No stopping on one miss:** if an item can't meet its tolerance, build the closest version, keep going with the rest, and mark that item FAIL with numbers in the report. Only stop for a safety/preservation problem (legacy hash change, HDT-M6-A change, protected file touched).
+- Deliver: rebuild CM6B in `outputs/CM1000_M6_generated_2026-10-28/` with all settings, tests and the 3MF; viewer `work/mesh-viewer/CM6A_vs_CM6B.html` rebuilt. Report in `44-cm6b-fidelity-REPORT.md` (replace the stopped version, keep its measurements as an appendix).
+
 Status: SPEC (Claude, 2026-10-28). Follows task 43 (report `43-m6-split-rails-REPORT.md`). Brian: fix every CM6B gap in Codex. Continue in the SAME checkout where task 43 was done (its uncommitted task 43 changes are the starting point; do not revert them).
 
 PROPOSED — UNVALIDATED: fit, strength and retention stay UNKNOWN. Same rules as task 43: disposable data only, never data/normal-use; no printing, commits, pushes or automatic builds; OpenSCAD.exe; Python 3.10 stdlib, UTF-8. Do not touch CM6A, the 2026-10-16 baseline, HDT-M6-A, TL-SG108E files or HANDOFF.md. Every source without `m6_rails` stays byte-identical (re-prove the 14 SHA-256 cases), HDT-M6-A stays triangle-identical.
