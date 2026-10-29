@@ -14,7 +14,7 @@ Rack (data/normal-use, commit 9e35c66): U9 CM1000, U8 TL-SG108E, U7 keystone, U6
 
 ## 2026-10-29 HP4-M6-B is the default (Brian); A kept
 
-Brian keeps both: HP4-M6-B is the default, HP4-M6-A the alternative; both in outputs/Final_3MF/. Next: 2U 5" screen plate at U4-U3 (own session).
+Brian keeps both: HP4-M6-B is the default, HP4-M6-A the alternative; both in outputs/Final_3MF/. Next: 2U 5" screen plate at U4-U3 (own session), test-print ID SCR5-A. Brian approved the concept (2026-10-29): front lip ~3 mm over the glass black border, glass loads from behind, rear clamp frame on the screen's M2.5 corner holes (113 x 68) using M2.5 heat-sets + screws Brian already owns (sizes UNKNOWN until measured), short rear pocket (~20 mm), plate-only (no M6 tray joints, normal four-corner rack screws), ribbon notch top-left toward the HP4-M6-B floor slot, rear finger access to the top-edge buttons.
 
 ## 2026-10-29 HP4-M6-B built (task 47) + DSI slot — waiting for Brian
 
