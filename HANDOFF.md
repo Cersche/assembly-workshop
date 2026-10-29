@@ -8,6 +8,8 @@ Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENT
 
 **CM1000 CM6B (Brian, 2026-10-28):** built and committed; its pocket misses CM6A by up to about 2 mm along the rails, and Brian accepted that after looking in the viewer. Unprinted, fit UNKNOWN.
 
+**Hue + Pi 4 (2026-10-28):** spec written as Codex [task 45](work/codex-tasks/45-hue-pi4-m6.md), test-print ID **HP4-M6-A**, output `outputs/Hue_Pi4_M6_2026-10-28/`. `m6_joint` can't build it (second device, hand-set tray, third joint, imported cradle, 15.5 mm front gap would move the Pi), so it's a hand patch of the baseline `ext.scad` reusing the `@m6` joint geometry at the same joint X. Open question for Brian: the Pi board's own small inserts (2.7 mm holes) can't become M6; the spec keeps them. Next: Brian runs task 45, then "review codex tasks" + publish the viewer.
+
 **TL-SG108E end of session:** SG8-M6-B ready to print; screw joint/recess approved via coupon SG8-C1; boss coupon SG8-C2 still to test. Next bracket: Hue + Pi 4.
 
 **Unfinished:** (1) Brian reviews CM6A (`outputs/CM1000_M6_2026-10-28/`); (2) TL-SG108E, Hue + Pi 4, OptiPlex not started; (3) `m6_joint` untested on any bracket other than the drive tray, and no sleeve support; (4) the empty middle post hole is not used yet (see the rack-post bullet); (5) Print in color pixelates SVG art and Export color STLs fails silently with unsaved changes (in IDEAS.md); (6) 4 sliver non-manifold edges on the HDT-M6-A tab coves. Nothing printed.
