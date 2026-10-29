@@ -12,6 +12,10 @@ Rack (data/normal-use, commit 9e35c66): U9 CM1000, U8 TL-SG108E, U7 keystone, U6
 
 **Decided 2026-10-28:** screen stays upright and centred; instead the Hue + Pi bracket gets a new revision **HP4-M6-B** with the Pi moved to the left (X negative) and the Hue to the right, so the Pi's DSI connector sits on the screen-connector side. HP4-M6-A stays immutable. Redesign runs in its own fresh session (Codex executes, Claude specs/reviews). Vendor screen dims: work/screen-5in/Dimensions.md.
 
+## 2026-10-29 HP4-M6-B is the default (Brian); A kept
+
+Brian keeps both: HP4-M6-B is the default, HP4-M6-A the alternative; both in outputs/Final_3MF/. Next: 2U 5" screen plate at U4-U3 (own session).
+
 ## 2026-10-29 HP4-M6-B built (task 47) + DSI slot — waiting for Brian
 
 Codex built task 47 (report `work/codex-tasks/47-hue-pi4-m6-b-REPORT.md`, all checks PASS). Brian then asked for the ribbon slot: Claude added `dsi_slot_cut()` (24 x 8 mm, X -86..-62, Y 87..95) to `outputs/Hue_Pi4_M6-B_2026-10-28/src/HP4-M6-B.scad` and rebuilt with the build script (tray 7,276 tris, closed single shell; 3MF plain tags 6,230/12,508, no ns0). Viewer https://claude.ai/artifact/KNLCn5GwbtCxaqgpzE5iuK. Reach ~160 mm (borderline); a longer cable would be a Pi 4 DSI 15-pin 1.0 mm-pitch FFC, same-side contacts (Type A), 200-300 mm. Next: Brian reviews; on approval copy the 3MF to `outputs/Final_3MF/` (replace HP4) and update its README. Not printed; reach/fit UNKNOWN.
