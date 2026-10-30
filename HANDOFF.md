@@ -4,6 +4,10 @@
 
 Brian: the tray print warps. [README](outputs/TL-SG108E_M6_2026-10-28/README.md): SG8-M6-C = SG8-M6-B with the tray footprint corners rounded (rear R 20, front R 5) via `tray_round()` in `src/SG8-M6-C_build.py`; nothing else changed (faceplate only gets the new ID). B moved to `previous_SG8-M6-B/`; Final_3MF now has the C set (3MF plain tags, tray 0 open edges); Brian accepted C as the bracket to use. Not printed; warping effect UNKNOWN.
 
+## 2026-10-29 SCR5-F = SCR5-E with rounded tray corners (Claude)
+
+`outputs/Screen_Pi_Hue_SCR5-F_2026-10-29/`: floor and deck outlines r 6 rounded (walls follow), deck pad to X -36 under the right M6 tab (Brian marked it hanging off the deck edge), front-right deck screw moved to (-12, 42), right-wall vents from Y 46. Four closed single-shell STLs, 3MF with plain tags; clash checks empty or contact only. Viewer https://claude.ai/artifact/CNFoRyZZRsD37cs19Vbjp5 (not committed). Not printed; fit/strength/warping UNKNOWN. SCR5-E unchanged. The app's rack placeholder (U4-U3) is plate-only and unaffected.
+
 ## 2026-10-29 SCR5-E placed in the saved rack (Claude, Brian's OK)
 
 `work/rack-plan/apply_scr5e.py data/normal-use` (dry-run first on a copy) added the library item "Screen 5in + Pi 4 + Hue 2U (SCR5-E, placeholder)" (faceplate only: screen aperture 115.7 x 72.2 at X +33, Pi USB/Ethernet openings, keystone at X -92.5 Z 66) and placed it at U4-U3. U5 is freed (the old Pi 4 + Hue placement removed; SCR5-E houses both). Previous document in `rack-history/8bce2fc5-….json` (restore via Save History). Saved layout now: U9 CM1000, U8 TL-SG108E, U7 keystone panel, U6 drive tray, U5 empty, U4-U3 SCR5-E, U2 empty (cooling), U1 OptiPlex. The app item is a placeholder plate; the real parts are `outputs/Screen_Pi_Hue_SCR5-E_2026-10-29/`. Older placement names still carry stale U labels (e.g. the drive tray says "(U2)" but sits at U6). Viewer of SCR5-E on Lab Rax posts: https://claude.ai/artifact/BbXrutJDGHgsA9VNcUHZVk (not committed; licensed post mesh).
