@@ -1,0 +1,459 @@
+<title>Rack Moonshot</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=Rajdhani:wght@600;700&family=Cinzel+Decorative:wght@700&family=Michroma&family=Bungee&family=Russo+One&family=Special+Elite&family=Monoton&display=swap">
+<style>
+/* Layout: theme rail | live 3D stage | dossier. One dark shell that re-skins its accent and display face per faction. */
+:root{
+  --bg:#0b0c0f; --panel:#13151a; --line:#262a33; --fg:#e8eaee; --muted:#9aa1ad;
+  --accent:#d8a91c; --accent2:#59c6ff;
+  --display:'Rajdhani',sans-serif; --dwt:700; --dcase:uppercase;
+  --body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--body);font-size:14px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px 32px}
+.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px;max-width:1500px;margin:0 auto 14px}
+.top h1{font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.18em;text-transform:uppercase;margin:0;color:var(--muted)}
+.top h1 b{color:var(--accent);font-weight:500}
+.top p{margin:0;color:var(--muted);font-size:13px;max-width:70ch}
+.grid{display:grid;grid-template-columns:210px minmax(0,1fr) 340px;gap:16px;max-width:1500px;margin:0 auto}
+.rail{display:flex;flex-direction:column;gap:6px}
+.rail button{all:unset;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 8px;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:var(--panel);transition:border-color .2s}
+.rail button:hover{border-color:var(--muted)}
+.rail button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.rail button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.rail .n{font-weight:600;font-size:14px}
+.rail .f{grid-column:1;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.rail .sw{grid-row:1/3;grid-column:2;align-self:center;display:flex;gap:3px}
+.rail .sw i{width:9px;height:22px;border-radius:2px;display:block}
+.stage{position:relative;min-width:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#000}
+#c{display:block;width:100%;height:clamp(380px,72vh,780px);touch-action:none}
+.hud{position:absolute;left:12px;top:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:#fff;text-shadow:0 1px 3px #000}
+.tog{position:absolute;left:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px}
+.tog label{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:3px;background:rgba(10,11,14,.78);border:1px solid rgba(255,255,255,.14);font-family:var(--mono);font-size:11px;cursor:pointer;color:#e8eaee}
+.tog input{accent-color:var(--accent);margin:0}
+.dossier{display:flex;flex-direction:column;gap:14px;min-width:0}
+.dossier h2{font-family:var(--display);font-weight:var(--dwt);text-transform:var(--dcase);font-size:clamp(30px,3.4vw,44px);line-height:1.05;margin:0;color:var(--accent);text-wrap:balance;letter-spacing:.02em}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2)}
+.tag{margin:0;font-size:15px}
+.dossier h3{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.dossier ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.kit{width:100%;border-collapse:collapse;font-size:12.5px}
+.kit td{padding:5px 6px 5px 0;border-top:1px solid var(--line);vertical-align:top}
+.kit td:first-child{font-weight:600}
+.kit td:nth-child(2){font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--accent);white-space:nowrap}
+.fil{display:flex;flex-wrap:wrap;gap:6px}
+.fil span{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;padding:3px 8px 3px 4px;border:1px solid var(--line);border-radius:3px}
+.fil i{width:14px;height:14px;border-radius:2px;display:block;border:1px solid rgba(255,255,255,.2)}
+.sacred{max-width:1500px;margin:18px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.sacred div{border:1px solid var(--line);border-radius:4px;padding:12px 14px;background:var(--panel)}
+.sacred b{display:block;font-family:var(--mono);font-size:20px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums}
+.sacred span{color:var(--muted);font-size:12.5px}
+.note{max-width:1500px;margin:14px auto 0;color:var(--muted);font-size:12px}
+@media (max-width:1100px){.grid{grid-template-columns:minmax(0,1fr)}.rail{flex-direction:row;overflow-x:auto;padding-bottom:4px}.rail button{flex:0 0 auto;min-width:150px}#c{height:clamp(360px,62vh,620px)}}
+@media (prefers-reduced-motion:reduce){.rail button{transition:none}}
+</style>
+
+<header class="top">
+  <h1><b>Rack Moonshot</b> · 9U · 282 × 240 · seven concepts</h1>
+  <p>Seven themed racks on the real Lab Rax interface. The post flanges, M6 hole pattern, U pitch and footprint match the current rack, so every bracket you already printed bolts straight in. Drag to orbit, scroll to zoom.</p>
+</header>
+
+<div class="grid">
+  <nav class="rail" id="rail" aria-label="Themes"></nav>
+  <div class="stage">
+    <canvas id="c" aria-label="3D concept render"></canvas>
+    <div class="hud"><span id="hudL"></span><span id="hudR"></span></div>
+    <div class="tog">
+      <label><input type="checkbox" id="tEq" checked> Your brackets</label>
+      <label><input type="checkbox" id="tIf"> Interface</label>
+      <label><input type="checkbox" id="tRot"> Auto-rotate</label>
+    </div>
+  </div>
+  <section class="dossier" aria-live="polite">
+    <div>
+      <div class="eyebrow" id="dFac"></div>
+      <h2 id="dName"></h2>
+    </div>
+    <p class="tag" id="dTag"></p>
+    <div><h3>What you're looking at</h3><ul id="dFeat"></ul></div>
+    <div><h3>Print kit</h3><table class="kit"><tbody id="dKit"></tbody></table></div>
+    <div><h3>Filament</h3><div class="fil" id="dFil"></div></div>
+  </section>
+</div>
+
+<section class="sacred" aria-label="Fixed interface">
+  <div><b>±118.26 mm</b><span>M6 insert holes, Ø7.6 bore, in a flat 6 mm front and rear flange</span></div>
+  <div><b>3 per U · ±15.9</b><span>Hole centre and two outers per U; plate slots ±15.902 about each U centre</span></div>
+  <div><b>44.45 mm / U</b><span>9U stack, 400.05 mm of slots; plates 44.4 per U, 252 wide, 4 thick</span></div>
+  <div><b>±111 clear</b><span>Inner opening between flanges stays empty, so trays and sleeves slide in</span></div>
+  <div><b>282 × 240</b><span>Body footprint and post centres (17.5 / 222.5 deep) match the wall mount and cleat</span></div>
+</section>
+<p class="note">Concept renders, not STLs yet. Themed parts sit outside the fixed interface; top crowns and signs are bolt-on and add height. Fan concepts for a personal build, not affiliated with any of the franchises. Fit and strength UNKNOWN until printed.</p>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(async function(){
+const U=44.45,N=9,H=N*U,HX=118.26,PI=Math.PI;
+const POSTS=[[-6,-35,-20.5],[-234,-205,-219.5]]; // [flange side, inner side, centre] z for front and rear posts
+
+// ---------- themes ----------
+const T={};
+T.expanse={envI:0.5,name:'Tachi',fac:'The Expanse · Martian corvette',font:["'Rajdhani'",700,'uppercase'],accent:'#d8a91c',accent2:'#59c6ff',
+ sw:['#4b525c','#d8a91c','#59c6ff'],bg:'#0d1116',env:['#1b2633','#8aa4bf','#0b0d10'],floor:'#0e1115',plate:0x3a4049,
+ screen:{bg:'#031018',fg:'#59c6ff',lines:['TACHI // OPS PANEL','REACTOR      NOMINAL','PDC 1-6      ONLINE','DRIVE        STANDBY']},
+ tag:'Gunmetal hull plating, grab rails and a drive glow. Legitimate salvage.',
+ feat:['Hull-plate side panels in a 4 × 3 grid with real seams and greebles','Yellow grab rails on standoffs, like the corridor to the airlock','PDC turret pods on the top corners; red/green nav lights blink','Two drive bells in the rear plinth with a blue glow (LED-ready)','Hazard-stripe kick plate and a LEGITIMATE SALVAGE stencil'],
+ kit:[['Post skins','4 × 3','4U + 1U + 4U, over the flange posts'],['Hull tiles','24','42 × 133, clip into side frames'],['Grab rails','4','printed or 8 mm rod + standoffs'],['Top deck','2','split at centre, 141 × 240'],['PDC pods','2','dome + twin barrels'],['Plinth + drive bells','2 + 2','split at centre; bells take an LED']],
+ fil:[['Gunmetal','#4b525c'],['Charcoal','#23272d'],['Hazard yellow','#d8a91c'],['Clear blue','#59c6ff']]};
+T.giger={envI:0.45,name:'Biomech',fac:'Inspired by H.R. Giger',font:["'Cinzel Decorative'",700,'none'],accent:'#9fb394',accent2:'#6c7a64',
+ sw:['#0e100f','#2c312c','#6c7a64'],bg:'#050606',env:['#1a2420','#4d5c50','#050605'],floor:'#060707',plate:0x161917,
+ screen:{bg:'#020604',fg:'#7d9a72',lines:['.. SIGNAL ACQUIRED ..','ORIGIN       UNKNOWN','PATTERN      REPEATS','DO NOT OPEN']},
+ tag:'Vertebrae for posts, a ribcage for walls and an elongated skull on top. Wet black, nothing straight.',
+ feat:['Each post is a spine: 18 vertebrae with outward spurs','Ribs arc from front post to rear post along both sides','Bone arches span the top, under an elongated cranium','Hoses tangle across the plinth and climb the rear posts','A row of teeth along the top front edge'],
+ kit:[['Spine posts','4 × 3','vertebrae printed as one shell per segment'],['Rib sets','2 × 6','arched ribs, pinned into the posts'],['Top arches','5','printed flat, bolt to the top frame'],['Cranium','2','split lengthwise, ~96 × 60 each half'],['Hoses','~8','TPU or printed segments'],['Plinth','2','split at centre']],
+ fil:[['Gloss black','#0e100f'],['Graphite silk','#2c312c'],['Bone grey-green','#6c7a64']]};
+T.weyland={envI:0.85,name:'Better Worlds',fac:'Weyland Corp · flagship era',font:["'Michroma'",400,'uppercase'],accent:'#c8a35a',accent2:'#ffb347',
+ sw:['#eceeea','#c8a35a','#14181c'],bg:'#cfd4d8',env:['#f2f4f5','#c9d0d6','#6f7880'],floor:'#9aa1a8',plate:0xe4e6e3,
+ screen:{bg:'#0b0e10',fg:'#ffb347',lines:['WEYLAND CORP · 2093','CRYO BAY 4   STABLE','ATMOS PROC   98%','CREW         EXPENDABLE']},
+ tag:'Clean white chamfers, smoked glass and gold hairlines. A corporate flagship with an orrery on the roof.',
+ feat:['Chamfered white posts with a vertical amber light strip','Side panels with a groove at every U and a smoked-glass window','Gold hairline along the top chamfer, BUILDING BETTER WORLDS below it','Recessed dark plinth with an amber underglow','A slowly turning gold orrery on top (removable, +110 mm)'],
+ kit:[['Chamfered post skins','4 × 3','white, light-strip channel'],['Side panels','2 × 2','split at mid-height; glass window insert'],['Top cap','2','chamfer front and back'],['Orrery','1 set','three rings, stand, sun (LED-ready)'],['Plinth','2','recessed, light channel']],
+ fil:[['Matte white','#eceeea'],['Silver grey','#c3c7c4'],['Smoke translucent','#14181c'],['Silk gold','#c8a35a']]};
+T.vault={envI:0.6,name:'Vault 21',fac:'Fallout · Vault-Tec blue and yellow',font:["'Bungee'",400,'uppercase'],accent:'#f2c230',accent2:'#5d8fe0',
+ sw:['#1f4e9c','#f2c230','#8b9096'],bg:'#0f1622',env:['#2a3a55','#9fb0c8','#101318'],floor:'#11151b',plate:0x1f4e9c,
+ screen:{bg:'#031a0a',fg:'#3cff7a',lines:['ROBCO TERMLINK','> VAULT 21 OVERSEER','> RACK STATUS: S.P.E.C.I.A.L.','> PRESS ANY KEY_']},
+ tag:'The Strip\'s own vault, the one with the blackjack tables. Riveted blue steel, a cog door on each side.',
+ feat:['Blue posts with a yellow stripe and rivet rows','A cog vault door on each side, painted 21','Steam pipe and a red valve wheel across the top rear','VAULT 21 sign on the roof and a caged work light','Hazard-stripe plinth; the screen boots a green RobCo terminal'],
+ kit:[['Post skins','4 × 3','rivets printed in'],['Cog doors','2','Ø144, 20 teeth, two-colour 21'],['Side panels','2 × 2','split at mid-height'],['Roof sign','1','140 × 26, two-colour'],['Pipe + valve','1 set','printed in 3 runs'],['Plinth','2','hazard stripes as colour swap']],
+ fil:[['Vault blue','#1f4e9c'],['Vault yellow','#f2c230'],['Steel silver','#8b9096'],['Valve red','#b3261e']]};
+T.enclave={envI:0.6,name:'Raven Rock',fac:'Fallout · Enclave',font:["'Russo One'",400,'uppercase'],accent:'#ff3b3b',accent2:'#cfd3d8',
+ sw:['#0b0c0e','#d5d9de','#ff2a2a'],bg:'#08080a',env:['#1a1a1f','#b9bec7','#050506'],floor:'#0a0a0c',plate:0x111215,
+ screen:{bg:'#0a0000',fg:'#ff3b3b',lines:['ENCLAVE RADIO // AUTO','THE PRESIDENT SAYS:','EVERYTHING IS FINE','PERIMETER    ARMED']},
+ tag:'Advanced power armour as furniture. Faceted black plates, chrome edges and a red visor across the brow.',
+ feat:['Faceted posts with a chrome spine and red sensor slits','Overlapping armour louvres down both sides','A helmet brow on top with a glowing red visor band','Shoulder pauldrons and a chrome crest fin','RAVEN ROCK across the brow, red line along the plinth'],
+ kit:[['Faceted post skins','4 × 3','hex profile, chrome spine inlay'],['Louvre plates','12','170 × 62, overlap like scales'],['Helmet brow','2','split at centre; clear red visor'],['Pauldrons + crest','3','bolt-on'],['Plinth','2','split at centre']],
+ fil:[['Gloss black','#0b0c0e'],['Gunmetal','#2b2e33'],['Silk chrome','#d5d9de'],['Clear red','#ff2a2a']]};
+T.ncr={envI:0.7,name:'Hoover Dam Garrison',fac:'Fallout: New Vegas · NCR',font:["'Special Elite'",400,'uppercase'],accent:'#e0b062',accent2:'#b8893a',
+ sw:['#b49a6a','#8a6238','#5c6040'],bg:'#2a2118',env:['#7aa3c8','#f1d6a3','#6b5639'],floor:'#4a3b2a',plate:0x8f7a52,
+ screen:{bg:'#1a1206',fg:'#ffcf6a',lines:['NCR RADIO NET // MOJAVE','CAMP McCARRAN    OK','HOOVER DAM       HOLDING','PATROL THE MOJAVE']},
+ tag:'Army-issue tan steel, ammo-crate walls and sandbags at the base. The flag flies over the dam.',
+ feat:['Tan steel posts with leather straps and brass buckles every 2U','Ammo-crate side walls: wood slats, battens, rope handles, stencils','A peaked olive tarp roof stencilled HOOVER DAM GARRISON','Two rows of sandbags along the front of the plinth','A flag with a star, waving from the rear post'],
+ kit:[['Post skins','4 × 3','straps and buckles printed in'],['Crate slats','2 × 10','wood-fill PLA, ~170 × 40'],['Tarp roof','2','split at centre'],['Sandbags','~19','TPU or matte PLA, pressed on'],['Flagpole + flag','1','flag printed flat 64 × 40']],
+ fil:[['Desert tan','#b49a6a'],['Wood fill','#8a6238'],['Olive drab','#5c6040'],['Brass silk','#b8893a'],['Sand','#c7b48a']]};
+T.vegas={envI:0.32,name:'The Strip',fac:'Fallout: New Vegas · for the locals',font:["'Monoton'",400,'uppercase'],accent:'#ff3fa4',accent2:'#3fe8ff',
+ sw:['#150f1c','#d4a64a','#ff3fa4'],bg:'#07040c',env:['#0a0614','#6a2f7a','#050308'],floor:'#0a0710',plate:0x1c1424,
+ screen:{bg:'#12001a',fg:'#ff3fa4',lines:['THE STRIP // NEW VEGAS','THE HOUSE ALWAYS WINS','CHIPS          38,000','SECURITRON ON PATROL']},
+ tag:'Googie atomic-age Strip glamour: chase bulbs, neon tubes, a welcome sign and a Lucky 38 style crown.',
+ feat:['Chasing marquee bulbs up every post and along the plinth','Pink neon tube on each post, cyan boomerang neon on the sides','Gold atomic starbursts on cream side panels','WELCOME TO FABULOUS NEW VEGAS sign on the roof, with its star','A turning saucer-and-spire crown behind it (removable, +190 mm)'],
+ kit:[['Post skins','4 × 3','bulb sockets for 5 mm LEDs'],['Side panels','2 × 2','starbursts as separate gold parts'],['Welcome sign','1','200 × 92, multi-colour face'],['Crown','1 set','stem, saucer, spire, neon ring channel'],['Plinth','2','bulb row, split at centre'],['Neon','—','EL wire or LED neon strip in channels']],
+ fil:[['Night purple','#150f1c'],['Silk gold','#d4a64a'],['Cream','#f3e6c8'],['Neon pink','#ff3fa4'],['Neon cyan','#3fe8ff']]};
+const ORDER=['expanse','giger','weyland','vault','enclave','ncr','vegas'];
+
+// ---------- renderer ----------
+const canvas=document.getElementById('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(32,1,5,6000);
+camera.position.set(620,420,900);
+const controls=new THREE.OrbitControls(camera,canvas);
+controls.target.set(0,H*0.5,-120);controls.enableDamping=true;controls.minDistance=250;controls.maxDistance=2400;controls.autoRotateSpeed=0.8;
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.add(new THREE.HemisphereLight(0xffffff,0x202020,0.35));
+const key=new THREE.DirectionalLight(0xffffff,1.6);key.position.set(420,800,600);key.castShadow=true;
+Object.assign(key.shadow.camera,{left:-420,right:420,top:520,bottom:-220,near:100,far:2200});key.shadow.mapSize.set(2048,2048);key.shadow.bias=-0.0005;
+scene.add(key);const rim=new THREE.DirectionalLight(0xffffff,0.6);rim.position.set(-600,300,-700);scene.add(rim);
+const floor=new THREE.Mesh(new THREE.CircleGeometry(1400,72),new THREE.MeshStandardMaterial({color:0x111111,roughness:.92}));
+floor.rotation.x=-PI/2;floor.position.y=-32.5;floor.receiveShadow=true;scene.add(floor);
+
+function envFor(th){
+  const c=document.createElement('canvas');c.width=1024;c.height=512;const g=c.getContext('2d');
+  const gr=g.createLinearGradient(0,0,0,512);gr.addColorStop(0,th.env[0]);gr.addColorStop(.47,th.env[1]);gr.addColorStop(.53,th.env[1]);gr.addColorStop(1,th.env[2]);
+  g.fillStyle=gr;g.fillRect(0,0,1024,512);
+  g.fillStyle='rgba(255,255,255,.9)';g.fillRect(170,90,170,70);g.fillRect(640,120,230,46);
+  g.fillStyle='rgba(255,255,255,.35)';g.fillRect(420,36,130,40);g.fillRect(40,300,120,30);
+  g.fillStyle='rgba(0,0,0,'+(1-(th.envI||.8))+')';g.fillRect(0,0,1024,512);
+  const t=new THREE.CanvasTexture(c);t.mapping=THREE.EquirectangularReflectionMapping;t.encoding=THREE.sRGBEncoding;
+  const rt=pmrem.fromEquirectangular(t);t.dispose();return rt;
+}
+
+// ---------- kit of helpers ----------
+const lin=c=>new THREE.Color(c).convertSRGBToLinear();
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function kit(group){
+  const K={anim:[],holes:[],group};
+  K.mat=(c,m=.3,r=.5,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:lin(c),metalness:m,roughness:r},o));
+  K.glow=(c,i=2.5)=>new THREE.MeshStandardMaterial({color:0x111111,emissive:lin(c),emissiveIntensity:i,roughness:.4});
+  K.add=(geo,mat,x=0,y=0,z=0,rx=0,ry=0,rz=0,parent=group)=>{const m=new THREE.Mesh(geo,mat);m.position.set(x,y,z);m.rotation.set(rx,ry,rz);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;};
+  K.box=(w,h,d,mat,x,y,z,parent)=>K.add(new THREE.BoxGeometry(w,h,d),mat,x,y,z,0,0,0,parent);
+  K.bb=(x0,x1,y0,y1,z0,z1,mat,parent)=>K.box(Math.abs(x1-x0),Math.abs(y1-y0),Math.abs(z1-z0),mat,(x0+x1)/2,(y0+y1)/2,(z0+z1)/2,parent);
+  K.cyl=(rt,rb,h,mat,x,y,z,rx=0,ry=0,rz=0,seg=24,parent)=>K.add(new THREE.CylinderGeometry(rt,rb,h,seg),mat,x,y,z,rx,ry,rz,parent);
+  K.cone=(r,h,mat,x,y,z,rx=0,ry=0,rz=0,parent)=>K.add(new THREE.ConeGeometry(r,h,16),mat,x,y,z,rx,ry,rz,parent);
+  K.sph=(r,mat,x,y,z,sx=1,sy=1,sz=1,parent)=>{const m=K.add(new THREE.SphereGeometry(r,24,16),mat,x,y,z,0,0,0,parent);m.scale.set(sx,sy,sz);return m;};
+  K.tube=(pts,r,mat,seg=64,parent)=>K.add(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map(p=>new THREE.Vector3(p[0],p[1],p[2]))),seg,r,10,false),mat,0,0,0,0,0,0,parent);
+  K.tor=(R,r,mat,x,y,z,rx=0,ry=0,rz=0,arc=2*PI,parent)=>K.add(new THREE.TorusGeometry(R,r,12,64,arc),mat,x,y,z,rx,ry,rz,parent);
+  // profile [[z,y]..] extruded along x from x0 to x1
+  K.xprism=(pts,x0,x1,mat)=>{const sh=new THREE.Shape(pts.map(p=>new THREE.Vector2(-p[0],p[1])));return K.add(new THREE.ExtrudeGeometry(sh,{depth:x1-x0,bevelEnabled:false}),mat,x0,0,0,0,PI/2,0);};
+  // profile [[x,z]..] extruded along y from y0 to y1
+  K.yprism=(pts,y0,y1,mat)=>{const sh=new THREE.Shape(pts.map(p=>new THREE.Vector2(p[0],-p[1])));return K.add(new THREE.ExtrudeGeometry(sh,{depth:y1-y0,bevelEnabled:false}),mat,0,y0,0,-PI/2,0,0);};
+  K.canvasTex=(w,h,draw)=>{const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=8;return t;};
+  K.label=(text,o,x,y,z,ry=0)=>{
+    const cw=1024,ch=Math.max(48,Math.round(cw*o.h/o.w));
+    const tex=K.canvasTex(cw,ch,(g)=>{if(o.bg){g.fillStyle=o.bg;g.fillRect(0,0,cw,ch);}let s=ch*.78;g.font=o.font.replace('{s}',s);const mw=g.measureText(text).width;if(mw>cw*.92){s*=cw*.92/mw;g.font=o.font.replace('{s}',s);}g.fillStyle=o.fg;g.textAlign='center';g.textBaseline='middle';g.fillText(text,cw/2,ch/2+s*.04);});
+    const m=new THREE.MeshStandardMaterial({map:tex,transparent:!o.bg,roughness:.6,metalness:.1,polygonOffset:true,polygonOffsetFactor:-2});
+    if(o.glow){m.emissive=new THREE.Color(0xffffff);m.emissiveMap=tex;m.emissiveIntensity=o.glow;}
+    const mesh=K.add(new THREE.PlaneGeometry(o.w,o.h),m,x,y,z,0,ry,0);mesh.castShadow=false;return mesh;};
+  K.stripes=(a,b,w,h,x,y,z,n=14)=>{const tex=K.canvasTex(1024,Math.round(1024*h/w),(g,cw,ch)=>{g.fillStyle=a;g.fillRect(0,0,cw,ch);g.fillStyle=b;const st=cw/n;for(let i=-2;i<n+2;i++){g.beginPath();g.moveTo(i*st,ch);g.lineTo(i*st+st/2,ch);g.lineTo(i*st+st/2+ch,0);g.lineTo(i*st+ch,0);g.fill();}});
+    const m=K.add(new THREE.PlaneGeometry(w,h),new THREE.MeshStandardMaterial({map:tex,roughness:.55,polygonOffset:true,polygonOffsetFactor:-2}),x,y,z);m.castShadow=false;return m;};
+  K.posts=(fn)=>{for(const s of [-1,1])for(const [z0,z1,zc] of POSTS)fn(s,z0,z1,zc,z0>-100?1:-1);};
+  K.sides=(fn)=>{for(const s of [-1,1])fn(s);};
+  K.rnd=rng(7);
+  return K;
+}
+
+// ---------- shared interface: flanges, holes, overlay ----------
+const holeGeo=new THREE.CylinderGeometry(3.8,3.8,6.5,16);
+const holeDark=new THREE.MeshStandardMaterial({color:0x050505,roughness:1});
+const holeLit=new THREE.MeshStandardMaterial({color:0x111111,emissive:0x3fe8ff,emissiveIntensity:3});
+function flanges(K,mat){
+  K.posts((s,z0,z1,zc,f)=>{
+    const fz=f>0?[0,-6]:[-234,-240];
+    K.bb(s*111,s*131,0,H,fz[0],fz[1],mat);
+    for(let u=0;u<N;u++)for(const o of [-15.9,0,15.9]){const m=K.add(holeGeo,holeDark,s*HX,(u+.5)*U+o,(fz[0]+fz[1])/2,PI/2,0,0);m.castShadow=false;K.holes.push(m);}
+  });
+}
+function overlay(K){
+  const g=new THREE.Group();g.visible=false;K.group.add(g);
+  const box=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(222,H,234)),new THREE.LineBasicMaterial({color:0x3fe8ff}));
+  box.position.set(0,H/2,-117);g.add(box);
+  const sprite=(text,x,y,z)=>{const c=document.createElement('canvas');c.width=512;c.height=64;const x2=c.getContext('2d');x2.fillStyle='rgba(5,10,14,.82)';x2.fillRect(0,0,512,64);x2.fillStyle='#3fe8ff';x2.font='500 30px "IBM Plex Mono", monospace';x2.textAlign='center';x2.textBaseline='middle';x2.fillText(text,256,33);
+    const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,depthTest:false}));s.scale.set(150,18.75,1);s.position.set(x,y,z);s.renderOrder=10;g.add(s);};
+  sprite('±118.26 · M6 · 3 per U',-215,H*.8,0);sprite('44.45 mm per U · 9U',-215,H*.6,0);sprite('±111 clear opening',0,H*.5,4);sprite('282 × 240 body',215,40,-120);
+  return g;
+}
+
+// ---------- your brackets (ghost faceplates) ----------
+const LAYOUT=[{u:9,n:1,id:'cm'},{u:8,n:1,id:'sw'},{u:7,n:1,id:'ks'},{u:5,n:2,id:'scr'},{u:3,n:1,id:'hdd'},{u:1,n:1,id:'opx'}];
+const OPEN={cm:[[-40,22,4,4],[-20,22,4,4],[0,22,4,4],[20,22,4,4],[40,22,4,4]],
+ sw:[0,1,2,3,4,5,6,7].map(i=>[-63+i*18,20,14,12]),ks:[0,1,2,3,4,5].map(i=>[-75+i*30,22,15,19]),
+ scr:[[-93,22,15,17.5],[-75,22,17.5,15],[-92.5,66,15,19]],hdd:[0,1,2,3,4,5,6,7,8,9].map(i=>[-54+i*12,22,3,24]),
+ opx:[[90,22,8,8],[-80,22,40,3],[-80,16,40,3],[-80,28,40,3]]};
+function brackets(K,th){
+  const g=new THREE.Group();K.group.add(g);
+  const pm=K.mat(th.plate,.2,.5),hole=K.mat(0x050505,0,1);
+  for(const it of LAYOUT){
+    const y0=(it.u-1)*U+(it.n*U-it.n*44.4)/2,h=it.n*44.4;
+    K.box(252,h,4,pm,0,y0+h/2,2,g);
+    for(const [x,y,w,hh] of OPEN[it.id])K.box(w,hh,1,hole,x,y0+y,4.1,g);
+    if(it.id==='scr'){const sc=th.screen;const tex=K.canvasTex(512,320,(c,w,hh)=>{c.fillStyle=sc.bg;c.fillRect(0,0,w,hh);c.fillStyle=sc.fg;c.font='500 30px "IBM Plex Mono", monospace';sc.lines.forEach((l,i)=>c.fillText(l,26,70+i*58));c.fillStyle='rgba(0,0,0,.25)';for(let yy=0;yy<hh;yy+=4)c.fillRect(0,yy,w,2);});
+      const m=new THREE.MeshStandardMaterial({color:0x000000,emissive:0xffffff,emissiveMap:tex,emissiveIntensity:1.1,roughness:.2,metalness:.2});
+      K.add(new THREE.PlaneGeometry(115.7,72.2),m,33,y0+h/2,4.15,0,0,0,g).castShadow=false;}
+  }
+  return g;
+}
+
+// ---------- builders ----------
+const B={};
+B.expanse=(K)=>{
+  const hull=K.mat(0x4b525c,.65,.42),alt=K.mat(0x555d68,.6,.48),dark=K.mat(0x23272d,.6,.5),yel=K.mat(0xd8a91c,.3,.45);
+  flanges(K,K.mat(0x3a4049,.6,.45));
+  K.posts((s,z0,z1,zc)=>{K.bb(s*111,s*141,0,H,z0,z1,hull);
+    for(let u=0;u<N;u++){K.bb(s*141,s*143,u*U+3,u*U+U-3,z0+(z0>-100?-3:3),z1+(z0>-100?3:-3),dark);
+      for(let k=0;k<3;k++){const h=4+K.rnd()*8,d=4+K.rnd()*8;K.box(3,h,d,alt,s*144.5,u*U+8+K.rnd()*(U-16),zc+(K.rnd()-.5)*14);}}});
+  K.sides(s=>{
+    for(let i=0;i<4;i++)for(let j=0;j<3;j++){const z0=-35-i*42.5,y0=j*H/3;K.bb(s*137,s*140+(i+j)%2*.8,y0+1,y0+H/3-1,z0-1,z0-41.5,(i+j)%2?hull:alt);}
+    K.bb(s*111,s*141,H-14,H,-35,-205,dark);K.bb(s*111,s*141,0,14,-35,-205,dark);
+    for(const y of [H*.35,H*.7]){K.cyl(3,3,150,yel,s*153,y,-120,PI/2);for(const z of [-50,-190])K.cyl(2.5,2.5,13,dark,s*147,y,z,0,0,PI/2);}
+  });
+  K.bb(-141,141,-32,0,0,-240,dark);K.stripes('#d8a91c','#141414',282,14,0,-16,0.4,18);
+  K.bb(-141,141,H,H+22,0,-240,hull);K.xprism([[0,H+22],[-30,H+40],[-210,H+40],[-240,H+22]],-135,135,dark);
+  K.label('LEGITIMATE SALVAGE',{w:210,h:13,font:"700 {s}px Rajdhani",fg:'#e9edf2'},0,H+11,0.4);
+  for(const s of [-1,1]){K.sph(15,dark,s*112,H+40,-32,1,.8,1);for(const o of [-4,4])K.cyl(2,2,30,K.mat(0x1a1c20,.8,.4),s*112+o,H+42,-12,PI/2);}
+  const bellPts=[[7,0],[10,4],[15,9],[20,14]].map(p=>new THREE.Vector2(p[0],p[1]));
+  const bm=K.mat(0x30343a,.9,.3,{side:THREE.DoubleSide});const glow=K.glow(0x59c6ff,3);
+  for(const x of [-70,70]){K.add(new THREE.LatheGeometry(bellPts,32),bm,x,-16,-238,-PI/2);K.cyl(9,9,1,glow,x,-16,-239,PI/2);}
+  K.anim.push(t=>{glow.emissiveIntensity=2.4+Math.sin(t*3)*.9;});
+  const red=K.glow(0xff3b30,3),grn=K.glow(0x3dff7a,3);K.sph(3,red,-141,H+30,-4);K.sph(3,grn,141,H+30,-4);
+  K.anim.push(t=>{const on=(t%1.6)<.2;red.emissiveIntensity=grn.emissiveIntensity=on?4:.2;});
+  K.cyl(1.6,1.6,70,dark,95,H+75,-200);K.cyl(14,2,5,alt,95,H+110,-200,.5);
+};
+B.giger=(K)=>{
+  const black=K.mat(0x0e100f,.9,.28),bone=K.mat(0x2c312c,.8,.32),sheen=K.mat(0x1a1d1a,1,.16),acc=K.mat(0x6c7a64,.6,.38);
+  flanges(K,sheen);
+  K.posts((s,z0,z1,zc)=>{K.bb(s*111,s*126,0,H,z0,z1,black);K.cyl(5,5,H,sheen,s*130,H/2,zc);
+    for(let i=0;i<18;i++){const y=(i+.5)*H/18;K.sph(13,bone,s*130,y,zc,1,.55,1.1);K.tor(12.5,2.4,black,s*130,y,zc,PI/2);K.cone(4,12,acc,s*146,y,zc,0,0,-s*PI/2);}});
+  K.sides(s=>{K.bb(s*133,s*136,0,H,-35,-205,sheen);
+    for(let k=0;k<6;k++){const y=30+k*(H-60)/5;K.tube([[s*130,y,-28],[s*150,y+8,-80],[s*157,y+12,-120],[s*150,y+8,-160],[s*130,y,-212]],3.2,bone,48);}
+    for(let k=0;k<3;k++){const y=60+k*120;K.tube([[s*136,y,-40],[s*145,y+40,-90],[s*141,y+20,-150],[s*138,y+60,-200]],1.6,acc,40);}
+    K.tube([[s*138,-20,-236],[s*148,H*.25,-232],[s*143,H*.5,-238],[s*150,H*.75,-231],[s*140,H+10,-236]],4,bone,60);});
+  K.bb(-141,141,-32,0,0,-240,black);K.bb(-141,141,H,H+10,0,-240,black);
+  for(let j=0;j<5;j++){const m=K.tor(132,5,bone,0,H+8,-25-j*47.5,0,0,0,PI);m.scale.y=.38;}
+  K.sph(60,sheen,0,H+16,-128,1,.52,1.6);
+  for(let k=0;k<4;k++)K.tor(54-k*6,1.6,bone,0,H+18+k*7,-128-k*12,PI/2,0,0).scale.set(1,1.75,1);
+  for(let i=0;i<14;i++)K.cone(3,11,bone,-104+i*16,H+15,-4);
+  for(let i=0;i<5;i++){const r=K.rnd;const pts=[];for(let k=0;k<7;k++)pts.push([-141+k*47,-6-r()*22,-2+r()*5]);K.tube(pts,2.5+r()*2,i%2?bone:acc,80);}
+};
+B.weyland=(K)=>{
+  const white=K.mat(0xeceeea,.05,.32),grey=K.mat(0xc3c7c4,.1,.4),glass=K.mat(0x14181c,.6,.12),gold=K.mat(0xc8a35a,1,.22),amber=K.glow(0xffb347,3);
+  flanges(K,grey);
+  K.posts((s,z0,z1,zc)=>{const a=z0,b=z1,d=Math.sign(b-a);
+    K.yprism([[s*111,a],[s*136,a],[s*141,a+d*5],[s*141,b-d*5],[s*136,b],[s*111,b]],0,H,white);
+    K.bb(s*141,s*141.8,20,H-20,zc-1.5,zc+1.5,amber);});
+  K.sides(s=>{K.bb(s*138,s*141,0,H,-35,-205,white);
+    for(let u=1;u<N;u++)K.bb(s*141,s*141.6,u*U-.6,u*U+.6,-40,-200,glass);
+    K.bb(s*141,s*141.7,H*.56,H*.86,-60,-180,glass);for(let i=0;i<3;i++)K.sph(1.6,amber,s*141.5,H*.5,-70-i*8);});
+  K.xprism([[0,H],[0,H+14],[-10,H+24],[-230,H+24],[-240,H+14],[-240,H]],-141,141,white);
+  K.bb(-141,141,H+13.4,H+14.6,0.6,-0.4,gold);
+  K.label('BUILDING BETTER WORLDS',{w:170,h:6,font:"{s}px Michroma",fg:'#6d7176'},0,H+7,0.4);
+  K.bb(-136,136,-30,-4,-4,-236,glass);K.bb(-141,141,-4,0,0,-240,white);K.bb(-141,141,-32,-30,0,-240,white);K.bb(-128,128,-29,-27,-2,-5,amber);
+  const orr=new THREE.Group();orr.position.set(0,H+24+70,-120);K.group.add(orr);
+  K.cyl(2,3,62,gold,0,H+55,-120);const sun=K.glow(0xffb347,4);K.sph(9,sun,0,0,0,1,1,1,orr);
+  const rings=[];[[52,.4,.2],[39,-.3,.6],[27,.7,-.2]].forEach(([R,a,b],i)=>{const rg=new THREE.Group();rg.rotation.set(PI/2+a,b,0);orr.add(rg);K.tor(R,1.1,gold,0,0,0,0,0,0,2*PI,rg);K.sph(3+i,i===1?K.mat(0x8fb0c8,.4,.3):gold,R,0,0,1,1,1,rg);rings.push(rg);});
+  K.anim.push(t=>{orr.rotation.y=t*.25;rings.forEach((r,i)=>r.rotation.z=t*(.4+i*.3));});
+};
+B.vault=(K)=>{
+  const blue=K.mat(0x1f4e9c,.35,.42),yel=K.mat(0xf2c230,.3,.42),steel=K.mat(0x8b9096,.85,.32),dark=K.mat(0x2a2d31,.6,.5),red=K.mat(0xb3261e,.4,.4);
+  flanges(K,dark);
+  K.posts((s,z0,z1,zc)=>{K.bb(s*111,s*141,0,H,z0,z1,blue);K.bb(s*141,s*142,0,H,zc-4,zc+4,yel);
+    for(let y=11;y<H;y+=22)for(const o of [-10,10])K.sph(1.8,steel,s*141.6,y,zc+o);});
+  K.sides(s=>{K.bb(s*138,s*141,0,H,-35,-205,blue);
+    for(let y=8;y<H;y+=24)for(const z of [-40,-200])K.sph(1.8,steel,s*141.4,y,z);
+    const gy=H*.55,gz=-120;K.cyl(62,62,8,steel,s*145,gy,gz,0,0,PI/2,48);
+    for(let k=0;k<20;k++){const a=k/20*2*PI;K.box(8,12,12,steel,s*145,gy+66*Math.sin(a),gz+66*Math.cos(a)).rotation.x=PI/2-a;}
+    K.tor(48,2.5,dark,s*149.3,gy,gz,0,PI/2,0);
+    K.label('21',{w:70,h:48,font:"{s}px Bungee",fg:'#1f4e9c'},s*149.5,gy,gz,s*PI/2);});
+  K.bb(-141,141,-32,0,0,-240,dark);K.stripes('#f2c230','#141414',282,14,0,-16,0.4,18);
+  K.bb(-141,141,H,H+16,0,-240,yel);
+  K.box(150,26,4,blue,0,H+29,-8);K.label('VAULT 21',{w:136,h:19,font:"{s}px Bungee",fg:'#f2c230'},0,H+29,-5.6);
+  K.tube([[-130,H+4,-234],[-130,H+28,-234],[-100,H+30,-234],[100,H+30,-234],[130,H+28,-234],[130,H+4,-234]],5,steel,80);
+  K.cyl(2,2,14,steel,0,H+38,-234);K.tor(10,1.8,red,0,H+46,-234);
+  const lamp=K.glow(0xffd27a,2.5);K.cyl(9,11,6,dark,-118,H+19,-22);K.sph(7,lamp,-118,H+29,-22);
+  for(const r of [0,PI/3,2*PI/3])K.tor(9,.7,dark,-118,H+29,-22,0,r,0);
+  K.anim.push(t=>{lamp.emissiveIntensity=2.3+Math.sin(t*9)*.15+(Math.sin(t*1.3)>.97?-1.5:0);});
+};
+B.enclave=(K)=>{
+  const black=K.mat(0x0b0c0e,.7,.2),chrome=K.mat(0xd5d9de,1,.1),gun=K.mat(0x2b2e33,.8,.32),red=K.glow(0xff2a2a,3);
+  flanges(K,gun);
+  K.posts((s,z0,z1,zc)=>{const a=z0,b=z1,d=Math.sign(b-a);
+    K.yprism([[s*111,a],[s*128,a],[s*141,a+d*7],[s*141,b-d*7],[s*128,b],[s*111,b]],0,H,black);
+    K.bb(s*140,s*142.5,0,H,zc-1.2,zc+1.2,chrome);
+    for(let u=0;u<N;u+=3)K.bb(s*141,s*142,u*U+18,u*U+28,zc+4,zc+9,red);});
+  K.sides(s=>{for(let k=0;k<6;k++)K.box(3,62,165,k%2?black:gun,s*139.5,34+k*66,-120).rotation.z=s*.12;
+    K.bb(s*138,s*142.5,0,H,-35,-39,chrome);K.bb(s*138,s*142.5,0,H,-201,-205,chrome);});
+  K.bb(-141,141,-32,0,0,-240,black);K.bb(-141,141,-3,0,0.5,-240,chrome);K.bb(-130,130,-20,-17,0,-2,red);
+  K.xprism([[0,H],[0,H+20],[-20,H+38],[-220,H+38],[-240,H+20],[-240,H]],-141,141,black);
+  const v=K.box(210,4.5,1.5,red,0,H+29.7,-9.3);v.rotation.x=-.837;
+  K.label('RAVEN ROCK',{w:120,h:13,font:"{s}px 'Russo One'",fg:'#e9e9e6'},0,H+10,0.4);
+  for(const s of [-1,1])K.sph(1,gun,s*116,H+40,-45,30,12,38);
+  K.box(5,16,180,chrome,0,H+46,-125);
+  K.anim.push(t=>{red.emissiveIntensity=2.2+Math.sin(t*2.2)*1.2;});
+};
+B.ncr=(K)=>{
+  const tan=K.mat(0xb49a6a,.25,.62),olive=K.mat(0x5c6040,.2,.75),brass=K.mat(0xb8893a,.9,.32),wood=K.mat(0x8a6238,0,.8),wood2=K.mat(0x6e4c2c,0,.85),leather=K.mat(0x4a2f1c,.1,.7),sand=K.mat(0xc7b48a,0,.95),rope=K.mat(0xcdb98a,0,.9);
+  flanges(K,K.mat(0x6e5f43,.2,.7));
+  K.posts((s,z0,z1,zc)=>{K.bb(s*111,s*141,0,H,z0,z1,tan);const f=z0>-100?1:-1;
+    for(let u=1;u<N;u+=2){const y=u*U;K.bb(s*111,s*142.5,y-5,y+5,z0-f*1,z1+f*1,leather);K.box(1.5,8,7,brass,s*143.2,y,zc);}});
+  K.sides(s=>{for(let k=0;k<10;k++)K.bb(s*137,s*141,k*H/10+.8,(k+1)*H/10-.8,-35,-205,k%2?wood:wood2);
+    for(const z of [-40,-200])K.bb(s*141,s*143.5,0,H,z-3,z+3,olive);
+    K.tor(14,2.2,rope,s*143,H*.42,-120,0,PI/2,PI,PI);
+    K.label('NCR · 1ST RECON',{w:145,h:16,font:"{s}px 'Special Elite'",fg:'#1d1a14'},s*141.4,H*.74,-120,s*PI/2);
+    K.label('PROPERTY OF HOOVER DAM',{w:120,h:8,font:"{s}px 'Special Elite'",fg:'#1d1a14'},s*141.4,H*.66,-120,s*PI/2);});
+  K.bb(-141,141,-32,0,0,-240,K.mat(0x6e5f43,.2,.8));
+  for(let r=0;r<2;r++){const n=r?5:6;for(let i=0;i<n;i++)K.sph(1,sand,-125+i*50+(r?25:0),r?-8:-24,-2,24,8.5,9);}
+  K.xprism([[0,H],[0,H+14],[-120,H+30],[-240,H+14],[-240,H]],-143,143,olive);
+  K.label('HOOVER DAM GARRISON',{w:190,h:10,font:"{s}px 'Special Elite'",fg:'#e9dcc0'},0,H+7,0.4);
+  K.cyl(1.6,1.6,140,brass,-125,H+90,-225);K.sph(3,brass,-125,H+161,-225);
+  const fg=new THREE.Group();fg.position.set(-125,H+138,-225);K.group.add(fg);
+  const ftex=K.canvasTex(640,400,(g,w,h)=>{g.fillStyle='#b98f4f';g.fillRect(0,0,w,h);g.fillStyle='#7a2b1f';g.fillRect(0,0,w,46);g.fillRect(0,h-46,w,46);
+    g.fillStyle='#f1d58a';g.beginPath();for(let i=0;i<10;i++){const a=-PI/2+i*PI/5,r=i%2?34:84;g.lineTo(200+r*Math.cos(a),190+r*Math.sin(a));}g.fill();
+    g.fillStyle='#3a2414';g.font="120px 'Special Elite'";g.textBaseline='middle';g.fillText('NCR',310,200);});
+  const fm=new THREE.MeshStandardMaterial({map:ftex,side:THREE.DoubleSide,roughness:.9});
+  const flag=K.add(new THREE.PlaneGeometry(64,40,12,1),fm,33,0,0,0,0,0,fg);
+  const fp=flag.geometry.attributes.position,fx=Array.from({length:fp.count},(_,i)=>fp.getX(i));
+  K.anim.push(t=>{for(let i=0;i<fp.count;i++){const x=fx[i]+32;fp.setZ(i,Math.sin(t*3-x*.12)*x*.08);}fp.needsUpdate=true;flag.geometry.computeVertexNormals();});
+};
+B.vegas=(K)=>{
+  const dark=K.mat(0x150f1c,.5,.32),gold=K.mat(0xd4a64a,1,.26),cream=K.mat(0xf3e6c8,.05,.5),pink=K.glow(0xff3fa4,2.6),cyan=K.glow(0x3fe8ff,2.6);
+  const on=K.glow(0xffe2a0,3.2),off=K.mat(0x4a3d24,.2,.5);const bulbs=[];
+  const bulb=(x,y,z,i)=>{const m=K.sph(2.3,off,x,y,z);m.castShadow=false;bulbs.push([m,i]);};
+  flanges(K,dark);
+  K.posts((s,z0,z1,zc,f)=>{K.bb(s*111,s*141,0,H,z0,z1,dark);K.bb(s*140,s*142,0,H,z1-f*.5,z1-f*2.5,gold);K.bb(s*140,s*142,0,H,z0+f*.5,z0+f*2.5,gold);
+    K.cyl(2.4,2.4,H-20,pink,s*143.5,H/2,zc-f*6);for(let i=0;i<28;i++)bulb(s*142.5,10+i*14,zc+f*7,i);});
+  const star=(s,cy,cz,R)=>{K.sph(4,gold,s*143,cy,cz);for(let k=0;k<8;k++){const a=k/8*2*PI,r=k%2?R*.6:R;K.cyl(.9,.9,r,gold,s*142.5,cy+Math.cos(a)*r/2,cz+Math.sin(a)*r/2,a);K.sph(2,cyan,s*142.5,cy+Math.cos(a)*r,cz+Math.sin(a)*r);}};
+  K.sides(s=>{K.bb(s*138,s*141,0,H,-35,-205,cream);star(s,H*.76,-92,40);star(s,H*.38,-150,28);star(s,H*.2,-72,22);
+    K.tube([[s*142,H*.53,-55],[s*142,H*.6,-118],[s*142,H*.5,-188]],2,cyan,32);});
+  K.bb(-141,141,-32,0,0,-240,dark);K.bb(-141,141,-4,0,0.5,-4,gold);for(let i=0;i<20;i++)bulb(-133+i*14,-17,1,i);
+  K.bb(-141,141,H,H+8,0,-240,gold);
+  // welcome sign
+  const sg=new THREE.Group();sg.position.set(0,H+80,-14);K.group.add(sg);
+  const P=[[-100,0],[-60,32],[0,46],[60,32],[100,0],[60,-32],[0,-46],[-60,-32]];
+  const shape=new THREE.Shape(P.map(p=>new THREE.Vector2(p[0],p[1])));
+  K.add(new THREE.ExtrudeGeometry(shape,{depth:6,bevelEnabled:false}),cream,0,0,-6,0,0,0,sg);
+  const stex=K.canvasTex(1024,472,(g,w,h)=>{g.fillStyle='#f6eedb';g.fillRect(0,0,w,h);
+    const L='WELCOME';for(let i=0;i<7;i++){const x=w/2+(i-3)*58,y=h*.27;g.fillStyle='#fff';g.strokeStyle='#c8202f';g.lineWidth=4;g.beginPath();g.arc(x,y,25,0,2*PI);g.fill();g.stroke();g.fillStyle='#c8202f';g.font="34px Bungee";g.textAlign='center';g.textBaseline='middle';g.fillText(L[i],x,y+2);}
+    g.fillStyle='#1d3f8f';g.font="38px Monoton";g.fillText('TO FABULOUS',w/2,h*.45);
+    g.fillStyle='#c8202f';g.font="92px Bungee";g.fillText('NEW VEGAS',w/2,h*.63);
+    g.fillStyle='#1d3f8f';g.font="30px Bungee";g.fillText('MOJAVE WASTELAND',w/2,h*.8);});
+  stex.repeat.set(1/200,1/92);stex.offset.set(.5,.5);
+  K.add(new THREE.ShapeGeometry(shape),new THREE.MeshStandardMaterial({map:stex,emissive:0xffffff,emissiveMap:stex,emissiveIntensity:.35,roughness:.5}),0,0,.2,0,0,0,sg);
+  for(let e=0;e<P.length;e++){const a=P[e],b=P[(e+1)%P.length];for(let k=0;k<5;k++){const t=k/5;const m=K.sph(2.1,off,a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,1.5,1,1,1,sg);m.castShadow=false;bulbs.push([m,e*5+k]);}}
+  const sp=[];for(let i=0;i<16;i++){const a=PI/2+i*PI/8,r=i%2?7:18;sp.push(new THREE.Vector2(r*Math.cos(a),r*Math.sin(a)));}
+  K.add(new THREE.ExtrudeGeometry(new THREE.Shape(sp),{depth:3,bevelEnabled:false}),K.mat(0xc8202f,.3,.4),0,62,-1.5,0,0,0,sg);
+  for(const x of [-34,34])K.cyl(3,3,40,gold,x,H+22,-14);
+  // crown
+  const cr=new THREE.Group();cr.position.set(0,H,-150);K.group.add(cr);
+  K.cyl(8,12,90,dark,0,45,0,0,0,0,24,cr);K.cyl(72,48,12,dark,0,96,0,0,0,0,48,cr);
+  K.tor(72,2.4,cyan,0,102,0,PI/2,0,0,2*PI,cr);K.tor(50,2,pink,0,90,0,PI/2,0,0,2*PI,cr);
+  K.cone(6,80,gold,0,142,0,0,0,0,cr);K.sph(5,pink,0,184,0,1,1,1,cr);
+  K.anim.push(t=>{cr.rotation.y=t*.3;const st=Math.floor(t*7);for(const [m,i] of bulbs)m.material=((i+st)%3===0)?on:off;});
+};
+
+// ---------- scene management ----------
+let current=null,rack=null,envRT=null,eq=null,ov=null,K=null;
+function disposeTree(o){o.traverse(n=>{if(n.geometry&&n.geometry!==holeGeo)n.geometry.dispose();const ms=n.material?(Array.isArray(n.material)?n.material:[n.material]):[];ms.forEach(m=>{if(m===holeDark||m===holeLit)return;if(m.map)m.map.dispose();if(m.emissiveMap&&m.emissiveMap!==m.map)m.emissiveMap.dispose();m.dispose();});});}
+function build(id){
+  const th=T[id];current=id;
+  if(rack){scene.remove(rack);disposeTree(rack);}
+  if(envRT)envRT.dispose();envRT=envFor(th);scene.environment=envRT.texture;
+  scene.background=new THREE.Color(th.bg);scene.fog=new THREE.Fog(th.bg,1800,3600);
+  floor.material.color.set(th.floor).convertSRGBToLinear();
+  rack=new THREE.Group();scene.add(rack);K=kit(rack);
+  B[id](K);eq=brackets(K,th);ov=overlay(K);applyToggles();
+  const r=document.documentElement.style;r.setProperty('--accent',th.accent);r.setProperty('--accent2',th.accent2);
+  r.setProperty('--display',th.font[0]+',sans-serif');r.setProperty('--dwt',th.font[1]);r.setProperty('--dcase',th.font[2]);
+  document.getElementById('dFac').textContent=th.fac;document.getElementById('dName').textContent=th.name;document.getElementById('dTag').textContent=th.tag;
+  document.getElementById('dFeat').innerHTML=th.feat.map(f=>'<li>'+f+'</li>').join('');
+  document.getElementById('dKit').innerHTML=th.kit.map(k=>'<tr><td>'+k[0]+'</td><td>'+k[1]+'</td><td>'+k[2]+'</td></tr>').join('');
+  document.getElementById('dFil').innerHTML=th.fil.map(f=>'<span><i style="background:'+f[1]+'"></i>'+f[0]+'</span>').join('');
+  document.getElementById('hudL').textContent=th.name.toUpperCase();
+  document.querySelectorAll('.rail button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id===id));
+  try{history.replaceState(null,'','#'+id);}catch(e){}
+}
+const tEq=document.getElementById('tEq'),tIf=document.getElementById('tIf'),tRot=document.getElementById('tRot');
+function applyToggles(){if(eq)eq.visible=tEq.checked;if(ov)ov.visible=tIf.checked;if(K)K.holes.forEach(h=>h.material=tIf.checked?holeLit:holeDark);controls.autoRotate=tRot.checked;}
+[tEq,tIf,tRot].forEach(x=>x.addEventListener('change',applyToggles));
+
+const rail=document.getElementById('rail');
+rail.innerHTML=ORDER.map(id=>{const t=T[id];return '<button type="button" data-id="'+id+'" aria-pressed="false"><span class="n">'+t.name+'</span><span class="f">'+t.fac.split(' · ')[0]+'</span><span class="sw">'+t.sw.map(c=>'<i style="background:'+c+'"></i>').join('')+'</span></button>';}).join('');
+rail.addEventListener('click',e=>{const b=e.target.closest('button');if(b)build(b.dataset.id);});
+
+function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;
+  const far=w/h<.9;camera.fov=far?44:32;camera.updateProjectionMatrix();}
+new ResizeObserver(resize).observe(canvas);resize();
+
+try{await Promise.race([Promise.all(["700 40px Rajdhani","700 40px 'Cinzel Decorative'","40px Michroma","40px Bungee","40px 'Russo One'","40px 'Special Elite'","40px Monoton","500 30px 'IBM Plex Mono'"].map(f=>document.fonts.load(f))),new Promise(r=>setTimeout(r,2500))]);}catch(e){}
+const start=(location.hash||'').slice(1);build(T[start]?start:'vegas');
+
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clock=new THREE.Clock();let tt=0;
+document.getElementById('hudR').textContent='DRAG · ORBIT   SCROLL · ZOOM';
+(function loop(){requestAnimationFrame(loop);const dt=clock.getDelta();tt+=reduce?dt*.15:dt;controls.update();if(K)K.anim.forEach(f=>f(tt));renderer.render(scene,camera);})();
+})();
+</script>
