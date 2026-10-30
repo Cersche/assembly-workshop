@@ -1,5 +1,14 @@
 # Assembly Workshop — current handoff
 
+## 2026-10-30 MoCA box: wall plate + French-cleat back plate (Claude)
+
+Brian: put a plate on the wall first, then hang the box on it. He picked a French cleat, with wall holes for anchors and a stud. The new file is [cleat16.scad](work/wall-box-wizard/concept15/cleat16.scad) (`pick=1` back plate, `2` wall plate, `0` both seated). It includes body15.scad, which gained a no-op `part="none"`.
+- **Back plate MOCA-BC-A:** the keyhole back plate without the keyholes, plus a 10.5 mm band at Z159-196 with a pocket through the outer face. The pocket has a 45 deg roof and 9 mm of lift room. There is an M3 lock-screw slot at X38 Z186. Sleeve, lid, cradle and porch are unchanged.
+- **Wall plate MOCA-WP-A:** the 105 x 210 box outline, 3 mm thick with a window, plus an 8 mm cleat at Z171-193. Six countersunk 4.5 mm holes: 4 for anchors, and 2 on the centre line 178 mm apart for a stud. An M3 insert pilot for the lock. V notches mark the levels; TOP is engraved.
+- **Checks:** the seated parts don't overlap. The box can lift 8.5 mm and pull out without catching. The pocket roof is a ~31 mm bridge.
+- **Print file:** `outputs/MoCA_Box_2026-10-27/wall_cleat_2026-10-30/` (3MF with both parts in print orientation, 2 STLs, README). Viewers: https://claude.ai/artifact/Qx8zg9giYPp6Qcv1sPVv88 (seated), https://claude.ai/artifact/LXWkHFnfdC6ks8Kf5nDVsE (layout).
+- Not printed. Fit, cleat hold, screw/anchor sizes and load are UNKNOWN.
+
 ## 2026-10-30 SG8-M6-D: proven TL-SG108E sleeve clearance restored (Claude)
 
 Brian printed SG8-M6-C: it did not fit. B/C had cut `sleeve_top` from the proven 1.35 mm (2026-10-23 flush print) to 0.35. [README](outputs/TL-SG108E_M6_2026-10-28/README.md): SG8-M6-D = C with 1.35 back; README lists every fit number vs the proven print. C moved to `previous_SG8-M6-C/`; Final_3MF has D (3MF plain tags, 0 open edges) and now says "accepted" is not "proven". New rule (memory): redesigns keep the proven fit numbers; check docs/Fit_Findings.md first. Brian has not said exactly what failed on C; confirm when D is printed. Not printed.

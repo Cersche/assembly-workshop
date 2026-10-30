@@ -319,7 +319,8 @@ module back_plate(){difference(){
  for(p=jt_pts())translate([p[0],db+0.01,p[1]])rotate([90,0,0]){cylinder(d=m3_clear,h=wall+1);cylinder(d1=jt_csk,d2=m3_clear,h=(jt_csk-m3_clear)/2);}
 }}
 assert(wo<=250&&ho+(mount_style=="tabs"?2*tab_len:0)<=250&&db+wall+(mount_style=="cleat"?cleat_c:0)<=250,"Outer size above 250 mm");
-if(part=="body")body();
+if(part=="none"){}   // for files that include this one (cleat16.scad)
+else if(part=="body")body();
 else if(part=="lid")lid();
 else if(part=="sleeve")sleeve();
 else if(part=="back")back_plate();
