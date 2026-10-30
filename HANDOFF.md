@@ -1,5 +1,9 @@
 # Assembly Workshop — current handoff
 
+## 2026-10-30 SG8-M6-D: proven TL-SG108E sleeve clearance restored (Claude)
+
+Brian printed SG8-M6-C: it did not fit. B/C had cut `sleeve_top` from the proven 1.35 mm (2026-10-23 flush print) to 0.35. [README](outputs/TL-SG108E_M6_2026-10-28/README.md): SG8-M6-D = C with 1.35 back; README lists every fit number vs the proven print. C moved to `previous_SG8-M6-C/`; Final_3MF has D (3MF plain tags, 0 open edges) and now says "accepted" is not "proven". New rule (memory): redesigns keep the proven fit numbers; check docs/Fit_Findings.md first. Brian has not said exactly what failed on C; confirm when D is printed. Not printed.
+
 ## 2026-10-29 SG8-M6-C: TL-SG108E tray corners rounded (Claude)
 
 Brian: the tray print warps. [README](outputs/TL-SG108E_M6_2026-10-28/README.md): SG8-M6-C = SG8-M6-B with the tray footprint corners rounded (rear R 20, front R 5) via `tray_round()` in `src/SG8-M6-C_build.py`; nothing else changed (faceplate only gets the new ID). B moved to `previous_SG8-M6-B/`; Final_3MF now has the C set (3MF plain tags, tray 0 open edges); Brian accepted C as the bracket to use. Not printed; warping effect UNKNOWN.
