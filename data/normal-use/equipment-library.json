@@ -556,5 +556,78 @@
     ],
     "status": "PROPOSED \u2014 UNVALIDATED",
     "display_name": "Philips Hue Bridge + Raspberry Pi 4 (keystone)"
+  },
+  {
+    "id": "eq-cbab7a748c93",
+    "name": "Screen 5in + Pi 4 + Hue 2U (SCR5-E, placeholder)",
+    "span": 2,
+    "spec": {
+      "name": "Faceplate only",
+      "faceplate_only": true,
+      "layout": "custom",
+      "u": 2,
+      "dev_w": 5.0,
+      "dev_d": 5.0,
+      "dev_h": 1.0,
+      "hole_d": 2.7,
+      "standoff": 0.0,
+      "insert_pilot": 3.2,
+      "board_t": 1.6,
+      "device_mount": "straps",
+      "joint": "none",
+      "rear_support": false,
+      "coupon": [],
+      "holes": [],
+      "ports": [
+        {
+          "x": 33.0,
+          "z": 44.45,
+          "w": 115.7,
+          "h": 72.2,
+          "r": 4.0,
+          "label": "Screen",
+          "type": "other",
+          "id": "front-1"
+        },
+        {
+          "x": -93.0,
+          "z": 26.8,
+          "w": 15.0,
+          "h": 17.5,
+          "r": 1.0,
+          "label": "Pi USB",
+          "type": "usb-a",
+          "id": "front-2"
+        },
+        {
+          "x": -75.0,
+          "z": 26.8,
+          "w": 15.0,
+          "h": 17.5,
+          "r": 1.0,
+          "label": "Pi USB",
+          "type": "usb-a",
+          "id": "front-3"
+        },
+        {
+          "x": -56.3,
+          "z": 25.6,
+          "w": 17.5,
+          "h": 15.0,
+          "r": 1.0,
+          "label": "Pi Ethernet",
+          "type": "rj45",
+          "id": "front-4"
+        }
+      ],
+      "rear_ports": [],
+      "keystones": []
+    },
+    "build": "411b8e5dd5cc5201cfbe8239ffa47a590e20ebbc493bd4568ad7d76d086d4770",
+    "parts": [
+      "faceplate"
+    ],
+    "status": "PROPOSED \u2014 UNVALIDATED",
+    "display_name": "Screen 5in + Pi 4 + Hue 2U (SCR5-E, placeholder)"
   }
 ]
