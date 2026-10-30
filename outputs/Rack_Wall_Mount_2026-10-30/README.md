@@ -14,6 +14,8 @@ Brian picked **top French cleat + bottom standoffs** (drywall, stud reachable, r
 
 The rail and bar are 282 mm long (rack width): they print diagonally on a 256 mm bed (like the Lab Rax 282 mm edges). Bed size not checked.
 
+Outline corners are rounded (as seen from the wall, = print footprint): R5 on bar and standoffs (incl. the bar's inner step), R6 on the rail. Mating faces (cleat slope, post faces, wall face) stay flat.
+
 ## Layout (rack frame: X 0 = rack centre, Z 0 = bottom of U1, Y 0 = rack rear face)
 
 - Rear post M6 insert holes used: X ±118.26, U9 Z 361.9 / 393.7, U1 Z 6.3 / 38.1 (Lab Rax 3-per-U pattern, same X as the front; inserts must be installed in those 8 rear holes).
@@ -38,7 +40,7 @@ The rail and bar are 282 mm long (rack width): they print diagonally on a 256 mm
 
 - Seated: rack parts ∩ rail volume 0 (surface contact on the 45 deg slope only); hook tip 0.5 mm clear of the rail plate, bar body 0.5 mm clear of the cleat front.
 - Lifted 0.3 mm, lifted 9.5 mm, and lifted 9.5 + pulled 20 mm: intersection empty.
-- Each STL is one closed shell (Euler genus = hole count: rail 22, bar 6, standoff 2). `RW_wall_mount_set.3mf`: 4 objects (rail, bar, 2 standoffs) side by side, print orientation, plain tags (12,178 vertex / 24,468 triangle).
+- Each STL is one closed shell (Euler genus = hole count: rail 22, bar 6, standoff 2). `RW_wall_mount_set.3mf`: 4 objects (rail, bar, 2 standoffs) side by side, print orientation, plain tags (12,658 vertex / 25,428 triangle). Rebuild: `python work/rack-wall-mount/make_3mf.py outputs/Rack_Wall_Mount_2026-10-30`.
 - Print orientation: rail wall-face down (cleat slope = 45 deg overhang), bar post-face down (hook underside 45 deg), standoffs post-face down. No supports expected.
 - Rear-post hole X (±118.26) is taken from the 1U support extension mesh (rear holes at the same X as the front); confirm on the real rack before drilling the wall.
 

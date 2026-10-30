@@ -35,6 +35,11 @@ bar_z0 = 350; bar_zm = 368; bar_z1 = 408; bar_end = 104;
 so_x0 = 104; so_z0 = ucz(1) - 32; so_z1 = ucz(1) + 32;
 rail_z0 = 336; rail_z1 = 412; cl_z0 = 356;
 row_z = [344, 400]; row_x = [for (i = [-5:5]) i * 25];
+round_r = 5;             // outline corner radius (as seen from the wall = print footprint); mating faces stay flat
+
+// 2D outline in X/Z (y of the 2D shape = Z) extruded over Y y0..y1
+module xz_prism(y0, y1) { translate([0, y1, 0]) rotate([90, 0, 0]) linear_extrude(y1 - y0) children(); }
+module rounded(r) { offset(r = r) offset(r = -2 * r) offset(r = r) children(); }   // convex and concave corners
 
 module m6_hole(x, z, y_end) {      // clearance through the flange, counterbore from the wall side
     translate([x, -1, z]) rotate([-90, 0, 0]) cylinder(d = m6_d, h = flange + 1.01);
@@ -51,12 +56,18 @@ module below_slope(ya, yb, zbot, xw) {
         polygon([[ya, zbot], [yb, zbot], [yb, slope_z - (yb - cl_y0)], [ya, slope_z - (ya - cl_y0)]]);
 }
 
+module bar_outline() {
+    rounded(round_r) union() {
+        for (s = [-1, 1]) translate([s > 0 ? bar_end : -half_w, bar_z0]) square([half_w - bar_end, bar_z1 - bar_z0]);
+        translate([-half_w, bar_zm]) square([2 * half_w, bar_z1 - bar_zm]);
+    }
+}
+
 module bar() {
     difference() {
         union() {
-            for (s = [-1, 1]) translate([s > 0 ? bar_end : -half_w, 0, bar_z0]) cube([half_w - bar_end, bar_y1, bar_z1 - bar_z0]);
-            translate([-half_w, 0, bar_zm]) cube([2 * half_w, bar_y1, bar_z1 - bar_zm]);
-            above_slope(bar_y1 - 0.01, hook_y1, bar_z1, half_w);
+            xz_prism(0, bar_y1) bar_outline();
+            intersection() { above_slope(bar_y1 - 0.01, hook_y1, bar_z1, half_w); xz_prism(bar_y1 - 1, hook_y1 + 1) bar_outline(); }
         }
         for (s = [-1, 1], z = [ucz(9) - 15.9, ucz(9) + 15.9]) m6_hole(s * hole_x, z, hook_y1 + 1);
         for (s = [-1, 1]) translate([s * lock_x, lock_y, 360]) cylinder(d = 3.4, h = 60);
@@ -73,11 +84,13 @@ module countersink(x, z) {     // #8 / 4 mm wood screw, head 1 mm below the room
     translate([x, cl_y1 + 1, z]) rotate([-90, 0, 0]) cylinder(d1 = 9.2, d2 = 4.5, h = 2.35);
 }
 
+module rail_outline() { rounded(round_r + 1) translate([-half_w, rail_z0]) square([2 * half_w, rail_z1 - rail_z0]); }
+
 module rail() {
     difference() {
         union() {
-            translate([-half_w, cl_y1, rail_z0]) cube([2 * half_w, plate_t, rail_z1 - rail_z0]);
-            below_slope(cl_y0, cl_y1 + 0.01, cl_z0, half_w);
+            xz_prism(cl_y1, wall_y) rail_outline();
+            intersection() { below_slope(cl_y0, cl_y1 + 0.01, cl_z0, half_w); xz_prism(cl_y0 - 1, cl_y1 + 1) rail_outline(); }
         }
         for (z = row_z, x = row_x) countersink(x, z);
         for (s = [-1, 1]) translate([s * lock_x, lock_y, slope_z - (lock_y - cl_y0) - 10]) cylinder(d = 2.5, h = 20);
@@ -93,7 +106,7 @@ module rail() {
 
 module standoff() {   // right side; the left one is the same part turned upside down
     difference() {
-        translate([so_x0, 0, so_z0]) cube([half_w - so_x0, wall_y, so_z1 - so_z0]);
+        xz_prism(0, wall_y) rounded(round_r) translate([so_x0, so_z0]) square([half_w - so_x0, so_z1 - so_z0]);
         for (z = [ucz(1) - 15.9, ucz(1) + 15.9]) m6_hole(hole_x, z, wall_y + 1);
         translate([half_w - 0.6, wall_y / 2, ucz(1)]) rotate([90, 0, 90])
             linear_extrude(1) text("RW-SO-A", size = 5, halign = "center", valign = "center", font = "Liberation Sans:style=Bold");

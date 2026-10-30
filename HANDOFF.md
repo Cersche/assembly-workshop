@@ -3,6 +3,7 @@
 ## 2026-10-30 Rack wall mount RW: top French cleat + bottom standoffs (Claude)
 
 Brian brainstormed rack wall mounting and picked **top cleat + bottom standoffs** (drywall, stud reachable, ~6-9 kg, rear-post insert holes face the wall). [README](outputs/Rack_Wall_Mount_2026-10-30/README.md), source [rwm1.scad](work/rack-wall-mount/rwm1.scad). RW-WP-A wall rail (282 wide = rack width, drilling template, 8 mm 45 deg cleat, 2 rows x 11 countersunk #8 holes at 25 mm pitch for stud/anchors); RW-RC-A rack cleat bar on the rear-post U9 M6 inserts; 2 x RW-SO-A standoffs on U1 inserts; rack rear face 30 mm off the wall (bottom-rear cable exit stays open); 2 x M3 lock screws from the top. 8 x M6 x 8 into rear-post inserts (rear X +/-118.26 inferred from the support-extension mesh; confirm on the rack). Clash: seated contact only, lifted 0.3 / 9.5 / 9.5+pulled empty. 3MF 4 objects, plain tags. Viewers https://claude.ai/artifact/GpjXS9DK3AJa7ufNtsFwcr (seated), https://claude.ai/artifact/GEW6JMk8CDAvPBTrdqsowH (print). 282 mm parts print diagonally on a 256 bed. Not printed; fit, cleat/anchor hold, insert engagement and load UNKNOWN.
+Brian then asked for rounded corners where possible: all outlines rounded (R5 bar/standoffs incl. inner step, R6 rail), mating faces flat; checks re-run, same results.
 
 ## 2026-10-30 MoCA box: wall plate + French-cleat back plate (Claude)
 
