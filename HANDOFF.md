@@ -14,6 +14,10 @@ Brian: put a plate on the wall first, then hang the box on it. He picked a Frenc
 - **Print file:** `outputs/MoCA_Box_2026-10-27/wall_cleat_2026-10-30/` (3MF with both parts in print orientation, 2 STLs, README). Viewers: https://claude.ai/artifact/Qx8zg9giYPp6Qcv1sPVv88 (seated), https://claude.ai/artifact/LXWkHFnfdC6ks8Kf5nDVsE (layout).
 - Not printed. Fit, cleat hold, screw/anchor sizes and load are UNKNOWN.
 
+## 2026-10-30 SG8-M6-E: new TL-SG108E faceplate for the printed D tray (Claude)
+
+Brian printed the D tray; with the B plate the holes sat ~2 mm low. Cause: the D sleeve top lip (Z to 34.85) runs under the screw bosses (bottom Z 32.42, capped by the plate top), so the boss rides on the lip. The D faceplate clashes the same way (OpenSCAD intersection). [SG8-M6-E](outputs/TL-SG108E_M6_2026-10-28/README.md) = D faceplate with the bosses cut off below Z 35.15; plate-only 3MF in Final_3MF. Bore floor opens; an ~8 mm insert may touch the lip by ~0.4 mm (insert OD UNKNOWN). D moved to `previous_SG8-M6-D/`. Not printed.
+
 ## 2026-10-30 SG8-M6-D: proven TL-SG108E sleeve clearance restored (Claude)
 
 Brian printed SG8-M6-C: it did not fit. B/C had cut `sleeve_top` from the proven 1.35 mm (2026-10-23 flush print) to 0.35. [README](outputs/TL-SG108E_M6_2026-10-28/README.md): SG8-M6-D = C with 1.35 back; README lists every fit number vs the proven print. C moved to `previous_SG8-M6-C/`; Final_3MF has D (3MF plain tags, 0 open edges) and now says "accepted" is not "proven". New rule (memory): redesigns keep the proven fit numbers; check docs/Fit_Findings.md first. Brian has not said exactly what failed on C; confirm when D is printed. Not printed.

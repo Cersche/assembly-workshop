@@ -1,4 +1,21 @@
-# SG8-M6-D — TP-Link TL-SG108E 1U bracket, M6 hardware (2026-10-30)
+# SG8-M6-E — TP-Link TL-SG108E 1U bracket, M6 hardware (2026-10-30)
+
+**E = new faceplate only, for the already printed SG8-M6-D tray.** Test-print ID **SG8-M6-E** is engraved on the back of the faceplate between the bosses.
+Print `SG8-M6-E_faceplate+label.3mf` (faceplate + UPLINK label inlay, no tray). **Not printed. Fit and strength UNKNOWN.**
+
+**Why (Brian, 2026-10-30: printed D tray + B plate, "holes too low"):** the sleeve top lip (Z 33.35–34.85 on D) runs under the screw bosses, but the bosses stayed at Z 32.42–44.42 (centre 38.425, capped by the plate top), so the boss sat on the lip and pushed the tray ~2 mm low. The D faceplate has the same boss, so D on D clashes too (OpenSCAD intersection of D faceplate and D tray: real volume, Y 0–8, up to Z 34.85; E faceplate and D tray: face contact at Y 0 only, no volume). E cuts each boss off below Z 35.15 (lip top + 0.3). Screw centre, bore, X positions and everything else are D.
+
+**Watch:** with the boss cut back, the 7.6 mm bore floor opens in a ~3.9 mm slot. An M6 insert wider than ~6.5 mm OD (likely ~8 mm, measured value UNKNOWN) sticks ~0.4 mm below the cut and touches the tray lip there; if the plate won't pull flat, take ~0.5 mm off the lip top in that spot.
+
+| File | What |
+|---|---|
+| `SG8-M6-E_faceplate+label.3mf` | Faceplate + UPLINK label inlay (one object, two parts) |
+| `SG8-M6-E_faceplate.stl`, `SG8-M6-E_UPLINK-label-inlay.stl` | Separate parts (faceplate closed, 0 open edges; inlay = D's, unchanged) |
+| `src/SG8-M6-E_build.py`, `src/SG8-M6-E.scad` | Build (`python src/SG8-M6-E_build.py <out_dir>`) and exact source; `src/label_3mf.py <rev> <inlay> <out> plate` packs plate-only |
+
+`previous_SG8-M6-D/` is D (its tray is the one in use).
+
+## SG8-M6-D — TP-Link TL-SG108E 1U bracket, M6 hardware (2026-10-30)
 
 Test-print ID **SG8-M6-D** is engraved (0.6 mm) on the back of the faceplate between the screw bosses and on the outside of the left sleeve wall.
 M6 redesign of the printed baseline `outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush/` (kept unchanged). **Not printed. Fit and strength UNKNOWN.**
