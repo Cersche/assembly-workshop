@@ -2,7 +2,7 @@
 
 ## 2026-10-29 SG8-M6-C: TL-SG108E tray corners rounded (Claude)
 
-Brian: the tray print warps. [README](outputs/TL-SG108E_M6_2026-10-28/README.md): SG8-M6-C = SG8-M6-B with the tray footprint corners rounded (rear R 20, front R 5) via `tray_round()` in `src/SG8-M6-C_build.py`; nothing else changed (faceplate only gets the new ID). B moved to `previous_SG8-M6-B/`; Final_3MF now has the C set (3MF plain tags, tray 0 open edges). Not printed; warping effect UNKNOWN.
+Brian: the tray print warps. [README](outputs/TL-SG108E_M6_2026-10-28/README.md): SG8-M6-C = SG8-M6-B with the tray footprint corners rounded (rear R 20, front R 5) via `tray_round()` in `src/SG8-M6-C_build.py`; nothing else changed (faceplate only gets the new ID). B moved to `previous_SG8-M6-B/`; Final_3MF now has the C set (3MF plain tags, tray 0 open edges); Brian accepted C as the bracket to use. Not printed; warping effect UNKNOWN.
 
 ## 2026-10-29 SCR5-E placed in the saved rack (Claude, Brian's OK)
 
