@@ -1,0 +1,336 @@
+<meta charset="utf-8">
+<title>Lab Rax Themes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=Press+Start+2P&family=Rajdhani:wght@600;700&family=Cinzel+Decorative:wght@700&family=Michroma&family=Bungee&family=Russo+One&family=Special+Elite&family=Monoton&display=swap">
+<style>
+/* Layout: theme rail | live Lab Rax stage | crown + filament + icon sheet. Dark shell, accent and display face follow the theme. */
+:root{
+  --bg:#0b0c0f; --panel:#13151a; --line:#262a33; --fg:#e8eaee; --muted:#9aa1ad;
+  --accent:#e8e8e2; --accent2:#9aa1ad;
+  --display:'Rajdhani',sans-serif; --dwt:700; --dcase:uppercase;
+  --body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--body);font-size:14px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px 32px}
+.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px;max-width:1500px;margin:0 auto 14px}
+.top h1{font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.18em;text-transform:uppercase;margin:0;color:var(--muted)}
+.top h1 b{color:var(--accent);font-weight:500}
+.top p{margin:0;color:var(--muted);font-size:13px;max-width:72ch}
+.grid{display:grid;grid-template-columns:200px minmax(0,1fr) 350px;gap:16px;max-width:1500px;margin:0 auto}
+.rail{display:flex;flex-direction:column;gap:6px}
+.rail button,.seg button{all:unset;cursor:pointer;box-sizing:border-box}
+.rail button{display:grid;grid-template-columns:1fr auto;gap:2px 8px;padding:9px 12px;border:1px solid var(--line);border-radius:4px;background:var(--panel)}
+.rail button:hover{border-color:var(--muted)}
+.rail button:focus-visible,.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.rail button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.rail .n{font-weight:600}
+.rail .f{grid-column:1;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.rail .sw{grid-row:1/3;grid-column:2;align-self:center;display:flex;gap:3px}
+.rail .sw i{width:8px;height:22px;border-radius:2px;display:block}
+.stage{position:relative;min-width:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#000}
+#c{display:block;width:100%;height:clamp(380px,72vh,780px);touch-action:none}
+.hud{position:absolute;left:12px;top:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:#fff;text-shadow:0 1px 3px #000}
+.tog{position:absolute;left:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px}
+.tog label,.tog button{all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:3px;background:rgba(10,11,14,.8);border:1px solid rgba(255,255,255,.14);font-family:var(--mono);font-size:11px;color:#e8eaee}
+.tog input{accent-color:var(--accent);margin:0}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.side h2{font-family:var(--display);font-weight:var(--dwt);text-transform:var(--dcase);font-size:clamp(28px,3.2vw,40px);line-height:1.05;margin:0;color:var(--accent);text-wrap:balance}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2)}
+.side h3{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.side p{margin:0}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.seg button{padding:8px 6px;border:1px solid var(--line);border-radius:3px;text-align:center;font-family:var(--mono);font-size:11px;line-height:1.3;background:var(--panel)}
+.seg button small{display:block;color:var(--muted);font-size:10px}
+.seg button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+.hw{font-size:12.5px;color:var(--muted);margin-top:8px}
+.hw b{color:var(--fg);font-weight:600}
+.fil{width:100%;border-collapse:collapse;font-size:12.5px}
+.fil td{padding:4px 6px 4px 0;border-top:1px solid var(--line)}
+.fil td:first-child{color:var(--muted);width:42%}
+.fil i{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-2px;margin-right:6px;border:1px solid rgba(255,255,255,.2)}
+.icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:6px}
+.icons figure{margin:0;border:1px solid var(--line);border-radius:3px;padding:6px;background:var(--panel);text-align:center}
+.icons canvas{width:56px;height:56px;display:block;margin:0 auto 4px}
+.icons figcaption{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.icons figcaption b{display:block;color:var(--fg);font-weight:500;font-size:11px}
+.note{max-width:1500px;margin:14px auto 0;color:var(--muted);font-size:12px}
+@media (max-width:1100px){.grid{grid-template-columns:minmax(0,1fr)}.rail{flex-direction:row;overflow-x:auto;padding-bottom:4px}.rail button{flex:0 0 auto;min-width:150px}#c{height:clamp(360px,62vh,620px)}}
+</style>
+
+<header class="top">
+  <h1><b>Lab Rax Themes</b> · real frame · colour, icons, crown</h1>
+  <p>Your actual Lab Rax rack and brackets. Each world gets its own filament colours, in-world device names and icons for the Print-in-color faceplates, and a new crown where the Lab Rax logo was: an LED matrix running that world's screen.</p>
+</header>
+
+<div class="grid">
+  <nav class="rail" id="rail" aria-label="Themes"></nav>
+  <div class="stage">
+    <canvas id="c" aria-label="3D render of the themed Lab Rax rack"></canvas>
+    <div class="hud"><span id="hudL"></span><span>DRAG · ORBIT &nbsp; SCROLL · ZOOM</span></div>
+    <div class="tog">
+      <label><input type="checkbox" id="tBr" checked> Brackets</label>
+      <label><input type="checkbox" id="tIc" checked> Icons</label>
+      <label><input type="checkbox" id="tRot"> Auto-rotate</label>
+      <button type="button" id="bTop">Crown close-up</button>
+    </div>
+  </div>
+  <section class="side">
+    <div><div class="eyebrow" id="sFac"></div><h2 id="sName"></h2></div>
+    <p id="sTag"></p>
+    <div>
+      <h3>Crown (replaces the logo beam middle)</h3>
+      <div class="seg" id="crown">
+        <button type="button" data-k="stock">Stock<small>Lab Rax logo</small></button>
+        <button type="button" data-k="strip">Dot strip<small>48 × 8 mono</small></button>
+        <button type="button" data-k="rgb">RGB window<small>64 × 32 colour</small></button>
+      </div>
+      <p class="hw" id="hw"></p>
+    </div>
+    <div><h3>Filament</h3><table class="fil"><tbody id="fil"></tbody></table></div>
+    <div><h3>Faceplate icons</h3><div class="icons" id="icons"></div></div>
+  </section>
+</div>
+<p class="note">Preview only, built from the Lab Rax creator's meshes (personal use, not for sharing). Crown sizes are concept numbers: the beam ends and their joints stay original, the middle is new. LED modules are real off-the-shelf parts; mounting, wiring, fit and strength UNKNOWN. Fan concepts, not affiliated with any franchise.</p>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const DATA=/*__DATA__*/null;
+(async function(){
+const PI=Math.PI,U=DATA.U,SL=DATA.slots,TOP=SL*U;
+const zb=(slot,span=1)=>(SL-slot-span+1)*U;
+const lin=c=>new THREE.Color(c).convertSRGBToLinear();
+
+// ---------- icons (24-grid stroke paths, same set as the Rack Finish page) ----------
+const ICON={
+ modem:"M5 11h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2zM8.2 7.6a5.4 5.4 0 0 1 7.6 0M5.6 5a9 9 0 0 1 12.8 0M7 15h.01M10 15h.01M13 15h.01",
+ switch:"M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM6 10h10l-2.5-2.5M18 14H8l2.5 2.5",
+ jack:"M5 4h14v11h-3v4H8v-4H5zM9 7.5v3M12 7.5v3M15 7.5v3",
+ bulb:"M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.1h5c0-.8.4-1.6 1.1-2.1A6 6 0 0 0 12 3z",
+ chip:"M7.5 6h9A1.5 1.5 0 0 1 18 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 16.5v-9A1.5 1.5 0 0 1 7.5 6zM9.5 9.5h5v5h-5zM9 3v3M12 3v3M15 3v3M9 18v3M12 18v3M15 18v3M3 9h3M3 12h3M3 15h3M18 9h3M18 12h3M18 15h3",
+ fan:"M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0M10.4 12a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0M12 10.4C11 7 12.5 4.6 15 5.2s2 3.4-.4 5.2M13.6 12c3.4-1 5.8.5 5.2 3s-3.4 2-5.2-.4M12 13.6c1 3.4-.5 5.8-3 5.2s-2-3.4.4-5.2M10.4 12C7 13 4.6 11.5 5.2 9s3.4-2 5.2.4",
+ pc:"M7.5 2.5h9A1.5 1.5 0 0 1 18 4v16a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20V4a1.5 1.5 0 0 1 1.5-1.5zM9 6.5h6M9 9.5h6M10.4 16.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0"
+};
+const SPOTS=[{slot:1,icon:"modem",x:-100},{slot:2,icon:"switch",x:-100},{slot:3,icon:"jack",x:-104},{slot:5,icon:"chip",x:-30},{slot:5,icon:"bulb",x:58},{slot:8,icon:"fan",x:0},{slot:9,icon:"pc",x:-100}];
+const DEV={modem:'CM1000 modem',switch:'TL-SG108E',jack:'Keystones',chip:'Pi 4',bulb:'Hue bridge',fan:'Cooling (U2)',pc:'OptiPlex'};
+
+// ---------- themes ----------
+// c: filament per group [name, hex]; ic: icon style; names: in-world device names; mx: LED colour for the dot strip; scr: matrix programme
+const T={
+ stock:{name:'Lab Rax',fac:'Baseline · as printed',font:["'Rajdhani'",700,'uppercase'],accent:'#e8e8e2',accent2:'#9aa1ad',bg:'#0d0e11',env:.6,
+  tag:'The rack as it stands: charcoal and black, white logo. Here for comparison.',
+  c:{posts:['Matte charcoal','#2c2f34'],extensions:['Matte charcoal','#2c2f34'],frame:['Black','#18191b'],panels:['Black','#18191b'],handles:['Black','#18191b'],feet:['Black','#18191b'],logo:['White','#f1f1ec'],faceplates:['Matte charcoal','#2c2f34'],brackets:['Black','#18191b'],crown:['Black','#18191b'],icons:['White','#f1f1ec']},
+  ic:{frame:'none',glow:0,label:"600 {s}px 'IBM Plex Sans'"},names:{modem:'MODEM',switch:'SWITCH',jack:'PATCH',chip:'PI 4',bulb:'HUE',fan:'COOLING',pc:'OPTIPLEX'},
+  mx:'#ff3030',strip:['LAB RAX · 9U · ASSEMBLY WORKSHOP · '],scr:'stock'},
+ expanse:{name:'Tachi Ops',fac:'The Expanse',font:["'Rajdhani'",700,'uppercase'],accent:'#d8a91c',accent2:'#59c6ff',bg:'#0d1116',env:.5,
+  tag:'MCRN gunmetal with hazard-yellow joints. Device labels read like a corvette ops deck.',
+  c:{posts:['Gunmetal','#4b525c'],extensions:['Hazard yellow','#d8a91c'],frame:['Charcoal','#23272d'],panels:['Charcoal','#23272d'],handles:['Hazard yellow','#d8a91c'],feet:['Charcoal','#23272d'],logo:['Hazard yellow','#d8a91c'],faceplates:['Gunmetal','#4b525c'],brackets:['Charcoal','#23272d'],crown:['Charcoal','#23272d'],icons:['Drive blue','#59c6ff']},
+  ic:{frame:'brackets',glow:6,label:"700 {s}px Rajdhani"},names:{modem:'TIGHTBEAM',switch:'NAV NET',jack:'PATCH BAY',chip:'OPS',bulb:'DECK LIGHTS',fan:'AIR RECYC',pc:'REACTOR'},
+  mx:'#3a8cff',strip:['REMEMBER THE CANT · ALL HANDS PREPARE FOR BURN · '],scr:'expanse'},
+ giger:{name:'Biomech',fac:'Inspired by H.R. Giger',font:["'Cinzel Decorative'",700,'none'],accent:'#9fb394',accent2:'#6c7a64',bg:'#050606',env:.45,
+  tag:'Gloss black and graphite silk. The rack has organs now, and a heartbeat on the crown.',
+  c:{posts:['Gloss black','#0e100f'],extensions:['Bone green-grey','#6c7a64'],frame:['Gloss black','#0e100f'],panels:['Graphite silk','#2c312c'],handles:['Bone green-grey','#6c7a64'],feet:['Gloss black','#0e100f'],logo:['Bone green-grey','#6c7a64'],faceplates:['Graphite silk','#2c312c'],brackets:['Gloss black','#0e100f'],crown:['Gloss black','#0e100f'],icons:['Bone','#a9b79c']},
+  ic:{frame:'oval',glow:4,label:"700 {s}px 'Cinzel Decorative'"},names:{modem:'SIGNAL',switch:'NERVE',jack:'SYNAPSE',chip:'CORTEX',bulb:'LUMEN',fan:'LUNG',pc:'HEART'},
+  mx:'#30ff60',strip:null,scr:'giger'},
+ weyland:{name:'Better Worlds',fac:'Weyland Corp',font:["'Michroma'",400,'uppercase'],accent:'#c8a35a',accent2:'#ffb347',bg:'#c9ced3',env:.85,
+  tag:'Matte white with gold joints. Faceplates labelled like a corporate ship, MOTHER included.',
+  c:{posts:['Matte white','#eceeea'],extensions:['Silk gold','#c8a35a'],frame:['Silver grey','#c3c7c4'],panels:['Matte white','#eceeea'],handles:['Silk gold','#c8a35a'],feet:['Smoke','#2a2f35'],logo:['Silk gold','#c8a35a'],faceplates:['Matte white','#eceeea'],brackets:['Silver grey','#c3c7c4'],crown:['Matte white','#eceeea'],icons:['Smoke','#2a2f35']},
+  ic:{frame:'circle',glow:0,label:"{s}px Michroma"},names:{modem:'UPLINK',switch:'NETWORK',jack:'PATCH',chip:'MOTHER',bulb:'ILLUM',fan:'ATMOS',pc:'CORE'},
+  mx:'#ffc030',strip:['BUILDING BETTER WORLDS · '],scr:'weyland'},
+ vault:{name:'Vault 21',fac:'Fallout · Vault-Tec',font:["'Bungee'",400,'uppercase'],accent:'#f2c230',accent2:'#5d8fe0',bg:'#0f1622',env:.6,
+  tag:'Vault blue and yellow. Every device gets a Vault-Tec job title; the crown boots a RobCo terminal.',
+  c:{posts:['Vault blue','#1f4e9c'],extensions:['Vault yellow','#f2c230'],frame:['Vault blue','#1f4e9c'],panels:['Steel silver','#8b9096'],handles:['Vault yellow','#f2c230'],feet:['Steel silver','#8b9096'],logo:['Vault yellow','#f2c230'],faceplates:['Vault blue','#1f4e9c'],brackets:['Steel silver','#8b9096'],crown:['Vault blue','#1f4e9c'],icons:['Vault yellow','#f2c230']},
+  ic:{frame:'cog',glow:0,label:"{s}px Bungee"},names:{modem:'COMM-LINK',switch:'ZAX RELAY',jack:'PATCH BAY',chip:'TERMLINK',bulb:'LIGHTS',fan:'AIR PURIF',pc:'MAINFRAME'},
+  mx:'#30ff60',strip:['VAULT 21 · PLEASE STAND BY · '],scr:'vault'},
+ enclave:{name:'Raven Rock',fac:'Fallout · Enclave',font:["'Russo One'",400,'uppercase'],accent:'#ff3b3b',accent2:'#cfd3d8',bg:'#08080a',env:.6,
+  tag:'Gloss black with chrome joints and red signals. The crown runs a radar sweep.',
+  c:{posts:['Gloss black','#0b0c0e'],extensions:['Silk chrome','#d5d9de'],frame:['Gloss black','#0b0c0e'],panels:['Gunmetal','#2b2e33'],handles:['Silk chrome','#d5d9de'],feet:['Gloss black','#0b0c0e'],logo:['Signal red','#e02020'],faceplates:['Gloss black','#0b0c0e'],brackets:['Gunmetal','#2b2e33'],crown:['Gloss black','#0b0c0e'],icons:['Signal red','#ff2a2a']},
+  ic:{frame:'chevron',glow:6,label:"{s}px 'Russo One'"},names:{modem:'BROADCAST',switch:'RELAY',jack:'UPLINK',chip:'EYEBOT',bulb:'BEACON',fan:'COOLANT',pc:'ZAX CORE'},
+  mx:'#ff2020',strip:['GOD BLESS THE ENCLAVE · '],scr:'enclave'},
+ ncr:{name:'NCR Field Rack',fac:'Fallout: New Vegas · NCR',font:["'Special Elite'",400,'uppercase'],accent:'#e0b062',accent2:'#b8893a',bg:'#2a2118',env:.7,
+  tag:'Desert tan, olive and brass, stencilled like army issue. The crown flies the flag.',
+  c:{posts:['Desert tan','#b49a6a'],extensions:['Olive drab','#5c6040'],frame:['Olive drab','#5c6040'],panels:['Desert tan','#b49a6a'],handles:['Brass silk','#b8893a'],feet:['Olive drab','#5c6040'],logo:['Brass silk','#b8893a'],faceplates:['Olive drab','#5c6040'],brackets:['Desert tan','#b49a6a'],crown:['Olive drab','#5c6040'],icons:['Bone white','#e9dcc0']},
+  ic:{frame:'star',glow:0,label:"{s}px 'Special Elite'"},names:{modem:'RADIO',switch:'FIELD NET',jack:'SWITCHBD',chip:'COMMAND',bulb:'LAMPS',fan:'VENT',pc:'HQ'},
+  mx:'#ffc030',strip:['PATROL THE MOJAVE · NCR · HOOVER DAM · '],scr:'ncr'},
+ vegas:{name:'The Strip',fac:'Fallout: New Vegas · for the locals',font:["'Monoton'",400,'uppercase'],accent:'#ff3fa4',accent2:'#3fe8ff',bg:'#07040c',env:.32,
+  tag:'Night purple and silk gold with neon icons. The crown is a slot machine that pays out.',
+  c:{posts:['Night purple','#2a1d38'],extensions:['Silk gold','#d4a64a'],frame:['Black','#120c18'],panels:['Night purple','#2a1d38'],handles:['Silk gold','#d4a64a'],feet:['Silk gold','#d4a64a'],logo:['Neon pink','#ff3fa4'],faceplates:['Black','#120c18'],brackets:['Night purple','#2a1d38'],crown:['Black','#120c18'],icons:['Neon pink','#ff3fa4']},
+  ic:{frame:'diamond',glow:10,label:"{s}px Bungee"},names:{modem:'THE WIRE',switch:'PIT BOSS',jack:'CASHIER',chip:'SECURITRON',bulb:'MARQUEE',fan:'COOLER',pc:'THE HOUSE'},
+  mx:'#ff2050',strip:['JACKPOT! · THE HOUSE ALWAYS WINS · LUCKY 38 · '],scr:'vegas'}
+};
+const ORDER=['stock','expanse','giger','weyland','vault','enclave','ncr','vegas'];
+const GROUPS=[['posts','Posts'],['extensions','1U joints'],['frame','Beams & rails'],['panels','Top & bottom panels'],['handles','Handles'],['feet','Feet'],['faceplates','Faceplates'],['brackets','Trays & rails'],['crown','Crown'],['icons','Icon inlay']];
+
+// ---------- renderer ----------
+const canvas=document.getElementById('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputEncoding=THREE.sRGBEncoding;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(30,1,5,6000);camera.position.set(560,520,900);
+const controls=new THREE.OrbitControls(camera,canvas);controls.target.set(0,230,-120);controls.enableDamping=true;controls.minDistance=150;controls.maxDistance=2400;controls.autoRotateSpeed=.8;
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.add(new THREE.HemisphereLight(0xffffff,0x202020,.35));
+const key=new THREE.DirectionalLight(0xffffff,1.5);key.position.set(420,800,600);key.castShadow=true;
+Object.assign(key.shadow.camera,{left:-420,right:420,top:560,bottom:-220,near:100,far:2200});key.shadow.mapSize.set(2048,2048);key.shadow.bias=-.0005;scene.add(key);
+const rim=new THREE.DirectionalLight(0xffffff,.55);rim.position.set(-600,300,-700);scene.add(rim);
+const floor=new THREE.Mesh(new THREE.CircleGeometry(1400,72),new THREE.MeshStandardMaterial({color:0x111111,roughness:.92}));
+floor.rotation.x=-PI/2;floor.position.y=-42;floor.receiveShadow=true;scene.add(floor);
+let envRT=null;
+function setEnv(th){const c=document.createElement('canvas');c.width=1024;c.height=512;const g=c.getContext('2d');
+  const gr=g.createLinearGradient(0,0,0,512);gr.addColorStop(0,'#2a3038');gr.addColorStop(.5,'#b8c0c8');gr.addColorStop(1,'#0c0d10');g.fillStyle=gr;g.fillRect(0,0,1024,512);
+  g.fillStyle='#fff';g.fillRect(170,90,170,70);g.fillRect(640,120,230,46);g.fillStyle='rgba(0,0,0,'+(1-th.env)+')';g.fillRect(0,0,1024,512);
+  const t=new THREE.CanvasTexture(c);t.mapping=THREE.EquirectangularReflectionMapping;t.encoding=THREE.sRGBEncoding;
+  if(envRT)envRT.dispose();envRT=pmrem.fromEquirectangular(t);t.dispose();scene.environment=envRT.texture;}
+
+// ---------- rack meshes (rack coords: x across, y depth from the front, z up) ----------
+const root=new THREE.Group();root.rotation.x=-PI/2;scene.add(root);
+function dec(b,Ty){const s=atob(b),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return new Ty(u.buffer);}
+const GEO={};for(const [k,m] of Object.entries(DATA.meshes)){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(dec(m.v,Float32Array),3));g.setIndex(new THREE.BufferAttribute(dec(m.i,Uint32Array),1));GEO[k]=g;}
+const MAT={};const SHINE={posts:[.35,.45],extensions:[.6,.35],frame:[.35,.45],panels:[.25,.55],handles:[.6,.35],feet:[.2,.6],logo:[.3,.4],stockbeam:[.35,.45],faceplates:[.15,.5],brackets:[.15,.6],icons:[.2,.4],glass:[.5,.15],crown:[.35,.4]};
+for(const g of Object.keys(SHINE))MAT[g]=new THREE.MeshStandardMaterial({color:0x888888,metalness:SHINE[g][0],roughness:SHINE[g][1],flatShading:true});
+MAT.glass.color.set(0x05070a);
+const parts={};
+for(const o of DATA.instances){const mesh=new THREE.Mesh(GEO[o.mesh],MAT[o.group]||MAT.frame);const R=o.R,t=o.t;
+  mesh.matrixAutoUpdate=false;mesh.matrix.set(R[0],R[1],R[2],t[0],R[3],R[4],R[5],t[1],R[6],R[7],R[8],t[2],0,0,0,1);
+  mesh.castShadow=mesh.receiveShadow=true;root.add(mesh);(parts[o.group]=parts[o.group]||[]).push(mesh);}
+
+// ---------- crown ----------
+// Original top front beam: centre (0, 27.425, 407.625), 282 x 55 x 55. Ends |x| >= 112 stay; the middle is replaced.
+const BZ=229.825+(SL-5)*U,BTOP=BZ+27.4,BBOT=BZ-27.4;
+const CROWNS={
+ strip:{cols:48,rows:8,pitch:4,top:BTOP+2,win:[194,34],hw:'<b>6 × MAX7219 8×8 dot modules</b> (FC-16 style, 32 × 32 mm each) in a row: 192 × 32 mm, 48 × 8 single-colour dots. Runs off the Pi on SPI or a small ESP32. Fits inside the original beam height (+2 mm). Modules come in red, green, blue, yellow and white; each theme picks one.'},
+ rgb:{cols:64,rows:32,pitch:2,top:TOP+0.5+76,win:[130,66],hw:'<b>P2 HUB75 RGB panel, 64 × 32</b> (128 × 64 mm, full colour) behind a 130 × 66 window. Driven by the Pi 4 with a HUB75 bonnet or by an ESP32-S3. The crown rises about 40 mm above the stock beam. Needs its own 5 V 2–4 A supply.'}
+};
+let crownGroup=null,matrix=null,crownKind='rgb';
+const crownMat=new THREE.MeshStandardMaterial({color:0x222222,metalness:.35,roughness:.4});
+const bezelMat=new THREE.MeshStandardMaterial({color:0x050505,metalness:.2,roughness:.7});
+function box(w,d,h,mat,x,y,z,par){const m=new THREE.Mesh(new THREE.BoxGeometry(w,d,h),mat);m.position.set(x,y,z);m.castShadow=m.receiveShadow=true;par.add(m);return m;}
+function buildCrown(){
+  if(crownGroup){root.remove(crownGroup);crownGroup.traverse(n=>{if(n.geometry)n.geometry.dispose();if(n.material&&n.material!==crownMat&&n.material!==bezelMat){if(n.material.map)n.material.map.dispose();n.material.dispose();}});crownGroup=null;matrix=null;}
+  const stock=crownKind==='stock';(parts.stockbeam||[]).forEach(m=>m.visible=stock);(parts.logo||[]).forEach(m=>m.visible=stock);
+  if(stock)return;
+  const C=CROWNS[crownKind];crownGroup=new THREE.Group();root.add(crownGroup);
+  const z0=TOP+.5,h=C.top-z0;
+  box(224,49,BTOP-BBOT,crownMat,0,30.5,BZ,crownGroup);                 // middle body behind the face, same depth as the beam
+  box(224,6,h,crownMat,0,3,z0+h/2,crownGroup);                          // front face
+  if(C.top>BTOP)box(224,49,C.top-BTOP,crownMat,0,30.5,BTOP+(C.top-BTOP)/2,crownGroup); // raised hood
+  const [ww,wh]=C.win,wz=z0+h/2;
+  box(ww,1,wh,bezelMat,0,-.2,wz,crownGroup);
+  const mw=C.cols*C.pitch,mh=C.rows*C.pitch;
+  const cv=document.createElement('canvas');cv.width=C.cols*8;cv.height=C.rows*8;
+  const tex=new THREE.CanvasTexture(cv);tex.encoding=THREE.sRGBEncoding;tex.anisotropy=8;
+  const m=new THREE.MeshStandardMaterial({color:0x000000,emissive:0xffffff,emissiveMap:tex,emissiveIntensity:1.6,roughness:.35,metalness:.1});
+  const p=new THREE.Mesh(new THREE.PlaneGeometry(mw,mh),m);p.rotation.x=PI/2;p.position.set(0,-.8,wz);crownGroup.add(p);
+  const src=document.createElement('canvas');src.width=C.cols;src.height=C.rows;
+  matrix={C,cv,tex,src,ctx:src.getContext('2d',{willReadFrequently:true}),out:cv.getContext('2d'),last:-1};
+  if(crownKind==='rgb'){ // emblem left of the window, status LEDs right
+    const em=decal(emblem(cur),40,40);em.position.set(-(ww/2+28),-.4,wz);crownGroup.add(em);
+    for(let i=0;i<3;i++){const l=new THREE.Mesh(new THREE.SphereGeometry(2.2,12,8),new THREE.MeshStandardMaterial({color:0,emissive:lin(i?T[cur].c.icons[1]:'#30ff60'),emissiveIntensity:2}));l.position.set(ww/2+18+i*9,-1,wz-18);crownGroup.add(l);}
+    const lb=decal(textCanvas(T[cur].names.chip,T[cur].ic.label,T[cur].c.icons[1],512,96),40,7.5);lb.position.set(ww/2+28,-.4,wz+10);crownGroup.add(lb);
+  }
+  crownMat.color.copy(lin(T[cur].c.crown[1]));
+}
+function decal(cv,w,h){const t=new THREE.CanvasTexture(cv);t.encoding=THREE.sRGBEncoding;t.anisotropy=8;
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshStandardMaterial({map:t,transparent:true,roughness:.5,metalness:.1,polygonOffset:true,polygonOffsetFactor:-2}));m.rotation.x=PI/2;return m;}
+
+// ---------- matrix programmes (drawn at true LED resolution, then lit as dots) ----------
+const PF="8px 'Press Start 2P'";
+function scroll(g,txt,t,y,spd,col,w){g.font=PF;g.textBaseline='top';const tw=g.measureText(txt).width;const x=w-((t*spd)%(tw+w));g.fillStyle=col;g.fillText(txt,Math.round(x),y);g.fillText(txt,Math.round(x+tw),y);}
+function center(g,txt,y,col,w){g.font=PF;g.textBaseline='top';const tw=g.measureText(txt).width;g.fillStyle=col;g.fillText(txt,Math.round((w-tw)/2),y);}
+function ecg(g,t,w,h,col,y0,amp){g.strokeStyle=col;g.lineWidth=1;g.beginPath();for(let x=0;x<w;x++){const ph=((x+t*22)%40);let y=0;if(ph>18&&ph<20)y=-amp*.35;else if(ph>=20&&ph<22)y=amp;else if(ph>=22&&ph<24)y=-amp*.6;else if(ph>28&&ph<33)y=amp*.18*Math.sin((ph-28)/5*PI);g.lineTo(x+.5,y0-y+.5);}g.stroke();}
+const PROG={
+ stock(g,t,w,h){center(g,'LAB',4,'#fff',w);center(g,'RAX',18,'#fff',w);g.strokeStyle='#ff3030';g.beginPath();for(let i=0;i<7;i++){const a=i/6*2*PI+t*.5;g.lineTo(8+6*Math.cos(a),16+6*Math.sin(a));}g.stroke();},
+ expanse(g,t,w,h){g.fillStyle='#04121e';g.fillRect(0,0,w,h);center(g,'TACHI',1,'#59c6ff',w);const b=(Math.sin(t*1.3)*.5+.5);g.fillStyle='#d8a91c';g.fillRect(4,12,Math.round((w-8)*b),4);g.strokeStyle='#59c6ff';g.strokeRect(3.5,11.5,w-7,5);g.fillStyle='#ff4030';if((t%1)<.5)g.fillRect(w-4,1,2,2);scroll(g,'ALL HANDS PREPARE FOR BURN  ·  REMEMBER THE CANT  ·  ',t,22,14,'#d8a91c',w);},
+ giger(g,t,w,h){const id=g.createImageData(w,h);for(let y=0;y<h;y++)for(let x=0;x<w;x++){const v=Math.sin(x*.21+t)*Math.sin(y*.33-t*.7)+Math.sin((x+y)*.12+t*.4);const k=Math.max(0,v)*40;const i=(y*w+x)*4;id.data[i]=k*.3;id.data[i+1]=k;id.data[i+2]=k*.5;id.data[i+3]=255;}g.putImageData(id,0,0);ecg(g,t,w,h,'#9fff90',h/2,h*.4);},
+ weyland(g,t,w,h){g.fillStyle='#120a00';g.fillRect(0,0,w,h);const cx=12,cy=12;g.fillStyle='#ffb347';g.beginPath();g.arc(cx,cy,3,0,2*PI);g.fill();g.strokeStyle='#7a5a20';g.beginPath();g.arc(cx,cy,9,0,2*PI);g.stroke();g.fillStyle='#fff3c0';g.fillRect(Math.round(cx+9*Math.cos(t))-1,Math.round(cy+9*Math.sin(t))-1,2,2);center(g,'MU/TH/UR',2,'#ffb347',w+26);g.fillStyle='#ffb347';if((t*2%1)<.6)g.fillRect(30+((t*8|0)%28),12,2,6);scroll(g,'BUILDING BETTER WORLDS  ·  ',t,23,12,'#ffcf80',w);},
+ vault(g,t,w,h){g.fillStyle='#0c2a66';g.fillRect(0,0,w,h);g.save();g.translate(12,16);g.rotate(t*.8);g.fillStyle='#f2c230';for(let i=0;i<10;i++){g.rotate(PI/5);g.fillRect(-2,-11,4,4);}g.beginPath();g.arc(0,0,8,0,2*PI);g.fill();g.fillStyle='#0c2a66';g.beginPath();g.arc(0,0,4,0,2*PI);g.fill();g.restore();g.font=PF;g.fillStyle='#f2c230';g.fillText('21',33,6);g.fillStyle='#fff';g.fillText((t%2<1.4)?'OK':'',36,18);},
+ enclave(g,t,w,h){g.fillStyle='#000';g.fillRect(0,0,w,h);const cx=16,cy=16,a=t*1.8;g.strokeStyle='#501010';g.beginPath();g.arc(cx,cy,13,0,2*PI);g.stroke();g.beginPath();g.arc(cx,cy,7,0,2*PI);g.stroke();for(let k=0;k<12;k++){g.strokeStyle='rgba(255,40,40,'+(1-k/12)+')';g.beginPath();g.moveTo(cx,cy);g.lineTo(cx+14*Math.cos(a-k*.07),cy+14*Math.sin(a-k*.07));g.stroke();}for(const [bx,by] of [[22,9],[9,22],[25,21]]){const ang=(Math.atan2(by-cy,bx-cx)-a)%(2*PI);const f=Math.max(0,1-((-ang+4*PI)%(2*PI))/2);if(f>0){g.fillStyle='rgba(255,90,90,'+f+')';g.fillRect(bx,by,2,2);}}g.font=PF;g.fillStyle='#ff3030';g.fillText('ENCL',33,6);g.fillText('AVE',36,18);},
+ ncr(g,t,w,h){g.fillStyle='#b98f4f';g.fillRect(0,0,w,h);g.fillStyle='#7a2b1f';g.fillRect(0,0,w,4);g.fillRect(0,h-4,w,4);const r=7+Math.sin(t*3)*.6;g.fillStyle='#f1d58a';g.beginPath();for(let i=0;i<10;i++){const a=-PI/2+i*PI/5,rr=i%2?r*.42:r;g.lineTo(13+rr*Math.cos(a),16+rr*Math.sin(a));}g.fill();g.font=PF;g.fillStyle='#3a2414';g.fillText('NCR',28,12);},
+ vegas(g,t,w,h){g.fillStyle='#14001c';g.fillRect(0,0,w,h);const S=['7','$','*','='],C=['#ff2050','#30ff60','#ffd040','#3fe8ff'];const cyc=t%6;g.font=PF;g.textBaseline='top';
+   for(let r=0;r<3;r++){const stop=1.6+r*.8,x=8+r*18;g.fillStyle='#000';g.fillRect(x-2,3,13,15);let idx;if(cyc<stop){idx=Math.floor(cyc*14+r*3)%4;}else idx=0;g.fillStyle=C[idx];g.fillText(S[idx],x+1,7);}
+   const win=cyc>3.6;for(let i=0;i<w;i+=2){const on=((i/2+Math.floor(t*10))%3)===0;g.fillStyle=on?'#ffe2a0':'#3a2a10';g.fillRect(i,0,1,1);g.fillRect(w-1-i,h-1,1,1);}
+   if(win&&(t*4%1)<.6)center(g,'JACKPOT',21,'#ff3fa4',w);else if(!win)center(g,'SPIN',21,'#d4a64a',w);}
+};
+function updateMatrix(t){if(!matrix)return;const f=Math.floor(t*20);if(f===matrix.last)return;matrix.last=f;
+  const {C,src,ctx,out,cv}=matrix,th=T[cur],w=C.cols,h=C.rows;ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,w,h);ctx.fillStyle='#000';ctx.fillRect(0,0,w,h);ctx.imageSmoothingEnabled=false;
+  if(crownKind==='strip'){if(th.strip)scroll(ctx,th.strip[0],t,0,14,'#fff',w);else ecg(ctx,t,w,h,'#fff',4,3.6);}
+  else PROG[th.scr](ctx,t,w,h);
+  const d=ctx.getImageData(0,0,w,h).data;out.fillStyle='#050505';out.fillRect(0,0,cv.width,cv.height);
+  const mono=crownKind==='strip',mc=th.mx;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4,r=d[i],g=d[i+1],b=d[i+2],l=(r+g+b)/3;
+    let col;if(mono)col=l>90?mc:'#1a0d0d';else col=(r+g+b)>40?'rgb('+r+','+g+','+b+')':'#141414';
+    out.fillStyle=col;out.beginPath();out.arc(x*8+4,y*8+4,3,0,2*PI);out.fill();}
+  matrix.tex.needsUpdate=true;}
+
+// ---------- icons + emblems ----------
+function iconCanvas(th,name){const s=256,c=document.createElement('canvas');c.width=c.height=s;const g=c.getContext('2d');const col=th.c.icons[1],st=th.ic;
+  g.strokeStyle=col;g.fillStyle=col;g.lineCap='round';g.lineJoin='round';g.shadowColor=col;g.shadowBlur=st.glow*2;
+  g.lineWidth=9;const P=(pts)=>{g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();g.stroke();};
+  const f=st.frame;
+  if(f==='circle'){g.beginPath();g.arc(128,128,118,0,2*PI);g.stroke();}
+  else if(f==='oval'){g.beginPath();g.ellipse(128,128,90,120,0,0,2*PI);g.stroke();g.lineWidth=4;for(let k=-3;k<=3;k++){g.beginPath();g.ellipse(128,128+k*24,104,8,0,0,PI);g.stroke();}g.lineWidth=9;}
+  else if(f==='brackets'){for(const [x,y,dx,dy] of [[10,10,1,1],[246,10,-1,1],[10,246,1,-1],[246,246,-1,-1]]){g.beginPath();g.moveTo(x,y+dy*50);g.lineTo(x,y);g.lineTo(x+dx*50,y);g.stroke();}}
+  else if(f==='cog'){g.beginPath();g.arc(128,128,104,0,2*PI);g.stroke();for(let i=0;i<12;i++){g.save();g.translate(128,128);g.rotate(i*PI/6);g.fillRect(-11,-126,22,20);g.restore();}}
+  else if(f==='chevron'){P([[128,8],[248,70],[248,186],[128,248],[8,186],[8,70]]);}
+  else if(f==='star'){g.lineWidth=7;const pts=[];for(let i=0;i<10;i++){const a=-PI/2+i*PI/5,r=i%2?62:124;pts.push([128+r*Math.cos(a),134+r*Math.sin(a)]);}P(pts);}
+  else if(f==='diamond'){P([[128,6],[250,128],[128,250],[6,128]]);g.lineWidth=3;P([[128,24],[232,128],[128,232],[24,128]]);}
+  const inner=f==='none'?1:(f==='star'?.42:f==='diamond'?.5:.62);
+  g.save();g.translate(128,128);g.scale(s*inner/24,s*inner/24);g.translate(-12,-12);g.lineWidth=1.7;g.shadowBlur=st.glow*2/(s*inner/24);g.stroke(new Path2D(ICON[name]));g.restore();
+  return c;}
+function textCanvas(txt,font,col,w=512,h=96){const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');let s=h*.78;g.font=font.replace('{s}',s);const mw=g.measureText(txt).width;if(mw>w*.96){s*=w*.96/mw;g.font=font.replace('{s}',s);}g.fillStyle=col;g.textAlign='center';g.textBaseline='middle';g.fillText(txt,w/2,h/2);return c;}
+function emblem(id){const th=T[id];const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');const col=th.c.icons[1],a=th.accent;g.strokeStyle=col;g.fillStyle=col;g.lineWidth=8;g.lineJoin='round';
+  const ring=()=>{g.beginPath();g.arc(128,128,112,0,2*PI);g.stroke();};
+  if(id==='stock'){g.beginPath();for(let i=0;i<6;i++){const q=PI/6+i*PI/3;g.lineTo(128+110*Math.cos(q),128+110*Math.sin(q));}g.closePath();g.stroke();g.font="700 80px Rajdhani";g.textAlign='center';g.textBaseline='middle';g.fillText('LR',128,132);}
+  else if(id==='expanse'){ring();g.beginPath();g.moveTo(128,40);g.lineTo(200,180);g.lineTo(56,180);g.closePath();g.stroke();g.beginPath();g.arc(128,140,22,0,2*PI);g.fill();}
+  else if(id==='giger'){g.beginPath();g.ellipse(128,128,70,112,0,0,2*PI);g.stroke();for(let k=0;k<6;k++){g.beginPath();g.ellipse(128,60+k*28,58-Math.abs(k-2.5)*8,9,0,0,PI);g.stroke();}}
+  else if(id==='weyland'){g.beginPath();g.moveTo(20,70);g.lineTo(88,186);g.lineTo(128,116);g.lineTo(168,186);g.lineTo(236,70);g.stroke();g.lineWidth=3;g.beginPath();g.moveTo(20,214);g.lineTo(236,214);g.stroke();}
+  else if(id==='vault'){g.beginPath();g.arc(128,128,92,0,2*PI);g.stroke();for(let i=0;i<12;i++){g.save();g.translate(128,128);g.rotate(i*PI/6);g.fillRect(-12,-118,24,22);g.restore();}g.font="104px Bungee";g.textAlign='center';g.textBaseline='middle';g.fillText('21',128,136);}
+  else if(id==='enclave'){g.beginPath();g.moveTo(128,30);g.lineTo(230,92);g.lineTo(196,210);g.lineTo(128,240);g.lineTo(60,210);g.lineTo(26,92);g.closePath();g.stroke();g.beginPath();g.moveTo(40,110);g.lineTo(128,150);g.lineTo(216,110);g.lineTo(128,190);g.closePath();g.fill();}
+  else if(id==='ncr'){ring();g.beginPath();for(let i=0;i<10;i++){const q=-PI/2+i*PI/5,r=i%2?34:80;g.lineTo(128+r*Math.cos(q),112+r*Math.sin(q));}g.fill();g.font="44px 'Special Elite'";g.textAlign='center';g.fillText('NCR',128,214);}
+  else if(id==='vegas'){for(let i=0;i<12;i++){const q=i*PI/6,r=i%2?70:118;g.beginPath();g.moveTo(128,128);g.lineTo(128+r*Math.cos(q),128+r*Math.sin(q));g.stroke();}g.fillStyle=a;g.beginPath();g.arc(128,128,30,0,2*PI);g.fill();g.fillStyle='#fff';g.font="40px Bungee";g.textAlign='center';g.textBaseline='middle';g.fillText('38',128,131);}
+  return c;}
+let iconGroup=null;
+function buildIcons(){if(iconGroup){root.remove(iconGroup);iconGroup.traverse(n=>{if(n.geometry)n.geometry.dispose();if(n.material){n.material.map&&n.material.map.dispose();n.material.dispose();}});}
+  iconGroup=new THREE.Group();root.add(iconGroup);const th=T[cur];
+  for(const sp of SPOTS){const mid=zb(sp.slot)+U/2;const ic=decal(iconCanvas(th,sp.icon),20,20);ic.position.set(sp.x,-4.25,mid+4);iconGroup.add(ic);
+    const lb=decal(textCanvas(th.names[sp.icon],th.ic.label,th.c.icons[1]),30,5.6);lb.position.set(sp.x,-4.25,mid-11);iconGroup.add(lb);}
+  const roof=decal(emblem(cur),120,120);roof.rotation.x=0;roof.position.set(0,120,253.75+(SL-5)*U+1.6);iconGroup.add(roof);
+  iconGroup.visible=tIc.checked;}
+
+// ---------- UI ----------
+let cur='vegas';
+const tBr=document.getElementById('tBr'),tIc=document.getElementById('tIc'),tRot=document.getElementById('tRot');
+function applyToggles(){for(const g of ['brackets','faceplates','icons','glass'])(parts[g]||[]).forEach(m=>m.visible=tBr.checked);if(iconGroup)iconGroup.visible=tIc.checked;controls.autoRotate=tRot.checked;}
+[tBr,tIc,tRot].forEach(x=>x.addEventListener('change',applyToggles));
+function setTheme(id){cur=id;const th=T[id];
+  for(const [g] of GROUPS)if(MAT[g])MAT[g].color.copy(lin(th.c[g][1]));
+  MAT.stockbeam.color.copy(lin(th.c.frame[1]));MAT.logo.color.copy(lin(th.c.logo[1]));
+  setEnv(th);scene.background=new THREE.Color(th.bg);floor.material.color.copy(lin(th.bg)).multiplyScalar(.9);
+  buildCrown();buildIcons();applyToggles();
+  const r=document.documentElement.style;r.setProperty('--accent',th.accent);r.setProperty('--accent2',th.accent2);r.setProperty('--display',th.font[0]+',sans-serif');r.setProperty('--dwt',th.font[1]);r.setProperty('--dcase',th.font[2]);
+  document.getElementById('sFac').textContent=th.fac;document.getElementById('sName').textContent=th.name;document.getElementById('sTag').textContent=th.tag;document.getElementById('hudL').textContent=th.name.toUpperCase();
+  document.getElementById('fil').innerHTML=GROUPS.map(([g,l])=>'<tr><td>'+l+'</td><td><i style="background:'+th.c[g][1]+'"></i>'+th.c[g][0]+'</td></tr>').join('')+'<tr><td>Dot-strip LEDs</td><td><i style="background:'+th.mx+'"></i>'+({'#ff3030':'Red','#3a8cff':'Blue','#30ff60':'Green','#ffc030':'Yellow','#ff2020':'Red','#ff2050':'Red'}[th.mx]||'Mono')+'</td></tr>';
+  const ic=document.getElementById('icons');ic.innerHTML='';for(const sp of SPOTS){const f=document.createElement('figure');const cv=iconCanvas(th,sp.icon);cv.style.background=th.c.faceplates[1];cv.style.borderRadius='3px';f.appendChild(cv);const cap=document.createElement('figcaption');cap.innerHTML='<b>'+th.names[sp.icon]+'</b>'+DEV[sp.icon];f.appendChild(cap);ic.appendChild(f);}
+  document.querySelectorAll('.rail button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id===id));
+  try{history.replaceState(null,'','#'+id);}catch(e){}}
+function setCrown(k){crownKind=k;document.querySelectorAll('#crown button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));
+  document.getElementById('hw').innerHTML=k==='stock'?'The original top front beam with the printed Lab Rax logo, in the theme colours.':CROWNS[k].hw;buildCrown();}
+const rail=document.getElementById('rail');
+rail.innerHTML=ORDER.map(id=>{const t=T[id];return '<button type="button" data-id="'+id+'" aria-pressed="false"><span class="n">'+t.name+'</span><span class="f">'+t.fac.split(' · ')[0]+'</span><span class="sw">'+[t.c.posts[1],t.c.extensions[1],t.c.icons[1]].map(c=>'<i style="background:'+c+'"></i>').join('')+'</span></button>';}).join('');
+rail.addEventListener('click',e=>{const b=e.target.closest('button');if(b)setTheme(b.dataset.id);});
+document.getElementById('crown').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setCrown(b.dataset.k);});
+document.getElementById('bTop').addEventListener('click',()=>{controls.target.set(0,TOP+20,-10);camera.position.set(90,TOP+60,330);});
+
+function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w/h<.9?42:30;camera.updateProjectionMatrix();}
+new ResizeObserver(resize).observe(canvas);resize();
+try{await Promise.race([Promise.all(["8px 'Press Start 2P'","700 40px Rajdhani","700 40px 'Cinzel Decorative'","40px Michroma","40px Bungee","40px 'Russo One'","40px 'Special Elite'","40px Monoton","600 40px 'IBM Plex Sans'"].map(f=>document.fonts.load(f))),new Promise(r=>setTimeout(r,2500))]);}catch(e){}
+const h0=(location.hash||'').slice(1);cur=T[h0]?h0:'vegas';setCrown('rgb');setTheme(cur);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const clock=new THREE.Clock();let tt=0;
+(function loop(){requestAnimationFrame(loop);tt+=clock.getDelta()*(reduce?.3:1);controls.update();updateMatrix(tt);renderer.render(scene,camera);})();
+})();
+</script>
