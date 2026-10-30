@@ -14,6 +14,10 @@ Brian: put a plate on the wall first, then hang the box on it. He picked a Frenc
 - **Print file:** `outputs/MoCA_Box_2026-10-27/wall_cleat_2026-10-30/` (3MF with both parts in print orientation, 2 STLs, README). Viewers: https://claude.ai/artifact/Qx8zg9giYPp6Qcv1sPVv88 (seated), https://claude.ai/artifact/LXWkHFnfdC6ks8Kf5nDVsE (layout).
 - Not printed. Fit, cleat hold, screw/anchor sizes and load are UNKNOWN.
 
+## 2026-10-30 SG8-PB-A: post brackets for the printed TL-SG108E D tray (Claude)
+
+Brian asked for a fix that uses the back of the post holes instead of another faceplate/tray print. [SG8-PB-A](outputs/TL-SG108E_post_brackets_2026-10-30/README.md): two brackets bolt to the unused middle front-flange hole of each front post (from behind, M6 x 8) and hold the D tray by its existing uprights (M6 x 8 into a 5 mm pilot). Use with the printed B faceplate with its two bosses cut off. Clash-checked against the D tray, the cut B plate and the 1U post mesh. Not printed. New rule (memory use-rear-posts): consider post mounting holes in every design.
+
 ## 2026-10-30 SG8-M6-E: new TL-SG108E faceplate for the printed D tray (Claude)
 
 Brian printed the D tray; with the B plate the holes sat ~2 mm low. Cause: the D sleeve top lip (Z to 34.85) runs under the screw bosses (bottom Z 32.42, capped by the plate top), so the boss rides on the lip. The D faceplate clashes the same way (OpenSCAD intersection). [SG8-M6-E](outputs/TL-SG108E_M6_2026-10-28/README.md) = D faceplate with the bosses cut off below Z 35.15; plate-only 3MF in Final_3MF. Bore floor opens; an ~8 mm insert may touch the lip by ~0.4 mm (insert OD UNKNOWN). D moved to `previous_SG8-M6-D/`. Not printed.
