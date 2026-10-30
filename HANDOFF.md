@@ -1,10 +1,24 @@
 # Assembly Workshop — current handoff
 
-## 2026-10-29 SCR5-C spec (task 50) — screen + Pi + Hue in one 2U
+## 2026-10-29 SG8-M6-C: TL-SG108E tray corners rounded (Claude)
 
-Brian: option with screen left, Pi 4 lower right (USB/Ethernet to front), Hue on a shelf top right extending behind the screen, keystone top right, M6 tray joints; U5 freed. Spec `work/codex-tasks/50-scr5-c-screen-pi-hue-2u.md`, prompt `docs/prompts/codex/50-scr5-c-screen-pi-hue-2u.md`. Waiting for Codex; SCR5-B stays the provisional Final_3MF plate.
+Brian: the tray print warps. [README](outputs/TL-SG108E_M6_2026-10-28/README.md): SG8-M6-C = SG8-M6-B with the tray footprint corners rounded (rear R 20, front R 5) via `tray_round()` in `src/SG8-M6-C_build.py`; nothing else changed (faceplate only gets the new ID). B moved to `previous_SG8-M6-B/`; Final_3MF now has the C set (3MF plain tags, tray 0 open edges). Not printed; warping effect UNKNOWN.
 
-Updated 2026-10-18 from Brian's explicit housekeeping confirmations. Read [AGENTS](AGENTS.md), [PROJECT](PROJECT.md), this handoff and the [ROADMAP](ROADMAP.md). AGENTS.md has since been updated with C1/C1b/C2/C3/C4 ([AGENTS updates needed](docs/housekeeping/AGENTS_Updates_Needed.md) is now historical). Dated work reports (e.g. work/gui-refinement/Report.md "Pi4 remains the only manufacturing adapter… no frame STL") describe their own snapshot and are superseded by C2/C3. Preserve every other boundary.
+## 2026-10-29 SCR5-E placed in the saved rack (Claude, Brian's OK)
+
+`work/rack-plan/apply_scr5e.py data/normal-use` (dry-run first on a copy) added the library item "Screen 5in + Pi 4 + Hue 2U (SCR5-E, placeholder)" (faceplate only: screen aperture 115.7 x 72.2 at X +33, Pi USB/Ethernet openings, keystone at X -92.5 Z 66) and placed it at U4-U3. U5 is freed (the old Pi 4 + Hue placement removed; SCR5-E houses both). Previous document in `rack-history/8bce2fc5-….json` (restore via Save History). Saved layout now: U9 CM1000, U8 TL-SG108E, U7 keystone panel, U6 drive tray, U5 empty, U4-U3 SCR5-E, U2 empty (cooling), U1 OptiPlex. The app item is a placeholder plate; the real parts are `outputs/Screen_Pi_Hue_SCR5-E_2026-10-29/`. Older placement names still carry stale U labels (e.g. the drive tray says "(U2)" but sits at U6). Viewer of SCR5-E on Lab Rax posts: https://claude.ai/artifact/BbXrutJDGHgsA9VNcUHZVk (not committed; licensed post mesh).
+
+## 2026-10-29 SCR5-E = SCR5-D split for printing (Claude)
+
+Brian: SCR5-D unprintable as one tray. [SCR5-E README](outputs/Screen_Pi_Hue_SCR5-E_2026-10-29/README.md): the tray is now floor+walls and a Hue deck, both supportless, joined by 5 × M2.5 inserts/screws on wall-top bosses; the rear cable notches are open-top; tray depth 148; deck front at Y 36 widens the DSI ribbon drop gap to ~9.5 mm (route ~145 mm, 200 mm cable comfortable). Four-object 3MF with plain tags; each part one closed shell; clash checks empty or contact only. Viewer https://claude.ai/artifact/2ct5xyErSVomgXkrPc62Ad. SCR5-C/D/E all uncommitted, waiting for Brian's OK to commit (auto-mode blocked the earlier commit). Not printed.
+
+## 2026-10-29 SCR5-D = SCR5-C + Pi cooling (Claude)
+
+Brian asked for Pi cooling. [SCR5-D README](outputs/Screen_Pi_Hue_SCR5-D_2026-10-29/README.md): a 30 × 30 × 7 5 V fan on the deck over the Pi (X -74/Y 30, Ø28 hole, 24 mm screw pitch, GPIO powered), 7 floor slots under the Pi and 12 slots in the right wall behind the screen. Clash checks empty; one closed shell per part; 3MF plain tags. Viewer https://claude.ai/artifact/VqaoG3GyENC6scuc1qBxKb. SCR5-C and SCR5-D are still uncommitted: the auto-mode check blocked the commit (probably the third-party Hue cradle mesh inside the tray STL), so it is waiting for Brian's OK. Airflow/temperatures UNKNOWN; not printed.
+
+## 2026-10-29 SCR5-C built by Claude (option; screen right, Pi + Hue + keystone left)
+
+Codex was out of usage, so Claude built task 50 directly. Brian changed the layout mid-task to **Pi lower left, Hue shelf + keystone top left, screen right** so the DSI ribbon stays short. [README](outputs/Screen_Pi_Hue_SCR5-C_2026-10-29/README.md): plate (screen pocket at X +33, HP4-M6-B Pi openings at the same X, golden keystone X -92.5/Z 66, two M6 deck joints X -71/-50), SCR5-B frame moved +33, one-piece tray (Pi floor + Hue shelf deck at Z 40.5, depth 142). The 3MF has three objects with plain tags. Each STL is one closed shell; clash checks are empty or boundary contacts only. Viewer https://claude.ai/artifact/Nut2mmRq6DcawEnMSUAaGR. Open points: ribbon about 200 mm (buy a 300 mm cable); the Pi HDMI/USB-C side faces the left rack wall (same as HP4-M6-B); the Hue must come out to reach the top-left frame screw and the M6 screws; the deck needs slicer supports; strength/heat UNKNOWN. Not in Final_3MF; SCR5-B stays the provisional plate until Brian picks. Not printed.
 
 ## 2026-10-29 SCR5-B task 49 — digital gate PASS; physical validation UNKNOWN
 
