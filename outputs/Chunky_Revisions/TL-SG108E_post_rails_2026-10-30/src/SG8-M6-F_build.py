@@ -47,7 +47,11 @@ module channel_profile(){
           [rb+cl,rz_mid+cl*1.4-cl],[ru1-1,rz_mid+cl*1.4+rb-ru1+1]]);}
 module cheek_id(s){translate([ch_in+0.6,60,26])rotate([90,0,-90])linear_extrude(1)mirror([s<0?1:0,0])
  text("SG8-M6-F",size=4.5,font="Liberation Sans:style=Bold",halign="center",valign="center");}
-module cheek(s){scale([s,1,1])difference(){
+// Brian, 2026-10-30: round the rail's vertical outside corners R3 (footprint opening; concave corners and faces unchanged).
+rail_r=3;
+module rail_round(){translate([0,0,-1])linear_extrude(100)offset(r=rail_r,$fn=48)offset(delta=-rail_r)
+ polygon([[ch_in,ch_y0],[125,ch_y0],[125,ch_y0b],[ch_out,ch_y0b],[ch_out,ch_blk],[ch_wall,ch_blk],[ch_wall,ch_y1],[ch_in,ch_y1]]);}
+module cheek(s){scale([s,1,1])intersection(){rail_round();difference(){
  union(){
   translate([ch_in,ch_y0,ch_z0])cube([ch_wall-ch_in,ch_y1-ch_y0,ch_z1-ch_z0]);              // wall + ledge
   translate([ch_in,ch_y0,ch_z0])cube([125-ch_in,ch_blk-ch_y0,ch_z1-ch_z0]);                // block behind the front flange
@@ -60,7 +64,7 @@ module cheek(s){scale([s,1,1])difference(){
  // Room for the faceplate screw tips / inserts in the outer two front holes.
  for(dz=[-face_dz,face_dz])translate([post_x,ch_y0-0.1,mid_z+dz])rotate([-90,0,0])cylinder(d=relief_d,h=relief_l,$fn=48);
  cheek_id(s);
-}}
+}}}
 '''
 
 def patch(t):
