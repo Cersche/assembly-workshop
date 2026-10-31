@@ -325,7 +325,7 @@ module label_cut(){for(l=labels)translate([l[1],-plate_t-0.1,l[2]])rotate([90,0,
 // KD-E: 6.5 mm floor, arm hangs over a pocket so it stays inside the floor when bent.
 key_y=-plate_t+1.3+48.5; key_x=[dev_off_x-55.0,dev_off_x+55.0];
 arm_w=8; arm_t=1.8; arm_l=26; arm_gap=1.2; arm_end=key_y+5; arm_root=arm_end-arm_l;
-bump_w=5; bump_up=2; bump_flat=4; tray_t=6.5; arm_z0=tray_t-1.2-arm_t; bump_base=tray_z+arm_z0+arm_t; bump_top=floor_top+bump_up; bump_hh=bump_top-bump_base;
+bump_w=5; bump_up=2; bump_flat=4; tray_t=5.5; arm_z0=tray_t-1.2-arm_t; bump_base=tray_z+arm_z0+arm_t; bump_top=floor_top+bump_up; bump_hh=bump_top-bump_base;
 module detent_cut(){for(x=key_x){
  difference(){translate([x-arm_w/2-arm_gap,arm_root,tray_z-0.1])cube([arm_w+2*arm_gap,arm_l+arm_gap,tray_t+0.2]);
   translate([x-arm_w/2,arm_root-0.1,tray_z-0.2])cube([arm_w,arm_l+0.1,tray_t+0.4]);}
@@ -386,7 +386,7 @@ ports=[];
 // inner face u 127.12, no holes (side holes only near post ends). So: one screw per rail (middle hole) + the plate joint.
 // Inner corner fillet: u >= 125.2 at Y 6.2, out to u 127.1 up to Y ~11.3, so the rail stays at u <= 125 in front of Y 11.8. M6 heat-set inserts assumed in all used holes.
 win_drop=0.3;              // window bottom 0.3 below the tray floor top: tolerance for the tray resting on the ledges
-win_top=min(sl_window_top,hs_z-hs_d/2);  // window top down to the boss bottom so the bosses sit fully on plate (Brian: boss overhung the window 0.7)
+win_top=min(sl_window_top,hs_z-hs_d/2-0.4);  // bosses sit on a 0.4 mm band of solid plate above the window (Brian 2026-10-31: boss overhung the window)
 tr_front=0.3;              // tray front 0.3 behind the plate back (plate only stops it sliding forward)
 run_y1=80.3;               // runner rear end (ahead of the tray's R20 rear corners)
 ru0=100.5; ru1=102; rb=107.5; rz_bot=1.5; rz_mid=9.0; ri=103.5;   // runner profile (u,z)

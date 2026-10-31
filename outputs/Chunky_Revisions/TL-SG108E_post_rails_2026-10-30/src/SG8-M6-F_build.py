@@ -21,7 +21,7 @@ F = r'''
 // inner face u 127.12, no holes (side holes only near post ends). So: one screw per rail (middle hole) + the plate joint.
 // Inner corner fillet: u >= 125.2 at Y 6.2, out to u 127.1 up to Y ~11.3, so the rail stays at u <= 125 in front of Y 11.8. M6 heat-set inserts assumed in all used holes.
 win_drop=0.3;              // window bottom 0.3 below the tray floor top: tolerance for the tray resting on the ledges
-win_top=min(sl_window_top,hs_z-hs_d/2);  // window top down to the boss bottom so the bosses sit fully on plate (Brian: boss overhung the window 0.7)
+win_top=min(sl_window_top,hs_z-hs_d/2-0.4);  // bosses sit on a 0.4 mm band of solid plate above the window (Brian 2026-10-31: boss overhung the window)
 tr_front=0.3;              // tray front 0.3 behind the plate back (plate only stops it sliding forward)
 run_y1=80.3;               // runner rear end (ahead of the tray's R20 rear corners)
 ru0=100.5; ru1=102; rb=107.5; rz_bot=1.5; rz_mid=9.0; ri=103.5;   // runner profile (u,z)
@@ -77,6 +77,8 @@ def patch(t):
     # walls (over the switch, 0.4 above its top) so they never sit on a wall; the sleeve lip is notched under each boss.
     rep('hs_x=[dev_off_x-sl_half-sl_wall+8, dev_off_x+sl_half+sl_wall-8];', 'hs_x=[-88, 56];')
     rep('text("SG8-M6-D"', 'text("SG8-M6-F"')
+    # floor 6.5 -> 5.5 (Brian 2026-10-31): switch 1 mm lower for room under the plate bosses; detent arm still 2.5 above the tray bottom (bump 2)
+    rep('bump_flat=4; tray_t=6.5;', 'bump_flat=4; tray_t=5.5;')
     # Brian, 2026-10-30: no strap slots on this tray (wall notches + floor slots under the walls); unused, a pain to print.
     rep(' if(sleeve)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])', ' if(false)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])')
     rep('y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])\n  translate([x,y-6,tray_z-0.1])', 'y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])\n  if(false)translate([x,y-6,tray_z-0.1])')

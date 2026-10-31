@@ -7,7 +7,7 @@ d = pathlib.Path(sys.argv[1]).resolve(); post = pathlib.Path(sys.argv[2]).resolv
 P = {k: f'import("{(d / f"SG8-M6-F_{k}.stl").as_posix()}");' for k in ['faceplate', 'tray', 'post-rail_left', 'post-rail_right']}
 P['post_left'] = f'translate([-126.12,17.5,{pz}])scale([1,1,1])import("{post}");'
 P['post_right'] = f'translate([126.12,17.5,{pz}])scale([-1,1,1])import("{post}");'
-P['switch'] = 'translate([-94,-2.7,6.9])cube([158,100,25]);'   # resting 0.1 low on the ledges (worst case)
+P['switch'] = 'translate([-94,-2.7,5.9])cube([158,100,25]);'   # floor top 6.0 (5.5 floor), resting 0.1 low on the ledges (worst case)
 pairs = [('tray', 'faceplate'), ('tray', 'post-rail_left'), ('tray', 'post-rail_right'), ('faceplate', 'post-rail_left'),
          ('faceplate', 'post-rail_right'), ('post-rail_left', 'post_left'), ('post-rail_right', 'post_right'), ('tray', 'post_left'),
          ('tray', 'post_right'), ('faceplate', 'post_left'), ('faceplate', 'post_right'), ('switch', 'faceplate'),
