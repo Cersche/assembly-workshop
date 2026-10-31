@@ -401,4 +401,5 @@ module hp4_tray_id(){translate([34.5,119,floor_top-0.6])linear_extrude(0.61)
 // Hue cradle; HP4-M6-B itself is untouched. Keystone top left, Hue cradle on the shelf deck.
 keystones=[-92.5];
 plate_center=66;            // keystone opening centre Z (only ks_golden/ks_box_cut use it here)
-cradle_x=-54.4; cradle_y=93; cradle_z=43.5-3-0.045;  // deck top 43.5
+cradle_x=-54.4; cradle_y=103;  // SCR5-H rev 6: 10 mm back
+cradle_z=43.5-3-0.045;  // deck top 43.5

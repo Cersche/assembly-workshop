@@ -27,7 +27,8 @@ pi_x0=-102; pi_w=56; pi_d=85; pi_h=20; pi_standoff=6; pi_pilot=3.2;
 pi_holes=[[3.5,81.5],[3.5,23.5],[52.5,81.5],[52.5,23.5]];
 pi_ports=[[-93.0,26.8,15.0,17.5,1.0],[-75.0,26.8,15.0,17.5,1.0],[-56.3,25.6,17.5,15.0,1.0]];
 // Hue Bridge v2 envelope in Brian's cradle (cradle posts 95 x 95; centre set in the lib overrides).
-hue_cx=-54.4; hue_cy=93; hue_w=90.7; hue_d=90.4; hue_h=30.7;
+hue_cx=-54.4; hue_cy=103;  // rev 6: Hue + cradle 10 mm back for the 40 mm fan (was 93)
+hue_w=90.7; hue_d=90.4; hue_h=30.7;
 // M6 joints (HP4-M6-B geometry, base moved from the floor to the deck).
 joint_x=[-71,-50]; jz=24; tab_w=20; up_t=6; tab_foot_h=5; fil_r=4; cb_d=11.5; cb_depth=3.5;
 m6_clear=6.6; m6_pilot=7.6; m6_boss_d=14; tongue_w=12; tongue_depth=7; tongue_h=3; slot_clear=0.3;
@@ -179,7 +180,7 @@ module supports(){
 }
 function pi_hole(h)=[pi_x0+h[0],h[1]];
 // Pi cooling (SCR5-F). Fan in front of the Hue cradle (Hue front Y 45.5), clear of the M6 tabs (Y <= 14.3).
-fan_s=30; fan_t=7; fan_cx=-74; fan_cy=30; fan_hole_d=28; fan_pitch=24; fan_screw_d=3.4;
+fan_s=40; fan_t=10; fan_cx=-74; fan_cy=35; fan_hole_d=38; fan_pitch=32; fan_screw_d=3.4;  // rev 6 (Brian 2026-10-31): 40x10 12 V fan (was 30x7), behind the M6 tabs
 floor_vent_x=[for(i=[0:6])-92+6*i]; floor_vent_y=[30,75]; vent_w=3;   // 7 slots 3 x 45 between the Pi standoffs
 wall_vent_y=[for(i=[0:11])46+8*i]; wall_vent_w=4; wall_vent_z=[floor_top+4.5,deck_z-4.5];  // 12 slots 4 x 20.3
 module deck_cooling_cut(){
@@ -213,11 +214,13 @@ module deck_part(engraved=true){
    footprint(deck_z,deck_t);
    deck_tab_pad();
    joint_tabs();
-   cradle();
+   intersection(){cradle();translate([-200,-50,0])cube([400,50+tray_d,200]);}  // rev 6: cradle clipped at the deck rear edge
   }
   joint_tab_cut();
   deck_cooling_cut();
   for(q=deck_screws)translate([q[0],q[1],deck_z-0.1])cylinder(d=deck_hole_d,h=deck_t+0.2);
+  // rev 6: rear screws now sit under the Hue -> 90 deg countersink for flush M2.5 flat heads
+  for(q=deck_screws)if(q[1]>100)translate([q[0],q[1],deck_top-1.1])cylinder(d1=2.9,d2=5.1,h=1.11,$fn=32);
   // ID on the deck underside (bed face), mirrored so it reads from below.
   if(engraved)translate([-25,100,deck_z-0.01])linear_extrude(0.61)mirror([1,0])
    text("SCR5-H",size=4,font="Liberation Sans:style=Bold",halign="center");
