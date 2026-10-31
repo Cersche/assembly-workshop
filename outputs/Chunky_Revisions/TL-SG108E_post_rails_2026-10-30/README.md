@@ -28,7 +28,7 @@ To take the switch out: the 2 joint screws, the faceplate, then slide the tray f
 
 **Posts (Brian's rack, corrected 2026-10-30):** the rack uses the creator's **4U posts**. At U8 (third U of the top 4U post) the side wall is solid, 14 mm thick (inner face X ±127.12), with **no holes**; side holes exist only near the post ends. Inner-corner fillet out to X 127.1 up to Y ~11.3. The first version of F was modelled on the 1U post (side holes, thinner wall) and was wrong for this rack. Middle front holes: Ø7.6 at X ±118.26, Z 22.225, no insert in Brian's rack yet (photo).
 
-**Switch fit = SG8-M6-D (proven numbers kept):** device 158 x 100 x 25, offset X −15, sleeve side play 0.5, sleeve top 1.35, 1.3 mm set back, keyhole detents, rear stop, flush ports, keystone +88, UPLINK inlay, rounded tray corners.
+**Switch fit = SG8-M6-D pocket, printed and fits well (Brian, 2026-10-31); kept exactly:** device 158 x 100 x 25, offset X −15, sleeve side play 0.5, sleeve top 1.35, 1.3 mm set back, keyhole detents, rear stop, flush ports, keystone +88, UPLINK inlay, rounded tray corners.
 
 ## Checks (OpenSCAD intersections, digital only) — all clear
 
