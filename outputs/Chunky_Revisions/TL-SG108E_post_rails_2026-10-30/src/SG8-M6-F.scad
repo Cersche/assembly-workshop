@@ -94,7 +94,7 @@ module plate2d(rear=false,plain=false){
   hull()for(sx=[-1,1],sz=[-1,1])translate([sx*(plate_w/2-plate_r),plate_center+sz*(plate_h/2-plate_r)])circle(r=plate_r+nudge);
   for(i=[0:u-1],dz=[-hole_dz,hole_dz],x=[-hole_x,hole_x])translate([x,i*rack_pitch+rack_pitch/2+dz])capsule2d();
   if(!plain){
-   if(sleeve)translate([dev_off_x,(sl_bottom-win_drop+sl_window_top)/2])square([2*sl_half,sl_window_top-sl_bottom+win_drop],center=true);
+   if(sleeve)translate([dev_off_x,(sl_bottom-win_drop+win_top)/2])square([2*sl_half,win_top-sl_bottom+win_drop],center=true);
    for(p=ports)translate([p[0],p[1]])rrect(p[2],p[3],p[4]);
   }
  }
@@ -386,6 +386,7 @@ ports=[];
 // inner face u 127.12, no holes (side holes only near post ends). So: one screw per rail (middle hole) + the plate joint.
 // Inner corner fillet: u >= 125.2 at Y 6.2, out to u 127.1 up to Y ~11.3, so the rail stays at u <= 125 in front of Y 11.8. M6 heat-set inserts assumed in all used holes.
 win_drop=0.3;              // window bottom 0.3 below the tray floor top: tolerance for the tray resting on the ledges
+win_top=min(sl_window_top,hs_z-hs_d/2);  // window top down to the boss bottom so the bosses sit fully on plate (Brian: boss overhung the window 0.7)
 tr_front=0.3;              // tray front 0.3 behind the plate back (plate only stops it sliding forward)
 run_y1=80.3;               // runner rear end (ahead of the tray's R20 rear corners)
 ru0=100.5; ru1=102; rb=107.5; rz_bot=1.5; rz_mid=9.0; ri=103.5;   // runner profile (u,z)

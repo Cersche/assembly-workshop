@@ -21,6 +21,7 @@ F = r'''
 // inner face u 127.12, no holes (side holes only near post ends). So: one screw per rail (middle hole) + the plate joint.
 // Inner corner fillet: u >= 125.2 at Y 6.2, out to u 127.1 up to Y ~11.3, so the rail stays at u <= 125 in front of Y 11.8. M6 heat-set inserts assumed in all used holes.
 win_drop=0.3;              // window bottom 0.3 below the tray floor top: tolerance for the tray resting on the ledges
+win_top=min(sl_window_top,hs_z-hs_d/2);  // window top down to the boss bottom so the bosses sit fully on plate (Brian: boss overhung the window 0.7)
 tr_front=0.3;              // tray front 0.3 behind the plate back (plate only stops it sliding forward)
 run_y1=80.3;               // runner rear end (ahead of the tray's R20 rear corners)
 ru0=100.5; ru1=102; rb=107.5; rz_bot=1.5; rz_mid=9.0; ri=103.5;   // runner profile (u,z)
@@ -80,7 +81,7 @@ def patch(t):
     rep(' if(sleeve)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])', ' if(false)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])')
     rep('y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])\n  translate([x,y-6,tray_z-0.1])', 'y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])\n  if(false)translate([x,y-6,tray_z-0.1])')
     rep('translate([dev_off_x,(sl_bottom+sl_window_top)/2])square([2*sl_half,sl_window_top-sl_bottom],center=true);',
-        'translate([dev_off_x,(sl_bottom-win_drop+sl_window_top)/2])square([2*sl_half,sl_window_top-sl_bottom+win_drop],center=true);')
+        'translate([dev_off_x,(sl_bottom-win_drop+win_top)/2])square([2*sl_half,win_top-sl_bottom+win_drop],center=true);')
     rep(' else if(part=="tray")intersection(){difference(){union(){tray();detent_add();top_uprights();}tray_id();}tray_round();}',
         ' else if(part=="tray")tray_f();\n else if(part=="cheek_left")cheek(-1);\n else if(part=="cheek_right")cheek(1);\n'
         ' else if(part=="assembly")union(){color("steelblue")difference(){faceplate();plate_id();}color("silver")tray_f();color("orange"){cheek(-1);cheek(1);}}')

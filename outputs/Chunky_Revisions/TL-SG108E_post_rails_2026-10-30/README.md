@@ -22,7 +22,7 @@ To take the switch out: the 2 joint screws, the faceplate, then slide the tray f
 ## Geometry (frame: X centred, plate back Y = 0, Z = 0 slot bottom)
 
 - **Tray** = SG8-M6-D tray: front trimmed to Y 0.3, strap slots removed (Brian), runners X ±100.5..107.5 (Y 0.3..80.3; 45° bearing face underneath, 45° top), right floor wing X 70.5..100.5, Z 0.5..6.5 under the keystone. Uprights 16 x 6 at Y 8.3..14.3 at **X −88 / +56**; sleeve lip notched 12.6 wide, Y 0..8.3 under each boss. Width 215 mm.
-- **Faceplate** = D faceplate with its two bosses (Ø12, Ø7.6 insert bore 7 deep, centre Z 38.425) moved to **X −88 / +56**, off the sleeve walls, so they sit over the switch top (0.4 mm above it) instead of on a wall or the lip: the B–E boss/lip clash can't happen. Switch window bottom 0.3 lower (tolerance). Keystone +88, UPLINK inlay, corner slots unchanged.
+- **Faceplate** = D faceplate with its two bosses (Ø12, Ø7.6 insert bore 7 deep, centre Z 38.425) moved to **X −88 / +56**, off the sleeve walls, so they sit over the switch top (0.4 mm above it) instead of on a wall or the lip: the B–E boss/lip clash can't happen. Switch window bottom 0.3 lower (tolerance); window top lowered 0.7 to Z 32.425 = boss bottom (Brian, 2026-10-31: each boss overhung the window by 0.7 mm, a sliver printed over air), so the bosses sit fully on plate and the window top is 0.43 above the switch top. Keystone +88, UPLINK inlay, corner slots unchanged.
 - **Post rail**: wall X ±103..111, Y 6.2..85, Z 0.5..44.0 with the runner channel and rear stop; block behind the front flange to X ±125 (Y 6.2..38), and to X ±126.9 (Y 11.8..38) against the post's side wall. Ø9 x 10 relief behind the faceplate's two screw holes. Outside vertical corners rounded R3 (Brian).
 - **Clearances**: runner on the ledge 0.1 below nominal; 0.25 elsewhere in the channel; rail to post 0.2–0.3; boss to tray uprights 0.3.
 
@@ -43,6 +43,7 @@ Tray × faceplate (incl. bosses), tray × each rail, faceplate × each rail, rai
 | Bore Y range (floor 1 mm, plate front stays solid) | Y 1.0–8.0 | Y 1.0–8.0 |
 | Boss bottom vs switch top (Z 32.0) | 32.425, 0.43 gap | 32.425, 0.43 gap |
 | Boss back vs upright front | 8.0 / 8.3, 0.3 gap | same |
+| Boss vs window top | 32.425 / 32.425, boss fully on plate | same |
 | Boss vs tray (sleeve wall, lip) | no overlap: lip notched, walls clear | same |
 
 Screw: head seat Y 10.8 (2.5 mm web), M6 x 8 tip at Y 2.8, so 5.2 mm into the insert (5.5 once pulled tight), 1.8 mm short of the bore floor. As installed the tray rests 0.1 mm low on its ledges, so the hole axis is 0.1 below the bore axis; the Ø6.6 hole gives ±0.3, and the plate's slots float to take up the rest.
