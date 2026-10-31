@@ -339,11 +339,11 @@ module detent_add(){for(x=key_x)translate([x-bump_w/2,0,0])rotate([90,0,90])line
 // Boss: 7.6 mm bore (rack post M6 insert hole), 7 mm deep, 11.2 mm across (all the height above the window allows),
 // top clipped flush with the plate top. Upright: 16 wide, 6 thick, 6.6 clearance + 11.5 x 3.5 head counterbore
 // (cut open where it leaves the upright), 2.5 mm under the head: M6 x 8 reaches ~5.2 mm into the insert. Fit/strength UNKNOWN.
-hs_x=[dev_off_x-sl_half-sl_wall+8, dev_off_x+sl_half+sl_wall-8]; m6_bore=7.6; m6_clear=6.6; hs_d=12;
+hs_x=[-88, 56]; m6_bore=7.6; m6_clear=6.6; hs_d=12;
 hs_z=min((sl_window_top+sl_lip+u*rack_pitch)/2, plate_bottom+plate_h-hs_d/2); hs_w=16; hs_gap=0.3; hs_t=6; hs_web=2.5;
-module top_bosses(){if(false)for(x=hs_x)intersection(){translate([x,0,hs_z])rotate([-90,0,0])difference(){cylinder(d=hs_d,h=8,$fn=64);translate([0,0,1])cylinder(d=m6_bore,h=8,$fn=64);}
+module top_bosses(){for(x=hs_x)intersection(){translate([x,0,hs_z])rotate([-90,0,0])difference(){cylinder(d=hs_d,h=8,$fn=64);translate([0,0,1])cylinder(d=m6_bore,h=8,$fn=64);}
  translate([x-hs_d,-0.1,0])cube([2*hs_d,8.2,plate_bottom+plate_h]);}}
-module top_uprights(){if(false)for(x=hs_x)difference(){translate([x-hs_w/2,8+hs_gap,sl_window_top])cube([hs_w,hs_t,u*rack_pitch-0.6-sl_window_top]);
+module top_uprights(){for(x=hs_x)difference(){translate([x-hs_w/2,8+hs_gap,sl_window_top])cube([hs_w,hs_t,u*rack_pitch-0.6-sl_window_top]);
  translate([x,8+hs_gap-0.1,hs_z])rotate([-90,0,0])cylinder(d=m6_clear,h=hs_t+0.2,$fn=48);
  translate([x,8+hs_gap+hs_web,hs_z])rotate([-90,0,0])cylinder(d=11.5,h=hs_t,$fn=64);}}
 // SG8-M6-C (Brian, 2026-10-29): tray prints were warping; round the footprint corners (vertical edges) as far as possible.
@@ -382,14 +382,15 @@ ports=[];
 // Frame: X centred, plate back Y=0, Z=0 slot bottom. u = |X| (cheek/runner profiles are drawn for the right side, s=+1).
 // Post (Lab Rax 1U, measured from the creator mesh, local only): front flange Y 0..6 for u 111.1..141.1, holes O7.6 at
 // u 118.2625, Z 6.32 / 22.225 / 38.13 (faceplate uses the outer two); side flange u 134.1..139.6, Y 6..35, holes O7.6 on the
-// X axis at Y 22.5, Z 22.225 -/+ 12.23. Inner corner rib: u >= 125.2 at Y 6.2, out to u 127.2 up to Y ~11.3 (mesh slices),
-// so the cheek stays at u <= 125 in front of Y 11.8. M6 heat-set inserts assumed in all used holes.
+// X axis at Y 22.5, Z 22.225 -/+ 12.23 -- BUT Brian's rack uses the 4U posts: at U8 (mid-post) the side wall is solid, 14 mm,
+// inner face u 127.12, no holes (side holes only near post ends). So: one screw per rail (middle hole) + the plate joint.
+// Inner corner fillet: u >= 125.2 at Y 6.2, out to u 127.1 up to Y ~11.3, so the rail stays at u <= 125 in front of Y 11.8. M6 heat-set inserts assumed in all used holes.
 win_drop=0.3;              // window bottom 0.3 below the tray floor top: tolerance for the tray resting on the ledges
 tr_front=0.3;              // tray front 0.3 behind the plate back (plate only stops it sliding forward)
 run_y1=80.3;               // runner rear end (ahead of the tray's R20 rear corners)
 ru0=100.5; ru1=102; rb=107.5; rz_bot=1.5; rz_mid=9.0; ri=103.5;   // runner profile (u,z)
 cl_bear=0.1; cl=0.25;      // ledge under the runner's 45 deg bearing face / everywhere else
-ch_in=103; ch_wall=111; ch_out=133.9; ch_z0=0.5; ch_z1=44.0; ch_y0=6.2; ch_y0b=11.8; ch_blk=38; ch_y1=85;
+ch_in=103; ch_wall=111; ch_out=126.9; ch_z0=0.5; ch_z1=44.0; ch_y0=6.2; ch_y0b=11.8; ch_blk=38; ch_y1=85;
 stop_y=run_y1+0.3;
 post_x=118.2625; mid_z=22.225; face_dz=15.902; side_y=22.5; side_dz=12.23;
 m6_clear=6.6; m6_head=11.5; web=2.5; relief_d=9; relief_l=10;
@@ -398,8 +399,10 @@ module along_y(y0,y1){translate([0,y1,0])rotate([90,0,0])linear_extrude(height=y
 module runner(s){scale([s,1,1])along_y(tr_front,run_y1)runner_profile();}
 // Right side: floor wing under the keystone (keystone block bottom Z 7.2) out to the runner.
 module wing(){translate([70.5,tr_front,tray_z])cube([ru0-70.5+0.01,run_y1-tr_front,6.0]);}
+// Lip notch under each plate boss (boss Y 0..8, upright from Y 8.3): 0.3 clear each side.
+module lip_notch(){for(x=hs_x)translate([x-6.3,-1,sl_window_top-0.1])cube([12.6,9.3,sl_lip+0.2]);}
 module tray_f(){intersection(){
- difference(){union(){tray();detent_add();for(s=[-1,1])runner(s);wing();}tray_id();}
+ difference(){union(){tray();detent_add();top_uprights();for(s=[-1,1])runner(s);wing();}tray_id();lip_notch();}
  union(){tray_round();translate([0,0,-1])linear_extrude(200)translate([0,(tr_front+run_y1)/2])rrect(2*rb,run_y1-tr_front,4);}
  translate([-200,tr_front,-1])cube([400,300,100]);
 }}
@@ -413,19 +416,12 @@ module cheek(s){scale([s,1,1])difference(){
  union(){
   translate([ch_in,ch_y0,ch_z0])cube([ch_wall-ch_in,ch_y1-ch_y0,ch_z1-ch_z0]);              // wall + ledge
   translate([ch_in,ch_y0,ch_z0])cube([125-ch_in,ch_blk-ch_y0,ch_z1-ch_z0]);                // block behind the front flange
-  translate([125-0.01,ch_y0b,ch_z0])cube([ch_out-125+0.01,ch_blk-ch_y0b,ch_z1-ch_z0]);     // reaches the side flange
+  translate([125-0.01,ch_y0b,ch_z0])cube([ch_out-125+0.01,ch_blk-ch_y0b,ch_z1-ch_z0]);     // braced against the 4U post's side wall (0.22 gap)
  }
  along_y(ch_y0-1,stop_y)channel_profile();
  // Front flange middle hole, screw from behind: 2.5 web, head pocket open to the rear.
  translate([post_x,ch_y0-0.1,mid_z])rotate([-90,0,0])cylinder(d=m6_clear,h=web+0.2,$fn=48);
  translate([post_x,ch_y0+web,mid_z])rotate([-90,0,0])cylinder(d=m6_head,h=ch_blk,$fn=64);
- // Side flange holes, screws from the inside: 2.5 web, head pocket open to the inner face.
- for(dz=[-side_dz,side_dz]){
-  translate([ch_out-web-0.1,side_y,mid_z+dz])rotate([0,90,0])cylinder(d=m6_clear,h=web+0.2,$fn=48);
-  translate([ch_in-1,side_y,mid_z+dz])rotate([0,90,0])cylinder(d=m6_head,h=ch_out-web-ch_in+1,$fn=64);
- }
- // Post rib on the side flange's inner face: u 127.12..134.12, Z 20.0..24.45, full depth (mesh slices). Slot 0.3 clear.
- translate([127.12-0.3,ch_y0,20.0-0.3])cube([ch_out,ch_blk,4.45+0.6]);
  // Room for the faceplate screw tips / inserts in the outer two front holes.
  for(dz=[-face_dz,face_dz])translate([post_x,ch_y0-0.1,mid_z+dz])rotate([-90,0,0])cylinder(d=relief_d,h=relief_l,$fn=48);
  cheek_id(s);

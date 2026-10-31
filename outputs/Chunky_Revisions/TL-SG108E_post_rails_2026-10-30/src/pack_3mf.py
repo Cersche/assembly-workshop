@@ -1,9 +1,9 @@
-"""Pack SG8-M6-F into one 3MF: tray, left cheek, right cheek, faceplate + UPLINK label (one object, two parts).
+"""Pack SG8-M6-F into one 3MF: tray, left post rail, right post rail, faceplate + UPLINK label (one object, two parts).
 Tray and cheeks keep their installed orientation (flat bottoms on the bed); the faceplate lies on its front face.
 Usage: python pack_3mf.py <stl_dir> <out.3mf>"""
 import sys, zipfile
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[3] / 'outputs' / 'Mechanical_Design_App'))
+sys.path.insert(0, str(next(p for p in Path(__file__).resolve().parents if (p / 'AGENTS.md').exists()) / 'outputs' / 'Mechanical_Design_App'))
 import print_layout as pl
 d, out = Path(sys.argv[1]), sys.argv[2]
 rd = lambda n: pl.facets((d / f'SG8-M6-F_{n}.stl').read_text(encoding='utf-8'))
@@ -16,11 +16,11 @@ fp, il = rd('faceplate'), rd('UPLINK-label-inlay')
 both = pl.move(fp + il, lambda v: (v[0], -v[2], v[1]))           # front face (Y=-4) onto the bed
 blo, bhi = pl.bounds(both)
 both = drop(both, 0, tlo[1] - GAP - bhi[1])
-cl, cr = rd('cheek_left'), rd('cheek_right')
+cl, cr = rd('post-rail_left'), rd('post-rail_right')
 cllo, clhi = pl.bounds(cl); crlo, crhi = pl.bounds(cr)
 cl = drop(cl, -GAP / 2 - clhi[0], thi[1] + GAP - cllo[1])          # side by side behind the tray
 cr = drop(cr, GAP / 2 - crlo[0], thi[1] + GAP - crlo[1])
-meshes = [('SG8-M6-F tray', tray), ('SG8-M6-F cheek left', cl), ('SG8-M6-F cheek right', cr),
+meshes = [('SG8-M6-F tray', tray), ('SG8-M6-F post rail left', cl), ('SG8-M6-F post rail right', cr),
           ('SG8-M6-F faceplate', both[:len(fp)]), ('SG8-M6-F UPLINK label', both[len(fp):])]
 def mesh(i, name, tris):
     idx, verts = {}, []
