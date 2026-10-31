@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="Segoe UI,Arial" font-size="16">
+<rect width="900" height="600" fill="#1e1e1e"/>
+<text x="450" y="32" fill="#fff" font-size="22" text-anchor="middle" font-weight="bold">DSI connector: the missing number is W</text>
+<text x="450" y="56" fill="#bbb" text-anchor="middle">Back of the screen (rear view: buttons on top, DSI connector on the right edge)</text>
+<!-- PCB 121x76 scaled 4px/mm -> 484 x 304 -->
+<rect x="120" y="110" width="484" height="304" fill="#2e8b57" stroke="#4fbf80"/>
+<text x="362" y="270" fill="#cfe" text-anchor="middle" font-size="18">PCB (rear)</text>
+<rect x="150" y="104" width="12" height="10" fill="#ccc"/><rect x="190" y="104" width="12" height="10" fill="#ccc"/><rect x="230" y="104" width="12" height="10" fill="#ccc"/>
+<text x="196" y="96" fill="#ccc" text-anchor="middle" font-size="13">buttons</text>
+<!-- connector: 30..51 from bottom => y = 414-51*4=210 .. 414-30*4=294 ; W unknown drawn 8mm=32px -->
+<rect x="572" y="210" width="32" height="84" fill="#f0e6c8" stroke="#ff5050" stroke-width="2"/>
+<text x="588" y="256" fill="#333" text-anchor="middle" font-size="12" transform="rotate(-90 588 252)">DSI</text>
+<!-- known: 30..51 -->
+<line x1="640" y1="210" x2="640" y2="294" stroke="#6fb7ff" stroke-width="2"/>
+<line x1="630" y1="210" x2="650" y2="210" stroke="#6fb7ff"/><line x1="630" y1="294" x2="650" y2="294" stroke="#6fb7ff"/>
+<text x="655" y="248" fill="#6fb7ff">21 long (30–51 up)</text>
+<text x="655" y="268" fill="#6fb7ff" font-size="13">known, you measured</text>
+<line x1="620" y1="294" x2="620" y2="414" stroke="#6fb7ff" stroke-dasharray="4 4"/>
+<text x="655" y="360" fill="#6fb7ff" font-size="13">30 from bottom edge</text>
+<!-- W -->
+<line x1="572" y1="190" x2="604" y2="190" stroke="#ff5050" stroke-width="3"/>
+<line x1="572" y1="180" x2="572" y2="200" stroke="#ff5050"/><line x1="604" y1="180" x2="604" y2="200" stroke="#ff5050"/>
+<text x="588" y="172" fill="#ff5050" text-anchor="middle" font-weight="bold" font-size="20">W = ?</text>
+<text x="120" y="455" fill="#ff5050" font-weight="bold">W = from the PCB's right edge, in to the far (inner) side of the connector</text>
+<text x="120" y="478" fill="#ddd">including the latch/flip lid when it is OPEN, and where the ribbon leaves it.</text>
+<text x="120" y="501" fill="#ddd">Codex guessed 8 mm (drawn here at that size). Nobody measured it.</text>
+<text x="120" y="536" fill="#fff" font-weight="bold">Also useful (one word): does the ribbon come out of the connector</text>
+<text x="120" y="558" fill="#fff" font-weight="bold">sideways off the edge, or straight up off the board (toward you)?</text>
+<text x="120" y="585" fill="#bbb" font-size="13">Height 5.25 above the PCB is already measured.</text>
+</svg>

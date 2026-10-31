@@ -1,0 +1,2 @@
+include <D:/Projects/assembly-workshop/outputs/Screen_Pi_Hue_SCR5-H_2026-10-30/checks/geometry.scad>
+intersection(){import("D:/Projects/assembly-workshop/outputs/Screen_Pi_Hue_SCR5-H_2026-10-30/SCR5-H_floor.stl");screw_heads();}

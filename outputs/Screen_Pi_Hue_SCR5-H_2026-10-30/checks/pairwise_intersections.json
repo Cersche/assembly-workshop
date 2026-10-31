@@ -1,0 +1,2270 @@
+[
+  {
+    "a": "plate",
+    "b": "frame",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "plate",
+    "b": "floor",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "deck",
+    "volume_mm3": 7.105427357601002e-15,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "pin1",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "pin2",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "pin3",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "glass",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "lcd",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "pcb",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "standoffs",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "buttons",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "pi",
+    "volume_mm3": 6.405986852087153e-14,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "plate",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "plate",
+    "b": "leaves",
+    "volume_mm3": 101.16032890317729,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "ribbon_corridor",
+    "volume_mm3": 729.9788224704007,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "plate",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "plate",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "plate",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "plate",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "plate",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "floor",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "frame",
+    "b": "deck",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "frame",
+    "b": "pin1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "pin2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "pin3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "glass",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "lcd",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "pcb",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "standoffs",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "buttons",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "frame",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "frame",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "frame",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "frame",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "frame",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "deck",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "pin1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "pin2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "pin3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "glass",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "lcd",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "floor",
+    "b": "pcb",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "floor",
+    "b": "standoffs",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "floor",
+    "b": "buttons",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "floor",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "floor",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "floor",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "floor",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "floor",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "floor",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "floor",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "floor",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "pin1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "deck",
+    "b": "pin2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "deck",
+    "b": "pin3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "deck",
+    "b": "glass",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "deck",
+    "b": "lcd",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "pcb",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "standoffs",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "buttons",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "deck",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "deck",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "deck",
+    "b": "hue",
+    "volume_mm3": 5171.005978230279,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "deck",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "ribbon_corridor",
+    "volume_mm3": 2708.2127104201554,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "deck",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "deck",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "deck",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "deck",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "pin2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "pin3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "glass",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "lcd",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "pcb",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "standoffs",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "buttons",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pin1",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "pin_stroke1",
+    "volume_mm3": 236.9702307258743,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pin1",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin1",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "pin3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "glass",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "lcd",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "pcb",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "standoffs",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "buttons",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pin2",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "pin_stroke2",
+    "volume_mm3": 236.72283160468407,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pin2",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin2",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "glass",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "lcd",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "pcb",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "standoffs",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "buttons",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pin3",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin3",
+    "b": "pin_stroke3",
+    "volume_mm3": 236.47543265894927,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pin3",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "lcd",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "pcb",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "standoffs",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "buttons",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "glass",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "glass",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "pcb",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "standoffs",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "buttons",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "lcd",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "lcd",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "standoffs",
+    "volume_mm3": 1.4421797089880783e-13,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pcb",
+    "b": "buttons",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pcb",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "dsi_keepout",
+    "volume_mm3": 475.19983005523676,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pcb",
+    "b": "ribbon_corridor",
+    "volume_mm3": 367.19986867904663,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pcb",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pcb",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "buttons",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "standoffs",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "standoffs",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "standoffs",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "standoffs",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "standoffs",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "standoffs",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "buttons",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "touch",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "dsi_keepout",
+    "volume_mm3": 551.25,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "dsi",
+    "b": "ribbon_corridor",
+    "volume_mm3": 551.25,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "dsi",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "ribbon_path",
+    "volume_mm3": 0.14256924810608923,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "dsi",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "pi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "touch",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pi",
+    "b": "hue",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pi",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pi",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pi",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pi",
+    "b": "ribbon_corridor",
+    "volume_mm3": 806.9997848272396,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pi",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pi",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pi",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pi",
+    "b": "ribbon_path",
+    "volume_mm3": 39.670428353056614,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pi",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pi",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pi",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pi",
+    "b": "pi_dsi",
+    "volume_mm3": 203.19995117187509,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "hue",
+    "b": "fan",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "hue",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "hue",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "hue",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "hue",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "hue",
+    "b": "screw_drivers",
+    "volume_mm3": 2481.502185596154,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "hue",
+    "b": "m6_drivers",
+    "volume_mm3": 18725.917361436328,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "hue",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "hue",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "hue",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "hue",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "hue",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "fan",
+    "b": "leaves",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "fan",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "fan",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "fan",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "fan",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "fan",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "fan",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "fan",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "fan",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "fan",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "fan",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "leaves",
+    "b": "dsi_keepout",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "leaves",
+    "b": "ribbon_corridor",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "leaves",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "leaves",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "leaves",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "leaves",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "leaves",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.9000091552734375,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "leaves",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.9000091552734375,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "leaves",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.9000091552734375,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "leaves",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi_keepout",
+    "b": "ribbon_corridor",
+    "volume_mm3": 3493.1247038841248,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "dsi_keepout",
+    "b": "screw_heads",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "dsi_keepout",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi_keepout",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi_keepout",
+    "b": "ribbon_path",
+    "volume_mm3": 4.419844668190802,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "dsi_keepout",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi_keepout",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi_keepout",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "dsi_keepout",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "ribbon_corridor",
+    "b": "screw_heads",
+    "volume_mm3": 38.7956936386398,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "ribbon_corridor",
+    "b": "screw_drivers",
+    "volume_mm3": 245.90251732453626,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "ribbon_corridor",
+    "b": "m6_drivers",
+    "volume_mm3": 745.9066780619704,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "ribbon_corridor",
+    "b": "ribbon_path",
+    "volume_mm3": 21.800427570558867,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "ribbon_corridor",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "ribbon_corridor",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "ribbon_corridor",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "ribbon_corridor",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "screw_heads",
+    "b": "screw_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "screw_heads",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "screw_heads",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "screw_heads",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "screw_heads",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "screw_heads",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "screw_heads",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "screw_drivers",
+    "b": "m6_drivers",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "screw_drivers",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "screw_drivers",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "screw_drivers",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "screw_drivers",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "screw_drivers",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "m6_drivers",
+    "b": "ribbon_path",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "m6_drivers",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "m6_drivers",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "m6_drivers",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "m6_drivers",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "ribbon_path",
+    "b": "pin_stroke1",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "ribbon_path",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "ribbon_path",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "ribbon_path",
+    "b": "pi_dsi",
+    "volume_mm3": 0.5697320170456508,
+    "method": "OpenSCAD CGAL"
+  },
+  {
+    "a": "pin_stroke1",
+    "b": "pin_stroke2",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin_stroke1",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin_stroke1",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin_stroke2",
+    "b": "pin_stroke3",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin_stroke2",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  },
+  {
+    "a": "pin_stroke3",
+    "b": "pi_dsi",
+    "volume_mm3": 0.0,
+    "method": "AABB separation/contact"
+  }
+]

@@ -1,0 +1,2 @@
+include <D:/Projects/assembly-workshop/outputs/Screen_Pi_Hue_SCR5-H_2026-10-30/checks/geometry.scad>
+intersection(){translate([58.5,0,41.5])import("D:/Projects/assembly-workshop/outputs/Screen_Pi_Hue_SCR5-H_2026-10-30/SCR5-H_pin3.stl");pin_stroke(2);}

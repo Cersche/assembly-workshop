@@ -1,0 +1,91 @@
+{
+  "window_sections_at_glass_centre_z": {
+    "0.15": [
+      -27.7,
+      93.7
+    ],
+    "1.0": [
+      -27.55,
+      93.55
+    ],
+    "2.0": [
+      -27.55,
+      93.55
+    ]
+  },
+  "vertical_section": [
+    1e-05,
+    2.7,
+    80.3,
+    88.8
+  ],
+  "nominal_window_w_mm": 121.1,
+  "side_lip_section": [
+    -26.75,
+    92.75
+  ],
+  "sections_outside_lip_y": {
+    "2.4": [
+      -27.55,
+      93.55
+    ],
+    "3.4": [
+      -27.55,
+      93.55
+    ]
+  },
+  "no_top_bottom_lip_section": [
+    1e-05,
+    2.7,
+    80.3,
+    88.8
+  ],
+  "lip_to_metal_frame_clearance_mm": 0.8999996185302734,
+  "metal_frame_bounds": [
+    [
+      -25.850000381469727,
+      91.8499984741211
+    ],
+    [
+      2.5,
+      5.5
+    ],
+    [
+      2.9000000953674316,
+      80.0999984741211
+    ]
+  ],
+  "chamfer_verified_45deg_mm": 0.3,
+  "roundtrip": [
+    {
+      "part": "plate",
+      "max_coordinate_error_mm": 4.999999987376214e-07,
+      "triangles_identical": true,
+      "print_min_z": 0.0
+    },
+    {
+      "part": "frame",
+      "max_coordinate_error_mm": 4.948730634168896e-07,
+      "triangles_identical": true,
+      "print_min_z": 0.0
+    },
+    {
+      "part": "pin1",
+      "max_coordinate_error_mm": 4.858398483520432e-07,
+      "triangles_identical": true,
+      "print_min_z": 0.0
+    },
+    {
+      "part": "pin2",
+      "max_coordinate_error_mm": 4.849853514343749e-07,
+      "triangles_identical": true,
+      "print_min_z": 0.0
+    },
+    {
+      "part": "pin3",
+      "max_coordinate_error_mm": 4.919433536088036e-07,
+      "triangles_identical": true,
+      "print_min_z": 0.0
+    }
+  ]
+}

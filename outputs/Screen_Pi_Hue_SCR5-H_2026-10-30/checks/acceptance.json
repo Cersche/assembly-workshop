@@ -1,0 +1,567 @@
+{
+  "meshes": {
+    "plate": {
+      "vertices": 3836,
+      "triangles": 7740,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 50916.81605131039,
+      "bounds": [
+        [
+          -126.0,
+          126.0
+        ],
+        [
+          0.0,
+          13.299999237060547
+        ],
+        [
+          5.7220458984375e-06,
+          88.79999542236328
+        ]
+      ],
+      "collinear_repairs": 1
+    },
+    "frame": {
+      "vertices": 1972,
+      "triangles": 3968,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 8833.825547718987,
+      "bounds": [
+        [
+          -39.0,
+          105.0
+        ],
+        [
+          13.299999237060547,
+          16.299999237060547
+        ],
+        [
+          3.0,
+          80.0
+        ]
+      ],
+      "collinear_repairs": 0
+    },
+    "floor": {
+      "vertices": 4472,
+      "triangles": 9016,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 51950.395551276364,
+      "bounds": [
+        [
+          -102.0,
+          -6.0
+        ],
+        [
+          4.0,
+          152.0
+        ],
+        [
+          8.22499942779541,
+          40.5
+        ]
+      ],
+      "collinear_repairs": 0
+    },
+    "deck": {
+      "vertices": 3680,
+      "triangles": 7404,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 51734.22679016396,
+      "bounds": [
+        [
+          -102.0,
+          -6.0
+        ],
+        [
+          4.0,
+          152.0
+        ],
+        [
+          40.5,
+          74.5
+        ]
+      ],
+      "collinear_repairs": 1
+    },
+    "pin1": {
+      "vertices": 120,
+      "triangles": 236,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 236.9702301162522,
+      "bounds": [
+        [
+          -2.5,
+          2.5
+        ],
+        [
+          -2.8999996185302734,
+          15.0
+        ],
+        [
+          39.599998474121094,
+          45.400001525878906
+        ]
+      ],
+      "collinear_repairs": 0
+    },
+    "pin2": {
+      "vertices": 216,
+      "triangles": 428,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 236.72283010940274,
+      "bounds": [
+        [
+          -2.5,
+          2.5
+        ],
+        [
+          -2.8999996185302734,
+          15.0
+        ],
+        [
+          39.599998474121094,
+          45.400001525878906
+        ]
+      ],
+      "collinear_repairs": 0
+    },
+    "pin3": {
+      "vertices": 312,
+      "triangles": 620,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 236.4754306784269,
+      "bounds": [
+        [
+          -2.5,
+          2.5
+        ],
+        [
+          -2.8999996185302734,
+          15.0
+        ],
+        [
+          39.599998474121094,
+          45.400001525878906
+        ]
+      ],
+      "collinear_repairs": 0
+    }
+  },
+  "hard_tray_clearance_pass": true,
+  "hard_tray_rows": [
+    {
+      "a": "frame",
+      "b": "floor",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "frame",
+      "b": "deck",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "floor",
+      "b": "glass",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "floor",
+      "b": "lcd",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "floor",
+      "b": "pcb",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "floor",
+      "b": "standoffs",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "floor",
+      "b": "buttons",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "floor",
+      "b": "dsi",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "floor",
+      "b": "touch",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "floor",
+      "b": "leaves",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "floor",
+      "b": "dsi_keepout",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "floor",
+      "b": "screw_heads",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "floor",
+      "b": "screw_drivers",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "floor",
+      "b": "pin_stroke1",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "floor",
+      "b": "pin_stroke2",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "floor",
+      "b": "pin_stroke3",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "deck",
+      "b": "glass",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "deck",
+      "b": "lcd",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "deck",
+      "b": "pcb",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "deck",
+      "b": "standoffs",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "deck",
+      "b": "buttons",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "deck",
+      "b": "dsi",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "deck",
+      "b": "touch",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "deck",
+      "b": "leaves",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "deck",
+      "b": "dsi_keepout",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "deck",
+      "b": "screw_heads",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "deck",
+      "b": "screw_drivers",
+      "volume_mm3": 0.0,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "deck",
+      "b": "pin_stroke1",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "deck",
+      "b": "pin_stroke2",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    },
+    {
+      "a": "deck",
+      "b": "pin_stroke3",
+      "volume_mm3": 0.0,
+      "method": "AABB separation/contact"
+    }
+  ],
+  "physical_envelope_clashes": [
+    {
+      "a": "deck",
+      "b": "hue",
+      "volume_mm3": 5171.005978230279,
+      "method": "OpenSCAD CGAL"
+    }
+  ],
+  "ribbon_tray_clashes": [],
+  "strict_acceptance_pass": false,
+  "three_mf": {
+    "vertex_tags": 14608,
+    "triangle_tags": 29412,
+    "ns0": false,
+    "objects": 7,
+    "status": "WITHHELD: diagnostic candidate only; failed acceptance blocks proposed export",
+    "candidate_path": "checks\\SCR5-H_UNVALIDATED_candidate_set.3mf"
+  },
+  "ribbon": {
+    "points_mm": [
+      [
+        -24,
+        14.5,
+        44
+      ],
+      [
+        -40,
+        24,
+        44
+      ],
+      [
+        -40,
+        32,
+        33
+      ],
+      [
+        -74,
+        85,
+        22
+      ]
+    ],
+    "segment_lengths_mm": [
+      18.607794065928395,
+      13.601470508735444,
+      63.92182725798755
+    ],
+    "centreline_length_mm": 96.13109183265139,
+    "bend_and_endpoint_allowance_mm": 15,
+    "total_estimate_mm": 111.13109183265139,
+    "stock_slack_mm": 48.86890816734861,
+    "endpoint_status": "Pi connector approximate, inherited F layout; bend/twist and connector registration UNKNOWN"
+  },
+  "pair_count": 378,
+  "nonzero_rows": [
+    {
+      "a": "plate",
+      "b": "leaves",
+      "volume_mm3": 101.16032890317729,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "plate",
+      "b": "ribbon_corridor",
+      "volume_mm3": 729.9788224704007,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "deck",
+      "b": "hue",
+      "volume_mm3": 5171.005978230279,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "deck",
+      "b": "ribbon_corridor",
+      "volume_mm3": 2708.2127104201554,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "pin1",
+      "b": "pin_stroke1",
+      "volume_mm3": 236.9702307258743,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "pin2",
+      "b": "pin_stroke2",
+      "volume_mm3": 236.72283160468407,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "pin3",
+      "b": "pin_stroke3",
+      "volume_mm3": 236.47543265894927,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "pcb",
+      "b": "dsi_keepout",
+      "volume_mm3": 475.19983005523676,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "pcb",
+      "b": "ribbon_corridor",
+      "volume_mm3": 367.19986867904663,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "dsi",
+      "b": "dsi_keepout",
+      "volume_mm3": 551.25,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "dsi",
+      "b": "ribbon_corridor",
+      "volume_mm3": 551.25,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "dsi",
+      "b": "ribbon_path",
+      "volume_mm3": 0.14256924810608923,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "pi",
+      "b": "ribbon_corridor",
+      "volume_mm3": 806.9997848272396,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "pi",
+      "b": "ribbon_path",
+      "volume_mm3": 39.670428353056614,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "pi",
+      "b": "pi_dsi",
+      "volume_mm3": 203.19995117187509,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "hue",
+      "b": "screw_drivers",
+      "volume_mm3": 2481.502185596154,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "hue",
+      "b": "m6_drivers",
+      "volume_mm3": 18725.917361436328,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "leaves",
+      "b": "pin_stroke1",
+      "volume_mm3": 0.9000091552734375,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "leaves",
+      "b": "pin_stroke2",
+      "volume_mm3": 0.9000091552734375,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "leaves",
+      "b": "pin_stroke3",
+      "volume_mm3": 0.9000091552734375,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "dsi_keepout",
+      "b": "ribbon_corridor",
+      "volume_mm3": 3493.1247038841248,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "dsi_keepout",
+      "b": "ribbon_path",
+      "volume_mm3": 4.419844668190802,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "ribbon_corridor",
+      "b": "screw_heads",
+      "volume_mm3": 38.7956936386398,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "ribbon_corridor",
+      "b": "screw_drivers",
+      "volume_mm3": 245.90251732453626,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "ribbon_corridor",
+      "b": "m6_drivers",
+      "volume_mm3": 745.9066780619704,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "ribbon_corridor",
+      "b": "ribbon_path",
+      "volume_mm3": 21.800427570558867,
+      "method": "OpenSCAD CGAL"
+    },
+    {
+      "a": "ribbon_path",
+      "b": "pi_dsi",
+      "volume_mm3": 0.5697320170456508,
+      "method": "OpenSCAD CGAL"
+    }
+  ],
+  "protected_files": 359,
+  "protected_unchanged": true
+}

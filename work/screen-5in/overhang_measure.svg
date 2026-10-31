@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" font-family="Segoe UI,Arial" font-size="16">
+<rect width="900" height="560" fill="#1e1e1e"/>
+<text x="450" y="34" fill="#fff" font-size="22" text-anchor="middle" font-weight="bold">Measure the glass overhang: A to B, on all 4 edges</text>
+<text x="450" y="60" fill="#bbb" text-anchor="middle">Side view of one edge, cut through the screen (front of the screen on the LEFT)</text>
+<!-- glass -->
+<rect x="150" y="110" width="40" height="380" fill="#6fb7ff" opacity=".85"/>
+<text x="170" y="100" fill="#6fb7ff" text-anchor="middle">glass + touch</text>
+<text x="170" y="510" fill="#6fb7ff" text-anchor="middle">2.5 mm</text>
+<!-- LCD module -->
+<rect x="190" y="150" width="80" height="340" fill="#9a9a9a"/>
+<text x="230" y="510" fill="#ccc" text-anchor="middle">LCD 5.0</text>
+<!-- PCB -->
+<rect x="270" y="105" width="26" height="385" fill="#2e8b57"/>
+<text x="283" y="510" fill="#2e8b57" text-anchor="middle">PCB</text>
+<!-- standoff -->
+<rect x="296" y="140" width="64" height="22" fill="#d4a017"/>
+<text x="330" y="132" fill="#d4a017" text-anchor="middle">standoff</text>
+<!-- A and B -->
+<line x1="110" y1="110" x2="600" y2="110" stroke="#ff5050" stroke-dasharray="6 5"/>
+<line x1="110" y1="150" x2="600" y2="150" stroke="#ff5050" stroke-dasharray="6 5"/>
+<circle cx="150" cy="110" r="6" fill="#ff5050"/><circle cx="190" cy="150" r="6" fill="#ff5050"/>
+<text x="95" y="115" fill="#ff5050" text-anchor="end" font-weight="bold">A</text>
+<text x="95" y="155" fill="#ff5050" text-anchor="end" font-weight="bold">B</text>
+<line x1="590" y1="112" x2="590" y2="148" stroke="#ff5050" stroke-width="2"/>
+<text x="610" y="128" fill="#ff5050" font-weight="bold">overhang = A to B</text>
+<text x="610" y="150" fill="#ddd">(your one reading: 0.91 mm)</text>
+<text x="200" y="75" fill="#fff" font-size="13"></text>
+<!-- lip -->
+<rect x="190" y="112" width="12" height="34" fill="#ffb347"/>
+<path d="M205 128 L420 230" stroke="#ffb347"/>
+<text x="425" y="235" fill="#ffb347">0.8 mm lip would tuck in here,</text>
+<text x="425" y="255" fill="#ffb347">behind the glass, in front of the LCD edge</text>
+<!-- front marker -->
+<text x="70" y="300" fill="#fff" text-anchor="middle">FRONT</text><text x="70" y="320" fill="#fff" text-anchor="middle">(you look</text><text x="70" y="338" fill="#fff" text-anchor="middle">from here)</text>
+<!-- how to measure -->
+<text x="425" y="320" fill="#fff" font-weight="bold">How:</text>
+<text x="425" y="345" fill="#ddd">calipers depth rod, or the tail of the calipers,</text>
+<text x="425" y="367" fill="#ddd">from the glass edge in to the grey LCD edge</text>
+<text x="425" y="400" fill="#fff" font-weight="bold">Send 4 numbers (front view, glass facing you):</text>
+<text x="425" y="425" fill="#ddd">top ___   bottom ___   left ___   right ___</text>
+<text x="425" y="458" fill="#bbb" font-size="14">If the touch layer is a separate, smaller sheet with its own</text>
+<text x="425" y="476" fill="#bbb" font-size="14">step, send that step too.</text>
+</svg>

@@ -1,0 +1,2 @@
+include <D:/Projects/assembly-workshop/outputs/Screen_Pi_Hue_SCR5-H_2026-10-30/checks/geometry.scad>
+translate([78.5,0,41.5])import("D:/Projects/assembly-workshop/outputs/Screen_Pi_Hue_SCR5-H_2026-10-30/SCR5-H_pin1.stl");

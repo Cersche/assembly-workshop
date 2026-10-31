@@ -1,0 +1,2 @@
+include <D:/Projects/assembly-workshop/outputs/Screen_5in_SCR5-G_2026-10-30/checks/geometry.scad>
+intersection(){import("D:/Projects/assembly-workshop/outputs/Screen_5in_SCR5-G_2026-10-30/SCR5-G_plate.stl");translate([68.5,0,41.5])import("D:/Projects/assembly-workshop/outputs/Screen_5in_SCR5-G_2026-10-30/SCR5-G_pin2.stl");}

@@ -1,0 +1,216 @@
+{
+  "meshes": {
+    "plate": {
+      "vertices": 2990,
+      "triangles": 6024,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 51705.009493695965,
+      "bounds": [
+        [
+          -126.0,
+          126.0
+        ],
+        [
+          0.0,
+          13.299999237060547
+        ],
+        [
+          5.7220458984375e-06,
+          88.79999542236328
+        ]
+      ],
+      "collinear_repairs": 1
+    },
+    "frame": {
+      "vertices": 986,
+      "triangles": 1996,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 8840.625382138696,
+      "bounds": [
+        [
+          -39.0,
+          105.0
+        ],
+        [
+          13.299999237060547,
+          16.299999237060547
+        ],
+        [
+          3.0,
+          80.0
+        ]
+      ],
+      "collinear_repairs": 0
+    },
+    "pin1": {
+      "vertices": 120,
+      "triangles": 236,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 236.9702301162522,
+      "bounds": [
+        [
+          -2.5,
+          2.5
+        ],
+        [
+          -2.8999996185302734,
+          15.0
+        ],
+        [
+          39.599998474121094,
+          45.400001525878906
+        ]
+      ],
+      "collinear_repairs": 0
+    },
+    "pin2": {
+      "vertices": 216,
+      "triangles": 428,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 236.72283010940274,
+      "bounds": [
+        [
+          -2.5,
+          2.5
+        ],
+        [
+          -2.8999996185302734,
+          15.0
+        ],
+        [
+          39.599998474121094,
+          45.400001525878906
+        ]
+      ],
+      "collinear_repairs": 0
+    },
+    "pin3": {
+      "vertices": 312,
+      "triangles": 620,
+      "shells": 1,
+      "bad_edges": 0,
+      "degenerate": 0,
+      "volume_mm3": 236.4754306784269,
+      "bounds": [
+        [
+          -2.5,
+          2.5
+        ],
+        [
+          -2.8999996185302734,
+          15.0
+        ],
+        [
+          39.599998474121094,
+          45.400001525878906
+        ]
+      ],
+      "collinear_repairs": 0
+    }
+  },
+  "intersections_mm3": {
+    "intersect_plate_frame": 0.0,
+    "intersect_plate_pin1": 0.0,
+    "intersect_plate_pin2": 0.0,
+    "intersect_plate_pin3": 0.0,
+    "intersect_plate_glass": 0.0,
+    "intersect_plate_lcd": 0.0,
+    "intersect_plate_pcb": 0.0,
+    "intersect_plate_standoffs": 0.0,
+    "intersect_plate_buttons": 0.0,
+    "intersect_plate_dsi": 0.0,
+    "intersect_plate_touch": 0.0,
+    "intersect_frame_pin1": 0.0,
+    "intersect_frame_pin2": 0.0,
+    "intersect_frame_pin3": 0.0,
+    "intersect_frame_glass": 0.0,
+    "intersect_frame_lcd": 0.0,
+    "intersect_frame_pcb": 0.0,
+    "intersect_frame_standoffs": 0.0,
+    "intersect_frame_buttons": 0.0,
+    "intersect_frame_dsi": 0.0,
+    "intersect_frame_touch": 0.0,
+    "intersect_pin1_pin2": 0.0,
+    "intersect_pin1_pin3": 0.0,
+    "intersect_pin1_glass": 0.0,
+    "intersect_pin1_lcd": 0.0,
+    "intersect_pin1_pcb": 0.0,
+    "intersect_pin1_standoffs": 0.0,
+    "intersect_pin1_buttons": 0.0,
+    "intersect_pin1_dsi": 0.0,
+    "intersect_pin1_touch": 0.0,
+    "intersect_pin2_pin3": 0.0,
+    "intersect_pin2_glass": 0.0,
+    "intersect_pin2_lcd": 0.0,
+    "intersect_pin2_pcb": 0.0,
+    "intersect_pin2_standoffs": 0.0,
+    "intersect_pin2_buttons": 0.0,
+    "intersect_pin2_dsi": 0.0,
+    "intersect_pin2_touch": 0.0,
+    "intersect_pin3_glass": 0.0,
+    "intersect_pin3_lcd": 0.0,
+    "intersect_pin3_pcb": 0.0,
+    "intersect_pin3_standoffs": 0.0,
+    "intersect_pin3_buttons": 0.0,
+    "intersect_pin3_dsi": 0.0,
+    "intersect_pin3_touch": 0.0,
+    "frame_dsi_3mm": 0.0,
+    "frame_ribbon_18mm": 0.0,
+    "plate_dsi_3mm": 0.0
+  },
+  "datums": {
+    "plate_front": 0.0,
+    "glass_front": 0.0,
+    "lit_centre_z": 44.4,
+    "plate_centre_z": 44.4,
+    "window_clearance_per_side": 0.2,
+    "glass_centre_x": 33,
+    "seat_y": 13.3,
+    "lip_enabled_edges": "[true,true,false,false]",
+    "chamfer_mm": 0.3,
+    "ribbon_slot_width_mm": 18
+  },
+  "three_mf": {
+    "vertex_tags": 4624,
+    "triangle_tags": 9304,
+    "ns0": false,
+    "objects": [
+      {
+        "name": "SCR5-G plate",
+        "vertices": 2990,
+        "triangles": 6024
+      },
+      {
+        "name": "SCR5-G frame",
+        "vertices": 986,
+        "triangles": 1996
+      },
+      {
+        "name": "SCR5-G pin1 DROP0.45",
+        "vertices": 120,
+        "triangles": 236
+      },
+      {
+        "name": "SCR5-G pin2 DROP0.45",
+        "vertices": 216,
+        "triangles": 428
+      },
+      {
+        "name": "SCR5-G pin3 DROP0.45",
+        "vertices": 312,
+        "triangles": 620
+      }
+    ]
+  },
+  "protected_file_count": 232,
+  "protected_unchanged": true,
+  "lip_status": "left/right cosmetic only; no top/bottom lip; rear frame supports screen"
+}
