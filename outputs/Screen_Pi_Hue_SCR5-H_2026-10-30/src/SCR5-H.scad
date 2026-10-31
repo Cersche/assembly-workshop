@@ -2,13 +2,13 @@
 // Measured values: work/screen-5in/Dimensions.md. Physical fit/strength UNKNOWN.
 part="plate";
 DROP=0.45; // coupon winner can be substituted here; all three pins use this DROP
-LIP=0.8; LIP_ON=true;
+LIP=0.8; LIP_ON=false; // rev 5 (2026-10-31): lips blocked the glass going in from the rear; removed
 LIP_EDGES=[true,true,false,false]; // left,right,bottom,top; Brian: side lips only, cosmetic
 FRAME_STEP=1.5; // measured glass-edge inset to metal LCD frame, left/right only
 SHIM=0; // moves rear frame seat and plate-boss mating face back
 $fn=48;
 GCX=33; GCZ=41.5; PW=252; PH=88.8; PT=4;
-GW=120.7; GH=77.2; CLEAR=0.2; WW=GW+2*CLEAR; WH=GH+2*CLEAR;
+GW=120.7; GH=77.2; CLEAR=0.4; WW=GW+2*CLEAR; WH=GH+2*CLEAR; // rev 5: CLEAR 0.2 -> 0.4 (printed window too tight)
 SEAT=13.3+SHIM; FT=3;
 SO=[56.45,34]; BTN_X=[45.5,35.5,25.5];
 PCB_TOP=38; GAP=0.10; LEAF_T=0.8;

@@ -94,3 +94,8 @@ The 12 right-wall vent slots are now two cable-access windows (Y 47–87 and 93�
 
 ## Rev 4 — one cable slot (Claude, 2026-10-31, Brian's choice)
 Right wall: one rounded 25 x 10 mm slot, low (centre 8 mm above the floor top), Y 112–142 envelope (centres 117/137). Vents behind Y 106 dropped; the 8 front vents stay. Floor closed, 0 bad edges; 3MF 14,486 vertex / 29,156 triangle plain tags, no ns0. Slot top is a short ~25 mm bridge.
+
+## Rev 5 — glass would not go in (Brian printed the plate, 2026-10-31)
+Cause (Claude's spec error): the left/right lips behind the glass narrowed the opening to 119.5, less than the 120.7 glass, so the screen could not pass from the rear; from the front the 121 PCB could not pass the lips either. Also, from the rear the glass top edge would hit the button-leaf nubs (nub bottom 0.5 below the glass top edge).
+Fix: lips removed (LIP_ON=false); window clearance 0.2 -> 0.4 per side, window 121.5 x 78.0 straight through the 4 mm plate (section-checked at Y 0.1–3.9). Plate only; frame, floor, deck and pins unchanged. 3MF 14,480 vertex / 29,144 triangle plain tags, no ns0.
+**Assembly: the screen goes in from the FRONT** (PCB first, glass facing you), until the glass is flush; then screw the rear frame to the 4 corner standoffs and the plate bosses from behind. The PCB top edge passes 0.1 mm under the leaf nubs (PCB centred confirmed). Fit UNKNOWN until reprinted.
