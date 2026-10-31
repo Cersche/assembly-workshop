@@ -27,6 +27,7 @@ No screws hold the tray itself, and none show at the front. To take the switch o
 
 - **Tray** = SG8-M6-D tray minus its two uprights, front trimmed to Y 0.3, plus two runners (X ±100.5..107.5, Y 0.3..80.3; 45° bearing face underneath, 45° top) and, on the right, a floor wing X 70.5..100.5, Z 0.5..6.5 that passes under the keystone (keystone block bottom Z 7.2). Width now 215 mm (was 174).
 - **Cheek**: wall X ±103..111, Y 6.2..85, Z 0.5..44.0 with the runner channel and rear stop; block behind the front flange to X ±125 (Y 6.2..38) and out to X ±133.9 against the side flange (Y 11.8..38).
+- **No strap slots** (Brian, 2026-10-30): the wall notches and floor slots at quarter depth are gone; this switch never used them.
 - **Faceplate** = D faceplate without bosses; the switch window bottom is 0.3 mm lower (tolerance for the tray resting on the ledges). Keystone +88, UPLINK inlay and four corner slots unchanged.
 - **Clearances**: runner on the ledge 0.1 below nominal (tray rests 0.1 low; window has 0.3); 0.25 elsewhere in the channel (normal); cheek to post 0.2–0.3.
 

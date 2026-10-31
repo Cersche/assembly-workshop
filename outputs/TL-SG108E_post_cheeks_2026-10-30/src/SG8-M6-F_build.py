@@ -75,6 +75,9 @@ def patch(t):
     rep('module top_bosses(){for(x=hs_x)', 'module top_bosses(){if(false)for(x=hs_x)')   # no bosses: plate carries no load
     rep('module top_uprights(){for(x=hs_x)', 'module top_uprights(){if(false)for(x=hs_x)')
     rep('text("SG8-M6-D"', 'text("SG8-M6-F"')
+    # Brian, 2026-10-30: no strap slots on this tray (wall notches + floor slots under the walls); unused, a pain to print.
+    rep(' if(sleeve)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])', ' if(false)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])')
+    rep('y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])\n  translate([x,y-6,tray_z-0.1])', 'y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])\n  if(false)translate([x,y-6,tray_z-0.1])')
     rep('translate([dev_off_x,(sl_bottom+sl_window_top)/2])square([2*sl_half,sl_window_top-sl_bottom],center=true);',
         'translate([dev_off_x,(sl_bottom-win_drop+sl_window_top)/2])square([2*sl_half,sl_window_top-sl_bottom+win_drop],center=true);')
     rep(' else if(part=="tray")intersection(){difference(){union(){tray();detent_add();top_uprights();}tray_id();}tray_round();}',

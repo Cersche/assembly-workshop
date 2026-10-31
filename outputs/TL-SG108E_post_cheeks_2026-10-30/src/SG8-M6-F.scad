@@ -216,12 +216,12 @@ module device_features_cut(){
  sleeve_v2_cut();
  if(false)for(x=sl_joints,z=sl_joint_z)translate([x,-0.1,z])rotate([-90,0,0])cylinder(d=joint_pilot,h=8.1);
  // Strap access through each wall at quarter-depth, clear of the front/rear joints.
- if(sleeve)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
+ if(false)for(side=[-1,1],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
   translate([side<0?dev_off_x-sl_half-sl_wall-0.1:dev_off_x+sl_half-0.1,y-6,floor_top-0.1])cube([sl_wall+0.2,12,3.1]);
 
  if(device_mount=="inserts")for(h=[for(q=holes)dp(q)])translate([dev_x+h[0],dev_y+h[1],floor_top+0.01])cylinder(d=insert_pilot,h=standoff+0.1);
  if(device_mount=="straps"||device_mount=="flat"||sleeve)for(x=[dev_x-5.5,dev_x+fp_w+2.5],y=[dev_y+fp_d*0.25,dev_y+fp_d*0.75])
-  translate([x,y-6,tray_z-0.1])cube([3,12,tray_t+0.2]);
+  if(false)translate([x,y-6,tray_z-0.1])cube([3,12,tray_t+0.2]);
  // Blind pockets retain at least foot_min_floor; taller feet pass through the floor by design.
  if(feet_style!="grooves"&&foot_h>0&&(device_mount=="flat"||sleeve))for(f=feet){corners=[dp([f[0],f[1]]),dp([f[0]+f[2],f[1]]),dp([f[0],f[1]+f[3]]),dp([f[0]+f[2],f[1]+f[3]])];x0=dev_x+min([for(p=corners)p[0]])-foot_clearance;x1=dev_x+max([for(p=corners)p[0]])+foot_clearance;y0=dev_y+min([for(p=corners)p[1]])-foot_clearance;y1=dev_y+max([for(p=corners)p[1]])+foot_clearance;deep=f[4]+foot_extra_depth;
   translate([x0,y0,deep>tray_t-foot_min_floor?tray_z-0.1:floor_top-deep])cube([x1-x0,y1-y0,deep>tray_t-foot_min_floor?tray_t+0.2:deep+0.02]);}
