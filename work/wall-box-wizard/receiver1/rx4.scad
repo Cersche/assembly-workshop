@@ -220,7 +220,10 @@ module devices(){
  color([0.95,0.95,0.95])rod([sbx1+10,sby0+coax_y,cz],[ks_coax,kb,ks_cz],7);
  // switch on the shelf, ports in the front window; power plug through the back wall
  color([0.2,0.35,0.6])translate([swx0,swy0,sw_z])cube(SW);
- color([0.05,0.05,0.05])for(i=[0:4])translate([swx0+8+i*17,swy0-0.2,sw_z+5])cube([14,1,12]);
+ // front face (Brian measured, 2026-11-01): 5 ports as one 76.5 group, 6.5 from the left, 6.55 up (port height 13
+ // ASSUMED); power LED centre 7 from the right, 10 up
+ color([0.05,0.05,0.05])for(i=[0:4])translate([swx0+6.5+i*15.3+0.5,swy0-0.2,sw_z+6.55])cube([14.3,1,13]);
+ color([0.2,0.9,0.3])translate([swx1-7,swy0+0.5,sw_z+10])rotate([90,0,0])cylinder(d=3,h=1);
  color("silver")translate([sw_pwr[0],swy0+SW[1]+sw_plug[0],sw_pwr[1]])rotate([90,0,0])cylinder(d=sw_plug[1],h=sw_plug[0]);
  color([0.15,0.15,0.15])rod([sw_pwr[0],swy0+SW[1]+sw_plug[0],sw_pwr[1]],[sw_pwr[0]+10,DO+40,sw_pwr[1]-30],4);
  // outside: 6 in jumper front keystone -> nearest switch port; coax in, ETH1 to / ETH2 from the Google Wifi
