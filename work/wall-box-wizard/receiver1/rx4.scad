@@ -59,7 +59,7 @@ pins=[75,125];                               // shelf locating pins into the bac
 ears=[for(x=[sbx0-11,sbx1+11],y=[sby0+10,sby1-10])[x,y]];   // cradle ears / base inserts; 22 pads end at the ScreenBeam's ends
 
 // Test print ID (Brian's rule: every test print carries its ID), engraved 0.6 on hidden faces
-print_id="RX4-A";
+print_id="RX4-B";
 module id_text(){text(print_id,size=6,font="Liberation Sans:style=Bold",halign="center",valign="center");}
 module rrect(x0,x1,y0,y1,r){hull()for(x=[x0+r,x1-r],y=[y0+r,y1-r])translate([x,y])circle(r=r);}
 // wall frames as in body15.scad: u to the right seen from outside, y inward, v up
@@ -76,6 +76,11 @@ module rplate(h){hull(){linear_extrude(h-er)rrect(0,WO,0,DO,cr);
 // 45-degree ledge on a wall: strip at the wall bottom, full depth at the top (prints without support)
 module ledge(x0,x1,y0,d,dir){hull(){translate([x0,dir>0?y0:y0-0.01,shelf_z-d-0.01])cube([x1-x0,0.01,0.01]);
  translate([x0,dir>0?y0:y0-d,shelf_z-0.01])cube([x1-x0,d,0.01]);}}
+
+// Side vents (Brian, 2026-11-01): vertical slots in both end walls (X = 0 and X = WO), round-ended so they print
+// upright without support; clear of the rounded corners, the base lip below and the lid lip above.
+vent_w=3; vent_z=[16,50]; vent_y=[28:6:DO-28];
+module side_vents(){for(x=[-1,WO-t-1],y=vent_y)hull()for(z=vent_z)translate([x,y,z])rotate([0,90,0])cylinder(d=vent_w,h=t+2);}
 
 // Body: open-bottom wall tube, Z t..HO; the removable base below it (Brian, 2026-11-01) and the lid on top screw into
 // M3 inserts at both ends of the four corner posts.
@@ -95,6 +100,7 @@ module body(){
   translate([pwr_hole[0],DO+1,pwr_hole[1]])rotate([90,0,0])cylinder(d=10,h=t+2);
   translate([sw_pwr[0],DO+1,sw_pwr[1]])rotate([90,0,0])cylinder(d=11,h=t+2);
   translate([100,DO-t+0.6,t+7])rotate([90,0,0])linear_extrude(0.61)id_text();   // ID on the inside of the back wall
+  side_vents();
  }
  for(x=pins)translate([x,DO-t-2.5,shelf_z-0.01])cylinder(d=3,h=2.4);   // shelf locating pins, up from the back ledge
  back_ks()ks_gold_one(0,0);
