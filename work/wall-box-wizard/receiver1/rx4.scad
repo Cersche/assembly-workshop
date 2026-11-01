@@ -9,7 +9,7 @@
 // UNKNOWN.
 //
 // Coordinates: X 0..WO (left -> right, seen from the front), Y 0..DO (front -> back), Z 0..HO (floor -> rim).
-// part: "body" | "lid" | "shelf" | "cradle" | "devices" (context, never printed) | "lid_on" (viewer) | "all"
+// part: "body" | "base" (removable bottom) | "lid" | "shelf" | "cradle" | "devices" (context, never printed) | "lid_on" (viewer) | "all"
 part="all";
 
 use <../concept15/body15.scad>   // ks_gold_one(): golden keystone, ks_tight 0.2
@@ -64,20 +64,18 @@ function lid_posts()=[[t+3.5,t+3.5],[WO-t-3.5,t+3.5],[t+3.5,DO-t-3.5],[WO-t-3.5,
 module ledge(x0,x1,y0,d,dir){hull(){translate([x0,dir>0?y0:y0-0.01,shelf_z-d-0.01])cube([x1-x0,0.01,0.01]);
  translate([x0,dir>0?y0:y0-d,shelf_z-0.01])cube([x1-x0,d,0.01]);}}
 
+// Body: open-bottom wall tube, Z t..HO; the removable base below it (Brian, 2026-11-01) and the lid on top screw into
+// M3 inserts at both ends of the four corner posts.
 module body(){
  difference(){
   union(){
-   difference(){
-    linear_extrude(HO)rrect(0,WO,0,DO,cr);
-    translate([0,0,t])linear_extrude(HO)rrect(t,WO-t,t,DO-t,cr-t);
-   }
-   for(e=ears)translate([e[0],e[1],t-0.01])cylinder(d=10,h=boss_h+0.01);
-   for(p=lid_posts())translate([p[0],p[1],0])cylinder(d=9,h=HO);
+   translate([0,0,t])linear_extrude(HO-t)difference(){rrect(0,WO,0,DO,cr);rrect(t,WO-t,t,DO-t,cr-t);}
+   for(p=lid_posts())translate([p[0],p[1],t])cylinder(d=9,h=HO-t);
    ledge(sl[0],sl[1],t-0.01,2.5,1);          // front ledge: stops 0.5 short of the ScreenBeam (drops in past it)
    ledge(bl[0],bl[1],DO-t+0.01,5,-1);        // back ledge
   }
-  for(e=ears)translate([e[0],e[1],t+boss_h-insert_d])cylinder(d=insert_pilot,h=insert_d+0.1);
   for(p=lid_posts())translate([p[0],p[1],HO-insert_d])cylinder(d=insert_pilot,h=insert_d+0.1);
+  for(p=lid_posts())translate([p[0],p[1],t-0.1])cylinder(d=insert_pilot,h=insert_d+0.1);
   back_ks()ks_hole();
   on_front(ks_front,ks_fz)ks_hole();
   translate([swx0+sw_lip,-1,sw_z+sw_lip])cube([SW[0]-2*sw_lip,t+2,SW[2]-2*sw_lip]);   // switch window, 1.5 lip
@@ -117,6 +115,24 @@ module lid(){
   }
   for(p=lid_posts())translate([p[0],p[1],-4]){cylinder(d=m3,h=10);translate([0,0,4+t-1.7])cylinder(d1=m3,d2=6.6,h=1.71);}
   for(x=[sl[1]+6:5.5:sbx1+30])translate([x-1.25,sby0+8,-1])cube([2.5,SB[1]-16,t+2]);
+ }
+}
+
+// Base: removable bottom, 2.5 plate with a 3 mm locating lip (notched at the corner posts and the back keystone frames),
+// four countersunk M3 up into the post inserts, and the cradle's four insert bosses. ScreenBeam + cradle can be fitted
+// on the base outside the box, then the body lowered over them.
+module base(){
+ difference(){
+  union(){
+   linear_extrude(t)rrect(0,WO,0,DO,cr);
+   translate([0,0,t-0.01])linear_extrude(3.01)difference(){rrect(t+0.3,WO-t-0.3,t+0.3,DO-t-0.3,cr-t);
+    rrect(t+1.9,WO-t-1.9,t+1.9,DO-t-1.9,cr-t);
+    for(p=lid_posts())translate(p)circle(d=11);
+    for(x=[ks_eth1,ks_eth2,ks_coax])translate([x-12,DO-t-3])square([24,3]);}
+   for(e=ears)translate([e[0],e[1],t-0.01])cylinder(d=10,h=boss_h+0.01);
+  }
+  for(e=ears)translate([e[0],e[1],t+boss_h-insert_d])cylinder(d=insert_pilot,h=insert_d+0.1);
+  for(p=lid_posts())translate([p[0],p[1],-1]){cylinder(d=m3,h=t+2);translate([0,0,1-0.01])cylinder(d1=6.6,d2=m3,h=1.71);}
  }
 }
 
@@ -169,10 +185,11 @@ module devices(){
 
 if(part=="body")body();
 if(part=="lid")lid();
+if(part=="base")base();
 if(part=="lid_on")translate([0,0,HO])lid();
 if(part=="shelf")shelf();
 if(part=="cradle")cradle();
 if(part=="devices")devices();
-if(part=="all"){color([0.92,0.91,0.87])body();color([0.55,0.75,0.6])cradle();color([0.6,0.7,0.85])shelf();devices();
+if(part=="all"){color([0.92,0.91,0.87])body();color([0.75,0.72,0.66])base();color([0.55,0.75,0.6])cradle();color([0.6,0.7,0.85])shelf();devices();
  color([0.8,0.8,0.85,0.6])translate([0,0,HO])lid();
  echo(str("outer ",WO," x ",DO," x ",HO," (+ lid ",t,")"));}
