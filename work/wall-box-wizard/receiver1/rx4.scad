@@ -25,8 +25,11 @@ sb_feet=[for(x=[16,104],y=[8.5,56.5])[x,y]]; foot_d=16; foot_dp=2.6;
 coax_y=32.5; coax_z=SB[2]-foot_h-19; pwr_y=24; eth_y=43; port_z=(SB[2]-foot_h)/2;
 
 // TL-SG105 (100 x 98 x 25, retailer listings), ports to the front; fit copied from the supplied bracket (sleeve
-// 100.5 x 25.5 -> 0.25 a side). Power jack on the rear, about 21 from its left side (seen from the front), 13.6 up.
-SW=[100,98,25]; sw_clr=0.25; sw_jack=[21,13.6]; sw_lip=1.5;
+// 100.5 x 25.5 -> 0.25 a side). Power jack on the rear (Brian measured, 2026-11-01): centre 12 from the switch's left
+// side seen from the front (right side seen from the rear), 13 up from its bottom. Barrel plug 35.25 long, 8.5 wide:
+// from the switch's back face it reaches the back wall's outer face (32.75 gap + 2.5 wall), so the cord leaves straight
+// out of the 11 mm hole.
+SW=[100,98,25]; sw_clr=0.25; sw_jack=[12,13]; sw_plug=[35.25,8.5]; sw_lip=1.5;
 
 bay=55;      // left: ScreenBeam power + LAN plugs (power 44.5 incl. tip); front keystone above them
 rzone=42;    // right: jumper's right-angle on Coax In
@@ -181,8 +184,8 @@ module devices(){
  // switch on the shelf, ports in the front window; power plug through the back wall
  color([0.2,0.35,0.6])translate([swx0,swy0,sw_z])cube(SW);
  color([0.05,0.05,0.05])for(i=[0:4])translate([swx0+8+i*17,swy0-0.2,sw_z+5])cube([14,1,12]);
- color("silver")translate([sw_pwr[0],DO+12,sw_pwr[1]])rotate([90,0,0])cylinder(d=9,h=24);
- color([0.15,0.15,0.15])rod([sw_pwr[0],DO+12,sw_pwr[1]],[sw_pwr[0]+10,DO+40,sw_pwr[1]-30],4);
+ color("silver")translate([sw_pwr[0],swy0+SW[1]+sw_plug[0],sw_pwr[1]])rotate([90,0,0])cylinder(d=sw_plug[1],h=sw_plug[0]);
+ color([0.15,0.15,0.15])rod([sw_pwr[0],swy0+SW[1]+sw_plug[0],sw_pwr[1]],[sw_pwr[0]+10,DO+40,sw_pwr[1]-30],4);
  // outside: 6 in jumper front keystone -> nearest switch port; coax in, ETH1 to / ETH2 from the Google Wifi
  color([0.85,0.85,0.85]){rod([ks_front,-14,ks_fz],[ks_front-12,-24,ks_fz-4],5);rod([ks_front-12,-24,ks_fz-4],[swx0+83,-12,sw_z+11],5);}
  color([0.95,0.95,0.95])for(x=[ks_eth1,ks_eth2,ks_coax])rod([x,DO+4,ks_z],[x,DO+40,ks_z-12],x==ks_coax?7:5);
