@@ -1,6 +1,6 @@
 # SG8-M6-F — TP-Link TL-SG108E 1U tray on post rails (2026-10-30)
 
-Test-print ID **SG8-M6-F** is engraved on every part: plate back above the window, outside of the tray's left sleeve wall, inner face of each post rail. **Not printed. Fit and strength UNKNOWN.**
+Test-print ID **SG8-M6-F** is engraved on every part: plate back above the window, outside of the tray's left sleeve wall, inner face of each post rail. **Tray printed 2026-10-31: switch slides in and the detents click (Brian). Faceplate, post rails and the M6 joint not yet confirmed; their fit and all strength UNKNOWN.**
 
 The tray rides on **two post rails** bolted to the front posts and is also screwed to the faceplate with the hidden M6 joint. The faceplate is held by its usual four rack screws. So the tray is carried by the posts at both sides and tied to the plate at the front.
 

@@ -6,4 +6,4 @@ Brian's rack uses the creator's **4U posts**: away from the post ends the side w
 
 | Folder | Bracket | Status |
 |---|---|---|
-| `TL-SG108E_post_rails_2026-10-30/` | SG8-M6-F, TP-Link TL-SG108E (U8) | Not printed |
+| `TL-SG108E_post_rails_2026-10-30/` | SG8-M6-F, TP-Link TL-SG108E (U8) | Tray printed: switch clicks in (2026-10-31); faceplate, rails, joint unconfirmed |

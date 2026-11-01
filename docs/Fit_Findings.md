@@ -35,6 +35,7 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 - 2026-10-28 SG8-C1 (SG8-M6-B left hidden-screw joint coupon): Brian: fitment great; M6 x 8 button head and head recess good to go. Boss/insert test (SG8-C2) still to do.
 - 2026-10-30 SG8-M6-C printed: did not fit. Cause found: B/C cut sleeve_top 1.35 → 0.35 against the proven print. SG8-M6-D restores 1.35, unprinted.
 - 2026-10-31 SG8-M6-D printed: switch pocket fits well (Brian). Proven pocket: sleeve_top 1.35, side play 0.5, KD-E detents, rear stop at 100 mm, 1.3 mm set back. SG8-M6-F keeps this pocket exactly (only the floor under it went 6.5 → 5.5 mm, pocket moves down with it).
+- 2026-10-31 SG8-M6-F tray printed (photo shows F's side runners; ID not read from the part): switch slides in with a satisfying detent click, seats with ports flush (Brian). Faceplate, post rails, M6 joint and insert still unprinted/unconfirmed.
 
 ## 2026-10-31 SCR5-H plate (rev 4 print) — glass would not go into the window
 Brian printed the SCR5-H plate: the Waveshare 5" glass (120.7 x 77.2) would not enter the window (121.1 x 77.6, 0.2/side) — the 0.8 mm side lips behind the glass left only 119.5 mm, so this was a design error, not printer shrink. Rev 5: lips removed, clearance 0.4/side (121.5 x 78.0), screen inserted from the front. Lesson: check the insertion path, not just the final position; flush-glass windows can't have rear lips.
