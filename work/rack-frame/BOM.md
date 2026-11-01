@@ -16,7 +16,7 @@ Fit, stiffness, strength and hole alignment are UNKNOWN until printed parts prov
 |---|---|---|---|
 | 1 | 2020 extrusion, posts | 4 | 400 mm (9U is 400.05; the 0.05 is irrelevant because the strips locate off the node). End tapping not needed: the sockets clamp with T-nuts |
 | 2 | 2020 extrusion, width members | 4 | 200 mm (4 mm slack each end in the sockets) |
-| 3 | 2020 extrusion, depth rails | 4 | 180 mm (184 mm gap, 2 mm slack each end); if 180 isn't sold, buy 200 and cut 16–20 mm off |
+| 3 | 2020 extrusion, depth rails | 4 | 200 mm, same as the width members. They run under the posts into the node cores (posts sit on the node roof, so nothing collides). No cutting (Brian 2026-10-31: off-the-shelf parts only) |
 | 4 | M5 roll-in T-nuts for 2020 (6 mm slot) | ~140 | nodes 48 (8 x 3 sockets x 2), trim 24 (12 x 2), strips 36 (12 x 3), braces 16 (2 x 8) = 124, plus spares |
 | 5 | M5 x 10 button or socket head screws | ~100 | nodes, trim, braces |
 | 6 | M5 x 10–12 countersunk screws | ~40 | hole strips; heads below the strip front face |
@@ -32,11 +32,10 @@ All extrusion, T-nuts and screws for the same 2020 profile / 6 mm slot. M5 appro
 
 ## Open items
 - Hole spacing: strict EIA 15.875 or Lab Rax 15.902. Does not affect this order.
-- 180 mm 2020 availability not checked.
 - Generator: work/rack-frame/frame_ab.py (`python work/rack-frame/frame_ab.py work/rack-frame/concept-AB`).
 
 ## Checked against the model (2026-10-31)
-Post gap inside 208 → width member 200 (4 mm slack/end). Front-to-rear post gap 184 → depth rail 180 (2 mm slack/end). Mounting faces Y 25 / 265 = 240. Nothing intrudes into the 208 inside width above the bottom node. Overall 256 x 248 x 456 incl. plates. Insert count 2 x 9 x 4 = 72. Screw/T-nut counts above assume 2 screws per socket, 3 per strip, 2 per trim piece, 8 per brace.
+Post gap inside 208 → width member 200 (4 mm slack/end). Depth rails 200 at Y 45–245, under the posts (post footprint Y 33–53 / 237–257, posts start above the node roof); width members stop at X ±100, rails start at X ±104, so they never meet. Only two stock lengths: 4 x 400 and 8 x 200. Mounting faces Y 25 / 265 = 240. Nothing intrudes into the 208 inside width above the bottom node. Overall 256 x 248 x 456 incl. plates. Insert count 2 x 9 x 4 = 72. Screw/T-nut counts above assume 2 screws per socket, 3 per strip, 2 per trim piece, 8 per brace.
 - Socket hollows, key ribs, screw slots, trim mounting and strip thickness are not drawn yet.
 
 ## History

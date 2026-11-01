@@ -72,7 +72,7 @@ def frame(opt):
         q["widths"] += box(0, 100, 33, 53, zh, zh + 20)
         if opt == "B":   # printed cover over the width member, flush with the node fronts
             q["trim"] += xprism(rrect(21, 33, zc0, zc0 + C, R, [(0, 0), (0, 1)]), 0, xs[1])
-        q["rails"] += box(104, 124, 55, MY / 2, zh, zh + 20)
+        q["rails"] += box(104, 124, 45, MY / 2, zh, zh + 20)   # 200 stock: runs under the post into the node core
     L = (Z1 - Z0 - 2 * S) / 3
     for k in range(3):
         q["strips"] += box(104, 124, 25, 33, Z0 + k * 3 * U + 0.2, Z0 + (k + 1) * 3 * U - 0.2)
