@@ -26,10 +26,9 @@ coax_y=32.5; coax_z=SB[2]-foot_h-19; pwr_y=24; eth_y=43; port_z=(SB[2]-foot_h)/2
 
 // TL-SG105 (100 x 98 x 25, retailer listings), ports to the front; fit copied from the supplied bracket (sleeve
 // 100.5 x 25.5 -> 0.25 a side). Power jack on the rear (Brian measured, 2026-11-01): centre 12 from the switch's left
-// side seen from the front (right side seen from the rear), 13 up from its bottom. Barrel plug 35.25 long, 8.5 wide:
-// from the switch's back face it reaches the back wall's outer face (32.75 gap + 2.5 wall), so the cord leaves straight
-// out of the 11 mm hole.
-SW=[100,98,25]; sw_clr=0.25; sw_jack=[12,13]; sw_plug=[35.25,8.5]; sw_lip=1.5;
+// side seen from the front (right side seen from the rear), 13 up from its bottom. Barrel plug 35.25 long overall, 8.5
+// wide, sticks out 26 from the switch's back face: ends 7 short of the back wall (33 gap), cord straight out the 11 mm hole.
+SW=[100,98,25]; sw_clr=0.25; sw_jack=[12,13]; sw_plug=[26,8.5]; sw_lip=1.5;
 
 bay=55;      // left: ScreenBeam power + LAN plugs (power 44.5 incl. tip); front keystone above them
 rzone=42;    // right: jumper's right-angle on Coax In
