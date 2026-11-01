@@ -1,7 +1,7 @@
 // MoCA receiver box, concept 4 "bones" (Brian, 2026-11-01; builds on rx3). One box for a cleaner look: the TP-Link
 // TL-SG105 now lives INSIDE, on a removable shelf above the ScreenBeam ("stacked, compact"), ports out of a front
-// window. Front wall, seen from the front: Ethernet keystone at the left, switch window beside it (6 in jumper between
-// them on the outside). Back wall: ETH1 + ETH2 pair at the left end, coax middle-right with the ScreenBeam's power hole beside it,
+// window. Front wall, seen from the front: switch window at the left, Ethernet keystone to its right (Brian, 2026-11-01;
+// 6 in jumper between them on the outside, to the nearest switch port). Back wall: ETH1 + ETH2 pair at the left end, coax middle-right with the ScreenBeam's power hole beside it,
 // plus the switch's power hole. Wiring: coax keystone -> short RG6 jumper -> ScreenBeam Coax In; ScreenBeam LAN -> ETH1 ->
 // Google Wifi WAN; Google Wifi LAN -> ETH2 -> inside patch -> front keystone -> 6 in jumper -> switch.
 // Shelf drops in on wall ledges after the ScreenBeam; the lid's ribs clamp switch and shelf (no screws). Cosmetics come
@@ -15,7 +15,7 @@ part="all";
 use <../concept15/body15.scad>   // ks_gold_one(): golden keystone, ks_tight 0.2
 
 $fn=40;
-t=2.5; cr=6; insert_pilot=4.0; m3=3.4;
+t=2.5; cr=6; insert_pilot=4.2; insert_d=4; m3=3.4;   // M3 x 3 x 5 heat-set insert: 4.2 bore, 4 deep
 
 // ScreenBeam (Brian): 120 x 65 x 30 incl. feet (13 dia, 2.25 proud, centres 8 in from the long edges, 16 from the
 // ends). Lies along X: LAN/power end at the left, Coax In end at the right. Port positions ASSUMED (first box's model):
@@ -43,8 +43,9 @@ sbx0=t+bay; sbx1=sbx0+SB[0]; sby0=t+3; sby1=sby0+SB[1];
 ks_z=t+17;                                   // back keystones (jack axis)
 ks_eth1=t+20; ks_eth2=t+43;                  // back, left pair (X)
 ks_coax=WO-70;                               // back, middle-right (X)
-ks_front=t+28; ks_fz=47;                     // front keystone, upper left, above the ScreenBeam's plugs
-swx0=ks_front+13.5; swx1=swx0+SW[0]; swy0=t; // switch front face against the front wall
+swx0=t+41.5;                                 // switch left side (X), unchanged
+ks_front=sbx1+10.5; ks_fz=40;                // front keystone right of the switch window, just past the ScreenBeam's right end, above its coax plug (Brian)
+ swx1=swx0+SW[0]; swy0=t; // switch front face against the front wall
 sl=[swx0-sw_clr-2, swx1+sw_clr+2];           // shelf X span
 pwr_hole=[ks_coax-22, t+10];                 // ScreenBeam power, back wall beside the coax (X, Z), 10 mm (Brian: power comes in the back with the coax)
 sw_pwr=[swx0+sw_jack[0], sw_z+sw_jack[1]];   // switch power, back wall (X, Z), 11 mm (plug passes through)
@@ -75,8 +76,8 @@ module body(){
    ledge(sl[0],sl[1],t-0.01,2.5,1);          // front ledge: stops 0.5 short of the ScreenBeam (drops in past it)
    ledge(bl[0],bl[1],DO-t+0.01,5,-1);        // back ledge
   }
-  for(e=ears)translate([e[0],e[1],t+boss_h-5.7])cylinder(d=insert_pilot,h=6);
-  for(p=lid_posts())translate([p[0],p[1],HO-7])cylinder(d=insert_pilot,h=7.1);
+  for(e=ears)translate([e[0],e[1],t+boss_h-insert_d])cylinder(d=insert_pilot,h=insert_d+0.1);
+  for(p=lid_posts())translate([p[0],p[1],HO-insert_d])cylinder(d=insert_pilot,h=insert_d+0.1);
   back_ks()ks_hole();
   on_front(ks_front,ks_fz)ks_hole();
   translate([swx0+sw_lip,-1,sw_z+sw_lip])cube([SW[0]-2*sw_lip,t+2,SW[2]-2*sw_lip]);   // switch window, 1.5 lip
@@ -150,8 +151,8 @@ module devices(){
  color([0.2,0.4,0.9])translate([sbx0-28,sby0+eth_y-6.5,pz-6])cube([28,13,12]);
  plug_in(ks_eth1,ks_z);plug_in(ks_eth2,ks_z);plug_in(ks_coax,ks_z);
  color([0.15,0.15,0.15]){rod([sbx0-28,sby0+eth_y,pz],[ks_eth1,kb-8,ks_z],6);
- // ETH2 -> straight forward and up through the left bay -> front keystone
-  rod([ks_eth2,kb,ks_z],[ks_front+4,kf+4,ks_fz],6);}
+ // ETH2 -> along the rear zone behind the ScreenBeam, then forward past its right end -> front keystone
+  rod([ks_eth2,kb,ks_z],[ks_front,sby1+10,ks_fz],6);rod([ks_front,sby1+10,ks_fz],[ks_front,kf+4,ks_fz],6);}
  color([0.2,0.4,0.9])translate([ks_front-8,t+4,ks_fz-6])cube([16,30,12]);
  // coax: right-angle F male on Coax In, short RG6 jumper round to the back of the coax keystone
  color("silver")translate([sbx1,sby0+coax_y,cz])rotate([0,90,0])cylinder(d=10,h=14);
@@ -161,8 +162,8 @@ module devices(){
  color([0.05,0.05,0.05])for(i=[0:4])translate([swx0+8+i*17,swy0-0.2,sw_z+5])cube([14,1,12]);
  color("silver")translate([sw_pwr[0],DO+12,sw_pwr[1]])rotate([90,0,0])cylinder(d=9,h=24);
  color([0.15,0.15,0.15])rod([sw_pwr[0],DO+12,sw_pwr[1]],[sw_pwr[0]+10,DO+40,sw_pwr[1]-30],4);
- // outside: 6 in jumper front keystone -> switch port 1; coax in, ETH1 to / ETH2 from the Google Wifi
- color([0.85,0.85,0.85]){rod([ks_front,-14,ks_fz],[ks_front+8,-22,ks_fz-4],5);rod([ks_front+8,-22,ks_fz-4],[swx0+15,-12,sw_z+11],5);}
+ // outside: 6 in jumper front keystone -> nearest switch port; coax in, ETH1 to / ETH2 from the Google Wifi
+ color([0.85,0.85,0.85]){rod([ks_front,-14,ks_fz],[ks_front-12,-24,ks_fz-4],5);rod([ks_front-12,-24,ks_fz-4],[swx0+83,-12,sw_z+11],5);}
  color([0.95,0.95,0.95])for(x=[ks_eth1,ks_eth2,ks_coax])rod([x,DO+4,ks_z],[x,DO+40,ks_z-12],x==ks_coax?7:5);
 }
 
