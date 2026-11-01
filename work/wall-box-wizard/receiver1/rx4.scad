@@ -58,6 +58,9 @@ bl=[60, ks_coax-14];                         // back ledge X span (clear of the 
 pins=[75,125];                               // shelf locating pins into the back ledge (X)
 ears=[for(x=[sbx0-11,sbx1+11],y=[sby0+10,sby1-10])[x,y]];   // cradle ears / base inserts; 22 pads end at the ScreenBeam's ends
 
+// Test print ID (Brian's rule: every test print carries its ID), engraved 0.6 on hidden faces
+print_id="RX4-A";
+module id_text(){text(print_id,size=6,font="Liberation Sans:style=Bold",halign="center",valign="center");}
 module rrect(x0,x1,y0,y1,r){hull()for(x=[x0+r,x1-r],y=[y0+r,y1-r])translate([x,y])circle(r=r);}
 // wall frames as in body15.scad: u to the right seen from outside, y inward, v up
 module on_front(x,z){multmatrix([[1,0,0,x],[0,1,0,0],[0,0,1,z],[0,0,0,1]])children();}
@@ -91,23 +94,26 @@ module body(){
   translate([swx0+sw_lip,-1,sw_z+sw_lip])cube([SW[0]-2*sw_lip,t+2,SW[2]-2*sw_lip]);   // switch window, 1.5 lip
   translate([pwr_hole[0],DO+1,pwr_hole[1]])rotate([90,0,0])cylinder(d=10,h=t+2);
   translate([sw_pwr[0],DO+1,sw_pwr[1]])rotate([90,0,0])cylinder(d=11,h=t+2);
-  for(x=pins)translate([x,DO-t-2.5,shelf_z-3])cylinder(d=3.4,h=3.1);
+  translate([100,DO-t+0.6,t+7])rotate([90,0,0])linear_extrude(0.61)id_text();   // ID on the inside of the back wall
  }
+ for(x=pins)translate([x,DO-t-2.5,shelf_z-0.01])cylinder(d=3,h=2.4);   // shelf locating pins, up from the back ledge
  back_ks()ks_gold_one(0,0);
  on_front(ks_front,ks_fz)ks_gold_one(0,0);
 }
 
-// Shelf: 2.5 plate wall to wall over the ScreenBeam, side rails and a back stop for the switch, vent slots, two pins
-// into the back ledge. Drops in after the ScreenBeam; the lid ribs hold it and the switch down.
+// Shelf: 2.5 plate wall to wall over the ScreenBeam, side rails and a back stop for the switch, vent slots, two holes
+// over the back ledge's pins (pins on the body so the shelf prints flat). Drops in after the ScreenBeam; the lid ribs
+// hold it and the switch down.
 module shelf(){
  difference(){
   union(){
    translate([sl[0],t+0.2,shelf_z])cube([sl[1]-sl[0],ID-0.4,sh]);
    for(x=[sl[0],swx1+sw_clr])translate([x,t+15,sw_z-0.01])cube([2,SW[1]-15+sw_clr,5]);
    translate([swx0+20,swy0+SW[1]+sw_clr,sw_z-0.01])cube([SW[0]-40,2,5]);
-   for(x=pins)translate([x,DO-t-2.5,shelf_z-2.5])cylinder(d=3,h=2.51);
   }
   for(x=[swx0+12:6:swx1-12])translate([x-1.25,t+12,shelf_z-1])cube([2.5,SW[1]-24,sh+2]);
+  for(x=pins)translate([x,DO-t-2.5,shelf_z-1])cylinder(d=3.4,h=sh+2);
+  translate([95,118,sw_z-0.6])linear_extrude(1)id_text();
  }
 }
 
@@ -124,6 +130,7 @@ module lid(){
    for(y=[swy0+25,swy0+SW[1]-25])translate([swx0+10,y-1,-1.2])cube([SW[0]-20,2,1.21]);
   }
   for(p=lid_posts())translate([p[0],p[1],-4]){cylinder(d=m3,h=10);translate([0,0,4+t-1.7])cylinder(d1=m3,d2=6.6,h=1.71);}
+  translate([190,105,-0.01])mirror([1,0,0])linear_extrude(0.61)id_text();   // ID on the underside
   for(x=[sl[1]+6:5.5:sbx1+30])translate([x-1.25,sby0+8,-1])cube([2.5,SB[1]-16,t+2]);
  }
 }
@@ -143,6 +150,7 @@ module base(){
   }
   for(e=ears)translate([e[0],e[1],t+boss_h-insert_d])cylinder(d=insert_pilot,h=insert_d+0.1);
   for(p=lid_posts())translate([p[0],p[1],-1]){cylinder(d=m3,h=t+2);translate([0,0,1-0.01])cylinder(d1=6.6,d2=m3,h=1.71);}
+  translate([WO/2,DO/2,-0.01])mirror([1,0,0])linear_extrude(0.61)id_text();   // ID on the underside
  }
 }
 
@@ -166,6 +174,7 @@ module cradle(){
    hull()for(dx=[-travel,travel],dy=[-travel,travel])translate([e[0]+dx,e[1]+dy,case_z+pad_up-wash[1]])cylinder(d=wash[0]+wash_clr,h=wash[1]+1);
   }
   for(f=sb_feet)translate([sbx0+f[0],sby0+f[1],case_z-foot_dp])cylinder(d=foot_d,h=foot_dp+0.1,$fn=48);
+  translate([(sbx0+sbx1)/2,sby0+SB[1]/2,plate_z-0.01])mirror([1,0,0])linear_extrude(0.61)id_text();   // ID on the underside
  }
 }
 
@@ -209,6 +218,7 @@ if(part=="base")base();
 if(part=="lid_on")translate([0,0,HO])lid();
 if(part=="shelf")shelf();
 if(part=="cradle")cradle();
+if(part=="washer")washer();
 if(part=="washers")for(i=[0:3])translate([i*14,0,0])washer();   // print 4, flat side down
 if(part=="washers_on")for(e=ears)translate([e[0],e[1],case_z+pad_up-wash[1]])washer();
 if(part=="devices")devices();
