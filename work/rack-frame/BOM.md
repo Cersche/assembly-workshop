@@ -38,5 +38,12 @@ All extrusion, T-nuts and screws for the same 2020 profile / 6 mm slot. M5 appro
 Post gap inside 208 → width member 200 (4 mm slack/end). Depth rails 200 at Y 45–245, under the posts (post footprint Y 33–53 / 237–257, posts start above the node roof); width members stop at X ±100, rails start at X ±104, so they never meet. Only two stock lengths: 4 x 400 and 8 x 200. Mounting faces Y 25 / 265 = 240. Nothing intrudes into the 208 inside width above the bottom node. Overall 256 x 248 x 456 incl. plates. Insert count 2 x 9 x 4 = 72. Screw/T-nut counts above assume 2 screws per socket, 3 per strip, 2 per trim piece, 8 per brace.
 - Socket hollows, key ribs, screw slots, trim mounting and strip thickness are not drawn yet.
 
+## Alternative: custom-cut version (Brian asked 2026-10-31, not chosen yet)
+All-metal frame: 2020 cut to exact length + 8 metal 3-way corner cubes (20 mm, e.g. the SeekLiny 2020 square cubes Brian found). Same inside dimensions. Generator and drawings: work/rack-frame/custom_rack.py → work/rack-frame/custom/ (Custom_Rack_Drawings.html + STLs).
+- Posts 4 x 400, width members 4 x 208, depth rails 4 x 184. Square ends, ±0.2 mm, both ends tapped for the cube screws.
+- Depth rail = 240 − 40 − 2 x strip thickness; 184 assumes 8 mm strips. Fix the strip thickness before ordering.
+- Overall 252 W (faceplates; frame 248) x 248 D (with plates; frame 224) x 440 H.
+- Unchecked: cube size exactly 20 mm and flush; cube screw thread (listing says M6, 2020 ends usually M5).
+
 ## History
 Earlier same-day concepts (metal corner brackets; stacked corner blocks; option B flush bezel frame) were superseded by option A.
