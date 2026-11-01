@@ -15,7 +15,7 @@ part="all";
 use <../concept15/body15.scad>   // ks_gold_one(): golden keystone, ks_tight 0.2
 
 $fn=40;
-t=2.5; cr=6; insert_pilot=4.2; insert_d=4; m3=3.4;   // M3 x 3 x 5 heat-set insert: 4.2 bore, 4 deep
+t=2.5; cr=12; er=2; insert_pilot=4.2; insert_d=4; m3=3.4;   // M3 x 3 x 5 heat-set insert: 4.2 bore, 4 deep
 
 // ScreenBeam (Brian): 120 x 65 x 30 incl. feet (13 dia, 2.25 proud, centres 8 in from the long edges, 16 from the
 // ends). Lies along X: LAN/power end at the left, Coax In end at the right. Port positions ASSUMED (first box's model):
@@ -59,7 +59,12 @@ module on_front(x,z){multmatrix([[1,0,0,x],[0,1,0,0],[0,0,1,z],[0,0,0,1]])childr
 module on_back(x,z){multmatrix([[-1,0,0,x],[0,-1,0,DO],[0,0,1,z],[0,0,0,1]])children();}
 module ks_hole(){translate([-10.5,-0.01,-15])cube([21,4.02,33.5]);}
 module back_ks(){for(x=[ks_eth1,ks_eth2,ks_coax])on_back(x,ks_z)children();}
-function lid_posts()=[[t+3.5,t+3.5],[WO-t-3.5,t+3.5],[t+3.5,DO-t-3.5],[WO-t-3.5,DO-t-3.5]];
+// corner posts on the corner diagonal, 1.2 skin outside the 9 mm post (follows cr)
+pc=cr-(cr-4.5-1.2)/sqrt(2);
+function lid_posts()=[[pc,pc],[WO-pc,pc],[pc,DO-pc],[WO-pc,DO-pc]];
+// outer plate (lid / base) with its outside edge rounded by er; rounded edge at the top, flip for the base
+module rplate(h){hull(){linear_extrude(h-er)rrect(0,WO,0,DO,cr);
+ for(a=[0:15:90])translate([0,0,h-er+er*sin(a)])linear_extrude(0.01)offset(delta=-(er-er*cos(a)))rrect(0,WO,0,DO,cr);}}
 // 45-degree ledge on a wall: strip at the wall bottom, full depth at the top (prints without support)
 module ledge(x0,x1,y0,d,dir){hull(){translate([x0,dir>0?y0:y0-0.01,shelf_z-d-0.01])cube([x1-x0,0.01,0.01]);
  translate([x0,dir>0?y0:y0-d,shelf_z-0.01])cube([x1-x0,d,0.01]);}}
@@ -106,7 +111,7 @@ module shelf(){
 module lid(){
  difference(){
   union(){
-   linear_extrude(t)rrect(0,WO,0,DO,cr);
+   rplate(t);
    translate([0,0,-3])linear_extrude(3.01)difference(){rrect(t+0.3,WO-t-0.3,t+0.3,DO-t-0.3,cr-t);
     rrect(t+1.9,WO-t-1.9,t+1.9,DO-t-1.9,cr-t);
     for(p=lid_posts())translate(p)circle(d=11);
@@ -124,7 +129,7 @@ module lid(){
 module base(){
  difference(){
   union(){
-   linear_extrude(t)rrect(0,WO,0,DO,cr);
+   translate([0,0,t])mirror([0,0,1])rplate(t);
    translate([0,0,t-0.01])linear_extrude(3.01)difference(){rrect(t+0.3,WO-t-0.3,t+0.3,DO-t-0.3,cr-t);
     rrect(t+1.9,WO-t-1.9,t+1.9,DO-t-1.9,cr-t);
     for(p=lid_posts())translate(p)circle(d=11);
