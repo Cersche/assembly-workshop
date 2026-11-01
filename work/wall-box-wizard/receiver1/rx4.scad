@@ -42,7 +42,7 @@ WO=IW+2*t; DO=ID+2*t;
 sbx0=t+bay; sbx1=sbx0+SB[0]; sby0=t+3; sby1=sby0+SB[1];
 ks_z=t+17;                                   // back keystones (jack axis)
 ks_eth1=t+20; ks_eth2=t+43;                  // back, left pair (X)
-ks_coax=WO-70;                               // back, middle-right (X)
+ks_coax=sbx1+10;                             // back, right: in line with the right-angle F's free post (Brian, 2026-11-01; was WO-70)
 swx0=t+41.5;                                 // switch left side (X), unchanged
 ks_front=sbx1+10.5; ks_fz=40;                // front keystone right of the switch window, just past the ScreenBeam's right end, above its coax plug (Brian)
  swx1=swx0+SW[0]; swy0=t; // switch front face against the front wall
