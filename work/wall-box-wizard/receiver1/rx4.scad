@@ -33,16 +33,17 @@ SW=[100,98,25]; sw_clr=0.25; sw_jack=[12,13]; sw_plug=[26,8.5]; sw_lip=1.5;
 
 bay=55;      // left: ScreenBeam power + LAN plugs (power 44.5 incl. tip); front keystone above them
 rzone=42;    // right: jumper's right-angle on Coax In
-bzone=58;    // behind the ScreenBeam: back keystone plugs, jumper, patch runs; 30 behind the switch for its power plug (Brian: "a little longer", was 35)
+bzone=55;    // behind the ScreenBeam: back keystone plugs, jumper, patch runs; 30 behind the switch for its power plug (Brian: "a little longer", was 35); 58 -> 55 when the ScreenBeam moved back for cradle travel
+travel=3; sb_front=3+travel;   // cradle adjusts +-travel in X and Y (Brian, 2026-11-01); ScreenBeam front gap leaves room for it
 boss_h=4; plate=4; sh=2.5;   // cradle bosses, cradle plate, switch shelf
 
 plate_z=t+boss_h; case_z=plate_z+plate;
 shelf_z=case_z+SB[2]-foot_h+2;              // shelf underside, 2 above the ScreenBeam
 sw_z=shelf_z+sh;                             // switch bottom
-IW=bay+SB[0]+rzone; ID=3+SB[1]+3+bzone+2; HO=sw_z+SW[2]+1.5;
+IW=bay+SB[0]+rzone; ID=sb_front+SB[1]+3+bzone+2; HO=sw_z+SW[2]+1.5;
 WO=IW+2*t; DO=ID+2*t;
 
-sbx0=t+bay; sbx1=sbx0+SB[0]; sby0=t+3; sby1=sby0+SB[1];
+sbx0=t+bay; sbx1=sbx0+SB[0]; sby0=t+sb_front; sby1=sby0+SB[1];
 ks_z=t+17;                                   // back keystones (jack axis)
 ks_eth1=t+20; ks_eth2=t+43;                  // back, left pair (X)
 ks_coax=sbx1+10;                             // back, right: in line with the right-angle F's free post (Brian, 2026-11-01; was WO-70)
@@ -55,7 +56,7 @@ pwr_hole=[ks_coax-22, t+10];                 // ScreenBeam power, back wall besi
 sw_pwr=[swx0+sw_jack[0], sw_z+sw_jack[1]];   // switch power, back wall (X, Z), 11 mm (plug passes through)
 bl=[60, ks_coax-14];                         // back ledge X span (clear of the ETH2 and coax keystones)
 pins=[75,125];                               // shelf locating pins into the back ledge (X)
-ears=[for(x=[sbx0-7,sbx1+7],y=[sby0+10,sby1-10])[x,y]];
+ears=[for(x=[sbx0-11,sbx1+11],y=[sby0+10,sby1-10])[x,y]];   // cradle ears / base inserts; 22 pads end at the ScreenBeam's ends
 
 module rrect(x0,x1,y0,y1,r){hull()for(x=[x0+r,x1-r],y=[y0+r,y1-r])translate([x,y])circle(r=r);}
 // wall frames as in body15.scad: u to the right seen from outside, y inward, v up
@@ -145,28 +146,32 @@ module base(){
  }
 }
 
-// Cradle: plate with foot pockets and side lips on four base bosses. Adjustable (Brian, 2026-11-01: "a little give"):
-// each ear has a countersunk rounded-rectangle slot, so the cradle shifts on the fixed inserts before the four M3
-// countersunk screws are tightened; the heads seat in the chamfered slot at any position. X +-2.5; Y 0.7 toward the
-// front (the cradle plate is then 0.75 from the front wall) and 2.5 toward the back.
-adj_x=[-2.5,2.5]; adj_y=[-0.7,2.5];
+// Cradle: plate with foot pockets and side lips on four base bosses. Adjustable (Brian, 2026-11-01: "a little give"),
+// +-travel in X and Y: each 22 mm ear pad (2 proud of the plate, outside the ScreenBeam's footprint) has a through slot
+// over the fixed base insert and a flat-bottomed track 2.4 deep; a printed countersunk washer rides in the track, so the
+// M3 countersunk head seats fully at any position and clamps 3.6 of pad.
+pad_up=2; wash=[10,2.4]; wash_clr=0.4;
 module cradle(){
  difference(){
   union(){
    translate([0,0,plate_z])linear_extrude(plate)union(){
     rrect(sbx0+1,sbx1-1,sby0-sb_clr/2-2,sby1+sb_clr/2+2,3);
-    for(e=ears)translate(e)rrect(-9,9,-9,9,3);
-    for(e=ears)hull(){translate(e)square([1,18],center=true);translate([e[0]<sbx0+60?sbx0+4:sbx1-4,e[1]])square([1,18],center=true);}
+    for(e=ears)hull(){translate(e)square([1,22],center=true);translate([e[0]<sbx0+60?sbx0+4:sbx1-4,e[1]])square([1,22],center=true);}
    }
+   for(e=ears)translate([0,0,plate_z])linear_extrude(plate+pad_up)translate(e)rrect(-11,11,-11,11,3);
    for(y=[sby0-sb_clr/2-2,sby1+sb_clr/2])translate([sbx0+15,y,case_z-0.01])cube([SB[0]-30,2,6]);
   }
   for(e=ears){
-   hull()for(dx=adj_x,dy=adj_y)translate([e[0]-dx,e[1]-dy,plate_z-1])cylinder(d=m3,h=plate+2);
-   hull()for(dx=adj_x,dy=adj_y)translate([e[0]-dx,e[1]-dy,case_z-1.7])cylinder(d1=m3,d2=6.6,h=1.71);
+   hull()for(dx=[-travel,travel],dy=[-travel,travel])translate([e[0]+dx,e[1]+dy,plate_z-1])cylinder(d=m3,h=plate+pad_up+2);
+   hull()for(dx=[-travel,travel],dy=[-travel,travel])translate([e[0]+dx,e[1]+dy,case_z+pad_up-wash[1]])cylinder(d=wash[0]+wash_clr,h=wash[1]+1);
   }
   for(f=sb_feet)translate([sbx0+f[0],sby0+f[1],case_z-foot_dp])cylinder(d=foot_d,h=foot_dp+0.1,$fn=48);
  }
 }
+
+// Printed slide washer for the cradle tracks: countersunk for the M3 head, which then sits flush with the pad top.
+module washer(){difference(){cylinder(d=wash[0],h=wash[1]);translate([0,0,-1])cylinder(d=m3,h=wash[1]+2);
+ translate([0,0,wash[1]-1.7])cylinder(d1=m3,d2=6.6,h=1.71);}}
 
 module rod(a,b,d){hull(){translate(a)sphere(d=d,$fn=16);translate(b)sphere(d=d,$fn=16);}}
 module plug_in(x,z){color([0.2,0.4,0.9])translate([x-8,DO-t-34,z-6])cube([16,30,12]);}   // patch plug in a back keystone
@@ -204,7 +209,9 @@ if(part=="base")base();
 if(part=="lid_on")translate([0,0,HO])lid();
 if(part=="shelf")shelf();
 if(part=="cradle")cradle();
+if(part=="washers")for(i=[0:3])translate([i*14,0,0])washer();   // print 4, flat side down
+if(part=="washers_on")for(e=ears)translate([e[0],e[1],case_z+pad_up-wash[1]])washer();
 if(part=="devices")devices();
-if(part=="all"){color([0.92,0.91,0.87])body();color([0.75,0.72,0.66])base();color([0.55,0.75,0.6])cradle();color([0.6,0.7,0.85])shelf();devices();
+if(part=="all"){color([0.92,0.91,0.87])body();color([0.75,0.72,0.66])base();color([0.55,0.75,0.6])cradle();color([0.9,0.6,0.3])for(e=ears)translate([e[0],e[1],case_z+pad_up-wash[1]])washer();color([0.6,0.7,0.85])shelf();devices();
  color([0.8,0.8,0.85,0.6])translate([0,0,HO])lid();
  echo(str("outer ",WO," x ",DO," x ",HO," (+ lid ",t,")"));}
