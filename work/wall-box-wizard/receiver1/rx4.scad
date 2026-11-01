@@ -145,19 +145,25 @@ module base(){
  }
 }
 
-// Cradle: plate with foot pockets and side lips on four floor bosses (plain M3 holes: the jumper takes up any
-// misalignment, so no adjustment slots or shims). Unchanged from rx3.
+// Cradle: plate with foot pockets and side lips on four base bosses. Adjustable (Brian, 2026-11-01: "a little give"):
+// each ear has a countersunk rounded-rectangle slot, so the cradle shifts on the fixed inserts before the four M3
+// countersunk screws are tightened; the heads seat in the chamfered slot at any position. X +-2.5; Y 0.7 toward the
+// front (the cradle plate is then 0.75 from the front wall) and 2.5 toward the back.
+adj_x=[-2.5,2.5]; adj_y=[-0.7,2.5];
 module cradle(){
  difference(){
   union(){
    translate([0,0,plate_z])linear_extrude(plate)union(){
     rrect(sbx0+1,sbx1-1,sby0-sb_clr/2-2,sby1+sb_clr/2+2,3);
-    for(e=ears)translate(e)rrect(-7,7,-7,7,3);
-    for(e=ears)hull(){translate(e)square([1,14],center=true);translate([e[0]<sbx0+60?sbx0+4:sbx1-4,e[1]])square([1,14],center=true);}
+    for(e=ears)translate(e)rrect(-9,9,-9,9,3);
+    for(e=ears)hull(){translate(e)square([1,18],center=true);translate([e[0]<sbx0+60?sbx0+4:sbx1-4,e[1]])square([1,18],center=true);}
    }
    for(y=[sby0-sb_clr/2-2,sby1+sb_clr/2])translate([sbx0+15,y,case_z-0.01])cube([SB[0]-30,2,6]);
   }
-  for(e=ears)translate([e[0],e[1],plate_z-1])cylinder(d=m3,h=plate+2);
+  for(e=ears){
+   hull()for(dx=adj_x,dy=adj_y)translate([e[0]-dx,e[1]-dy,plate_z-1])cylinder(d=m3,h=plate+2);
+   hull()for(dx=adj_x,dy=adj_y)translate([e[0]-dx,e[1]-dy,case_z-1.7])cylinder(d1=m3,d2=6.6,h=1.71);
+  }
   for(f=sb_feet)translate([sbx0+f[0],sby0+f[1],case_z-foot_dp])cylinder(d=foot_d,h=foot_dp+0.1,$fn=48);
  }
 }
