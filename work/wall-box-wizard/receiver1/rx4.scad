@@ -82,6 +82,16 @@ module ledge(x0,x1,y0,d,dir){hull(){translate([x0,dir>0?y0:y0-0.01,shelf_z-d-0.0
 vent_w=3; vent_z=[16,50]; vent_y=[28:6:DO-28];
 module side_vents(){for(x=[-1,WO-t-1],y=vent_y)hull()for(z=vent_z)translate([x,y,z])rotate([0,90,0])cylinder(d=vent_w,h=t+2);}
 
+// Switch window (1.5 lip), smoothed (Brian, 2026-11-01): R2.5 corners and a 45-degree 1.2 chamfer on the outer edge
+// (prints upright: the chamfer over the top edge is a 45-degree overhang).
+win_r=2.5; win_ch=1.2;
+module switch_window(){
+ x0=swx0+sw_lip; x1=swx1-sw_lip; z0=sw_z+sw_lip; z1=sw_z+SW[2]-sw_lip;
+ module o(g,y,h)translate([0,y,0])rotate([-90,0,0])linear_extrude(h)rrect(x0-g,x1+g,-z1-g,-z0+g,win_r+g);
+ o(0,-1,t+2);
+ hull(){o(win_ch,-0.01,0.01);o(0,win_ch,0.01);}
+}
+
 // Body: open-bottom wall tube, Z t..HO; the removable base below it (Brian, 2026-11-01) and the lid on top screw into
 // M3 inserts at both ends of the four corner posts.
 module body(){
@@ -96,7 +106,7 @@ module body(){
   for(p=lid_posts())translate([p[0],p[1],t-0.1])cylinder(d=insert_pilot,h=insert_d+0.1);
   back_ks()ks_hole();
   on_front(ks_front,ks_fz)ks_hole();
-  translate([swx0+sw_lip,-1,sw_z+sw_lip])cube([SW[0]-2*sw_lip,t+2,SW[2]-2*sw_lip]);   // switch window, 1.5 lip
+  switch_window();
   translate([pwr_hole[0],DO+1,pwr_hole[1]])rotate([90,0,0])cylinder(d=10,h=t+2);
   translate([sw_pwr[0],DO+1,sw_pwr[1]])rotate([90,0,0])cylinder(d=11,h=t+2);
   translate([100,DO-t+0.6,t+7])rotate([90,0,0])linear_extrude(0.61)id_text();   // ID on the inside of the back wall
