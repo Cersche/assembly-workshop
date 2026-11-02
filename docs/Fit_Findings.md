@@ -29,6 +29,7 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 | 2026-10-27 | MoCA box first print: sleeve rev A, cradle rev A | Sleeve had no porch screw slots (fixed in rev B). Cradle: ScreenBeam feet (13 mm, 2.25 proud) hold it off the plate; keystone-side pad hits the keystone, so the jumper is ~1 in short of Coax In (cradle rev B) |
 | 2026-10-28 | CM1000 bracket: faceplate + rails v2 (screw access bays) | Fits (Brian) |
 | 2026-11-01 | CM6A CM1000 bracket (M6) | Too tight: slides in from the rear, jams near the faceplate; forced in, rail rear ends spread to 228 (design 220.46), 3.8 per side. Modem measured 44.5 tall, 12 mm end wedge; channel slope too steep. Fix: CM6C, unprinted |
+| 2026-11-01 | CM1P-T1 one-piece test slice (0.4 clear, pointed V) | Too tight: had to be REALLY forced on, thin tie strips bowed toward the modem as the blocks levered apart. Modem end has a flat gray strip the V didn't allow for. Next: CM1P-T2 |
 | 2026-10-28 | TL-SG108E `2026-10-23_TL-SG108E_flush` | Printed and tested; fit acceptable (Brian) |
 | 2026-10-27 | MoCA porch15 + printed bezel nut | Fits, but nut too tall (above the rim), too thick and too tight; empty corner past the OUTs and closed modem side get in the way (porch rev 2, porch16.scad). Splitter calipered |
 
@@ -37,6 +38,8 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 - 2026-10-30 SG8-M6-C printed: did not fit. Cause found: B/C cut sleeve_top 1.35 → 0.35 against the proven print. SG8-M6-D restores 1.35, unprinted.
 - 2026-10-31 SG8-M6-D printed: switch pocket fits well (Brian). Proven pocket: sleeve_top 1.35, side play 0.5, KD-E detents, rear stop at 100 mm, 1.3 mm set back. SG8-M6-F keeps this pocket exactly (only the floor under it went 6.5 → 5.5 mm, pocket moves down with it).
 - 2026-10-31 SG8-M6-F tray printed (photo shows F's side runners; ID not read from the part): switch slides in with a satisfying detent click, seats with ports flush (Brian). Faceplate, post rails, M6 joint and insert still unprinted/unconfirmed.
+
+- 2026-11-01 OptiPlex measured (Brian): 178 deep incl. bezel, not the 194.5 from the STEP. Feet 5 x 20 x 2.8 tall, 15 from each side, front pair 15 from the case front, rear pair 10 from the rear. SLV-F's dips are 16 long, too short for a 20 mm foot, so its click-in can't seat as designed. OPX-A uses 21.
 
 ## 2026-10-31 SCR5-H plate (rev 4 print) — glass would not go into the window
 Brian printed the SCR5-H plate: the Waveshare 5" glass (120.7 x 77.2) would not enter the window (121.1 x 77.6, 0.2/side) — the 0.8 mm side lips behind the glass left only 119.5 mm, so this was a design error, not printer shrink. Rev 5: lips removed, clearance 0.4/side (121.5 x 78.0), screen inserted from the front. Lesson: check the insertion path, not just the final position; flush-glass windows can't have rear lips.
