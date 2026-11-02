@@ -1,6 +1,6 @@
 // CM1P-T2: second test slice for the one-piece CM1000 bracket. T1 was too tight and its thin strips bowed as the blocks levered apart.
 // Changes from T1: flat channel floor for the modem's flat end strip, 1.5 clearance across the width (was 0.4),
-// 1.2 on the nose (was 0.7), a 1.6 front wall across the whole width so the frame can't bow, like the real faceplate.
+// 1.2 on the nose (was 0.7). Same open frame as T1: this print only proves the fit (Brian).
 // Brian measured: 212 across the flat ends, 44.4 tall, 14 end wedge, 3 tall at the very front, 44.4 at 15 back.
 // ASSUMED: nose a straight taper; flat strip width unmeasured.
 // Frame: X across (254 plate), Y depth (plate front Y=0), Z height (0..44.45).
@@ -25,7 +25,6 @@ far_y = 20;
 
 strip_h = 3.5;
 strip_y = 13;
-window = [134, 16];        // in the front wall: see the modem's front; X, Z size
 
 module channel(y0, y1)
     translate([0, y1, 0]) rotate([90, 0, 0]) linear_extrude(y1 - y0)
@@ -50,9 +49,7 @@ difference() {
         translate([254, 0, 0]) mirror([1, 0, 0]) end_block();
         strip(0);
         strip(plate_h - strip_h);
-        translate([block_x - 0.5, 0, 0]) cube([254 - 2 * block_x + 1, floor_y, plate_h]);
     }
-    translate([127 - window[0] / 2, -1, mid - window[1] / 2]) cube([window[0], floor_y + 2, window[1]]);
     translate([127, strip_y / 2, plate_h - 0.5]) linear_extrude(1)
         text(id, size = 5, font = "Liberation Sans:style=Bold", halign = "center", valign = "center");
 }
