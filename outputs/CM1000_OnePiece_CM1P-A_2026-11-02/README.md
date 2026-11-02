@@ -18,7 +18,7 @@ Rails are 0.05 short of the plate at top and bottom (coplanar faces lost the pla
 
 ## Checks run (digital only)
 
-From `src/`: FreeCAD reports one valid solid, one shell. `python pack_check.py`: all 15 parts closed with 0 bad edges, 18102/36204 vertex/triangle tags, 16 objects. No sampled surface point inside the modem envelope; cross-sections at Y 60, Y 69, X 18, X 90, Z mid and Y 0.1 inspected. The envelope assumes a straight nose taper, a 6 flat strip and 136 depth. No slicer check.
+From `src/`: FreeCAD reports one valid solid, one shell. `python pack_check.py`: all 15 parts closed with 0 bad edges, 17866/35728 vertex/triangle tags, 16 objects. No sampled surface point inside the modem envelope; cross-sections at Y 60, Y 69, X 18, X 90, Z mid and Y 0.1 inspected. The envelope assumes a straight nose taper, a 6 flat strip and 136 depth. No slicer check.
 
 The plate's thinnest point is about 0.4 at the old V apex between X 40 and 214 (0.2 behind the logo recesses), unchanged from the baseline mesh.
 
