@@ -1,6 +1,6 @@
 # CM1000 one-piece bracket, test slice 3 — test-print ID CM1P-T3 (2026-11-02)
 
-PROPOSED — UNPRINTED. CM1P-T2 went on very easily with about 3.31 total play and the modem's front touching the end-block walls. T3 sets the clearance from that and tests what T2's open middle could not: the real faceplate's nose pocket and light pipes. No rack slots and no side slot: it does not test rack fit, the side screw or strength.
+PRINTED 2026-11-02: goes on the modem, total side play 1.5 (design 1.5). Effort and seating depth not reported yet. Designed as: CM1P-T2 went on very easily with about 3.31 total play and the modem's front touching the end-block walls. T3 sets the clearance from that and tests what T2's open middle could not: the real faceplate's nose pocket and light pipes. No rack slots and no side slot: it does not test rack fit, the side screw or strength.
 
 Print `CM1P-T3_test_slice.3mf`: one object, front face on the bed, no supports. 220.46 x 44.45 x 30 mm, about 92 cm3 of solid volume, so much heavier than T2.
 
