@@ -1,5 +1,7 @@
 # CM1000 one-piece bracket, test slice 4 — test-print ID CM1P-T4 (2026-11-02)
 
+SUPERSEDED, do not print: the modem end wedge is 15, this uses 14. Print CM1P-H.
+
 PROPOSED — UNPRINTED. CM1P-T3 with only the channel changed, to test the V and clearance planned for CM1P-G before another full part. Printed fit UNKNOWN. No rack slots and no side slot: it does not test rack fit, the side screw or strength. Remix of noyoustupid / Jsmaz3 (CC BY-NC-SA): personal use, never redistribute.
 
 Print `CM1P-T4_test_slice.3mf`: one object, front face on the bed, no supports, same as T3. 220.46 x 44.45 x 30 mm, about 94.5 cm3 of solid volume. ID engraved on the top face.

@@ -1,5 +1,7 @@
 # CM1000 one-piece bracket — test-print ID CM1P-G (2026-11-02)
 
+SUPERSEDED, do not print: the modem end wedge is 15, this uses 14. Print CM1P-H.
+
 PROPOSED — UNPRINTED. CM1P-F with the V matched to the modem and the rails drawn leaning inward, built from Brian's measurements of the printed CM1P-E. Built without printing CM1P-T4 first (Brian's call), so the matched V is untested. Fit, rack fit, side screw and strength UNKNOWN. Remix of noyoustupid / Jsmaz3 (CC BY-NC-SA): personal use, never redistribute.
 
 ## Print
