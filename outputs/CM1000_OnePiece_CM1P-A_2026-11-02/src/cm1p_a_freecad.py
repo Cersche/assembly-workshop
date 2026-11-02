@@ -43,8 +43,8 @@ nose = prism([(floor_y, mid - floor_h), (floor_y, mid + floor_h), (far_y, mid + 
               (depth + 2, mid - h), (far_y, mid - h)], 'x', 0, 254)
 pocket = channel.common(nose)
 
-# ear fills as CM6A: inset 0.05 from coplanar plate faces
-ky, oy = fit(0, 3, 0.05, 2.95); kz, oz = fit(0, 44.45, 0.05, 44.40)
+# ear fills as CM6A, inset 0.05 from coplanar plate faces, but 4 thick (Brian; baseline 3): added at the rear, front face unchanged
+ky, oy = fit(0, 3, 0.05, 4.0); kz, oz = fit(0, 44.45, 0.05, 44.40)
 kx, ox = fit(0, 16.9, 0.05, 17.3)
 fl = solid(os.path.join(orig, 'fp_16_normal_part.stl'), App.Matrix(kx, 0, 0, ox, 0, ky, 0, oy, 0, 0, kz, oz, 0, 0, 0, 1))
 kx, ox = fit(237.1, 254, 236.7, 253.95)
@@ -55,7 +55,9 @@ print('plate+ears', body.isValid(), len(body.Solids), round(body.Volume, 1))
 for x0, x1 in ((rail_x, 40.0), (214.0, 254 - rail_x)):
     body = body.fuse(Part.makeBox(x1 - x0, depth - 0.3, plate_h - 0.1, V(x0, 0.3, 0.05)))   # 0.05 inset top and bottom: faces coplanar with the plate lose the plate in the boolean
 print('blocks', body.isValid(), len(body.Solids), round(body.Volume, 1))
-cuts = [pocket] + [solid(os.path.join(orig, 'fp_%d_negative_part.stl' % n)) for n in (18, 19, 20, 21)]
+# rack slot cutters stretched from Y -1..4 to -1..5 so they clear the 4 ears
+slot_m = App.Matrix(1, 0, 0, 0, 0, 1.2, 0, 0.2, 0, 0, 1, 0, 0, 0, 0, 1)
+cuts = [pocket] + [solid(os.path.join(orig, 'fp_%d_negative_part.stl' % n), slot_m) for n in (18, 19, 20, 21)]
 # side screw slot, left rail only as the baseline (Brian): baseline rail's position (Y 62.52..75.06, head recess 60.87..76.7 x 1.5 deep) + 1 longer at each end (Brian). Baseline centre is Z 22.99, the modem hole
 # was reported at 22.25, so the slot is 0.74 taller downward to cover both
 sl_z = (20.55, 24.69); rc_z = (18.97, 26.24)
