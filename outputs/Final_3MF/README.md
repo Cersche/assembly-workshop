@@ -6,7 +6,8 @@ Print status (Brian, 2026-10-30): "accepted" means accepted to print, not proven
 
 | File | Bracket | Source folder |
 |---|---|---|
-| CM1P-E_CM1000_one_piece_bracket.3mf | **CM1000, one-piece, test print.** CM1P-A (printed, a little too much play) with 0.50 clearance per side instead of 0.75, 1.0 total side play. 16 objects, 16336/32668 tags. **Unprinted.** Fit UNKNOWN | CM1000_OnePiece_CM1P-E_2026-11-02 |
+| CM1P-F_CM1000_one_piece_bracket.3mf | **CM1000, one-piece, test print.** CM1P-E (printed, still too loose) with 0.25 clearance per side, 0.5 total side play, front edges squared. 16 objects, 16336/32668 tags. **Unprinted.** Fit UNKNOWN | CM1000_OnePiece_CM1P-F_2026-11-02 |
+| CM1P-E_CM1000_one_piece_bracket.3mf | **Printed, superseded by CM1P-F:** too loose, barely holds the modem. 0.50 clearance per side | CM1000_OnePiece_CM1P-E_2026-11-02 |
 | OPX-D_OptiPlex_sleeve_channels_set.3mf | **OptiPlex, test print (2026-11-01).** One-piece front sleeve + 2 rear C-channels with rear stops + 2 front post rails, sleeve runners on the rails, middle screw in each rear ear; measured PC and feet, 21 mm click-in dips; case front flush with the plate, raised bezel 2.3 proud. Replaces the SLV-F full tray. 12 x M6 x 8, M6 inserts in 4 middle post holes. 5 objects, 6390/12820 tags. **Unprinted.** Fit UNKNOWN | OptiPlex_Sleeve_Channels_OPX-D_2026-11-01 |
 | OPX-C_OptiPlex_sleeve_channels_set.3mf | **Superseded by OPX-D.** Same sleeve and channels without the rails, runners or middle ear screws | OptiPlex_Sleeve_Channels_OPX-C_2026-11-01 |
 | OPX-B_OptiPlex_sleeve_channels_set.3mf | **Superseded by OPX-C.** PC 2.3 further back (bezel flush, case recessed) | OptiPlex_Sleeve_Channels_OPX-B_2026-11-01 |
