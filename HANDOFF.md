@@ -18,6 +18,9 @@ Brian looked at the printed SLV-F and two third-party brackets (scubaroboto rear
 
 **Unfinished or unverified:** nothing printed, no 3MF opened in a slicer. Fit, click-in, strength, stiffness across the open middle and insert retention are UNKNOWN. OPX-D also needs M6 inserts in 4 middle post holes, and its runner clearances (0.1 on the ledge, 0.25 elsewhere) come from SG8-M6-F, whose rails are unproven. Rear add-ons on the dummy PC are rough, read from photos; check antenna access beside the left channel and stop. The slot the PC lands in is unchecked: clashes used a middle section of the 4U post.
 
+## 2026-11-02 CM1000 one-piece bracket: CM1P-A printed, CM1P-E built (Claude)
+Brian printed CM1P-A: the whole modem goes in easily, a little too much play. **[CM1P-E](outputs/CM1000_OnePiece_CM1P-E_2026-11-02/README.md), unprinted:** A with side clearance 0.75 to 0.50 per side (1.0 total play), nothing else changed. `outputs/Final_3MF/CM1P-E_CM1000_one_piece_bracket.3mf`. **Next step:** his print report, plus side screw and rack fit, which he hasn't reported on A yet. Log in docs/Fit_Findings.md.
+
 ## 2026-11-02 CM1000 one-piece bracket: T3 fits, full part CM1P-A built (Claude)
 T3: on by hand without force, 1.5 side play as designed, looks seated as far as T2 in photos (not measured). Brian said go. **[CM1P-A](outputs/CM1000_OnePiece_CM1P-A_2026-11-02/README.md), unprinted:** full one-piece part with T3's channel and pocket, solid rails to Y137.62, rack slots, ears, logo, icons and pipes back as colour parts, side slots. One valid solid, 0 bad edges, 16348/32692 tags. `outputs/Final_3MF/CM1P-A_CM1000_one_piece_bracket.3mf`.
 Brian tried quicker drafts (CM1P-B, C, D in outputs/: rail windows, plain front), found they saved about no print time and dropped them; they were never printed. **CM1P-A is the print.**

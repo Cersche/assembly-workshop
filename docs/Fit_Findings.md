@@ -32,6 +32,7 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 | 2026-11-01 | CM1P-T1 one-piece test slice (0.4 clear, pointed V) | Too tight: had to be REALLY forced on, thin tie strips bowed toward the modem as the blocks levered apart. Modem end has a flat gray strip the V didn't allow for. Next: CM1P-T2 |
 | 2026-11-02 | CM1P-T2 one-piece test slice (1.5 clear per side, 8 flat floor, 1.2 nose) | Fits: went on very easily. Total side play about 3.31 (design 3.0), so the modem is about 211.69 across its ends if nothing flexed. Modem front touches the end-block walls. Rack fit and strength not tested |
 | 2026-11-02 | CM1P-T3 one-piece test slice (0.75 clear per side, real faceplate pocket and light pipes) | Goes on the modem. Total side play 1.5, exactly the design 1.5, so T2's 211.69 modem width holds. Went on by hand without force; looks seated as far as T2 in photos (not measured). Rack fit and strength not tested |
+| 2026-11-02 | CM1P-A full one-piece bracket (0.75 clear per side, 120 mm rails) | Whole modem goes inside easily, a little too much play. Next: CM1P-E at 0.50 per side. Side screw, rack fit and strength not reported |
 | 2026-10-28 | TL-SG108E `2026-10-23_TL-SG108E_flush` | Printed and tested; fit acceptable (Brian) |
 | 2026-10-27 | MoCA porch15 + printed bezel nut | Fits, but nut too tall (above the rim), too thick and too tight; empty corner past the OUTs and closed modem side get in the way (porch rev 2, porch16.scad). Splitter calipered |
 
