@@ -56,12 +56,12 @@ for x0, x1 in ((rail_x, 40.0), (214.0, 254 - rail_x)):
     body = body.fuse(Part.makeBox(x1 - x0, depth - 0.3, plate_h - 0.1, V(x0, 0.3, 0.05)))   # 0.05 inset top and bottom: faces coplanar with the plate lose the plate in the boolean
 print('blocks', body.isValid(), len(body.Solids), round(body.Volume, 1))
 cuts = [pocket] + [solid(os.path.join(orig, 'fp_%d_negative_part.stl' % n)) for n in (18, 19, 20, 21)]
-# side screw slots: baseline rail's length and position (Y 62.52..75.06, head recess 60.87..76.7 x 1.5 deep). Baseline centre is Z 22.99, the modem hole
+# side screw slots: baseline rail's position (Y 62.52..75.06, head recess 60.87..76.7 x 1.5 deep) + 1 longer at each end (Brian). Baseline centre is Z 22.99, the modem hole
 # was reported at 22.25, so the slot is 0.74 taller downward to cover both
 sl_z = (20.55, 24.69); rc_z = (18.97, 26.24)
 for x0, x1, rx0, rx1 in ((15.0, 22.0, 15.0, 18.27), (232.0, 239.0, 235.73, 239.0)):
-    cuts.append(stadium(x0, x1, 62.52, 75.06, *sl_z))
-    cuts.append(stadium(rx0, rx1, 60.87, 76.7, *rc_z))
+    cuts.append(stadium(x0, x1, 61.52, 76.06, *sl_z))
+    cuts.append(stadium(rx0, rx1, 59.87, 77.7, *rc_z))
 cuts.append(solid(os.path.join(here, 'id.stl')))
 out = body.cut(cuts)
 print('cuts', out.isValid(), len(out.Solids), round(out.Volume, 1))

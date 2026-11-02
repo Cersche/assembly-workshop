@@ -12,7 +12,7 @@ PROPOSED — UNPRINTED. First full-length print of the one-piece bracket, built 
 - Plain solid rails to Y 137.62 (baseline depth), outer width 220.46, no trusses or windows, no frame or other additions (Brian).
 - Kept from the baseline: 4 corner rack slots, ears, logo, icons, 5 light pipes as separate colour parts. No joints, inserts or joint screws: it's one piece.
 - Light pipes' rear ends trimmed from 8.72 to 8.34 by the pocket, as on T3. T3 had a plain front; this one has the real front back.
-- Side screw slots on both rails: baseline length and position (Y 62.52..75.06, head recess Y 60.87..76.7 x 1.5 deep). Height changed: Z 20.55..24.69, because the baseline slot centre (22.99) and the reported modem hole height (22.25) disagree and this covers both. Screw centre range 62.4 to 72.0 behind the modem's front, 22.05 to 23.19 up. The modem hole's distance back is NOT measured.
+- Side screw slots on both rails: baseline position, 1 longer at each end (Brian): Y 61.52..76.06, head recess Y 59.87..77.7 x 1.5 deep. Height changed: Z 20.55..24.69, because the baseline slot centre (22.99) and the reported modem hole height (22.25) disagree and this covers both. Screw centre range 61.4 to 73.0 behind the modem's front, 22.05 to 23.19 up. Brian checked the modem hole is inside the earlier 62.4 to 72.0 range; exact distance not recorded.
 
 Rails are 0.05 short of the plate at top and bottom (coplanar faces lost the plate in the boolean), below one layer.
 
