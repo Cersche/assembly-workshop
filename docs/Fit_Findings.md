@@ -28,6 +28,7 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 | 2026-10-20 | SLV-A OptiPlex sleeve | Slid in, feet in pockets (later: 0.5 mm tight in height, above) |
 | 2026-10-27 | MoCA box first print: sleeve rev A, cradle rev A | Sleeve had no porch screw slots (fixed in rev B). Cradle: ScreenBeam feet (13 mm, 2.25 proud) hold it off the plate; keystone-side pad hits the keystone, so the jumper is ~1 in short of Coax In (cradle rev B) |
 | 2026-10-28 | CM1000 bracket: faceplate + rails v2 (screw access bays) | Fits (Brian) |
+| 2026-11-01 | CM6A CM1000 bracket (M6) | Too tight: slides in from the rear, jams near the faceplate; forced in, rail rear ends spread to 228 (design 220.46), 3.8 per side. Modem measured 44.5 tall, 12 mm end wedge; channel slope too steep. Fix: CM6C, unprinted |
 | 2026-10-28 | TL-SG108E `2026-10-23_TL-SG108E_flush` | Printed and tested; fit acceptable (Brian) |
 | 2026-10-27 | MoCA porch15 + printed bezel nut | Fits, but nut too tall (above the rim), too thick and too tight; empty corner past the OUTs and closed modem side get in the way (porch rev 2, porch16.scad). Splitter calipered |
 
@@ -39,3 +40,6 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 
 ## 2026-10-31 SCR5-H plate (rev 4 print) — glass would not go into the window
 Brian printed the SCR5-H plate: the Waveshare 5" glass (120.7 x 77.2) would not enter the window (121.1 x 77.6, 0.2/side) — the 0.8 mm side lips behind the glass left only 119.5 mm, so this was a design error, not printer shrink. Rev 5: lips removed, clearance 0.4/side (121.5 x 78.0), screen inserted from the front. Lesson: check the insertion path, not just the final position; flush-glass windows can't have rear lips.
+
+## 2026-10-31 SCR5-H7 print — screen window installed in the rack
+Brian installed the printed SCR5-H7 screen unit (window 121.5 x 78.0, 0.4/side): overall a pretty good fit; a little more clearance than needed at the top edge of the glass (visible gap above the screen). The rev 7 test fit also found the missing frame corner tab, the unused Pi standoffs hitting the frame, and the panel ribbon jammed at the glass bottom edge; those are fixed in SCR5-H8 (not printed). **Parked (Brian):** tighten the top clearance later, once all brackets are dialed in.
