@@ -1,6 +1,6 @@
 # CM1000 one-piece bracket — test-print ID CM1P-A (2026-11-02)
 
-PROPOSED — UNPRINTED. First full-length print of the one-piece bracket, built from CM1P-T3, which went on the modem by hand with 1.5 total side play and looked seated as far as T2 (read from photos, not measured). Fit over the full rail, rack fit, side screw and strength UNKNOWN. Replaces CM6A and CM6C; neither should be printed. Remix of noyoustupid / Jsmaz3 (CC BY-NC-SA): personal use, never redistribute.
+PROPOSED — PRINT STARTED 2026-11-02, result not in yet. First full-length print of the one-piece bracket, built from CM1P-T3, which went on the modem by hand with 1.5 total side play and looked seated as far as T2 (read from photos, not measured). Fit over the full rail, rack fit, side screw and strength UNKNOWN. Replaces CM6A and CM6C; neither should be printed. Remix of noyoustupid / Jsmaz3 (CC BY-NC-SA): personal use, never redistribute.
 
 ## Print
 
