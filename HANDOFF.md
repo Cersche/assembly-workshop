@@ -20,6 +20,7 @@ Brian looked at the printed SLV-F and two third-party brackets (scubaroboto rear
 
 ## 2026-11-02 CM1000 one-piece bracket: T3 fits, full part CM1P-A built (Claude)
 T3: on by hand without force, 1.5 side play as designed, looks seated as far as T2 in photos (not measured). Brian said go. **[CM1P-A](outputs/CM1000_OnePiece_CM1P-A_2026-11-02/README.md), unprinted:** full one-piece part with T3's channel and pocket, solid rails to Y137.62, rack slots, ears, logo, icons and pipes back as colour parts, side slots. One valid solid, 0 bad edges, 16348/32692 tags. `outputs/Final_3MF/CM1P-A_CM1000_one_piece_bracket.3mf`.
+**[CM1P-B](outputs/CM1000_OnePiece_CM1P-B_2026-11-02/README.md), unprinted, is the current fitment draft:** CM1P-A with rail windows (2 thick channel shell, centre bar, 2 ribs), 136.6 cm3 vs 184.9, 16456/32908 tags. Thin rails may flex, which weakens a good slide as fit evidence. 
 **Next step:** Brian confirmed the modem side hole is within 62.4 to 72 mm behind the modem's front, and the side slot got 1 mm more at each end (61.4 to 73). Left rail only, as the baseline. Ears thickened to 4 at the rear (Brian: consistent with the other faceplates; baseline 3). Plate stays baseline 254 x 44.45, not the 252 x 44.4 standard. He prints, reports hand fit over the full length, side screw and rack fit. Log in docs/Fit_Findings.md.
 Open: full-length fit, rack fit, side screw and strength UNKNOWN. CM6A and CM6C remain in Final_3MF as history: do not print them.
 
