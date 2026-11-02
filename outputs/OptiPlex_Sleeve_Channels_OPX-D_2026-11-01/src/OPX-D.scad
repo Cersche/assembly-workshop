@@ -1,10 +1,10 @@
-// OPX-D (2026-11-01): OPX-C plus front post rails (SG8-M6-F pattern) and a middle screw in each rear ear, for the PC's weight (Brian). CONCEPT, fit and strength UNKNOWN.
+// OPX-D (2026-11-01): OPX-C plus front post rails (SG8-M6-F pattern) and a middle screw in each rear ear, for the PC's weight (Brian). Test print, unprinted; fit and strength UNKNOWN.
 // The stops on the channels catch the case's rear corners.
 // Own geometry; ideas credited to Psychobob (one-piece flush shelf, scooped floor/roof) and scubaroboto (rear C-channel, ear gusset).
 // Frame as the app: X centred (- = left seen from the front), plate back Y=0, Z=0 slot bottom, rear post back Y=240.
 // Kept from printed SLV-F: plate 252 x 44.4 x 4, four-corner slots, window +-91.75 x Z 3.5..40.8, foot tracks and click-in dips.
 // PC (Brian, 2026-11-01): 182.5 wide, 178 deep incl. the bezel, 36 tall; bezel left-aligned, 122.5 x 23 from the bottom, 2.3 proud.
-part="assembly";   // assembly, front, rear_left, rear_right, pc, print_front, print_rear_left, print_rear_right
+part="assembly";   // assembly, front, rear_left, rear_right, rail_left, rail_right, pc, print_front, print_rear_left, print_rear_right
 $fn=48;
 
 rack_pitch=44.45; plate_w=252; plate_t=4; plate_r=2.5; plate_h=44.4; plate_bottom=0.025;

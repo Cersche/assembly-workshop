@@ -1,6 +1,6 @@
 # OPX-D: OPX-C plus front post rails and rear ear middle screws (2026-11-01)
 
-**Status:** CONCEPT for Brian's review, not packaged for print. OPX-C is still the current print file. Fit, strength and insert retention are UNKNOWN.
+**Status:** current print file, replaces OPX-C (Brian, 2026-11-01): `OPX-D_OptiPlex_sleeve_channels_set.3mf`, also in `outputs/Final_3MF/`. 5 objects, 6390/12820 tags, 0 open edges. Unprinted and not opened in a slicer. Fit, strength and insert retention are UNKNOWN.
 
 OPX-B with the PC 2.3 further forward (Brian, 2026-11-01): the case front is flush with the plate face and the raised bezel stands 2.3 proud of it. OPX-A and OPX-B stay in their own folders.
 
@@ -18,13 +18,16 @@ Brian chose this layout over the settled full-tray layout (2026-11-01, after bei
 |---|---|---|
 | OPX-D-FRONT | `OPX-D-FRONT.stl` | Plate down |
 | OPX-D-L, OPX-D-R | `OPX-D-L.stl`, `OPX-D-R.stl` | Ear down |
+| OPX-D-RL, OPX-D-RR | `OPX-D-RL.stl`, `OPX-D-RR.stl` | Flat, as installed |
 
 `PC_dummy.stl` is a check model, not a part. The rear add-ons on it are approximate, read off Brian's photos.
 
 ## Assembly
-1. Screw both channels to the back of the rear posts: 4 x M6 x 8, 2 per channel.
-2. Slide the PC into the sleeve from the sleeve's rear until its front feet click into the dips.
-3. Slide the sleeve and PC in from the front of the rack, feeding the PC's rear into the channels. Screw the plate to the front posts: 4 x M6 x 8.
+1. Press M6 inserts into the 4 middle post holes (2 front, 2 rear).
+2. Screw a rail to each front post's middle hole from behind: 2 x M6 x 8.
+3. Screw both channels to the back of the rear posts: 6 x M6 x 8, 3 per channel.
+4. Slide the PC into the sleeve from the sleeve's rear until its front feet click into the dips.
+5. Slide the sleeve and PC in from the front of the rack, runners onto the rails, feeding the PC's rear into the channels. Screw the plate to the front posts: 4 x M6 x 8.
 
 ## Dimensions (mm)
 - **PC, measured by Brian:** 182.5 wide, 178 deep including the bezel, 36 tall. The bezel starts at the left, is 122.5 x 23 from the bottom, and stands 2.3 proud. The old 194.5 depth is retired for this design.
@@ -41,7 +44,9 @@ Each channel has a stop, 5 wide and full height, with its face at Y 172.5, catch
 Full tray floor, floor cable opening, rear crossbar, and the hidden plate screws (no plate joint is left).
 
 ## Digital checks
-`python src/OPX-D_build.py <post.stl>` intersects the source modules against each other and the 4U post mesh (kept local, not in this folder). Controls must overlap or the run stops.
+`python src/OPX-D_build.py <post.stl>` intersects the source modules against each other and the 4U post mesh (kept local, not in this folder). Controls must overlap or the run stops. Last run 2026-11-01: controls overlapped, rear stops catch the PC, runner captured by the rail, 0 overlaps. Only touches are the PC on the sleeve floor and the plate and ears against the post faces. The check uses a middle section of the 4U post, not the slot the PC lands in.
+
+`python src/pack_3mf.py <out.3mf>` builds the 3MF.
 
 ## Credits
 Ideas, not meshes: Psychobob, "10" rack Optiplex shelf & rear bracket support" (one-piece flush shelf, scooped floor and roof); scubaroboto, "Optiplex 3060 Rear Support Bracket for 10" Rack" (rear C-channel, ear gusset). Geometry here is redrawn with our own dimensions.

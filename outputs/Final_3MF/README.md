@@ -6,7 +6,8 @@ Print status (Brian, 2026-10-30): "accepted" means accepted to print, not proven
 
 | File | Bracket | Source folder |
 |---|---|---|
-| OPX-C_OptiPlex_sleeve_channels_set.3mf | **OptiPlex, test print (2026-11-01).** One-piece front sleeve + 2 rear C-channels with rear stops, measured PC and feet, 21 mm click-in dips; case front flush with the plate, raised bezel 2.3 proud. Replaces the SLV-F full tray. **Unprinted.** Fit UNKNOWN | OptiPlex_Sleeve_Channels_OPX-C_2026-11-01 |
+| OPX-D_OptiPlex_sleeve_channels_set.3mf | **OptiPlex, test print (2026-11-01).** One-piece front sleeve + 2 rear C-channels with rear stops + 2 front post rails, sleeve runners on the rails, middle screw in each rear ear; measured PC and feet, 21 mm click-in dips; case front flush with the plate, raised bezel 2.3 proud. Replaces the SLV-F full tray. 12 x M6 x 8, M6 inserts in 4 middle post holes. 5 objects, 6390/12820 tags. **Unprinted.** Fit UNKNOWN | OptiPlex_Sleeve_Channels_OPX-D_2026-11-01 |
+| OPX-C_OptiPlex_sleeve_channels_set.3mf | **Superseded by OPX-D.** Same sleeve and channels without the rails, runners or middle ear screws | OptiPlex_Sleeve_Channels_OPX-C_2026-11-01 |
 | OPX-B_OptiPlex_sleeve_channels_set.3mf | **Superseded by OPX-C.** PC 2.3 further back (bezel flush, case recessed) | OptiPlex_Sleeve_Channels_OPX-B_2026-11-01 |
 | OPX-A_OptiPlex_sleeve_channels_set.3mf | **Superseded by OPX-B.** Same parts without the rear stops | OptiPlex_Sleeve_Channels_2026-11-01 |
 | HDT-M6-A_drive_tray.3mf | HDD/SSD tray | Hard_Drive_Tray_M6_2026-10-28 |

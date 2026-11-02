@@ -1,7 +1,7 @@
 # Assembly Workshop — current handoff
 
 ## 2026-11-01 OptiPlex rethink: front sleeve + rear channels, OPX-A to OPX-D (Claude)
-**Next step:** Brian decides whether to print OPX-C now or have OPX-D packaged. If OPX-D: add a `pack_3mf.py` to its `src/` (copy OPX-C's, add the two rails, flat), run it, count the tags in the 3MF, copy it to `outputs/Final_3MF/`, add the table row and mark OPX-C superseded. Then log Brian's print report in `docs/Fit_Findings.md`.
+**Next step:** Brian chose OPX-D and it is packaged. Wait for his print report, log it in `docs/Fit_Findings.md`, and make any fixes as a new revision with a new ID.
 
 Brian looked at the printed SLV-F and two third-party brackets (scubaroboto rear bracket, BY-NC-SA; Psychobob shelf, Standard Digital File License; both stay in his Downloads, only ideas borrowed, credited in the READMEs) and replaced the settled full tray and one-piece rear bracket after being reminded of his "do not let me change this" note. PC orientation is still settled: power button at the faceplate, ports toward the rear posts.
 
@@ -11,8 +11,8 @@ Brian looked at the printed SLV-F and two third-party brackets (scubaroboto rear
 |---|---|---|
 | [OPX-A](outputs/OptiPlex_Sleeve_Channels_2026-11-01/README.md) | One-piece plate + 65 deep sleeve, 2 rear C-channels on the back of the rear posts, 21 long dips, foot stop | Superseded |
 | [OPX-B](outputs/OptiPlex_Sleeve_Channels_OPX-B_2026-11-01/README.md) | A + rear stops 0.8 behind the case (Brian declined front lips) | Superseded |
-| [OPX-C](outputs/OptiPlex_Sleeve_Channels_OPX-C_2026-11-01/README.md) | B with the PC 2.3 forward: case front flush with the plate face, raised bezel 2.3 proud | **Current print file**, `outputs/Final_3MF/OPX-C_OptiPlex_sleeve_channels_set.3mf`, 3 objects, 3710/7452 tags. [Viewer](https://claude.ai/artifact/2upwkYtACyGUd5gD4SacUP) |
-| [OPX-D](outputs/OptiPlex_Sleeve_Channels_OPX-D_2026-11-01/README.md) | C + 2 front post rails (SG8-M6-F pattern, 1 M6 x 8 from behind into each middle hole), sleeve runners, middle slot in each rear ear, because the PC is heavy | **Concept, no 3MF.** [Viewer](https://claude.ai/artifact/PpnVxYSYPtQ7ce9GR1J4Fs) |
+| [OPX-C](outputs/OptiPlex_Sleeve_Channels_OPX-C_2026-11-01/README.md) | B with the PC 2.3 forward: case front flush with the plate face, raised bezel 2.3 proud | Superseded by OPX-D, unprinted. [Viewer](https://claude.ai/artifact/2upwkYtACyGUd5gD4SacUP) |
+| [OPX-D](outputs/OptiPlex_Sleeve_Channels_OPX-D_2026-11-01/README.md) | C + 2 front post rails (SG8-M6-F pattern, 1 M6 x 8 from behind into each middle hole), sleeve runners, middle slot in each rear ear, because the PC is heavy | **Current print file**, `outputs/Final_3MF/OPX-D_OptiPlex_sleeve_channels_set.3mf`, 5 objects, 6390/12820 tags, 0 open edges. Viewers: [print set](https://claude.ai/artifact/84BSwjwzf23NHqX8jnxgjW), [assembled](https://claude.ai/artifact/DrEjPao2ZoppAueBMMBF9Y) |
 
 **Checks:** digital only, `python src/OPX-?_build.py <post.stl>`. The 4U post (`3D/Objects/object_190.model` in `work/rack-geometry-recovery/sources/Lab+Rax+1-5U+Posts+&+Panels.3mf`) must be converted to a local STL first and never goes in these folders. OpenSCAD reports "top level object is empty" for a failed import as well as a clear pair, so the OPX scripts intersect source modules, stop on errors and run controls that must overlap. Viewer pages with the post mesh are in `work/mesh-viewer/`, not committed.
 
