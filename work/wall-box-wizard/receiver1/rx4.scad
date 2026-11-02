@@ -59,7 +59,7 @@ pins=[75,125];                               // shelf locating pins into the bac
 ears=[for(x=[sbx0-11,sbx1+11],y=[sby0+10,sby1-10])[x,y]];   // cradle ears / base inserts; 22 pads end at the ScreenBeam's ends
 
 // Test print ID (Brian's rule: every test print carries its ID), engraved 0.6 on hidden faces
-print_id="RX4-B";
+print_id="RX4-C";
 module id_text(){text(print_id,size=6,font="Liberation Sans:style=Bold",halign="center",valign="center");}
 module rrect(x0,x1,y0,y1,r){hull()for(x=[x0+r,x1-r],y=[y0+r,y1-r])translate([x,y])circle(r=r);}
 // wall frames as in body15.scad: u to the right seen from outside, y inward, v up
@@ -133,8 +133,19 @@ module shelf(){
  }
 }
 
+// Switch side tabs on the lid (Brian, 2026-11-02): one each side, reach 6.5 down past the switch's top edge, so the top is
+// held in X as well as the bottom (shelf rails). 0.4 a side: the lid itself can shift 0.3 on its lip. Lead-in chamfer at
+// the tip, 4 thick at the root, 2 at the tip; lid frame, Z 0 = underside. Fit and strength UNKNOWN.
+tab_len=40; tab_h=8; tab_clr=0.4;
+module sw_tabs(){
+ module p()polygon([[0,0.01],[4,0.01],[2,-tab_h],[0.8,-tab_h],[0,-tab_h+0.8]]);
+ y1=swy0+SW[1]/2+tab_len/2;
+ translate([swx1+tab_clr,y1,0])rotate([90,0,0])linear_extrude(tab_len)p();
+ translate([swx0-tab_clr,y1,0])rotate([90,0,0])linear_extrude(tab_len)mirror([1,0])p();
+}
+
 // Lid: 2.5 plate, locating lip (cut where the switch meets the front wall), four countersunk M3, two ribs that clamp
-// the switch (0.3 clearance), vent slots over the ScreenBeam's uncovered right part.
+// the switch (0.3 clearance), two side tabs, vent slots over the ScreenBeam's uncovered right part.
 module lid(){
  difference(){
   union(){
@@ -144,6 +155,7 @@ module lid(){
     for(p=lid_posts())translate(p)circle(d=11);
     translate([swx0-sw_clr-1,0])square([SW[0]+2*sw_clr+2,t+3]);}
    for(y=[swy0+25,swy0+SW[1]-25])translate([swx0+10,y-1,-1.2])cube([SW[0]-20,2,1.21]);
+   sw_tabs();
   }
   for(p=lid_posts())translate([p[0],p[1],-4]){cylinder(d=m3,h=10);translate([0,0,4+t-1.7])cylinder(d1=m3,d2=6.6,h=1.71);}
   translate([190,105,-0.01])mirror([1,0,0])linear_extrude(0.61)id_text();   // ID on the underside
