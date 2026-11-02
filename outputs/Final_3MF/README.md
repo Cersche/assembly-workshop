@@ -8,7 +8,7 @@ Print status (Brian, 2026-10-30): "accepted" means accepted to print, not proven
 |---|---|---|
 | HDT-M6-A_drive_tray.3mf | HDD/SSD tray | Hard_Drive_Tray_M6_2026-10-28 |
 | HDT-M6-A_drive_tray_color.3mf | HDD/SSD tray, color inlay | Hard_Drive_Tray_M6_2026-10-28 |
-| CM6C_CM1000_M6_bracket_set.3mf | **CM1000 modem, current (2026-11-01).** Channels recut to the measured modem wedge, inserts moved, screw bays open top/bottom. **Unprinted**, 25365/50774 tags. Fit UNKNOWN | CM1000_CM6C_2026-11-01 |
+| CM6C_CM1000_M6_bracket_set.3mf | **CM1000 modem, current (2026-11-01).** Channels recut to the measured modem wedge, inserts moved, head-sized screw bays with a bar along the channel. **Unprinted**, 25401/50854 tags. Fit UNKNOWN | CM1000_CM6C_2026-11-01 |
 | CM6A_CM1000_M6_bracket_set.3mf | **Superseded by CM6C.** Printed 2026-11-01: too tight, modem forced in and spread the rails to 228. Baseline + M6 hardware only | CM1000_M6_2026-10-28 |
 | SG8-M6-E_faceplate+label.3mf | TL-SG108E faceplate only, for the printed SG8-M6-D tray. **Unprinted.** Bosses cut back to clear the D tray lip (D plate + D tray clash: holes ~2 mm low). | TL-SG108E_M6_2026-10-28 |
 | SG8-M6-D_TL-SG108E_M6_set.3mf | **Tray only now (printed); its faceplate clashes, use E.**  TL-SG108E switch. **Unprinted.** C + the proven 1.35 mm sleeve top clearance back (C printed 2026-10-30: did not fit; B/C had cut it to 0.35). Proven printed version: outputs/STL_Deliveries/2026-10-23_TL-SG108E_flush (M3) | TL-SG108E_M6_2026-10-28 |

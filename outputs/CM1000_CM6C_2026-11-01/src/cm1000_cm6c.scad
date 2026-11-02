@@ -12,6 +12,7 @@ joint_x = [22.2, 231.8];   // CM6A x22.6/231.4
 joint_z = [5.6, 38.85];    // CM6A z8.6/35.85: toward the top and bottom faces, away from the recut channel
 clear_d = 6.6;             // M6 clearance through the 4 mm rail flange (Y16..20)
 bay_top = 6;               // bay reach from the joint centre; head 10.5 dia
+bay_x   = 5.5;             // bay reach toward the channel: head radius 5.25 + 0.25
 bay_y   = [20, 54];        // head seat Y20; 34 mm fits a standard 4 mm L-key's short arm
 
 // channel surface: x = tip_x + slope * |z - mid|. Modem wedge 12 long x 22.25 half-height = 0.539, tip about x20.38, so 0.38 clear.
@@ -36,10 +37,11 @@ module rail(body, x0) difference() {
     end_mirror(x0 < 127) channel(15, 140);
     for (z = joint_z) {
         ycyl(x0, z, clear_d, 15, 20.5);
-        // open through the top or bottom face: the head reaches within 0.35 of it, too thin to keep
+        // only as wide as the head: open at the outer side and the top or bottom face (head within 0.35 of it),
+        // a bar stays along the channel from the flange to the rail behind the bay
         zlo = z < mid ? -1 : z - bay_top;
         zhi = z < mid ? z + bay_top : 45.5;
-        translate([x0 - 9, bay_y[0], zlo]) cube([26, bay_y[1] - bay_y[0], zhi - zlo]);
+        end_mirror(x0 < 127) translate([10, bay_y[0], zlo]) cube([joint_x[0] + bay_x - 10, bay_y[1] - bay_y[0], zhi - zlo]);
     }
     engrave(str(id, x0 < 127 ? "-L" : "-R"), [x0 + 1, 95, 44.45], 90);
 }

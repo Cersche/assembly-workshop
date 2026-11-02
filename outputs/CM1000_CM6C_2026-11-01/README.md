@@ -22,15 +22,15 @@ Hardware unchanged: 4 M6 x 5 x 8 inserts, 4 M6 x 8 button heads, 4 rack screws.
 | Wall at the channel tip | 3.9 | 3.2 |
 | Insert/joint position | x22.6/231.4, z8.6/35.85 | x22.2/231.8, z5.6/38.85 |
 | Rail lips | past x34 | end at x32 |
-| Screw bays, Y20..54 | 12 tall, closed by a thin floor | open through the top or bottom face; head comes within 0.35 of it |
-| Rail web in the bays | z14.6..29.85 | z11.6..32.85 |
+| Screw bays, Y20..54 | 12 tall, across the whole rail; on the right rail a hairline strip was left by mistake | head-sized notch, open at the outer side and the top or bottom face (head within 0.35 of it); both rails mirror exactly |
+| Rail in the bays | web z14.6..29.85 only | web z11.6..32.85 plus a bar along the channel, 4.3 wide and 7.95 tall, flange to rail |
 
 The faceplate pocket's nose taper is kept, plus 0.1 in the widened ends. Width across the rails stays 220.46.
 
 ## Checks run (digital only)
 
 `python check_fit.py` from `src/`:
-- All three STLs closed; 3MF has 25365 vertex and 50774 triangle tags.
+- All three STLs closed; 3MF has 25401 vertex and 50854 triangle tags.
 - 0.38 clear of the modem wedge at every sampled plane, Y10 to Y130.
 - Pilot wall to the nearest surface 1.63 (the outer side face); about 2.15 to the channel by calculation. Flange wall around the 6.6 hole 2.13.
 
