@@ -1,0 +1,232 @@
+<meta charset="utf-8">
+<title>Rack Finish 3D</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&family=Saira+Stencil+One&display=swap">
+<style>
+/* Layout: one-screen studio; finish controls in a left rail, the real-mesh rack fills the rest (rail drops below on phones). Single dark look by choice, like the app's viewport. */
+:root{
+  --bench:#121417;--panel:#1a1d21;--line:#2c3036;--ink:#ebe8e2;--muted:#979ca5;--sel:#ff8200;
+  --display:"Saira Stencil One",Impact,sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--bench);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.45}
+.app{height:100%;display:grid;grid-template-columns:320px minmax(0,1fr)}
+.rail{overflow:auto;border-right:1px solid var(--line);background:var(--panel);display:grid;align-content:start;gap:20px;padding-block:18px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:16px}
+.stage{position:relative;min-width:0;min-height:0}
+canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+canvas:active{cursor:grabbing}
+@media (max-width:820px){
+  .app{grid-template-columns:minmax(0,1fr);grid-template-rows:62vh auto;height:auto}
+  .stage{order:-1;height:62vh}
+  .rail{border-right:0;border-top:1px solid var(--line);padding-right:max(16px,env(safe-area-inset-right,0px))}
+}
+h1{font-family:var(--display);font-weight:400;font-size:30px;line-height:1;margin:0}
+h1 span{color:var(--sel)}
+.sub{color:var(--muted);font-size:12.5px;margin:4px 0 0}
+h2{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 8px}
+.themes{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.themes button{all:unset;box-sizing:border-box;cursor:pointer;padding:8px;border:1px solid var(--line);border-radius:5px;display:grid;gap:6px;background:var(--bench)}
+.themes button[aria-pressed="true"]{border-color:var(--sel);box-shadow:inset 0 0 0 1px var(--sel)}
+.themes button:focus-visible,.seg button:focus-visible,.views button:focus-visible{outline:2px solid var(--sel);outline-offset:2px}
+.themes b{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:600}
+.chips{display:flex;gap:3px}.chips i{flex:1;height:12px;border-radius:2px;border:1px solid #ffffff22}
+.parts{display:grid;gap:4px}
+.row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:3px 0}
+.row input[type=color]{width:28px;height:28px;border:1px solid var(--line);border-radius:4px;padding:0;background:none;cursor:pointer}
+.row input[type=color]::-webkit-color-swatch-wrapper{padding:2px}.row input[type=color]::-webkit-color-swatch{border:0;border-radius:2px}
+.row label{display:grid;min-width:0}.row label span{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row code{font:11px var(--mono);color:var(--muted)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.views button{font:500 12.5px var(--body);color:var(--ink);background:var(--bench);border:1px solid var(--line);border-radius:4px;padding:6px 10px;cursor:pointer}
+.seg button[aria-pressed="true"]{border-color:var(--sel);color:var(--sel)}
+.slider{display:grid;grid-template-columns:auto minmax(0,1fr) 44px;gap:10px;align-items:center;margin-top:10px;font-size:12.5px;color:var(--muted)}
+.slider input{accent-color:var(--sel)}
+.slider output{font:12px var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.views{position:absolute;left:12px;top:calc(12px + env(safe-area-inset-top,0px));display:flex;flex-wrap:wrap;gap:6px}
+.views button{background:#1a1d21e6}
+.legend{position:absolute;right:12px;bottom:12px;max-width:min(320px,calc(100% - 24px));font:11.5px/1.5 var(--mono);color:var(--muted);background:#1a1d21e6;border:1px solid var(--line);border-radius:5px;padding:8px 10px}
+.pick{display:grid;gap:8px}
+.pick pre{margin:0;font:11.5px/1.5 var(--mono);white-space:pre-wrap;background:var(--bench);border:1px solid var(--line);border-radius:5px;padding:10px}
+.pick button{justify-self:start;font:600 13px var(--body);background:var(--sel);color:#111;border:0;border-radius:4px;padding:8px 14px;cursor:pointer}
+.note{font-size:12px;color:var(--muted);margin:0}
+</style>
+
+<div class="app">
+  <aside class="rail">
+    <div><h1>Rack <span>Finish</span> 3D</h1><p class="sub">Your saved 9U frame and the current final brackets, real meshes in their slots.</p></div>
+    <section><h2>Theme</h2><div class="themes" id="themes"></div></section>
+    <section><h2>Part colors</h2><div class="parts" id="parts"></div></section>
+    <section><h2>Icons</h2>
+      <div class="seg" id="iconMode"></div>
+      <div class="slider"><span>Size</span><input type="range" id="iconSize" min="16" max="34" step="1" value="24"><output id="iconSizeOut">24 mm</output></div>
+    </section>
+    <section class="pick"><h2>Your pick</h2><pre id="pickText"></pre><button type="button" id="copy">Copy my pick</button></section>
+    <p class="note">Preview only, nothing is exported. U2 (cooling) is a plain placeholder plate; no part exists yet. Icons other than the drive tray's are drawn on, not modeled. Printed color and fit are unknown. The frame is the Lab Rax creator's model (personal use): don't share this page.</p>
+  </aside>
+  <main class="stage">
+    <canvas id="c" aria-label="3D rack preview. Drag to orbit, scroll or pinch to zoom, right-drag or two fingers to pan."></canvas>
+    <div class="views" id="views"></div>
+    <div class="legend">Drag to orbit · scroll to zoom · right-drag to pan</div>
+  </main>
+</div>
+
+<script>
+const DATA=/*__DATA__*/null;
+const FIBER=["#1f6fd1","#ff8200","#12a150","#8a5a2b","#7a8794","#f1f1ec","#d0202b","#0d0d0e","#f5c400"];
+const GROUPS=[["posts","Posts"],["extensions","Post joints (1U extensions)"],["frame","Top & bottom frame"],["panels","Top & bottom panels"],["handles","Handles"],["feet","Feet"],["logo","Lab Rax logo"],["faceplates","Faceplates"],["brackets","Trays & rails (behind)"],["icons","Icons"]];
+const T={
+ fiber:{name:"Fiber Code",c:{posts:["Matte charcoal","#2c2f34"],extensions:["Matte charcoal","#2c2f34"],frame:["Black","#18191b"],panels:["Black","#18191b"],handles:["Black","#18191b"],feet:["Black","#18191b"],logo:["White","#f1f1ec"],faceplates:["Matte charcoal","#2c2f34"],brackets:["Black","#18191b"],icons:["Fiber code","#f1f1ec"]},mode:"fiber"},
+ grease:{name:"Greasepaint",c:{posts:["Matte black","#111113"],extensions:["Blood red","#b5121b"],frame:["Matte black","#111113"],panels:["Matte black","#111113"],handles:["Silk silver","#c8ccd2"],feet:["Blood red","#b5121b"],logo:["Blood red","#b5121b"],faceplates:["Matte black","#111113"],brackets:["Dark grey","#3a3d42"],icons:["Silk silver","#c8ccd2"]},mode:"one"},
+ amber:{name:"Amber Terminal",c:{posts:["Graphite grey","#363a40"],extensions:["Black","#18191b"],frame:["Black","#18191b"],panels:["Black","#18191b"],handles:["Graphite grey","#363a40"],feet:["Black","#18191b"],logo:["Amber","#ffb000"],faceplates:["Graphite grey","#363a40"],brackets:["Black","#18191b"],icons:["Amber","#ffb000"]},mode:"one"},
+ bucket:{name:"Bucket Truck",c:{posts:["Black","#18191b"],extensions:["Safety orange","#ff6a13"],frame:["Black","#18191b"],panels:["Black","#18191b"],handles:["Safety orange","#ff6a13"],feet:["Black","#18191b"],logo:["White","#eeeee8"],faceplates:["Safety orange","#ff6a13"],brackets:["Black","#18191b"],icons:["Black","#121212"]},mode:"one"},
+ clean:{name:"Cleanroom",c:{posts:["White","#efefeb"],extensions:["Signal blue","#1f6fd1"],frame:["Light grey","#d6d8d5"],panels:["Light grey","#d6d8d5"],handles:["Signal blue","#1f6fd1"],feet:["Slate","#2f3a46"],logo:["Signal blue","#1f6fd1"],faceplates:["Light grey","#d6d8d5"],brackets:["White","#efefeb"],icons:["Slate","#2f3a46"]},mode:"one"},
+ black:{name:"Blackout",c:{posts:["Matte black","#141416"],extensions:["Matte black","#141416"],frame:["Matte black","#141416"],panels:["Matte black","#141416"],handles:["Matte black","#141416"],feet:["Matte black","#141416"],logo:["Dark grey","#4b4f55"],faceplates:["Matte black","#141416"],brackets:["Matte black","#141416"],icons:["Dark grey","#4b4f55"]},mode:"one"}
+};
+const MODES={one:"One color",fiber:"Fiber code by slot",off:"Off"};
+// Icons as paths on a 24 grid (stroked, round caps), so they draw cleanly at any size.
+const ICON={
+ modem:"M5 11h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2zM8.2 7.6a5.4 5.4 0 0 1 7.6 0M5.6 5a9 9 0 0 1 12.8 0M7 15h.01M10 15h.01M13 15h.01",
+ switch:"M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM6 10h10l-2.5-2.5M18 14H8l2.5 2.5",
+ jack:"M5 4h14v11h-3v4H8v-4H5zM9 7.5v3M12 7.5v3M15 7.5v3",
+ bulb:"M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.1h5c0-.8.4-1.6 1.1-2.1A6 6 0 0 0 12 3z",
+ chip:"M7.5 6h9A1.5 1.5 0 0 1 18 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 16.5v-9A1.5 1.5 0 0 1 7.5 6zM9.5 9.5h5v5h-5zM9 3v3M12 3v3M15 3v3M9 18v3M12 18v3M15 18v3M3 9h3M3 12h3M3 15h3M18 9h3M18 12h3M18 15h3",
+ fan:"M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0M10.4 12a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0M12 10.4C11 7 12.5 4.6 15 5.2s2 3.4-.4 5.2M13.6 12c3.4-1 5.8.5 5.2 3s-3.4 2-5.2-.4M12 13.6c1 3.4-.5 5.8-3 5.2s-2-3.4.4-5.2M10.4 12C7 13 4.6 11.5 5.2 9s3.4-2 5.2.4",
+ pc:"M7.5 2.5h9A1.5 1.5 0 0 1 18 4v16a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20V4a1.5 1.5 0 0 1 1.5-1.5zM9 6.5h6M9 9.5h6M10.4 16.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0"
+};
+// Icon spots per slot (app slot 1 = top). x in mm from the rack centre; drive tray (slot 4) has a modeled inlay already.
+const SPOTS=[{slot:1,icon:"modem",x:-100},{slot:2,icon:"switch",x:-100},{slot:3,icon:"jack",x:-104},{slot:5,icon:"chip",x:-30},{slot:5,icon:"bulb",x:58},{slot:8,icon:"fan",x:0},{slot:9,icon:"pc",x:-100}];
+
+let S={theme:"fiber",colors:{},mode:"fiber",size:24};
+function applyTheme(k){S.theme=k;S.colors={};for(const [g] of GROUPS)S.colors[g]=T[k].c[g].slice();S.mode=T[k].mode;}
+applyTheme("fiber");
+try{const s=JSON.parse(localStorage.getItem("rackFinish3d")||"null");if(s&&T[s.theme]&&s.colors)S=s;}catch(e){}
+const save=()=>{try{localStorage.setItem("rackFinish3d",JSON.stringify(S));}catch(e){}};
+
+/* ---------- WebGL ---------- */
+const cv=document.getElementById("c"),gl=cv.getContext("webgl2",{antialias:true});
+function hex(h){const n=parseInt(h.slice(1),16);return [(n>>16&255)/255,(n>>8&255)/255,(n&255)/255].map(v=>Math.pow(v,2.2));}
+function prog(vs,fs){const p=gl.createProgram();for(const [t,s] of [[gl.VERTEX_SHADER,vs],[gl.FRAGMENT_SHADER,fs]]){const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(sh));gl.attachShader(p,sh);}gl.linkProgram(p);return p;}
+const P=prog(`#version 300 es
+in vec3 p;uniform mat4 vp,m;out vec3 w;void main(){vec4 q=m*vec4(p,1.);w=q.xyz;gl_Position=vp*q;}`,
+`#version 300 es
+precision highp float;in vec3 w;uniform vec3 col,eye;out vec4 o;
+void main(){vec3 n=normalize(cross(dFdx(w),dFdy(w)));vec3 v=normalize(eye-w);if(dot(n,v)<0.)n=-n;
+vec3 L1=normalize(vec3(-.45,-.8,.65)),L2=normalize(vec3(.7,-.2,.35));
+float d=max(dot(n,L1),0.)*.75+max(dot(n,L2),0.)*.28+.2+.08*n.z;
+float s=pow(max(dot(n,normalize(L1+v)),0.),48.)*.18;
+vec3 c=col*d+s;o=vec4(pow(c,vec3(1./2.2)),1.);}`);
+const PD=prog(`#version 300 es
+in vec3 p;in vec2 uv;uniform mat4 vp;out vec2 t;void main(){t=uv;gl_Position=vp*vec4(p,1.);}`,
+`#version 300 es
+precision highp float;in vec2 t;uniform sampler2D tex;uniform vec3 col;out vec4 o;
+void main(){float a=texture(tex,t).a;if(a<.5)discard;o=vec4(pow(col*.95+.03,vec3(1./2.2)),1.);}`);
+
+function dec(b,T){const s=atob(b),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return new T(u.buffer);}
+const GEO={};
+for(const [k,m] of Object.entries(DATA.meshes)){
+  const vao=gl.createVertexArray();gl.bindVertexArray(vao);
+  const vb=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,vb);gl.bufferData(gl.ARRAY_BUFFER,dec(m.v,Float32Array),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(P,"p");gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,3,gl.FLOAT,false,0,0);
+  const ib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,dec(m.i,Uint32Array),gl.STATIC_DRAW);
+  GEO[k]={vao,n:m.n*3};
+}
+const INST=DATA.instances.map(o=>({...o,M:new Float32Array([o.R[0],o.R[3],o.R[6],0,o.R[1],o.R[4],o.R[7],0,o.R[2],o.R[5],o.R[8],0,o.t[0],o.t[1],o.t[2],1])}));
+
+// Icon textures and quads
+const TEX={};
+for(const [k,d] of Object.entries(ICON)){
+  const c=document.createElement("canvas");c.width=c.height=256;const x=c.getContext("2d");x.scale(256/24,256/24);
+  x.lineWidth=1.8;x.lineCap="round";x.lineJoin="round";x.strokeStyle="#fff";x.stroke(new Path2D(d));
+  const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
+  gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,c);gl.generateMipmap(gl.TEXTURE_2D);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR);TEX[k]=t;
+}
+const quadVAO=gl.createVertexArray(),quadBuf=gl.createBuffer();
+gl.bindVertexArray(quadVAO);gl.bindBuffer(gl.ARRAY_BUFFER,quadBuf);
+{const lp=gl.getAttribLocation(PD,"p"),lu=gl.getAttribLocation(PD,"uv");gl.enableVertexAttribArray(lp);gl.vertexAttribPointer(lp,3,gl.FLOAT,false,20,0);gl.enableVertexAttribArray(lu);gl.vertexAttribPointer(lu,2,gl.FLOAT,false,20,12);}
+const U=DATA.U,SL=DATA.slots;
+
+/* ---------- camera ---------- */
+const box={lo:[-150,-60,-45],hi:[150,250,420]},target=[0,120,190];
+let cam={yaw:-.55,pitch:.22,dist:900,tx:0,ty:120,tz:190};
+const VIEWS={"Front":[0,.05],"Three-quarter":[-.55,.22],"Side":[-1.5708,.08],"Back":[3.1416,.12],"Top":[-.3,1.2]};
+function mat(){
+  const w=cv.width,h=cv.height,a=w/h,f=1/Math.tan(15*Math.PI/180),n=50,fa=5000;
+  const e=[cam.tx+cam.dist*Math.cos(cam.pitch)*Math.sin(cam.yaw),cam.ty-cam.dist*Math.cos(cam.pitch)*Math.cos(cam.yaw),cam.tz+cam.dist*Math.sin(cam.pitch)];
+  const fw=norm([cam.tx-e[0],cam.ty-e[1],cam.tz-e[2]]),r=norm(cross(fw,[0,0,1])),u=cross(r,fw);
+  const V=[r[0],u[0],-fw[0],0,r[1],u[1],-fw[1],0,r[2],u[2],-fw[2],0,-dot(r,e),-dot(u,e),dot(fw,e),1];
+  const Pm=[f/a,0,0,0,0,f,0,0,0,0,(fa+n)/(n-fa),-1,0,0,2*fa*n/(n-fa),0];
+  return {vp:mul(Pm,V),eye:e,r,u};
+}
+const norm=v=>{const l=Math.hypot(...v)||1;return v.map(x=>x/l)},cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+function mul(a,b){const o=new Float32Array(16);for(let i=0;i<4;i++)for(let j=0;j<4;j++){let s=0;for(let k=0;k<4;k++)s+=a[k*4+j]*b[i*4+k];o[i*4+j]=s;}return o;}
+
+function iconColor(slot){return S.mode==="fiber"?FIBER[(slot-1)%FIBER.length]:S.colors.icons[1];}
+let queued=false;function draw(){if(!queued){queued=true;requestAnimationFrame(render);}}
+function render(){
+  queued=false;const dpr=Math.min(devicePixelRatio||1,2),w=Math.round(cv.clientWidth*dpr),h=Math.round(cv.clientHeight*dpr);
+  if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}
+  gl.viewport(0,0,w,h);gl.clearColor(.07,.078,.09,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.enable(gl.DEPTH_TEST);
+  const {vp,eye}=mat();
+  gl.useProgram(P);gl.uniformMatrix4fv(gl.getUniformLocation(P,"vp"),false,vp);gl.uniform3fv(gl.getUniformLocation(P,"eye"),eye);
+  const um=gl.getUniformLocation(P,"m"),uc=gl.getUniformLocation(P,"col");
+  for(const o of INST){
+    if(o.group==="icons"&&S.mode==="off")continue;
+    const c=o.group==="glass"?"#0c1622":o.group==="icons"?iconColor(o.slot):S.colors[o.group][1];
+    gl.uniformMatrix4fv(um,false,o.M);gl.uniform3fv(uc,hex(c));gl.bindVertexArray(GEO[o.mesh].vao);gl.drawElements(gl.TRIANGLES,GEO[o.mesh].n,gl.UNSIGNED_INT,0);
+  }
+  if(S.mode!=="off"){
+    gl.useProgram(PD);gl.uniformMatrix4fv(gl.getUniformLocation(PD,"vp"),false,vp);gl.bindVertexArray(quadVAO);gl.bindBuffer(gl.ARRAY_BUFFER,quadBuf);
+    gl.enable(gl.POLYGON_OFFSET_FILL);gl.polygonOffset(-2,-2);
+    for(const s of SPOTS){
+      const zc=(SL-s.slot)*U+U/2,h=S.size/2,y=-4.25,x0=s.x-h,x1=s.x+h,z0=zc-h,z1=zc+h;
+      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([x0,y,z0,0,0,x1,y,z0,1,0,x1,y,z1,1,1,x0,y,z0,0,0,x1,y,z1,1,1,x0,y,z1,0,1]),gl.DYNAMIC_DRAW);
+      gl.bindTexture(gl.TEXTURE_2D,TEX[s.icon]);gl.uniform3fv(gl.getUniformLocation(PD,"col"),hex(iconColor(s.slot)));gl.drawArrays(gl.TRIANGLES,0,6);
+    }
+    gl.disable(gl.POLYGON_OFFSET_FILL);
+  }
+}
+new ResizeObserver(draw).observe(cv);
+
+/* ---------- orbit ---------- */
+const ptr=new Map();let last=null;
+cv.addEventListener("contextmenu",e=>e.preventDefault());
+cv.addEventListener("pointerdown",e=>{cv.setPointerCapture(e.pointerId);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY,b:e.button,shift:e.shiftKey});});
+cv.addEventListener("pointerup",e=>{ptr.delete(e.pointerId);last=null;});
+cv.addEventListener("pointercancel",e=>{ptr.delete(e.pointerId);last=null;});
+function pan(dx,dy){const {r,u}=mat(),k=cam.dist/cv.clientHeight*.55;cam.tx+=(-dx*r[0]+dy*u[0])*k;cam.ty+=(-dx*r[1]+dy*u[1])*k;cam.tz+=(-dx*r[2]+dy*u[2])*k;}
+cv.addEventListener("pointermove",e=>{
+  const p=ptr.get(e.pointerId);if(!p)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;
+  if(ptr.size===2){const [a,b]=[...ptr.values()],d=Math.hypot(a.x-b.x,a.y-b.y),mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+    if(last){cam.dist=Math.min(3000,Math.max(150,cam.dist*last.d/d));pan(mx-last.mx,my-last.my);}last={d,mx,my};draw();return;}
+  if(p.b===2||p.b===1||p.shift)pan(dx,dy);else{cam.yaw+=dx*.008;cam.pitch=Math.max(-1.4,Math.min(1.45,cam.pitch+dy*.006));}
+  draw();
+});
+cv.addEventListener("wheel",e=>{e.preventDefault();cam.dist=Math.min(3000,Math.max(150,cam.dist*Math.exp(e.deltaY*.0012)));draw();},{passive:false});
+function fit(){const a=(cv.clientWidth||1)/(cv.clientHeight||1),t=Math.tan(15*Math.PI/180);return Math.max(520/2/t,340/2/t/a)*1.3;}
+function view(k){const [y,p]=VIEWS[k];Object.assign(cam,{yaw:y,pitch:p,dist:fit(),tx:0,ty:120,tz:200});draw();}
+
+/* ---------- UI ---------- */
+const $=id=>document.getElementById(id);
+function ui(){
+  $("themes").innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" data-theme="${k}" aria-pressed="${S.theme===k}"><b>${t.name}</b><span class="chips">${["posts","extensions","faceplates","icons","logo"].map(g=>`<i style="background:${g==="icons"&&t.mode==="fiber"?"linear-gradient(90deg,"+FIBER.join(",")+")":t.c[g][1]}"></i>`).join("")}</span></button>`).join("");
+  $("parts").innerHTML=GROUPS.map(([g,l])=>`<div class="row"><input type="color" id="col-${g}" value="${S.colors[g][1]}" aria-label="${l} color"><label for="col-${g}">${l}<span>${g==="icons"&&S.mode==="fiber"?"Fiber code by slot":S.colors[g][0]}</span></label><code>${S.colors[g][1]}</code></div>`).join("");
+  $("iconMode").innerHTML=Object.entries(MODES).map(([k,l])=>`<button type="button" data-mode="${k}" aria-pressed="${S.mode===k}">${l}</button>`).join("");
+  $("iconSize").value=S.size;$("iconSizeOut").textContent=S.size+" mm";
+  $("pickText").textContent="Rack finish pick (3D)\nStarting theme: "+T[S.theme].name+"\n"+GROUPS.map(([g,l])=>`${l}: ${g==="icons"&&S.mode!=="one"?MODES[S.mode]:S.colors[g][0]+" "+S.colors[g][1]}`).join("\n")+`\nIcon size: ${S.size} mm, icons only (no text labels)`;
+  document.documentElement.style.setProperty("--sel",S.mode==="fiber"?"#ff8200":(["#141416","#111113","#18191b","#121212"].includes(S.colors.logo[1])?"#c8ccd2":S.colors.logo[1]));
+  save();draw();
+}
+$("views").innerHTML=Object.keys(VIEWS).map(k=>`<button type="button" data-view="${k}">${k}</button>`).join("");
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.theme){applyTheme(b.dataset.theme);ui();}
+  else if(b.dataset.mode){S.mode=b.dataset.mode;ui();}
+  else if(b.dataset.view)view(b.dataset.view);});
+document.addEventListener("input",e=>{const t=e.target;
+  if(t.id==="iconSize"){S.size=+t.value;$("iconSizeOut").textContent=S.size+" mm";save();draw();return;}
+  if(t.id.startsWith("col-")){const g=t.id.slice(4);S.colors[g]=["Custom",t.value];if(g==="icons"&&S.mode==="fiber")S.mode="one";t.closest(".row").querySelector("code").textContent=t.value;t.closest(".row").querySelector("label span").textContent="Custom";draw();}});
+document.addEventListener("change",e=>{if(e.target.id&&e.target.id.startsWith("col-"))ui();});
+$("copy").addEventListener("click",e=>{const b=e.currentTarget,t=$("pickText").textContent;navigator.clipboard.writeText(t).then(()=>{b.textContent="Copied";setTimeout(()=>b.textContent="Copy my pick",1500);}).catch(()=>{const r=document.createRange();r.selectNodeContents($("pickText"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selected, press Ctrl+C";});});
+ui();view("Three-quarter");
+</script>

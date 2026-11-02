@@ -1,0 +1,163 @@
+{
+  "plate": {
+    "vertices": 4494,
+    "triangles": 9080,
+    "shells": 1,
+    "bad_edges": 0,
+    "degenerate": 0,
+    "volume_mm3": 51701.315807624305,
+    "bounds": [
+      [
+        -126.0,
+        126.0
+      ],
+      [
+        0.0,
+        13.299999237060547
+      ],
+      [
+        5.7220458984375e-06,
+        88.79999542236328
+      ]
+    ],
+    "collinear_repairs": 26
+  },
+  "frame": {
+    "vertices": 3076,
+    "triangles": 6180,
+    "shells": 1,
+    "bad_edges": 0,
+    "degenerate": 0,
+    "volume_mm3": 8895.533466245488,
+    "bounds": [
+      [
+        -39.5,
+        105.5
+      ],
+      [
+        13.299999237060547,
+        16.299999237060547
+      ],
+      [
+        3.0,
+        80.0
+      ]
+    ],
+    "collinear_repairs": 0
+  },
+  "floor": {
+    "vertices": 4822,
+    "triangles": 9704,
+    "shells": 1,
+    "bad_edges": 0,
+    "degenerate": 0,
+    "volume_mm3": 58370.35015988056,
+    "bounds": [
+      [
+        -102.0,
+        -6.0
+      ],
+      [
+        4.0,
+        152.0
+      ],
+      [
+        8.22499942779541,
+        40.5
+      ]
+    ],
+    "collinear_repairs": 0
+  },
+  "deck": {
+    "vertices": 5204,
+    "triangles": 10456,
+    "shells": 1,
+    "bad_edges": 0,
+    "degenerate": 0,
+    "volume_mm3": 52179.28841386494,
+    "bounds": [
+      [
+        -102.0,
+        -6.0
+      ],
+      [
+        4.0,
+        152.0
+      ],
+      [
+        40.5,
+        74.5
+      ]
+    ],
+    "collinear_repairs": 1
+  },
+  "pin1": {
+    "vertices": 120,
+    "triangles": 236,
+    "shells": 1,
+    "bad_edges": 0,
+    "degenerate": 0,
+    "volume_mm3": 236.9702301162522,
+    "bounds": [
+      [
+        -2.5,
+        2.5
+      ],
+      [
+        -2.8999996185302734,
+        15.0
+      ],
+      [
+        39.599998474121094,
+        45.400001525878906
+      ]
+    ],
+    "collinear_repairs": 0
+  },
+  "pin2": {
+    "vertices": 216,
+    "triangles": 428,
+    "shells": 1,
+    "bad_edges": 0,
+    "degenerate": 0,
+    "volume_mm3": 236.72283010940274,
+    "bounds": [
+      [
+        -2.5,
+        2.5
+      ],
+      [
+        -2.8999996185302734,
+        15.0
+      ],
+      [
+        39.599998474121094,
+        45.400001525878906
+      ]
+    ],
+    "collinear_repairs": 0
+  },
+  "pin3": {
+    "vertices": 312,
+    "triangles": 620,
+    "shells": 1,
+    "bad_edges": 0,
+    "degenerate": 0,
+    "volume_mm3": 236.4754306784269,
+    "bounds": [
+      [
+        -2.5,
+        2.5
+      ],
+      [
+        -2.8999996185302734,
+        15.0
+      ],
+      [
+        39.599998474121094,
+        45.400001525878906
+      ]
+    ],
+    "collinear_repairs": 0
+  }
+}

@@ -48,6 +48,7 @@ For each part, write down what was printed, on what, and whether it fit. The res
 
 ## Later — ideas, not commitments
 
+- Revisit the SCR5 screen window: a bit too much clearance at the top of the glass (H7 fit, 2026-10-31); tighten once all brackets are dialed in. See docs/Fit_Findings.md.
 - Cabling backlog: a quicker way back to the rack-level panel from a slot (today it's the rack dropdown).
 - Better wizard detection: non-circular slots, solid-box features, recessed or touching ports.
 - SCAD imports that `include`/`use` other files.

@@ -1,5 +1,23 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-01 OptiPlex rethink: front sleeve + rear channels, OPX-A to OPX-D (Claude)
+**Next step:** Brian decides whether to print OPX-C now or have OPX-D packaged. If OPX-D: add a `pack_3mf.py` to its `src/` (copy OPX-C's, add the two rails, flat), run it, count the tags in the 3MF, copy it to `outputs/Final_3MF/`, add the table row and mark OPX-C superseded. Then log Brian's print report in `docs/Fit_Findings.md`.
+
+Brian looked at the printed SLV-F and two third-party brackets (scubaroboto rear bracket, BY-NC-SA; Psychobob shelf, Standard Digital File License; both stay in his Downloads, only ideas borrowed, credited in the READMEs) and replaced the settled full tray and one-piece rear bracket after being reminded of his "do not let me change this" note. PC orientation is still settled: power button at the faceplate, ports toward the rear posts.
+
+**PC measured by Brian (use these, not the STEP):** 182.5 wide, 178 deep including the bezel (the STEP's 194.5 is wrong for this), 36 tall. Bezel starts at the left seen from the front, 122.5 x 23 from the bottom, 2.3 proud. Feet 5 x 20 (long front to back) x 2.8 tall, 15 from each side, front pair 15 from the case front, rear pair 10 from the rear. SLV-F's dips are 16 long, too short for a 20 foot, so its click-in can't seat as designed. Older specs and the wizard's saved OptiPlex still carry the old numbers.
+
+| Rev | What | Status |
+|---|---|---|
+| [OPX-A](outputs/OptiPlex_Sleeve_Channels_2026-11-01/README.md) | One-piece plate + 65 deep sleeve, 2 rear C-channels on the back of the rear posts, 21 long dips, foot stop | Superseded |
+| [OPX-B](outputs/OptiPlex_Sleeve_Channels_OPX-B_2026-11-01/README.md) | A + rear stops 0.8 behind the case (Brian declined front lips) | Superseded |
+| [OPX-C](outputs/OptiPlex_Sleeve_Channels_OPX-C_2026-11-01/README.md) | B with the PC 2.3 forward: case front flush with the plate face, raised bezel 2.3 proud | **Current print file**, `outputs/Final_3MF/OPX-C_OptiPlex_sleeve_channels_set.3mf`, 3 objects, 3710/7452 tags. [Viewer](https://claude.ai/artifact/2upwkYtACyGUd5gD4SacUP) |
+| [OPX-D](outputs/OptiPlex_Sleeve_Channels_OPX-D_2026-11-01/README.md) | C + 2 front post rails (SG8-M6-F pattern, 1 M6 x 8 from behind into each middle hole), sleeve runners, middle slot in each rear ear, because the PC is heavy | **Concept, no 3MF.** [Viewer](https://claude.ai/artifact/PpnVxYSYPtQ7ce9GR1J4Fs) |
+
+**Checks:** digital only, `python src/OPX-?_build.py <post.stl>`. The 4U post (`3D/Objects/object_190.model` in `work/rack-geometry-recovery/sources/Lab+Rax+1-5U+Posts+&+Panels.3mf`) must be converted to a local STL first and never goes in these folders. OpenSCAD reports "top level object is empty" for a failed import as well as a clear pair, so the OPX scripts intersect source modules, stop on errors and run controls that must overlap. Viewer pages with the post mesh are in `work/mesh-viewer/`, not committed.
+
+**Unfinished or unverified:** nothing printed, no 3MF opened in a slicer. Fit, click-in, strength, stiffness across the open middle and insert retention are UNKNOWN. OPX-D also needs M6 inserts in 4 middle post holes, and its runner clearances (0.1 on the ledge, 0.25 elsewhere) come from SG8-M6-F, whose rails are unproven. Rear add-ons on the dummy PC are rough, read from photos; check antenna access beside the left channel and stop. The slot the PC lands in is unchecked: clashes used a middle section of the 4U post.
+
 ## 2026-11-01 CM1000 one-piece bracket: test slice CM1P-T1 (Claude)
 Brian rejected CM6C's rails (never print it) and chose plain solid rails printed in one piece with the faceplate, proven first by a quick test print. Modem measured: 212 x 44.4, 14 end wedge, 3 tall at the front, 44.4 at 15 back, about 136 deep, side hole 22.25 up (distance back from the front still missing). [CM1P-T1](outputs/CM1000_OnePiece_Test_CM1P-T1_2026-11-01/README.md) is the pocket and channels only. Unprinted. T1 printed: too tight, had to be really forced on, tie strips bowed; the modem's end has a flat gray strip the V ignored. [CM1P-T2](outputs/CM1000_OnePiece_Test_CM1P-T2_2026-11-01/README.md) is deliberately loose (1.5 per side, flat floor, same open frame as T1), unprinted. Next: Brian's T2 play measurement, then the full one-piece part, keeping rack slots, light pipes, logo and the side screw slot. Open: these numbers predict 1.3 per side on CM6A against the 3.8 measured.
 

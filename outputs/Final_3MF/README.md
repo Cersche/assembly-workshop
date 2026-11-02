@@ -6,6 +6,9 @@ Print status (Brian, 2026-10-30): "accepted" means accepted to print, not proven
 
 | File | Bracket | Source folder |
 |---|---|---|
+| OPX-C_OptiPlex_sleeve_channels_set.3mf | **OptiPlex, test print (2026-11-01).** One-piece front sleeve + 2 rear C-channels with rear stops, measured PC and feet, 21 mm click-in dips; case front flush with the plate, raised bezel 2.3 proud. Replaces the SLV-F full tray. **Unprinted.** Fit UNKNOWN | OptiPlex_Sleeve_Channels_OPX-C_2026-11-01 |
+| OPX-B_OptiPlex_sleeve_channels_set.3mf | **Superseded by OPX-C.** PC 2.3 further back (bezel flush, case recessed) | OptiPlex_Sleeve_Channels_OPX-B_2026-11-01 |
+| OPX-A_OptiPlex_sleeve_channels_set.3mf | **Superseded by OPX-B.** Same parts without the rear stops | OptiPlex_Sleeve_Channels_2026-11-01 |
 | HDT-M6-A_drive_tray.3mf | HDD/SSD tray | Hard_Drive_Tray_M6_2026-10-28 |
 | HDT-M6-A_drive_tray_color.3mf | HDD/SSD tray, color inlay | Hard_Drive_Tray_M6_2026-10-28 |
 | CM6C_CM1000_M6_bracket_set.3mf | **CM1000 modem, current (2026-11-01).** Channels recut to the measured modem wedge, inserts moved, head-sized screw bays with a bar along the channel. **Unprinted**, 25401/50854 tags. Fit UNKNOWN | CM1000_CM6C_2026-11-01 |

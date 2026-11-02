@@ -77,3 +77,7 @@ Whenever work produces, changes or examines STL/3MF files, run `python tools/mes
 ## M6 bracket hardware — Brian, 2026-10-28
 
 Faceplate/bracket overhaul: every bracket redesign replaces all M3 heat-set inserts with the same M6 heat-set inserts used in the rack posts, fastened with the same M6 x 8 button-head screws as the shelf (one-item BOM; M3 lacked rigidity for heavy items). Redesigns go one bracket per fresh session; printed baseline is listed in HANDOFF.md. Insert bore/OD/length come from Brian or a measured part; until then they are UNKNOWN. Already-printed revisions stay immutable. This supersedes the M3 x 0.5 limit for new bracket designs only; fit and strength stay UNKNOWN.
+
+## Fasteners and heat-set inserts — Brian, 2026-10-31
+
+Universal standard; full list in Brian's global CLAUDE.md. No self-tapping into prints. M3 is the default, M6 for weight-bearing joints, M2/M2.5 only where a device forces it. Inserts: M6x5x8 → 7.6 bore; M3x3x5 → 4.2 bore x 4 deep; M2.5x4x3.5 → 3.2 bore x 5 deep. Screws on hand: M3 countersunk, M2.5 socket head, M6x8 button head. Already printed revisions stay immutable.

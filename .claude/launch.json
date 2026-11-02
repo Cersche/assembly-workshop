@@ -334,6 +334,34 @@
         "work/mesh-viewer"
       ],
       "port": 8861
+    },
+    {
+      "name": "Rack finish pages",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8863",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "work/rack-finish"
+      ],
+      "port": 8863
+    },
+    {
+      "name": "Rack moonshot pages",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8865",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "work/rack-moonshot"
+      ],
+      "port": 8865
     }
   ]
 }

@@ -1,0 +1,15 @@
+SCR5-H8_screen_pi_hue_set.3mf vertex tags 17738 triangle tags 35668 no ns0 [('SCR5-H8 plate', 4252, 8576), ('SCR5-H8 frame', 3076, 6180), ('SCR5-H8 floor', 4822, 9704), ('SCR5-H8 deck', 4940, 9924), ('SCR5-H8 pin1 DROP0.45', 120, 236), ('SCR5-H8 pin2 DROP0.45', 216, 428), ('SCR5-H8 pin3 DROP0.45', 312, 620)]
+Traceback (most recent call last):
+  File "D:\Projects\assembly-workshop\outputs\Screen_Pi_Hue_SCR5-H8_2026-10-31\src\SCR5-H_verify_geometry.py", line 83, in <module>
+    if __name__=='__main__':main()
+  File "D:\Projects\assembly-workshop\outputs\Screen_Pi_Hue_SCR5-H8_2026-10-31\src\SCR5-H_verify_geometry.py", line 35, in main
+    assert abs(sections[y][0]-(-27.55))<0.00002
+AssertionError
+Traceback (most recent call last):
+  File "D:\Projects\assembly-workshop\outputs\Screen_Pi_Hue_SCR5-H8_2026-10-31\src\SCR5-H_finalize.py", line 61, in <module>
+    if __name__=='__main__':sys.exit(main())
+  File "D:\Projects\assembly-workshop\outputs\Screen_Pi_Hue_SCR5-H8_2026-10-31\src\SCR5-H_finalize.py", line 43, in main
+    subprocess.run([sys.executable,str(HERE/'src/SCR5-H_verify_geometry.py')],check=True)
+  File "C:\Program Files\Python310\lib\subprocess.py", line 524, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Program Files\\Python310\\python.exe', 'D:\\Projects\\assembly-workshop\\outputs\\Screen_Pi_Hue_SCR5-H8_2026-10-31\\src\\SCR5-H_verify_geometry.py']' returned non-zero exit status 1.

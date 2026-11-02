@@ -1,0 +1,211 @@
+<title>Rack Finish Book</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&family=Oswald:wght@500&family=Saira+Stencil+One&family=Share+Tech+Mono&display=swap">
+<style>
+/* Layout: workbench page; left = finish choices, right = live 9U rack preview (stacks on phones). Single dark look by choice: it is a shop bench. */
+:root{
+  --bench:#141619; --panel:#1c1f23; --line:#2e3238; --ink:#ebe8e2; --muted:#9ba0a8; --sel:#ff8200;
+  --display:"Saira Stencil One","Oswald",Impact,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+body{background:var(--bench);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{display:grid;gap:10px;margin-bottom:22px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,6vw,56px);line-height:1;margin:0;text-wrap:balance}
+h1 span{color:var(--sel)}
+.lede{max-width:68ch;color:var(--muted);margin:0}
+h2{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:28px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+.col{display:grid;gap:26px;min-width:0}
+.themes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:520px){.themes{grid-template-columns:minmax(0,1fr)}}
+.theme{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:8px;padding:12px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.theme:focus-visible{outline:2px solid var(--sel);outline-offset:2px}
+.theme[aria-pressed="true"]{border-color:var(--sel);box-shadow:inset 0 0 0 1px var(--sel)}
+.theme b{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.theme p{margin:0;font-size:13px;color:var(--muted)}
+.chips{display:flex;gap:4px}
+.chips i{display:block;height:18px;flex:1;border-radius:2px;border:1px solid #ffffff22}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:500 13px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:7px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{border-color:var(--sel);color:var(--sel)}
+.seg button:focus-visible{outline:2px solid var(--sel);outline-offset:2px}
+.hint{font-size:13px;color:var(--muted);margin:8px 0 0}
+.rackbox{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);display:grid;gap:14px;min-width:0}
+.rackframe{background:#0b0c0e;border:1px solid var(--line);border-radius:8px;padding:14px}
+#rack{display:block;width:100%;height:auto;max-width:100%}
+.bom{display:grid;gap:6px;font-size:13px}
+.bom div{display:grid;grid-template-columns:18px 92px minmax(0,1fr);gap:8px;align-items:center}
+.bom i{width:16px;height:16px;border-radius:3px;border:1px solid #ffffff33;display:block}
+.bom span:first-of-type{font-family:var(--mono);color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.pick{display:grid;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px}
+.pick pre{margin:0;font:12.5px/1.5 var(--mono);white-space:pre-wrap;color:var(--ink)}
+.pick button{justify-self:start;font:600 13px var(--body);background:var(--sel);color:#111;border:0;border-radius:4px;padding:8px 14px;cursor:pointer}
+.about{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:6px}
+.about div{border-top:2px solid var(--line);padding-top:8px;font-size:13px;color:var(--muted)}
+.about strong{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
+.notes{margin-top:34px;border-top:1px solid var(--line);padding-top:18px;display:grid;gap:6px;max-width:78ch;font-size:13.5px;color:var(--muted)}
+.notes b{color:var(--ink)}
+@media (prefers-reduced-motion:no-preference){.theme,.seg button{transition:border-color .15s,color .15s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Lab Rax 10in · 9U · final finish</div>
+    <h1>Rack <span>Finish</span> Book</h1>
+    <p class="lede">Pick a theme, an icon style and a label face. The rack on the right is your current layout (U9 modem down to U1 OptiPlex) with each choice applied. Colors are filament colors: every plate is the base color plus inlays, so what you see is what you would print.</p>
+    <div class="about" aria-label="What these themes are tuned to">
+      <div><strong>Fiber guy by trade</strong>OSP and splice work, so one theme uses the 12-color fiber code you already read in your sleep.</div>
+      <div><strong>Gene Simmons on every win</strong>So one theme is black, silver and one hit of red. No band logos, just the attitude.</div>
+      <div><strong>Function first</strong>You pushed v1 over polish, so every theme sticks to 2 or 3 filaments per plate and icons a printer can actually draw.</div>
+      <div><strong>Dark three-panel app</strong>The Assembly Workshop GUI is dark; Amber Terminal and Blackout match it.</div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div class="col">
+      <section aria-labelledby="h-theme"><h2 id="h-theme">1 · Theme</h2><div class="themes" id="themes"></div></section>
+      <section aria-labelledby="h-icon"><h2 id="h-icon">2 · Icons</h2><div class="seg" id="icons"></div><p class="hint" id="iconHint"></p></section>
+      <section aria-labelledby="h-font"><h2 id="h-font">3 · Label face</h2><div class="seg" id="fonts"></div><p class="hint">All labels are raised or inlaid text at least 6 mm tall.</p></section>
+      <section aria-labelledby="h-acc"><h2 id="h-acc">4 · Accent stripe</h2><div class="seg" id="accents"></div><p class="hint" id="accHint"></p></section>
+    </div>
+
+    <aside class="rackbox" aria-label="Rack preview">
+      <div class="rackframe"><svg id="rack" viewBox="0 0 300 422" role="img" aria-label="Front view of the 9U rack with the selected finish"></svg></div>
+      <div class="bom" id="bom" aria-label="Filaments needed"></div>
+      <div class="pick"><pre id="pickText"></pre><button type="button" id="copy">Copy my pick</button></div>
+    </aside>
+  </div>
+
+  <div class="notes">
+    <div><b>How it gets printed.</b> Icons and labels go in through Print in color: 0.6 mm inlays (or raised), kept 2 mm off every port, window and rack slot. Lines are drawn at about 1.6 mm so they survive a 0.4 mm nozzle.</div>
+    <div><b>Not settled yet.</b> How the printed colors look, and whether the inlays stay sharp, is unknown until a test coupon is printed. The preview is a drawing, not a render of the real STLs; port and window shapes are simplified.</div>
+  </div>
+</div>
+
+<script>
+const FIBER=[["Blue","#1f6fd1"],["Orange","#ff8200"],["Green","#12a150"],["Brown","#8a5a2b"],["Slate","#7a8794"],["White","#f1f1ec"],["Red","#d0202b"],["Black","#0d0d0e"],["Yellow","#f5c400"],["Violet","#7b3fb5"],["Rose","#f08bb0"],["Aqua","#21c4c9"]];
+const THEMES={
+  fiber:{name:"Fiber Code",blurb:"Charcoal plates, white icons, each U gets its fiber color in TIA-598 order.",plate:["Matte charcoal","#2c2f34"],icon:["White","#f1f1ec"],accent:["Fiber code","fiber"],frame:["Black","#18191b"],hole:"#060707",acc:"fiber"},
+  grease:{name:"Greasepaint",blurb:"Matte black, silk silver icons, one stripe of blood red. Loud without a logo.",plate:["Matte black","#111113"],icon:["Silk silver","#c8ccd2"],accent:["Blood red","#b5121b"],frame:["Matte black","#111113"],hole:"#000",acc:"theme"},
+  amber:{name:"Amber Terminal",blurb:"Graphite plates with amber icons, like an old CRT. Matches the dark app.",plate:["Graphite grey","#363a40"],icon:["Amber","#ffb000"],accent:["Amber","#ffb000"],frame:["Black","#18191b"],hole:"#08090a",acc:"none"},
+  bucket:{name:"Bucket Truck",blurb:"Safety orange plates, black icons, a reflective-white stripe. Field gear.",plate:["Safety orange","#ff6a13"],icon:["Black","#121212"],accent:["White","#eeeeE8"],frame:["Black","#18191b"],hole:"#0a0a0a",acc:"theme"},
+  clean:{name:"Cleanroom",blurb:"Light grey plates, slate icons, one signal-blue stripe. Tidy lab look.",plate:["Light grey","#d6d8d5"],icon:["Slate","#2f3a46"],accent:["Signal blue","#1f6fd1"],frame:["White","#efefeb"],hole:"#121417",acc:"theme"},
+  black:{name:"Blackout",blurb:"Black on black. Icons in dark grey you only see up close.",plate:["Matte black","#141416"],icon:["Dark grey","#4b4f55"],accent:["Dark grey","#4b4f55"],frame:["Matte black","#141416"],hole:"#000",acc:"none"}
+};
+const ICONSTYLES={outline:["Line icons","Thin line icons inlaid in the icon color. Cleanest look."],badge:["Badge","Icon cut out of a solid accent-colored tile. Reads from across the room."],text:["Text only","No icons, bigger labels. Fewest small details to print."]};
+const FONTS={stencil:["Stencil","'Saira Stencil One'"],cond:["Condensed","'Oswald'"],mono:["Mono","'Share Tech Mono'"]};
+const ACCENTS={theme:["Theme color","One stripe color for the whole rack."],fiber:["Fiber code","U9 down to U1 get blue, orange, green, brown, slate, white, red, black."],none:["No stripe","Two filaments per plate. Simplest."]};
+
+const I={
+ modem:'<rect x="3" y="11" width="18" height="8" rx="2"/><path d="M8.2 7.6a5.4 5.4 0 0 1 7.6 0M5.6 5a9 9 0 0 1 12.8 0"/><path d="M7 15h.01M10 15h.01M13 15h.01"/>',
+ switch:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 10h10l-2.5-2.5M18 14H8l2.5 2.5"/>',
+ jack:'<path d="M5 4h14v11h-3v4H8v-4H5z"/><path d="M9 7.5v3M12 7.5v3M15 7.5v3"/>',
+ db:'<ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/>',
+ bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.1h5c0-.8.4-1.6 1.1-2.1A6 6 0 0 0 12 3z"/>',
+ chip:'<rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 3v3M12 3v3M15 3v3M9 18v3M12 18v3M15 18v3M3 9h3M3 12h3M3 15h3M18 9h3M18 12h3M18 15h3"/>',
+ screen:'<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/>',
+ fan:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="1.6"/><path d="M12 10.4C11 7 12.5 4.6 15 5.2s2 3.4-.4 5.2M13.6 12c3.4-1 5.8.5 5.2 3s-3.4 2-5.2-.4M12 13.6c1 3.4-.5 5.8-3 5.2s-2-3.4.4-5.2M10.4 12C7 13 4.6 11.5 5.2 9s3.4-2 5.2.4"/>',
+ pc:'<rect x="6" y="2.5" width="12" height="19" rx="1.5"/><path d="M9 6.5h6M9 9.5h6"/><circle cx="12" cy="16.5" r="1.6"/>'
+};
+const RACK=[
+ {u:9,h:1,name:"Modem",sub:"U9 · CM1000",icons:["modem"],f:"modem"},
+ {u:8,h:1,name:"Switch",sub:"U8 · TL-SG108E",icons:["switch"],f:"switch"},
+ {u:7,h:1,name:"Patch",sub:"U7 · Keystones",icons:["jack"],f:"keystone"},
+ {u:6,h:1,name:"Storage",sub:"U6 · HDD / SSD",icons:["db"],f:"drives"},
+ {u:5,h:1,name:"Hue + Pi",sub:"U5 · Bridge / Pi 4",icons:["bulb","chip"],f:"pi"},
+ {u:4,h:2,name:"Display",sub:"U4–U3 · 5in DSI",icons:["screen"],f:"screen"},
+ {u:2,h:1,name:"Cooling",sub:"U2 · Reserved",icons:["fan"],f:"vent"},
+ {u:1,h:1,name:"OptiPlex",sub:"U1 · Micro PC",icons:["pc"],f:"pc"}
+];
+const U=44.45, PX=24, TOP=11;
+
+let S={theme:"fiber",icon:"outline",font:"stencil",acc:"fiber"};
+try{const s=JSON.parse(localStorage.getItem("rackFinish")||"null");if(s&&THEMES[s.theme])S=Object.assign(S,s);}catch(e){}
+const save=()=>{try{localStorage.setItem("rackFinish",JSON.stringify(S));}catch(e){}};
+
+function accentFor(i){const t=THEMES[S.theme];if(S.acc==="none")return null;if(S.acc==="fiber")return FIBER[i%12];return [t.accent[0],t.accent[1]];}
+
+function feat(f,H,hole,ac){
+  const r=(x,y,w,h,rx=1)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${hole}"/>`;
+  const c=H/2;let s="";
+  if(f==="modem"){for(let i=0;i<4;i++)s+=`<circle cx="${196+i*9}" cy="${c}" r="1.7" fill="${hole}"/>`;for(let i=0;i<5;i++)s+=r(138+i*8,c-9,3,18,1.5);}
+  if(f==="switch"){for(let i=0;i<8;i++)s+=r(140+i*11.2,c-4.5,9,8,.8);}
+  if(f==="keystone"){for(let i=0;i<6;i++)s+=r(118+i*19,c-9.5,14.5,19,1.5);}
+  if(f==="drives"){s+=r(126,c-8,104,5,2.5)+r(126,c+3,104,5,2.5);}
+  if(f==="pi"){s+=r(122,c-8,14,16)+r(140,c-8,14,16)+r(158,c-7,16,14)+r(212,c-9.5,14.5,19,1.5);}
+  if(f==="screen"){s+=`<rect x="118" y="${c-36}" width="118" height="72" rx="4" fill="${hole}"/><rect x="123" y="${c-31}" width="108" height="62" rx="1" fill="#1d3247" opacity=".55"/>`;}
+  if(f==="vent"){for(let x=112;x<=232;x+=7)s+=r(x,8,3.2,H-16,1.6);}
+  if(f==="pc"){s+=r(160,c-3,11,5,.8)+r(175,c-3,11,5,.8)+`<circle cx="194" cy="${c}" r="1.8" fill="${hole}"/><circle cx="224" cy="${c}" r="5" fill="none" stroke="${ac||hole}" stroke-width="1.6"/><path d="M224 ${c-5.5}v4" stroke="${ac||hole}" stroke-width="1.6"/>`;}
+  return s;
+}
+
+function plate(d,i){
+  const t=THEMES[S.theme], H=d.h*U-0.05, y=TOP+(9-d.u)*U+0.025, a=accentFor(i), ic=t.icon[1];
+  let g=`<g transform="translate(${PX} ${y})">`;
+  g+=`<rect width="252" height="${H}" rx="2.5" fill="${t.plate[1]}"/>`;
+  for(let k=0;k<d.h;k++){const uc=H-(k*U+U/2);for(const sx of[126-118.26,126+118.26])for(const dz of[-15.9,15.9])g+=`<rect x="${sx-4.5}" y="${uc+dz-1.9}" width="9" height="3.8" rx="1.9" fill="${t.hole}"/>`;}
+  let x=17;
+  if(a){g+=`<rect x="${x}" y="7" width="4.5" height="${H-14}" rx="1" fill="${a[1]}" ${a[1]===t.plate[1]||a[1]==="#0d0d0e"?`stroke="${ic}" stroke-width=".6"`:""}/>`;x+=10;}
+  const c=H/2;
+  if(S.icon!=="text"){
+    for(const n of d.icons){
+      if(S.icon==="badge"){const bc=a?a[1]:ic, sc=t.plate[1];g+=`<rect x="${x}" y="${c-13}" width="26" height="26" rx="3" fill="${bc}"/><g transform="translate(${x+3} ${c-10}) scale(.833)" fill="none" stroke="${sc}" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">${I[n]}</g>`;x+=30;}
+      else{g+=`<g transform="translate(${x} ${c-11}) scale(.917)" fill="none" stroke="${ic}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${I[n]}</g>`;x+=26;}
+    }
+    x+=4;
+  }
+  const fam=FONTS[S.font][1], big=S.icon==="text"?13:10.5;
+  g+=`<text x="${x}" y="${c+1}" fill="${ic}" font-family="${fam},Impact,sans-serif" font-size="${big}" letter-spacing=".6">${d.name.toUpperCase()}</text>`;
+  g+=`<text x="${x}" y="${c+(S.icon==="text"?11:9.5)}" fill="${ic}" font-family="'Share Tech Mono',monospace" font-size="5.6" letter-spacing=".3">${d.sub}</text>`;
+  g+=feat(d.f,H,t.hole,a&&a[1]);
+  return g+"</g>";
+}
+
+function draw(){
+  const t=THEMES[S.theme];
+  let s=`<rect x="0" y="0" width="300" height="422" fill="#0b0c0e"/>`;
+  for(const px of[6,276]){s+=`<rect x="${px}" y="2" width="18" height="418" rx="2" fill="${t.frame[1]}" stroke="#ffffff14"/>`;for(let u=0;u<9;u++)for(const dz of[-15.9,0,15.9])s+=`<circle cx="${px+9}" cy="${TOP+u*U+U/2+dz}" r="2.2" fill="#000" opacity=".65"/>`;}
+  s+=`<rect x="6" y="2" width="288" height="8" rx="2" fill="${t.frame[1]}" stroke="#ffffff14"/><rect x="6" y="412" width="288" height="8" rx="2" fill="${t.frame[1]}" stroke="#ffffff14"/>`;
+  RACK.forEach((d,i)=>s+=plate(d,i));
+  document.getElementById("rack").innerHTML=s;
+  document.documentElement.style.setProperty("--sel",S.acc==="fiber"?"#ff8200":(t.accent[1]==="#4b4f55"||t.accent[1]==="#121212"?"#c8ccd2":t.accent[1]));
+
+  const rows=[["Plate",t.plate],["Icons + text",t.icon],["Rack frame",t.frame]];
+  let acc="";
+  if(S.acc==="theme"&&t.accent[1]!==t.icon[1])rows.push(["Stripe",t.accent]);
+  if(S.acc==="fiber")acc=FIBER.slice(0,8).map(f=>`<i style="background:${f[1]};display:inline-block;width:14px;height:14px;border-radius:2px;border:1px solid #ffffff33;margin-right:3px;vertical-align:-2px"></i>`).join("");
+  const set=new Set(rows.map(r=>r[1][1].toLowerCase()));
+  if(S.acc==="fiber")FIBER.slice(0,8).forEach(f=>set.add(f[1].toLowerCase()));
+  let perPlate=2+((S.acc!=="none"&&!(S.acc==="theme"&&t.accent[1]===t.icon[1]))||(S.icon==="badge"&&S.acc!=="none")?1:0);
+  document.getElementById("bom").innerHTML=rows.map(r=>`<div><i style="background:${r[1][1]}"></i><span>${r[0]}</span><span>${r[1][0]}</span></div>`).join("")+
+   (S.acc==="fiber"?`<div><i style="background:conic-gradient(${FIBER.slice(0,8).map((f,k)=>f[1]+" "+k*45+"deg "+(k+1)*45+"deg").join(",")})"></i><span>Stripes</span><span>${acc} 8 fiber colors, one per plate</span></div>`:"")+
+   `<div><i style="background:transparent;border-color:transparent"></i><span>Totals</span><span>${perPlate} filaments per plate · about ${set.size} spools for the whole rack</span></div>`;
+
+  const txt=`Rack finish pick\nTheme: ${t.name} (plate ${t.plate[0]}, icons ${t.icon[0]}, frame ${t.frame[0]})\nIcons: ${ICONSTYLES[S.icon][0]}\nLabel face: ${FONTS[S.font][0]}\nStripe: ${ACCENTS[S.acc][0]}${S.acc==="theme"?" ("+t.accent[0]+")":""}`;
+  document.getElementById("pickText").textContent=txt;
+  document.getElementById("iconHint").textContent=ICONSTYLES[S.icon][1];
+  document.getElementById("accHint").textContent=ACCENTS[S.acc][1];
+  for(const b of document.querySelectorAll("[data-k]"))b.setAttribute("aria-pressed",String(S[b.dataset.k]===b.dataset.v));
+  save();
+}
+
+function build(){
+  document.getElementById("themes").innerHTML=Object.entries(THEMES).map(([k,t])=>{
+    const sw=[t.plate[1],t.icon[1],t.accent[1]==="fiber"?`linear-gradient(90deg,${FIBER.slice(0,8).map(f=>f[1]).join(",")})`:t.accent[1],t.frame[1]];
+    return `<button type="button" class="theme" data-k="theme" data-v="${k}"><b>${t.name}</b><span class="chips">${sw.map(c=>`<i style="background:${c}"></i>`).join("")}</span><p>${t.blurb}</p></button>`;}).join("");
+  const seg=(id,obj,k)=>document.getElementById(id).innerHTML=Object.entries(obj).map(([v,o])=>`<button type="button" data-k="${k}" data-v="${v}"${k==="font"?` style="font-family:${o[1]},sans-serif;font-size:14px"`:""}>${o[0]}</button>`).join("");
+  seg("icons",ICONSTYLES,"icon");seg("fonts",FONTS,"font");seg("accents",ACCENTS,"acc");
+  document.addEventListener("click",e=>{const b=e.target.closest("[data-k]");if(!b)return;S[b.dataset.k]=b.dataset.v;if(b.dataset.k==="theme")S.acc=THEMES[b.dataset.v].acc;draw();});
+  document.getElementById("copy").addEventListener("click",e=>{const t=document.getElementById("pickText").textContent;const btn=e.currentTarget;
+    navigator.clipboard.writeText(t).then(()=>{btn.textContent="Copied";setTimeout(()=>btn.textContent="Copy my pick",1500);}).catch(()=>{const r=document.createRange();r.selectNodeContents(document.getElementById("pickText"));const sel=getSelection();sel.removeAllRanges();sel.addRange(r);btn.textContent="Selected, press Ctrl+C";});});
+  draw();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
+}
+build();
+</script>
