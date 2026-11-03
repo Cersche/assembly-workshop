@@ -11,14 +11,14 @@ PROPOSED — UNPRINTED. One piece, with the V slope of Brian's CM1000_1U_Mount a
 - **V:** slope 43 degrees off vertical, as the mount. The modem's slope is 35.9, so it rides on the arm tips, not its end strip. 0.25 per side at the tips at the plate end. Arm tips 1.5 thick. Flat floor 8.64 tall, 215.3 across, 1.65 off the modem's end strip per side. The mount's full point would need 222.84 across, too wide for this rail.
 - **Rails:** 220.46 outside and 0.52 lean per side at the tips, as H. Wall behind the floor 2.58. Length unchanged, 137.62. Lean is assumed to repeat on this V.
 - **Window:** 54 x 8 clear at the old pipes' span, 2.5 bevel at 45 degrees, 59 x 13 at the front face. No pipes.
-- **Modem 2.5 further back:** front at Y 4.1. Plate is 2.86 thick at the nose relief, about 2.5 under the window. Side screw slot moved back 2.5 with it (Y 64.02 to 78.56).
+- **Modem 2.5 further back:** front at Y 4.1. Plate is 2.86 thick at the nose relief, about 2.5 under the window. Side screw slot moved back 2.5 with it (Y 64.02 to 78.56), the same place on the modem as the proven CM1P-E slot (Brian: keep it).
 - **Icons:** the old pipes' icon shapes at 62%, inlaid 0.4 above the window, each over its light. The two detail specks in icon 2 are now plate-coloured islands.
 - **Left out:** the mount's fins, because the modem slots are unconfirmed and deep fins can't slide in from the rear.
 
 ## Assumptions, not measurements
 
 - Light positions come from the old pipes, not a lit modem.
-- The hold depends on the 15 wedge. At the arm tips the modem should be about 184 across, 1.5 in from its top and bottom faces. Each 1 of wedge moves the tip play about 0.7 per side.
+- The hold depends on the 15 wedge, now backed by Brian's 182 flat top (212 less 2 x 15). His 106 flat top depth is 15 less than this model assumed; the extra taper only takes material off the modem, so no new clash, but the arm tips grip over less length. Where it sits is not measured.
 - The lean figures come from CM1P-E, which had a different channel.
 - E's unexplained 1 of side play stays unexplained.
 
