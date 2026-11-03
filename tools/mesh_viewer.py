@@ -8,6 +8,7 @@ WebGL renderer (no CDN, works offline and in the Claude app side panel).
 Each 3MF object becomes its own part, placed by its build-item transform.
 Several STL files are laid side by side on the bed unless --as-is is given.
 --see-through NAME draws matching parts glassy, with their edges and a slider.
+--wireframe NAME draws matching parts as their sharp edges only.
 Vertex positions are quantized to 16 bits per axis over each part's bounding
 box (about 0.003 mm on a 200 mm part).
 """
@@ -190,11 +191,15 @@ def main(argv=None):
     ap.add_argument("--as-is", action="store_true", help="keep STL coordinates, no side-by-side layout")
     ap.add_argument("--see-through", action="append", default=[], metavar="NAME",
                     help="draw parts whose name contains NAME see-through (repeatable)")
+    ap.add_argument("--wireframe", action="append", default=[], metavar="NAME",
+                    help="draw parts whose name contains NAME as sharp edges only (repeatable)")
     a = ap.parse_args(argv)
     parts = load_parts(a.files, a.as_is)
     for p in parts:
         if any(s.lower() in p["name"].lower() for s in a.see_through):
             p["opacity"] = SEE_THROUGH
+        if any(s.lower() in p["name"].lower() for s in a.wireframe):
+            p["wire"] = True
     title = a.title or Path(a.files[0]).stem
     template = (Path(__file__).with_name("mesh_viewer_template.html")).read_text(encoding="utf-8")
     page = (template.replace("__TITLE__", html.escape(title))
