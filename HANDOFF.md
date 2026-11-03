@@ -1,8 +1,12 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-03 OptiPlex OPX-F: looser post rails, second step (Claude)
+Brian printed the OPX-E rails: improved, still a little too tight in the rails; rear stops and feet line up fine. He gave no amount, so Claude chose another 0.5 per side. [OPX-F](outputs/OptiPlex_Sleeve_Channels_OPX-F_2026-11-03/README.md) is two new rails only, `outputs/Final_3MF/OPX-F_OptiPlex_post_rails.3mf`, channel 1.0 outward from OPX-D, reused with the printed OPX-D sleeve and channels. Viewers: [print](https://claude.ai/artifact/L8dcwJatg3BRr8t49pRu1t), [assembled](https://claude.ai/artifact/YBVDEkyi9uM9GtVd3h6MZC). Clash checks clear, 2 objects, 2444/4888 tags, 0 open edges. Not printed or opened in a slicer.
+**Next step:** Brian prints the rails and reports the slide-in and any front sag: the rails only carry the sleeve after it drops about 1.1. If still tight, clearance may not be the cause: each rail can pivot on its one screw, and the 45 degree runner faces can wedge under the PC's weight (neither tested). Log results in `docs/Fit_Findings.md`.
+
 ## 2026-11-03 OptiPlex OPX-E: looser post rails (Claude)
 Brian printed OPX-D: inserting the PC + faceplate into the rack is a tiny bit too tight. He asked for about 0.5 per side between the rails and the runners. [OPX-E](outputs/OptiPlex_Sleeve_Channels_OPX-E_2026-11-03/README.md) is two new rails only, `outputs/Final_3MF/OPX-E_OptiPlex_post_rails.3mf`, channel moved 0.5 outward, reused with the printed OPX-D sleeve and channels. Viewers: [print](https://claude.ai/artifact/V5BE8cREY5FV1vi4Km5ept), [assembled](https://claude.ai/artifact/TmzMpfgcsb9YFj4SGxgcS5). Clash checks clear, 2 objects, 2446/4892 tags, 0 open edges. Not printed or opened in a slicer.
-**Next step:** Brian prints the rails and reports the slide-in and any front sag: the rails only carry the sleeve after it drops about 0.6. Click-in, rear stops and strength on OPX-D are still unreported. Log results in `docs/Fit_Findings.md`.
+Printed: improved, still a little too tight, see OPX-F above.
 
 ## 2026-11-03 CM1000 light pipes: CM1P-T6, whole test in one piece (Claude)
 Brian asked for the CM1P-T5 test in one piece. **[CM1P-T6](outputs/CM1000_Light_Pipe_Test_CM1P-T6_2026-11-03/README.md), unprinted, is the one to print; don't print T5:** one 127 wide slice with 10 pipes, the 5 types twice, A1-A5 printed as CM1P-O and B1-B5 at 100% infill, set per part. `outputs/Final_3MF/CM1P-T6_light_pipe_test_slice.3mf`. Digital checks only: one valid solid, 0 bad edges, 29812/59620 tags, nothing inside the modem envelope. Viewer `work/mesh-viewer/CM1P-T6_on_modem.html`, not committed because it holds licensed meshes. **Next:** Brian ranks the 10 holes, then the bracket revision with the winning pipe.
@@ -50,7 +54,7 @@ Brian supplied CM1000_1U_Mount and 1U_Bracket STLs and asked for a one-piece bra
 For the some-day rack rebuild, no action pending. Concept only, not printed: [README](work/rack-post-hex/README.md). 1.2 x 0.2 grooves on the 4U post bed face, 25 pads, bores centred in pads, watertight. PHX-B (Brian: chamfer the gaps 45 degrees) has V grooves 1.2 wide x 0.6 deep. PHX-C adds matching 1U/2U faceplate blanks on one rack-wide lattice, with the post rebuilt to match (hexes 2.4% wider). Nothing in work/rack-post-hex/ is committed yet: the first commit attempt was blocked and Brian has not chosen how to commit it. Warp benefit UNKNOWN; sources are anecdotal.
 
 ## 2026-11-01 OptiPlex rethink: front sleeve + rear channels, OPX-A to OPX-D (Claude)
-**Next step:** see the OPX-E entry above; OPX-D was printed and its rails are being replaced.
+**Next step:** see the OPX-F entry above; OPX-D was printed and its rails are being replaced.
 
 Brian looked at the printed SLV-F and two third-party brackets (scubaroboto rear bracket, BY-NC-SA; Psychobob shelf, Standard Digital File License; both stay in his Downloads, only ideas borrowed, credited in the READMEs) and replaced the settled full tray and one-piece rear bracket after being reminded of his "do not let me change this" note. PC orientation is still settled: power button at the faceplate, ports toward the rear posts.
 
