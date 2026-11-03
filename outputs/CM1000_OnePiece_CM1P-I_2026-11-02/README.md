@@ -18,7 +18,7 @@ PROPOSED — UNPRINTED. One piece, with the V slope of Brian's CM1000_1U_Mount a
 ## Assumptions, not measurements
 
 - Light positions come from the old pipes, not a lit modem.
-- The hold depends on the 15 wedge, now backed by Brian's 182 flat top (212 less 2 x 15). His 106 flat top depth is 15 less than this model assumed; the extra taper only takes material off the modem, so no new clash, but the arm tips grip over less length. Where it sits is not measured.
+- The hold depends on the 15 wedge, now backed by Brian's 182 flat top (212 less 2 x 15). His front slope is 25 deep and flat top 106, against the 15 this bracket's pocket assumes. The longer slope only takes material off the modem, so no new clash, but the arm tips start gripping about 10 further back.
 - The lean figures come from CM1P-E, which had a different channel.
 - E's unexplained 1 of side play stays unexplained.
 

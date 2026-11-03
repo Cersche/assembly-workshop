@@ -37,6 +37,7 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 | 2026-11-02 | CM1P-E measured empty, rail tips (Brian) | Outside 221.5 (design 220.46), V floor to V floor 214 (design 212.69), so the channel is about 1.3 wide at the tips. Side play 3 (design 1.0). Rails don't bend when the modem is pushed in (Brian). Modem height in the rack fine, clear of the switch, modem doesn't shrink toward the rear (Brian). Front width and mid-rail not measured |
 | 2026-11-02 | CM1000 modem measured (Brian) | 212 end to end, flat strip on each end 3 wide (channels since T2 assumed 8), end wedge 15 (14 used through CM1P-G). Not a printed part; sets the next channel |
 | 2026-11-02 | CM1000 modem top face measured (Brian) | Flat top 182 x 106. 182 confirms the 15 end wedge (212 less 2 x 15). 106 leaves 30 of the 136 depth sloping; where it sits, front or rear, is not measured. Not a printed part |
+| 2026-11-02 | CM1000 modem front slope measured (Brian) | 25 deep at the front. With the 106 flat top that leaves 5 of the 136 depth unexplained: a rear edge slope, or the depth is really 131. Not a printed part |
 | 2026-10-28 | TL-SG108E `2026-10-23_TL-SG108E_flush` | Printed and tested; fit acceptable (Brian) |
 | 2026-10-27 | MoCA porch15 + printed bezel nut | Fits, but nut too tall (above the rim), too thick and too tight; empty corner past the OUTs and closed modem side get in the way (porch rev 2, porch16.scad). Splitter calipered |
 
