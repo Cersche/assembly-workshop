@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-03 Screen + Pi + Hue: SCR5-H10, keystone cleared, low M3 joint (Claude)
+Brian spotted it: the X -88 M6 joint added in H8 sat in the keystone opening, and H9 inherited it. **Do not print the H8 or H9 plate and deck** (both 3MFs are still in `outputs/Final_3MF/`). **[SCR5-H10](outputs/Screen_Pi_Hue_SCR5-H10_2026-11-03/README.md), unprinted, is the one to print:** H9 with that joint removed and a new M3 joint low on the outer side (Brian chose it; M3 because only about 9 mm is free there). Reprint plate, floor, deck; frame and pins are H8's. Digital checks now include the keystone path and the rack post mesh. **Next:** Brian reviews or prints. Push from this session was refused by the permission check, so local commits may be ahead of GitHub: run `git status -sb`, then push. App library item not updated.
+
 ## 2026-11-03 Power strip wall bracket: PSB-A first draft (Claude)
 Brian wants a wall bracket for the rack's power strip, with spools for adapter cord slack and a holder for the OptiPlex brick. **[PSB-A](outputs/Power_Strip_Bracket_PSB-A_2026-11-03/README.md), unprinted:** plate with 10 spools, 2 hangers for the keyholes (printed mushroom + M3 countersunk into insert, because the M3 head nearly slips the 5 wide slot), cradle with 2 spools, 2 screw-on hoops. `outputs/Final_3MF/PSB-A_power_strip_bracket_set.3mf`. Digital checks only: 0 bad edges. Viewer `work/mesh-viewer/PSB-A_assembled.html`. **Next step:** Brian's lip thickness, depth behind the lip, foot height, keyhole height; which outlets need spools; wall type; where it mounts. Those assumptions are in the README. Fit and strength UNKNOWN.
 
