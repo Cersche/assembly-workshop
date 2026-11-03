@@ -81,3 +81,7 @@ Faceplate/bracket overhaul: every bracket redesign replaces all M3 heat-set inse
 ## Fasteners and heat-set inserts — Brian, 2026-10-31
 
 Universal standard; full list in Brian's global CLAUDE.md. No self-tapping into prints. M3 is the default, M6 for weight-bearing joints, M2/M2.5 only where a device forces it. Inserts: M6x5x8 → 7.6 bore; M3x3x5 → 4.2 bore x 4 deep; M2.5x4x3.5 → 3.2 bore x 5 deep. Screws on hand: M3 countersunk, M2.5 socket head, M6x8 button head. Already printed revisions stay immutable.
+
+## Measurement requests need a diagram — Brian, 2026-11-02
+
+Whenever you ask Brian for a measurement while designing anything, send a diagram showing exactly where and how to measure, with the expected value. Never ask in words alone.
