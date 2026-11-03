@@ -40,6 +40,7 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 | 2026-11-02 | CM1000 modem front slope measured (Brian) | 25 deep at the front. With the 106 flat top that leaves 5 of the 136 depth unexplained: a rear edge slope, or the depth is really 131. Not a printed part |
 | 2026-11-02 | CM1000 modem end slope measured (Brian) | 25 along the sloped face. Brian marked up the section: 20.7 above the strip, 3 strip, 20.7 below, 44.4 total, so the strip is centred. With the 15 wedge that gives 25.6 along the face, close to his 25. Shape stays as modelled. Not a printed part |
 | 2026-11-02 | CM1000 modem corner radius, from a top photo Brian supplied | Same on all corners (Brian). Circle fits on the two front corners give 8.0 and 9.1 at 2.37 px/mm, so about 8.5, not measured on the part. Same photo at that scale makes the depth about 129, against 136 in the model and 131 from his 25 + 106. Not a printed part |
+| 2026-11-02 | CM1000 modem depth confirmed (Brian) | 131 front to rear, so 25 front slope + 106 flat top, no rear slope. Replaces 136, which all earlier models and channels assumed. Not a printed part |
 | 2026-10-28 | TL-SG108E `2026-10-23_TL-SG108E_flush` | Printed and tested; fit acceptable (Brian) |
 | 2026-10-27 | MoCA porch15 + printed bezel nut | Fits, but nut too tall (above the rim), too thick and too tight; empty corner past the OUTs and closed modem side get in the way (porch rev 2, porch16.scad). Splitter calipered |
 

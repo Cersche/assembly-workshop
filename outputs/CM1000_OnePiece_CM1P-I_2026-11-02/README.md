@@ -17,6 +17,8 @@ PROPOSED — UNPRINTED. One piece, with the V slope of Brian's CM1000_1U_Mount a
 
 ## Assumptions, not measurements
 
+- Modem depth is 131 (Brian), measured after this was built; the clearance check used 136. The rails run about 2.5 past the modem's rear, and the corners are R 8.5 from a photo. Both only leave more room around the modem.
+
 - Light positions come from the old pipes, not a lit modem.
 - The hold depends on the 15 wedge, now backed by Brian's 182 flat top (212 less 2 x 15). His front slope is 25 deep and flat top 106, against the 15 this bracket's pocket assumes. The longer slope only takes material off the modem, so no new clash, but the arm tips start gripping about 10 further back.
 - The lean figures come from CM1P-E, which had a different channel.
