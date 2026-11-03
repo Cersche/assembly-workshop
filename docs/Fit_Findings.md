@@ -58,6 +58,7 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 - 2026-10-31 SG8-M6-F tray printed (photo shows F's side runners; ID not read from the part): switch slides in with a satisfying detent click, seats with ports flush (Brian). Faceplate, post rails, M6 joint and insert still unprinted/unconfirmed.
 
 - 2026-11-01 OptiPlex measured (Brian): 178 deep incl. bezel, not the 194.5 from the STEP. Feet 5 x 20 x 2.8 tall, 15 from each side, front pair 15 from the case front, rear pair 10 from the rear. SLV-F's dips are 16 long, too short for a 20 mm foot, so its click-in can't seat as designed. OPX-A uses 21.
+- 2026-11-03 OPX-D printed (Brian): inserting the PC + faceplate into the rack is just a tiny bit too tight. Runner gaps were 0.1 ledge, 0.25 outer, 0.35 hold-down, from SG8-M6-F. OPX-E rails add 0.5 to each, unprinted. Click-in, rear stops and strength not reported yet.
 
 ## 2026-10-31 SCR5-H plate (rev 4 print) — glass would not go into the window
 Brian printed the SCR5-H plate: the Waveshare 5" glass (120.7 x 77.2) would not enter the window (121.1 x 77.6, 0.2/side) — the 0.8 mm side lips behind the glass left only 119.5 mm, so this was a design error, not printer shrink. Rev 5: lips removed, clearance 0.4/side (121.5 x 78.0), screen inserted from the front. Lesson: check the insertion path, not just the final position; flush-glass windows can't have rear lips.
