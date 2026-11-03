@@ -44,6 +44,7 @@ Raising the default (e.g. to 0.8) is **not decided**; until then, set `sleeve_to
 | 2026-11-02 | CM1000 modem underside measured (Brian) | Underside flat 106, crease to rear edge, no feet or bumps on or near the front slope. So the 25 front slope is the same top and bottom, no longer assumed. Not a printed part |
 | 2026-11-02 | CM1P-K test run, modem fit (Brian) | "Perfect fit. No sagging, no play, not tight." The 0.5 up-and-down lip gap, the 43 degree V and 0.25 per side at the tips all work on this print. Side screw is approximately 80 from the faceplate front, past the slot's rear end (slot Y 64.02 to 78.56, centred on the earlier 62.4 to 72 hole measurement). CM1P-M centres the slot on 80. Slicer settings, tip width, lights and rack fit not reported. Strength UNKNOWN |
 | 2026-11-02 | CM1P-M report (Brian) | "Everything fits, 2 walls, 10% infill." Taken to mean CM1P-M with its slot centred on 80; revision not named, details on screw, lights and rack not itemised. These settings are the only ones proven for this fit. Strength UNKNOWN |
+| 2026-11-02 | CM1P-M rails (Brian) | "Fits perfect", but the rails are a tad too short in the rear. CM1P-N extends them 10, nothing else, unprinted. Strength UNKNOWN |
 | 2026-10-28 | TL-SG108E `2026-10-23_TL-SG108E_flush` | Printed and tested; fit acceptable (Brian) |
 | 2026-10-27 | MoCA porch15 + printed bezel nut | Fits, but nut too tall (above the rim), too thick and too tight; empty corner past the OUTs and closed modem side get in the way (porch rev 2, porch16.scad). Splitter calipered |
 

@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-02 CM1000 one-piece bracket: CM1P-N, rails 10 longer (Claude)
+Brian: fits perfect, rails just a tad too short in the rear, extend them 10 and change nothing else. **[CM1P-N](outputs/CM1000_OnePiece_CM1P-N_2026-11-02/README.md), unprinted, is the one to print:** CM1P-M with rails ending at Y 147.62, carried straight on with the same section, channel and lean per mm. The four M3 bores in the rail end faces moved back with them, and the ID text changed; nothing else. `outputs/Final_3MF/CM1P-N_CM1000_one_piece_bracket.3mf`. Digital checks only: one valid solid, 0 bad edges, 13172/26324 tags, and slices against CM1P-M differ only at the ID, the old bores and stray grid cells (`src/compare_to_m.py`). Rails now run about 12.5 past the modem's rear; rack clearance there is unchecked. Viewer https://claude.ai/artifact/XZiCuyGtGoWpd2QXPmX4f8 and `work/mesh-viewer/CM1P-N_with_modem_see_through.html`, not committed because it holds licensed meshes. **Next step:** Brian's report on length, fit and rack. Strength UNKNOWN.
+
 ## 2026-11-02 CM1000 one-piece bracket closed for now (Claude)
 Brian's last word after CM1P-M was sent: "everything fits, 2 walls, 10% infill", then moved on. Taken to mean CM1P-M printed at those settings; he didn't name the revision, so that's an assumption. Strength UNKNOWN, and at 2 walls / 10% it says nothing about a solid print. No open CM1000 work.
 
