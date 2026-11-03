@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-03 Power strip wall bracket: PSB-A first draft (Claude)
+Brian wants a wall bracket for the rack's power strip, with spools for adapter cord slack and a holder for the OptiPlex brick. **[PSB-A](outputs/Power_Strip_Bracket_PSB-A_2026-11-03/README.md), unprinted:** plate with 10 spools, 2 hangers for the keyholes (printed mushroom + M3 countersunk into insert, because the M3 head nearly slips the 5 wide slot), cradle with 2 spools, 2 screw-on hoops. `outputs/Final_3MF/PSB-A_power_strip_bracket_set.3mf`. Digital checks only: 0 bad edges. Viewer `work/mesh-viewer/PSB-A_assembled.html`. **Next step:** Brian's lip thickness, depth behind the lip, foot height, keyhole height; which outlets need spools; wall type; where it mounts. Those assumptions are in the README. Fit and strength UNKNOWN.
+
 ## 2026-11-03 Screen + Pi + Hue: SCR5-H9, tray stiffened against sag (Claude)
 Brian reported the tray sagging. Cause found in the H8 meshes: at the deck fan hole, only two 10 x 3 mm deck strips carried the rear of the tray, with no walls and no floor tie to the plate. **[SCR5-H9](outputs/Screen_Pi_Hue_SCR5-H9_2026-11-03/README.md), unprinted, is the one to print:** fan moved to the outer side (Brian's choice), inner and outer walls keyed into the deck, plate ledge under the floor, Hue 10 forward, tray 10 shorter. Reprint plate, floor, deck; frame and pins are H8's. In `outputs/Final_3MF/`. Digital checks only. **Next:** Brian reviews or prints. Assumes only USB-C is used on the Pi's side (HDMI and audio are now walled off). Sag reduction, fit and strength UNKNOWN. App library item not updated.
 
