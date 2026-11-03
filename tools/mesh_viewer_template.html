@@ -34,6 +34,8 @@
   button { background:#333; color:var(--text); border:1px solid var(--line); border-radius:5px; padding:4px 10px; font:inherit; cursor:pointer; }
   button:hover { border-color:var(--accent); }
   .hint { color:var(--muted); font-size:11px; margin-top:8px; }
+  #seeRow { display:grid; grid-template-columns:auto 1fr; gap:8px; align-items:center; margin-top:8px; }
+  #seeRow[hidden] { display:none; }
   #err { position:absolute; inset:0; display:none; place-items:center; color:var(--muted); padding:16px; text-align:center; }
 </style>
 </head>
@@ -43,6 +45,7 @@
 <details id="panel" open>
   <summary><h1>__TITLE__</h1></summary>
   <div id="parts"></div>
+  <label id="seeRow" hidden>See-through <input id="see" type="range" min="0" max="96"></label>
   <div class="row">
     <button id="reset">Reset view</button>
     <button id="all">Show all</button>
@@ -87,11 +90,11 @@ function program(vs, fs) { const p = gl.createProgram(); gl.attachShader(p, shad
 const meshProg = program(
   `attribute vec3 p; attribute vec3 n; uniform mat4 mvp; varying vec3 vn;
    void main(){ vn = n; gl_Position = mvp * vec4(p, 1.0); }`,
-  `precision mediump float; varying vec3 vn; uniform vec3 color; uniform vec3 eye;
+  `precision mediump float; varying vec3 vn; uniform vec3 color; uniform vec3 eye; uniform float alpha;
    void main(){ vec3 n = normalize(vn); if (!gl_FrontFacing) n = -n;
      float head = max(dot(n, eye), 0.0); float sky = 0.5 + 0.5 * n.z;
      vec3 c = color * (0.25 + 0.15 * sky + 0.65 * head);
-     gl_FragColor = vec4(c, 1.0); }`);
+     gl_FragColor = vec4(c, alpha); }`);
 const lineProg = program(
   `attribute vec3 p; attribute vec3 c; uniform mat4 mvp; varying vec3 vc;
    void main(){ vc = c; gl_Position = mvp * vec4(p, 1.0); }`,
@@ -114,7 +117,19 @@ PARTS.forEach((part, k) => {
   part.count = idx.length; part.posArr = pos;
   part.pbuf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, part.pbuf); gl.bufferData(gl.ARRAY_BUFFER, pos, gl.STATIC_DRAW);
   part.nbuf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, part.nbuf); gl.bufferData(gl.ARRAY_BUFFER, nrm, gl.STATIC_DRAW);
-  part.color = COLORS[k % COLORS.length]; part.visible = true;
+  part.color = COLORS[k % COLORS.length]; part.visible = true; part.alpha = part.opacity || 1;
+  if (part.opacity) { // see-through parts get their sharp edges drawn so their shape still reads
+    const seen = new Map(), d = [], key = o => [0, 1, 2].map(a => pos[o + a].toFixed(3)).join();
+    for (let i = 0; i < idx.length; i++) {
+      const j = i % 3 === 2 ? i - 2 : i + 1, a = key(i * 3), b = key(j * 3), e = a < b ? a + "|" + b : b + "|" + a;
+      const m = seen.get(e);
+      if (m === undefined) { seen.set(e, i); continue; }
+      const cos = nrm[m * 3] * nrm[i * 3] + nrm[m * 3 + 1] * nrm[i * 3 + 1] + nrm[m * 3 + 2] * nrm[i * 3 + 2];
+      if (cos < 0.9) for (const o of [i * 3, j * 3]) d.push(pos[o], pos[o + 1], pos[o + 2]);
+    }
+    part.ebuf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, part.ebuf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(d), gl.STATIC_DRAW);
+    part.ecount = d.length / 3;
+  }
   part.hi = part.lo.map((x, a) => x + part.span[a]);
   for (let a = 0; a < 3; a++) { scene.lo[a] = Math.min(scene.lo[a], part.lo[a]); scene.hi[a] = Math.max(scene.hi[a], part.hi[a]); }
 });
@@ -166,7 +181,7 @@ function render() {
   pending = false;
   const dpr = Math.min(window.devicePixelRatio || 1, 2), w = Math.round(canvas.clientWidth * dpr), h = Math.round(canvas.clientHeight * dpr);
   if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
-  gl.viewport(0, 0, w, h); gl.clearColor(0.118, 0.118, 0.118, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); gl.enable(gl.DEPTH_TEST);
+  gl.depthMask(true); gl.disable(gl.BLEND); gl.viewport(0, 0, w, h); gl.clearColor(0.118, 0.118, 0.118, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); gl.enable(gl.DEPTH_TEST);
   const { M, eye } = matrix();
   gl.useProgram(lineProg); gl.uniformMatrix4fv(gl.getUniformLocation(lineProg, "mvp"), false, M);
   gl.bindBuffer(gl.ARRAY_BUFFER, grid.buf);
@@ -178,14 +193,28 @@ function render() {
   gl.uniform3fv(gl.getUniformLocation(meshProg, "eye"), eye);
   const mp = gl.getAttribLocation(meshProg, "p"), mn = gl.getAttribLocation(meshProg, "n"), uc = gl.getUniformLocation(meshProg, "color");
   gl.enable(gl.POLYGON_OFFSET_FILL); gl.polygonOffset(1, 1);
-  for (const part of PARTS) {
-    if (!part.visible) continue;
+  const ua = gl.getUniformLocation(meshProg, "alpha");
+  const clear = PARTS.filter(p => p.visible && p.alpha < 1);
+  for (const part of [...PARTS.filter(p => p.visible && p.alpha >= 1), ...clear]) { // solid parts first, see-through over them
+    if (part.alpha < 1 && !gl.isEnabled(gl.BLEND)) {
+      gl.enable(gl.BLEND); gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(false);
+    }
+    gl.uniform1f(ua, part.alpha);
     gl.uniform3fv(uc, hex(part.color));
     gl.bindBuffer(gl.ARRAY_BUFFER, part.pbuf); gl.enableVertexAttribArray(mp); gl.vertexAttribPointer(mp, 3, gl.FLOAT, false, 0, 0);
     gl.bindBuffer(gl.ARRAY_BUFFER, part.nbuf); gl.enableVertexAttribArray(mn); gl.vertexAttribPointer(mn, 3, gl.FLOAT, false, 0, 0);
     gl.drawArrays(gl.TRIANGLES, 0, part.count);
   }
   gl.disableVertexAttribArray(mn);
+  const edged = PARTS.filter(p => p.visible && p.ebuf);
+  if (edged.length) {
+    gl.useProgram(lineProg);
+    for (const part of edged) {
+      gl.vertexAttrib3fv(lc, hex(part.color));
+      gl.bindBuffer(gl.ARRAY_BUFFER, part.ebuf); gl.enableVertexAttribArray(lp); gl.vertexAttribPointer(lp, 3, gl.FLOAT, false, 0, 0);
+      gl.drawArrays(gl.LINES, 0, part.ecount);
+    }
+  }
   lastM = M; drawOverlay();
 }
 
@@ -203,6 +232,12 @@ PARTS.forEach(part => {
   sz.textContent = part.span.map(s => (s < 1e-6 ? 0 : s).toFixed(1)).join(" × ") + " mm";
   row.append(cb, sw, nm, sz); list.append(row);
 });
+const seeParts = PARTS.filter(p => p.opacity);
+if (seeParts.length) {
+  const see = document.getElementById("see"); document.getElementById("seeRow").hidden = false;
+  see.value = 100 - Math.round(seeParts[0].opacity * 100);
+  see.oninput = () => { seeParts.forEach(p => { p.alpha = 1 - see.value / 100; }); draw(); };
+}
 document.getElementById("reset").onclick = () => frame(-Math.PI / 3, 0.55);
 document.getElementById("top").onclick = () => frame(-Math.PI / 2, Math.PI / 2 - 0.001);
 document.getElementById("front").onclick = () => frame(-Math.PI / 2, 0);

@@ -7,6 +7,7 @@ WebGL renderer (no CDN, works offline and in the Claude app side panel).
 
 Each 3MF object becomes its own part, placed by its build-item transform.
 Several STL files are laid side by side on the bed unless --as-is is given.
+--see-through NAME draws matching parts glassy, with their edges and a slider.
 Vertex positions are quantized to 16 bits per axis over each part's bounding
 box (about 0.003 mm on a 200 mm part).
 """
@@ -24,6 +25,7 @@ from pathlib import Path
 NS = "{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}"
 PNS = "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}"
 GAP = 10.0  # mm between STL parts when laid out side by side
+SEE_THROUGH = 0.16  # starting opacity of --see-through parts
 
 
 def read_stl(path):
@@ -186,8 +188,13 @@ def main(argv=None):
     ap.add_argument("-o", "--out", required=True, help="output .html")
     ap.add_argument("-t", "--title", help="page title (default: first file name)")
     ap.add_argument("--as-is", action="store_true", help="keep STL coordinates, no side-by-side layout")
+    ap.add_argument("--see-through", action="append", default=[], metavar="NAME",
+                    help="draw parts whose name contains NAME see-through (repeatable)")
     a = ap.parse_args(argv)
     parts = load_parts(a.files, a.as_is)
+    for p in parts:
+        if any(s.lower() in p["name"].lower() for s in a.see_through):
+            p["opacity"] = SEE_THROUGH
     title = a.title or Path(a.files[0]).stem
     template = (Path(__file__).with_name("mesh_viewer_template.html")).read_text(encoding="utf-8")
     page = (template.replace("__TITLE__", html.escape(title))
