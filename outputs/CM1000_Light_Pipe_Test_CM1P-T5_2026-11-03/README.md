@@ -1,5 +1,7 @@
 # CM1000 light pipe test slices — test-print IDs CM1P-T5A and CM1P-T5B (2026-11-03)
 
+SUPERSEDED, do not print: Brian asked for the whole test in one piece, see CM1P-T6.
+
 PROPOSED — UNPRINTED. Brian printed CM1P-O: lights line up with the tubes but none gets through, and in a flashlight test much more light passes the old plate. He had also switched to gyroid infill. These slices separate pipe length from infill. They test light only: no rails, no rack slots, no strength. Remix of noyoustupid / Jsmaz3 (CC BY-NC-SA): in-house only.
 
 ## Print
