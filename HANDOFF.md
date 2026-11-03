@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-03 CM1000 light pipes: CM1P-T7 icon-only sanity check (Claude)
+Brian asked for an icon-only test set after CM1P-T6. **[CM1P-T7](outputs/CM1000_Icon_Only_Test_CM1P-T7_2026-11-03/README.md), unprinted:** 70 wide slice with all 5 icon-only pipes in their real places. `outputs/Final_3MF/CM1P-T7_icon_only_test_slice.3mf`. Digital checks only: one valid solid, 0 bad edges, 14124/28244 tags, nothing inside the modem envelope. Viewer `work/mesh-viewer/CM1P-T7_on_modem.html`, not committed because it holds licensed meshes. **Next:** Brian's check of all 5 icons, then the bracket revision if he wants it.
+
 ## 2026-11-03 CM1000 light pipes: CM1P-T6 result, icon only is best (Claude)
 Brian printed CM1P-T6: the icon-only hole passed the most light. **Next:** with his OK, a new bracket revision with CM1P-O's fit and icon-only pipes, tunnels open behind them. Don't print CM1P-O for its lights.
 
