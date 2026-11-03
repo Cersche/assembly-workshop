@@ -44,7 +44,7 @@ bx('power_switch', 50, 58, d + 0.2, d + 0.5, 18, 26)
 bx('power_jack', 34, 44, d + 0.2, d + 0.5, 17, 27)
 for n, x in (('rear_hole_a', 12), ('rear_hole_b', 200)):
     hole(n, x, d + 0.1, m, (0, 1, 0))
-hole('side_screw_hole', 0, 67.2, 22.25, (1, 0, 0), 1.2)   # 62.4 to 72 back (Brian), middle shown
+hole('side_screw_hole', 0, 75.9, 22.25, (1, 0, 0), 1.2)   # about 80 back from the bracket faceplate front on the printed CM1P-K (Brian), less 4.1. Replaces 62.4 to 72, middle 67.2
 for n, p in parts.items():
     p.export(os.path.join(here, n + '.stl'))
 print(parts['modem_shell'].bounds.tolist(), round(parts['modem_shell'].volume / 1000, 1), parts['modem_shell'].is_watertight)
