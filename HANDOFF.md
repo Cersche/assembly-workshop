@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-03 Screen + Pi + Hue: SCR5-H11, add-on fan mount, T-rails on the plate ledge (Claude)
+Brian asked for a detachable fan mount and a longer floor ledge fastened to the floor, tabs rather than screws. **[SCR5-H11](outputs/Screen_Pi_Hue_SCR5-H11_2026-11-03/README.md), unprinted, is the one to print (replaces H10):** tool-free clip-on fan mount as its own part; ledge 26 long with 3 T-rails the floor slides under. Reprint plate, floor, deck and print the mount; frame and pins are H8's. Digital checks only; the clip and slide motions were not simulated. **Next:** Brian reviews or prints. If this session's commit isn't on GitHub, run `git status -sb` and push.
+
 ## 2026-11-03 Screen + Pi + Hue: SCR5-H10, keystone cleared, low M3 joint (Claude)
 Brian spotted it: the X -88 M6 joint added in H8 sat in the keystone opening, and H9 inherited it. **Do not print the H8 or H9 plate and deck** (both 3MFs are still in `outputs/Final_3MF/`). **[SCR5-H10](outputs/Screen_Pi_Hue_SCR5-H10_2026-11-03/README.md), unprinted, is the one to print:** H9 with that joint removed and a new M3 joint low on the outer side (Brian chose it; M3 because only about 9 mm is free there). Reprint plate, floor, deck; frame and pins are H8's. Digital checks now include the keystone path and the rack post mesh. **Next:** Brian reviews or prints. Push from this session was refused by the permission check, so local commits may be ahead of GitHub: run `git status -sb`, then push. App library item not updated.
 
