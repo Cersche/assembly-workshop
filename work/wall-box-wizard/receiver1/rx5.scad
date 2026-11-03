@@ -56,7 +56,7 @@ pins=[86,136];                               // shelf locating pins into the bac
 ears=[for(x=[sbx0-11,sbx1+11],y=[sby0+10,sby1-10])[x,y]];   // cradle ears / base inserts; 22 pads end at the ScreenBeam's ends
 
 // Test print ID (Brian's rule: every test print carries its ID), engraved 0.6 on hidden faces
-print_id="RX5-A";
+print_id="RX5-B";
 module id_text(){text(print_id,size=6,font="Liberation Sans:style=Bold",halign="center",valign="center");}
 module rrect(x0,x1,y0,y1,r){hull()for(x=[x0+r,x1-r],y=[y0+r,y1-r])translate([x,y])circle(r=r);}
 // wall frames as in body15.scad: u to the right seen from outside, y inward, v up
@@ -91,7 +91,7 @@ module switch_window(){
 
 // Strain relief (Brian, 2026-11-02): a fin on the back wall beside each power hole; a small zip tie goes through its slot and
 // round the cord. 45-degree underside, prints upright without support.
-fin_t=2.5;
+fin_t=2.5; fin_off=5.7;   // just clear of the 11 mm hole, so the plugs pass (RX5-A had the fin across the hole)
 module tie_fin(x){w=DO-t+0.01;difference(){translate([x,0,0])rotate([90,0,90])linear_extrude(fin_t)polygon([[w,46],[w,62],[w-14,62],[w-14,60]]);
  translate([x-1,w-7.5,53.5])cube([fin_t+2,4.5,2.5]);}}
 
@@ -114,7 +114,7 @@ module body(){
   translate([100,DO-t+0.6,t+7])rotate([90,0,0])linear_extrude(0.61)id_text();   // ID on the inside of the back wall
   side_vents();
  }
- tie_fin(sw_pwr[0]+2.1);tie_fin(pwr_hole[0]-2.1-fin_t);
+ tie_fin(sw_pwr[0]+fin_off);tie_fin(pwr_hole[0]-fin_off-fin_t);
  for(x=pins)translate([x,DO-t-2.5,shelf_z-0.01])cylinder(d=3,h=2.4);   // shelf locating pins, up from the back ledge
  back_ks()ks_gold_one(0,0);
 }
@@ -241,11 +241,11 @@ module devices(){
 // ScreenBeam: out the left end, up through the open left bay, straight past its fin, above the ETH1 patch.
 module sw_cord(){jx=swx1-sw_jack[0];py=swy0-sw_plug[0];br=10;z=sw_z+sw_jack[1];
  for(a=[0:15:165])rod([jx+br-br*cos(a),py-br*sin(a),z],[jx+br-br*cos(a+15),py-br*sin(a+15),z],4);
- rod([jx+2*br,py,z],[jx+2*br,85,z],4);rod([jx+2*br,85,z],[sw_pwr[0],112,pw_z],4);rod([sw_pwr[0],112,pw_z],[sw_pwr[0],DO+40,pw_z],4);}
+ rod([jx+2*br,py,z],[jx+2*br,85,z],4);rod([jx+2*br,85,z],[sw_pwr[0]+3.5,112,pw_z],4);rod([sw_pwr[0]+3.5,112,pw_z],[sw_pwr[0]+3.5,DO+40,pw_z],4);}
 // ETH1 patch: LAN is now the front jack, so it stays low and passes under the power cord, out past the power plug's tip.
 module eth_patch(){pz=case_z+port_z;a=[sbx0-28,sby0+eth_y,pz];b=[14,34,20];c=[14,72,18];d=[ks_eth1,DO-t-42,ks_z];rod(a,b,6);rod(b,c,6);rod(c,d,6);}
 module sb_cord(){pz=case_z+port_z;
- rod([sbx0-35,sby0+pwr_y,pz],[15,sby0+pwr_y,32],4);rod([15,sby0+pwr_y,32],[12,66,42],4);rod([12,66,42],[pwr_hole[0],112,pw_z],4);rod([pwr_hole[0],112,pw_z],[pwr_hole[0],DO+40,pw_z],4);}
+ rod([sbx0-35,sby0+pwr_y,pz],[15,sby0+pwr_y,32],4);rod([15,sby0+pwr_y,32],[12,66,42],4);rod([12,66,42],[pwr_hole[0]-3.5,112,pw_z],4);rod([pwr_hole[0]-3.5,112,pw_z],[pwr_hole[0]-3.5,DO+40,pw_z],4);}
 if(part=="cords"){sw_cord();sb_cord();}
 if(part=="body")body();
 if(part=="lid")lid();
