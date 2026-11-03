@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-02 CM1000 one-piece bracket: CM1P-I, mount's V + light window (Claude)
+Brian supplied CM1000_1U_Mount and 1U_Bracket STLs and asked for a one-piece bracket using that geometry, with a beveled window instead of light pipes; licenses are fine since it stays in his workshop. Dimensions: [note](work/equipment-models/netgear_cm1000/CM1000_1U_Mount_reverse.md). **[CM1P-I](outputs/CM1000_OnePiece_CM1P-I_2026-11-02/README.md), unprinted:** 43 degree V riding on the arm tips (0.25 per side), 8.64 floor, 54 x 8 window with 2.5 bevel, modem 2.5 further back, icons inlaid above the window. `outputs/Final_3MF/CM1P-I_CM1000_one_piece_bracket.3mf`. Digital checks only: one valid solid, 0 bad edges, 12768/25516 tags. **Next step:** Brian's calipers across the modem 1.5 in from the top face (about 184 if the wedge is 15) and whether the end slots exist, then his print report. CM1P-H still has no print report. Fit, lights and strength UNKNOWN.
+
 ## 2026-11-01 OptiPlex rethink: front sleeve + rear channels, OPX-A to OPX-D (Claude)
 **Next step:** Brian chose OPX-D and it is packaged. Wait for his print report, log it in `docs/Fit_Findings.md`, and make any fixes as a new revision with a new ID.
 
