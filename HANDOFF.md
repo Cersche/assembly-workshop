@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-03 CM1000 light pipes: CM1P-T6 result, icon only is best (Claude)
+Brian printed CM1P-T6: the icon-only hole passed the most light. **Next:** with his OK, a new bracket revision with CM1P-O's fit and icon-only pipes, tunnels open behind them. Don't print CM1P-O for its lights.
+
 ## 2026-11-03 OptiPlex OPX-F: looser post rails, second step (Claude)
 Brian printed the OPX-E rails: improved, still a little too tight in the rails; rear stops and feet line up fine. He gave no amount, so Claude chose another 0.5 per side. [OPX-F](outputs/OptiPlex_Sleeve_Channels_OPX-F_2026-11-03/README.md) is two new rails only, `outputs/Final_3MF/OPX-F_OptiPlex_post_rails.3mf`, channel 1.0 outward from OPX-D, reused with the printed OPX-D sleeve and channels. Viewers: [print](https://claude.ai/artifact/L8dcwJatg3BRr8t49pRu1t), [assembled](https://claude.ai/artifact/YBVDEkyi9uM9GtVd3h6MZC). Clash checks clear, 2 objects, 2444/4888 tags, 0 open edges. Not printed or opened in a slicer.
 Empty-sleeve test on OPX-E: the tabs still had to be squeezed inward to enter; 1/4 turn on the rail screws did not help, so weight is ruled out and rail pivot is unlikely.
