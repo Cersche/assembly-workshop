@@ -26,7 +26,7 @@ def run(a):
         if d.exists() and d.stat().st_size > 84:
             v = abs(trimesh.load(d).volume)
     return dict(opt=o, a=x, b=y, mm3=round(v, 2))
-J = [(o, a, b) for o in ('S1', 'S2', 'N') for a, b in PAIRS]
+J = [(o, a, b) for o in ('S3',) for a, b in PAIRS]
 with cf.ThreadPoolExecutor(4) as x:
     rows = list(x.map(run, J))
 PLA = 1.24e-3
@@ -42,10 +42,8 @@ def add(name, parts, hue_xy, pi_y):
         tot += g; mom += g * (y - 4); mx += g * (xc + 60)
     table[name] = dict(grams_printed=det, total_g=round(tot), moment_gmm=round(mom), lever_mm=round(mom / tot, 1), twist_gmm=round(mx), hue_lever=round(hue_xy[1] - 4, 1))
 add('H11', {'floor': OUT / 'SCR5-H11_floor.stl', 'deck': OUT / 'SCR5-H11_deck.stl'}, (-54.4, 97), 46.5)
-add('S1', {'floor': S / 'S1_floor.stl', 'deck': S / 'S1_deck.stl'}, (-34, 68.5), 46.5)
-add('S2', {'floor': S / 'S2_floor.stl', 'deck': S / 'S2_deck.stl'}, (-34, 68.5), 63.5)
-add('N', {'floor': S / 'N_floor.stl', 'deck': S / 'N_deck.stl'}, (-34, 81.5), 46.5)
-json.dump(dict(pairs=rows, table=table), open(H / 'checks.json', 'w', encoding='utf-8'), indent=1)
+add('S3', {'floor': S / 'S3_floor.stl', 'deck': S / 'S3_deck.stl'}, (-34, 68.5), 46.5)
+json.dump(dict(pairs=rows, table=table), open(H / 'checks_s3.json', 'w', encoding='utf-8'), indent=1)
 for r in rows:
     if r['mm3'] > 0: print(r)
 for k, v in table.items(): print(k, v)

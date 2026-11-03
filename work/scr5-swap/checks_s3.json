@@ -1,0 +1,244 @@
+{
+ "pairs": [
+  {
+   "opt": "S3",
+   "a": "plate",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "plate",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "floor",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "plate",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "floor",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "deck",
+   "b": "pi",
+   "mm3": 60.75
+  },
+  {
+   "opt": "S3",
+   "a": "floor",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "deck",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "plate",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "pi",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "plate",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "floor",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "deck",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "pi",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "hue",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "floor",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "deck",
+   "b": "ribbon",
+   "mm3": 3.77
+  },
+  {
+   "opt": "S3",
+   "a": "plate",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "hue",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "frame",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "frame",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "frame",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "frame",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "screen",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "screen",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "screen",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "screen",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "mount",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "mount",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "mount",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "mount",
+   "b": "plate",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "fan",
+   "b": "mount",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "post",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "post",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "post",
+   "b": "fan",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S3",
+   "a": "post",
+   "b": "mount",
+   "mm3": 0.0
+  }
+ ],
+ "table": {
+  "H11": {
+   "grams_printed": {
+    "floor": 87,
+    "deck": 62
+   },
+   "total_g": 360,
+   "moment_gmm": 27463,
+   "lever_mm": 76.3,
+   "twist_gmm": -228,
+   "hue_lever": 93
+  },
+  "S3": {
+   "grams_printed": {
+    "floor": 84,
+    "deck": 69
+   },
+   "total_g": 364,
+   "moment_gmm": 20528,
+   "lever_mm": 56.4,
+   "twist_gmm": 3354,
+   "hue_lever": 64.5
+  }
+ }
+}

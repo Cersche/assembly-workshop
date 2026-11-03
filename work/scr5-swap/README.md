@@ -16,3 +16,8 @@ Findings: Hue height alone changes nothing for sag (bending at the plate depends
 Clashes (`checks.json`): all 0 except concept leftovers: ribbon vs inner wall where no slot is modelled (A), and the Pi HDMI shells vs a wall flush with the board edge. **H11 itself has that:** floor vs Pi with connectors 22.5 mm3 at the outer wall/grille (shells modelled 1.5 past the board, published layout, not measured).
 
 `python work/scr5-swap/build.py`, `checks.py`, `figures.py`. STLs under `stl/` are not committed (cradle is third-party).
+
+## Later options, all dropped (Brian, 2026-11-03)
+Keystone optional: C = swap A with no keystone, 3 M6 on the bar (76% bending, twist 3100 g*mm, `checks_no_keystone.json`). N2 = no swap, no keystone, Hue 15.5 forward, third M6 back at X -92 (81%, small twist). The keystone can't move in the no-swap layout: 22 mm gap against 33.5 needed.
+S3 = Pi on the deck, front ports, keystone on its side above them (window X -108.5..-75, Z 64.5..85.5), deck 3.5 lower, M6 at X -64.5 and -50, Z 75 (75%, twist 3350 g*mm, `checks_s3.json`). `build.py` and `checks.py` now build S3 only; `figures_no_keystone.py` needs the C and N2 STLs.
+Brian chose none of them: the Pi goes on the back of the screen, the Hue stays in its bay and the front becomes a keystone access panel. See HANDOFF.md.
