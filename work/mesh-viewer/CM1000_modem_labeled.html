@@ -1,0 +1,211 @@
+<title>CM1000 Modem Understanding</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: a workbench view, the big labeled part first, the source list underneath. */
+:root{--bg:#eef0f2;--fg:#1b2026;--muted:#5a636d;--panel:#f8f9fa;--line:#c6ccd3;--blue:#0b5cad;--gray:#3d454e;--orange:#b84300}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15191d;--fg:#e8ebee;--muted:#a0a9b2;--panel:#1e2329;--line:#39414a;--blue:#7ab8f5;--gray:#c2c9d0;--orange:#ff9b5c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15191d;--fg:#e8ebee;--muted:#a0a9b2;--panel:#1e2329;--line:#39414a;--blue:#7ab8f5;--gray:#c2c9d0;--orange:#ff9b5c;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,"Segoe UI",Arial,sans-serif;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 28px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:12px}
+h1{font-size:22px;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:2px 0 0}
+.bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+button{font:inherit;padding:6px 12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:6px;cursor:pointer}
+button:hover{border-color:var(--fg)}
+button:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+#stage{position:relative;height:min(68vh,680px);min-height:360px;border:1px solid var(--line);border-radius:8px;background:var(--panel);overflow:hidden}
+#stage canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px}
+.key b{font-weight:700}
+.m{color:var(--blue)}.e{color:var(--gray)}.g{color:var(--orange)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.cols>div{min-width:0}
+h2{font-size:15px;margin:0 0 4px}
+ul{margin:0;padding-left:18px}
+li{margin:2px 0}
+</style>
+<div class="wrap">
+  <div>
+    <h1>Netgear CM1000 as I understand it</h1>
+    <p class="sub">All sizes in mm. Drag to turn, scroll or pinch to zoom. Labels are printed on the faces they name.</p>
+  </div>
+  <div class="bar" role="group" aria-label="Views">
+    <button id="v-fl" type="button">Front left</button>
+    <button id="v-fr" type="button">Front right</button>
+    <button id="v-l" type="button">Left end</button>
+    <button id="v-t" type="button">Top</button>
+    <button id="v-r" type="button">Rear</button>
+    <button id="v-b" type="button">Underneath</button>
+  </div>
+  <div id="stage"></div>
+  <div class="key"><span class="m"><b>Blue:</b> you measured it</span><span class="e"><b>Gray:</b> worked out from your numbers</span><span class="g"><b>Orange:</b> my guess</span></div>
+  <div class="cols">
+    <div><h2 class="m">You measured</h2><ul><li>212 end to end</li><li>44.4 thick</li><li>End strip 3 tall</li><li>End wedge 15</li><li>End slope 20.7 tall, top and bottom, strip centred</li><li>End slope 25 along the face</li><li>Top face 182 x 106</li><li>Front slope 25 deep</li><li>131 front to rear</li><li>Side screw hole 62.4 to 72 back from the front, 22.25 up</li></ul></div>
+    <div><h2 class="e">Worked out or carried over</h2><ul><li>End slopes 35.9° off vertical, from 15 across and 20.7 tall. That makes the face 25.6 long against your 25</li></ul></div>
+    <div><h2 class="g">Guesses</h2><ul><li>Underneath is the same as the top</li><li>Rear ports, placed by eye from your photos</li><li>Corner radius 8.5 on all four corners, read from your photo (8.0 and 9.1 on the two front corners), kept the same up the slopes</li><li>Straight slopes</li></ul></div>
+    <div><h2>Left out</h2><ul><li>Vent holes</li><li>The crease where the end and front slopes meet: the corner is drawn as a smooth blend</li><li>Any groove in the slopes, still unproven</li></ul></div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+var stage=document.getElementById('stage');
+if(!window.THREE){stage.textContent='The 3D library did not load. Reload the page to try again.';return;}
+var BLUE='#0b5cad',GRAY='#3d454e',ORANGE='#b84300',INK='#1b2026';
+var w=212,d=131,H=44.4,e=15,n=25,mid=22.2,t=23.7,b=20.7;
+function V(x,y,z){return new THREE.Vector3(x,y,z);}
+var scene=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(28,1,10,4000);cam.up.set(0,0,1);
+var ren=new THREE.WebGLRenderer({antialias:true,alpha:true});ren.setPixelRatio(Math.min(devicePixelRatio||1,2));stage.appendChild(ren.domElement);
+scene.add(new THREE.HemisphereLight(0xffffff,0x8a8f96,.8));
+var sun=new THREE.DirectionalLight(0xffffff,.45);sun.position.set(-80,-200,300);scene.add(sun);
+var fill=new THREE.DirectionalLight(0xffffff,.25);fill.position.set(200,300,120);scene.add(fill);
+
+function face(pts,color){
+  var p=[];for(var i=1;i<pts.length-1;i++){[pts[0],pts[i],pts[i+1]].forEach(function(q){p.push(q[0],q[1],q[2]);});}
+  var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));g.computeVertexNormals();
+  scene.add(new THREE.Mesh(g,new THREE.MeshLambertMaterial({color:color,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1})));
+  var e2=new THREE.BufferGeometry().setFromPoints(pts.map(function(q){return V(q[0],q[1],q[2]);}));
+  scene.add(new THREE.LineLoop(e2,new THREE.LineBasicMaterial({color:0x14181c})));
+}
+var TOP=0xd5d9de,SLOPE=0xc2c8cf,FRONT=0xe2d9cc,STRIP=0x9aa1a9,REAR=0xaeb4bb,UNDER=0xb9bfc6;
+var RC=8.5;
+function outline(ix,iy){var o=[];[[w-ix-RC,iy+RC,-90],[w-ix-RC,d-RC,0],[ix+RC,d-RC,90],[ix+RC,iy+RC,180]].forEach(function(c){for(var k=0;k<=12;k++){var t=(c[2]+k*7.5)*Math.PI/180;o.push([c[0]+RC*Math.cos(t),c[1]+RC*Math.sin(t)]);}});return o;}
+var lv=[[0,outline(e,n)],[b,outline(0,0)],[t,outline(0,0)],[H,outline(e,n)]];
+function poly(pts,color){var p=[];for(var i=1;i<pts.length-1;i++){[pts[0],pts[i],pts[i+1]].forEach(function(q){p.push(q[0],q[1],q[2]);});}var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));g.computeVertexNormals();scene.add(new THREE.Mesh(g,new THREE.MeshLambertMaterial({color:color,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1})));}
+for(var l=0;l<3;l++){var A=lv[l],B=lv[l+1];for(var i=0;i<A[1].length;i++){var k=(i+1)%A[1].length,a0=A[1][i],a1=A[1][k],b0=B[1][i],b1=B[1][k];
+  var mx=(a0[0]+a1[0]+b0[0]+b1[0])/4,my=(a0[1]+a1[1]+b0[1]+b1[1])/4,col;
+  var ex=Math.min(mx,w-mx),ey=my;
+  if(l===1)col=STRIP;else if(my>d-.5)col=REAR;else if(my>d-RC-1&&ex>RC)col=REAR;else if(ey<n&&ey*.6<ex)col=FRONT;else col=l===0?UNDER:SLOPE;
+  poly([[a0[0],a0[1],A[0]],[a1[0],a1[1],A[0]],[b1[0],b1[1],B[0]],[b0[0],b0[1],B[0]]],col);
+}}
+poly(lv[3][1].map(function(q){return [q[0],q[1],H];}),TOP);
+poly(lv[0][1].map(function(q){return [q[0],q[1],0];}),UNDER);
+lv.forEach(function(L0){scene.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(L0[1].map(function(q){return V(q[0],q[1],L0[0]);})),new THREE.LineBasicMaterial({color:0x14181c})));});
+
+function textTex(lines,W,Hh,color,align){
+  var c=document.createElement('canvas');c.width=W;c.height=Hh;var x=c.getContext('2d');
+  var fs=lines.map(function(l){return l.size;}),tot=fs.reduce(function(a,s){return a+s*1.22;},0),y=(Hh-tot)/2;
+  x.textAlign='center';x.textBaseline='middle';
+  lines.forEach(function(l){x.font=(l.bold===false?'':'bold ')+l.size+'px Arial,sans-serif';x.fillStyle=l.color||color;x.fillText(l.text,W/2,y+l.size*.61);y+=l.size*1.22;});
+  var tx=new THREE.CanvasTexture(c);tx.anisotropy=8;return tx;
+}
+function decal(c,u,v,pw,ph,lines){
+  u=u.clone().normalize();v=v.clone().normalize();var nn=new THREE.Vector3().crossVectors(u,v);
+  var W=2048,Hh=Math.max(64,Math.round(W*ph/pw));
+  var m=new THREE.Mesh(new THREE.PlaneGeometry(pw,ph),new THREE.MeshBasicMaterial({map:textTex(lines,W,Hh,INK),transparent:true,depthWrite:false}));
+  m.matrixAutoUpdate=false;m.matrix.makeBasis(u,v,nn);m.matrix.setPosition(c.clone().addScaledVector(nn,.12));scene.add(m);
+}
+function L(text,size,color,bold){return {text:text,size:size,color:color,bold:bold};}
+// faces, each scaled by the width of its plane
+decal(V(106,78,H),V(1,0,0),V(0,1,0),170,100,[L('TOP FACE',230,INK),L('182 wide x 106 deep',190,BLUE),L('you measured this',120,BLUE,false)]);
+decal(V(106,12.5,t+10.35),V(1,0,0),V(0,25,20.7),180,30,[L('FRONT SLOPE',170,INK),L('25 deep: you measured this',125,BLUE)]);
+decal(V(106,12.5,b-10.35),V(1,0,0),V(0,-25,20.7),180,30,[L('LOWER FRONT SLOPE',150,INK),L('25 deep: assumed same as the top',115,ORANGE)]);
+decal(V(106,83,0),V(1,0,0),V(0,-1,0),170,100,[L('UNDERNEATH',150,INK),L('assumed same as the top',110,ORANGE)]);
+var sl=Math.hypot(15,20.7);
+[[7.5,V(0,-1,0),V(15,0,20.7),t+10.35],[204.5,V(0,1,0),V(-15,0,20.7),t+10.35]].forEach(function(a){
+  decal(V(a[0],78,a[3]),a[1],a[2],100,sl-2,[L('END SLOPE',135,INK),L('15 across, 20.7 tall',115,BLUE),L('25 along the face, 35.9° off vertical',95,GRAY,false)]);
+});
+[[7.5,V(0,-1,0),V(-15,0,20.7)],[204.5,V(0,1,0),V(15,0,20.7)]].forEach(function(a){
+  decal(V(a[0],78,b-10.35),a[1],a[2],100,sl-2,[L('LOWER END SLOPE',135,INK),L('assumed same as the top',115,ORANGE)]);
+});
+decal(V(0,108,mid),V(0,-1,0),V(0,0,1),50,2.9,[L('END STRIP, 3 TALL',92,'#ffffff')]);
+decal(V(w,70,mid),V(0,1,0),V(0,0,1),50,2.9,[L('END STRIP, 3 TALL',92,'#ffffff')]);
+decal(V(106,0,mid),V(1,0,0),V(0,0,1),60,2.9,[L('FRONT EDGE, 3 TALL',76,'#ffffff')]);
+decal(V(106,d,40),V(-1,0,0),V(0,0,1),120,6,[L('REAR FACE',78,INK)]);
+
+// rear parts
+function box(x0,x1,z0,z1,dy,color){var m=new THREE.Mesh(new THREE.BoxGeometry(x1-x0,dy,z1-z0),new THREE.MeshLambertMaterial({color:color}));m.position.set((x0+x1)/2,d+dy/2,(z0+z1)/2);scene.add(m);return m;}
+function disc(x,y,z,r,axis,color){var m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,.8,28),new THREE.MeshLambertMaterial({color:color}));if(axis==='x')m.rotation.z=Math.PI/2;m.position.set(x,y,z);scene.add(m);}
+box(20,192,8,36.4,.2,0x4a5058);
+box(160,172,15,27,.6,0xd9b94a);box(50,58,18,26,.6,0x2a2d31);box(34,44,17,27,.6,0x15171a);
+disc(106,d+.4,mid,4.5,'y',0xb9812f);disc(184,d+.4,mid,1.5,'y',0xb33a3a);disc(12,d+.3,mid,2.2,'y',0x0c0d0f);disc(200,d+.3,mid,2.2,'y',0x0c0d0f);
+disc(.05,67.2,22.25,1.3,'x',0x0c0d0f);
+
+// labels that always face you, grouped by the side they belong to
+var groups=[];
+function group(f){var g=new THREE.Group();g.userData.f=f?f.clone().normalize():null;scene.add(g);groups.push(g);return g;}
+function tag(g,pos,text,color,size){
+  size=size||7.5;
+  var c=document.createElement('canvas'),x=c.getContext('2d'),fs=56;x.font='bold '+fs+'px Arial,sans-serif';
+  var tw=Math.ceil(x.measureText(text).width)+44;c.width=tw;c.height=fs+30;
+  x=c.getContext('2d');x.font='bold '+fs+'px Arial,sans-serif';x.fillStyle='#ffffff';x.strokeStyle=color;x.lineWidth=5;x.beginPath();x.rect(3,3,tw-6,c.height-6);x.fill();x.stroke();
+  x.fillStyle=color;x.textBaseline='middle';x.textAlign='center';x.fillText(text,tw/2,c.height/2+2);
+  var s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),depthTest:false,transparent:true}));
+  s.scale.set(size*tw/c.height,size,1);s.position.copy(pos);s.renderOrder=10;g.add(s);
+}
+function seg(g,a,b,color){g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:color})));}
+function dim(g,a,b,dir,off,text,color,noExt){
+  var A=a.clone().addScaledVector(dir,off),B=b.clone().addScaledVector(dir,off);
+  if(!noExt){seg(g,a,A,color);seg(g,b,B,color);}
+  seg(g,A,B,color);
+  var along=new THREE.Vector3().subVectors(B,A).normalize();
+  [[A,along.clone().negate()],[B,along]].forEach(function(p){
+    var len=Math.min(4,A.distanceTo(B)*.35);
+    var cone=new THREE.Mesh(new THREE.ConeGeometry(len*.28,len,14),new THREE.MeshBasicMaterial({color:color}));
+    cone.quaternion.setFromUnitVectors(V(0,1,0),p[1]);cone.position.copy(p[0]).addScaledVector(p[1],-len/2);g.add(cone);
+  });
+  tag(g,A.clone().add(B).multiplyScalar(.5),text,color);
+}
+function call(g,p,lab,text,color){seg(g,p,lab,color);tag(g,lab,text,color);}
+
+var CR=group(V(0,-1,.15));call(CR,V(RC-RC*Math.SQRT1_2,RC-RC*Math.SQRT1_2,t),V(-30,-16,t+22),'corner R 8.5 from your photo',ORANGE);call(CR,V(w-RC+RC*Math.SQRT1_2,RC-RC*Math.SQRT1_2,t),V(w+30,-16,t+22),'corner R 8.5 from your photo',ORANGE);
+var ox=V(-1,0,0),oy=V(0,-1,0),px=V(1,0,0),py=V(0,1,0),pz=V(0,0,1);
+var G=group(V(0,-1,0));dim(G,V(0,0,b),V(w,0,b),oy,24,'212 end to end (you)',BLUE);
+G=group(V(0,0,1));dim(G,V(e,d,H),V(w-e,d,H),py,14,'182 (you)',BLUE);
+dim(G,V(w-e,n,H),V(w-e,d,H),V(1,0,.25).normalize(),22,'106 (you)',BLUE);
+G=group(V(-1,0,.1));dim(G,V(e,d,0),V(e,d,H),ox,24,'44.4 thick (you)',BLUE);
+call(G,V(0,118,20.7),V(-24,118,6),'end strip 3 (you)',BLUE);
+dim(G,V(0,0,t),V(0,n,t),V(-1,0,.15).normalize(),14,'25 (you)',BLUE);
+dim(G,V(0,0,0),V(0,d,0),ox,14,'131 front to rear (you)',BLUE);
+dim(G,V(0,62.4,22.25),V(0,72,22.25),V(-1,0,-.75).normalize(),18,'side screw hole 62.4 to 72 back (you)',BLUE);
+G=group(V(1,0,.1));dim(G,V(w-e,d,0),V(w-e,d,H),px,24,'44.4 thick (you)',BLUE);
+dim(G,V(w,0,t),V(w,n,t),V(1,0,.15).normalize(),14,'25 (you)',BLUE);
+dim(G,V(w,0,0),V(w,d,0),px,14,'131 front to rear (you)',BLUE);
+G=group(V(0,.1,1));
+[[0,e,-1],[w,w-e,1]].forEach(function(a){
+  var y=60,A=V(a[0],y,H),B=V(a[1],y,H);seg(G,V(a[0],y,t),A,BLUE);dim(G,A,B,pz,7,'wedge 15 (you)',BLUE);
+});
+G=group(V(0,1,0));
+var ly=d+6;
+call(G,V(166,d+.6,27),V(166,ly,50),'Ethernet',ORANGE);
+call(G,V(106,d+.4,27),V(106,ly,50),'Coax cable',ORANGE);
+call(G,V(54,d+.6,26),V(54,ly,50),'Power switch',ORANGE);
+call(G,V(39,d+.6,17),V(39,ly,-8),'Power jack',ORANGE);
+call(G,V(184,d+.4,20),V(188,ly,-8),'Reset',ORANGE);
+call(G,V(12,d+.3,20),V(8,ly,-8),'Hole',ORANGE);
+call(G,V(200,d+.3,20),V(224,ly,-8),'Hole',ORANGE);
+tag(G,V(106,ly,-20),'Rear ports placed by eye from your photos',ORANGE);
+
+// turn and zoom
+var target=V(106,68,22),theta=-2.2,phi=1.0,rad=430;
+function setV(th,ph,r){theta=th;phi=ph;if(r)rad=r;draw();}
+var tmp=new THREE.Vector3();
+function draw(){
+  phi=Math.max(.06,Math.min(Math.PI-.06,phi));rad=Math.max(90,Math.min(1600,rad));
+  cam.position.set(target.x+rad*Math.sin(phi)*Math.cos(theta),target.y+rad*Math.sin(phi)*Math.sin(theta),target.z+rad*Math.cos(phi));
+  cam.lookAt(target);
+  tmp.subVectors(cam.position,target).normalize();
+  groups.forEach(function(g){g.visible=!g.userData.f||g.userData.f.dot(tmp)>.12;});
+  ren.render(scene,cam);
+}
+function size(){var W=stage.clientWidth,Hh=stage.clientHeight;ren.setSize(W,Hh,false);cam.aspect=W/Hh;cam.updateProjectionMatrix();draw();}
+new ResizeObserver(size).observe(stage);
+var el=ren.domElement,pts={},pinch=0;
+el.addEventListener('pointerdown',function(ev){el.setPointerCapture(ev.pointerId);pts[ev.pointerId]=[ev.clientX,ev.clientY];pinch=0;});
+el.addEventListener('pointermove',function(ev){
+  var p=pts[ev.pointerId];if(!p)return;var ids=Object.keys(pts);
+  if(ids.length===1){theta-=(ev.clientX-p[0])*.008;phi-=(ev.clientY-p[1])*.008;}
+  pts[ev.pointerId]=[ev.clientX,ev.clientY];
+  if(ids.length===2){var a=pts[ids[0]],c=pts[ids[1]],dd=Math.hypot(a[0]-c[0],a[1]-c[1]);if(pinch)rad*=pinch/dd;pinch=dd;}
+  draw();
+});
+function up(ev){delete pts[ev.pointerId];pinch=0;}
+el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+el.addEventListener('wheel',function(ev){ev.preventDefault();rad*=Math.exp(ev.deltaY*.001);draw();},{passive:false});
+var views={'v-fl':[-2.2,1.0,430],'v-fr':[-.95,1.0,430],'v-l':[Math.PI,1.25,390],'v-t':[-Math.PI/2,.12,430],'v-r':[1.35,1.05,430],'v-b':[-2.2,2.25,430]};
+Object.keys(views).forEach(function(id){document.getElementById(id).addEventListener('click',function(){var v=views[id];setV(v[0],v[1],v[2]);});});
+size();
+window.__view=function(id){var v=views[id];setV(v[0],v[1],v[2]);};
+})();
+</script>
