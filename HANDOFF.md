@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-03 CM1000 light pipes: CM1P-T5 test slices after CM1P-O passed no light (Claude)
+Brian printed CM1P-O: lights line up with the tubes but none gets through, while an earlier faceplate shines through easily; flashlight test agrees. He also switched to gyroid infill, so length and infill are both suspects. The tunnels are open in the mesh; the pipe is about twice as long (11.3 against 5.8 on the centre line). **[CM1P-T5A/T5B](outputs/CM1000_Light_Pipe_Test_CM1P-T5_2026-11-03/README.md), unprinted:** 70 wide slices of CM1P-O's plate that sit on the modem's front, 5 different pipes per slice; print T5A's pipes as CM1P-O, T5B's at 100% infill. `outputs/Final_3MF/CM1P-T5_light_pipe_test_slices.3mf`. Digital checks only: valid solids, 0 bad edges, 29720/59432 tags, nothing inside the modem envelope. CM1P-O's fit report beyond the lights isn't itemised. Viewer `work/mesh-viewer/CM1P-T5_on_modem.html`, not committed because it holds licensed meshes. **Next:** Brian's ranking of the holes on each slice, then the bracket revision with the winning pipe.
+
 ## 2026-11-03 Screen + Pi + Hue: Pi/Hue swap explored, no revision yet (Claude)
 Concepts and numbers in [work/scr5-swap/README.md](work/scr5-swap/README.md). Options shown to Brian: swap A (keystone moves low), swap B (Pi turned, ports to the rear), no swap (Hue forward + right, -15%). **Waiting on Brian's pick; H11 stays the one to print.** Possible H11 issue: Pi HDMI shells vs the outer wall (published layout, unmeasured).
 
