@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-03 Screen + Pi + Hue: Pi/Hue swap explored, no revision yet (Claude)
+Concepts and numbers in [work/scr5-swap/README.md](work/scr5-swap/README.md). Options shown to Brian: swap A (keystone moves low), swap B (Pi turned, ports to the rear), no swap (Hue forward + right, -15%). **Waiting on Brian's pick; H11 stays the one to print.** Possible H11 issue: Pi HDMI shells vs the outer wall (published layout, unmeasured).
+
 ## 2026-11-03 Screen + Pi + Hue: SCR5-H11, add-on fan mount, T-rails on the plate ledge (Claude)
 Brian asked for a detachable fan mount and a longer floor ledge fastened to the floor, tabs rather than screws. **[SCR5-H11](outputs/Screen_Pi_Hue_SCR5-H11_2026-11-03/README.md), unprinted, is the one to print (replaces H10):** tool-free clip-on fan mount as its own part; ledge 26 long with 3 T-rails the floor slides under. Reprint plate, floor, deck and print the mount; frame and pins are H8's. Digital checks only; the clip and slide motions were not simulated. **Next:** Brian reviews or prints. If this session's commit isn't on GitHub, run `git status -sb` and push.
 

@@ -1,0 +1,698 @@
+{
+ "pairs": [
+  {
+   "opt": "S1",
+   "a": "plate",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "plate",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "floor",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "plate",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "floor",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "deck",
+   "b": "pi",
+   "mm3": 60.75
+  },
+  {
+   "opt": "S1",
+   "a": "floor",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "deck",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "plate",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "pi",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "plate",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "floor",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "deck",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "pi",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "hue",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "floor",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "deck",
+   "b": "ribbon",
+   "mm3": 3.82
+  },
+  {
+   "opt": "S1",
+   "a": "plate",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "hue",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "frame",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "frame",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "frame",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "frame",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "screen",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "screen",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "screen",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "screen",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "mount",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "mount",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "mount",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "mount",
+   "b": "plate",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "fan",
+   "b": "mount",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "post",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "post",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "post",
+   "b": "fan",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S1",
+   "a": "post",
+   "b": "mount",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "plate",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "plate",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "floor",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "plate",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "floor",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "deck",
+   "b": "pi",
+   "mm3": 63.0
+  },
+  {
+   "opt": "S2",
+   "a": "floor",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "deck",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "plate",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "pi",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "plate",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "floor",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "deck",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "pi",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "hue",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "floor",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "deck",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "plate",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "hue",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "frame",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "frame",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "frame",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "frame",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "screen",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "screen",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "screen",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "screen",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "mount",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "mount",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "mount",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "mount",
+   "b": "plate",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "fan",
+   "b": "mount",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "post",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "post",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "post",
+   "b": "fan",
+   "mm3": 0.0
+  },
+  {
+   "opt": "S2",
+   "a": "post",
+   "b": "mount",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "plate",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "plate",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "floor",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "plate",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "floor",
+   "b": "pi",
+   "mm3": 63.0
+  },
+  {
+   "opt": "N",
+   "a": "deck",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "floor",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "deck",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "plate",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "pi",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "plate",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "floor",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "deck",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "pi",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "hue",
+   "b": "ks",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "floor",
+   "b": "ribbon",
+   "mm3": 2.13
+  },
+  {
+   "opt": "N",
+   "a": "deck",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "plate",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "hue",
+   "b": "ribbon",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "frame",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "frame",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "frame",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "frame",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "screen",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "screen",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "screen",
+   "b": "hue",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "screen",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "mount",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "mount",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "mount",
+   "b": "pi",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "mount",
+   "b": "plate",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "fan",
+   "b": "mount",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "post",
+   "b": "floor",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "post",
+   "b": "deck",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "post",
+   "b": "fan",
+   "mm3": 0.0
+  },
+  {
+   "opt": "N",
+   "a": "post",
+   "b": "mount",
+   "mm3": 0.0
+  }
+ ],
+ "table": {
+  "H11": {
+   "grams_printed": {
+    "floor": 87,
+    "deck": 62
+   },
+   "total_g": 360,
+   "moment_gmm": 27463,
+   "lever_mm": 76.3,
+   "twist_gmm": -228,
+   "hue_lever": 93
+  },
+  "S1": {
+   "grams_printed": {
+    "floor": 86,
+    "deck": 72
+   },
+   "total_g": 369,
+   "moment_gmm": 20819,
+   "lever_mm": 56.5,
+   "twist_gmm": 3277,
+   "hue_lever": 64.5
+  },
+  "S2": {
+   "grams_printed": {
+    "floor": 88,
+    "deck": 64
+   },
+   "total_g": 363,
+   "moment_gmm": 21390,
+   "lever_mm": 58.9,
+   "twist_gmm": 3258,
+   "hue_lever": 64.5
+  },
+  "N": {
+   "grams_printed": {
+    "floor": 78,
+    "deck": 65
+   },
+   "total_g": 353,
+   "moment_gmm": 23337,
+   "lever_mm": 66.0,
+   "twist_gmm": 3819,
+   "hue_lever": 77.5
+  }
+ }
+}
