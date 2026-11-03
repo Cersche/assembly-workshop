@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-02 CM1000 one-piece bracket closed for now (Claude)
+Brian's last word after CM1P-M was sent: "everything fits, 2 walls, 10% infill", then moved on. Taken to mean CM1P-M printed at those settings; he didn't name the revision, so that's an assumption. Strength UNKNOWN, and at 2 walls / 10% it says nothing about a solid print. No open CM1000 work.
+
 ## 2026-11-02 CM1000 one-piece bracket: CM1P-K printed and fits, CM1P-M centres the screw slot on 80 (Claude)
 Brian printed a test run of CM1P-K: "perfect fit. no sagging, no play, not tight." The only fault: the mounting screw slot sits too far forward. He puts the screw at approximately 80 from the faceplate front and chose to centre the slot there. **[CM1P-M](outputs/CM1000_OnePiece_CM1P-M_2026-11-02/README.md), unprinted, is the one to print:** CM1P-K with the slot at Y 72.73 to 87.27 and the head recess moved with it, nothing else changed. `outputs/Final_3MF/CM1P-M_CM1000_one_piece_bracket.3mf`. CM1P-L (slot moved 5) was built first and superseded before printing; don't print it. Digital checks only: one valid solid, 0 bad edges, 13192/26364 tags. Modem model's side hole moved to match (`build_modem.py`). The V stays as it is: the fit answered that. Test-run slicer settings and tip width not reported, so a print with different walls or infill may spread differently. Viewer: https://claude.ai/artifact/4WkpBW87EcAFKDrLZLYh6g and `work/mesh-viewer/CM1P-M_with_modem_see_through.html`, not committed because it holds licensed meshes. **Next step:** Brian's report on CM1P-M: screw goes into the hole, fit same as K, lights, rack fit. Strength UNKNOWN.
 
