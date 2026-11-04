@@ -1,0 +1,97 @@
+{
+ "plate": {
+  "shells": 1,
+  "watertight": true,
+  "bad_edges": 0,
+  "degenerate": 0,
+  "grams_solid": 72.4,
+  "bounds": [
+   [
+    -126.0,
+    0.0,
+    0.0
+   ],
+   [
+    126.0,
+    19.0,
+    88.8
+   ]
+  ]
+ },
+ "frame": {
+  "shells": 3,
+  "watertight": true,
+  "bad_edges": 0,
+  "degenerate": 0,
+  "grams_solid": 7.8,
+  "bounds": [
+   [
+    -39.5,
+    13.3,
+    3.0
+   ],
+   [
+    105.5,
+    16.3,
+    80.0
+   ]
+  ]
+ },
+ "deck": {
+  "shells": 1,
+  "watertight": true,
+  "bad_edges": 0,
+  "degenerate": 0,
+  "grams_solid": 57.0,
+  "bounds": [
+   [
+    -105.0,
+    14.65,
+    28.0
+   ],
+   [
+    -6.0,
+    129.7,
+    79.7
+   ]
+  ]
+ },
+ "underframe": {
+  "shells": 1,
+  "watertight": true,
+  "bad_edges": 0,
+  "degenerate": 0,
+  "grams_solid": 31.3,
+  "bounds": [
+   [
+    -94.35,
+    14.65,
+    8.3
+   ],
+   [
+    -5.5,
+    125.7,
+    28.0
+   ]
+  ]
+ },
+ "fanmount": {
+  "shells": 1,
+  "watertight": true,
+  "bad_edges": 0,
+  "degenerate": 0,
+  "grams_solid": 6.6,
+  "bounds": [
+   [
+    -1.15,
+    12.0,
+    1.0
+   ],
+   [
+    42.85,
+    29.5,
+    82.0
+   ]
+  ]
+ }
+}
