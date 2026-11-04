@@ -1,5 +1,7 @@
 # TP-Link ER605 one-piece bracket — test-print ID ER6-C (2026-11-04)
 
+**ER6-D lowers this pocket to 26.0 at Brian's direction. ER6-C is the 0.5-taller fallback.**
+
 PROPOSED — UNPRINTED. Current design. [ER6-B](../ER605_Bracket_ER6-B_2026-11-04/README.md) with the pocket raised for the measured case. Detents, wedges, vents and faceplate standard as ER6-B; see its README for those. Remix of Mixmeister's ER605 mount (MakerWorld, BY-NC-SA). Router fit, detent click, rack fit and strength are UNKNOWN.
 
 ## Print
