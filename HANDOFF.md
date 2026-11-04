@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-04 ER605 bracket: ER6-C, pocket for the 26 mm case (Claude)
+Brian: case 26 tall, 4 room above the keyhole, feet off, mount through keyholes. **[ER6-C](outputs/ER605_Bracket_ER6-C_2026-11-04/README.md), unprinted, is the current design; ER6-A and B have a 25.7 pocket that is too short, don't print them.** Pocket 26.5, root chamfer 4.5, detents kept. `outputs/Final_3MF/ER6-C_ER605_bracket.3mf`. Digital checks only. **Next step:** Brian checks the ports-end screw heads (`work/mesh-viewer/ER6-C_check_screw_heads.png`) and prints. Fit, click and strength UNKNOWN.
+
 ## 2026-11-04 ER605 bracket: ER6-B, keyhole detents (Claude)
 Brian measured the router and chose click-in retention. **[ER6-B](outputs/ER605_Bracket_ER6-B_2026-11-04/README.md), unprinted, is the current design; ER6-A stays as the plain version.** ER6-A plus two arms with KD-E-angle bumps into the keyholes at X ±61.75, Y 47.7. `outputs/Final_3MF/ER6-B_ER605_bracket.3mf`. Digital checks only. **Next step:** Brian gives case height J, room above the keyhole L, feet off yes/no; or prints it. Fit, click and strength UNKNOWN.
 

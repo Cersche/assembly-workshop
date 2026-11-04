@@ -1,5 +1,7 @@
 # TP-Link ER605 one-piece bracket — test-print ID ER6-B (2026-11-04)
 
+**Superseded by [ER6-C](../ER605_Bracket_ER6-C_2026-11-04/README.md): the case measured 26 tall, so this 25.7 pocket is too short. Don't print.**
+
 PROPOSED — UNPRINTED. [ER6-A](../ER605_Bracket_ER6-A_2026-11-04/README.md) plus two click-in detents in the router's keyholes, so it can't walk forward when cables are unplugged. Everything else, including the faceplate standard, is unchanged from ER6-A. Remix of Mixmeister's ER605 mount (MakerWorld, BY-NC-SA). Router fit, detent click, rack fit and strength are UNKNOWN.
 
 ## Print

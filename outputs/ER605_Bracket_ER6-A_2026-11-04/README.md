@@ -1,5 +1,7 @@
 # TP-Link ER605 one-piece bracket — test-print ID ER6-A (2026-11-04)
 
+**Superseded by [ER6-C](../ER605_Bracket_ER6-C_2026-11-04/README.md): the case measured 26 tall, so this 25.7 pocket is too short. Don't print.**
+
 PROPOSED — UNPRINTED. Print-friendly remix of Mixmeister's "TP-Link ER605 Omada 10-inch rack mount" (MakerWorld, BY-NC-SA), no-keystone version. Rebuilt from scratch in OpenSCAD from that part's measured dimensions; no source mesh is inside. Router fit, rack fit and strength are UNKNOWN. Router size is not measured: the pocket is the source's.
 
 ## Print
