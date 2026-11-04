@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-04 ER605 bracket: ER6-B, keyhole detents (Claude)
+Brian measured the router and chose click-in retention. **[ER6-B](outputs/ER605_Bracket_ER6-B_2026-11-04/README.md), unprinted, is the current design; ER6-A stays as the plain version.** ER6-A plus two arms with KD-E-angle bumps into the keyholes at X ±61.75, Y 47.7. `outputs/Final_3MF/ER6-B_ER605_bracket.3mf`. Digital checks only. **Next step:** Brian gives case height J, room above the keyhole L, feet off yes/no; or prints it. Fit, click and strength UNKNOWN.
+
 ## 2026-11-04 ER605 bracket: ER6-A, print-friendly remix (Claude)
 Brian supplied Mixmeister's ER605 10-inch mount and asked for a more printer-friendly version on our faceplate standard. **[ER6-A](outputs/ER605_Bracket_ER6-A_2026-11-04/README.md), unprinted:** one piece, front face on the bed, no supports, no hardware beyond the 4 rack screws. Plate is the 252 x 44.4 standard. Source pocket kept (158.7 x 25.7 x 101.7); rear bars replaced by 45 deg side wedges, 17 whole 45 deg-roof hexes, pointed side windows, 5 mm root chamfer. `outputs/Final_3MF/ER6-A_ER605_bracket.3mf`. Digital checks only. No rack slot chosen, no keystones. **Next step:** Brian measures the router (`work/mesh-viewer/ER6-A_measure_router.png`) or prints it. Fit and strength UNKNOWN.
 

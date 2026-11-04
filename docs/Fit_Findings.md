@@ -69,3 +69,5 @@ Brian printed the SCR5-H plate: the Waveshare 5" glass (120.7 x 77.2) would not 
 
 ## 2026-10-31 SCR5-H7 print — screen window installed in the rack
 Brian installed the printed SCR5-H7 screen unit (window 121.5 x 78.0, 0.4/side): overall a pretty good fit; a little more clearance than needed at the top edge of the glass (visible gap above the screen). The rev 7 test fit also found the missing frame corner tab, the unused Pi standoffs hitting the frame, and the panel ribbon jammed at the glass bottom edge; those are fixed in SCR5-H8 (not printed). **Parked (Brian):** tighten the top clearance later, once all brackets are dialed in.
+
+- 2026-11-04 ER605 router measured (Brian): 158 wide, 101 deep; keyhole round part dia 8, 17.25 from side, 50 from rear edge; slots 4 wide, 8.5 from centre; stepped bar is on the ports edge. Height and room above the keyhole not measured. Not a printed part.
