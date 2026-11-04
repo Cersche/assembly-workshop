@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-04 ER605 bracket: ER6-H, 3 long floor slots (Claude)
+Brian picked 3 long slots over the hexes for faster printing. **[ER6-H](outputs/ER605_Bracket_ER6-H_2026-11-04/README.md), unprinted, is the current design:** ER6-G with the new floor. `outputs/Final_3MF/ER6-H_ER605_bracket.3mf`. Digital checks only, not sliced. Fit, flushness, click and strength UNKNOWN.
+
 ## 2026-11-04 ER605 bracket: ER6-G, keystone each side (Claude)
 Brian asked for a keystone on either side. **[ER6-G](outputs/ER605_Bracket_ER6-G_2026-11-04/README.md), unprinted, is the current design:** ER6-F plus golden keystone blocks at X ±99; ID moved to the collar top. `outputs/Final_3MF/ER6-G_ER605_bracket.3mf`. Digital checks only. Fit, flushness, click and strength UNKNOWN.
 
