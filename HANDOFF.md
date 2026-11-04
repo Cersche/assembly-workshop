@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-04 ER605 bracket: ER6-E, simplified open-top (Claude)
+Brian: honeycomb on the bottom, simplify, cue picture supplied. **[ER6-E](outputs/ER605_Bracket_ER6-E_2026-11-04/README.md), unprinted, is the current design:** honeycomb floor, open top behind a 12 collar, plain sloped sides, detents kept. ER6-D is the closed-sleeve alternative; A and B don't fit. `outputs/Final_3MF/ER6-E_ER605_bracket.3mf`. Digital checks only. Fit, click and strength UNKNOWN.
+
 ## 2026-11-04 ER605 bracket: ER6-D, pocket 26.0 (Claude)
 Brian asked for another 0.5 off the height. **[ER6-D](outputs/ER605_Bracket_ER6-D_2026-11-04/README.md), unprinted, is the current design;** pocket 26.0 on the measured 26 case, no designed gap. ER6-C (26.5) is the fallback; A and B don't fit. `outputs/Final_3MF/ER6-D_ER605_bracket.3mf`. Screw heads flush (Brian). Fit, click and strength UNKNOWN.
 
