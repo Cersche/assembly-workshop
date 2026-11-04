@@ -7,13 +7,13 @@ $fn=40;
 L=-110.85;
 RU=[16.5,68.8];                       // upright rows: blocks Z 1.5..35 and 53.8..87.3
 RS=[12.9,33.9,54.9,75.9];             // sideways rows: blocks 21 tall
-function gcx()=opt=="A"?33:opt=="B"?38:opt=="S"?33:38.6;
-function cols()=opt=="A"?[-100.35,-79.35,-58.35]:opt=="B"?[-100.35,-79.35,-58.35,-37.35]:opt=="T"?[-33.35]:[];
+function gcx()=opt=="A"?33:opt=="B"||opt=="C"?38:opt=="S"?33:38.6;
+function cols()=opt=="A"?[-100.35,-79.35,-58.35]:opt=="B"||opt=="C"?[-100.35,-79.35,-58.35,-37.35]:opt=="T"?[-33.35]:[];
 function side_cols()=opt=="S"||opt=="T"?[-94.1,-60.6]:[];          // sideways block X centre
-up=[for(x=cols(),c=RU)[x,c]];
+up=[for(x=cols(),c=opt=="C"?[RU[1]]:RU)[x,c]];
 side=[for(x=side_cols(),c=RS)[x,c]];
-function m6()=opt=="A"?[[-40,21.5],[-40,59],[-69,44.4]]:opt=="B"?[[-90,44.4],[-60,44.4]]:opt=="S"?[[-36,28],[-36,59]]:[[-33.35,44.4]];
-function fbx()=opt=="A"||opt=="S"?[[gcx()-68,10],[gcx()-68,72],[gcx()+68,10],[gcx()+68,72]]:[[gcx()-68,44.4],[gcx()+68,10],[gcx()+68,72]];
+function m6()=opt=="C"?[[-95,45],[-67,45],[-45,45]]:opt=="A"?[[-40,21.5],[-40,59],[-69,44.4]]:opt=="B"?[[-90,44.4],[-60,44.4]]:opt=="S"?[[-36,28],[-36,59]]:[[-33.35,44.4]];
+function fbx()=opt=="C"?[[gcx()-68,46],[gcx()-68,10],[gcx()+68,10],[gcx()+68,72]]:opt=="A"||opt=="S"?[[gcx()-68,10],[gcx()-68,72],[gcx()+68,10],[gcx()+68,72]]:[[gcx()-68,44.4],[gcx()+68,10],[gcx()+68,72]];
 GW=120.7; GCZ=41.5; D=gcx()-33;
 module xz(y,d){translate([0,y+d,0])rotate([90,0,0])linear_extrude(d)children();}
 module rr(w,h,r){hull()for(x=[-w/2+r,w/2-r],z=[-h/2+r,h/2-r])translate([x,z])circle(r=r);}
@@ -33,6 +33,7 @@ module plate(){
     xz(0,4)translate([0,44.4])rr(252,88.8,2.5);
     for(q=fbx())cy(q[0],3.9,q[1],9,9.4);
     for(q=m6())cy(q[0],3.9,q[1],14,10.7);
+    if(opt=="C")for(x=[-90,-60])box([x-6,3.9,7],[x+6,19,10]);
     if(opt=="A"||opt=="B")box([L,3.9,38],[opt=="A"?-46:-27,8,50.8]); // mid-height stiffening bar behind the label strip
    }
    xz(-.02,4.04)slots();
@@ -68,9 +69,9 @@ module frame_new(){
   box([pi_x0-1,13,71.3],[pi_x0+86,17,75.5]);                 // Pi board clears the top bar
   box([pi_x0+11.2-8,13,73],[pi_x0+11.2+8,17,81]);            // USB-C elbow gap
   box([gcx()+58,13,14],[gcx()+67,17,73]);                    // Pi USB/Ethernet plugs clear the right bar
-  if(opt!="A"&&opt!="S")box([-60,13,-1],[gcx()-64.7,17,90]);       // left bar and bosses come off, column 4 blocks are there
+  if(opt!="A"&&opt!="S")box([-60,13,opt=="C"?16:-1],[gcx()-64.7,17,90]);       // left bar and bosses come off, column 4 blocks are there
  }
- if(opt!="A"&&opt!="S"){box([gcx()-64.7,13.3,3.5],[gcx()-60.6,16.3,79.5]);hull(){cy(fbx()[0][0],13.3,44.4,9,3);cy(gcx()-64,13.3,44.4,7,3);}}
+ if(opt!="A"&&opt!="S"){box([gcx()-64.7,13.3,3.5],[gcx()-60.6,16.3,79.5]);hull(){cy(fbx()[0][0],13.3,opt=="C"?46:44.4,9,3);cy(gcx()-64,13.3,opt=="C"?46:44.4,7,3);}}
 }
 // flat DSI ribbon, 16 wide (50 mm cable from the screen's box assumed)
 RIB=[[gcx()-58,14.5],[gcx()-58,20],[gcx()-50,24.5],[gcx()-40,24.5],[gcx()-37.6,20.6]];
@@ -85,7 +86,7 @@ module fan_mount(){difference(){union(){
  }
  cy(fan_c[0],24.4,fan_c[1],37,5.2);
 }}
-hue_cx=-54.4; hue_y0=27; deck_z=28; deck_t=3; deck_top=deck_z+deck_t;
+hue_cx=-54.4; hue_y0=opt=="C"?24.5:27; deck_z=opt=="C"?2:28; deck_t=3; deck_top=deck_z+deck_t;
 hue_w=88; hue_d=88; hue_h=26;
 module hue(){translate([hue_cx,hue_y0+hue_d/2,deck_top+.1]){linear_extrude(hue_h)offset(r=12)square([hue_w-24,hue_d-24],center=true);translate([0,0,hue_h-.1])cylinder(d=26,h=.7);}}
 deck_y1=hue_y0+hue_d+4;
@@ -94,7 +95,18 @@ module tabs(){for(q=m6())difference(){
   cy(q[0],14,q[1],6.6,7.2);
   translate([q[0],17.5,q[1]])rotate([-90,0,0])cylinder(d=11.5,h=3.2);
 }}
-module deck(){union(){
+module deck_low(){difference(){   // one part: floor, side walls, front wall with 3 M6, full cradle
+ union(){
+  difference(){box([-105,14.65,2],[-3.9,116,5]);box([-37,14,1],[-3,16.7,6]);}
+  box([-105,14.65,4.9],[-102,116,28]); box([-6.9,21,4.9],[-3.9,116,28]);
+  box([-105,14.65,2],[-37,20.65,52]);
+  translate([hue_cx,68.5,5-3-.045])intersection(){import("C:/Users/brian/Downloads/Swanky Rottis.stl",convexity=6);translate([-50,-50,3])cube([100,100,40]);}
+ }
+ for(q=m6()){cy(q[0],14,q[1],6.6,7.2);cy(q[0],17.15,q[1],11.5,3.6);}
+ for(x=[-90,-60])box([x-6.15,14,6.85],[x+6.15,19.3,10.15]);
+}}
+module hue_lift(){translate([0,0,28])hue();}
+module deck(){if(opt=="C")deck_low();else union(){
   difference(){box([-105,15,deck_z],[-8,deck_y1,deck_top]);box([-33.3,14,deck_z-1],[-7,16.7,deck_top+1]);}
   tabs();
   for(x=opt=="B"?[-89.85,-68.85,-47.85,-26.85]:[-89.85,-68.85,-47.85,-30])hull(){box([x-1.5,36,deck_z-.1],[x+1.5,deck_y1-2,deck_top-1]);box([x-1.5,44,12.5],[x+1.5,deck_y1-12,deck_z]);}  // ribs between the lower cable lanes
@@ -124,6 +136,7 @@ if(part=="fan")fan();
 if(part=="fan_mount")fan_mount();
 if(part=="hue")hue();
 if(part=="deck")deck();
+if(part=="hue_lift")hue_lift();
 if(part=="rail")rail_part();
 if(part=="jacks")jacks();
 if(part=="plugs")plugs();

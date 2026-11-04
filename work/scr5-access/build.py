@@ -4,12 +4,12 @@ from pathlib import Path
 import trimesh
 H = Path(__file__).parent; S = H / 'stl'; EXE = r'C:\Program Files\OpenSCAD\openscad.exe'
 S.mkdir(exist_ok=True)
-PARTS = 'plate frame screen pi pi_screws ribbon fan fan_mount hue deck jacks plugs cables m6_tools m6_heads sd_path usbc pi_plugs pins pi_drivers rail'.split()
+PARTS = 'plate frame screen pi pi_screws ribbon fan fan_mount hue deck jacks plugs cables m6_tools m6_heads sd_path usbc pi_plugs pins pi_drivers rail hue_lift'.split()
 PAIRS = [('plate', 'frame'), ('plate', 'pi'), ('plate', 'hue'), ('plate', 'deck'), ('plate', 'pins'), ('frame', 'pi'), ('frame', 'deck'), ('frame', 'hue'), ('frame', 'pi_screws'), ('frame', 'fan_mount'),
          ('screen', 'pi'), ('screen', 'frame'), ('screen', 'deck'), ('pi', 'hue'), ('pi', 'deck'), ('pi', 'fan'), ('pi', 'fan_mount'), ('pi', 'ribbon'), ('pi', 'pins'), ('ribbon', 'hue'), ('ribbon', 'deck'), ('ribbon', 'fan_mount'), ('ribbon', 'frame'),
          ('hue', 'deck'), ('hue', 'fan'), ('hue', 'fan_mount'), ('hue', 'jacks'), ('hue', 'plugs'), ('hue', 'cables'), ('hue', 'usbc'), ('deck', 'jacks'), ('deck', 'plugs'), ('deck', 'cables'), ('deck', 'm6_heads'), ('jacks', 'frame'), ('jacks', 'ribbon'), ('plugs', 'ribbon'),
          ('deck', 'fan_mount'), ('deck', 'usbc'), ('fan_mount', 'pi_plugs'), ('fan', 'pi_plugs'), ('frame', 'usbc'), ('frame', 'pi_plugs'), ('pi_plugs', 'post_r'), ('plate', 'post_l'), ('plate', 'post_r'), ('deck', 'post_l'), ('jacks', 'post_l'), ('plugs', 'post_l'), ('frame', 'post_r'), ('screen', 'post_r'),
-         ('m6_tools', 'jacks'), ('m6_tools', 'plugs'), ('m6_tools', 'deck'), ('m6_tools', 'fan_mount'), ('m6_tools', 'hue'), ('pi_drivers', 'fan'), ('pi_drivers', 'fan_mount'), ('pi_drivers', 'frame'), ('pi_drivers', 'hue'), ('sd_path', 'hue'), ('sd_path', 'deck'), ('sd_path', 'ribbon'), ('usbc', 'fan_mount'), ('rail', 'plate'), ('rail', 'post_l'), ('rail', 'jacks'), ('rail', 'plugs'), ('rail', 'deck')]
+         ('m6_tools', 'jacks'), ('m6_tools', 'plugs'), ('m6_tools', 'deck'), ('m6_tools', 'fan_mount'), ('m6_tools', 'hue'), ('pi_drivers', 'fan'), ('pi_drivers', 'fan_mount'), ('pi_drivers', 'frame'), ('pi_drivers', 'hue'), ('sd_path', 'hue'), ('sd_path', 'deck'), ('sd_path', 'ribbon'), ('usbc', 'fan_mount'), ('rail', 'plate'), ('rail', 'post_l'), ('rail', 'jacks'), ('rail', 'plugs'), ('rail', 'deck'), ('hue_lift', 'plugs'), ('hue_lift', 'cables'), ('hue_lift', 'jacks'), ('hue_lift', 'plate'), ('hue_lift', 'ribbon'), ('hue_lift', 'fan_mount')]
 SRC = (H / 'access_concept.scad').as_posix()
 def exp(a):
     o, p = a; f = S / f'{o}_{p}.stl'

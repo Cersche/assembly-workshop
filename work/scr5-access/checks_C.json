@@ -1,0 +1,397 @@
+[
+{
+"a": "plate",
+"b": "frame",
+"mm3": 0.0
+},
+{
+"a": "plate",
+"b": "pi",
+"mm3": 0.0
+},
+{
+"a": "plate",
+"b": "hue",
+"mm3": 0.0
+},
+{
+"a": "plate",
+"b": "deck",
+"mm3": 0.0
+},
+{
+"a": "plate",
+"b": "pins",
+"mm3": 0.0
+},
+{
+"a": "frame",
+"b": "pi",
+"mm3": 0.0
+},
+{
+"a": "frame",
+"b": "deck",
+"mm3": 0.0
+},
+{
+"a": "frame",
+"b": "hue",
+"mm3": 0.0
+},
+{
+"a": "frame",
+"b": "pi_screws",
+"mm3": 0.0
+},
+{
+"a": "frame",
+"b": "fan_mount",
+"mm3": 0.0
+},
+{
+"a": "screen",
+"b": "pi",
+"mm3": 0.0
+},
+{
+"a": "screen",
+"b": "frame",
+"mm3": 0.0
+},
+{
+"a": "screen",
+"b": "deck",
+"mm3": 0.0
+},
+{
+"a": "pi",
+"b": "hue",
+"mm3": 0.0
+},
+{
+"a": "pi",
+"b": "deck",
+"mm3": 0.0
+},
+{
+"a": "pi",
+"b": "fan",
+"mm3": 0.0
+},
+{
+"a": "pi",
+"b": "fan_mount",
+"mm3": 0.0
+},
+{
+"a": "pi",
+"b": "ribbon",
+"mm3": 0.0
+},
+{
+"a": "pi",
+"b": "pins",
+"mm3": 0.0
+},
+{
+"a": "ribbon",
+"b": "hue",
+"mm3": 0.0
+},
+{
+"a": "ribbon",
+"b": "deck",
+"mm3": 0.0
+},
+{
+"a": "ribbon",
+"b": "fan_mount",
+"mm3": 0.0
+},
+{
+"a": "ribbon",
+"b": "frame",
+"mm3": 0.0
+},
+{
+"a": "hue",
+"b": "deck",
+"mm3": 0.0
+},
+{
+"a": "hue",
+"b": "fan",
+"mm3": 0.0
+},
+{
+"a": "hue",
+"b": "fan_mount",
+"mm3": 0.0
+},
+{
+"a": "hue",
+"b": "jacks",
+"mm3": 0.0
+},
+{
+"a": "hue",
+"b": "plugs",
+"mm3": 0.0
+},
+{
+"a": "hue",
+"b": "cables",
+"mm3": 0.0
+},
+{
+"a": "hue",
+"b": "usbc",
+"mm3": 0.0
+},
+{
+"a": "deck",
+"b": "jacks",
+"mm3": 0.0
+},
+{
+"a": "deck",
+"b": "plugs",
+"mm3": 0.0
+},
+{
+"a": "deck",
+"b": "cables",
+"mm3": 0.0
+},
+{
+"a": "deck",
+"b": "m6_heads",
+"mm3": 0.0
+},
+{
+"a": "jacks",
+"b": "frame",
+"mm3": 0.0
+},
+{
+"a": "jacks",
+"b": "ribbon",
+"mm3": 0.0
+},
+{
+"a": "plugs",
+"b": "ribbon",
+"mm3": 0.0
+},
+{
+"a": "deck",
+"b": "fan_mount",
+"mm3": 0.0
+},
+{
+"a": "deck",
+"b": "usbc",
+"mm3": 0.0
+},
+{
+"a": "fan_mount",
+"b": "pi_plugs",
+"mm3": 0.0
+},
+{
+"a": "fan",
+"b": "pi_plugs",
+"mm3": 0.0
+},
+{
+"a": "frame",
+"b": "usbc",
+"mm3": 0.0
+},
+{
+"a": "frame",
+"b": "pi_plugs",
+"mm3": 0.0
+},
+{
+"a": "pi_plugs",
+"b": "post_r",
+"mm3": 0.0
+},
+{
+"a": "plate",
+"b": "post_l",
+"mm3": 0.0
+},
+{
+"a": "plate",
+"b": "post_r",
+"mm3": 0.0
+},
+{
+"a": "deck",
+"b": "post_l",
+"mm3": 0.0
+},
+{
+"a": "jacks",
+"b": "post_l",
+"mm3": 0.0
+},
+{
+"a": "plugs",
+"b": "post_l",
+"mm3": 0.0
+},
+{
+"a": "frame",
+"b": "post_r",
+"mm3": 0.0
+},
+{
+"a": "screen",
+"b": "post_r",
+"mm3": 0.0
+},
+{
+"a": "m6_tools",
+"b": "jacks",
+"mm3": 0.0
+},
+{
+"a": "m6_tools",
+"b": "plugs",
+"mm3": 0.0
+},
+{
+"a": "m6_tools",
+"b": "deck",
+"mm3": 0.0
+},
+{
+"a": "m6_tools",
+"b": "fan_mount",
+"mm3": 0.0
+},
+{
+"a": "m6_tools",
+"b": "hue",
+"mm3": 0.0
+},
+{
+"a": "pi_drivers",
+"b": "fan",
+"mm3": 0.0
+},
+{
+"a": "pi_drivers",
+"b": "fan_mount",
+"mm3": 0.0
+},
+{
+"a": "pi_drivers",
+"b": "frame",
+"mm3": 0.0
+},
+{
+"a": "pi_drivers",
+"b": "hue",
+"mm3": 0.0
+},
+{
+"a": "sd_path",
+"b": "hue",
+"mm3": 0.0
+},
+{
+"a": "sd_path",
+"b": "deck",
+"mm3": 0.0
+},
+{
+"a": "sd_path",
+"b": "ribbon",
+"mm3": 108.9,
+"from": [
+-19.0,
+20.3,
+38.0
+],
+"to": [
+-6.2,
+24.7,
+53.8
+]
+},
+{
+"a": "usbc",
+"b": "fan_mount",
+"mm3": 0.0
+},
+{
+"a": "rail",
+"b": "plate",
+"mm3": 0.0
+},
+{
+"a": "rail",
+"b": "post_l",
+"mm3": 0.0
+},
+{
+"a": "rail",
+"b": "jacks",
+"mm3": 0.0
+},
+{
+"a": "rail",
+"b": "plugs",
+"mm3": 0.0
+},
+{
+"a": "rail",
+"b": "deck",
+"mm3": 0.0
+},
+{
+"a": "hue_lift",
+"b": "plugs",
+"mm3": 0.0
+},
+{
+"a": "hue_lift",
+"b": "cables",
+"mm3": 0.0
+},
+{
+"a": "hue_lift",
+"b": "jacks",
+"mm3": 339.8,
+"from": [
+-98.0,
+24.5,
+58.5
+],
+"to": [
+-30.0,
+34.0,
+59.0
+]
+},
+{
+"a": "hue_lift",
+"b": "plate",
+"mm3": 0.0
+},
+{
+"a": "hue_lift",
+"b": "ribbon",
+"mm3": 0.0
+},
+{
+"a": "hue_lift",
+"b": "fan_mount",
+"mm3": 0.0
+}
+]

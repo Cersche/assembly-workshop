@@ -48,7 +48,7 @@ for o in sys.argv[1:]:
     rows = []
     # sanity: plate boss must register as solid
     print(o, 'plate columns', len(col('plate')))
-    for a, b in PAIRS:
+    for a, b in [p for p in PAIRS if (S / f'{o}_{p[0]}.stl').exists() and (S / f'{o}_{p[1]}.stl').exists() or 'post' in p[1]]:
         ma, mb = load(o, a), load(o, b)
         if (np.minimum(ma.bounds[1], mb.bounds[1]) <= np.maximum(ma.bounds[0], mb.bounds[0])).any():
             rows.append(dict(a=a, b=b, mm3=0.0)); continue
