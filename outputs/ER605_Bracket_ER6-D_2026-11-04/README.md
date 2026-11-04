@@ -12,4 +12,4 @@ PROPOSED — UNPRINTED. Current design. [ER6-C](../ER605_Bracket_ER6-C_2026-11-0
 
 ## UNKNOWN
 
-Same as ER6-C: ports-end screw heads, arm durability and click force, right keyhole assumed symmetric, strength.
+Arm durability and click force, right keyhole assumed symmetric, strength. Ports-end screw heads are flush with the case bottom (Brian), so they clear.

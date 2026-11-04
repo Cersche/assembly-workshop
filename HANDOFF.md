@@ -1,7 +1,7 @@
 # Assembly Workshop — current handoff
 
 ## 2026-11-04 ER605 bracket: ER6-D, pocket 26.0 (Claude)
-Brian asked for another 0.5 off the height. **[ER6-D](outputs/ER605_Bracket_ER6-D_2026-11-04/README.md), unprinted, is the current design;** pocket 26.0 on the measured 26 case, no designed gap. ER6-C (26.5) is the fallback; A and B don't fit. `outputs/Final_3MF/ER6-D_ER605_bracket.3mf`. Screw-head check still open. Fit, click and strength UNKNOWN.
+Brian asked for another 0.5 off the height. **[ER6-D](outputs/ER605_Bracket_ER6-D_2026-11-04/README.md), unprinted, is the current design;** pocket 26.0 on the measured 26 case, no designed gap. ER6-C (26.5) is the fallback; A and B don't fit. `outputs/Final_3MF/ER6-D_ER605_bracket.3mf`. Screw heads flush (Brian). Fit, click and strength UNKNOWN.
 
 ## 2026-11-04 ER605 bracket: ER6-C, pocket for the 26 mm case (Claude)
 Brian: case 26 tall, 4 room above the keyhole, feet off, mount through keyholes. **[ER6-C](outputs/ER605_Bracket_ER6-C_2026-11-04/README.md), unprinted, is the current design; ER6-A and B have a 25.7 pocket that is too short, don't print them.** Pocket 26.5, root chamfer 4.5, detents kept. `outputs/Final_3MF/ER6-C_ER605_bracket.3mf`. Digital checks only. **Next step:** Brian checks the ports-end screw heads (`work/mesh-viewer/ER6-C_check_screw_heads.png`) and prints. Fit, click and strength UNKNOWN.

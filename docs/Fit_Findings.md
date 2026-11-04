@@ -72,3 +72,4 @@ Brian installed the printed SCR5-H7 screen unit (window 121.5 x 78.0, 0.4/side):
 
 - 2026-11-04 ER605 router measured (Brian): 158 wide, 101 deep; keyhole round part dia 8, 17.25 from side, 50 from rear edge; slots 4 wide, 8.5 from centre; stepped bar is on the ports edge. Height and room above the keyhole not measured. Not a printed part.
 - 2026-11-04 ER605 router measured (Brian): 26 tall without feet (source pocket 25.7 too short), 4 room above the keyhole. Not a printed part.
+- 2026-11-04 ER605 ports-end screw heads flush with the case bottom (Brian). Not a printed part.
