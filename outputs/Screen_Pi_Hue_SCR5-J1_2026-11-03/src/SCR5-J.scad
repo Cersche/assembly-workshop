@@ -76,7 +76,7 @@ module deck_outline(){
 }
 module hue_cradle(){ // Brian's cradle corner posts read in place. Rear posts cut to 6 tall: the Hue tilts over them and slides out the back.
  translate([hue_cx,hue_cy,deck_top-3-0.045])intersection(){
-  import("C:/Users/brian/Downloads/Swanky Rottis.stl",convexity=6);
+  import("C:/Users/brian/Downloads/STL/Swanky Rottis.stl",convexity=6);
   union(){translate([-50,-50,3])cube([100,50,40]);translate([-50,0,3])cube([100,50,9.045]);}
  }
 }

@@ -60,4 +60,4 @@ Pi ports through the plate, the floor and inner walls, plate ledge and T-rails, 
 ## Rebuild
 `SCR5-J1_deck.stl` and the 3MF contain the third-party Hue cradle, so they stay on the PC and out of git. `checks/ref_deck_no_cradle.stl` is the deck without it.
 
-`python src/SCR5-J1_build.py`, then `python src/SCR5-J1_finish.py`. Needs OpenSCAD, trimesh, numpy and the local Hue cradle `C:/Users/brian/Downloads/Swanky Rottis.stl`.
+`python src/SCR5-J1_build.py`, then `python src/SCR5-J1_finish.py`. Needs OpenSCAD, trimesh, numpy and the local Hue cradle `C:/Users/brian/Downloads/STL/Swanky Rottis.stl`.
