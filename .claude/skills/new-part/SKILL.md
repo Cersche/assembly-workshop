@@ -35,5 +35,6 @@ Only when Brian says he's printing it, or asks for a print file. If he does, the
 6. End the delivery message with the fit report to send back: ID on the part; fits or not; where tight or loose, and by how much if measured; walls and infill. Add any part-specific items, such as a screw or lights.
 
 ## After
+- If the part has a section in `work/workbench/Workflow_Log.md`, add a short row whenever a step starts or ends or something gets in the way.
 - Add Brian's printed results to `docs/Fit_Findings.md`, and new device measurements to the device's card. If a report leaves out the ID, ask once before logging it. Printing needs his direction, and fit and strength stay UNKNOWN until a print shows otherwise, for that specimen only.
 - Update `HANDOFF.md`, commit only this part's files, push, then send the Gene photo.
