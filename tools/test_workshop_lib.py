@@ -62,8 +62,10 @@ class LibraryMatchesBuiltParts(unittest.TestCase):
 
     def test_hidden_m6_boss(self):
         ref = solid(REF / "SG8-M6-F_faceplate.stl")
-        lib = self.render(f"ws_m6_plate_boss({BOSS_X},{BOSS_Z});")
-        self.same_in(lib, ref, box(BOSS_X - 7, BOSS_X + 7, 0, 8, BOSS_Z - 7, 45))
+        for x in (BOSS_X, 56):  # SG8-M6-F's two bosses
+            with self.subTest(x=x):
+                lib = self.render(f"ws_m6_plate_boss({x},{BOSS_Z});")
+                self.same_in(lib, ref, box(x - 7, x + 7, 0, 8, BOSS_Z - 7, 45))
 
     def test_m6_screw_cut_in_tray_upright(self):
         ref = solid(REF / "SG8-M6-F_tray.stl")

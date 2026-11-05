@@ -75,3 +75,4 @@ Brian installed the printed SCR5-H7 screen unit (window 121.5 x 78.0, 0.4/side):
 - 2026-11-04 ER605 router measured (Brian): 26 tall without feet (source pocket 25.7 too short), 4 room above the keyhole. Not a printed part.
 - 2026-11-04 ER605 ports-end screw heads flush with the case bottom (Brian). Not a printed part.
 - 2026-11-04 Right-angle F on the ScreenBeam coax port (Brian): 24.6 from port face to the connector's outer face, as modelled in MRT-E (18.6 + 6). Leaves 1.9 to the tray side wall. Barrel tip 38.2 not confirmed on this port. Not a printed part.
+- 2026-11-05 SG8-M6-F (Brian): "the tray did print and everything did fit well." Parts covered by "everything" not itemised, including whether the M6 screws are fitted in the joint. Strength UNKNOWN.
