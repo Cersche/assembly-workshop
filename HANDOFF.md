@@ -37,6 +37,9 @@ Brian confirmed 24.6 from the ScreenBeam port face to the right-angle F's outer 
 Brian printed the OPX-F rails: good fit. He then asked for a cable pass-through on the rear brackets; position and size are Claude's choice. [OPX-G](outputs/OptiPlex_Sleeve_Channels_OPX-G_2026-11-04/README.md) is two new channels only, `outputs/Final_3MF/OPX-G_OptiPlex_rear_channels.3mf`: a window about 31 x 28 through each web, behind the rear stop, otherwise as printed OPX-D-L/R. Reuses the printed OPX-D sleeve and OPX-F rails. Viewers: [print](https://claude.ai/artifact/AE6zMsD1DYfFwioQS45Ba7), [assembled](https://claude.ai/artifact/E3EWjyGEyPvyeLvjKuKLtf). Clash checks clear, 2 objects, 2422/4868 tags, 0 open edges. Not printed or opened in a slicer.
 **Next step:** Brian reviews the window position and size, then prints. Log the report in `docs/Fit_Findings.md`. Unknown: window's effect on stiffness, plug sizes, cable rubbing, front sag on OPX-F.
 
+## 2026-11-05 Screen + Pi + Hue: SCR5-J5 tray, Hue cradle loosened (Claude)
+Brian printed J4: Hue cradle too tight. [SCR5-J5](outputs/Screen_Pi_Hue_SCR5-J5_2026-11-05/README.md) changes only the tray: posts 0.4 out each side, front posts 0.8 forward (0.8 more room each way; rear posts stay on the tray edge). `outputs/Final_3MF/SCR5-J5_tray.3mf`. Other J4 parts unchanged. **Not printed.** Fit UNKNOWN. Not committed: the permission check blocked it, Brian runs it.
+
 ## 2026-11-04 ER605 bracket: ER6-H, 3 long floor slots (Claude)
 Brian picked 3 long slots over the hexes for faster printing. **[ER6-H](outputs/ER605_Bracket_ER6-H_2026-11-04/README.md), unprinted, is the current design:** ER6-G with the new floor. `outputs/Final_3MF/ER6-H_ER605_bracket.3mf`. Digital checks only, not sliced. Fit, flushness, click and strength UNKNOWN.
 
