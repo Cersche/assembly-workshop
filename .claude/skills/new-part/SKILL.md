@@ -1,6 +1,6 @@
 ---
 name: new-part
-description: Design and release a new or revised 3D printed part for the rack (bracket, tray, faceplate, test coupon). Use for any work that creates a new part revision.
+description: Design, draft and release a new or revised 3D printed part for the rack (bracket, tray, faceplate, test coupon). Use for any work on a part design, including drafts that aren't ready to print.
 ---
 
 # New part
@@ -10,8 +10,11 @@ Prints are slow and real, so a dropped feature or a tightened clearance costs Br
 ## Before modelling
 1. If an earlier version exists, read its README and `docs/Fit_Findings.md`. List every feature Brian asked for and keep them all. If one can't stay, ask in chat first.
 2. Keep every clearance from the version that printed well. Never tighten one without Brian's OK. A fit report about one feature applies to that feature only.
-3. Measure the real device. Any measurement request comes with a diagram showing where and how to measure, and the expected value. Keep unmeasured dimensions marked UNKNOWN.
+3. Measure first. Each device gets one card, `docs/devices/<device>.md`, holding overall size, corners, end and edge shapes, slopes, feet, screw heads, ports and anything else the part touches. Mark each value measured by Brian, from a source file or UNKNOWN. Before a new device's first print, send one diagram showing where and how to measure, with the expected values, and ask for everything the fit depends on in one go. If Brian prints with a value still UNKNOWN, name it in chat first. Source models and STEP files are not measurements.
 4. Look at the actual post mesh, and consider the rear posts as mounting points. Default pattern: post rails (`outputs/Chunky_Revisions/README.md`). Brian's rack has 4U posts with no side holes mid-post.
+
+## Draft
+Explore freely until Brian says he's printing it. A draft is one working SCAD file and a viewer page: no new ID, 3MF, outputs folder, README, handoff entry or per-change commit. Put several small changes into one viewer update instead of one each. Render with the pinned snapshot (`--backend=manifold`), then send and publish the page with `tools/mesh_viewer.py`. Commit working files once at the end of the session so nothing stays on one machine.
 
 ## Modelling
 - `include <workshop.scad>` for the plate, slots, golden keystone, insert bores and hidden M6 joint. Don't redraw these. Use `include <BOSL2/std.scad>` for fillets and rounded shapes. See `lib/README.md`.
@@ -22,13 +25,15 @@ Prints are slow and real, so a dropped feature or a tightened clearance costs Br
 - Never edit an already printed revision. Make a new one.
 
 ## Release
+Only when Brian says he's printing it, or asks for a print file. If he does, the current draft becomes the next revision.
 1. Run this, adding `--against device.stl` whenever a device mesh exists:
    `python tools/release_part.py <part>.scad --id <ID> --part <name>[:<ID on part>] -o outputs/<Name>_<ID>_<YYYY-MM-DD>`
 2. Fix every FAIL. Read every WARN and tell Brian about any you keep. Don't work around a failed check.
 3. Confirm IDs and bores in the viewer: the script only finds the ID in the source, and its hole scan can miss bores open on one side.
 4. Send the viewer page with SendUserFile (display "render") and publish the same file as an Artifact. Send the 3MF too.
 5. Write the folder's README: what changed, which fit values were kept or changed and why, and what's UNKNOWN.
+6. End the delivery message with the fit report to send back: ID on the part; fits or not; where tight or loose, and by how much if measured; walls and infill. Add any part-specific items, such as a screw or lights.
 
 ## After
-- Add Brian's printed results to `docs/Fit_Findings.md`. Printing needs his direction, and fit and strength stay UNKNOWN until a print shows otherwise, for that specimen only.
+- Add Brian's printed results to `docs/Fit_Findings.md`, and new device measurements to the device's card. If a report leaves out the ID, ask once before logging it. Printing needs his direction, and fit and strength stay UNKNOWN until a print shows otherwise, for that specimen only.
 - Update `HANDOFF.md`, commit only this part's files, push, then send the Gene photo.
