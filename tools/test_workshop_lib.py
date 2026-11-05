@@ -74,6 +74,12 @@ class LibraryMatchesBuiltParts(unittest.TestCase):
         # Starts above Z 33.91: below that, SG8-M6-F's own sleeve lip fills the recess.
         self.same_in(lib, ref, box(BOSS_X - 8, BOSS_X + 8, 8.3, 14.3, 34, 43.85))
 
+    def test_m6_keepout_catches_the_sg8_lip(self):
+        """The real case behind the rule: SG8-M6-F's sleeve lip fills part of each head recess."""
+        ref = solid(REF / "SG8-M6-F_tray.stl")
+        keep = self.render(f"ws_m6_head_keepout({BOSS_X},8.3,{BOSS_Z});")
+        self.assertGreater((ref ^ keep).volume(), 10)
+
     def test_bosl2_available(self):
         self.assertGreater(self.render("include <BOSL2/std.scad>\ncuboid([10,10,10],rounding=1);").volume(), 900)
 

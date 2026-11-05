@@ -239,6 +239,7 @@ def main(argv=None):
     ap.add_argument("--bodies", action="append", default=[], metavar="PART=N", help="expected body count (default 1)")
     ap.add_argument("--turn", action="append", default=[], metavar="PART=AXISDEG",
                     help="print orientation in the 3MF, such as tray=x180 (a part named faceplate defaults to x90)")
+    ap.add_argument("--keepout", metavar="PART", help='SCAD part holding solids no released part may overlap, such as screw head room')
     ap.add_argument("--openscad", type=Path, default=SNAPSHOT)
     ap.add_argument("--viewer-dir", type=Path, default=ROOT / "work" / "mesh-viewer")
     args = ap.parse_args(argv)
@@ -276,6 +277,19 @@ def main(argv=None):
 
     stage = Path(tempfile.mkdtemp(prefix=f"release-{args.id}-"))
     triangles, stls, sources = {}, [], set()
+    keepout = None
+    if args.keepout:
+        rep.heading("Keep-out")
+        keep_stl = stage / "keepout.stl"
+        keep_deps = stage / "keepout.deps"
+        if render(args.openscad, scad, args.keepout, keep_stl, keep_deps, rep):
+            sources.update(read_deps(keep_deps, scad))
+            _, keepout = load_manifold(keep_stl)
+            if keepout.status().name != "NoError" or keepout.volume() <= 0:
+                rep.fail(f"keep-out {args.keepout} is not a closed solid; keep-out not checked")
+                keepout = None
+            else:
+                rep.info(f"keep-out {args.keepout}: {keepout.volume():.0f} mm3, {len(keepout.decompose())} bodies")
     for part, part_id in parts:
         rep.heading(part)
         stl = stage / f"{args.id}_{part}.stl"
@@ -303,6 +317,12 @@ def main(argv=None):
             rep.fail(f'{part}: ID "{part_id}" not found in the source')
         check_holes(part, find_holes(solid), rep)
         check_clearance(part, solid, devices, args.min_gap, rep)
+        if keepout is not None:
+            intrusion = (solid ^ keepout).volume()
+            if intrusion > OVERLAP_LIMIT:
+                rep.fail(f"{part}: intrudes into the keep-out by {intrusion:.2f} mm3")
+            else:
+                rep.info(f"{part}: keep-out clear")
         triangles[part] = len(mesh.faces)
         stls.append(stl)
 

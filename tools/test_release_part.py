@@ -22,6 +22,8 @@ if(part=="shallow"){difference(){cube([40,40,10]);translate([20,20,-1])cylinder(
 if(part=="two"){cube(10);translate([30,0,0])cube(10);}
 if(part=="broken"){cube(10);undefined_module_name_x();}
 if(part=="empty"){}
+if(part=="keep_hit")translate([5,5,5])cube(4);
+if(part=="keep_clear")translate([5,5,20])cube(4);
 """
 
 
@@ -132,6 +134,24 @@ class ReleaseTests(Base):
         self.assertAlmostEqual(lowest[1], 0, 3)
         self.assertAlmostEqual(boxes[0][2], 40, 2)  # x90 stands the 40 mm block side up
         self.assertAlmostEqual(boxes[1][0] - boxes[0][1], 10, 2)  # 10 mm apart
+
+
+class KeepoutTests(Base):
+    def test_intrusion_fails_and_nothing_is_written(self):
+        code, text = self.run_tool("--part", "good", "--keepout", "keep_hit")
+        self.assertEqual(code, 1, text)
+        self.assertIn("intrudes into the keep-out", text)
+        self.assertFalse(self.out.exists())
+
+    def test_clear_part_passes_and_keepout_is_not_released(self):
+        code, text = self.run_tool("--part", "good", "--keepout", "keep_clear")
+        self.assertEqual(code, 0, text)
+        self.assertIn("keep-out clear", text)
+        self.assertFalse(list(self.out.glob("*keep*")))
+
+    def test_missing_keepout_fails_not_clears(self):
+        code, text = self.run_tool("--part", "good", "--keepout", "no_such_part")
+        self.assertEqual(code, 1, text)
 
 
 class LibraryFreezeTests(Base):

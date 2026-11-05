@@ -75,6 +75,11 @@ module ws_m6_plate_boss(x,z,u=1,d=12,h=8,$fn=64){intersection(){
  translate([x-d,-0.1,0])cube([2*d,h+0.2,ws_plate_top(u)]);
 }}
 
+// Keep-outs for release_part.py --keepout: solids no released part may overlap. Y direction, like the joint.
+ws_head_gap=1;  // Brian 2026-11-05: minimum room around a screw head; unprinted as a rule
+module ws_head_keepout(x,y0,z,head_d,len=6,$fn=64){translate([x,y0,z])rotate([-90,0,0])cylinder(d=head_d+2*ws_head_gap,h=len);}
+module ws_m6_head_keepout(x,y0,z,len=6,web=ws_m6_web,$fn=64){translate([x,y0+web+0.01,z])rotate([-90,0,0])cylinder(d=ws_m6_head_d,h=len-0.02);}
+
 // Hidden M6 joint, tray side: clearance hole and head recess along +Y, starting at Y=y0. Subtract from the upright.
 module ws_m6_screw_cut(x,y0,z,len=6,web=ws_m6_web){
  translate([x,y0-0.1,z])rotate([-90,0,0])cylinder(d=ws_m6_clear,h=len+0.2,$fn=48);
