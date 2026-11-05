@@ -17,6 +17,7 @@ Prints are slow and real, so a dropped feature or a tightened clearance costs Br
 - `include <workshop.scad>` for the plate, slots, golden keystone, insert bores and hidden M6 joint. Don't redraw these. Use `include <BOSL2/std.scad>` for fillets and rounded shapes. See `lib/README.md`.
 - Name parts with a SCAD variable: `part="tray";` and `if(part=="tray")...`.
 - Every screw joint in a print gets a heat-set insert, with bores modeled in: M3 by default, M6 for weight-bearing joints and brackets, M2/M2.5 only where a device forces it. No self-tapping and no drilling. Ask before adding a new screw type.
+- Leave real room around screw heads, tool paths and other non-fit features; don't design them down to the last fraction of a mm (Brian, 2026-11-05). Check the room around each screw head against nearby geometry, and tell Brian about any tight spot. This doesn't loosen proven fit clearances, which stay as printed.
 - Use a new unique ID for each revision, and model it on the part where it doesn't affect a tested feature. Test prints and coupons always need one.
 - Never edit an already printed revision. Make a new one.
 
