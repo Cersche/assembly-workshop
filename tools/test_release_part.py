@@ -134,6 +134,15 @@ class ReleaseTests(Base):
         self.assertAlmostEqual(boxes[1][0] - boxes[0][1], 10, 2)  # 10 mm apart
 
 
+class LibraryFreezeTests(Base):
+    def test_library_files_are_frozen(self):
+        self.scad.write_text('include <workshop.scad>\nthe_id="TST-A";\nws_plate(1,keystones=[88]);\n', encoding="utf-8")
+        code, text = self.run_tool("--part", "any")
+        self.assertEqual(code, 0, text)
+        self.assertTrue((self.out / "src" / "lib" / "workshop.scad").exists())
+        self.assertIn("library file(s) frozen", text)
+
+
 class Check3mfTests(Base):
     def make(self, xml):
         path = self.dir / "t.3mf"

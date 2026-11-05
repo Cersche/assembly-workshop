@@ -12,6 +12,7 @@ WARNs are printed and kept in the report. Digital checks only: printed fit and s
 """
 import argparse
 import datetime
+import os
 import re
 import shutil
 import subprocess
@@ -26,6 +27,7 @@ import manifold3d as m3
 import trimesh
 
 ROOT = Path(__file__).resolve().parents[1]
+LIB = ROOT / "lib"
 SNAPSHOT = Path(r"D:\Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe")
 # name, design bore, minimum depth (Brian's fastener standard, 2026-10-31)
 INSERTS = [("M6 insert", 7.6, 6.0), ("M3 insert", 4.2, 4.0), ("M2.5 insert", 3.2, 5.0)]
@@ -67,7 +69,8 @@ def load_manifold(path):
 def render(openscad, scad, part, out, deps, rep):
     run = subprocess.run([str(openscad), "--backend=manifold", "-o", str(out), "-d", str(deps),
                           "-D", f'part="{part}"', str(scad)],
-                         capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(scad.parent))
+                         capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(scad.parent),
+                         env={**os.environ, "OPENSCADPATH": str(LIB)})
     log = run.stdout + run.stderr
     # These are only warnings in OpenSCAD, but the part can silently lose geometry.
     fatal = ("Ignoring unknown module", "Ignoring unknown variable", "Ignoring unknown function",
@@ -292,7 +295,8 @@ def main(argv=None):
         size = mesh.bounds[1] - mesh.bounds[0]
         rep.info(f"{part}: closed solid, {bodies} body, {len(mesh.faces)} triangles, volume {solid.volume():.0f} mm3, "
                  f"size {size[0]:.2f} x {size[1]:.2f} x {size[2]:.2f} mm")
-        source_text = "\n".join(f.read_text(encoding="utf-8", errors="replace") for f in sources if f.suffix == ".scad")
+        source_text = "\n".join(f.read_text(encoding="utf-8", errors="replace") for f in sources
+                                if f.suffix == ".scad" and LIB not in f.parents)
         if f'"{part_id}"' in source_text:
             rep.info(f"{part}: ID {part_id} found in the source; the scan can't confirm it is on this part's mesh")
         else:
@@ -316,8 +320,11 @@ def main(argv=None):
     rep.heading("Source")
     source_dir = scad.parent
     inside = [f for f in sources if source_dir in f.parents or f == scad]
-    outside = [f for f in sources if f not in inside]
+    from_lib = [f for f in sources if LIB in f.parents and f not in inside]
+    outside = [f for f in sources if f not in inside and f not in from_lib]
     rep.info(f"{len(inside)} source file(s) frozen in src/")
+    if from_lib:
+        rep.info(f"{len(from_lib)} library file(s) frozen in src/lib/; to re-render, set OPENSCADPATH to src/lib")
     for f in outside:
         rep.warn(f"dependency outside the source folder was not frozen: {f}")
 
@@ -336,6 +343,10 @@ def main(argv=None):
     shutil.copy2(layout, out / layout.name)
     for f in inside:
         target = out / "src" / f.relative_to(source_dir)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(f, target)
+    for f in from_lib:
+        target = out / "src" / "lib" / f.relative_to(LIB)
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(f, target)
     (out / "release_report.md").write_text(report, encoding="utf-8")
