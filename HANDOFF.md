@@ -1,5 +1,10 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-05 One-command part release script (Claude)
+`tools/release_part.py` builds and checks new parts; usage is in PROJECT.md and tests in `tools/test_release_part.py`. Tried on MRT-F (tray + plate) into a scratch folder, not outputs/: about 3 s, no fails or warnings, and the scan found the expected 7.6 and 4.2 bores. It writes its own 3MF because the app's `print_layout` drops part names it doesn't know. It treats unknown modules and variables and missing files as failures, because OpenSCAD only warns and the part silently loses geometry.
+Limits: the generated 3MF has not been opened in a slicer yet; the ID check reads the source only; older parts aren't converted. The script doesn't need `scipy`.
+**Next step:** use it on the next new part and have Brian confirm its 3MF opens in Bambu Studio.
+
 ## 2026-11-05 OpenSCAD snapshot for new parts (Claude)
 Brian approved the snapshot for **new parts only**; rule and command are in AGENTS.md. Installed on the PC: OpenSCAD 2026.11.01 at `D:\Tools\OpenSCAD-snapshot\` (outside the repo) and Python `manifold3d` 3.5.4. Existing scripts and the app still use 2021.01.
 Test, one timed render per part, old vs snapshot: SG8-M6-F faceplate 11.2 s vs 0.33 s, SG8-M6-F tray 10.4 s vs 0.4 s, MRT-F tray 138 s vs 0.5 s. On each part both versions gave one body with no mesh errors, and bounding boxes match to 0.001 mm. Volume differs by about 0.02% or less, in the largest pieces checked mostly along engraved text outlines. Engraved text was not inspected up close. Results cover these three parts only; nothing was printed. Viewer page: `work/mesh-viewer/OpenSCAD_old_vs_snapshot.html` (not committed).
