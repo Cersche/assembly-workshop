@@ -85,3 +85,7 @@ Universal standard; full list in Brian's global CLAUDE.md. No self-tapping into 
 ## Measurement requests need a diagram — Brian, 2026-11-02
 
 Whenever you ask Brian for a measurement while designing anything, send a diagram showing exactly where and how to measure, with the expected value. Never ask in words alone.
+
+## OpenSCAD for new parts — Brian, 2026-11-05
+
+New parts render with the pinned snapshot: `D:\Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe --backend=manifold -o <out>.stl <part>.scad`. Do not auto-update it. Reproducing an existing revision, and the app and its existing scripts, stay on `C:\Program Files\OpenSCAD\openscad.exe` (2021.01), because text outlines differ slightly between versions. The snapshot lives only on the PC, outside the repo. Printed fit and strength stay UNKNOWN. Evidence: HANDOFF.md, 2026-11-05.
