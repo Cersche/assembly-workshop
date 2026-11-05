@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-05 Release script: posts by U, merged cuts, ID on the mesh (Claude)
+From the CSB-A workflow log. `tools/release_part.py` gained `--posts U:SIDE` (real post meshes placed by `tools/rack_posts.py`; reproduces CSB-A's 0.22 gap at U2, U3 and U7), `--cuts PART=N` (merged openings fail; turning CSB-A's wall windows back on gives 5 openings instead of 8 and fails) and an ID-on-mesh check (blanked-ID re-render must differ). 20 release tests and the library tests pass. Rear posts and the U5 extension's holes are still unchecked on the rack. CSB-A itself was not changed or re-released.
+
 ## 2026-11-05 CSB-A cable span bracket released for printing (Claude)
 First part made with the new habits (device card, drafts until printing, fit report by ID), logged in `work/workbench/Workflow_Log.md`. [README](outputs/Cable_Span_Bracket_CSB-A_2026-11-05/README.md), source `work/cable-span-bracket/span_bracket.scad`, post card `docs/devices/lab-rax-4u-post.md`. A 1U cable trough, front to rear post on one side, one M6 x 8 into each post's middle-hole insert. The same part goes on the left turned 180 degrees. Soft style, floor slots, 7 weave fingers, a drop-out near each end. Release: 0 FAIL, 0 WARN, posts gap 0.22, keep-out clear. Viewer https://claude.ai/artifact/9crGzhJh6CR3T3WobCN58G. Brian measured C = 16; A, B, D, E, F come from the source model on his direction (UNKNOWN as measurements). Can't share a U on the same side with a post-rail bracket (same front middle hole).
 **Next step:** Brian prints CSB-A and sends the fit report; log it in `docs/Fit_Findings.md` and fill the Workflow_Log totals. Fit, inserts, rocking, strength and capacity UNKNOWN.

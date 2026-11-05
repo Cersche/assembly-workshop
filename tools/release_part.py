@@ -2,6 +2,7 @@
 
   python tools/release_part.py work/x/ABC-A.scad --id ABC-A --part tray --part plate:ABC-A-P \
       -o outputs/ABC_2026-11-05 [--against device.stl] [--min-gap 0.5] [--bodies tray=2]
+      [--posts 3:right] [--cuts cuts=6] [--keepout keepout]
 
 Renders each part on the pinned OpenSCAD snapshot, checks it, then writes one new folder:
   <ID>_<part>.stl, <ID>_<N>-parts-print-layout.3mf, src/ (frozen source), release_report.md
@@ -25,6 +26,8 @@ from xml.sax.saxutils import escape
 import numpy as np
 import manifold3d as m3
 import trimesh
+
+import rack_posts
 
 ROOT = Path(__file__).resolve().parents[1]
 LIB = ROOT / "lib"
@@ -89,6 +92,56 @@ def render(openscad, scad, part, out, deps, rep):
         rep.fail(f"{part}: nothing rendered (exit {run.returncode}); is the part name right?")
         return False
     return True
+
+
+def check_id_on_mesh(openscad, scad, part, part_id, solid, stage, rep):
+    """Render the part again with its ID text blanked; the ID is on the mesh only if the geometry changes."""
+    token = f'"{part_id}"'
+    text = scad.read_text(encoding="utf-8", errors="replace")
+    if token not in text:
+        rep.warn(f"{part}: ID {part_id} is set in an included file, so its mesh check did not run; check it in the viewer")
+        return
+    blank = scad.parent / f".idcheck_{part}_{os.getpid()}.scad"
+    out = stage / f"idcheck_{part}.stl"
+    try:
+        blank.write_text(text.replace(token, '""'), encoding="utf-8")
+        ok = render(openscad, blank, part, out, stage / f"idcheck_{part}.deps", Report())
+    finally:
+        blank.unlink(missing_ok=True)
+    if not ok:
+        rep.warn(f"{part}: the part did not render with its ID blanked, so the ID mesh check did not run")
+        return
+    _, without = load_manifold(out)
+    changed = (solid - without) + (without - solid)
+    volume = changed.volume()
+    if volume <= OVERLAP_LIMIT:
+        rep.fail(f"{part}: ID {part_id} is in the source but not on this part's mesh")
+        return
+    box = changed.bounding_box()
+    lo, hi = box[:3], box[3:]
+    rep.info(f"{part}: ID {part_id} is on the mesh, {volume:.1f} mm3 of text at X {lo[0]:.1f}..{hi[0]:.1f}, "
+             f"Y {lo[1]:.1f}..{hi[1]:.1f}, Z {lo[2]:.1f}..{hi[2]:.1f}; legibility not checked")
+
+
+def check_cuts(openscad, scad, part, wanted, stage, rep):
+    """A check-only part holding each opening as a solid: openings that run together merge into one body."""
+    out = stage / f"cuts_{part}.stl"
+    if not render(openscad, scad, part, out, stage / f"cuts_{part}.deps", rep):
+        return
+    _, cuts = load_manifold(out)
+    if cuts.status().name != "NoError" or cuts.volume() <= 0:
+        rep.fail(f"cuts {part} is not a closed solid; cuts not checked")
+        return
+    bodies = cuts.decompose()
+    if len(bodies) == wanted:
+        rep.info(f"cuts {part}: {wanted} separate openings, none run together")
+        return
+    rep.fail(f"cuts {part}: {len(bodies)} separate openings, expected {wanted}"
+             + ("; some run into each other" if len(bodies) < wanted else ""))
+    for body in sorted(bodies, key=lambda b: -b.volume())[:3]:
+        lo, hi = body.bounding_box()[:3], body.bounding_box()[3:]
+        rep.info(f"cuts {part}: largest opening X {lo[0]:.1f}..{hi[0]:.1f}, Y {lo[1]:.1f}..{hi[1]:.1f}, "
+                 f"Z {lo[2]:.1f}..{hi[2]:.1f}")
 
 
 def read_deps(depfile, scad):
@@ -240,6 +293,10 @@ def main(argv=None):
     ap.add_argument("--turn", action="append", default=[], metavar="PART=AXISDEG",
                     help="print orientation in the 3MF, such as tray=x180 (a part named faceplate defaults to x90)")
     ap.add_argument("--keepout", metavar="PART", help='SCAD part holding solids no released part may overlap, such as screw head room')
+    ap.add_argument("--posts", action="append", default=[], metavar="U:SIDE",
+                    help="check against the real rack posts around slot U (from the bottom), side right, left or both")
+    ap.add_argument("--cuts", action="append", default=[], metavar="PART=N",
+                    help="check-only SCAD part holding each opening as a solid; fails unless it has N separate bodies")
     ap.add_argument("--openscad", type=Path, default=SNAPSHOT)
     ap.add_argument("--viewer-dir", type=Path, default=ROOT / "work" / "mesh-viewer")
     args = ap.parse_args(argv)
@@ -275,6 +332,17 @@ def main(argv=None):
         else:
             devices.append((path, device))
 
+    for spec in args.posts:
+        u, _, side = spec.partition(":")
+        try:
+            placed = rack_posts.posts(int(u), side or "both")
+        except Exception as e:  # a clash check that didn't run must never read as clear
+            rep.fail(f"posts {spec} could not be placed: {e}")
+            continue
+        for name, post in placed:
+            devices.append((Path(name), post))
+        rep.info(f"posts {spec}: {len(placed)} real post meshes placed for slot U{u}")
+
     stage = Path(tempfile.mkdtemp(prefix=f"release-{args.id}-"))
     triangles, stls, sources = {}, [], set()
     keepout = None
@@ -290,6 +358,10 @@ def main(argv=None):
                 keepout = None
             else:
                 rep.info(f"keep-out {args.keepout}: {keepout.volume():.0f} mm3, {len(keepout.decompose())} bodies")
+    for spec in args.cuts:
+        name, _, n = spec.partition("=")
+        rep.heading(f"Cuts {name}")
+        check_cuts(args.openscad, scad, name, int(n or 0), stage, rep)
     for part, part_id in parts:
         rep.heading(part)
         stl = stage / f"{args.id}_{part}.stl"
@@ -312,7 +384,7 @@ def main(argv=None):
         source_text = "\n".join(f.read_text(encoding="utf-8", errors="replace") for f in sources
                                 if f.suffix == ".scad" and LIB not in f.parents)
         if f'"{part_id}"' in source_text:
-            rep.info(f"{part}: ID {part_id} found in the source; the scan can't confirm it is on this part's mesh")
+            check_id_on_mesh(args.openscad, scad, part, part_id, solid, stage, rep)
         else:
             rep.fail(f'{part}: ID "{part_id}" not found in the source')
         check_holes(part, find_holes(solid), rep)

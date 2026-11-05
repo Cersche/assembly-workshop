@@ -17,13 +17,17 @@ module id(){translate([1,1,9.5])linear_extrude(1)text("TST-A",size=4);}
 module block(){difference(){cube([40,40,10]);translate([20,30,-1])cylinder(d=BORE,h=DEPTH+1,$fn=48);}id();}
 BORE=7.6; DEPTH=8;
 if(part=="good")block();
-if(part=="near"){difference(){cube([40,40,10]);translate([20,20,-1])cylinder(d=7.45,h=12,$fn=48);}}
-if(part=="shallow"){difference(){cube([40,40,10]);translate([20,20,-1])cylinder(d=4.2,h=3,$fn=48);}}
-if(part=="two"){cube(10);translate([30,0,0])cube(10);}
+if(part=="near"){difference(){cube([40,40,10]);translate([20,20,-1])cylinder(d=7.45,h=12,$fn=48);}id();}
+if(part=="shallow"){difference(){cube([40,40,10]);translate([20,20,-1])cylinder(d=4.2,h=3,$fn=48);}id();}
+if(part=="two"){cube([25,10,10]);translate([30,0,0])cube(10);id();}
 if(part=="broken"){cube(10);undefined_module_name_x();}
 if(part=="empty"){}
 if(part=="keep_hit")translate([5,5,5])cube(4);
 if(part=="keep_clear")translate([5,5,20])cube(4);
+if(part=="no_id_on_mesh")cube(10);
+if(part=="cuts_apart"){cube(5);translate([10,0,0])cube(5);}
+if(part=="cuts_merged"){cube(5);translate([4,0,0])cube(5);}
+if(part=="in_post"){translate([112,1,1])cube([2,4,2]);id();}
 """
 
 
@@ -154,9 +158,43 @@ class KeepoutTests(Base):
         self.assertEqual(code, 1, text)
 
 
+class NewCheckTests(Base):
+    def test_id_must_be_on_the_mesh(self):
+        code, text = self.run_tool("--part", "good")
+        self.assertEqual(code, 0, text)
+        self.assertIn("ID TST-A is on the mesh", text)
+        self.out = self.dir / "out2"
+        code, text = self.run_tool("--part", "no_id_on_mesh")
+        self.assertEqual(code, 1, text)
+        self.assertIn("not on this part's mesh", text)
+        self.assertFalse(list(self.dir.glob(".idcheck_*")))
+
+    def test_merged_cuts_fail(self):
+        code, text = self.run_tool("--part", "good", "--cuts", "cuts_apart=2")
+        self.assertEqual(code, 0, text)
+        self.assertIn("2 separate openings, none run together", text)
+        self.assertFalse(list(self.out.glob("*cuts*")))
+        self.out = self.dir / "out2"
+        code, text = self.run_tool("--part", "good", "--cuts", "cuts_merged=2")
+        self.assertEqual(code, 1, text)
+        self.assertIn("some run into each other", text)
+
+    def test_real_posts_are_checked(self):
+        code, text = self.run_tool("--part", "good", "--posts", "3:right")
+        self.assertEqual(code, 0, text)
+        self.assertIn("no overlap with post_front_right_U3", text)
+        self.out = self.dir / "out2"
+        code, text = self.run_tool("--part", "in_post", "--posts", "3:right")
+        self.assertEqual(code, 1, text)
+        self.assertIn("overlaps post_front_right_U3", text)
+        self.out = self.dir / "out3"
+        code, text = self.run_tool("--part", "good", "--posts", "12:right")
+        self.assertEqual(code, 1, text)
+
+
 class LibraryFreezeTests(Base):
     def test_library_files_are_frozen(self):
-        self.scad.write_text('include <workshop.scad>\nthe_id="TST-A";\nws_plate(1,keystones=[88]);\n', encoding="utf-8")
+        self.scad.write_text('include <workshop.scad>\nthe_id="TST-A";\ndifference(){ws_plate(1,keystones=[88]);translate([-100,-3.5,20])rotate([90,0,0])linear_extrude(1)text(the_id);}\n', encoding="utf-8")
         code, text = self.run_tool("--part", "any")
         self.assertEqual(code, 0, text)
         self.assertTrue((self.out / "src" / "lib" / "workshop.scad").exists())

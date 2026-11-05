@@ -26,10 +26,10 @@ Explore freely until Brian says he's printing it. A draft is one working SCAD fi
 
 ## Release
 Only when Brian says he's printing it, or asks for a print file. If he does, the current draft becomes the next revision.
-1. Run this, adding `--against device.stl` whenever a device mesh exists:
+1. Run this, adding `--against device.stl` whenever a device mesh exists, `--posts <U>:<right|left|both>` for anything near the rack posts (places the real posts by U; never place them by hand), and `--cuts cuts=<N>` when the part has several windows, vents or slots (a check-only `part=="cuts"` holding each opening as a solid; merged openings fail):
    `python tools/release_part.py <part>.scad --id <ID> --part <name>[:<ID on part>] -o outputs/<Name>_<ID>_<YYYY-MM-DD>`
 2. Fix every FAIL. Read every WARN and tell Brian about any you keep. Don't work around a failed check.
-3. Confirm IDs and bores in the viewer: the script only finds the ID in the source, and its hole scan can miss bores open on one side.
+3. Confirm bores in the viewer: the hole scan can miss bores open on one side. The script checks the ID is on the mesh, but not that it is legible.
 4. Send the viewer page with SendUserFile (display "render") and publish the same file as an Artifact. Send the 3MF too.
 5. Write the folder's README: what changed, which fit values were kept or changed and why, and what's UNKNOWN.
 6. End the delivery message with the fit report to send back: ID on the part; fits or not; where tight or loose, and by how much if measured; walls and infill. Add any part-specific items, such as a screw or lights.
