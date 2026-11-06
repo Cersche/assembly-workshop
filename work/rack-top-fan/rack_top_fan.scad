@@ -1,4 +1,4 @@
-// Task 53 preparation, Draft 3 (not released): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
+// Draft 4 (not released; looks pass, Brian 2026-11-06: 45 deg chamfer + shadow groove, swirl grille): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
 // The fan sits fully recessed in the top's own 35 mm height (Brian: no fan body sticking out of the top):
 // new front + rear top edges are hollowed on the inside into a cavity, the fan rests on ledges in them,
 // and a 3 mm grille, flush with the rail tops, clamps it down. No panel: the grille is the top surface.
@@ -37,9 +37,13 @@ open_d=192;              // air opening under the blades (ledges cut back to it)
 front_wall=3;            // outer wall of each edge at the grille seat
 grille_fit=0.3;          // grille to edge recess, each side
 grille_x=rail_in-0.5;    // grille half width: 0.5 clear of the rail lip
-m3_y=11; m3_x=[-95,-40,40,95];
+m3_y=26; m3_x=[-105.5,105.5];                 // grille screws at the 4 corners, in solid edge beside the cavity
 csk_d=7.0; csk_h=(csk_d-3.4)/2;               // M3 countersink, 90 deg, room around a 6.7 max head                // grille screws, M3 countersunk into M3 inserts in the edge walls
-jack_x=106; jack_z=431; jack_d=8;             // DC panel jack in the rear edge's back face (model UNKNOWN), beside the fan
+jack_x=85; jack_z=407.5; jack_d=8;            // DC panel jack in the rear edge's back face (model UNKNOWN), below the fan ledge
+chamfer=15;              // looks: 45 deg chamfer on the outer top corner of each edge, like the stock edge's slope
+seat_y=chamfer+2;        // grille seat starts here (2 mm land behind the chamfer)
+shadow=[3,3,z_stock];    // looks: shadow groove depth, height, centre Z (the old stock top height) round the sides
+hub_r=14; ring_r=62; n_blades=16; blade_w=2.4; sweep=70;   // swirl grille
 cav_x=fan[0]/2+fan_fit;  // cavity half width
 cav_y=fan_c[1]-fan[1]/2-fan_fit;              // cavity front face (Y 19.5)
 z_fan=z_lid-grille_t-fan[2]; z_ledge=z_fan-ledge_t; z_grille=z_lid-grille_t;
@@ -62,20 +66,22 @@ module edge(jack=false, label="TFE-A", coupon_insert=false){
     // ledge cut back to the air opening
     translate([fan_c[0],fan_c[1],z_ledge-1]) cylinder(d=open_d,h=ledge_t+2);
     // grille seat
-    box([-grille_x-grille_fit,front_wall,z_grille],[grille_x+grille_fit,36,z_lid+1]);
+    box([-grille_x-grille_fit,seat_y,z_grille],[grille_x+grille_fit,36,z_lid+1]);
+    // 45 deg chamfer on the outer top corner
+    translate([-x_edge-1,0,0]) rotate([90,0,90]) linear_extrude(2*x_edge+2)
+      polygon([[-1,z_lid-chamfer-1],[-1,z_lid+1],[chamfer+1,z_lid+1]]);
+    // shadow groove on both end faces (continues the side rails' groove)
+    for(s=[-1,1]) translate([s*(x_edge-shadow[0]/2),17.5,shadow[2]]) cube([shadow[0]+0.02,37,shadow[1]],center=true);
     // cross-holes
     for(s=[-1,1]) for(h=[plug_hole,tongue_hole]) translate([s*(plug_x[0]+plug_x[1])/2,h[0],h[1]]) rotate([0,90,0]) cylinder(d=xhole_d,h=10,center=true);
     // M3 inserts for the grille screws
     for(x=m3_x) translate([x,m3_y,z_grille]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3,5);
-    // The specified X 101..141.12 coupon excludes the normal X=95 insert.
-    // A coupon-only bore at X=106 tests the same seat and M3 pilot depth.
-    if(coupon_insert) translate([106,m3_y,z_grille]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3,5);
     // ID on the inner face (Y 35) beside the cavity: mid-length is open air (the fan opening),
     // so it sits in solid wall between the cavity (X 100.5) and the plug/tongue column (X 127.12).
     if(label!="") inner_tag(is_undef(tag)?label:tag,119,435,3);
     // DC jack (rear edge only): hole through the back face, pocket beside the fan, open down into the rack
     if(jack){ translate([jack_x,-1,jack_z]) rotate([-90,0,0]) cylinder(d=jack_d,h=front_wall+2);
-              box([jack_x-6,front_wall,z_top-1],[jack_x+4.5,36,jack_z+8]); }
+              box([jack_x-6,front_wall,z_top-1],[jack_x+6,36,z_ledge-1]); }
   }
 }
 module rail(label="TSR-A"){
@@ -88,6 +94,8 @@ module rail(label="TSR-A"){
     for(y=[tongue_hole[0],240-tongue_hole[0]]) translate([(plug_x[0]+plug_x[1])/2,y,tongue_hole[1]]) rotate([0,90,0]) cylinder(d=xhole_d,h=40,center=true);
     // side panel groove from below
     box([groove[0],rail_y[0]-1,z_top-1],[groove[1],rail_y[1]+1,groove[2]]);
+    // looks: shadow groove along the outer face at the old stock top height
+    translate([rail_out-shadow[0],rail_y[0]-1,shadow[2]-shadow[1]/2]) cube([shadow[0]+1,rail_y[1]-rail_y[0]+2,shadow[1]]);
     // Inner side, clear of pockets, groove and handle bores.
     translate([rail_in-0.01,120,435]) rotate([90,0,90])
       linear_extrude(height=0.61) mirror([1,0,0]) text(is_undef(tag)?label:tag,size=4,halign="center",valign="center");
@@ -99,11 +107,11 @@ module rail_left(){ mirror([1,0,0]) rail(); }
 module edge_rear(){ translate([0,240,0]) rotate([0,0,180]) edge(jack=true,label="TRE-A"); }
 
 module grille(){
-  y0=front_wall+grille_fit; y1=240-front_wall-grille_fit;
+  y0=seat_y+grille_fit; y1=240-seat_y-grille_fit;
   difference(){
     translate([-grille_x,y0,z_grille]) cuboid([2*grille_x,y1-y0,grille_t],rounding=2,edges="Z",anchor=FRONT+BOTTOM+LEFT);
     grille_openings();
-    translate([0,9,z_grille-0.01]) linear_extrude(height=0.61)
+    translate([70,26,z_grille-0.01]) linear_extrude(height=0.61)
       text(is_undef(tag)?"TFG-A":tag,size=4,halign="center",valign="center");
     for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_grille-0.01]){ cylinder(d=3.4,h=grille_t+1); translate([0,0,grille_t-csk_h+0.02]) cylinder(d1=3.4,d2=csk_d,h=csk_h); }
   }
@@ -114,12 +122,16 @@ module fan_dummy(){ translate([fan_c[0],fan_c[1],z_fan]) difference(){ translate
 
 // The same cutters drive the grille and the check-only cuts (32 vents + 8 screws).
 module grille_openings(){
-    difference(){
-      translate([fan_c[0],fan_c[1],z_grille-1]) cylinder(d=open_d,h=grille_t+2);
-      for(r=[30,55,80]) translate([fan_c[0],fan_c[1],z_grille-1]) difference(){ cylinder(r=r+1.5,h=grille_t+2); cylinder(r=r-1.5,h=grille_t+2); }
-      for(a=[0:45:135]) translate([fan_c[0],fan_c[1],z_grille+grille_t/2]) rotate([0,0,a]) cube([open_d,3,grille_t+2],center=true);
-      translate([fan_c[0],fan_c[1],z_grille-1]) cylinder(r=14,h=grille_t+2);
-    }
+  translate([fan_c[0],fan_c[1],z_grille-1]) linear_extrude(grille_t+2) difference(){
+    circle(d=open_d);
+    circle(r=hub_r);
+    difference(){ circle(r=ring_r+blade_w/2); circle(r=ring_r-blade_w/2); }   // one ring keeps fingers out and stiffens the blades
+    for(i=[0:n_blades-1]) rotate(i*360/n_blades) blade_2d();
+  }
+}
+module blade_2d(steps=14){
+  for(k=[0:steps-1]) hull() for(t=[k/steps,(k+1)/steps])
+    let(r=hub_r-1+t*(open_d/2+3-hub_r+1), a=t*sweep) translate([r*cos(a),r*sin(a)]) circle(d=blade_w,$fn=16);
 }
 module cuts(){
   grille_openings();
@@ -170,10 +182,7 @@ if(part=="edge_front_print") edge_print_pose() edge();
 if(part=="edge_rear_print") edge_print_pose() edge(jack=true,label="TRE-A");
 if(part=="rail_print") rail_print_pose() rail();
 if(part=="grille_print") grille_print_pose() grille();
-if(part=="keepout") {keepout();
-  // Additional head belonging only to the edge test coupon's insert.
-  translate([106,m3_y,z_lid]) rotate([90,0,0]) ws_head_keepout(0,0,0,csk_d,6);
-}
+if(part=="keepout") keepout();
 if(part=="keepout_edge_front_print") edge_print_pose() keepout();
 if(part=="keepout_edge_rear_print") edge_print_pose() rear_local() keepout();
 if(part=="keepout_rail_print") rail_print_pose() keepout();

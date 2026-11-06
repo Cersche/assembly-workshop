@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" font-family="Segoe UI, Arial" font-size="13">
+<rect width="1000" height="470" fill="#1d1f24"/>
+<text x="20" y="28" fill="#fff" font-size="18" font-weight="bold">Rack top, side view of the front edge (front on the left): how to make it look less like a box</text>
+<text x="20" y="48" fill="#9ab">Scale 4 px/mm. Dashed = the stock 45° edge we replaced. Blue dashed = fan. The rear edge gets the same shape, mirrored.</text>
+<defs><g id="ghost"><polygon points="0,0 140,-140 140,0" fill="none" stroke="#888" stroke-dasharray="5 4"/></g>
+<g id="fan"><rect x="80" y="-188" width="170" height="120" fill="none" stroke="#5bd" stroke-dasharray="6 4"/><text x="150" y="-120" fill="#5bd">fan</text></g></defs>
+<!-- NOW -->
+<g transform="translate(40,330)">
+  <text x="0" y="-235" fill="#fff" font-weight="bold" font-size="15">Now: a 50 mm box</text>
+  <rect x="0" y="-200" width="140" height="200" fill="#666" stroke="#aaa"/>
+  <rect x="140" y="-200" width="110" height="200" fill="#444"/>
+  <rect x="12" y="-200" width="238" height="12" fill="#bbb"/>
+  <use href="#fan"/><use href="#ghost"/>
+  <text x="0" y="25" fill="#ccc">flat 50 tall front, 2 mm rounded corner</text>
+</g>
+<!-- A -->
+<g transform="translate(370,330)">
+  <text x="0" y="-235" fill="#7f7" font-weight="bold" font-size="15">A: 45° chamfer back on top</text>
+  <polygon points="0,0 0,-140 60,-200 250,-200 250,0" fill="#666" stroke="#aaa"/>
+  <rect x="140" y="-200" width="110" height="200" fill="#444" opacity="0.6"/>
+  <rect x="66" y="-200" width="184" height="12" fill="#bbb"/>
+  <use href="#fan"/><use href="#ghost"/>
+  <line x1="0" y1="-140" x2="-10" y2="-140" stroke="#7f7"/><text x="-38" y="-136" fill="#7f7" font-size="11">Z435</text>
+  <text x="2" y="-172" fill="#7f7" font-size="12">15 x 15</text>
+  <text x="0" y="25" fill="#ccc">same 45° as the stock edge, 15 deep</text>
+  <text x="0" y="43" fill="#ccc">(the most the fan allows); grille shrinks</text>
+  <text x="0" y="61" fill="#ccc">to Y 16 and its screws go to the 4 corners</text>
+</g>
+<!-- B -->
+<g transform="translate(700,330)">
+  <text x="0" y="-235" fill="#fc4" font-weight="bold" font-size="15">B: shadow line + big round</text>
+  <path d="M0 0 L0 -134 L10 -134 L10 -146 L0 -146 L0 -168 A32 32 0 0 1 32 -200 L250 -200 L250 0 Z" fill="#666" stroke="#aaa"/>
+  <rect x="140" y="-200" width="110" height="200" fill="#444" opacity="0.6"/>
+  <rect x="40" y="-200" width="210" height="12" fill="#bbb"/>
+  <use href="#fan"/><use href="#ghost"/>
+  <text x="14" y="-138" fill="#fc4" font-size="11">3 x 3 groove at Z435</text>
+  <text x="0" y="25" fill="#ccc">groove all round at the old top height, so</text>
+  <text x="0" y="43" fill="#ccc">the extra 15 reads as a lid; 8 mm round</text>
+  <text x="0" y="61" fill="#ccc">top corner; grille screws stay where they are</text>
+</g>
+<text x="20" y="440" fill="#fff" font-weight="bold">Also, the grille is most of what you see from above:</text>
+<text x="20" y="460" fill="#ddd">now 3 rings + 4 spokes; could be honeycomb, front-to-back slats, or a swirl (blades echoing the fan). A and B can be combined (chamfer + groove on the side rails).</text>
+</svg>
