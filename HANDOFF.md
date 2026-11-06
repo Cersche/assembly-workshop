@@ -1,8 +1,7 @@
 # Assembly Workshop — current handoff
 
 ## 2026-11-05 Setup script for other Windows machines (Claude)
-`tools/setup_3d_tools.ps1` installs what a machine is missing for 3D part work (usage in PROJECT.md). Its `-CheckOnly` report passed on the main PC; it has not run on the laptop yet. The snapshot download is hash-checked against the PC's build, and files.openscad.org may drop old snapshots, so set up the laptop soon. `AW_OPENSCAD_SNAPSHOT` overrides the snapshot path.
-**Next step:** Brian runs it on the laptop and reports the output.
+`tools/setup_3d_tools.ps1` installs what a machine is missing for 3D part work (usage in PROJECT.md). Its `-CheckOnly` report passed on the main PC. Brian ran it on the laptop (2026-11-05): it installed the packages and the hash-checked snapshot in `C:\Tools`, set `AW_OPENSCAD_SNAPSHOT`, and all 25 tool tests passed. The laptop clone sits in `C:\WINDOWS\system32ssembly-workshop`, from an admin window; moving it out is suggested. `AW_OPENSCAD_SNAPSHOT` overrides the snapshot path.
 
 ## 2026-11-05 Release script: posts by U, merged cuts, ID on the mesh (Claude)
 From the CSB-A workflow log. `tools/release_part.py` gained `--posts U:SIDE` (real post meshes placed by `tools/rack_posts.py`; reproduces CSB-A's 0.22 gap at U2, U3 and U7), `--cuts PART=N` (merged openings fail; turning CSB-A's wall windows back on gives 5 openings instead of 8 and fails) and an ID-on-mesh check (blanked-ID re-render must differ). 20 release tests and the library tests pass. Rear posts and the U5 extension's holes are still unchecked on the rack. CSB-A itself was not changed or re-released.
