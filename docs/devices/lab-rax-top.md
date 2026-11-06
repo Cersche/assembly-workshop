@@ -1,6 +1,6 @@
 # Lab Rax rack top (Brian's 9U rack, stock creator top parts)
 
-Device card for parts that replace or sit on the rack top. Source = creator's meshes in `work/rack-geometry-recovery/sources/5U+Lab+Rax+X2D.3mf` (mklements, BY-NC-SA, local only), placed with the rack view's recovered poses (`outputs/Mechanical_Design_App/rack-references/rack-scene.js`, 9 slots). Frame: X across (0 = centre), Y front 0 to rear 240, Z up, Z 0 = bottom of slot 9. Source values are not measurements; the recovered poses themselves are visual placements, fit UNKNOWN. Measuring diagrams: `work/rack-cooling/top_fan_options.svg` (C..J) and `work/rack-cooling/top_edge_joint_measure.svg` (P, T, H, K), both 2026-11-05.
+Device card for parts that replace or sit on the rack top. Source = creator's meshes in `work/rack-geometry-recovery/sources/5U+Lab+Rax+X2D.3mf` (mklements, BY-NC-SA, local only), placed with the rack view's recovered poses (`outputs/Mechanical_Design_App/rack-references/rack-scene.js`, 9 slots). Frame: X across (0 = centre), Y front 0 to rear 240, Z up, Z 0 = bottom of slot 9. Source values are not measurements; the recovered poses themselves are visual placements, fit UNKNOWN. Measuring diagrams: `work/rack-cooling/top_fan_options.svg` (C..J) and `work/rack-cooling/top_edge_joint_measure.svg` (P, T, X, K), both 2026-11-05.
 
 | Ref | Value | Expected (source) | Measured by Brian | Status |
 | --- | --- | --- | --- | --- |
@@ -20,7 +20,7 @@ Device card for parts that replace or sit on the rack top. Source = creator's me
 | P5 | Plug outer face to edge end | 7.14 (edge end X 141.12) | | UNKNOWN |
 | T1 | Tongue into the side rail, length | 19.85 (Y 35..54.85) | | UNKNOWN |
 | T2 | Tongue height | 23.85 (Z 400.05..423.9) | | UNKNOWN |
-| H | Cross-holes through plug and tongue, along the edge | Ø6.4, centres about Y 22.5 Z 390 and Y 45 Z 416; what goes in them UNKNOWN | | UNKNOWN |
+| X | Cross-holes through plug and tongue, along the edge | Ø6.4, centres about Y 22.5 Z 390 and Y 45 Z 416; what goes in them UNKNOWN | | UNKNOWN |
 
 Other source shapes:
 - Front and rear top edges ("Top Front Edge", 282.25 long): hollow 45° profiles, Z 380.2 to 435.05, wrapping over the post tops; inner face at Y 35 / 205. No holes on their top.
