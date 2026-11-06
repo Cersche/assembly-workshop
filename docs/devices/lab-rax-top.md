@@ -6,7 +6,7 @@ Device card for parts that replace or sit on the rack top. Source = creator's me
 | --- | --- | --- | --- | --- |
 | C | Flat top, front to rear (top of front 45° edge to top of rear one) | 175 (Y 32.5 to 207.5, Z 435.05) | | UNKNOWN |
 | D | Between the handles, inside faces | 226.6 (X ±113.29) | | UNKNOWN |
-| E | Underside of top panel down to the top of slot 1 / CM1000 | 30 to the post tops (Z 400.05 to 430.05); CM1000 height above that UNKNOWN | | UNKNOWN |
+| E | Top of the CM1000 to the top of the rack | 35 (Z 400.05 to 435.05; modem envelope 44.4 tall fills slot 1) | about 35 (2026-11-05) | Measured |
 | F | Handle screw holes, across, centre to centre | 249.5 (X ±124.73) | | UNKNOWN |
 | G | Handle screw holes, front to rear | 130 (Y 55 and 185) | | UNKNOWN |
 | H | Screw holding each handle (size x length) | hole Ø7.6 in the rail top = M6 insert bore | | UNKNOWN |
@@ -28,3 +28,5 @@ Other source shapes:
 - Handles: X ±113.29..136.29, Y 35..205, Z 435.05..472.55, on the rails. They overlap the panel edge by ~0.7, which seems to be what holds the panel down (UNKNOWN).
 - Stock panel: a 120 mm fan grille (cut-outs within ~55 radius of X 0, Y 120).
 - The bottom of the rack has the same layout (bottom panel and edges), see `work/rack-cooling/Decisions.md`.
+
+2026-11-05 (Brian): use the stock values for the joint (P, T, X) and the panel/handle shapes; everything else on the rack has worked from stock values. They stay UNKNOWN as measurements. Rows C, D, F, G, H, I, K are not needed by the recessed-fan design.

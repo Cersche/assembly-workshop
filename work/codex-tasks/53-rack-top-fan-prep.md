@@ -1,6 +1,6 @@
 # Task 53: rack top fan parts, release prep + joint test coupon (no release)
 
-**Start only after Brian's measurements are in `docs/devices/lab-rax-top.md` (rows P1..P5, T1, T2, X, H, K, E, J).** If any of these rows is still UNKNOWN, keep the source value, list it in the report, and do not guess a new one.
+**Brian (2026-11-05): use the stock source values in `docs/devices/lab-rax-top.md` for the joint; no measurements needed.** E is measured (about 35). Printer bed J is UNKNOWN: assume 256 x 256 and report the margin. **Wait for Claude's go: the airflow layout over the modem is still being decided.**
 
 ## Goal
 Turn the draft `work/rack-top-fan/rack_top_fan.scad` (option B, Brian 2026-11-05) into parts ready for `tools/release_part.py`, plus one small joint test coupon. Do not release, print or create an outputs/ folder: Claude releases when Brian says he is printing.

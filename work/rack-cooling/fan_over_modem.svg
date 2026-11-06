@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Segoe UI, Arial" font-size="14">
+<rect width="900" height="400" fill="#1d1f24"/>
+<text x="20" y="28" fill="#fff" font-size="18" font-weight="bold">Side section, front on the left: the recessed fan sits 2 mm above the CM1000</text>
+<text x="20" y="48" fill="#9ab" font-size="13">Scale 3 px/mm. Modem envelope 212 x 131 x 44.4 at Y 4.1 (CM1P pack check); top of rack 35 above it (Brian).</text>
+<g transform="translate(60,300)">
+  <!-- Y 0..240 -> 0..720 ; Z 400 at y0, up = negative, 3px/mm -->
+  <rect x="0" y="-105" width="720" height="105" fill="none" stroke="#666" stroke-dasharray="4 4"/>
+  <rect x="0" y="-105" width="58" height="105" fill="#777"/><rect x="662" y="-105" width="58" height="105" fill="#777"/>
+  <text x="2" y="-110" fill="#ccc" font-size="12">front edge</text><text x="652" y="-110" fill="#ccc" font-size="12">rear edge</text>
+  <rect x="60" y="-96" width="600" height="90" fill="none" stroke="#5bd" stroke-width="2"/><text x="300" y="-50" fill="#5bd">fan 200 x 30</text>
+  <rect x="9" y="-105" width="702" height="9" fill="#bbb"/><text x="320" y="-112" fill="#bbb" font-size="12">grille, flush</text>
+  <rect x="12" y="0" width="393" height="133" fill="#3a5"/><text x="120" y="70" fill="#fff" font-weight="bold">CM1000 (Y 4..135)</text>
+  <line x1="420" y1="0" x2="420" y2="-6" stroke="#fc4" stroke-width="2"/><text x="425" y="20" fill="#fc4" font-weight="bold">2 mm gap</text>
+  <path d="M520 90 L520 10" stroke="#7f7" stroke-width="3" marker-end="url(#a)"/><text x="530" y="60" fill="#7f7">air in: only behind the modem (~85 mm)</text>
+  <line x1="60" y1="20" x2="405" y2="20" stroke="#f77" stroke-width="2"/><text x="120" y="-10" fill="#f77" font-size="13">~60% of the fan is right on top of the modem</text>
+</g>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="#7f7"/></marker></defs>
+<text x="20" y="370" fill="#ddd" font-size="13">A: keep it (air comes from behind the modem)   B: taller top with a ~15 mm air gap (new rails too, fan stays hidden)   C: move the modem down one slot</text>
+</svg>
