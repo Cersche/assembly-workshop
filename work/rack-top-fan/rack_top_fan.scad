@@ -1,4 +1,4 @@
-// Draft 4 (not released; looks pass, Brian 2026-11-06: 45 deg chamfer + shadow groove, swirl grille): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
+// Draft 4 (not released; looks pass, Brian 2026-11-06: 45 deg chamfer, swirl grille; shadow groove dropped): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
 // The fan sits fully recessed in the top's own 35 mm height (Brian: no fan body sticking out of the top):
 // new front + rear top edges are hollowed on the inside into a cavity, the fan rests on ledges in them,
 // and a 3 mm grille, flush with the rail tops, clamps it down. No panel: the grille is the top surface.
@@ -42,7 +42,6 @@ csk_d=7.0; csk_h=(csk_d-3.4)/2;               // M3 countersink, 90 deg, room ar
 jack_x=85; jack_z=407.5; jack_d=8;            // DC panel jack in the rear edge's back face (model UNKNOWN), below the fan ledge
 chamfer=15;              // looks: 45 deg chamfer on the outer top corner of each edge, like the stock edge's slope
 seat_y=chamfer+2;        // grille seat starts here (2 mm land behind the chamfer)
-shadow=[3,3,z_stock];    // looks: shadow groove depth, height, centre Z (the old stock top height) round the sides
 hub_r=14; ring_r=62; n_blades=16; blade_w=2.4; sweep=70;   // swirl grille
 cav_x=fan[0]/2+fan_fit;  // cavity half width
 cav_y=fan_c[1]-fan[1]/2-fan_fit;              // cavity front face (Y 19.5)
@@ -70,8 +69,6 @@ module edge(jack=false, label="TFE-A", coupon_insert=false){
     // 45 deg chamfer on the outer top corner
     translate([-x_edge-1,0,0]) rotate([90,0,90]) linear_extrude(2*x_edge+2)
       polygon([[-1,z_lid-chamfer-1],[-1,z_lid+1],[chamfer+1,z_lid+1]]);
-    // shadow groove on both end faces (continues the side rails' groove)
-    for(s=[-1,1]) translate([s*(x_edge-shadow[0]/2),17.5,shadow[2]]) cube([shadow[0]+0.02,37,shadow[1]],center=true);
     // cross-holes
     for(s=[-1,1]) for(h=[plug_hole,tongue_hole]) translate([s*(plug_x[0]+plug_x[1])/2,h[0],h[1]]) rotate([0,90,0]) cylinder(d=xhole_d,h=10,center=true);
     // M3 inserts for the grille screws
@@ -94,8 +91,6 @@ module rail(label="TSR-A"){
     for(y=[tongue_hole[0],240-tongue_hole[0]]) translate([(plug_x[0]+plug_x[1])/2,y,tongue_hole[1]]) rotate([0,90,0]) cylinder(d=xhole_d,h=40,center=true);
     // side panel groove from below
     box([groove[0],rail_y[0]-1,z_top-1],[groove[1],rail_y[1]+1,groove[2]]);
-    // looks: shadow groove along the outer face at the old stock top height
-    translate([rail_out-shadow[0],rail_y[0]-1,shadow[2]-shadow[1]/2]) cube([shadow[0]+1,rail_y[1]-rail_y[0]+2,shadow[1]]);
     // Inner side, clear of pockets, groove and handle bores.
     translate([rail_in-0.01,120,435]) rotate([90,0,90])
       linear_extrude(height=0.61) mirror([1,0,0]) text(is_undef(tag)?label:tag,size=4,halign="center",valign="center");
