@@ -33,3 +33,9 @@ OptiPlex (182.5 W x 178 D x 36 H) leaves ~12.75 mm each side and ~62 mm behind i
 Creator parts (mklements, BY-NC-SA, local personal use only, never redistributed): Top Panel 228 x 171.5 x 3; Top Front Edge (front and rear, ~282 long, the honeycomb vent edge); Top Left Edge x4 (side handles, 30 x 170 x 35). The bottom has the same layout (Bottom Panel, Bottom Front Edge). The creator's photo shows a 120 mm fan hung under the top panel.
 - Usable top area ≈ **228 wide x ~170 deep**: wider than a bay (208), much shallower (bay ~240). A 200 mm fan needs a redesigned top.
 - Headroom under the top panel: **not measured.** The measuring diagram is `work/rack-cooling/top_fan_space_measure.svg` (expected 228 / 170; headroom unknown).
+
+## Top redesign session (2026-11-05, later)
+- The stock top's flat area is only ~175 deep: both top edges are 45° sloped vents, Y 0..35 each. Only screw points on top: the 4 M6 handle holes (`docs/devices/lab-rax-top.md`).
+- **Brian chose option B:** new front and rear top edges with a square top (flat top 240 deep), same plug + tongue joint as the stock edges; new panel 228 x 212 in the stock rail ledge + new edge recesses; fan clamped under a grille on 4 posts (no fan screw holes needed). Solid edge faces: no high vents (chimney).
+- **Fan: Thermaltake CT200 ARGB** (`docs/devices/fan-200mm.md`). **Power:** 12 V wall wart in the power strip, DC jack in the rear edge, buck board for 5 V ARGB.
+- Draft: `work/rack-top-fan/rack_top_fan.scad`, viewer https://claude.ai/artifact/T6HSpFzBcET4bHky9yfyev (our parts only). Waiting on the measurements in `work/rack-cooling/top_edge_joint_measure.svg`.
