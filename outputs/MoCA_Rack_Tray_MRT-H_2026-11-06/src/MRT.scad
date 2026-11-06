@@ -101,8 +101,7 @@ module rear_wall(){
   translate([tx0,0,0])rotate([90,0,90])linear_extrude(side_t)polygon([[ext_y0,fl_z],[wy,fl_z],[tip,tip-wy+fl_z],[tip,wall_top],[ext_y0,wall_top]]);
   // sloped top at the tip, the hold-down bears on it
   translate([0,tip,0])rotate([90,0,0])linear_extrude(tip-bar_y1)polygon([[tx0,wall_top-0.01],[tx0+side_t,wall_top-0.01],[tx0+side_t,wall_top+top_rise],[tx0,wall_top]]);
-  // floor flange along the wall
-  translate([tx0+side_t-0.01,ext_y0,fl_z])cube([flange_w,bar_y1-ext_y0,fl_top-fl_z]);
+  // floor flange along the wall: part of tray_floor2d()
 }
 module shoe(tag){difference(){union(){
   translate([s_x0,s_block,b_z0])cube([s_x1-s_x0,rack_depth+ear_t-s_block,b_z1-b_z0]);
@@ -168,9 +167,26 @@ function rp_cheek_x(i)=rp_side[i]>0?rp_x[i]+chan/2:rp_x[i]-chan/2-rp_cw;
 function rp_hole_x(i)=rp_cheek_x(i)+rp_cw/2;
 module yz(x0,x1){translate([x0,0,0])rotate([90,0,90])linear_extrude(x1-x0)children();}
 module sec(c,a0,a1,r0,r1){n=36;polygon(concat([for(i=[0:n])let(a=a0+(a1-a0)*i/n)[c[0]+r1*cos(a),c[1]+r1*sin(a)]],[for(i=[n:-1:0])let(a=a0+(a1-a0)*i/n)[c[0]+r0*cos(a),c[1]+r0*sin(a)]]));}
-module rp_dock(i){x=rp_x[i]; w=chan/2+wall_t;
-  translate([x-w,bar_y1-0.01,fl_z])cube([2*w,rp_floor-bar_y1+0.01,fl_top-fl_z]);
-  translate([rp_cheek_x(i),bar_y1-0.01,fl_z])cube([rp_cw,rp_c1-bar_y1+0.01,rib_top-fl_z]);
+module rp_dock(i,floor=true){x=rp_x[i]; w=chan/2+wall_t;
+  if(floor)translate([x-w,bar_y1-0.01,fl_z])cube([2*w,rp_floor-bar_y1+0.01,fl_top-fl_z]);
+  translate([0,0,fl_z])linear_extrude(rib_top-fl_z)rr(rp_cheek_x(i),rp_cheek_x(i)+rp_cw,bar_y1-0.01,rp_c1,2);   // cheek, rounded corners
+}
+// ---- Floor outline, every piece on the bed in one shape with rounded corners (Brian, 2026-11-06: helps against warping).
+// Outside corners r 3, inside corners filleted r 3; the front edge on the plate ledge stays square.
+fl_round=3;
+module round2d(r){offset(r=r)offset(delta=-r)offset(r=-r)offset(delta=r)children();}
+module tray_floor2d(){
+  round2d(fl_round)union(){
+    rr(tx0,tx1,0,depth,4);
+    translate([tx0,bar_y0])square([tx1-tx0,bar_y1-bar_y0]);
+    translate([tx0,depth-6])square([c_in[0]-R+chan/2+wall_t-tx0,bar_y0-depth+6.01]);
+    translate([c_out2[0],depth-6])square([tx1-side_t-c_out2[0]+0.01,bar_y0-depth+6.01]);
+    for(m=[0,1])mir(m)translate([tx0,ext_y0])square([side_t+flange_w,bar_y1-ext_y0]);
+    translate([xc-14,depth-6])square([28,max([for(e=ears)e[1]])+boss_d/2+3-depth+6]);   // under the splitter's rear ear boss (Brian, 2026-11-06)
+    if(rp_on)for(i=[0,1]){w=chan/2+wall_t;translate([rp_x[i]-w,bar_y1-0.01])square([2*w,rp_floor-bar_y1+0.01]);
+      translate([rp_cheek_x(i),bar_y1-0.01])square([rp_cw,rp_c1-bar_y1+0.01]);}
+  }
+  translate([tx0,0])square([tx1-tx0,10]);
 }
 module rp_dock_cut(i){for(y=rp_ins)translate([rp_hole_x(i),y,0]){translate([0,0,rib_top-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);translate([0,0,rib_top-ins_dp-relief])cylinder(d=screw_clear,h=relief+0.01);}}
 // up: centre above the cable, down: below. The block is clipped behind the rib and, where it would meet the dock, kept off it.
@@ -279,7 +295,7 @@ module cov_bores(){for(p=cov_all)translate([p[0],p[1],0]){translate([0,0,wall_to
 module tray(){difference(){
   union(){
     // floor
-    translate([0,0,fl_z])linear_extrude(fl_top-fl_z)union(){rr(tx0,tx1,0,depth,4);translate([tx0,0])square([tx1-tx0,10]);}
+    translate([0,0,fl_z])linear_extrude(fl_top-fl_z)tray_floor2d();
     // side walls, tied into the plate by a chamfer
     for(x=[tx0,tx1-side_t])translate([x,0,fl_z])cube([side_t,depth-4,wall_top-fl_z]);
     for(s=[0,1])translate([s==0?tx0+side_t-0.01:tx1-side_t-6.01,0,fl_top-0.01])
@@ -287,19 +303,14 @@ module tray(){difference(){
     // floor-to-plate chamfer across the width
     translate([tx0,0,0])rotate([90,0,90])linear_extrude(tx1-tx0)polygon([[-0.01,fl_top-0.01],[5,fl_top-0.01],[-0.01,fl_top+5]]);
     for(m=[0,1]){mir(m)rear_wall();upright(m);}
-    translate([tx0,bar_y0,fl_z])cube([tx1-tx0,bar_y1-bar_y0,fl_top-fl_z]);
-    // floor carried back under the cords, coax IN and coax OUT
-    translate([tx0,depth-6,fl_z])cube([c_in[0]-R+chan/2+wall_t-tx0,bar_y0-depth+6.01,fl_top-fl_z]);
-    translate([c_out2[0],depth-6,fl_z])cube([tx1-side_t-c_out2[0]+0.01,bar_y0-depth+6.01,fl_top-fl_z]);   // under the OUT2 bend too
+    // bar, floor behind the tray and docks are in tray_floor2d()
     rear_rib();
     if(ks_on)for(x=ks_x)ks_tower(x);
-    if(rp_on)for(i=[0,1])rp_dock(i);
+    if(rp_on)for(i=[0,1])rp_dock(i,false);
     // ScreenBeam: foot pads and long-side fences
     for(f=sb_feet)translate([f[0],f[1],fl_top-0.01])cylinder(d=22,h=pad+0.01);
     for(y=[sby0-sb_clr/2-2,sby0+SB[1]+sb_clr/2])translate([sbx0+15,y,fl_top-0.01])cube([SB[0]-30,2,pad+6]);
     // splitter riser and ear bosses
-    // floor under the rear ear boss: it sat half past the floor end (Y 172) since the splitter moved back in MRT-G (Brian, 2026-11-06)
-    translate([xc-14,depth-6,fl_z])cube([28,max([for(e=ears)e[1]])+boss_d/2+3-depth+6,fl_top-fl_z]);
     translate([xc-sp_w/2+2,y0+2,fl_top-0.01])cube([sp_w-4,sp_l-4,riser+0.01]);
     for(e=ears)translate([e[0],e[1],fl_top-0.01])cylinder(d=boss_d,h=riser+0.01);
     channels();
@@ -386,7 +397,7 @@ module jig(){translate([0,0,-(fl_top-jf)])difference(){
 // (the ramp reaches ~24 below the jig floor). Tie slots as in the tray hold the jumper, which has no lips.
 post_d=8.2;
 module port_post(p,dir,len){translate(p)rotate([0,dir*90,0])cylinder(d=post_d,h=len);
-  translate([dir>0?p[0]-8:p[0],p[1]-7,fl_top-jf])cube([8,14,p[2]+6-fl_top+jf]);}
+  translate([0,0,fl_top-jf])linear_extrude(p[2]+6-fl_top+jf)rr(dir>0?p[0]-8:p[0],dir>0?p[0]:p[0]+8,p[1]-7,p[1]+7,2);}
 function jw()=chan/2+wall_t+fil;
 module jmask(n){w=jw()+1;
   if(n==5)union(){sector2d(c_jump,0,90,R-w,R+w);translate([x_out-9,c_jump[1]+R-w])square([c_jump[0]-x_out+9.01,2*w]);
@@ -396,7 +407,7 @@ module jmask(n){w=jw()+1;
   if(n==7)union(){sector2d(c_out2,-90,90,R-w,R+w);translate([rp_cheek_x(1)-1,c_out2[1]-0.01])square([c_out2[0]+R+w-rp_cheek_x(1)+1,rp_c1-c_out2[1]+1]);
     translate([x_out-9,out2_y-9])square([c_out2[0]-x_out+9.01,18]);}
 }
-module jfloor(n){w=chan/2+wall_t;
+module jfloor(n){w=jw()+1;   // covers the wall fillets and the trimmed gussets
   if(n==5){sector2d(c_jump,0,90,R-w,R+w);translate([x_out-8,out1_y-w])square([c_jump[0]-x_out+8.01,2*w]);
     translate([ra_x-8,coax_p[1]-8])square([16,c_jump[1]-coax_p[1]+8.01]);translate([coax_p[0]-8,coax_p[1]-8])square([ra_x-coax_p[0]+8,16]);}
   if(n==6){sector2d(c_in,180,90,R-w,R+w);translate([split_wall-wall_t0,c_in[1]-0.01])square([rp_cheek_x(0)+rp_cw-split_wall+wall_t0,rp_floor-c_in[1]]);
@@ -406,7 +417,7 @@ module jfloor(n){w=chan/2+wall_t;
 }
 module cjig(n){tag=n==5?"MRT-T5":n==6?"MRT-T6":"MRT-T7"; translate([0,0,-(fl_top-jf)])difference(){
   union(){
-    translate([0,0,fl_top-jf])linear_extrude(jf)jfloor(n);
+    translate([0,0,fl_top-jf])linear_extrude(jf)round2d(fl_round)jfloor(n);
     intersection(){union(){channels();rear_rib();if(n>5)rp_dock(n-6);}translate([0,0,fl_top-0.02])linear_extrude(60)jmask(n);}
     if(n==5){port_post(coax_p,1,11);port_post([x_out,out1_y,axis_z],1,sp_port);}
     if(n==6)port_post([x_in,in_y,axis_z],-1,sp_port);

@@ -14,6 +14,8 @@ T6 and T7 end in the tray's ramp dock: screw the real MRT-H ramp on (Up or Down)
 
 Hardware: 4 M3 x 3 x 5 inserts (T6, T7) and 4 M3 countersunk screws.
 
+Floors are rounded (r 3) and wide enough to carry the walls' base fillets; the post pillars have r 2 corners. The three port posts stick out sideways, so their undersides are short overhangs: add support from the build plate under them if your slicer flags them.
+
 ## Checks
 0 failed, 0 warnings; each jig is one closed body. The jigs were not checked against the device mock-ups: the post pillars stand in for the ScreenBeam and splitter.
 

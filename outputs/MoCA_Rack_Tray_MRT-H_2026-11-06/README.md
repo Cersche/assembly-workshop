@@ -25,6 +25,7 @@ Print only the ramp you'll use at each entrance (or both, to swap later).
 - Rear keystones were tried and dropped.
 
 - Floor carried out under the splitter's rear ear boss, which sat half past the floor end since MRT-G (Brian, slicer, before printing).
+- Floor outline rounded everywhere on the bed (outside corners r 3, inside corners filleted r 3; the front edge on the plate stays square), and the dock cheeks have r 2 corners, against warping (Brian).
 
 Kept as printed: every MRT-G fit value (ScreenBeam pockets, splitter riser and bores, 48 straight at the splitter, 58 behind the right-angle F, lips, rib, M6 joint, shoes).
 
