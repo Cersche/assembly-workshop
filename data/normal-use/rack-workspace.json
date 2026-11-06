@@ -263,7 +263,7 @@
           },
           "id": "u7-cf85e14e09b8",
           "equipment": "eq-cf85e14e09b8",
-          "slot": 3,
+          "slot": 4,
           "span": 1,
           "geometry": "equipment-library",
           "fit": "UNKNOWN"
@@ -338,7 +338,7 @@
           },
           "id": "u8-748d6610d466",
           "equipment": "eq-748d6610d466",
-          "slot": 2,
+          "slot": 3,
           "span": 1,
           "geometry": "equipment-library",
           "fit": "UNKNOWN"
@@ -488,8 +488,83 @@
           },
           "id": "u4-u3-scr5e",
           "equipment": "eq-cbab7a748c93",
-          "slot": 4,
+          "slot": 5,
           "span": 2,
+          "geometry": "equipment-library",
+          "fit": "UNKNOWN"
+        },
+        {
+          "assembly": {
+            "id": "asm-beb921731a2be38f4847c4202ebca8a8",
+            "name": "Modem ECB7250 (placeholder) (U2)",
+            "revision": 1,
+            "project": {
+              "selections": {
+                "screw": {
+                  "id": "accu-sscf-m3-8-a2",
+                  "revision": 1,
+                  "name": "Accu M3 × 8 socket cap · A2",
+                  "kind": "screw",
+                  "manufacturer": "Accu",
+                  "part_number": "SSCF-M3-8-A2",
+                  "diameter": 3,
+                  "pitch": 0.5,
+                  "length": 8,
+                  "threaded_length": 8,
+                  "length_convention": "under_head",
+                  "head_diameter": 5.5,
+                  "head_height": 3,
+                  "drive": "2.5 mm hex",
+                  "material": "A2 stainless steel",
+                  "finish": "Natural",
+                  "verification": "documented",
+                  "source": "https://www.accu.co.uk/metric-cap-head-screws/3818-SSCF-M3-8-A2",
+                  "retrieved": "2026-10-17",
+                  "availability": "Not checked",
+                  "cad_status": "Supplier CAD link only; no model downloaded",
+                  "notes": "Nominal dimensions; head diameter tolerance +0/-0.18 mm, height +0/-0.14 mm. Full-thread specification from supplier."
+                },
+                "heatset": {
+                  "id": "mcmaster-94459a140",
+                  "revision": 1,
+                  "name": "McMaster M3 heat-set · 5.7 mm",
+                  "kind": "heatset",
+                  "part_number": "94459A140",
+                  "diameter": 3,
+                  "pitch": 0.5,
+                  "length": 5.7,
+                  "hole_max_diameter": 4,
+                  "hole_profile": "straight",
+                  "end_type": "open",
+                  "material": "Brass",
+                  "verification": "partial",
+                  "source": "https://www.mcmaster.com/products/94459a170/",
+                  "retrieved": "2026-10-17",
+                  "availability": "Not checked",
+                  "cad_status": "No CAD downloaded",
+                  "notes": "Catalog standard-profile brass row. 4 mm is For Max. Hole Dia., not an exact installation target. Outside diameter, usable thread depth and minimum wall remain unverified."
+                }
+              },
+              "inputs": {
+                "stack": 3.3,
+                "pocket": 8,
+                "boss_diameter": 9,
+                "pilot": 4,
+                "minimum_engagement": 3,
+                "bottom_allowance": 0.5
+              },
+              "notes": "Clearance v2 baseline. Insert pilot is provisional. Physical testing pending.",
+              "id": "asm-beb921731a2be38f4847c4202ebca8a8",
+              "name": "Modem ECB7250 (placeholder) (U2)",
+              "units": "mm"
+            },
+            "appearance": {},
+            "fit": "UNKNOWN"
+          },
+          "id": "u2-c374022fea31",
+          "equipment": "eq-c374022fea31",
+          "slot": 8,
+          "span": 1,
           "geometry": "equipment-library",
           "fit": "UNKNOWN"
         }
@@ -506,5 +581,5 @@
       }
     }
   ],
-  "generation": "5352aede-5234-449d-add5-3cb047996e36"
+  "generation": "d6f4df1e-25e5-447d-8e5b-2f1124d113b5"
 }
