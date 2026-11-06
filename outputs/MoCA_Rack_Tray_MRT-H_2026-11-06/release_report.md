@@ -23,7 +23,7 @@
 - plate: keep-out clear
 
 ## tray
-- tray: closed solid, 1 body, 26536 triangles, volume 239636 mm3, size 220.83 x 225.50 x 41.98 mm
+- tray: closed solid, 3 body, 27372 triangles, volume 241145 mm3, size 218.50 x 225.50 x 41.98 mm
 - tray: ID MRT-H is on the mesh, 28.3 mm3 of text at X -54.5..-33.5, Y 133.6..138.4, Z 3.4..4.0; legibility not checked
 - tray: 2 x dia 16.01 (Z), depth about 2.75
 - tray: 2 x dia 16.0 (Z), depth about 2.75
@@ -237,7 +237,7 @@
 - ramp_out_down: keep-out clear
 
 ## 3MF
-- 3MF: 11 objects, 11 items, 31816 vertices, 64458 triangles, matching the STLs
+- 3MF: 11 objects, 11 items, 32202 vertices, 65294 triangles, matching the STLs
 - plate: turned x90 for printing in the 3MF; its STL keeps the design position
 - shoe_left: turned x-90 for printing in the 3MF; its STL keeps the design position
 - shoe_right: turned x-90 for printing in the 3MF; its STL keeps the design position

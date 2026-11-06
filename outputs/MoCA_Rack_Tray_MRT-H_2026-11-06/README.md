@@ -26,6 +26,7 @@ Print only the ramp you'll use at each entrance (or both, to swap later).
 
 - Floor carried out under the splitter's rear ear boss, which sat half past the floor end since MRT-G (Brian, slicer, before printing).
 - Floor outline rounded everywhere on the bed (outside corners r 3, inside corners filleted r 3; the front edge on the plate stays square), and the dock cheeks have r 2 corners, against warping (Brian).
+- Break-away supports modelled in under the two 2 mm strap grooves below the ScreenBeam (Brian): a comb of 0.8 mm ribs on a 3 mm pitch, 0.2 mm below the groove roof and 0.4 mm off its sides, joined at the ends. They are 2 separate pieces in the tray STL (tray = 3 bodies), so turn off slicer supports for the tray; after printing pull each comb out with pliers through the front strap notch. Removal force UNKNOWN until printed. The tie grooves (5 mm wide, 1.6 high) bridge on their own and have none. Also fixed two small fillet overhangs at floor level: the IN channel's inner base fillet now sits on floor, and the jumper bend's outer fillet is trimmed to the tray's right edge.
 
 Kept as printed: every MRT-G fit value (ScreenBeam pockets, splitter riser and bores, 48 straight at the splitter, 58 behind the right-angle F, lips, rib, M6 joint, shoes).
 

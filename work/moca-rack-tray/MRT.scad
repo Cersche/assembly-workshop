@@ -179,7 +179,7 @@ module tray_floor2d(){
   round2d(fl_round)union(){
     rr(tx0,tx1,0,depth,4);
     translate([tx0,bar_y0])square([tx1-tx0,bar_y1-bar_y0]);
-    translate([tx0,depth-6])square([c_in[0]-R+chan/2+wall_t-tx0,bar_y0-depth+6.01]);
+    translate([tx0,depth-6])square([c_in[0]-R+chan/2+wall_t+fil+1-tx0,bar_y0-depth+6.01]);
     translate([c_out2[0],depth-6])square([tx1-side_t-c_out2[0]+0.01,bar_y0-depth+6.01]);
     for(m=[0,1])mir(m)translate([tx0,ext_y0])square([side_t+flange_w,bar_y1-ext_y0]);
     translate([xc-14,depth-6])square([28,max([for(e=ears)e[1]])+boss_d/2+3-depth+6]);   // under the splitter's rear ear boss (Brian, 2026-11-06)
@@ -292,7 +292,27 @@ module cover_o(){cov_solid(cov_o,"MRT-H-C2",[c_out2[0]+R,188],90){sector2d(c_out
 module cover_i(){cov_solid(cov_i,"MRT-H-C3",[11,130],90){sector2d(c_in,180,90,R-cov_w,R+cov_w);translate([c_in[0]-R-cov_w,c_in[1]-0.01])square([2*cov_w,(ks_on?rib_y0:bar_y1)-c_in[1]]);translate([tx0,70])square([split_wall-tx0,bar_y1-70]);}}
 module cov_pillars(z0){for(p=cov_all)translate([p[0],p[1],z0])cylinder(d=pil_d,h=wall_top-z0);}
 module cov_bores(){for(p=cov_all)translate([p[0],p[1],0]){translate([0,0,wall_top-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);translate([0,0,wall_top-ins_dp-relief])cylinder(d=screw_clear,h=relief+0.01);}}
-module tray(){difference(){
+// ---- Break-away supports under the two strap grooves (Brian, 2026-11-06). Ribs along the groove, 0.8 wide on a 3 pitch, 0.2 below the
+// groove roof and 0.4 off its sides, so they touch the tray only through the first layers' squish; joined at each end so each comes out as one
+// comb (pull from the front notch with pliers). Only where the groove has a roof: not under the floor window or the through-slots.
+// The tie grooves (5 wide, 1.6 high) bridge on their own and get none. Removal force UNKNOWN until printed.
+sup_gap=0.2; sup_side=0.4; sup_w=0.8; sup_pitch=3;
+module strap_support2d(x){y0s=4.3+sup_side; y1s=sby0+SB[1]+sb_clr/2+2.3-sup_side; x0s=x-9+sup_side; x1s=x+9-sup_side;
+  difference(){
+    union(){
+      for(xx=[x0s:sup_pitch:x1s-sup_w+0.01])translate([xx,y0s])square([sup_w,y1s-y0s]);
+      translate([x1s-sup_w,y0s])square([sup_w,y1s-y0s]);
+      for(yy=[y0s,y1s-sup_w])translate([x0s,yy])square([x1s-x0s,sup_w]);
+    }
+    offset(delta=sup_side)rr(sbx0+30,sbx0+90,sby0+13,sby0+52,6);
+  }
+  // end bars where the window cuts the ribs, so each piece stays one comb
+  intersection(){translate([x0s,y0s])square([x1s-x0s,y1s-y0s]);
+    difference(){offset(delta=sup_side+sup_w)rr(sbx0+30,sbx0+90,sby0+13,sby0+52,6);offset(delta=sup_side)rr(sbx0+30,sbx0+90,sby0+13,sby0+52,6);}}
+}
+module strap_supports(){for(x=[sbx0+30,sbx0+90])translate([0,0,fl_z])linear_extrude(groove_strap-sup_gap)strap_support2d(x);}
+module tray(){union(){strap_supports();tray_body();}}
+module tray_body(){difference(){
   union(){
     // floor
     translate([0,0,fl_z])linear_extrude(fl_top-fl_z)tray_floor2d();
@@ -313,7 +333,7 @@ module tray(){difference(){
     // splitter riser and ear bosses
     translate([xc-sp_w/2+2,y0+2,fl_top-0.01])cube([sp_w-4,sp_l-4,riser+0.01]);
     for(e=ears)translate([e[0],e[1],fl_top-0.01])cylinder(d=boss_d,h=riser+0.01);
-    channels();
+    intersection(){channels();translate([tx0,-1,-1])cube([tx1-tx0,300,100]);}
     cov_pillars(fl_z);
   }
   // front edge stands off the plate, underside chamfered onto the plate's ledge
