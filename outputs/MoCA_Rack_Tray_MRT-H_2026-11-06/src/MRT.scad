@@ -298,6 +298,8 @@ module tray(){difference(){
     for(f=sb_feet)translate([f[0],f[1],fl_top-0.01])cylinder(d=22,h=pad+0.01);
     for(y=[sby0-sb_clr/2-2,sby0+SB[1]+sb_clr/2])translate([sbx0+15,y,fl_top-0.01])cube([SB[0]-30,2,pad+6]);
     // splitter riser and ear bosses
+    // floor under the rear ear boss: it sat half past the floor end (Y 172) since the splitter moved back in MRT-G (Brian, 2026-11-06)
+    translate([xc-14,depth-6,fl_z])cube([28,max([for(e=ears)e[1]])+boss_d/2+3-depth+6,fl_top-fl_z]);
     translate([xc-sp_w/2+2,y0+2,fl_top-0.01])cube([sp_w-4,sp_l-4,riser+0.01]);
     for(e=ears)translate([e[0],e[1],fl_top-0.01])cylinder(d=boss_d,h=riser+0.01);
     channels();

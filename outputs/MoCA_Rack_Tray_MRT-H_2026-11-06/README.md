@@ -24,6 +24,8 @@ Print only the ramp you'll use at each entrance (or both, to swap later).
   - Down reaches about 22 below the slot, into the rear of the U below.
 - Rear keystones were tried and dropped.
 
+- Floor carried out under the splitter's rear ear boss, which sat half past the floor end since MRT-G (Brian, slicer, before printing).
+
 Kept as printed: every MRT-G fit value (ScreenBeam pockets, splitter riser and bores, 48 straight at the splitter, 58 behind the right-angle F, lips, rib, M6 joint, shoes).
 
 ## Checks
