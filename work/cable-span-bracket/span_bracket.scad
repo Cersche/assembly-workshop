@@ -5,7 +5,9 @@
 include <workshop.scad>
 part="bracket";          // bracket | left | keepout | demo_cables
 soft=true;               // rounded outside corners, round finger tips (Brian picked B + C, 2026-11-05)
-vented=true;             // floor slots
+vented=true;             // floor slots: zip-tie pairs since CSB-B
+tie_l=6.5; tie_t=3;      // each tie slot: 6.5 along the cables (ties up to 4.8 wide), 3 across (band ~1.3 thick)
+tie_groove=true; tie_groove_d=1.6;  // groove under the floor between the pair, so the band sits flush and nothing pokes into the U below
 wall_windows=false;      // outer wall windows: they merged into one long slot; Brian closed them 2026-11-05
 dropout=true;            // drop-out near each end: cables leave straight up or down in the outer lane (X 121..134.5), free beside the post-rail parts
 do_y0=44; do_y1=62; do_x=121; do_r=3; do_lintel=8;  // CSB-B: drop-outs moved 4 away from the ends so the tool window takes a 30 mm key short arm (Brian). Outer wall kept as a bridge across the top of each drop-out
@@ -49,9 +51,12 @@ module finger(y,from_out){
         translate([tip+(from_out?finger_w/2:-finger_w/2),y])circle(d=finger_w);} } }
   else finger_body(y,from_out);
 }
-module vents(){ // floor slots between the fingers and long windows in the outer wall
+module vents(){ // zip-tie slot pairs between the fingers (CSB-B, Brian: the old cross slots were no use for ties)
+  // each pair: two slots long along the cables, one against each wall; the tie goes down one, under the floor in a groove, up the other, over the bundle
   for(i=[-3:2]) if(!(dropout && (i==-3||i==2))){ y=yc+(i+0.5)*pitch;
-    translate([0,y,z0-1])linear_extrude(floor_t+2)hull(){for(x=[x_in+wall+4,x_out-wall-4])translate([x,0])circle(d=4);}
+    for(x=[x_in+wall+0.5+tie_t/2, x_out-wall-0.5-tie_t/2])
+      translate([x,y,z0-1])linear_extrude(floor_t+2)hull(){for(dy=[-1,1])translate([0,dy*(tie_l-tie_t)/2])circle(d=tie_t);}
+    if(tie_groove) translate([x_in+wall+0.5,y-tie_l/2,z0-1])cube([x_out-x_in-2*wall-1,tie_l,1+tie_groove_d]);
   }
   if(wall_windows) for(i=[-2:1]) translate([x_out-wall-1,yc+(i+0.5)*pitch,z0+floor_t+3])rotate([0,90,0])linear_extrude(wall+2)
     hull(){for(dy=[-(pitch-finger_w)/2-6,(pitch-finger_w)/2+6])translate([-5,dy])circle(d=8);}
