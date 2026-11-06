@@ -252,7 +252,8 @@ module tray(){difference(){
 
 // ---- MRT-T3 channel forming jig (MRT-T1 plus the cover pillars): the tray's channels, rib, ScreenBeam foot pockets and splitter riser in their exact places, on a thin open floor.
 // Same heights above the floor as the tray. Set the real gear on it, form the coax and cut the jumpers. Floor is 2 thick, lowered 2 so it sits on the bed.
-jf=2;
+jf=2; jig_id="MRT-T4";   // MRT-T3 was the 2026-11-04 jig; MRT-T4 follows MRT-G
+jig_tie=182;             // cross tie between the splitter ears (to 172) and the rib (202)
 module sector2d_old(c,a0,da,r0,r1){n=24;translate(c)polygon(concat([for(i=[0:n])let(a=a0+da*i/n)[r1*cos(a),r1*sin(a)]],[for(i=[n:-1:0])let(a=a0+da*i/n)[r0*cos(a),r0*sin(a)]]));}
 module jig_floor2d(){ w=chan/2+wall_t;
   sector2d(c_jump,0,90,R-w,R+w); sector2d(c_out2,-90,90,R-w,R+w); sector2d(c_in,180,90,R-w,R+w);
@@ -272,9 +273,9 @@ module jig_floor2d(){ w=chan/2+wall_t;
   translate([xc+20,c_jump[1]+R-4])square([jw0-xc-20+0.01,8]); // splitter to jumper
   translate([c_in[0]-2,in_y-5])square([xc-24-c_in[0]+2.01,10]);     // splitter to IN
   translate([xc+20,out2_y-5])square([c_out2[0]-xc-20+2,10]);        // splitter to OUT
-  translate([xc-8,y0+sp_l+10])square([16,c_in[1]+36-y0-sp_l-10]);     // splitter to the ID patch
-  translate([c_in[0]-R,c_in[1]+30])square([c_out2[0]+2*R-c_in[0],10]); // cross tie, carries the ID
-  translate([xc-8,c_in[1]+30])square([16,bar_y0-c_in[1]-29.99]);    // to the rib
+  translate([xc-8,y0+sp_l+10])square([16,jig_tie-y0-sp_l-10+0.01]);  // splitter to the ID patch
+  translate([c_in[0]-R,jig_tie])square([c_out2[0]+2*R-c_in[0],10]);   // cross tie, carries the ID
+  translate([xc-8,jig_tie+9.99])square([16,bar_y0-jig_tie-9.98]);    // to the rib
 }
 module jig(){translate([0,0,-(fl_top-jf)])difference(){
   union(){
@@ -289,7 +290,7 @@ module jig(){translate([0,0,-(fl_top-jf)])difference(){
   for(f=sb_feet)translate([f[0],f[1],case_z-foot_dp])cylinder(d=foot_d,h=foot_dp+pad);
   for(e=ears)translate([e[0],e[1],sp_z-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);
   cov_bores();
-  translate([xc,c_in[1]+35,fl_top-0.6])linear_extrude(1)text("MRT-T3",size=6,font="Liberation Sans:style=Bold",halign="center",valign="center");
+  translate([xc,jig_tie+5,fl_top-0.6])linear_extrude(1)text(jig_id,size=6,font="Liberation Sans:style=Bold",halign="center",valign="center");
 }}
 // ---- MRT-T2 notch slice: three short channels ending in a rib notch, lip gaps 6.4 / 6.8 (the tray's) / 7.4. Same channel, wall, lip and rib sizes as the tray.
 sl_l=34; sl_gaps=[6.4,6.8,7.4]; sl_pitch=chan+wall_t;
