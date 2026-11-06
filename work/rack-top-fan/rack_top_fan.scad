@@ -1,4 +1,4 @@
-// DRAFT 3 (no ID yet): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
+// Task 53 preparation, Draft 3 (not released): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
 // The fan sits fully recessed in the top's own 35 mm height (Brian: no fan body sticking out of the top):
 // new front + rear top edges are hollowed on the inside into a cavity, the fan rests on ledges in them,
 // and a 3 mm grille, flush with the rail tops, clamps it down. No panel: the grille is the top surface.
@@ -10,6 +10,7 @@
 include <workshop.scad>
 include <BOSL2/std.scad>
 part="assembly";         // edge_front | edge_rear | rail | rail_left | grille | fan | assembly
+tag=undef; // Optional override; defaults belong to each physical part below.
 $fn=64;
 
 // --- stock interfaces (source values) ---
@@ -44,7 +45,7 @@ z_fan=z_lid-grille_t-fan[2]; z_ledge=z_fan-ledge_t; z_grille=z_lid-grille_t;
 
 module box(a,b){translate(a)cube(b-a);}
 
-module edge(jack=false){
+module edge(jack=false, label="TFE-A", coupon_insert=false){
   difference(){
     union(){
       translate([-x_edge,0,z_top]) cuboid([2*x_edge,35,z_lid-z_top],rounding=2,edges=[TOP+FRONT],anchor=FRONT+BOTTOM+LEFT);
@@ -65,12 +66,18 @@ module edge(jack=false){
     for(s=[-1,1]) for(h=[plug_hole,tongue_hole]) translate([s*(plug_x[0]+plug_x[1])/2,h[0],h[1]]) rotate([0,90,0]) cylinder(d=xhole_d,h=10,center=true);
     // M3 inserts for the grille screws
     for(x=m3_x) translate([x,m3_y,z_grille]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3,5);
+    // The specified X 101..141.12 coupon excludes the normal X=95 insert.
+    // A coupon-only bore at X=106 tests the same seat and M3 pilot depth.
+    if(coupon_insert) translate([106,m3_y,z_grille]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3,5);
+    // Requested mid-length Y=35 tag location: dry-run FAIL, the air-opening
+    // cutter removes this ledge here. Keep the failure visible; no relocated tag.
+    inner_tag(is_undef(tag)?label:tag,0,z_ledge+1,1.2);
     // DC jack (rear edge only): hole through the back face, pocket beside the fan, open down into the rack
     if(jack){ translate([jack_x,-1,jack_z]) rotate([-90,0,0]) cylinder(d=jack_d,h=front_wall+2);
               box([jack_x-6,front_wall,z_top-1],[jack_x+4.5,36,jack_z+8]); }
   }
 }
-module rail(){
+module rail(label="TSR-A"){
   difference(){
     translate([rail_in,rail_y[0],z_top]) cuboid([rail_out-rail_in,rail_y[1]-rail_y[0],z_lid-z_top],rounding=2,edges=[TOP+RIGHT],anchor=FRONT+BOTTOM+LEFT);
     // tongue pockets at both ends, open at the end and the bottom (the rail drops onto the edge tongues)
@@ -80,33 +87,94 @@ module rail(){
     for(y=[tongue_hole[0],240-tongue_hole[0]]) translate([(plug_x[0]+plug_x[1])/2,y,tongue_hole[1]]) rotate([0,90,0]) cylinder(d=xhole_d,h=40,center=true);
     // side panel groove from below
     box([groove[0],rail_y[0]-1,z_top-1],[groove[1],rail_y[1]+1,groove[2]]);
+    // Inner side, clear of pockets, groove and handle bores.
+    translate([rail_in-0.01,120,435]) rotate([90,0,90])
+      linear_extrude(height=0.61) text(is_undef(tag)?label:tag,size=4,halign="center",valign="center");
     // stock handles screw down into M6 inserts here
     for(y=handle_hole[1]) translate([handle_hole[0],y,z_lid]) mirror([0,0,1]) ws_insert_bore(ws_insert_m6,10);
   }
 }
 module rail_left(){ mirror([1,0,0]) rail(); }
-module edge_rear(){ translate([0,240,0]) rotate([0,0,180]) edge(jack=true); }
+module edge_rear(){ translate([0,240,0]) rotate([0,0,180]) edge(jack=true,label="TRE-A"); }
 
 module grille(){
   y0=front_wall+grille_fit; y1=240-front_wall-grille_fit;
   difference(){
     translate([-grille_x,y0,z_grille]) cuboid([2*grille_x,y1-y0,grille_t],rounding=2,edges="Z",anchor=FRONT+BOTTOM+LEFT);
-    difference(){
-      translate([fan_c[0],fan_c[1],z_grille-1]) cylinder(d=open_d,h=grille_t+2);
-      for(r=[30,55,80]) translate([fan_c[0],fan_c[1],z_grille-1]) difference(){ cylinder(r=r+1.5,h=grille_t+2); cylinder(r=r-1.5,h=grille_t+2); }
-      for(a=[0:45:135]) translate([fan_c[0],fan_c[1],z_grille+grille_t/2]) rotate([0,0,a]) cube([open_d,3,grille_t+2],center=true);
-      translate([fan_c[0],fan_c[1],z_grille-1]) cylinder(r=14,h=grille_t+2);
-    }
+    grille_openings();
+    translate([0,9,z_grille-0.01]) linear_extrude(height=0.61)
+      text(is_undef(tag)?"TFG-A":tag,size=4,halign="center",valign="center");
     for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_grille-0.01]){ cylinder(d=3.4,h=grille_t+1); translate([0,0,grille_t-1.7+0.02]) cylinder(d1=3.4,d2=6.6,h=1.7); }
   }
 }
 
 module fan_dummy(){ translate([fan_c[0],fan_c[1],z_fan]) difference(){ translate([0,0,fan[2]/2]) cuboid(fan,rounding=8,edges="Z"); cylinder(d=open_d-4,h=3*fan[2],center=true);} }
 
+
+// The same cutters drive the grille and the check-only cuts (32 vents + 8 screws).
+module grille_openings(){
+    difference(){
+      translate([fan_c[0],fan_c[1],z_grille-1]) cylinder(d=open_d,h=grille_t+2);
+      for(r=[30,55,80]) translate([fan_c[0],fan_c[1],z_grille-1]) difference(){ cylinder(r=r+1.5,h=grille_t+2); cylinder(r=r-1.5,h=grille_t+2); }
+      for(a=[0:45:135]) translate([fan_c[0],fan_c[1],z_grille+grille_t/2]) rotate([0,0,a]) cube([open_d,3,grille_t+2],center=true);
+      translate([fan_c[0],fan_c[1],z_grille-1]) cylinder(r=14,h=grille_t+2);
+    }
+}
+module cuts(){
+  grille_openings();
+  for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_grille-1]) cylinder(d=3.4,h=grille_t+2);
+}
+module inner_tag(label,x,z,size){
+  translate([x,35.01,z]) rotate([90,0,0]) linear_extrude(height=0.61)
+    text(label,size=size,halign="center",valign="center");
+}
+module coupon(){
+  difference(){
+    intersection(){edge(label="",coupon_insert=true); box([101,-1,plug_z[0]-1],[x_edge+1,56,z_lid+1]);}
+    inner_tag(is_undef(tag)?"TFE-T1":tag,120,435,3);
+  }
+}
+module rail_coupon(){
+  difference(){
+    intersection(){rail(label="");box([rail_in-1,35,z_top-1],[rail_out+1,75,z_lid+1]);}
+    translate([rail_in-0.01,55,435]) rotate([90,0,90]) linear_extrude(height=0.61)
+      text(is_undef(tag)?"TSR-T1":tag,size=3,halign="center",valign="center");
+  }
+}
+// Head envelopes include 1 mm radial room. Cross-hole hardware remains UNKNOWN:
+// no M6 cross-hole screw has been specified by Brian, so none is invented here.
+module keepout(){
+  for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_lid-1.7]) rotate([90,0,0])
+    ws_head_keepout(0,0,0,6.6,6);
+}
+// Same transform for a physical part and its check envelope. Edges' inner faces
+// point down; tongues protrude 19.85 past that face, so tongue tips define Z=0.
+// No claim of support-free printing is made.
+module edge_print_pose(){
+  translate([128,128,0]) rotate([0,0,45]) translate([0,-(plug_z[0]+z_lid)/2,tongue_y[1]]) rotate([-90,0,0]) children();
+}
+module rear_local(){translate([0,240,0]) rotate([0,0,180]) children();}
+module rail_print_pose(){translate([0,0,rail_out]) rotate([0,90,0]) translate([0,-35,-z_top]) children();}
+module grille_print_pose(){translate([grille_x,-front_wall-grille_fit,-z_grille]) children();}
 if(part=="edge_front") edge();
 if(part=="edge_rear") edge_rear();
 if(part=="rail") rail();
 if(part=="rail_left") rail_left();
 if(part=="grille") grille();
 if(part=="fan") fan_dummy();
+if(part=="coupon") coupon();
+if(part=="rail_coupon") rail_coupon();
+if(part=="edge_front_print") edge_print_pose() edge();
+if(part=="edge_rear_print") edge_print_pose() edge(jack=true,label="TRE-A");
+if(part=="rail_print") rail_print_pose() rail();
+if(part=="grille_print") grille_print_pose() grille();
+if(part=="keepout") {keepout();
+  // Additional head belonging only to the edge test coupon's insert.
+  translate([106,m3_y,z_lid-1.7]) rotate([90,0,0]) ws_head_keepout(0,0,0,6.6,6);
+}
+if(part=="keepout_edge_front_print") edge_print_pose() keepout();
+if(part=="keepout_edge_rear_print") edge_print_pose() rear_local() keepout();
+if(part=="keepout_rail_print") rail_print_pose() keepout();
+if(part=="keepout_grille_print") grille_print_pose() keepout();
+if(part=="cuts") cuts();
 if(part=="assembly"){ edge(); edge_rear(); rail(); rail_left(); grille(); %fan_dummy(); }
