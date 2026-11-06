@@ -25,4 +25,5 @@ Steps: Measure, Draft, Print, Report.
 | 2026-11-05 | Draft | Brian asked for 30 mm key clearance: drop-outs moved 4 mm, window now takes up to about 33. Key clear at -30..+30 | My edit commented out the drop-out sizes; caught by OpenSCAD warnings and rerun | Fail the render on any warning |
 
 | 2026-11-05 | CSB-B draft | Floor slots turned into zip-tie pairs (6.5 x 3, one by each wall) with a 1.6 deep groove under the floor so the tie sits flush (Brian) | none |
+| 2026-11-05 | CSB-B released | Brian printing; release_part.py 0 failed, 0 warnings, posts gap 0.22, keep-out clear | none |
 Totals when the part is done: drafts sent ___, revisions released ___, prints ___, prints that failed ___, measurement requests ___.
