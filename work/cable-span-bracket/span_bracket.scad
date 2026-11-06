@@ -1,4 +1,4 @@
-// CSB-A cable span bracket (released 2026-11-05 when Brian said he is printing): front post to rear post, one side of the rack.
+// CSB-B DRAFT (from printed CSB-A, which fits; adds tool windows) cable span bracket: front post to rear post, one side of the rack.
 // Frame: X centred, Y=0 front face of front post, Y=240 rear face of rear post, Z=0 slot bottom. Drawn on the right (+X).
 // Same part goes on the left turned 180 degrees about the vertical (part=="left"): the posts and this part both repeat under that turn.
 // Post values come from the 4U post mesh (object_190), not measured. Fit, capacity and strength UNKNOWN.
@@ -9,7 +9,9 @@ vented=true;             // floor slots
 wall_windows=false;      // outer wall windows: they merged into one long slot; Brian closed them 2026-11-05
 dropout=true;            // drop-out near each end: cables leave straight up or down in the outer lane (X 121..134.5), free beside the post-rail parts
 do_y0=40; do_y1=58; do_x=121; do_r=3; do_lintel=8;  // outer wall kept as a bridge across the top of each drop-out (sideways stiffness)
-tag="CSB-A";             // test print ID, engraved 0.6 deep in the outer face of the outer wall, mid-length
+tag="CSB-B";             // test print ID, engraved 0.6 deep in the outer face of the outer wall, mid-length
+tool_z=6;                // CSB-B: inner wall cut to 6 tall between each pad and its drop-out, so a 4 mm L-key reaches the screw (CSB-A: no driver access, Brian 2026-11-05)
+key_a=0;                 // demo_key swing about the screw axis, degrees
 hooks=false;             // catch under each finger tip (option D, not picked)
 y_f=6; y_r=234;          // inner faces of the front and rear post flanges (mesh + 240 rack depth)
 end_gap=0.3;             // gap at each end to the flange
@@ -76,13 +78,14 @@ module bracket(){
       // inner wall stays full height beside each drop-out: it carries the bracket where the outer wall is cut
       if(dropout) for(m=[0,1]) intersection(){
         translate([0,0,z0])linear_extrude(h)plan2d();
-        translate([0,m?ry(do_y1+8):do_y0-10,z0])cube([x_in+wall-0.01,do_y1-do_y0+18,h]); }
+        translate([0,m?ry(do_y1+8):do_y0,z0])cube([x_in+wall-0.01,do_y1-do_y0+8,h]); }
       // keep the pads whole
       for(y=[y_f+end_gap,y_r-end_gap-pad_t])intersection(){translate([0,0,z0])linear_extrude(h)plan2d();translate([0,y,0])cube([300,pad_t,100]);}
     }
     screw_end(y_f+end_gap,1);
     screw_end(y_r-end_gap,-1);
     if(vented) vents();
+    for(y=[y_f+end_gap+pad_t-0.01, ry(do_y0-1)]) translate([x_in-1,y,z0+tool_z])cube([wall+2,do_y0-1-(y_f+end_gap+pad_t)+0.01,h]);  // tool windows
     translate([x_out-0.6,yc,zm])rotate([90,0,90])linear_extrude(1)text(tag,size=6,font="Liberation Sans:style=Bold",halign="center",valign="center");
     if(dropout) for(y=[do_y0,ry(do_y1)]) translate([0,0,z0-1])linear_extrude(h+1-do_lintel)offset(r=do_r)translate([do_x+do_r,y+do_r])square([40,do_y1-do_y0-2*do_r]);
   }
@@ -98,4 +101,10 @@ if(part=="keepout")keepout();
 if(part=="demo_cables"){ // scale only: 6 mm data, 8 mm power. Not a part
   for(c=[[116.5,10,6],[122.5,10,6],[128,10,8],[116.5,16,6],[122.5,16,6],[128,18,8]])
     translate([c[0],40,z0+floor_t+c[1]-5+c[2]/2])rotate([-90,0,0])cylinder(d=c[2],h=160);
+}
+if(part=="demo_key"){ // 4 mm hex L-key in the front screw, long arm into the rack. Not a part
+  translate([ws_hole_x,0,zm])rotate([0,key_a,0])translate([-ws_hole_x,0,-zm]){
+    translate([ws_hole_x,9.6,zm])rotate([-90,0,0])rotate([0,0,30])cylinder(d=4.62,h=35-9.6,$fn=6);
+    translate([ws_hole_x+2.3,35,zm])rotate([0,-90,0])rotate([0,0,30])cylinder(d=4.62,h=70,$fn=6);
+  }
 }
