@@ -37,7 +37,8 @@ open_d=192;              // air opening under the blades (ledges cut back to it)
 front_wall=3;            // outer wall of each edge at the grille seat
 grille_fit=0.3;          // grille to edge recess, each side
 grille_x=rail_in-0.5;    // grille half width: 0.5 clear of the rail lip
-m3_y=11; m3_x=[-95,-40,40,95];                // grille screws, M3 countersunk into M3 inserts in the edge walls
+m3_y=11; m3_x=[-95,-40,40,95];
+csk_d=7.0; csk_h=(csk_d-3.4)/2;               // M3 countersink, 90 deg, room around a 6.7 max head                // grille screws, M3 countersunk into M3 inserts in the edge walls
 jack_x=106; jack_z=431; jack_d=8;             // DC panel jack in the rear edge's back face (model UNKNOWN), beside the fan
 cav_x=fan[0]/2+fan_fit;  // cavity half width
 cav_y=fan_c[1]-fan[1]/2-fan_fit;              // cavity front face (Y 19.5)
@@ -69,9 +70,9 @@ module edge(jack=false, label="TFE-A", coupon_insert=false){
     // The specified X 101..141.12 coupon excludes the normal X=95 insert.
     // A coupon-only bore at X=106 tests the same seat and M3 pilot depth.
     if(coupon_insert) translate([106,m3_y,z_grille]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3,5);
-    // Requested mid-length Y=35 tag location: dry-run FAIL, the air-opening
-    // cutter removes this ledge here. Keep the failure visible; no relocated tag.
-    inner_tag(is_undef(tag)?label:tag,0,z_ledge+1,1.2);
+    // ID on the inner face (Y 35) beside the cavity: mid-length is open air (the fan opening),
+    // so it sits in solid wall between the cavity (X 100.5) and the plug/tongue column (X 127.12).
+    if(label!="") inner_tag(is_undef(tag)?label:tag,119,435,3);
     // DC jack (rear edge only): hole through the back face, pocket beside the fan, open down into the rack
     if(jack){ translate([jack_x,-1,jack_z]) rotate([-90,0,0]) cylinder(d=jack_d,h=front_wall+2);
               box([jack_x-6,front_wall,z_top-1],[jack_x+4.5,36,jack_z+8]); }
@@ -89,7 +90,7 @@ module rail(label="TSR-A"){
     box([groove[0],rail_y[0]-1,z_top-1],[groove[1],rail_y[1]+1,groove[2]]);
     // Inner side, clear of pockets, groove and handle bores.
     translate([rail_in-0.01,120,435]) rotate([90,0,90])
-      linear_extrude(height=0.61) text(is_undef(tag)?label:tag,size=4,halign="center",valign="center");
+      linear_extrude(height=0.61) mirror([1,0,0]) text(is_undef(tag)?label:tag,size=4,halign="center",valign="center");
     // stock handles screw down into M6 inserts here
     for(y=handle_hole[1]) translate([handle_hole[0],y,z_lid]) mirror([0,0,1]) ws_insert_bore(ws_insert_m6,10);
   }
@@ -104,7 +105,7 @@ module grille(){
     grille_openings();
     translate([0,9,z_grille-0.01]) linear_extrude(height=0.61)
       text(is_undef(tag)?"TFG-A":tag,size=4,halign="center",valign="center");
-    for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_grille-0.01]){ cylinder(d=3.4,h=grille_t+1); translate([0,0,grille_t-1.7+0.02]) cylinder(d1=3.4,d2=6.6,h=1.7); }
+    for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_grille-0.01]){ cylinder(d=3.4,h=grille_t+1); translate([0,0,grille_t-csk_h+0.02]) cylinder(d1=3.4,d2=csk_d,h=csk_h); }
   }
 }
 
@@ -125,7 +126,7 @@ module cuts(){
   for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_grille-1]) cylinder(d=3.4,h=grille_t+2);
 }
 module inner_tag(label,x,z,size){
-  translate([x,35.01,z]) rotate([90,0,0]) linear_extrude(height=0.61)
+  translate([x,35.01,z]) rotate([90,0,0]) linear_extrude(height=0.61) mirror([1,0,0])
     text(label,size=size,halign="center",valign="center");
 }
 module coupon(){
@@ -137,21 +138,22 @@ module coupon(){
 module rail_coupon(){
   difference(){
     intersection(){rail(label="");box([rail_in-1,35,z_top-1],[rail_out+1,75,z_lid+1]);}
-    translate([rail_in-0.01,55,435]) rotate([90,0,90]) linear_extrude(height=0.61)
+    translate([rail_in-0.01,55,435]) rotate([90,0,90]) linear_extrude(height=0.61) mirror([1,0,0])
       text(is_undef(tag)?"TSR-T1":tag,size=3,halign="center",valign="center");
   }
 }
 // Head envelopes include 1 mm radial room. Cross-hole hardware remains UNKNOWN:
 // no M6 cross-hole screw has been specified by Brian, so none is invented here.
 module keepout(){
-  for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_lid-1.7]) rotate([90,0,0])
-    ws_head_keepout(0,0,0,6.6,6);
+  // Countersunk heads sit flush in the countersink; keep the room above the grille open.
+  for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_lid]) rotate([90,0,0])
+    ws_head_keepout(0,0,0,csk_d,6);
 }
-// Same transform for a physical part and its check envelope. Edges' inner faces
-// point down; tongues protrude 19.85 past that face, so tongue tips define Z=0.
-// No claim of support-free printing is made.
+// Same transform for a physical part and its check envelope. Edges lie on their flat
+// front face (Y 0), diagonal on a 256 bed: tongues, ledge and cavity walls print upright;
+// the two plugs stick out sideways 19.85 and need a small support each.
 module edge_print_pose(){
-  translate([128,128,0]) rotate([0,0,45]) translate([0,-(plug_z[0]+z_lid)/2,tongue_y[1]]) rotate([-90,0,0]) children();
+  translate([128,128,0]) rotate([0,0,45]) translate([0,(plug_z[0]+z_lid)/2,0]) rotate([90,0,0]) children();
 }
 module rear_local(){translate([0,240,0]) rotate([0,0,180]) children();}
 module rail_print_pose(){translate([0,0,rail_out]) rotate([0,90,0]) translate([0,-35,-z_top]) children();}
@@ -170,7 +172,7 @@ if(part=="rail_print") rail_print_pose() rail();
 if(part=="grille_print") grille_print_pose() grille();
 if(part=="keepout") {keepout();
   // Additional head belonging only to the edge test coupon's insert.
-  translate([106,m3_y,z_lid-1.7]) rotate([90,0,0]) ws_head_keepout(0,0,0,6.6,6);
+  translate([106,m3_y,z_lid]) rotate([90,0,0]) ws_head_keepout(0,0,0,csk_d,6);
 }
 if(part=="keepout_edge_front_print") edge_print_pose() keepout();
 if(part=="keepout_edge_rear_print") edge_print_pose() rear_local() keepout();

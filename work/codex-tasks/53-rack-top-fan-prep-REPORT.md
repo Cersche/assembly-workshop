@@ -329,3 +329,13 @@ EXIT: 1
 NOT RELEASED: nothing written to C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop\work\rack-top-fan\task53-scratch\dryrun-grille_print. Rendered files left in C:\Users\brian\AppData\Local\Packages\sandbox.{08e871e9-8ea4-4857-81a8-427730a4ffab}\AC\Temp\release-TFG-A-9bp3o5v_
 ```
 
+
+## Claude review (2026-11-06)
+
+Verified: report matches the SCAD diff; renders one body each. Fixed the three FAILs as design changes (not workarounds):
+- Edge IDs TFE-A / TRE-A: moved to the inner face at X 119, Z 435 (solid wall between the cavity and the plug column); the mid-length spot is the fan opening.
+- Grille keepout: countersunk heads sit flush, so the keepout now starts at the grille top (Z 450.05); countersink widened 6.6 -> 7.0 (90 deg) for room around a 6.7 max M3 head.
+- Edge print pose: front face (Y 0) down instead of the inner face, which left the body 19.85 up on the tongues. Tongues, ledge and cavity walls print upright; each plug sticks out sideways 19.85 and needs a small support.
+- Engraved text un-mirrored (edges, rail, coupons) so it reads from the face it is cut into.
+
+Rerun (scratch only): all six dry runs exit 0, 0 FAIL; 1 WARN on grille_print (dia 4.23 near the 4.2 insert bore), a slice of the countersink cone, kept. Assembly-frame geometry only lost material (tags, countersink), so the clash volumes above still hold; not rerun.
