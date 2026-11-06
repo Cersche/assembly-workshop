@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="Segoe UI, Arial" font-size="15">
+<rect width="900" height="470" fill="#1d1f24"/>
+<text x="20" y="30" fill="#fff" font-size="19" font-weight="bold">Top of rack: where to measure (expected values from the Lab Rax source files)</text>
+<!-- top view -->
+<text x="40" y="65" fill="#9ab">A. TOP VIEW (top panel removed, looking down)</text>
+<rect x="40" y="80" width="400" height="300" fill="#2b2f36" stroke="#888" stroke-width="2"/>
+<rect x="40" y="80" width="400" height="38" fill="#444" /><text x="190" y="104" fill="#ccc">rear top edge</text>
+<rect x="40" y="342" width="400" height="38" fill="#444" /><text x="180" y="366" fill="#ccc">front top edge (mesh)</text>
+<rect x="40" y="118" width="40" height="224" fill="#444" /><rect x="400" y="118" width="40" height="224" fill="#444" />
+<text x="44" y="235" fill="#ccc" font-size="12">handle</text><text x="403" y="235" fill="#ccc" font-size="12">handle</text>
+<circle cx="240" cy="230" r="98" fill="none" stroke="#5bd" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="196" y="235" fill="#5bd">140 mm fan?</text>
+<line x1="80" y1="300" x2="400" y2="300" stroke="#fc4" stroke-width="2"/><text x="170" y="292" fill="#fc4" font-weight="bold">1: inside width ≈ 228</text>
+<line x1="350" y1="118" x2="350" y2="342" stroke="#f77" stroke-width="2"/><text x="356" y="160" fill="#f77" font-weight="bold" transform="rotate(90 356 160)">2: depth ≈ 170</text>
+<text x="40" y="405" fill="#ccc" font-size="13">1: handle to handle, inside faces, where the top panel sits.</text>
+<text x="40" y="423" fill="#ccc" font-size="13">2: rear edge to front edge, inside faces.</text>
+<!-- side view -->
+<text x="500" y="65" fill="#9ab">B. SIDE VIEW (looking at the side)</text>
+<rect x="500" y="110" width="360" height="10" fill="#777"/><text x="640" y="104" fill="#ccc">top panel (3 mm)</text>
+<rect x="500" y="230" width="360" height="40" fill="#3a5" /><text x="600" y="255" fill="#fff">CM1000 in top slot (U9)</text>
+<rect x="500" y="270" width="360" height="40" fill="#555" /><text x="640" y="295" fill="#ccc">U8 ...</text>
+<line x1="520" y1="226" x2="860" y2="226" stroke="#888" stroke-dasharray="4 4"/><text x="700" y="220" fill="#aaa" font-size="12">top of the top U (post hole level)</text>
+<line x1="830" y1="120" x2="830" y2="226" stroke="#7f7" stroke-width="2"/><text x="660" y="175" fill="#7f7" font-weight="bold">3: headroom = ?</text>
+<text x="500" y="340" fill="#ccc" font-size="13">3: underside of the top panel down to the top of the</text>
+<text x="500" y="358" fill="#ccc" font-size="13">top slot (or the top of the CM1000, whichever is higher).</text>
+<text x="500" y="376" fill="#ccc" font-size="13">A 25 mm fan needs about 30 mm; less → fan sits on top.</text>
+<text x="20" y="455" fill="#fc4" font-size="13">Expected 1 and 2 come from the creator's Top Panel (228 x 171.5 x 3). Your printed rack may differ by a few mm.</text>
+</svg>

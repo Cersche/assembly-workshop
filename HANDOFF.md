@@ -1,5 +1,9 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-05 Rack cooling plan and new layout (Claude)
+Discussion only, nothing designed. Chimney airflow: a 200 mm fan in the top exhausting up, a filtered bottom intake (the rack is wall-mounted), low side vents only. The stock Lab Rax top is ~228 x 170, too shallow for 200 mm, so Brian wants our own redesigned top. Saved rack reordered (commit 901fca2): CM1000 at the top, then ER605 (in the rack, not yet in the library), switch, keystone, screen/Pi/Hue 2U, HDD/SSD, ECB7250 MoCA placeholder, OptiPlex at the bottom. Details: `work/rack-cooling/Decisions.md`. Unknown: fan model, headroom under the top, wall gap, airflow and temperatures.
+**Next step:** a fresh session redesigns the top using `/new-part`; prompt in `docs/prompts/2026-11-05_top-fan-redesign.md`.
+
 ## 2026-11-05 Setup script for other Windows machines (Claude)
 `tools/setup_3d_tools.ps1` installs what a machine is missing for 3D part work (usage in PROJECT.md). Its `-CheckOnly` report passed on the main PC. Brian ran it on the laptop (2026-11-05): it installed the packages and the hash-checked snapshot in `C:\Tools`, set `AW_OPENSCAD_SNAPSHOT`, and all 25 tool tests passed. The laptop clone now lives in a projects folder on C:. `AW_OPENSCAD_SNAPSHOT` overrides the snapshot path.
 
