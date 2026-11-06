@@ -4,6 +4,8 @@
 
 `MRT-A.scad` to `MRT-F.scad`, `make_*.py`, `check_*.py` and `clash_*.py` are history. Don't edit them or run them for the new file.
 
+**Draft MRT-H (2026-11-06, parked):** stronger walls, screw-on Up/Down coax ramps (`ramp_in_up` etc.), forming jigs MRT-T5..T7. See HANDOFF.md. The release command below needs the four `ramp_*` parts added.
+
 ## Checks
 Render the device and cable mock-ups first (snapshot, `OPENSCADPATH` set to `lib`), for example into a scratch folder:
 

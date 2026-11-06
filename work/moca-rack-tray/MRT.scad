@@ -6,7 +6,7 @@
 // Z = 0 slot bottom. Modules are written in the old x = 0..220 frame and shifted by -x_mid at the end. Tray prints floor down, plate front face down.
 // part: plate, tray, cover_j, cover_o, cover_i, jig, slice, shoe_left, shoe_right, screenbeam, splitter, cables, keepout (check only), cuts (check only)
 part="tray";
-id="MRT-G";
+id="MRT-H";   // draft after MRT-T4 (Brian 2026-11-06): stronger channel walls, rear keystones
 $fn=64;
 include <workshop.scad>
 
@@ -14,7 +14,10 @@ include <workshop.scad>
 u=1; rack_pitch=ws_pitch; plate_t=ws_plate_t; plate_r=ws_plate_r; hole_x=ws_hole_x; hole_dz=ws_hole_dz;
 
 // ---- Tray. Post flange inner faces are at rack X +-111.12 (4U post mesh), so 218 wide leaves 2.12 a side.
-tx0=1; tx1=219; depth=172; tray_end_y=172; fl_z=0.025; fl_top=4; side_t=2.5; wall_top=24; wall_t=2; chan=10;
+tx0=1; tx1=219; depth=172; tray_end_y=172; fl_z=0.025; fl_top=4; side_t=2.5; wall_top=24; wall_t=3; chan=10;
+// Channel walls 2 -> 3 thick, grown outward so the channel (10) and lips stay as printed, with a 45 deg fillet at the outside base and
+// gussets on the bend walls (Brian, MRT-T4: the coax puts a lot of tension on the walls). The cord/IN wall stays 2 (cords on one side, IN on the other).
+wall_t0=2; fil=4; gus_t=3; gus_out=9;
 // ---- Retention lips: 45 deg underside, so they print without supports. The cable presses past from above.
 lip_p=3.2; lip_pl=4.5;
 // Coax lips get a 60 deg lead-in on top (Brian, MRT-T1 2026-11-06: the flat top took enough force to nearly damage the coax).
@@ -56,12 +59,16 @@ module along(y0,y1){translate([0,y1,0])rotate([90,0,0])linear_extrude(height=y1-
 module rr(x0,x1,y0,y1,r){translate([x0+r,y0+r])offset(r=r)square([x1-x0-2*r,y1-y0-2*r]);}
 
 // ---- Curved walls: inner and outer wall of one channel bend
-module arc_wall(c,a0,da){translate([c[0],c[1],fl_top-0.01])rotate(a0)rotate_extrude(angle=da){
-  translate([R-chan/2-wall_t,0])square([wall_t,wall_top-fl_top+0.01]);
-  translate([R+chan/2,0])square([wall_t,wall_top-fl_top+0.01]);
+// Wall cross-section from the channel face f, growing in direction d (+1/-1), thickness t, 45 deg base fillet fi.
+module wall_prof(f,d,t=wall_t,fi=fil){h=wall_top-fl_top+0.01;polygon(d>0?[[f,0],[f+t+fi,0],[f+t,fi],[f+t,h],[f,h]]:[[f,h],[f-t,h],[f-t,fi],[f-t-fi,0],[f,0]]);}
+module arc_wall(c,a0,da,fi=fil,fo=fil){translate([c[0],c[1],fl_top-0.01])rotate(a0)rotate_extrude(angle=da){
+  wall_prof(R-chan/2,-1,wall_t,fi); wall_prof(R+chan/2,1,wall_t,fo);
 }}
-module wall_x(y,x0,x1){translate([x0,y,fl_top-0.01])cube([x1-x0,wall_t,wall_top-fl_top+0.01]);}
-module wall_y(x,y0,y1){translate([x,y0,fl_top-0.01])cube([wall_t,y1-y0,wall_top-fl_top+0.01]);}
+// Gussets on the outside of a bend's outer wall, under the cover's edge
+module arc_gussets(c,angs){for(a=angs)translate([c[0],c[1],fl_top-0.01])rotate(a)rotate([90,0,0])translate([0,0,-gus_t/2])linear_extrude(gus_t)
+  polygon([[R+chan/2+wall_t-0.01,0],[R+chan/2+wall_t+gus_out,0],[R+chan/2+wall_t-0.01,wall_top-fl_top-1]]);}
+module wall_x(f,d,x0,x1,t=wall_t,fi=fil){translate([x0,0,fl_top-0.01])rotate([90,0,90])linear_extrude(x1-x0)wall_prof(f,d,t,fi);}
+module wall_y(f,d,y0,y1,t=wall_t,fi=fil){translate([0,y1,fl_top-0.01])rotate([90,0,0])linear_extrude(y1-y0)wall_prof(f,d,t,fi);}
 
 // ---- Lips. d = +1 points toward +r (or +x/+y), d = -1 the other way; face = the wall face it grows from.
 module lip_prof(face,d,p,lead=0){u=wall_top-p-0.5-lead;polygon([[face-d*0.4,u],[face,u],[face+d*p,u+p],[face+d*p,u+p+0.5],[face,wall_top],[face-d*0.4,wall_top]]);}
@@ -120,31 +127,106 @@ module rib_lip(f,p,lead=0){translate([0,bar_y1,0])rotate([90,0,0])linear_extrude
 module rear_rib(){
   difference(){
     translate([tx0,rib_y0,fl_top-0.01])cube([tx1-tx0,bar_y1-rib_y0,rib_top-fl_top+0.01]);
-    for(n=[[tx0+side_t,split_wall-wall_t],[c_in[0]-R-chan/2,c_in[0]-R+chan/2],[c_out2[0]+R-chan/2,c_out2[0]+R+chan/2]])
+    for(n=concat([[tx0+side_t,split_wall-wall_t0]],ks_on?[for(x=ks_x)[x-ks_notch/2,x+ks_notch/2]]:[[c_in[0]-R-chan/2,c_in[0]-R+chan/2],[c_out2[0]+R-chan/2,c_out2[0]+R+chan/2]]))
       translate([n[0],rib_y0-1,fl_top])cube([n[1]-n[0],bar_y1-rib_y0+2,rib_top]);
   }
-  rib_lip(tx0+side_t,lip_pl); rib_lip(c_in[0]-R-chan/2,lip_p,lip_lead); rib_lip(c_out2[0]+R-chan/2,lip_p,lip_lead);
+  rib_lip(tx0+side_t,lip_pl); if(!ks_on){rib_lip(c_in[0]-R-chan/2,lip_p,lip_lead); rib_lip(c_out2[0]+R-chan/2,lip_p,lip_lead);}
 }
+// ---- Rear keystones (Brian, MRT-T4 2026-11-06): one F keystone coupler at each coax entrance, golden keystone (lib) in a 4 mm panel facing the rear,
+// face flush with the rear of the rack (Y 240, rear posts' rear face). Coupler card: docs/devices/f-keystone-coupler.md. The inside jack tip (~18 behind the face) is 35 from the IN bend's end, 33 from OUT2's,
+// the cable's 48 rule counted from a port tip. Window bottom 0.5 under the floor top (small pocket), jack ASSUMED at Z ~20.3: the coax climbs
+// from ~9 at the last lip to ~20 under the cover's end (Y 196), the top of the channel.
+// IN keystone 3.5 right of its channel so the cords keep 12 beside it (3.9 shoe .. 16); OUT 1.5 left so it stays 1.1 clear of the shoe ramp. Coax has 3 of
+// play in the channel. Box: floor, two side braces sloping up from the rib to the panel top, the panel. The cable is screwed to the coupler
+// first, then pushed through the window and snapped in. Coupler size, jack height, snap fit and strength UNKNOWN.
+ks_on=false; end_lips=true;   // keystones parked (Brian 2026-11-06: won't fly), replaced by the screw-on ramps below; end lips back on
+ks_face=240; ks_t=4; ks_fr=2; ks_x=[c_in[0]-R+3.5,c_out2[0]+R-1.5]; ks_c=fl_top+14.5; ks_top=ks_c+18.5+4; ks_notch=14; ks_tip=18;   // inside jack tip behind the face: ~18 scaled from Brian's photo (UNKNOWN); rear jack sticks out 12 (C, measured)
+ks_jog_y=190;   // the coax eases over to the keystone from Y 190
+ks_jack_z=ks_c+1.75;   // ASSUMED: jack near the keystone's middle
+module ks_tower(x){w=10.5+ks_fr;
+  difference(){union(){
+    translate([x-w,bar_y1-0.01,fl_z])cube([2*w,ks_face-bar_y1+0.01,fl_top-fl_z]);
+    translate([x-w,ks_face-ks_t,fl_z])cube([2*w,ks_t,ks_top-fl_z]);
+    for(sx=[x-w,x+10.5])translate([sx,0,fl_z])rotate([90,0,90])linear_extrude(ks_fr)
+      polygon([[bar_y1-0.01,0],[ks_face-ks_t+0.01,0],[ks_face-ks_t+0.01,ks_top-fl_z],[bar_y1-0.01,rib_top-fl_z]]);
+   }
+   translate([x-10.5,ks_face-ks_t-0.01,ks_c-15])cube([21,ks_t+0.02,33.5]);
+   translate([x-10.5,ks_face-ks_t-11,ks_c-15])cube([21,11.01,fl_top]);   // floor pocket in front of the window
+  }
+  translate([x,ks_face-ws_plate_t,ks_c-ws_plate_center(1)])rotate([0,0,180])ws_keystone(0,1);
+}
+// ---- Rear coax ramps (Brian, 2026-11-06): each entrance can turn the coax up or down inside the rack, R30 as the channels.
+// One block can't do both (each direction's guide sits in the other's path), so each entrance gets a dock on the tray (floor and a cheek
+// with 2 M3 x 3 x 5 inserts) and two screw-on blocks, Up and Down, held by the same 2 M3 countersunk screws. The cheek is the channel's
+// side wall over the dock; the block carries a trough (Up) or hood (Down) on the outside of the bend and side walls. Bends start at Y 204,
+// turn vertical at Y 234 (cable centre), the guide surface 5 outside the cable centre line. Up stays inside the 1U (to Z 44);
+// Down reaches 22 below the slot bottom, into the rear of the U below. Room there, cable push, screw length and strength UNKNOWN.
+rp_on=true; rp_y0=204; rp_rest=rest_z(); rp_g=5; rp_sh=3; rp_sw=3; rp_floor=210; rp_cw=9; rp_c1=226; rp_web=230; rp_ins=[212,220]; rp_ear=3;
+function rest_z()=fl_top+3.5+1;   // the cable's rest height, as `rest` in the cable model
+rp_x=[c_in[0]-R,c_out2[0]+R]; rp_side=[1,-1];   // IN cheek on its right (cords on the left), OUT on its left (shoe on the right)
+function rp_cheek_x(i)=rp_side[i]>0?rp_x[i]+chan/2:rp_x[i]-chan/2-rp_cw;
+function rp_hole_x(i)=rp_cheek_x(i)+rp_cw/2;
+module yz(x0,x1){translate([x0,0,0])rotate([90,0,90])linear_extrude(x1-x0)children();}
+module sec(c,a0,a1,r0,r1){n=36;polygon(concat([for(i=[0:n])let(a=a0+(a1-a0)*i/n)[c[0]+r1*cos(a),c[1]+r1*sin(a)]],[for(i=[n:-1:0])let(a=a0+(a1-a0)*i/n)[c[0]+r0*cos(a),c[1]+r0*sin(a)]]));}
+module rp_dock(i){x=rp_x[i]; w=chan/2+wall_t;
+  translate([x-w,bar_y1-0.01,fl_z])cube([2*w,rp_floor-bar_y1+0.01,fl_top-fl_z]);
+  translate([rp_cheek_x(i),bar_y1-0.01,fl_z])cube([rp_cw,rp_c1-bar_y1+0.01,rib_top-fl_z]);
+}
+module rp_dock_cut(i){for(y=rp_ins)translate([rp_hole_x(i),y,0]){translate([0,0,rib_top-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);translate([0,0,rib_top-ins_dp-relief])cylinder(d=screw_clear,h=relief+0.01);}}
+// up: centre above the cable, down: below. The block is clipped behind the rib and, where it would meet the dock, kept off it.
+module ramp(i,up,tag){x=rp_x[i]; sd=rp_side[i]; w=chan/2+rp_sw; c=up?[rp_y0,rp_rest+R]:[rp_y0,rp_rest-R];
+  a0=up?-90:0; a1=up?0:90; cx0=rp_cheek_x(i); cx1=cx0+rp_cw; wb=up?10:0;   // web bottom, reaches the side wall
+  difference(){union(){
+    intersection(){
+      union(){
+        yz(x-w,x+w)sec(c,a0,a1,R+rp_g,R+rp_g+rp_sh);                    // trough / hood on the outside of the bend
+        for(sx=[x-w,x+chan/2])yz(sx,sx+rp_sw)sec(c,a0,a1,R-rp_g-rp_sw,R+rp_g+rp_sh);   // side walls
+        if(up)yz(x-w,x+w)translate([rp_y0+R+rp_g,c[1]-0.01])square([rp_sh,wall_top+20-c[1]]);
+      }
+      translate([x-w-1,up?rp_floor+0.5:bar_y1+0.5,-60])cube([2*w+2,60,120]);
+      translate([x-w-1,0,-60])cube([2*w+2,300,ws_pitch-0.5+60]);        // stays inside the slot top
+    }
+    // cheek-side web and the ear on the cheek
+    // full-width web behind the cheek, 45 deg underside, so the ear has no overhang
+    translate([0,rp_web,0])rotate([90,0,0])linear_extrude(rp_web-rp_c1-0.6)polygon(sd>0?
+      [[x+chan/2,wb],[x+chan/2+rp_sw,wb],[cx1,wb+cx1-x-chan/2-rp_sw],[cx1,rib_top+0.3+rp_ear],[x+chan/2,rib_top+0.3+rp_ear]]:
+      [[x-w,wb],[x-chan/2,wb],[x-chan/2,rib_top+0.3+rp_ear],[cx0,rib_top+0.3+rp_ear],[cx0,wb+x-w-cx0]]);
+    translate([cx0,bar_y1+0.5,rib_top+0.3])cube([rp_cw,rp_web-bar_y1-0.5,rp_ear]);   // the cheek's footprint, off the channel
+   }
+   // the cheek over the dock is the side wall there; the dock floor and cheek stay clear
+   translate([cx0-0.3,bar_y1,-1])cube([rp_cw+0.6,rp_c1-bar_y1+0.6,rib_top+0.3+1]);
+   translate([x-w-1,bar_y1,-1])cube([2*w+2,rp_floor-bar_y1+0.5,fl_top+1+0.5]);
+   // cable-tie slot pairs through the trough / hood: entrance, middle, exit. The tie goes in one, over the cable, out the other, round the back.
+   for(a=up?[-72,-45,-15]:[78,45,15],sx=[-3.5,3.5])translate([x+sx,c[0],c[1]])rotate([a,0,0])translate([0,R+rp_g+rp_sh/2,0])
+     hull()for(t=[-1.6,1.6])translate([0,0,t])rotate([90,0,0])cylinder(d=2,h=rp_sh+3,center=true,$fn=16);
+   for(y=rp_ins)translate([rp_hole_x(i),y,rib_top]){cylinder(d=screw_clear,h=rp_ear+2);translate([0,0,0.3+rp_ear-csk_h])cylinder(d1=screw_clear,d2=csk_d,h=csk_h+0.01);}
+   // ID on the outer face of the side wall away from the cheek
+   tx=sd>0?x-w:x+w; translate([tx-sd*0.6,226,up?20:-1])rotate([90,0,sd>0?-90:90])translate([0,0,-1])linear_extrude(1.6)text(tag,size=2.6,font="Liberation Sans:style=Bold",halign="center",valign="center");
+  }
+}
+module ramp_path(i,up){x=rp_x[i]; c=up?[rp_y0,rp_rest+R]:[rp_y0,rp_rest-R];
+  run(concat([[x,190,rp_rest]],[for(k=[0:10])let(a=(up?-90:90)+(up?90:-90)*k/10)[x,c[0]+R*cos(a),c[1]+R*sin(a)]],[[x,c[0]+R,up?c[1]+30:c[1]-30]]),coax_d);}
 module channels(){
     // jumper channel
-    arc_wall(c_jump,0,90);
-    wall_x(c_jump[1]+R+chan/2,jw0,c_jump[0]+0.01);
-    wall_x(c_jump[1]+R-chan/2-wall_t,jw0,c_jump[0]+0.01);
+    arc_wall(c_jump,0,90); arc_gussets(c_jump,[25,55,80]);
+    wall_x(c_jump[1]+R+chan/2,1,jw0,c_jump[0]+0.01);
+    wall_x(c_jump[1]+R-chan/2,-1,jw0,c_jump[0]+0.01);
     // no lips on the jumper (Brian, 2026-11-06): it hangs between two ports above the floor; the connectors and cover C1 hold it
     // modem OUT channel
-    arc_wall(c_out2,-90,90);
-    wall_y(c_out2[0]+R-chan/2-wall_t,c_out2[1]-0.01,bar_y1);
-    wall_y(c_out2[0]+R+chan/2,c_out2[1]-0.01,bar_y1);
-    arc_lip(c_out2,-82,18,true); arc_lip(c_out2,-60,18,false); arc_lip(c_out2,-26,18,true);
+    arc_wall(c_out2,-90,90); arc_gussets(c_out2,[-80,-50,-20]);
+    wall_y(c_out2[0]+R-chan/2,-1,c_out2[1]-0.01,ks_on?ks_jog_y:bar_y1);   // side the coax eases toward stops at the jog
+    wall_y(c_out2[0]+R+chan/2,1,c_out2[1]-0.01,ks_on?rib_y0+0.01:bar_y1);
+    arc_lip(c_out2,-82,18,true); arc_lip(c_out2,-60,18,false); if(end_lips)arc_lip(c_out2,-26,18,true);
     // coax IN channel
-    arc_wall(c_in,180,90);
-    wall_y(c_in[0]-R-chan/2-wall_t,c_in[1]-0.01,bar_y1);
-    wall_y(c_in[0]-R+chan/2,c_in[1]-0.01,bar_y1);
-    arc_lip(c_in,244,18,true); arc_lip(c_in,222,18,false); arc_lip(c_in,188,18,true);
+    // outer IN wall, fillet and gussets kept out of the cord channel (x >= split_wall - wall_t0)
+    intersection(){union(){arc_wall(c_in,180,90); arc_gussets(c_in,[205,235,262]);}translate([split_wall-wall_t0,0,-1])cube([200,300,60]);}
+    wall_y(c_in[0]-R-chan/2,-1,c_in[1]-0.01,bar_y1,wall_t0,0);   // cord side: runs on to the rib
+    wall_y(c_in[0]-R+chan/2,1,c_in[1]-0.01,ks_on?ks_jog_y:bar_y1);
+    arc_lip(c_in,244,18,true); arc_lip(c_in,222,18,false); if(end_lips)arc_lip(c_in,188,18,true);
     // power + LAN channel: long inner wall, tray side wall on the other side
-    wall_y(split_wall-wall_t,70,c_in[1]);
-    lip_y(tx0+side_t,1,lip_pl,82,92); lip_y(split_wall-wall_t,-1,lip_pl,102,112);
-    lip_y(tx0+side_t,1,lip_pl,122,132); lip_y(split_wall-wall_t,-1,lip_pl,142,152);
+    wall_y(split_wall,-1,70,c_in[1],wall_t0,0);
+    lip_y(tx0+side_t,1,lip_pl,82,92); lip_y(split_wall-wall_t0,-1,lip_pl,102,112);
+    lip_y(tx0+side_t,1,lip_pl,122,132); lip_y(split_wall-wall_t0,-1,lip_pl,142,152);
 }
 // ---- Hidden M6 joint, dimensions from SG8-M6-B / coupon SG8-C1 (head recess and fit good, Brian 2026-10-28): 7.6 bore 7 deep in an 8 long boss,
 // upright 6 thick with a 0.3 gap to the boss, 6.6 clearance, 11.5 x 3.5 head counterbore, 2.5 under the head: M6 x 8 reaches about 5.2 into the insert.
@@ -189,9 +271,9 @@ module cov_solid(pts,tag,tp,ta){difference(){
   for(p=pts)translate([p[0],p[1],wall_top-1]){cylinder(d=screw_clear,h=cov_t+2);translate([0,0,1+cov_t-csk_h])cylinder(d1=screw_clear,d2=csk_d,h=csk_h+0.01);}
   translate([tp[0],tp[1],wall_top+cov_t-0.6])rotate(ta)linear_extrude(1)text(tag,size=4,font="Liberation Sans:style=Bold",halign="center",valign="center");
 }}
-module cover_j(){cov_solid(cov_j,"MRT-G-C1",pol(c_jump,45,R),-45){sector2d(c_jump,0,90,R-cov_w,R+cov_w);translate([jw0,c_jump[1]+R-cov_w])square([c_jump[0]-jw0+0.01,2*cov_w]);}}
-module cover_o(){cov_solid(cov_o,"MRT-G-C2",[c_out2[0]+R,188],90){sector2d(c_out2,-90,90,R-cov_w,R+cov_w);translate([c_out2[0]+R-cov_w,c_out2[1]-0.01])square([2*cov_w,bar_y1-c_out2[1]]);}}
-module cover_i(){cov_solid(cov_i,"MRT-G-C3",[11,130],90){sector2d(c_in,180,90,R-cov_w,R+cov_w);translate([c_in[0]-R-cov_w,c_in[1]-0.01])square([2*cov_w,bar_y1-c_in[1]]);translate([tx0,70])square([split_wall-tx0,bar_y1-70]);}}
+module cover_j(){cov_solid(cov_j,"MRT-H-C1",pol(c_jump,45,R),-45){sector2d(c_jump,0,90,R-cov_w,R+cov_w);translate([jw0,c_jump[1]+R-cov_w])square([c_jump[0]-jw0+0.01,2*cov_w]);}}
+module cover_o(){cov_solid(cov_o,"MRT-H-C2",[c_out2[0]+R,188],90){sector2d(c_out2,-90,90,R-cov_w,R+cov_w);translate([c_out2[0]+R-cov_w,c_out2[1]-0.01])square([2*cov_w,(ks_on?rib_y0:bar_y1)-c_out2[1]]);}}
+module cover_i(){cov_solid(cov_i,"MRT-H-C3",[11,130],90){sector2d(c_in,180,90,R-cov_w,R+cov_w);translate([c_in[0]-R-cov_w,c_in[1]-0.01])square([2*cov_w,(ks_on?rib_y0:bar_y1)-c_in[1]]);translate([tx0,70])square([split_wall-tx0,bar_y1-70]);}}
 module cov_pillars(z0){for(p=cov_all)translate([p[0],p[1],z0])cylinder(d=pil_d,h=wall_top-z0);}
 module cov_bores(){for(p=cov_all)translate([p[0],p[1],0]){translate([0,0,wall_top-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);translate([0,0,wall_top-ins_dp-relief])cylinder(d=screw_clear,h=relief+0.01);}}
 module tray(){difference(){
@@ -210,6 +292,8 @@ module tray(){difference(){
     translate([tx0,depth-6,fl_z])cube([c_in[0]-R+chan/2+wall_t-tx0,bar_y0-depth+6.01,fl_top-fl_z]);
     translate([c_out2[0],depth-6,fl_z])cube([tx1-side_t-c_out2[0]+0.01,bar_y0-depth+6.01,fl_top-fl_z]);   // under the OUT2 bend too
     rear_rib();
+    if(ks_on)for(x=ks_x)ks_tower(x);
+    if(rp_on)for(i=[0,1])rp_dock(i);
     // ScreenBeam: foot pads and long-side fences
     for(f=sb_feet)translate([f[0],f[1],fl_top-0.01])cylinder(d=22,h=pad+0.01);
     for(y=[sby0-sb_clr/2-2,sby0+SB[1]+sb_clr/2])translate([sbx0+15,y,fl_top-0.01])cube([SB[0]-30,2,pad+6]);
@@ -225,6 +309,7 @@ module tray(){difference(){
   // room for the bosses
   for(x=j_x,z=j_z)translate([x,-1,z])rotate([-90,0,0])cylinder(d=hs_d+1,h=hs_l+hs_gap+1);
   cov_bores();
+  if(rp_on)for(i=[0,1])rp_dock_cut(i);
   // ScreenBeam foot pockets
   for(f=sb_feet)translate([f[0],f[1],case_z-foot_dp])cylinder(d=foot_d,h=foot_dp+pad);
   // Velcro strap slots around the ScreenBeam
@@ -233,9 +318,9 @@ module tray(){difference(){
   for(e=ears)translate([e[0],e[1],sp_z-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);
   // cable-tie slots
   tie(on_arc(c_jump,28),28+90,3.5); tie(on_arc(c_out2,-38),-38+90,3.5); tie(on_arc(c_in,206),206+90,3.5);
-  tie([(tx0+side_t+split_wall-wall_t)/2,100],90,5.5); tie([(tx0+side_t+split_wall-wall_t)/2,138],90,5.5);
+  tie([(tx0+side_t+split_wall-wall_t0)/2,100],90,5.5); tie([(tx0+side_t+split_wall-wall_t0)/2,138],90,5.5);
   // tie slots in the floor behind the tray, inside each channel
-  for(t=[[(tx0+side_t+split_wall-wall_t)/2,5.5],[c_in[0]-R,3.5],[c_out2[0]+R,3.5]]){tie([t[0],186],90,t[1]);tie_groove([t[0],186],90,t[1]);}
+  for(t=[[(tx0+side_t+split_wall-wall_t0)/2,5.5],[c_in[0]-R,3.5],[c_out2[0]+R,3.5]]){tie([t[0],186],90,t[1]);tie_groove([t[0],186],90,t[1]);}
   // floor windows
   translate([0,0,fl_z-1])linear_extrude(fl_top-fl_z+1.01){
     rr(sbx0+30,sbx0+90,sby0+13,sby0+52,6);
@@ -244,7 +329,7 @@ module tray(){difference(){
   }
   // Grooves under the floor: ties and straps pass under without reaching the slot below
   tie_groove(on_arc(c_jump,28),28+90,3.5); tie_groove(on_arc(c_out2,-38),-38+90,3.5); tie_groove(on_arc(c_in,206),206+90,3.5);
-  tie_groove([(tx0+side_t+split_wall-wall_t)/2,100],90,5.5); tie_groove([(tx0+side_t+split_wall-wall_t)/2,138],90,5.5);
+  tie_groove([(tx0+side_t+split_wall-wall_t0)/2,100],90,5.5); tie_groove([(tx0+side_t+split_wall-wall_t0)/2,138],90,5.5);
   for(x=[sbx0+30,sbx0+90])translate([x-9,-1,fl_z-1])cube([18,sby0+SB[1]+sb_clr/2+2.3+2.5+1,1+groove_strap]);
   // ID on the floor top, open area left of the splitter
   translate([66,136,fl_top-0.6])linear_extrude(1)text(id,size=5,font="Liberation Sans:style=Bold",halign="center",valign="center");
@@ -292,20 +377,60 @@ module jig(){translate([0,0,-(fl_top-jf)])difference(){
   cov_bores();
   translate([xc,jig_tie+5,fl_top-0.6])linear_extrude(1)text(jig_id,size=6,font="Liberation Sans:style=Bold",halign="center",valign="center");
 }}
+// ---- Coax forming jigs MRT-T5 (jumper), MRT-T6 (IN), MRT-T7 (OUT2) (Brian, 2026-11-06): one per cable, so each coax takes its final shape
+// while the tray prints. Each is the tray's own channel walls, lips and rib for that run, cut out around it, on a 2 mm floor (floor 2 lower, as
+// MRT-T4), with a smooth post at each device port in its true place for the F nut to slide over (8.2, under the thread's ~8.4 root; fit
+// UNKNOWN). T6/T7 end in the tray's ramp dock, so the real Up or Down ramp screws on; for Down, set the jig with that end over the bench edge
+// (the ramp reaches ~24 below the jig floor). Tie slots as in the tray hold the jumper, which has no lips.
+post_d=8.2;
+module port_post(p,dir,len){translate(p)rotate([0,dir*90,0])cylinder(d=post_d,h=len);
+  translate([dir>0?p[0]-8:p[0],p[1]-7,fl_top-jf])cube([8,14,p[2]+6-fl_top+jf]);}
+function jw()=chan/2+wall_t+fil;
+module jmask(n){w=jw()+1;
+  if(n==5)union(){sector2d(c_jump,0,90,R-w,R+w);translate([x_out-9,c_jump[1]+R-w])square([c_jump[0]-x_out+9.01,2*w]);
+    translate([coax_p[0]-9,coax_p[1]-9])square([ra_x+w-coax_p[0]+9,c_jump[1]-coax_p[1]+9.01]);}
+  if(n==6)intersection(){union(){sector2d(c_in,180,90,R-w,R+w);translate([split_wall-wall_t0,c_in[1]-0.01])square([rp_cheek_x(0)+rp_cw-split_wall+wall_t0+1,rp_c1-c_in[1]+1]);
+    translate([c_in[0]-0.01,in_y-9])square([x_in+9-c_in[0],18]);}translate([split_wall-wall_t0-0.01,0])square([300,300]);}
+  if(n==7)union(){sector2d(c_out2,-90,90,R-w,R+w);translate([rp_cheek_x(1)-1,c_out2[1]-0.01])square([c_out2[0]+R+w-rp_cheek_x(1)+1,rp_c1-c_out2[1]+1]);
+    translate([x_out-9,out2_y-9])square([c_out2[0]-x_out+9.01,18]);}
+}
+module jfloor(n){w=chan/2+wall_t;
+  if(n==5){sector2d(c_jump,0,90,R-w,R+w);translate([x_out-8,out1_y-w])square([c_jump[0]-x_out+8.01,2*w]);
+    translate([ra_x-8,coax_p[1]-8])square([16,c_jump[1]-coax_p[1]+8.01]);translate([coax_p[0]-8,coax_p[1]-8])square([ra_x-coax_p[0]+8,16]);}
+  if(n==6){sector2d(c_in,180,90,R-w,R+w);translate([split_wall-wall_t0,c_in[1]-0.01])square([rp_cheek_x(0)+rp_cw-split_wall+wall_t0,rp_floor-c_in[1]]);
+    translate([rp_cheek_x(0),c_in[1]])square([rp_cw,rp_c1-c_in[1]]);translate([c_in[0]-0.01,in_y-8])square([x_in+8-c_in[0],16]);}
+  if(n==7){sector2d(c_out2,-90,90,R-w,R+w);translate([rp_cheek_x(1),c_out2[1]-0.01])square([c_out2[0]+R+w-rp_cheek_x(1),rp_floor-c_out2[1]]);
+    translate([rp_cheek_x(1),c_out2[1]])square([rp_cw,rp_c1-c_out2[1]]);translate([x_out-8,out2_y-8])square([c_out2[0]-x_out+8.01,16]);}
+}
+module cjig(n){tag=n==5?"MRT-T5":n==6?"MRT-T6":"MRT-T7"; translate([0,0,-(fl_top-jf)])difference(){
+  union(){
+    translate([0,0,fl_top-jf])linear_extrude(jf)jfloor(n);
+    intersection(){union(){channels();rear_rib();if(n>5)rp_dock(n-6);}translate([0,0,fl_top-0.02])linear_extrude(60)jmask(n);}
+    if(n==5){port_post(coax_p,1,11);port_post([x_out,out1_y,axis_z],1,sp_port);}
+    if(n==6)port_post([x_in,in_y,axis_z],-1,sp_port);
+    if(n==7)port_post([x_out,out2_y,axis_z],1,sp_port);
+  }
+  if(n>5)rp_dock_cut(n-6);
+  if(n==5)tie(on_arc(c_jump,28),28+90,3.5);
+  if(n==6){tie(on_arc(c_in,206),206+90,3.5);tie([c_in[0]-R,186],90,3.5);}
+  if(n==7){tie(on_arc(c_out2,-38),-38+90,3.5);tie([c_out2[0]+R,186],90,3.5);}
+  tp=n==5?[ra_x,(coax_p[1]+c_jump[1])/2,90]:n==6?[(c_in[0]+x_in)/2,in_y,0]:[(x_out+c_out2[0])/2,out2_y,0];
+  translate([tp[0],tp[1],fl_top-0.6])rotate(tp[2])linear_extrude(1)text(tag,size=4.5,font="Liberation Sans:style=Bold",halign="center",valign="center");
+}}
 // ---- MRT-T2 notch slice: three short channels ending in a rib notch, lip gaps 6.4 / 6.8 (the tray's) / 7.4. Same channel, wall, lip and rib sizes as the tray.
-sl_l=34; sl_gaps=[6.4,6.8,7.4]; sl_pitch=chan+wall_t;
+sl_l=34; sl_gaps=[6.4,6.8,7.4]; sl_wt=2; sl_pitch=chan+sl_wt;   // MRT-T2 as printed, 2 mm walls
 module slice(){translate([0,0,-(fl_top-jf)])difference(){
   union(){
-    translate([0,0,fl_top-jf])cube([3*sl_pitch+wall_t,sl_l,jf]);
-    for(i=[0:3])translate([i*sl_pitch,0,fl_top-0.01])cube([wall_t,sl_l,wall_top-fl_top+0.01]);
-    for(i=[0:2]){f=i*sl_pitch+wall_t; p=chan-sl_gaps[i];
+    translate([0,0,fl_top-jf])cube([3*sl_pitch+sl_wt,sl_l,jf]);
+    for(i=[0:3])translate([i*sl_pitch,0,fl_top-0.01])cube([sl_wt,sl_l,sl_wtop-fl_top+0.01]);
+    for(i=[0:2]){f=i*sl_pitch+sl_wt; p=chan-sl_gaps[i];
       lip_y(f,1,p,4,14);   // wall lip, as in the tray
       // rib lip at the rear, same height as the tray's rib
       translate([0,sl_l,0])rotate([90,0,0])linear_extrude(4)polygon([[f-0.4,lip_u],[f,lip_u],[f+p,lip_u+p],[f+p,18],[f-0.4,18]]);
     }
   }
-  for(i=[0:2])translate([i*sl_pitch+wall_t+chan/2,22,fl_top-0.6])linear_extrude(1)text(str(sl_gaps[i]),size=4,font="Liberation Sans:style=Bold",halign="center",valign="center");
-  translate([(3*sl_pitch+wall_t)/2,0.6,5.5+fl_top])rotate([90,0,0])linear_extrude(1)text("MRT-T2",size=4,font="Liberation Sans:style=Bold",halign="center",valign="center");
+  for(i=[0:2])translate([i*sl_pitch+sl_wt+chan/2,22,fl_top-0.6])linear_extrude(1)text(str(sl_gaps[i]),size=4,font="Liberation Sans:style=Bold",halign="center",valign="center");
+  translate([(3*sl_pitch+sl_wt)/2,0.6,5.5+fl_top])rotate([90,0,0])linear_extrude(1)text("MRT-T2",size=4,font="Liberation Sans:style=Bold",halign="center",valign="center");
 }}
 // ---- Context models
 module screenbeam(){
@@ -332,16 +457,23 @@ module cables(){
   // jumper: right-angle F, bend, straight into OUT1
   run(concat([[ra_x,ra_tip_y,coax_p[2]]],arc_pts(c_jump,0,90,coax_p[2]-3,rest+3),[[x_out+sp_port,out1_y,axis_z]]),coax_d);
   // modem coax out of OUT2, IN coax into IN, each with an F connector at the port
-  run(concat([[x_out+sp_port,out2_y,axis_z]],arc_pts(c_out2,-90,0,rest+4,rest),[[c_out2[0]+R,245,rest]]),coax_d);
-  run(concat([[x_in-sp_port,in_y,axis_z]],arc_pts(c_in,270,180,rest+4,rest),[[c_in[0]-R,245,rest]]),coax_d);
+  if(ks_on){ty=ks_face-ks_tip; cy=ty-20;
+    run(concat([[x_out+sp_port,out2_y,axis_z]],arc_pts(c_out2,-90,-40,rest+4,rest),arc_pts(c_out2,-40,0,rest,ks_jack_z-2,4),[[c_out2[0]+R,ks_jog_y,ks_jack_z],[ks_x[1],cy,ks_jack_z]]),coax_d);
+    run(concat([[x_in-sp_port,in_y,axis_z]],arc_pts(c_in,270,220,rest+4,rest),arc_pts(c_in,220,180,rest,ks_jack_z-2,4),[[c_in[0]-R,ks_jog_y,ks_jack_z],[ks_x[0],cy,ks_jack_z]]),coax_d);
+    for(x=ks_x){translate([x,cy,ks_jack_z])rotate([-90,0,0])cylinder(d=11.5,h=20);   // F connector + crimp on the coupler, ASSUMED 20
+      translate([x,ks_face+1,ks_jack_z])rotate([-90,0,0])cylinder(d=11.5,h=12+20);    // outside plug on the 12 rear jack, connector ASSUMED 20 past its tip
+      rod([x,ks_face+33,ks_jack_z],[x,ks_face+50,ks_jack_z],coax_d);}
+  } else {
+  run(concat([[x_out+sp_port,out2_y,axis_z]],arc_pts(c_out2,-90,0,rest+4,rest),[[c_out2[0]+R,rp_on?190:245,rest]]),coax_d);
+  run(concat([[x_in-sp_port,in_y,axis_z]],arc_pts(c_in,270,180,rest+4,rest),[[c_in[0]-R,rp_on?190:245,rest]]),coax_d);}
   for(p=[[x_out+sp_port-1,out1_y],[x_out+sp_port-1,out2_y]])translate([p[0],p[1],axis_z])rotate([0,90,0])cylinder(d=11.5,h=sp_a-sp_port+1);
   translate([x_in-sp_port+1,in_y,axis_z])rotate([0,-90,0])cylinder(d=11.5,h=sp_a-sp_port+1);
   // power plug and cord (ASSUMED 45 long, 5 cord), LAN plug and cord (ASSUMED 38 long, 6 cord)
   translate([pwr_end,pwr_y-6,port_z-6])cube([sbx0-pwr_end,12,12]);
   translate([lan_end,lan_y-8,port_z-7])cube([sbx0-lan_end,16,14]);
-  rp=11; lp=24; cx=(tx0+side_t+split_wall-wall_t)/2;
-  run(concat([for(i=[0:6])let(a=90-i*15)[pwr_end-rp*sin(90-a),pwr_y+rp-rp*cos(90-a),port_z-i*1.8]],[[pwr_end-rp,pwr_y+rp+20,fl_top+4],[pwr_end-rp,245,fl_top+4]]),5);
-  run(concat([for(i=[0:6])let(a=90-i*15)[lan_end-lp*sin(90-a),lan_y+lp-lp*cos(90-a),port_z-i*1.6]],[[lan_end-lp,lan_y+lp+20,fl_top+4],[lan_end-lp,245,fl_top+4]]),6);
+  rp=11; lp=24; cx=(tx0+side_t+split_wall-wall_t0)/2;
+  run(concat([for(i=[0:6])let(a=90-i*15)[pwr_end-rp*sin(90-a),pwr_y+rp-rp*cos(90-a),port_z-i*1.8]],[[pwr_end-rp,pwr_y+rp+20,fl_top+4],[pwr_end-rp,185,fl_top+4],[13,198,fl_top+4],[13,245,fl_top+4]]),5);
+  run(concat([for(i=[0:6])let(a=90-i*15)[lan_end-lp*sin(90-a),lan_y+lp-lp*cos(90-a),port_z-i*1.6]],[[lan_end-lp,lan_y+lp+20,fl_top+4],[lan_end-lp,185,fl_top+4],[7.3,198,fl_top+4],[7.3,245,fl_top+4]]),6);
 }
 // ---- Check-only parts for tools/release_part.py (never released)
 // keepout: each M6 head recess stays open, plus an 8 mm driver path 40 mm straight back from it; the shoe screw heads behind the rear posts.
@@ -370,6 +502,15 @@ translate([-x_mid,0,0]){
   if(part=="screenbeam")screenbeam();
   if(part=="splitter")splitter();
   if(part=="cables")cables();
+  if(part=="ramp_in_up")ramp(0,true,"MRT-H-RIU");
+  if(part=="ramp_in_down")ramp(0,false,"MRT-H-RID");
+  if(part=="ramp_out_up")ramp(1,true,"MRT-H-ROU");
+  if(part=="ramp_out_down")ramp(1,false,"MRT-H-ROD");
+  if(part=="jig_jumper")cjig(5);
+  if(part=="jig_in")cjig(6);
+  if(part=="jig_out")cjig(7);
+  if(part=="coax_up")for(i=[0,1])ramp_path(i,true);
+  if(part=="coax_down")for(i=[0,1])ramp_path(i,false);
   if(part=="clash_devices")intersection(){tray();union(){screenbeam();splitter();}}
   if(part=="clash_cables")intersection(){tray();cables();}
   if(part=="keepout")keepout();

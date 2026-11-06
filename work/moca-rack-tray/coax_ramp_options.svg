@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" font-family="Arial, sans-serif" font-size="14">
+  <rect width="900" height="430" fill="#fff"/>
+  <text x="20" y="28" font-size="18" font-weight="bold">Coax ramps at the rear of the tray (side view, rear of the rack to the right)</text>
+  <text x="20" y="50" fill="#555">Where the keystones were: Y 206 (rib) to Y 240 (rear of the rear posts). The tray is 1U: Z 0 to 44.4. Bend R30, as in the channels.</text>
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#c0392b"/></marker></defs>
+  <!-- panel 1: down -->
+  <g transform="translate(30,80)">
+    <text x="0" y="0" font-weight="bold">A  Down ramp</text>
+    <rect x="0" y="150" width="120" height="14" fill="#cfd8e3" stroke="#333"/>
+    <text x="10" y="185" fill="#555">tray floor</text>
+    <line x1="120" y1="80" x2="120" y2="320" stroke="#999" stroke-dasharray="4 4"/><text x="80" y="335" fill="#555">rib Y 206</text>
+    <line x1="230" y1="40" x2="230" y2="320" stroke="#999" stroke-dasharray="4 4"/><text x="200" y="335" fill="#555">rear Y 240</text>
+    <path d="M120,150 A95,95 0 0 1 215,245 L215,320 L240,320 L240,245 A120,120 0 0 0 120,125 Z" fill="#e8c46a" stroke="#333"/>
+    <path d="M20,140 L120,140 A100,100 0 0 1 220,240 L220,320" fill="none" stroke="#c0392b" stroke-width="4" marker-end="url(#a)"/>
+    <text x="0" y="360" fill="#333">Curved back wall turns the</text>
+    <text x="0" y="378" fill="#333">coax down past the floor,</text>
+    <text x="0" y="396" fill="#333">into the U below's rear.</text>
+  </g>
+  <!-- panel 2: up -->
+  <g transform="translate(320,80)">
+    <text x="0" y="0" font-weight="bold">B  Up ramp</text>
+    <rect x="0" y="150" width="120" height="14" fill="#cfd8e3" stroke="#333"/>
+    <line x1="120" y1="20" x2="120" y2="320" stroke="#999" stroke-dasharray="4 4"/>
+    <line x1="230" y1="20" x2="230" y2="320" stroke="#999" stroke-dasharray="4 4"/>
+    <path d="M120,164 L120,150 A95,95 0 0 0 215,55 L215,20 L240,20 L240,55 A120,120 0 0 1 120,175 Z" fill="#e8c46a" stroke="#333"/>
+    <path d="M20,140 L120,140 A100,100 0 0 0 220,40 L220,20" fill="none" stroke="#c0392b" stroke-width="4" marker-end="url(#a)"/>
+    <text x="0" y="360" fill="#333">Curved floor ramps the coax</text>
+    <text x="0" y="378" fill="#333">up past the tray top,</text>
+    <text x="0" y="396" fill="#333">into the U above's rear.</text>
+  </g>
+  <!-- panel 3: swap -->
+  <g transform="translate(610,80)">
+    <text x="0" y="0" font-weight="bold">C  Screw-on ramp, flip to choose</text>
+    <text x="0" y="40" fill="#333">One ramp block per entrance,</text>
+    <text x="0" y="58" fill="#333">2 x M3 into inserts in the tray.</text>
+    <text x="0" y="76" fill="#333">Print the Up or Down version</text>
+    <text x="0" y="94" fill="#333">(or both) and swap later</text>
+    <text x="0" y="112" fill="#333">without reprinting the tray.</text>
+    <text x="0" y="150" fill="#333">Built in (A or B) is stiffer</text>
+    <text x="0" y="168" fill="#333">and has no joint; C keeps</text>
+    <text x="0" y="186" fill="#333">the choice open.</text>
+    <text x="0" y="230" fill="#555">Either way, each entrance can</text>
+    <text x="0" y="248" fill="#555">go its own way, e.g. OUT2 up</text>
+    <text x="0" y="266" fill="#555">to the CM1000 at the top,</text>
+    <text x="0" y="284" fill="#555">IN down to the wall coax.</text>
+  </g>
+</svg>
