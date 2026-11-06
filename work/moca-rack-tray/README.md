@@ -1,6 +1,6 @@
 # MoCA rack tray
 
-**Working file: `MRT.scad`** (from 2026-11-05). It is MRT-F rebuilt on `lib/workshop.scad`: plate outline and slots, hidden M6 joint and insert bores come from the library, in the rack frame (X centred). Every part matched MRT-F to within 1.3 mm³ when rendered on the snapshot. Part IDs are unchanged because the geometry is unchanged; a release gets the next free ID.
+**Working file: `MRT.scad`** (from 2026-11-05). Released as **MRT-G** on 2026-11-06: `outputs/MoCA_Rack_Tray_MRT-G_2026-11-06/` (what changed and why is in its README). The next change becomes MRT-H; covers then get MRT-H-C1..C3. It is MRT-F rebuilt on `lib/workshop.scad`: plate outline and slots, hidden M6 joint and insert bores come from the library, in the rack frame (X centred). Every part matched MRT-F to within 1.3 mm³ when rendered on the snapshot. Part IDs are unchanged because the geometry is unchanged; a release gets the next free ID.
 
 `MRT-A.scad` to `MRT-F.scad`, `make_*.py`, `check_*.py` and `clash_*.py` are history. Don't edit them or run them for the new file.
 
@@ -14,7 +14,7 @@ openscad --backend=manifold -o <scratch>/dev_screenbeam.stl -D part="screenbeam"
 Do the same for `splitter` and `cables`. Then run the full check into a scratch folder. At release, use a new ID and an `outputs/` folder instead:
 
 ```
-python tools/release_part.py work/moca-rack-tray/MRT.scad --id MRT-F --part plate:MRT-E-P --part tray:MRT-F --part cover_j:MRT-F-C1 --part cover_o:MRT-F-C2 --part cover_i:MRT-F-C3 --part shoe_left:MRT-C-L --part shoe_right:MRT-C-R --turn plate=x90 --keepout keepout --cuts cuts=7 --posts 2:both --against <scratch>/dev_screenbeam.stl --against <scratch>/dev_splitter.stl --against <scratch>/dev_cables.stl -o <scratch>/mrt_check
+python tools/release_part.py work/moca-rack-tray/MRT.scad --id MRT-G --part plate:MRT-E-P --part tray:MRT-G --part cover_j:MRT-G-C1 --part cover_o:MRT-G-C2 --part cover_i:MRT-G-C3 --part shoe_left:MRT-C-L --part shoe_right:MRT-C-R --turn plate=x90 --turn shoe_left=x-90 --turn shoe_right=x-90 --keepout keepout --cuts cuts=7 --posts 2:both --against <scratch>/dev_screenbeam.stl --against <scratch>/dev_splitter.stl --against <scratch>/dev_cables.stl -o <scratch>/mrt_check
 ```
 
 Result on 2026-11-05: 0 failed, 3 warnings.
@@ -25,6 +25,6 @@ Result on 2026-11-05: 0 failed, 3 warnings.
 - No part overlaps the real posts at U2. The tray clears the front posts by 2.12 a side, and the plate and shoes touch the post faces.
 - No part overlaps the ScreenBeam, splitter or cables. The nearest cable gap is 1.03 to the tray.
 
-Digital checks only. The shoes' print orientation still has to be chosen at release. Fit and strength are UNKNOWN.
+Digital checks only. Shoes print ear face down (x-90). Fit and strength are UNKNOWN.
 
 Devices: `docs/devices/screenbeam-ecb7250.md`, `docs/devices/bridgelink-2way-splitter.md`.

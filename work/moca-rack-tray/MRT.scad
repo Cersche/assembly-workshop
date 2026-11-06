@@ -6,7 +6,7 @@
 // Z = 0 slot bottom. Modules are written in the old x = 0..220 frame and shifted by -x_mid at the end. Tray prints floor down, plate front face down.
 // part: plate, tray, cover_j, cover_o, cover_i, jig, slice, shoe_left, shoe_right, screenbeam, splitter, cables, keepout (check only), cuts (check only)
 part="tray";
-id="MRT-F";
+id="MRT-G";
 $fn=64;
 include <workshop.scad>
 
@@ -189,9 +189,9 @@ module cov_solid(pts,tag,tp,ta){difference(){
   for(p=pts)translate([p[0],p[1],wall_top-1]){cylinder(d=screw_clear,h=cov_t+2);translate([0,0,1+cov_t-csk_h])cylinder(d1=screw_clear,d2=csk_d,h=csk_h+0.01);}
   translate([tp[0],tp[1],wall_top+cov_t-0.6])rotate(ta)linear_extrude(1)text(tag,size=4,font="Liberation Sans:style=Bold",halign="center",valign="center");
 }}
-module cover_j(){cov_solid(cov_j,"MRT-F-C1",pol(c_jump,45,R),-45){sector2d(c_jump,0,90,R-cov_w,R+cov_w);translate([jw0,c_jump[1]+R-cov_w])square([c_jump[0]-jw0+0.01,2*cov_w]);}}
-module cover_o(){cov_solid(cov_o,"MRT-F-C2",[c_out2[0]+R,188],90){sector2d(c_out2,-90,90,R-cov_w,R+cov_w);translate([c_out2[0]+R-cov_w,c_out2[1]-0.01])square([2*cov_w,bar_y1-c_out2[1]]);}}
-module cover_i(){cov_solid(cov_i,"MRT-F-C3",[11,130],90){sector2d(c_in,180,90,R-cov_w,R+cov_w);translate([c_in[0]-R-cov_w,c_in[1]-0.01])square([2*cov_w,bar_y1-c_in[1]]);translate([tx0,70])square([split_wall-tx0,bar_y1-70]);}}
+module cover_j(){cov_solid(cov_j,"MRT-G-C1",pol(c_jump,45,R),-45){sector2d(c_jump,0,90,R-cov_w,R+cov_w);translate([jw0,c_jump[1]+R-cov_w])square([c_jump[0]-jw0+0.01,2*cov_w]);}}
+module cover_o(){cov_solid(cov_o,"MRT-G-C2",[c_out2[0]+R,188],90){sector2d(c_out2,-90,90,R-cov_w,R+cov_w);translate([c_out2[0]+R-cov_w,c_out2[1]-0.01])square([2*cov_w,bar_y1-c_out2[1]]);}}
+module cover_i(){cov_solid(cov_i,"MRT-G-C3",[11,130],90){sector2d(c_in,180,90,R-cov_w,R+cov_w);translate([c_in[0]-R-cov_w,c_in[1]-0.01])square([2*cov_w,bar_y1-c_in[1]]);translate([tx0,70])square([split_wall-tx0,bar_y1-70]);}}
 module cov_pillars(z0){for(p=cov_all)translate([p[0],p[1],z0])cylinder(d=pil_d,h=wall_top-z0);}
 module cov_bores(){for(p=cov_all)translate([p[0],p[1],0]){translate([0,0,wall_top-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);translate([0,0,wall_top-ins_dp-relief])cylinder(d=screw_clear,h=relief+0.01);}}
 module tray(){difference(){
