@@ -1,6 +1,7 @@
 """Checks lib/workshop.scad against the built SG8-M6-F parts: python -m unittest tools/test_workshop_lib.py"""
 import os
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -11,7 +12,8 @@ import trimesh
 
 ROOT = Path(__file__).resolve().parents[1]
 REF = ROOT / "outputs" / "Chunky_Revisions" / "TL-SG108E_post_rails_2026-10-30"
-OPENSCAD = r"D:\Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from release_part import SNAPSHOT as OPENSCAD  # noqa: E402
 BOSS_X, BOSS_Z = -88, 38.425  # SG8-M6-F hs_x[0] and hs_z
 
 

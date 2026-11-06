@@ -31,7 +31,8 @@ import rack_posts
 
 ROOT = Path(__file__).resolve().parents[1]
 LIB = ROOT / "lib"
-SNAPSHOT = Path(r"D:\Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe")
+# AW_OPENSCAD_SNAPSHOT overrides the path on machines where tools/setup_3d_tools.ps1 used another folder.
+SNAPSHOT = Path(os.environ.get("AW_OPENSCAD_SNAPSHOT", r"D:\Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe"))
 # name, design bore, minimum depth (Brian's fastener standard, 2026-10-31)
 INSERTS = [("M6 insert", 7.6, 6.0), ("M3 insert", 4.2, 4.0), ("M2.5 insert", 3.2, 5.0)]
 NEAR = 0.15       # a hole this close to a standard bore, but not on it, gets a warning

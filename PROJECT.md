@@ -43,3 +43,5 @@ Git tracks only a small part of the project. [Backup_Manifest_Summary](docs/hous
 **Shared parts library (2026-11-05):** new parts use `include <workshop.scad>` and BOSL2 from `lib/`; see `lib/README.md`. Design checklist: `.claude/skills/new-part/SKILL.md`. Check the library against built parts with `python -m unittest tools/test_workshop_lib.py`.
 
 **Screw head room (2026-11-05):** minimum 1 mm around a screw head, and its recess stays completely open. Model the room as a SCAD `keepout` part with `ws_m6_head_keepout()` or `ws_head_keepout()`, then pass `--keepout keepout` to `tools/release_part.py`; any overlap fails the release.
+
+**Another Windows machine (2026-11-05):** after cloning the repo, run `powershell -NoProfile -ExecutionPolicy Bypass -File tools\setup_3d_tools.ps1 -CheckOnly` to see what's missing, then without `-CheckOnly` to install it and run the 3D tool tests. It installs Git, Python 3.10, OpenSCAD 2021.01, FreeCAD, the pinned snapshot (hash-checked against the main PC) and pinned Python packages. Without a D: drive the snapshot goes to C:\Tools and `AW_OPENSCAD_SNAPSHOT` points the tools at it.
