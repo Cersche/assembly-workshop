@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 600" font-family="Arial, sans-serif" font-size="11">
+<rect width="720" height="600" fill="#fff"/>
+<text x="360" y="22" text-anchor="middle" font-size="15" font-weight="bold">Idea: splitter at the rear, up on a pedestal, coax bends up or down instead of sideways</text>
+<text x="360" y="40" text-anchor="middle" fill="#555">Rack X (centred) and Y (front 0, rear 240) in mm. Same rules as MRT-H: 48 straight from the splitter body, 58 behind the right-angle F, R30 bends.</text>
+
+<!-- ===== Plan view ===== -->
+<text x="163" y="68" text-anchor="middle" font-weight="bold" font-size="13">Plan (from above)</text>
+<rect x="32.4" y="80" width="261.2" height="288" fill="#f4f4f4" stroke="#999"/>
+<text x="38" y="94" fill="#777">front plate, Y 0</text>
+<line x1="20" y1="368" x2="306" y2="368" stroke="#000" stroke-width="2"/><text x="300" y="382" text-anchor="end">rack rear, Y 240</text>
+<rect x="114" y="87.2" width="144" height="78" fill="#dfe7f3" stroke="#567"/>
+<text x="186" y="120" text-anchor="middle" fill="#345">ScreenBeam</text><text x="186" y="134" text-anchor="middle" fill="#345">flat on the floor (as T1)</text>
+<path d="M252 138.8 H281.5 V191.6" fill="none" stroke="#888" stroke-width="8"/>
+<text x="232" y="182" text-anchor="end" font-size="10">right-angle F</text>
+<path d="M281.5 191.6 V293.6 A36 36 0 0 1 245.5 329.6 H194.4" fill="none" stroke="#2a9d4a" stroke-width="5"/>
+<text x="276" y="250" text-anchor="end" fill="#2a9d4a" font-weight="bold">jumper</text>
+<text x="276" y="263" text-anchor="end" fill="#2a9d4a">(longer straight)</text>
+<rect x="154.2" y="319.5" width="27.6" height="46.5" fill="#666"/>
+<text x="140" y="312" text-anchor="end" font-weight="bold">splitter</text>
+<path d="M194.4 356 H281.5" fill="none" stroke="#d2462d" stroke-width="5"/><circle cx="282" cy="356" r="6" fill="#d2462d"/>
+<text x="290" y="352" fill="#d2462d" font-weight="bold">OUT2</text>
+<path d="M140.2 341.6 H62" fill="none" stroke="#2d6fd2" stroke-width="5"/><circle cx="62" cy="341.6" r="6" fill="#2d6fd2"/>
+<text x="62" y="332" text-anchor="middle" fill="#2d6fd2" font-weight="bold">IN</text>
+<path d="M114 128 H44 V368" fill="none" stroke="#aaa" stroke-width="4"/><text x="48" y="230" fill="#888" font-size="10" transform="rotate(-90 48 230)">power + LAN cords</text>
+<text x="163" y="398" text-anchor="middle">Dots = coax turns vertical, X −85 / +94</text><text x="163" y="412" text-anchor="middle">(same lanes as today's ramps).</text>
+<text x="163" y="426" text-anchor="middle">No plan bend on OUT2 or IN: no 15 mm squeeze.</text>
+
+<!-- ===== Elevation ===== -->
+<text x="533" y="68" text-anchor="middle" font-weight="bold" font-size="13">Seen from the front, cut at the splitter (Y ≈ 220)</text>
+<rect x="400" y="100" width="266.4" height="49.4" fill="#eef2f7"/><text x="406" y="114" fill="#567">slot above, rear</text>
+<rect x="400" y="256" width="266.4" height="48" fill="#eef2f7"/><text x="406" y="298" fill="#567">slot below, rear</text>
+<rect x="400" y="149.4" width="266.4" height="106.6" fill="#fff8e6" stroke="#c9a227" stroke-dasharray="4 3"/>
+<text x="406" y="163" fill="#8a6d00">2U tray: 88.8</text>
+<rect x="400" y="251.2" width="266.4" height="4.8" fill="#777"/>
+<rect x="482.8" y="215.2" width="144" height="33.6" fill="none" stroke="#567" stroke-dasharray="5 3"/>
+<text x="555" y="244" text-anchor="middle" fill="#567" font-size="10">ScreenBeam (further forward)</text>
+<rect x="518" y="211.7" width="46.8" height="39.5" fill="#bbb"/><text x="541" y="233" text-anchor="middle" font-size="10">pedestal</text>
+<rect x="527.6" y="192.6" width="27.6" height="19.1" fill="#666"/>
+<line x1="400" y1="202.7" x2="666" y2="202.7" stroke="#999" stroke-dasharray="2 3"/>
+<text x="404" y="198" fill="#777" font-size="10">port axis Z 44.4</text>
+<path d="M572 202.7 H614.4 A36 36 0 0 0 650.4 166.7 V100" fill="none" stroke="#d2462d" stroke-width="5"/>
+<text x="642" y="128" text-anchor="end" fill="#d2462d" font-weight="bold">OUT2 up to the modem</text>
+<path d="M510.8 202.7 H468.8 A36 36 0 0 0 432.8 238.7 V304" fill="none" stroke="#2d6fd2" stroke-width="5"/>
+<path d="M468.8 202.7 A36 36 0 0 1 432.8 166.7 V100" fill="none" stroke="#2d6fd2" stroke-width="3" stroke-dasharray="7 4"/>
+<text x="440" y="132" fill="#2d6fd2">IN: up or down</text><text x="440" y="145" fill="#2d6fd2">(swap the guide)</text>
+<line x1="590" y1="270" x2="590" y2="270"/>
+<text x="533" y="330" text-anchor="middle">Bends end vertical at Z 14.4 / 74.4: both stay inside the 2U.</text>
+<text x="533" y="344" text-anchor="middle">Only the cable itself carries on into the neighbours' rear.</text>
+
+<!-- ===== Compare ===== -->
+<g font-size="11.5">
+<text x="30" y="450" font-weight="bold" font-size="13">Same idea in 1U vs 2U</text>
+<text x="30" y="468">• 1U: port axis ~Z 22. Bends end at Z 52 / −8, so the guides poke ~8 into the U above or below (today's Down: 22).</text>
+<text x="42" y="482">The 15 mm squeeze is gone in 1U too.</text>
+<text x="30" y="498">• 2U: port axis Z 44.4. Both bends and guides stay inside the tray; IN goes up or down equally; ~55 mm of air over the ScreenBeam.</text>
+<text x="30" y="514">• Both: the splitter is at the rear, so its F connectors are reached from the back at mid-height.</text>
+<text x="42" y="528">The jumper climbs from the F (Z 21) to OUT1 (Z 44 in 2U, Z 22 in 1U).</text>
+<text x="30" y="544">• Kept as proven: jumper channel 10, R30, 58 behind the F; 48 straights; ScreenBeam pockets; covers; lips 6.8 + 60°; M6 joint; shoes.</text>
+<text x="30" y="562" fill="#a33">• UNKNOWN: pedestal stiffness under coax pull; the jumper climb; the neighbours' rear at X −85 / +94, Y 218–230</text>
+<text x="42" y="576" fill="#a33">(OptiPlex channels, drive tray); and which U to free for 2U (the rack is full).</text>
+</g>
+</svg>
