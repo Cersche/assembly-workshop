@@ -8,10 +8,10 @@ soft=true;               // rounded outside corners, round finger tips (Brian pi
 vented=true;             // floor slots
 wall_windows=false;      // outer wall windows: they merged into one long slot; Brian closed them 2026-11-05
 dropout=true;            // drop-out near each end: cables leave straight up or down in the outer lane (X 121..134.5), free beside the post-rail parts
-do_y0=40; do_y1=58; do_x=121; do_r=3; do_lintel=8;  // outer wall kept as a bridge across the top of each drop-out (sideways stiffness)
+do_y0=44; do_y1=62; do_x=121; do_r=3; do_lintel=8;  // CSB-B: drop-outs moved 4 away from the ends so the tool window takes a 30 mm key short arm (Brian). Outer wall kept as a bridge across the top of each drop-out
 tag="CSB-B";             // test print ID, engraved 0.6 deep in the outer face of the outer wall, mid-length
 tool_z=6;                // CSB-B: inner wall cut to 6 tall between each pad and its drop-out, so a 4 mm L-key reaches the screw (CSB-A: no driver access, Brian 2026-11-05)
-key_a=0;                 // demo_key swing about the screw axis, degrees
+key_a=0; key_s=30;       // demo_key short arm, tip to outside of bend                 // demo_key swing about the screw axis, degrees
 hooks=false;             // catch under each finger tip (option D, not picked)
 y_f=6; y_r=234;          // inner faces of the front and rear post flanges (mesh + 240 rack depth)
 end_gap=0.3;             // gap at each end to the flange
@@ -104,7 +104,7 @@ if(part=="demo_cables"){ // scale only: 6 mm data, 8 mm power. Not a part
 }
 if(part=="demo_key"){ // 4 mm hex L-key in the front screw, long arm into the rack. Not a part
   translate([ws_hole_x,0,zm])rotate([0,key_a,0])translate([-ws_hole_x,0,-zm]){
-    translate([ws_hole_x,9.6,zm])rotate([-90,0,0])rotate([0,0,30])cylinder(d=4.62,h=35-9.6,$fn=6);
-    translate([ws_hole_x+2.3,35,zm])rotate([0,-90,0])rotate([0,0,30])cylinder(d=4.62,h=70,$fn=6);
+    translate([ws_hole_x,9.6,zm])rotate([-90,0,0])rotate([0,0,30])cylinder(d=4.62,h=key_s-2.3,$fn=6);
+    translate([ws_hole_x+2.3,9.6+key_s-2.3,zm])rotate([0,-90,0])rotate([0,0,30])cylinder(d=4.62,h=70,$fn=6);
   }
 }

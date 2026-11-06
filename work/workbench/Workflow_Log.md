@@ -22,5 +22,6 @@ Steps: Measure, Draft, Print, Report.
 | 2026-11-05 | Draft | Brian circled the outer wall vents: they had merged into one long slot (my spacing error). Closed; floor slots stay | My windows overlapped and I didn't catch it | Flag cuts that merge into one opening |
 | 2026-11-05 | Print | Brian: "let's print this sucker". Released as CSB-A: ID engraved, release_part.py 0 FAIL / 0 WARN, README and fit report sent. Waiting on his print | The release script can't confirm the ID on the mesh; checked it by hand, and my first check picture missed the text | ID check on the mesh itself |
 | 2026-11-05 | Report | Brian: CSB-A fits, but no driver reaches the screws. CSB-B draft: tool window in the inner wall by each pad; a 4 mm L-key clears at -30 to +30 degrees in the model (CSB-A blocks it). Asked for his key's short arm (diagram) | My "screwdriver room" check was left UNKNOWN at release instead of modelled with a real tool | Tool-swing check as a release step |
+| 2026-11-05 | Draft | Brian asked for 30 mm key clearance: drop-outs moved 4 mm, window now takes up to about 33. Key clear at -30..+30 | My edit commented out the drop-out sizes; caught by OpenSCAD warnings and rerun | Fail the render on any warning |
 
 Totals when the part is done: drafts sent ___, revisions released ___, prints ___, prints that failed ___, measurement requests ___.
