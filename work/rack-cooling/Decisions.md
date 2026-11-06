@@ -36,6 +36,6 @@ Creator parts (mklements, BY-NC-SA, local personal use only, never redistributed
 
 ## Top redesign session (2026-11-05, later)
 - The stock top's flat area is only ~175 deep: both top edges are 45° sloped vents, Y 0..35 each. Only screw points on top: the 4 M6 handle holes (`docs/devices/lab-rax-top.md`).
-- **Brian chose option B:** new front and rear top edges with a square top (flat top 240 deep), same plug + tongue joint as the stock edges; new panel 228 x 212 in the stock rail ledge + new edge recesses; fan clamped under a grille on 4 posts (no fan screw holes needed). Solid edge faces: no high vents (chimney).
+- **Brian chose option B:** new front and rear top edges with a square top (flat top 240 deep), same plug + tongue joint as the stock edges; **fan recessed in the top's own 35 mm height (Brian: no fan body sticking out)**: it rests on ledges in the hollowed edges and a 3 mm grille, flush with the rail tops, clamps it (no fan screw holes needed); no panel. Solid edge faces: no high vents (chimney).
 - **Fan: Thermaltake CT200 ARGB** (`docs/devices/fan-200mm.md`). **Power:** 12 V wall wart in the power strip, DC jack in the rear edge, buck board for 5 V ARGB.
 - Draft: `work/rack-top-fan/rack_top_fan.scad`, viewer https://claude.ai/artifact/T6HSpFzBcET4bHky9yfyev (our parts only). Waiting on the measurements in `work/rack-cooling/top_edge_joint_measure.svg`.
