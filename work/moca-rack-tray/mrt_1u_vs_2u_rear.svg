@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 640" font-family="Arial, sans-serif" font-size="12">
+<rect width="760" height="640" fill="#ffffff"/>
+<text x="380" y="24" text-anchor="middle" font-size="16" font-weight="bold">MoCA tray rear, side view along the OUT2 coax (draft MRT-H numbers)</text>
+<text x="380" y="42" text-anchor="middle" fill="#555">Y = depth (rear posts' rear face at Y 240), Z = height from the slot bottom. 3 px per mm. Same floor, rib and R30 ramp in both.</text>
+<!-- ===== 1U panel ===== -->
+<g>
+<text x="175" y="70" text-anchor="middle" font-weight="bold" font-size="14">1U (today, MRT-H)</text>
+<rect x="40" y="78.6" width="270" height="133.2" fill="#eef2f7"/><text x="50" y="98" fill="#567">slot 7 above: drive tray (rear)</text>
+<rect x="40" y="345" width="270" height="133.2" fill="#eef2f7"/><text x="50" y="470" fill="#567">slot 9 below: OptiPlex (rear)</text>
+<rect x="40" y="211.8" width="270" height="133.2" fill="#fff8e6" stroke="#c9a227" stroke-dasharray="4 3"/>
+<text x="48" y="226" fill="#8a6d00">this slot: 44.4</text>
+<rect x="40" y="273" width="168" height="60" fill="#e3e3e3"/><text x="70" y="300" fill="#666">channel walls to Z 24</text>
+<rect x="40" y="264" width="138" height="9" fill="#9aa"/><text x="44" y="260" font-size="10" fill="#466">cover Z 24..27</text>
+<rect x="40" y="333" width="168" height="12" fill="#777"/>
+<rect x="196" y="279" width="12" height="54" fill="#555"/>
+<path d="M40 319.5 H202 A90 90 0 0 0 292 229.5 V80" fill="none" stroke="#d2462d" stroke-width="5"/>
+<path d="M202 319.5 A90 90 0 0 1 292 409.5 V478" fill="none" stroke="#2d6fd2" stroke-width="4" stroke-dasharray="8 5"/>
+<line x1="310" y1="78" x2="310" y2="480" stroke="#000" stroke-width="2"/><text x="306" y="494" text-anchor="end" font-size="10">Y 240</text>
+<line x1="157" y1="355" x2="157" y2="372" stroke="#000"/><line x1="202" y1="355" x2="202" y2="372" stroke="#000"/>
+<line x1="157" y1="365" x2="202" y2="365" stroke="#000"/><text x="180" y="385" text-anchor="middle" font-weight="bold">15</text>
+<text x="100" y="400" font-size="10">plan bend ends Y 189 · ramp starts Y 204</text>
+<text x="230" y="150" fill="#d2462d" font-weight="bold">Up: leaves into slot 7</text>
+<text x="160" y="440" fill="#2d6fd2" font-weight="bold">Down: 22 into slot 9</text>
+</g>
+<!-- ===== 2U panel ===== -->
+<g transform="translate(400,0)">
+<text x="175" y="70" text-anchor="middle" font-weight="bold" font-size="14">2U (idea)</text>
+<rect x="40" y="78.6" width="270" height="266.4" fill="#fff8e6" stroke="#c9a227" stroke-dasharray="4 3"/>
+<text x="48" y="94" fill="#8a6d00">this slot: 88.8</text>
+<rect x="40" y="345" width="270" height="133.2" fill="#eef2f7"/><text x="50" y="470" fill="#567">slot below (rear)</text>
+<rect x="40" y="273" width="168" height="60" fill="#e3e3e3"/><text x="70" y="300" fill="#666">channel walls to Z 24</text>
+<rect x="40" y="264" width="138" height="9" fill="#9aa"/>
+<rect x="40" y="333" width="168" height="12" fill="#777"/>
+<rect x="196" y="279" width="12" height="54" fill="#555"/>
+<path d="M40 319.5 H202 A90 90 0 0 0 292 229.5 V80" fill="none" stroke="#d2462d" stroke-width="5"/>
+<path d="M202 319.5 A90 90 0 0 1 292 409.5 V478" fill="none" stroke="#2d6fd2" stroke-width="4" stroke-dasharray="8 5"/>
+<line x1="310" y1="78" x2="310" y2="480" stroke="#000" stroke-width="2"/><text x="306" y="494" text-anchor="end" font-size="10">Y 240</text>
+<line x1="157" y1="355" x2="157" y2="372" stroke="#000"/><line x1="202" y1="355" x2="202" y2="372" stroke="#000"/>
+<line x1="157" y1="365" x2="202" y2="365" stroke="#000"/><text x="180" y="385" text-anchor="middle" font-weight="bold">still 15</text>
+<text x="215" y="150" fill="#d2462d" font-weight="bold">Up: bend stays inside</text>
+<text x="215" y="164" fill="#d2462d">(then climbs on anyway)</text>
+<text x="160" y="440" fill="#2d6fd2" font-weight="bold">Down: same 22 below</text>
+</g>
+<!-- ===== summary ===== -->
+<g font-size="12">
+<text x="40" y="530" font-weight="bold">What the picture shows</text>
+<text x="40" y="550">• The rack is only 240 deep, so the 15 mm between OUT2's plan bend and the ramp bend is set by depth, not height. 2U doesn't change it.</text>
+<text x="40" y="568">• The coax has to leave the tray vertically either way (wall at the back). 2U only moves where the Up bend sits, not where the cable goes.</text>
+<text x="40" y="586">• Rack is full: slots 1-9 all taken (slot 2 = ER605, in the rack but not yet in the app). A 2U tray means removing something.</text>
+<text x="40" y="604">• Everything Brian proved on MRT-G / T4 (channel 10, lips 6.8 + 60°, R30, 48 / 58 straights) is in plan view and carries over to 2U unchanged.</text>
+<text x="40" y="626" fill="#555">Cable centre Z 8.5 · rib top Z 22 · walls Z 24 · Up bend centre (Y 204, Z 38.5) · Down centre (Y 204, Z -21.5) · guide 5 outside the cable</text>
+</g>
+</svg>
