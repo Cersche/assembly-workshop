@@ -1,39 +1,46 @@
-// DRAFT 2 (no ID yet): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
+// DRAFT 3 (no ID yet): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
 // The fan sits fully recessed in the top's own 35 mm height (Brian: no fan body sticking out of the top):
 // new front + rear top edges are hollowed on the inside into a cavity, the fan rests on ledges in them,
 // and a 3 mm grille, flush with the rail tops, clamps it down. No panel: the grille is the top surface.
-// Stock side rails and handles stay.
+// Draft 3 (Brian picked B): the top is 15 taller (50 instead of 35) so there is a 15 mm air gap between the
+// CM1000's top (Z 400.05, it fills slot 1) and the fan. That needs our own side rails; the stock handles go back on them.
 // Frame = rack frame: X centred, Y 0 front .. 240 rear, Z 0 = bottom of slot 9, post tops Z 400.05.
 // Joint values (plug, tongue, cross-holes) are read from the creator's meshes (docs/devices/lab-rax-top.md),
 // not measured, and not copied: they are redrawn here as plain boxes. Fit and strength UNKNOWN.
 include <workshop.scad>
 include <BOSL2/std.scad>
-part="assembly";         // edge_front | edge_rear | grille | fan | assembly
+part="assembly";         // edge_front | edge_rear | rail | rail_left | grille | fan | assembly
 $fn=64;
 
 // --- stock interfaces (source values) ---
 z_top=400.05;            // post tops / bottom of the edge body / top of slot 1 (U9)
-z_lid=435.05;            // top of rails and edges
+z_stock=435.05;          // stock rail/edge top (reference only)
+air_gap=15;              // Brian 2026-11-05: room between the modem top and the fan
+z_lid=z_stock+air_gap;   // top of our rails and edges, Z 450.05
 x_edge=141.12;           // edge half length (282.25 long)
 plug_x=[127.12,133.98];  // plug + tongue column, each end
 plug_y=[11.15,35]; plug_z=[380.2,z_top];      // drops into the post top pocket (post solid Y 0..11)
 tongue_y=[35,54.85]; tongue_z=[z_top,423.9];  // slides into the side rail end pocket (Y 35..55, Z 400..424)
 xhole_d=6.4; plug_hole=[22.5,390.2]; tongue_hole=[45,416];  // cross-holes along X, centres approximate (UNKNOWN)
-rail_in=110.98;          // inner face of the stock side rails (and their lip over the old panel seat)
+rail_in=110.98;          // inner face of the side rails (stock value, kept)
+rail_out=140.98; rail_y=[35,205];             // stock rail envelope in X and Y
+pocket_fit=[0.15,0.15,0.1];                   // tongue pocket room in X, Y, Z (stock rail pocket ~Y 35..55, Z 400..424)
+groove=[136.28,139.78,405.5];                 // side panel groove from below, stock X 136.28..139.78 (depth approx.)
+handle_hole=[124.73,[55,185]];                // stock handle screw positions (M6 inserts in the rail top)
 
 // --- new design values (draft) ---
 fan=[200,200,30]; fan_c=[0,120]; fan_fit=0.5; // CT200 frame from listings (UNKNOWN); 0.5 room each side
-ledge_t=2;               // fan rests on ledges in the edges: Z 400.05..402.05
-grille_t=3;              // grille Z 432.05..435.05, flush with the rail tops; it rests on the fan top
+ledge_t=2;               // fan rests on ledges in the edges: Z 415.05..417.05
+grille_t=3;              // grille Z 447.05..450.05, flush with the rail tops; it rests on the fan top
 open_d=192;              // air opening under the blades (ledges cut back to it) and in the grille
 front_wall=3;            // outer wall of each edge at the grille seat
 grille_fit=0.3;          // grille to edge recess, each side
 grille_x=rail_in-0.5;    // grille half width: 0.5 clear of the rail lip
 m3_y=11; m3_x=[-95,-40,40,95];                // grille screws, M3 countersunk into M3 inserts in the edge walls
-jack_x=106; jack_z=416; jack_d=8;             // DC panel jack in the rear edge's back face (model UNKNOWN), beside the fan
+jack_x=106; jack_z=431; jack_d=8;             // DC panel jack in the rear edge's back face (model UNKNOWN), beside the fan
 cav_x=fan[0]/2+fan_fit;  // cavity half width
 cav_y=fan_c[1]-fan[1]/2-fan_fit;              // cavity front face (Y 19.5)
-z_fan=z_top+ledge_t; z_grille=z_lid-grille_t;
+z_fan=z_lid-grille_t-fan[2]; z_ledge=z_fan-ledge_t; z_grille=z_lid-grille_t;
 
 module box(a,b){translate(a)cube(b-a);}
 
@@ -46,10 +53,12 @@ module edge(jack=false){
         box([plug_x[0],tongue_y[0]-0.01,tongue_z[0]],[plug_x[1],tongue_y[1],tongue_z[1]]);
       }
     }
-    // fan cavity, open to the inside, ledge left underneath
+    // fan cavity, open to the inside, ledge left at z_ledge
     box([-cav_x,cav_y,z_fan],[cav_x,36,z_lid+1]);
+    // below the ledge: open to the air gap under the fan
+    box([-cav_x,cav_y,z_top-1],[cav_x,36,z_ledge]);
     // ledge cut back to the air opening
-    translate([fan_c[0],fan_c[1],z_top-1]) cylinder(d=open_d,h=ledge_t+2);
+    translate([fan_c[0],fan_c[1],z_ledge-1]) cylinder(d=open_d,h=ledge_t+2);
     // grille seat
     box([-grille_x-grille_fit,front_wall,z_grille],[grille_x+grille_fit,36,z_lid+1]);
     // cross-holes
@@ -61,6 +70,21 @@ module edge(jack=false){
               box([jack_x-6,front_wall,z_top-1],[jack_x+4.5,36,jack_z+8]); }
   }
 }
+module rail(){
+  difference(){
+    translate([rail_in,rail_y[0],z_top]) cuboid([rail_out-rail_in,rail_y[1]-rail_y[0],z_lid-z_top],rounding=2,edges=[TOP+RIGHT],anchor=FRONT+BOTTOM+LEFT);
+    // tongue pockets at both ends, open at the end and the bottom (the rail drops onto the edge tongues)
+    for(e=[0,1]) let(y0=e==0?rail_y[0]-1:240-tongue_y[1]-pocket_fit[1], y1=e==0?tongue_y[1]+pocket_fit[1]:rail_y[1]+1)
+      box([plug_x[0]-pocket_fit[0],y0,z_top-1],[plug_x[1]+pocket_fit[0],y1,tongue_z[1]+pocket_fit[2]]);
+    // matching cross-holes (what goes in them UNKNOWN)
+    for(y=[tongue_hole[0],240-tongue_hole[0]]) translate([(plug_x[0]+plug_x[1])/2,y,tongue_hole[1]]) rotate([0,90,0]) cylinder(d=xhole_d,h=40,center=true);
+    // side panel groove from below
+    box([groove[0],rail_y[0]-1,z_top-1],[groove[1],rail_y[1]+1,groove[2]]);
+    // stock handles screw down into M6 inserts here
+    for(y=handle_hole[1]) translate([handle_hole[0],y,z_lid]) mirror([0,0,1]) ws_insert_bore(ws_insert_m6,10);
+  }
+}
+module rail_left(){ mirror([1,0,0]) rail(); }
 module edge_rear(){ translate([0,240,0]) rotate([0,0,180]) edge(jack=true); }
 
 module grille(){
@@ -81,6 +105,8 @@ module fan_dummy(){ translate([fan_c[0],fan_c[1],z_fan]) difference(){ translate
 
 if(part=="edge_front") edge();
 if(part=="edge_rear") edge_rear();
+if(part=="rail") rail();
+if(part=="rail_left") rail_left();
 if(part=="grille") grille();
 if(part=="fan") fan_dummy();
-if(part=="assembly"){ edge(); edge_rear(); grille(); %fan_dummy(); }
+if(part=="assembly"){ edge(); edge_rear(); rail(); rail_left(); grille(); %fan_dummy(); }
