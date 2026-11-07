@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 660" font-family="Segoe UI, Arial, sans-serif" font-size="12">
+<rect width="940" height="660" fill="#ffffff"/>
+<text x="20" y="22" font-size="16" font-weight="bold">Fan wiring, option B (JBC-B draft 2): 12 V brick feeds both fans, Pi drives ARGB + PWM + tach</text>
+
+<!-- CT200 -->
+<rect x="20" y="50" width="200" height="70" rx="8" fill="#eceff1" stroke="#455a64" stroke-width="1.5"/>
+<text x="120" y="78" text-anchor="middle" font-weight="bold">Thermaltake CT200</text>
+<text x="120" y="96" text-anchor="middle">12 V 0.16 A + 5 V ARGB 0.31 A</text>
+<text x="120" y="112" text-anchor="middle" fill="#555">leads unmodified</text>
+<path d="M220,80 C260,80 270,125 310,125" fill="none" stroke="#78909c" stroke-width="6"/>
+<path d="M220,100 C260,100 270,215 310,215" fill="none" stroke="#78909c" stroke-width="5"/>
+<text x="232" y="148" fill="#455a64">4-pin PWM lead</text>
+<text x="232" y="196" fill="#455a64">3-pin ARGB lead</text>
+
+<!-- Junction box -->
+<rect x="285" y="40" width="370" height="270" rx="6" fill="none" stroke="#222" stroke-width="2"/>
+<text x="295" y="58" font-weight="bold">Junction box JBC-B (right rear post, U9)</text>
+<rect x="300" y="100" width="122" height="145" fill="none" stroke="#888" stroke-dasharray="5 4"/>
+<text x="304" y="260" fill="#666" font-size="11">connector pocket: end stops,</text>
+<text x="304" y="273" fill="#666" font-size="11">lid holds the pairs down</text>
+<!-- 4-pin pair -->
+<rect x="310" y="112" width="50" height="30" fill="#cfd8dc" stroke="#455a64"/>
+<rect x="361" y="112" width="52" height="30" fill="#fff3e0" stroke="#455a64"/>
+<text x="335" y="131" text-anchor="middle" font-size="10">fan plug</text>
+<text x="387" y="126" text-anchor="middle" font-size="10">4-pin ext.</text>
+<text x="387" y="138" text-anchor="middle" font-size="10">(cut)</text>
+<!-- 3-pin pair -->
+<rect x="310" y="200" width="50" height="30" fill="#cfd8dc" stroke="#455a64"/>
+<rect x="361" y="200" width="52" height="30" fill="#e8f5e9" stroke="#455a64"/>
+<text x="335" y="219" text-anchor="middle" font-size="10">fan plug</text>
+<text x="387" y="213" text-anchor="middle" font-size="10">3-pin ext.</text>
+<text x="387" y="225" text-anchor="middle" font-size="10">(uncut)</text>
+
+<!-- Wagos -->
+<rect x="450" y="66" width="80" height="34" rx="4" fill="#fff8e1" stroke="#e0a800" stroke-width="2"/>
+<text x="490" y="82" text-anchor="middle" font-weight="bold">Wago 221-413</text>
+<text x="490" y="95" text-anchor="middle">12 V bus</text>
+<rect x="545" y="66" width="80" height="34" rx="4" fill="#f5f5f5" stroke="#333" stroke-width="2"/>
+<text x="585" y="82" text-anchor="middle" font-weight="bold">Wago 221-413</text>
+<text x="585" y="95" text-anchor="middle">GND bus</text>
+
+<g fill="none" stroke-width="2.5">
+<!-- extension 12V / GND to Wagos -->
+<path d="M413,118 H465 V100" stroke="#e0a800"/>
+<path d="M413,124 H560 V100" stroke="#333"/>
+<!-- PWM / TACH down -->
+<path d="M413,130 H455 V310" stroke="#1565c0"/>
+<path d="M413,136 H470 V310" stroke="#7b1fa2"/>
+<!-- ARGB down -->
+<path d="M413,207 H444 V310" stroke="#d32f2f"/>
+<path d="M413,215 H436 V310" stroke="#2e7d32"/>
+<path d="M413,223 H428 V310" stroke="#333"/>
+<!-- Pi fan pair from Wagos -->
+<path d="M490,100 V310" stroke="#e0a800"/>
+<path d="M585,100 V310" stroke="#333"/>
+<!-- brick pair into Wagos -->
+<path d="M515,100 V310" stroke="#e0a800"/>
+<path d="M610,100 V310" stroke="#333"/>
+</g>
+<g font-size="10" fill="#444">
+<text x="468" y="114">1</text><text x="493" y="114">2</text><text x="518" y="114">3</text>
+<text x="563" y="114">1</text><text x="588" y="114">2</text><text x="613" y="114">3</text>
+</g>
+<text x="300" y="300" font-size="11" fill="#444">floor slot / corner exit</text>
+
+<!-- Brick lead (outside box) -->
+<g fill="none" stroke-width="2.5">
+<path d="M515,310 V350 H790 V260" stroke="#e0a800"/>
+<path d="M610,310 V335 H805 V260" stroke="#333"/>
+</g>
+<rect x="690" y="150" width="230" height="110" rx="8" fill="#eceff1" stroke="#455a64" stroke-width="1.5"/>
+<text x="805" y="172" text-anchor="middle" font-weight="bold">At the power strip</text>
+<text x="805" y="192" text-anchor="middle">screw-terminal socket tip (+ / −)</text>
+<text x="805" y="210" text-anchor="middle">↑ 5.5 x 2.1 plug</text>
+<text x="805" y="228" text-anchor="middle">GuanTing 12 V 2 A brick</text>
+<text x="805" y="246" text-anchor="middle">↑ power strip</text>
+<text x="812" y="300" font-size="11" fill="#444">new 2-wire lead</text>
+<text x="812" y="314" font-size="11" fill="#444">up the rack</text>
+
+<!-- Bundle down to Pi: rows -->
+<g fill="none" stroke-width="2.5">
+<path d="M585,310 V400 H640" stroke="#333"/>
+<path d="M490,310 V425 H640" stroke="#e0a800"/>
+<path d="M470,310 V450 H640" stroke="#7b1fa2"/>
+<path d="M455,310 V475 H640" stroke="#1565c0"/>
+<path d="M444,310 V500 H640" stroke="#d32f2f"/>
+<path d="M436,310 V525 H640" stroke="#2e7d32"/>
+<path d="M428,310 V550 H640" stroke="#333"/>
+</g>
+<text x="300" y="380" font-weight="bold">7 wires down the</text>
+<text x="300" y="396" font-weight="bold">rear post to the Pi</text>
+<text x="300" y="412" fill="#555" font-size="11">(slots 5-6, length UNKNOWN)</text>
+
+<g font-size="12">
+<text x="646" y="404">Pi fan GND → Pi fan −, and tie to Pi GND once</text>
+<text x="646" y="429">Pi fan 12 V → Pi 40 mm fan + (optional MOSFET later)</text>
+<text x="646" y="454" fill="#7b1fa2">TACH → spare GPIO + pull-up to 3.3 V</text>
+<text x="646" y="479" fill="#1565c0">PWM → 74AHCT125 ch2 ← GPIO12, pin 32</text>
+<text x="646" y="504" fill="#d32f2f">ARGB 5 V → Pi pin 2 (5 V)</text>
+<text x="646" y="529" fill="#2e7d32">ARGB DATA → 74AHCT125 ch1 ← GPIO10, pin 19</text>
+<text x="646" y="554">ARGB GND → Pi pin 6 (GND)</text>
+</g>
+<rect x="636" y="388" width="10" height="176" fill="none"/>
+
+<!-- Legend -->
+<g transform="translate(20,590)" font-size="11">
+<text x="0" y="0" font-weight="bold">Colours = function, not real wire colours (check each lead).</text>
+<line x1="0" y1="18" x2="22" y2="18" stroke="#e0a800" stroke-width="3"/><text x="28" y="22">12 V</text>
+<line x1="70" y1="18" x2="92" y2="18" stroke="#333" stroke-width="3"/><text x="98" y="22">GND</text>
+<line x1="140" y1="18" x2="162" y2="18" stroke="#d32f2f" stroke-width="3"/><text x="168" y="22">5 V</text>
+<line x1="205" y1="18" x2="227" y2="18" stroke="#2e7d32" stroke-width="3"/><text x="233" y="22">ARGB data</text>
+<line x1="305" y1="18" x2="327" y2="18" stroke="#1565c0" stroke-width="3"/><text x="333" y="22">PWM</text>
+<line x1="375" y1="18" x2="397" y2="18" stroke="#7b1fa2" stroke-width="3"/><text x="403" y="22">TACH</text>
+<text x="0" y="44">Wago ports: 1 = CT200 (via cut 4-pin extension), 2 = Pi fan, 3 = brick. Crossings without a dot are not connected.</text>
+<text x="0" y="60">Level shifter, pull-up and MOSFET sit at the Pi, not in the box. Fit, lengths and Pi 5 V headroom UNKNOWN.</text>
+</g>
+</svg>
