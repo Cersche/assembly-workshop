@@ -1,4 +1,4 @@
-// CSB-B DRAFT (from printed CSB-A, which fits; adds tool windows) cable span bracket: front post to rear post, one side of the rack.
+// CSB-C DRAFT (from CSB-B: screw seat 2 mm thicker so an M6 x 8 no longer sticks 2 out past the post, Brian 2026-11-07) cable span bracket: front post to rear post, one side of the rack.
 // Frame: X centred, Y=0 front face of front post, Y=240 rear face of rear post, Z=0 slot bottom. Drawn on the right (+X).
 // Same part goes on the left turned 180 degrees about the vertical (part=="left"): the posts and this part both repeat under that turn.
 // Post values come from the 4U post mesh (object_190), not measured. Fit, capacity and strength UNKNOWN.
@@ -11,8 +11,9 @@ tie_groove=true; tie_groove_d=1.6;  // groove under the floor between the pair, 
 wall_windows=false;      // outer wall windows: they merged into one long slot; Brian closed them 2026-11-05
 dropout=true;            // drop-out near each end: cables leave straight up or down in the outer lane (X 121..134.5), free beside the post-rail parts
 do_y0=44; do_y1=62; do_x=121; do_r=3; do_lintel=8;  // CSB-B: drop-outs moved 4 away from the ends so the tool window takes a 30 mm key short arm (Brian). Outer wall kept as a bridge across the top of each drop-out
-tag="CSB-B";             // test print ID, engraved 0.6 deep in the outer face of the outer wall, mid-length
+tag="CSB-C";             // test print ID, engraved 0.6 deep in the outer face of the outer wall, mid-length
 tool_z=6;                // CSB-B: inner wall cut to 6 tall between each pad and its drop-out, so a 4 mm L-key reaches the screw (CSB-A: no driver access, Brian 2026-11-05)
+screw_web=ws_m6_web+2;   // CSB-C: 4.5 under the head (CSB-B 2.5: the M6 x 8 stuck out 2 past the post, Brian)
 key_a=0; key_s=30;       // demo_key short arm, tip to outside of bend                 // demo_key swing about the screw axis, degrees
 hooks=false;             // catch under each finger tip (option D, not picked)
 y_f=6; y_r=234;          // inner faces of the front and rear post flanges (mesh + 240 rack depth)
@@ -64,7 +65,7 @@ module vents(){ // zip-tie slot pairs between the fingers (CSB-B, Brian: the old
 module screw_end(y0,dir){ // dir=+1 front pad, -1 rear pad. Middle hole takes the M6 x 8; corners only get relief for faceplate screws
   a=dir>0?-90:90;
   translate([ws_hole_x,y0-dir,zm])rotate([a,0,0])cylinder(d=ws_m6_clear,h=pad_t+2);
-  translate([ws_hole_x,y0+dir*ws_m6_web,zm])rotate([a,0,0])cylinder(d=ws_m6_head_d,h=pad_t,$fn=64);
+  translate([ws_hole_x,y0+dir*screw_web,zm])rotate([a,0,0])cylinder(d=ws_m6_head_d,h=pad_t,$fn=64);
   for(dz=[-ws_hole_dz,ws_hole_dz])translate([ws_hole_x,y0-dir,zm+dz])rotate([a,0,0])cylinder(d=9,h=4+1);
 }
 module bracket(){
@@ -96,8 +97,8 @@ module bracket(){
   }
 }
 module keepout(){
-  ws_m6_head_keepout(ws_hole_x,y_f+end_gap,zm,len=6);
-  translate([0,240,0])mirror([0,1,0])ws_m6_head_keepout(ws_hole_x,y_f+end_gap,zm,len=6);
+  ws_m6_head_keepout(ws_hole_x,y_f+end_gap,zm,len=6,web=screw_web);
+  translate([0,240,0])mirror([0,1,0])ws_m6_head_keepout(ws_hole_x,y_f+end_gap,zm,len=6,web=screw_web);
 }
 module left(){ translate([0,240,0])rotate([0,0,180])bracket(); }
 if(part=="bracket")bracket();
@@ -109,7 +110,7 @@ if(part=="demo_cables"){ // scale only: 6 mm data, 8 mm power. Not a part
 }
 if(part=="demo_key"){ // 4 mm hex L-key in the front screw, long arm into the rack. Not a part
   translate([ws_hole_x,0,zm])rotate([0,key_a,0])translate([-ws_hole_x,0,-zm]){
-    translate([ws_hole_x,9.6,zm])rotate([-90,0,0])rotate([0,0,30])cylinder(d=4.62,h=key_s-2.3,$fn=6);
-    translate([ws_hole_x+2.3,9.6+key_s-2.3,zm])rotate([0,-90,0])rotate([0,0,30])cylinder(d=4.62,h=70,$fn=6);
+    translate([ws_hole_x,9.6+screw_web-ws_m6_web,zm])rotate([-90,0,0])rotate([0,0,30])cylinder(d=4.62,h=key_s-2.3,$fn=6);
+    translate([ws_hole_x+2.3,9.6+screw_web-ws_m6_web+key_s-2.3,zm])rotate([0,-90,0])rotate([0,0,30])cylinder(d=4.62,h=70,$fn=6);
   }
 }

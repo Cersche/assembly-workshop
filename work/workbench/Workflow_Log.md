@@ -26,4 +26,5 @@ Steps: Measure, Draft, Print, Report.
 
 | 2026-11-05 | CSB-B draft | Floor slots turned into zip-tie pairs (6.5 x 3, one by each wall) with a 1.6 deep groove under the floor so the tie sits flush (Brian) | none |
 | 2026-11-05 | CSB-B released | Brian printing; release_part.py 0 failed, 0 warnings, posts gap 0.22, keep-out clear | none |
+| 2026-11-07 | CSB-C draft | Brian: on CSB-B the M6 x 8 sticks out 2 past the post. Seat under the head 2.5 -> 4.5; posts clear, head room clear, 30 mm key clears -30..+30 (limit now about 31) | CSB-B released with grip length unchecked against the real bolt |
 Totals when the part is done: drafts sent ___, revisions released ___, prints ___, prints that failed ___, measurement requests ___.
