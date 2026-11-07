@@ -1,4 +1,4 @@
-// TF-B edges (2026-11-06: fan cavity for the real 195 CT200 frame; rails, grille, coupons unchanged from TF-A; looks pass, Brian 2026-11-06: 45 deg chamfer, swirl grille; shadow groove dropped): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
+// TF-C (2026-11-06: stock M6 x 8 button-head cross joints: insert bores in the rails, head recesses in the edges; 195 fan cavity; looks pass, Brian 2026-11-06: 45 deg chamfer, swirl grille; shadow groove dropped): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
 // The fan sits fully recessed in the top's own 35 mm height (Brian: no fan body sticking out of the top):
 // new front + rear top edges are hollowed on the inside into a cavity, the fan rests on ledges in them,
 // and a 3 mm grille, flush with the rail tops, clamps it down. No panel: the grille is the top surface.
@@ -22,7 +22,9 @@ x_edge=141.12;           // edge half length (282.25 long)
 plug_x=[127.12,133.98];  // plug + tongue column, each end
 plug_y=[11.15,35]; plug_z=[380.2,z_top];      // drops into the post top pocket (post solid Y 0..11)
 tongue_y=[35,54.85]; tongue_z=[z_top,423.9];  // slides into the side rail end pocket (Y 35..55, Z 400..424)
-xhole_d=6.4; plug_hole=[22.5,390.2]; tongue_hole=[45,416];  // cross-holes along X, centres approximate (UNKNOWN)
+xhole_d=6.4; plug_hole=[22.5,390.05]; tongue_hole=[45,412.55]; // cross-holes along X, stock centres (source mesh)
+xhead=[10.8,2];          // stock M6 x 8 button-head recess on the inner face of the plug and tongue (dia, depth)
+xinsert=[7.6,139.48];    // stock M6 insert bore in the post/rail, facing the edge: dia, outer end X (1.5 skin left)
 rail_in=110.98;          // inner face of the side rails (stock value, kept)
 rail_out=140.98; rail_y=[35,205];             // stock rail envelope in X and Y
 pocket_fit=[0.15,0.15,0.1];                   // tongue pocket room in X, Y, Z (stock rail pocket ~Y 35..55, Z 400..424)
@@ -49,7 +51,7 @@ z_fan=z_lid-grille_t-fan[2]; z_ledge=z_fan-ledge_t; z_grille=z_lid-grille_t;
 
 module box(a,b){translate(a)cube(b-a);}
 
-module edge(jack=false, label="TFE-B", coupon_insert=false){
+module edge(jack=false, label="TFE-C", coupon_insert=false){
   difference(){
     union(){
       translate([-x_edge,0,z_top]) cuboid([2*x_edge,35,z_lid-z_top],rounding=2,edges=[TOP+FRONT],anchor=FRONT+BOTTOM+LEFT);
@@ -70,7 +72,11 @@ module edge(jack=false, label="TFE-B", coupon_insert=false){
     translate([-x_edge-1,0,0]) rotate([90,0,90]) linear_extrude(2*x_edge+2)
       polygon([[-1,z_lid-chamfer-1],[-1,z_lid+1],[chamfer+1,z_lid+1]]);
     // cross-holes
-    for(s=[-1,1]) for(h=[plug_hole,tongue_hole]) translate([s*(plug_x[0]+plug_x[1])/2,h[0],h[1]]) rotate([0,90,0]) cylinder(d=xhole_d,h=10,center=true);
+    // M6 x 8 button heads go in from inside the rack and thread into the post / rail inserts (Brian 2026-11-06, as stock)
+    for(s=[-1,1]) mirror([s<0?1:0,0,0]) for(h=[plug_hole,tongue_hole]) translate([0,h[0],h[1]]) rotate([0,90,0]){
+      translate([0,0,plug_x[0]-1]) cylinder(d=xhole_d,h=plug_x[1]-plug_x[0]+2);
+      translate([0,0,plug_x[0]-1]) cylinder(d=xhead[0],h=xhead[1]+1);
+    }
     // M3 inserts for the grille screws
     for(x=m3_x) translate([x,m3_y,z_grille]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3,5);
     // ID on the inner face (Y 35) beside the cavity: mid-length is open air (the fan opening),
@@ -81,14 +87,17 @@ module edge(jack=false, label="TFE-B", coupon_insert=false){
               box([jack_x-6,front_wall,z_top-1],[jack_x+6,36,z_ledge-1]); }
   }
 }
-module rail(label="TSR-A"){
+module rail(label="TSR-B"){
   difference(){
     translate([rail_in,rail_y[0],z_top]) cuboid([rail_out-rail_in,rail_y[1]-rail_y[0],z_lid-z_top],rounding=2,edges=[TOP+RIGHT],anchor=FRONT+BOTTOM+LEFT);
     // tongue pockets at both ends, open at the end and the bottom (the rail drops onto the edge tongues)
     for(e=[0,1]) let(y0=e==0?rail_y[0]-1:240-tongue_y[1]-pocket_fit[1], y1=e==0?tongue_y[1]+pocket_fit[1]:rail_y[1]+1)
       box([plug_x[0]-pocket_fit[0],y0,z_top-1],[plug_x[1]+pocket_fit[0],y1,tongue_z[1]+pocket_fit[2]]);
-    // matching cross-holes (what goes in them UNKNOWN)
-    for(y=[tongue_hole[0],240-tongue_hole[0]]) translate([(plug_x[0]+plug_x[1])/2,y,tongue_hole[1]]) rotate([0,90,0]) cylinder(d=xhole_d,h=40,center=true);
+    // inside of each pocket open to the rack, as on the stock rail, so the M6 screw goes in from inside
+    for(e=[0,1]) let(y0=e==0?rail_y[0]-1:240-tongue_y[1]-pocket_fit[1], y1=e==0?tongue_y[1]+pocket_fit[1]:rail_y[1]+1)
+      box([rail_in-1,y0,z_top-1],[plug_x[0],y1,tongue_z[1]+pocket_fit[2]]);
+    // M6 heat-set insert (M6 x 5 x 8) facing the tongue, blind: 1.5 skin on the outer face as stock
+    for(y=[tongue_hole[0],240-tongue_hole[0]]) translate([plug_x[1],y,tongue_hole[1]]) rotate([0,90,0]) cylinder(d=xinsert[0],h=xinsert[1]-plug_x[1]);
     // side panel groove from below
     box([groove[0],rail_y[0]-1,z_top-1],[groove[1],rail_y[1]+1,groove[2]]);
     // Inner side, clear of pockets, groove and handle bores.
@@ -99,7 +108,7 @@ module rail(label="TSR-A"){
   }
 }
 module rail_left(){ mirror([1,0,0]) rail(); }
-module edge_rear(){ translate([0,240,0]) rotate([0,0,180]) edge(jack=true,label="TRE-B"); }
+module edge_rear(){ translate([0,240,0]) rotate([0,0,180]) edge(jack=true,label="TRE-C"); }
 
 module grille(){
   y0=seat_y+grille_fit; y1=240-seat_y-grille_fit;
@@ -139,14 +148,14 @@ module inner_tag(label,x,z,size){
 module coupon(){
   difference(){
     intersection(){edge(label="",coupon_insert=true); box([101,-1,plug_z[0]-1],[x_edge+1,56,z_lid+1]);}
-    inner_tag(is_undef(tag)?"TFE-T1":tag,120,435,3);
+    inner_tag(is_undef(tag)?"TFE-T2":tag,120,435,3);
   }
 }
 module rail_coupon(){
   difference(){
     intersection(){rail(label="");box([rail_in-1,35,z_top-1],[rail_out+1,75,z_lid+1]);}
     translate([rail_in-0.01,55,435]) rotate([90,0,90]) linear_extrude(height=0.61) mirror([1,0,0])
-      text(is_undef(tag)?"TSR-T1":tag,size=3,halign="center",valign="center");
+      text(is_undef(tag)?"TSR-T2":tag,size=3,halign="center",valign="center");
   }
 }
 // Head envelopes include 1 mm radial room. Cross-hole hardware remains UNKNOWN:
@@ -155,6 +164,8 @@ module keepout(){
   // Countersunk heads sit flush in the countersink; keep the room above the grille open.
   for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_lid]) rotate([90,0,0])
     ws_head_keepout(0,0,0,csk_d,6);
+  // M6 x 8 button heads at the cross joints (head 10.5 + 1 mm room), 6 mm of tool room inward from the inner face
+  for(sx=[-1,1], h=[plug_hole,tongue_hole], y=[h[0],240-h[0]]) translate([sx>0?plug_x[0]-6:-plug_x[0],y,h[1]]) rotate([0,90,0]) cylinder(d=12.5,h=6);
 }
 // Same transform for a physical part and its check envelope. Edges lie on their flat
 // front face (Y 0), diagonal on a 256 bed: tongues, ledge and cavity walls print upright;
@@ -174,7 +185,7 @@ if(part=="fan") fan_dummy();
 if(part=="coupon") coupon();
 if(part=="rail_coupon") rail_coupon();
 if(part=="edge_front_print") edge_print_pose() edge();
-if(part=="edge_rear_print") edge_print_pose() edge(jack=true,label="TRE-B");
+if(part=="edge_rear_print") edge_print_pose() edge(jack=true,label="TRE-C");
 if(part=="rail_print") rail_print_pose() rail();
 if(part=="grille_print") grille_print_pose() grille();
 if(part=="keepout") keepout();
