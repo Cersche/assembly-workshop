@@ -1,4 +1,4 @@
-// TF-A (released 2026-11-06 for printing; looks pass, Brian 2026-11-06: 45 deg chamfer, swirl grille; shadow groove dropped): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
+// TF-B edges (2026-11-06: fan cavity for the real 195 CT200 frame; rails, grille, coupons unchanged from TF-A; looks pass, Brian 2026-11-06: 45 deg chamfer, swirl grille; shadow groove dropped): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
 // The fan sits fully recessed in the top's own 35 mm height (Brian: no fan body sticking out of the top):
 // new front + rear top edges are hollowed on the inside into a cavity, the fan rests on ledges in them,
 // and a 3 mm grille, flush with the rail tops, clamps it down. No panel: the grille is the top surface.
@@ -30,7 +30,7 @@ groove=[136.28,139.78,405.5];                 // side panel groove from below, s
 handle_hole=[124.73,[55,185]];                // stock handle screw positions (M6 inserts in the rail top)
 
 // --- new design values (draft) ---
-fan=[200,200,30]; fan_c=[0,120]; fan_fit=0.5; // CT200 frame from listings (UNKNOWN); 0.5 room each side
+fan=[195,195,30]; fan_c=[0,120]; fan_fit=0.5; // CT200 frame 195 x 195 x 30 (Thermaltake drawing, not measured); 0.5 room each side
 ledge_t=2;               // fan rests on ledges in the edges: Z 415.05..417.05
 grille_t=3;              // grille Z 447.05..450.05, flush with the rail tops; it rests on the fan top
 open_d=192;              // air opening under the blades (ledges cut back to it) and in the grille
@@ -49,7 +49,7 @@ z_fan=z_lid-grille_t-fan[2]; z_ledge=z_fan-ledge_t; z_grille=z_lid-grille_t;
 
 module box(a,b){translate(a)cube(b-a);}
 
-module edge(jack=false, label="TFE-A", coupon_insert=false){
+module edge(jack=false, label="TFE-B", coupon_insert=false){
   difference(){
     union(){
       translate([-x_edge,0,z_top]) cuboid([2*x_edge,35,z_lid-z_top],rounding=2,edges=[TOP+FRONT],anchor=FRONT+BOTTOM+LEFT);
@@ -99,7 +99,7 @@ module rail(label="TSR-A"){
   }
 }
 module rail_left(){ mirror([1,0,0]) rail(); }
-module edge_rear(){ translate([0,240,0]) rotate([0,0,180]) edge(jack=true,label="TRE-A"); }
+module edge_rear(){ translate([0,240,0]) rotate([0,0,180]) edge(jack=true,label="TRE-B"); }
 
 module grille(){
   y0=seat_y+grille_fit; y1=240-seat_y-grille_fit;
@@ -174,7 +174,7 @@ if(part=="fan") fan_dummy();
 if(part=="coupon") coupon();
 if(part=="rail_coupon") rail_coupon();
 if(part=="edge_front_print") edge_print_pose() edge();
-if(part=="edge_rear_print") edge_print_pose() edge(jack=true,label="TRE-A");
+if(part=="edge_rear_print") edge_print_pose() edge(jack=true,label="TRE-B");
 if(part=="rail_print") rail_print_pose() rail();
 if(part=="grille_print") grille_print_pose() grille();
 if(part=="keepout") keepout();

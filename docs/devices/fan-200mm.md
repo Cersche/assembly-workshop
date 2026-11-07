@@ -4,9 +4,9 @@ Device card for the rack-top fan. Brian chose the Thermaltake CT200 (ARGB Sync, 
 
 | Value | Source | Measured | Status |
 | --- | --- | --- | --- |
-| Frame | 200 x 200 x 30 (most listings; one says 35, probably the box) | | UNKNOWN |
-| Corner radius / frame shape | | | UNKNOWN |
-| Hole pattern | not published in the pages found; the draft clamps the fan under a grille instead | | UNKNOWN |
+| Frame | **195 x 195 x 30** (Thermaltake dimension drawing, sent by Brian 2026-11-06; listings said 200) | | from source, not measured |
+| Corner radius / frame shape | round blade ring with square corner tabs at the holes (drawing); corner-to-corner 174 per drawing text | | from source |
+| Hole pattern | 155 x 155 (drawing); not used, the grille clamps the fan | | from source |
 | Power | 12 V 4-pin PWM fan + 5 V 3-pin ARGB (needs a 5 V ARGB controller or the Pi) | | UNKNOWN |
 | Cable exit (corner, length) | | | UNKNOWN |
 | Weight | | | UNKNOWN |
