@@ -45,6 +45,7 @@ csk_d=7.0; csk_h=(csk_d-3.4)/2;               // M3 countersink, 90 deg, room ar
 fan_hole=155/2;          // CT200 hole pattern 155 x 155 centred (Thermaltake drawing; holes "standard", ~4.3, Brian 2026-11-07)
 pad_t=8; pad_d=12;       // TF-D: pad under each fan corner, Z 409.05..417.05, boss 12 OD (>= 9 for M3 x 3 x 5)
 shcs_d=5.5; shcs_h=3; head_hole=shcs_d+2;     // M3 socket cap head (std 5.5 x 3) in a grille hole with 1 mm room all round
+chan_w=10; chan_top=440; // TF-D (Brian 2026-11-07): fan cable channel inside the rear edge at the LEFT end of the cavity (global X -98..-108), Z 399..440 (2 mm under the grille insert), open into the rack; replaces the DC jack
 jack_x=85; jack_z=407.5; jack_d=8;            // DC panel jack in the rear edge's back face (model UNKNOWN), below the fan ledge
 chamfer=15;              // looks: 45 deg chamfer on the outer top corner of each edge, like the stock edge's slope
 seat_y=chamfer+2;        // grille seat starts here (2 mm land behind the chamfer)
@@ -90,8 +91,7 @@ module edge_body(jack, label, coupon_insert){
     // so it sits in solid wall between the cavity (X 100.5) and the plug/tongue column (X 127.12).
     if(label!="") inner_tag(is_undef(tag)?label:tag,119,435,3);
     // DC jack (rear edge only): hole through the back face, pocket beside the fan, open down into the rack
-    if(jack){ translate([jack_x,-1,jack_z]) rotate([-90,0,0]) cylinder(d=jack_d,h=front_wall+2);
-              box([jack_x-6,front_wall,z_top-1],[jack_x+6,36,z_ledge-1]); }
+    if(jack) cable_channel();   // rear edge only; local +X is global -X (left) on the rear edge
   }
 }
 // TF-D: pads under the two fan corners on this edge. They hang from the ledge and the cavity wall (Y 19.5)
@@ -107,9 +107,9 @@ module fan_pads(jack){
       translate([0,0,z_fan]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3);
       translate([0,0,z0-1]) cylinder(d=3.4,h=pad_t+2);
     }
-    if(jack) box([jack_x-6,front_wall,z_top-1],[jack_x+6,36,z_ledge-1]);   // keep the DC jack pocket open
   }
 }
+module cable_channel(){ box([cav_x-0.01,cav_y,z_top-1],[cav_x+chan_w,36,chan_top]); }
 module rail(label="TSR-B"){
   difference(){
     translate([rail_in,rail_y[0],z_top]) cuboid([rail_out-rail_in,rail_y[1]-rail_y[0],z_lid-z_top],rounding=2,edges=[TOP+RIGHT],anchor=FRONT+BOTTOM+LEFT);
@@ -221,4 +221,5 @@ if(part=="keepout_edge_rear_print") edge_print_pose() rear_local() keepout();
 if(part=="keepout_rail_print") rail_print_pose() keepout();
 if(part=="keepout_grille_print") grille_print_pose() keepout();
 if(part=="cuts") cuts();
+if(part=="chan_show") rear_local() intersection(){ cable_channel(); box([-200,0,z_top],[200,35,500]); }   // viewer marker only
 if(part=="assembly"){ edge(); edge_rear(); rail(); rail_left(); grille(); %fan_dummy(); }
