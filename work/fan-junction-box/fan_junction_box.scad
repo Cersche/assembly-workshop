@@ -19,15 +19,20 @@ c_face=0.3;    // case back to receiver front, lip to receiver bottom
 c_post=0.3;    // receiver to the flange edge
 // ---- Wago 221-413 (datasheet, Brian 2026-11-07: use it): W across levers x D entry to back x H lever closed
 wago=[18.7,18.6,8.3]; wago_fit=0.4; wago_gap=1.6;
-side_room=2;   // draft 4 (Brian): room between the outer Wagos and the side walls for the outer wires
-wire_room=16;  // draft 4: 12 + 4 for the floor tie anchor behind the slot
+side_room=2;   // draft 4 (Brian): room beside the outer Wagos for the outer wires
+wire_room=16;  // draft 4: wire room in front of the entries
+// draft 6 (Brian 2026-11-07): wires leave straight down beside the right rear post, parallel to it. The Wagos turn 90 deg:
+// stacked along Y against the -X wall, entries facing +X into a full-depth wire lane on the post side; exit hole in the
+// lane's rear corner, under the CT200 lead notch, so every wire enters and leaves at the right rear corner.
 
 // ---- case (Z chosen so the receiver covers the M6 head recess, Z 372.05..383.55, with ~2 mm left each side)
 wall=2; floor_t=2; inner_h=12; lid_t=2.5;
 zc0=366; zc_lid=zc0+floor_t+inner_h; zc1=zc_lid+lid_t;           // 366 / 380 / 382.5
 cx1=124.0; cy1=223.0;          // +X side (post side wall X 127.12) and case back stay put; growth goes to -X and the front
-cx0=cx1-(2*wall+2*wago[0]+wago_gap+2*wago_fit+2*side_room);     // 76.4
-cy0=cy1-(2*wall+wire_room+wago[1]+wago_fit);                    // 184.0
+cx0=cx1-(2*wall+wago_fit+wago[1]+wire_room);                    // 85.0
+cy0=cy1-(2*wall+2*wago[0]+wago_gap+2*wago_fit+2*side_room);     // 175.2
+wago_x1=cx0+wall+wago_fit/2+wago[1];                             // Wago entry faces X 105.8
+exit_x=116; exit_y=[209,216]; exit_d=8;                          // exit hole X 112..120, Y 205..220 (inner walls X 122, Y 221)
 r_bed=3;                                                         // rounded bed corners (Brian, 2026-11-05)
 
 // ---- receiver
@@ -41,7 +46,7 @@ z_stop=zc1;                   // channel closed above the cleat top: the top sto
 zr1=z_stop+3;                 // receiver top 385.5
 rx0=92; rx_right=126.5; rx_fil=124.2; ry_leg=239.5;             // outline
 lock=[dt_x,234.5];            // M3 lock screw axis X, Y (vertical)
-ear=[85.5,226.3];             // third lid screw on a back ear, clear of the receiver (X >= 92)
+ear=[87.0,226.3];             // third lid screw on a back ear, clear of the receiver (X >= 92)
 // draft 3 (Brian 2026-11-07): front lid screws moved onto outside ears so the Wago wire path to the front is completely clear
 lid_screws=[[cx0+4.5,cy0+wall-4.5],[cx1-4.5,cy0+wall-4.5],ear];
 module ears2d(){ for(p=lid_screws) hull(){ translate(p) circle(d=9); translate([p[0]-4.5,p[1]<cy0+10?cy0+1:cy1-3]) square([9,1]); } }
@@ -98,18 +103,18 @@ module case_body(){
     for(p=lid_screws) translate([p[0],p[1],zc_lid]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3,7);
     // M3 countersunk lock screw up through the lip
     translate([lock[0],lock[1],zc0-0.01]){ cylinder(d=3.4,h=10); cylinder(d1=7,d2=3.4,h=1.8); }
-    // floor slot in the wire room: 12 V pair up from the power strip + 6-conductor bundle down to the Pi
-    translate([103,cy0+wall+5,zc0-1]) linear_extrude(floor_t+2) hull(){ for(x=[-6.5,6.5]) translate([x,0]) circle(d=7); }
-    // draft 5 (Brian: the floor bridge blocked the Wago entries): flush zip tie notches through the floor instead.
-    // The tie goes down one, under the floor, up the other and over the wires lying between the slot and the Wagos.
-    for(x=[103-11,103+11]) translate([x-1,tie_y-2.25,zc0-1]) cube([2,4.5,floor_t+2]);
+    // draft 6: exit hole in the lane's rear corner, 12 V pair up from the power strip + 6-conductor bundle down to the Pi,
+    // both running straight down beside the post (X 116 is 11 inside the post side wall X 127.12)
+    translate([exit_x,0,zc0-1]) linear_extrude(floor_t+2) hull(){ for(y=exit_y) translate([0,y]) circle(d=exit_d); }
+    // flush zip tie notches (draft 5 style) either side of the lane just in front of the exit: tie the bundle before it drops
+    for(x=[exit_x-4,exit_x+4]) translate([x-1,tie_y-2.25,zc0-1]) cube([2,4.5,floor_t+2]);
   }
   // low fences so the Wagos stay at the back (1.2 high, below the wire entries: entry height ASSUMED)
-  for(i=[0:1]) translate([cx0+wall+side_room+wago_fit/2+i*(wago[0]+wago_gap)+2,wago_y-1.2,zc0+floor_t-0.01]) cube([wago[0]-4,1.2,1.2]);
+  for(i=[0:1]) translate([wago_x1,wago_y0+i*(wago[0]+wago_gap)+2,zc0+floor_t-0.01]) cube([1.2,wago[0]-4,1.2]);
 }
-tie_y=cy1-wall-wago_fit/2-wago[1]-1.2-3.0;                                                 // bridge centre Y, in front of the fences
+tie_y=exit_y[0]-exit_d/2-4;                                                                // tie notch centre Y 201
 module tie_bridge(x,y,len){ difference(){ translate([x-len/2,y-3,0]) cube([len,6,3.7]); translate([x-len/2-1,y-2.25,0]) cube([len+2,4.5,2.2]); } }
-wago_y=cy1-wall-wago_fit/2-wago[1];                                  // Wago fronts (entries) at Y 202.0
+wago_y0=cy0+wall+side_room+wago_fit/2;                               // first Wago's low-Y side
 
 module lid(){
   difference(){
@@ -125,7 +130,7 @@ module lid(){
   translate([0,0,zc1-0.01]) tie_bridge(113,cy1-16,12);
 }
 
-module wagos(){ for(i=[0:1]) translate([cx0+wall+side_room+wago_fit/2+i*(wago[0]+wago_gap),wago_y,zc0+floor_t]) cube(wago); }
+module wagos(){ for(i=[0:1]) translate([wago_x1-wago[1],wago_y0+i*(wago[0]+wago_gap),zc0+floor_t]) cube([wago[1],wago[0],wago[2]]); }  // entries at +X
 module keepout(){ receiver_keepout(); for(p=lid_screws) translate([p[0],p[1],zc1]) cylinder(d=7+2,h=3); }
 
 if(part=="receiver") receiver();
