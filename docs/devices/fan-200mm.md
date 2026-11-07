@@ -6,7 +6,7 @@ Device card for the rack-top fan. Brian chose the Thermaltake CT200 (ARGB Sync, 
 | --- | --- | --- | --- |
 | Frame | **195 x 195 x 30** (Thermaltake dimension drawing, sent by Brian 2026-11-06; listings said 200) | | from source, not measured |
 | Corner radius / frame shape | round blade ring with square corner tabs at the holes (drawing); corner-to-corner 174 per drawing text | | from source |
-| Hole pattern | 155 x 155 (drawing); not used, the grille clamps the fan | | from source |
+| Hole pattern | 155 x 155, centred (20 in from each frame edge), standard fan holes (~4.3, Brian 2026-11-07); drawing image re-sent by Brian 2026-11-07. **The fan must be screwed down through these (Brian 2026-11-07); TF-A..C only clamped it under the grille, fixed in TF-D** | | from source |
 | Power | 12 V 0.16 A (4-pin PWM) + 5 V 0.31 A (3-pin ARGB) (Milwaukee PC / Performance-PCs listings) | | from source, not measured |
 | ARGB LED count | | | UNKNOWN (find by test; needed by the WS2812 library) |
 | Cable exit (corner, length) | | | UNKNOWN |

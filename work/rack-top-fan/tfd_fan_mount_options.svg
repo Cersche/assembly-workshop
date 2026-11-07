@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="Segoe UI,Arial" font-size="13">
+<rect width="900" height="470" fill="#fff"/>
+<text x="20" y="26" font-size="17" font-weight="bold">TF-D fan mount: section through one fan corner (front edge, looking from the side)</text>
+<text x="20" y="46">Problem: CT200 holes (155 x 155) sit at Y 42.5 / 197.5, 7.5 mm PAST the edges' inner face (Y 35). Nothing is under them today.</text>
+<text x="20" y="64">Fix in both options: a corner pad grows inward from each edge under each hole (outside the 192 blade circle), into the 15 mm air gap.</text>
+<g id="base">
+</g>
+<!-- Option A -->
+<g transform="translate(20,90)">
+<text x="0" y="0" font-weight="bold" font-size="15">A. Fan's own screws, up from below (my pick)</text>
+<rect x="0" y="20" width="140" height="300" fill="#cde" stroke="#333"/><text x="30" y="300">edge TFE-D</text>
+<rect x="140" y="40" width="250" height="180" fill="#eee" stroke="#333"/><text x="215" y="135">CT200 frame (30)</text>
+<rect x="140" y="20" width="250" height="20" fill="#9c9" stroke="#333"/><text x="300" y="34">grille 3</text>
+<rect x="140" y="220" width="100" height="60" fill="#cde" stroke="#333"/><text x="150" y="262">new pad</text>
+<rect x="185" y="190" width="12" height="90" fill="#fff" stroke="#c00"/>
+<rect x="179" y="280" width="24" height="8" fill="#c00"/><text x="210" y="300" fill="#c00">screw head under pad</text>
+<rect x="187" y="180" width="8" height="100" fill="#c00" opacity=".6"/>
+<text x="250" y="200">bites into the fan's own</text><text x="250" y="216">bottom flange hole</text>
+<text x="0" y="345">+ short screw, no insert needed (it goes into the fan, not a print)</text>
+<text x="0" y="362">+ grille unchanged, fan held even with grille off</text>
+<text x="0" y="379">- needs the fan screws (usually in the CT200 box; check)</text>
+</g>
+<!-- Option B -->
+<g transform="translate(470,90)">
+<text x="0" y="0" font-weight="bold" font-size="15">B. Long M3 countersunk, down through the fan</text>
+<rect x="0" y="20" width="140" height="300" fill="#cde" stroke="#333"/><text x="30" y="300">edge TFE-D</text>
+<rect x="140" y="40" width="250" height="180" fill="#eee" stroke="#333"/><text x="215" y="135">CT200 frame (30)</text>
+<rect x="140" y="20" width="250" height="20" fill="#9c9" stroke="#333"/><text x="300" y="34">grille, hole for head</text>
+<rect x="140" y="220" width="100" height="60" fill="#cde" stroke="#333"/><text x="150" y="268">pad + M3 insert</text>
+<rect x="183" y="220" width="16" height="22" fill="#fc6" stroke="#963"/>
+<rect x="187" y="22" width="8" height="215" fill="#c00" opacity=".6"/>
+<path d="M179 22 L203 22 L195 34 L187 34 Z" fill="#c00"/>
+<text x="250" y="200">M3 x ~35 countersunk</text><text x="250" y="216">into M3 x 3 x 5 insert</text>
+<text x="0" y="345">+ screw type you have (M3 countersunk)</text>
+<text x="0" y="362">- needs ~35 long; head sits proud on the flat fan flange</text>
+<text x="0" y="379">- only works if the fan holes run the full 30</text>
+</g>
+<text x="20" y="455">Holes: standard fan holes (~4.3, Brian). Fan, holes, pad strength: UNKNOWN until printed. Air gap under the fan stays 15 mm (CM1000 top at Z 400.05).</text>
+</svg>

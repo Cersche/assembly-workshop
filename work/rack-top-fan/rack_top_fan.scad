@@ -1,3 +1,4 @@
+// TF-D DRAFT (2026-11-07, Brian: the fan must be screwed down): 4 pads under the CT200 155 x 155 holes with M3 inserts, M3 x 35 socket caps down through the fan, grille holes for the heads. TF-C source is frozen in outputs/Rack_Top_Fan_TF-C_2026-11-06/src.
 // TF-C (2026-11-06: stock M6 x 8 button-head cross joints: insert bores in the rails, head recesses in the edges; 195 fan cavity; looks pass, Brian 2026-11-06: 45 deg chamfer, swirl grille; shadow groove dropped): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
 // The fan sits fully recessed in the top's own 35 mm height (Brian: no fan body sticking out of the top):
 // new front + rear top edges are hollowed on the inside into a cavity, the fan rests on ledges in them,
@@ -41,6 +42,9 @@ grille_fit=0.3;          // grille to edge recess, each side
 grille_x=rail_in-0.5;    // grille half width: 0.5 clear of the rail lip
 m3_y=26; m3_x=[-105.5,105.5];                 // grille screws at the 4 corners, in solid edge beside the cavity
 csk_d=7.0; csk_h=(csk_d-3.4)/2;               // M3 countersink, 90 deg, room around a 6.7 max head                // grille screws, M3 countersunk into M3 inserts in the edge walls
+fan_hole=155/2;          // CT200 hole pattern 155 x 155 centred (Thermaltake drawing; holes "standard", ~4.3, Brian 2026-11-07)
+pad_t=8; pad_d=12;       // TF-D: pad under each fan corner, Z 409.05..417.05, boss 12 OD (>= 9 for M3 x 3 x 5)
+shcs_d=5.5; shcs_h=3; head_hole=shcs_d+2;     // M3 socket cap head (std 5.5 x 3) in a grille hole with 1 mm room all round
 jack_x=85; jack_z=407.5; jack_d=8;            // DC panel jack in the rear edge's back face (model UNKNOWN), below the fan ledge
 chamfer=15;              // looks: 45 deg chamfer on the outer top corner of each edge, like the stock edge's slope
 seat_y=chamfer+2;        // grille seat starts here (2 mm land behind the chamfer)
@@ -51,7 +55,10 @@ z_fan=z_lid-grille_t-fan[2]; z_ledge=z_fan-ledge_t; z_grille=z_lid-grille_t;
 
 module box(a,b){translate(a)cube(b-a);}
 
-module edge(jack=false, label="TFE-C", coupon_insert=false){
+module edge(jack=false, label="TFE-D", coupon_insert=false){
+  union(){ edge_body(jack,label,coupon_insert); fan_pads(jack); }
+}
+module edge_body(jack, label, coupon_insert){
   difference(){
     union(){
       translate([-x_edge,0,z_top]) cuboid([2*x_edge,35,z_lid-z_top],rounding=2,edges=[TOP+FRONT],anchor=FRONT+BOTTOM+LEFT);
@@ -87,6 +94,22 @@ module edge(jack=false, label="TFE-C", coupon_insert=false){
               box([jack_x-6,front_wall,z_top-1],[jack_x+6,36,z_ledge-1]); }
   }
 }
+// TF-D: pads under the two fan corners on this edge. They hang from the ledge and the cavity wall (Y 19.5)
+// into the 15 mm air gap; M3 x 3 x 5 insert from the top, 3.4 hole below for the screw tip.
+module fan_pads(jack){
+  z0=z_fan-pad_t;
+  difference(){
+    for(x=[-fan_hole,fan_hole]) hull(){
+      translate([x,fan_c[1]-fan_hole,z0]) cylinder(d=pad_d,h=pad_t);
+      box([x-pad_d/2-2,cav_y-0.01,z0],[x+pad_d/2+2,cav_y+1,z_fan]);
+    }
+    for(x=[-fan_hole,fan_hole]) translate([x,fan_c[1]-fan_hole,0]){
+      translate([0,0,z_fan]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3);
+      translate([0,0,z0-1]) cylinder(d=3.4,h=pad_t+2);
+    }
+    if(jack) box([jack_x-6,front_wall,z_top-1],[jack_x+6,36,z_ledge-1]);   // keep the DC jack pocket open
+  }
+}
 module rail(label="TSR-B"){
   difference(){
     translate([rail_in,rail_y[0],z_top]) cuboid([rail_out-rail_in,rail_y[1]-rail_y[0],z_lid-z_top],rounding=2,edges=[TOP+RIGHT],anchor=FRONT+BOTTOM+LEFT);
@@ -108,7 +131,7 @@ module rail(label="TSR-B"){
   }
 }
 module rail_left(){ mirror([1,0,0]) rail(); }
-module edge_rear(){ translate([0,240,0]) rotate([0,0,180]) edge(jack=true,label="TRE-C"); }
+module edge_rear(){ translate([0,240,0]) rotate([0,0,180]) edge(jack=true,label="TRE-D"); }
 
 module grille(){
   y0=seat_y+grille_fit; y1=240-seat_y-grille_fit;
@@ -116,7 +139,8 @@ module grille(){
     translate([-grille_x,y0,z_grille]) cuboid([2*grille_x,y1-y0,grille_t],rounding=2,edges="Z",anchor=FRONT+BOTTOM+LEFT);
     grille_openings();
     translate([70,26,z_grille-0.01]) linear_extrude(height=0.61)
-      text(is_undef(tag)?"TFG-A":tag,size=4,halign="center",valign="center");
+      text(is_undef(tag)?"TFG-B":tag,size=4,halign="center",valign="center");
+    for(x=[-fan_hole,fan_hole],y=[fan_c[1]-fan_hole,fan_c[1]+fan_hole]) translate([x,y,z_grille-1]) cylinder(d=head_hole,h=grille_t+2);
     for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_grille-0.01]){ cylinder(d=3.4,h=grille_t+1); translate([0,0,grille_t-csk_h+0.02]) cylinder(d1=3.4,d2=csk_d,h=csk_h); }
   }
 }
@@ -124,7 +148,7 @@ module grille(){
 module fan_dummy(){ translate([fan_c[0],fan_c[1],z_fan]) difference(){ translate([0,0,fan[2]/2]) cuboid(fan,rounding=8,edges="Z"); cylinder(d=open_d-4,h=3*fan[2],center=true);} }
 
 
-// The same cutters drive the grille and the check-only cuts (32 vents + 8 screws).
+// The same cutters drive the grille and the check-only cuts (32 vents + 8 screws + 4 fan-screw head holes).
 module grille_openings(){
   translate([fan_c[0],fan_c[1],z_grille-1]) linear_extrude(grille_t+2) difference(){
     circle(d=open_d);
@@ -140,6 +164,7 @@ module blade_2d(steps=14){
 module cuts(){
   grille_openings();
   for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_grille-1]) cylinder(d=3.4,h=grille_t+2);
+  for(x=[-fan_hole,fan_hole],y=[fan_c[1]-fan_hole,fan_c[1]+fan_hole]) translate([x,y,z_grille-1]) cylinder(d=head_hole,h=grille_t+2);
 }
 module inner_tag(label,x,z,size){
   translate([x,35.01,z]) rotate([90,0,0]) linear_extrude(height=0.61) mirror([1,0,0])
@@ -164,6 +189,8 @@ module keepout(){
   // Countersunk heads sit flush in the countersink; keep the room above the grille open.
   for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_lid]) rotate([90,0,0])
     ws_head_keepout(0,0,0,csk_d,6);
+  // TF-D fan screws: M3 socket cap heads on the fan top, 1 mm room, 6 mm tool room above
+  for(x=[-fan_hole,fan_hole],y=[fan_c[1]-fan_hole,fan_c[1]+fan_hole]) translate([x,y,z_grille]) cylinder(d=head_hole,h=grille_t+6);
   // M6 x 8 button heads at the cross joints (head 10.5 + 1 mm room), 6 mm of tool room inward from the inner face
   for(sx=[-1,1], h=[plug_hole,tongue_hole], y=[h[0],240-h[0]]) translate([sx>0?plug_x[0]-6:-plug_x[0],y,h[1]]) rotate([0,90,0]) cylinder(d=12.5,h=6);
 }
@@ -185,7 +212,7 @@ if(part=="fan") fan_dummy();
 if(part=="coupon") coupon();
 if(part=="rail_coupon") rail_coupon();
 if(part=="edge_front_print") edge_print_pose() edge();
-if(part=="edge_rear_print") edge_print_pose() edge(jack=true,label="TRE-C");
+if(part=="edge_rear_print") edge_print_pose() edge(jack=true,label="TRE-D");
 if(part=="rail_print") rail_print_pose() rail();
 if(part=="grille_print") grille_print_pose() grille();
 if(part=="keepout") keepout();

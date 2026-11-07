@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" font-family="Segoe UI,Arial" font-size="14">
+<rect width="760" height="430" fill="#fff"/>
+<text x="20" y="28" font-size="17" font-weight="bold">CT200 fan: measure the mounting holes (for TF-D)</text>
+<!-- top view -->
+<text x="40" y="58" font-weight="bold">TOP VIEW (fan lying flat)</text>
+<rect x="60" y="80" width="300" height="300" rx="14" fill="#eee" stroke="#333" stroke-width="2"/>
+<circle cx="210" cy="230" r="140" fill="#fff" stroke="#999"/>
+<circle cx="210" cy="230" r="30" fill="#ccc" stroke="#999"/>
+<g fill="#fff" stroke="#c00" stroke-width="2">
+<circle cx="85" cy="105" r="7"/><circle cx="335" cy="105" r="7"/><circle cx="85" cy="355" r="7"/><circle cx="335" cy="355" r="7"/></g>
+<!-- A -->
+<line x1="85" y1="72" x2="335" y2="72" stroke="#06c" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
+<line x1="85" y1="98" x2="85" y2="66" stroke="#06c" stroke-dasharray="3"/><line x1="335" y1="98" x2="335" y2="66" stroke="#06c" stroke-dasharray="3"/>
+<text x="150" y="64" fill="#06c" font-weight="bold">A = hole centre to centre</text>
+<!-- A2 vertical -->
+<line x1="372" y1="105" x2="372" y2="355" stroke="#06c" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
+<text x="380" y="235" fill="#06c" font-weight="bold">A (other way)</text>
+<text x="380" y="253" fill="#06c">same? (square?)</text>
+<defs><marker id="a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#06c"/></marker></defs>
+<!-- detail -->
+<text x="500" y="58" font-weight="bold">CORNER, SIDE VIEW</text>
+<rect x="520" y="90" width="160" height="150" fill="#eee" stroke="#333" stroke-width="2"/>
+<rect x="590" y="90" width="20" height="40" fill="#fff" stroke="#c00" stroke-width="2"/>
+<rect x="590" y="200" width="20" height="40" fill="#fff" stroke="#c00" stroke-width="2"/>
+<line x1="590" y1="80" x2="610" y2="80" stroke="#06c" stroke-width="2"/>
+<text x="560" y="76" fill="#06c" font-weight="bold">B = hole dia</text>
+<line x1="700" y1="90" x2="700" y2="130" stroke="#06c" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
+<text x="707" y="115" fill="#06c" font-weight="bold">C</text>
+<text x="520" y="262">C = how deep the hole goes</text>
+<text x="520" y="280">before it opens up / ends</text>
+<text x="520" y="298">(or "goes straight through 30")</text>
+<text x="20" y="408">Calipers on hole edges: centre-to-centre = outside-to-outside minus one hole dia. Expected A: maybe 154 or 170 (UNKNOWN). Fan shown 195 square.</text>
+</svg>
