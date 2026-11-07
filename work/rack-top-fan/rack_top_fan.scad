@@ -45,7 +45,6 @@ csk_d=7.0; csk_h=(csk_d-3.4)/2;               // M3 countersink, 90 deg, room ar
 fan_hole=155/2;          // CT200 hole pattern 155 x 155 centred (Thermaltake drawing; holes "standard", ~4.3, Brian 2026-11-07)
 pad_t=8; pad_d=12;       // TF-D: pad under each fan corner, Z 409.05..417.05, boss 12 OD (>= 9 for M3 x 3 x 5)
 shcs_d=5.5; shcs_h=3; head_hole=shcs_d+2;     // M3 socket cap head (std 5.5 x 3) in a grille hole with 1 mm room all round
-chan=[100,120,15];      // TF-D (Brian 2026-11-07): cable channel replaces the DC jack: global X 100..120 (right rear corner, above the fan junction box), 15 deep from the back face, full height, open at the back
 jack_x=85; jack_z=407.5; jack_d=8;            // DC panel jack in the rear edge's back face (model UNKNOWN), below the fan ledge
 chamfer=15;              // looks: 45 deg chamfer on the outer top corner of each edge, like the stock edge's slope
 seat_y=chamfer+2;        // grille seat starts here (2 mm land behind the chamfer)
@@ -90,10 +89,9 @@ module edge_body(jack, label, coupon_insert){
     // ID on the inner face (Y 35) beside the cavity: mid-length is open air (the fan opening),
     // so it sits in solid wall between the cavity (X 100.5) and the plug/tongue column (X 127.12).
     if(label!="") inner_tag(is_undef(tag)?label:tag,119,435,3);
-    // TF-C had a DC jack here; TF-D replaces it with the cable channel (Brian 2026-11-07)
-    // rear edge only (TF-D): lay-in cable channel, open at the back face and full height, so plugged cables drop into the rack.
-    // Local X is mirrored on the rear edge (rotated 180), so global X 100..120 is local -120..-100.
-    if(jack) translate([-chan[1],-1,z_top-1]) cuboid([chan[1]-chan[0],chan[2]+1,z_lid-z_top+2],rounding=2,edges=[BACK+LEFT,BACK+RIGHT],anchor=FRONT+BOTTOM+LEFT);
+    // DC jack (rear edge only): hole through the back face, pocket beside the fan, open down into the rack
+    if(jack){ translate([jack_x,-1,jack_z]) rotate([-90,0,0]) cylinder(d=jack_d,h=front_wall+2);
+              box([jack_x-6,front_wall,z_top-1],[jack_x+6,36,z_ledge-1]); }
   }
 }
 // TF-D: pads under the two fan corners on this edge. They hang from the ledge and the cavity wall (Y 19.5)
@@ -109,6 +107,7 @@ module fan_pads(jack){
       translate([0,0,z_fan]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3);
       translate([0,0,z0-1]) cylinder(d=3.4,h=pad_t+2);
     }
+    if(jack) box([jack_x-6,front_wall,z_top-1],[jack_x+6,36,z_ledge-1]);   // keep the DC jack pocket open
   }
 }
 module rail(label="TSR-B"){
