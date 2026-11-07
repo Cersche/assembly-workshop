@@ -29,4 +29,5 @@ Steps: Measure, Draft, Print, Report.
 | 2026-11-07 | CSB-C draft | Brian: on CSB-B the M6 x 8 sticks out 2 past the post. Seat under the head 2.5 -> 4.5; posts clear, head room clear, 30 mm key clears -30..+30 (limit now about 31) | CSB-B released with grip length unchecked against the real bolt |
 | 2026-11-07 | CSB-C draft | Brian marked picture: zip-tie anchor (2 upright slots, tie behind a bridge) on the side wall by each pad, and an 8 wide cable entry notch in the low inner wall; posts, head room and 30 mm key still clear | none |
 | 2026-11-07 | CSB-C draft | Tie anchors removed (Brian); entry notch now a rounded U open through the floor (8 wide, to X 119) for cables from below. Section there: up/down 24k, sideways 0.3k (3.7k beside it) | notch weakens the end sideways |
+| 2026-11-07 | CSB-C released | Brian printing; release_part.py 0 failed, 0 warnings, posts gap 0.22, keep-out clear; M6 x 10 screws | none |
 Totals when the part is done: drafts sent ___, revisions released ___, prints ___, prints that failed ___, measurement requests ___.
