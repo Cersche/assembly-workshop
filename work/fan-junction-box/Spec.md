@@ -13,7 +13,7 @@ It splits the 12 V brick power for the rack fans in the top corner of the rack. 
 - **Fan stays unmodified:** it plugs into a 4-pin PWM extension and a 3-pin ARGB extension. Only the 4-pin lead's 12 V and GND go into the Wagos; its PWM/TACH wires and the ARGB lead carry on to the Pi.
 - **Down the rack to the Pi (slots 5-6):** 6 conductors: 12 V, GND, 5 V, DATA, PWM, TACH (length UNKNOWN).
 - **At the Pi, not in the box:** 74AHCT125 level shifter (DATA to **GPIO10 / pin 19, SPI**; fan PWM through a spare channel from GPIO12 or GPIO13, pins 32/33); TACH to a GPIO with a 3.3 V pull-up; ARGB 5 V from pin 2/4, GND pin 6; optional MOSFET for the Pi fan if it is 2-wire. ARGB moved off GPIO18 because the WS2812 library's PWM mode and fan hardware PWM would share the same peripheral.
-- **12 V input:** the GuanTing brick's included **screw-terminal DC socket tip** (5.5 x 2.1 female barrel + green +/- screw block, Brian's photo 2026-11-07). The TF-C rear-edge DC jack pocket stays as released and is not used.
+- **12 V input:** the GuanTing brick's included **screw-terminal DC socket tip** (5.5 x 2.1 female barrel + green +/- screw block, Brian's photo 2026-11-07). The TF-C rear-edge DC jack pocket stays as released and is not used. **Update 2026-11-07 (Brian):** the socket tip sits at the power strip, not in the rack; a new 2-wire lead runs from it up to the box.
 - Diagram: `wiring_concept.svg` (it still shows the earlier 4 x 221-412 pass-through version; the passthroughs were dropped for compactness).
 
 ## Wago 221-413 (datasheet values; Brian: "this company has been accurate", use them)
@@ -22,7 +22,7 @@ Width 18.7 (across the levers), depth 18.6 (wire entry to back), height 8.3 leve
 ## Placement (agreed)
 Right rear corner of **slot 1 (U9)**, behind the CM1000 (modem envelope ends ~Y 140), just under the TF-C top. Concept: `placement_concept.scad` (rack frame of `rack_top_fan.scad`), viewer https://claude.ai/artifact/23GjqncMvU6fzYKy9YzwNt (v2; simplified posts, CM1000 envelope, our TF-C parts).
 - Case roughly **46 x 36 x 18** (concept X 78..124, Y 165..201, Z 365..383), two 413s side by side, entries facing -Y with ~12 mm of wire room in front.
-- Brick socket adapter in an **open cradle on the outside of the case's -X wall**, mouth facing -X; only its two leads enter the case.
+- **Brick socket stays down at the power strip** with the brick (Brian, 2026-11-07, cleaner look; supersedes the outside cradle): a new 12 V pair runs up the rack and enters the case through the floor slot, beside the outgoing 6-conductor bundle. No cradle on the case.
 - CT200 leads enter from the top (short run through the 15 mm gap under the fan ledge); the 6-conductor bundle leaves at the bottom and runs straight down the rear post lane (X ~111..127, in front of the rear flange) to the Pi.
 
 ## Mounting: cleat (agreed)

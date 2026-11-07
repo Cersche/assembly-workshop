@@ -6,7 +6,7 @@
 // Fit, strength, cleat play, insert fit and wire retention are UNKNOWN.
 include <workshop.scad>
 include <BOSL2/std.scad>
-part="assembly";   // receiver | case | lid | keepout | wagos | socket | assembly
+part="assembly";   // receiver | case | lid | keepout | wagos | assembly
 $fn=48;
 
 // ---- post interface (source values, not measured)
@@ -83,12 +83,8 @@ module case_body(){
       translate([0,0,zc0]) linear_extrude(z_stop-zc0) dt_cleat2d();
       // lock lip under the receiver bottom
       translate([0,0,zc0]) linear_extrude(3.7) rbox2([lock[0]-6,cy1-2],[lock[0]+6,ry_leg],2);
-      // open cradle for the brick's screw-terminal DC socket tip, outside the -X wall (adapter size UNKNOWN: 15 x 15 x 22 block assumed)
-      translate([0,0,zc0]) difference(){
-        linear_extrude(9) rbox2([cx0-24.6,sock_y-9.8],[cx0+1,sock_y+9.8],2);
-        box([cx0-22.6,sock_y-7.8,floor_t],[cx0+0.01,sock_y+7.8,20]);                           // block pocket 15.6 x 22.6
-        translate([cx0-26,sock_y-6.25,floor_t+1]) cube([5,12.5,20]);                          // barrel slot in the end stop
-      }
+      // (draft 2, Brian 2026-11-07: no socket cradle. The DC socket stays down at the power strip with the brick;
+      //  a new 12 V pair runs up the rack and enters through the floor slot beside the outgoing bundle.)
     }
     // inside
     translate([0,0,zc0+floor_t]) linear_extrude(20) difference(){
@@ -99,15 +95,12 @@ module case_body(){
     for(p=lid_screws) translate([p[0],p[1],zc_lid]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3,7);
     // M3 countersunk lock screw up through the lip
     translate([lock[0],lock[1],zc0-0.01]){ cylinder(d=3.4,h=10); cylinder(d1=7,d2=3.4,h=1.8); }
-    // brick leads in through the -X wall, level with the adapter's screw block
-    translate([cx0-1,sock_y-3.5,zc0+floor_t+1]) cube([wall+2,7,6]);
-    // 6-conductor bundle out through the floor (wire room, front)
-    translate([105,cy0+wall+5,zc0-1]) linear_extrude(floor_t+2) hull(){ for(x=[-4,4]) translate([x,0]) circle(d=7); }
+    // floor slot in the wire room: 12 V pair up from the power strip + 6-conductor bundle down to the Pi
+    translate([103,cy0+wall+5,zc0-1]) linear_extrude(floor_t+2) hull(){ for(x=[-6.5,6.5]) translate([x,0]) circle(d=7); }
   }
   // low fences so the Wagos stay at the back (1.2 high, below the wire entries: entry height ASSUMED)
   for(i=[0:1]) translate([cx0+wall+wago_fit/2+i*(wago[0]+wago_gap)+2,wago_y-1.2,zc0+floor_t-0.01]) cube([wago[0]-4,1.2,1.2]);
 }
-sock_y=200;
 wago_y=cy1-wall-wago_fit/2-wago[1];                                  // Wago fronts (entries) at Y 202.0
 
 module lid(){
@@ -123,16 +116,11 @@ module lid(){
 }
 
 module wagos(){ for(i=[0:1]) translate([cx0+wall+wago_fit/2+i*(wago[0]+wago_gap),wago_y,zc0+floor_t]) cube(wago); }
-module socket(){ // screw-terminal DC socket tip, ASSUMED 15 x 15 x 22 block + 11.5 x 18 barrel, mouth -X
-  translate([cx0-22.3,sock_y-7.5,zc0+floor_t]) cube([22,15,15]);
-  translate([cx0-22.3,sock_y,zc0+floor_t+7.5]) rotate([0,-90,0]) cylinder(d=11.5,h=18);
-}
 module keepout(){ receiver_keepout(); for(p=lid_screws) translate([p[0],p[1],zc1]) cylinder(d=7+2,h=3); }
 
 if(part=="receiver") receiver();
 if(part=="case") case_body();
 if(part=="lid") lid();
 if(part=="wagos") wagos();
-if(part=="socket") socket();
 if(part=="keepout") keepout();
-if(part=="assembly"){ receiver(); case_body(); lid(); color("orange") wagos(); color("green") socket(); }
+if(part=="assembly"){ receiver(); case_body(); lid(); color("orange") wagos(); }
