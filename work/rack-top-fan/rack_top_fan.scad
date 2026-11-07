@@ -1,4 +1,4 @@
-// Draft 4 (not released; looks pass, Brian 2026-11-06: 45 deg chamfer, swirl grille; shadow groove dropped): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
+// TF-A (released 2026-11-06 for printing; looks pass, Brian 2026-11-06: 45 deg chamfer, swirl grille; shadow groove dropped): rack top for a 200 mm exhaust fan, option B (Brian 2026-11-05).
 // The fan sits fully recessed in the top's own 35 mm height (Brian: no fan body sticking out of the top):
 // new front + rear top edges are hollowed on the inside into a cavity, the fan rests on ledges in them,
 // and a 3 mm grille, flush with the rail tops, clamps it down. No panel: the grille is the top surface.
