@@ -100,12 +100,12 @@ module case_body(){
     translate([lock[0],lock[1],zc0-0.01]){ cylinder(d=3.4,h=10); cylinder(d1=7,d2=3.4,h=1.8); }
     // floor slot in the wire room: 12 V pair up from the power strip + 6-conductor bundle down to the Pi
     translate([103,cy0+wall+5,zc0-1]) linear_extrude(floor_t+2) hull(){ for(x=[-6.5,6.5]) translate([x,0]) circle(d=7); }
+    // draft 5 (Brian: the floor bridge blocked the Wago entries): flush zip tie notches through the floor instead.
+    // The tie goes down one, under the floor, up the other and over the wires lying between the slot and the Wagos.
+    for(x=[103-11,103+11]) translate([x-1,tie_y-2.25,zc0-1]) cube([2,4.5,floor_t+2]);
   }
   // low fences so the Wagos stay at the back (1.2 high, below the wire entries: entry height ASSUMED)
   for(i=[0:1]) translate([cx0+wall+side_room+wago_fit/2+i*(wago[0]+wago_gap)+2,wago_y-1.2,zc0+floor_t-0.01]) cube([wago[0]-4,1.2,1.2]);
-  // zip tie anchor (Brian, draft 4): bridge on the floor between the slot and the Wagos; the tie runs through it along X
-  // and over the wires crossing it, so a pull on the bundle stops here, not at the Wagos. Tie up to 4 wide x 1.5 thick assumed.
-  translate([0,0,zc0+floor_t-0.01]) tie_bridge(103,tie_y,12);
 }
 tie_y=cy1-wall-wago_fit/2-wago[1]-1.2-3.0;                                                 // bridge centre Y, in front of the fences
 module tie_bridge(x,y,len){ difference(){ translate([x-len/2,y-3,0]) cube([len,6,3.7]); translate([x-len/2-1,y-2.25,0]) cube([len+2,4.5,2.2]); } }
