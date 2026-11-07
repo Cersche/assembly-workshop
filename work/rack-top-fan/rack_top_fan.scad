@@ -45,7 +45,7 @@ csk_d=7.0; csk_h=(csk_d-3.4)/2;               // M3 countersink, 90 deg, room ar
 fan_hole=155/2;          // CT200 hole pattern 155 x 155 centred (Thermaltake drawing; holes "standard", ~4.3, Brian 2026-11-07)
 pad_t=8; pad_d=12;       // TF-D: pad under each fan corner, Z 409.05..417.05, boss 12 OD (>= 9 for M3 x 3 x 5)
 shcs_d=5.5; shcs_h=3; head_hole=shcs_d+2;     // M3 socket cap head (std 5.5 x 3) in a grille hole with 1 mm room all round
-chan_w=10; chan_top=440; // TF-D (Brian 2026-11-07): fan cable channel inside the rear edge at the LEFT end of the cavity (global X -98..-108), Z 399..440 (2 mm under the grille insert), open into the rack; replaces the DC jack
+chan_w=10; chan_y=30;    // TF-D (Brian 2026-11-07): plain cable notch in the rear edge at the LEFT end of the cavity (global X -98..-108), 6 deep from the inner face (global Y 204..210, 1.9 short of the grille insert bore), full height; replaces the DC jack
 jack_x=85; jack_z=407.5; jack_d=8;            // DC panel jack in the rear edge's back face (model UNKNOWN), below the fan ledge
 chamfer=15;              // looks: 45 deg chamfer on the outer top corner of each edge, like the stock edge's slope
 seat_y=chamfer+2;        // grille seat starts here (2 mm land behind the chamfer)
@@ -109,7 +109,7 @@ module fan_pads(jack){
     }
   }
 }
-module cable_channel(){ box([cav_x-0.01,cav_y,z_top-1],[cav_x+chan_w,36,chan_top]); }
+module cable_channel(){ box([cav_x-0.01,chan_y,z_top-1],[cav_x+chan_w,36,z_lid+1]); }   // plain notch, full height, open inside and top (grille covers it)
 module rail(label="TSR-B"){
   difference(){
     translate([rail_in,rail_y[0],z_top]) cuboid([rail_out-rail_in,rail_y[1]-rail_y[0],z_lid-z_top],rounding=2,edges=[TOP+RIGHT],anchor=FRONT+BOTTOM+LEFT);
