@@ -39,3 +39,13 @@ Right rear corner of **slot 1 (U9)**, behind the CM1000 (modem envelope ends ~Y 
 - Hardware: M6 x 8 button head + M6 insert (receiver), M3 countersunk + M3 inserts (lock + lid). All on hand.
 
 Draft geometry is small and design-heavy: Claude drafts it with `/new-part` (pinned OpenSCAD snapshot, `lib/workshop.scad`); no Codex task needed unless the release packaging grows.
+
+## Option B with fan lead extensions (Brian, 2026-11-07; B picked over A)
+Brian: the CT200's own leads won't reach the Pi, so they are extended **in the box**. Supersedes "passing straight through" above for option B. The Pi fan still runs from the same 12 V feed.
+- **4-pin:** CT200 4-pin plugs into a female 4-pin PWM extension inside the box. The extension is cut: its 12 V and GND go into the two 221-413s; its PWM and TACH continue down to the Pi in the bundle.
+- **3-pin ARGB:** CT200 3-pin plugs into a 3-pin ARGB extension that runs uncut to the Pi.
+- **Retention:** both mated pairs lie stacked (4-pin below, ARGB on top) in one pocket in a front bay, with end stops at both ends (corner tabs, 7.5 mm wire gap) so they can't vibrate apart; the lid holds them down. No signal splices, no extra Wagos.
+- **Wago ports (3 each):** 12 V: brick, CT200 (via the cut extension), Pi fan. GND: same. The Pi fan's 12 V pair goes down the rear post in the same bundle.
+- **Path:** fan leads lay in through a lid notch at the -X edge into the drop room at the pocket's -X end; the pairs run +X; the extension wires turn back into the post-side lane to the Wagos and the corner exit (no U-turn). Lid tie bridge moved beside the new notch.
+- **Draft sizes (TYPICAL, UNKNOWN):** mated pair 26 x 11.5 x 7.5 each; pocket 28.5 x 12.5. Extension lengths UNKNOWN (expect ~30 cm route). Where to measure: `pair_measure.svg`.
+- Geometry: `fan_junction_box_B.scad` (draft 2). Option A (`fan_junction_box.scad`) is unchanged.

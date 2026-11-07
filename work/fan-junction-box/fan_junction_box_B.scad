@@ -2,6 +2,11 @@
 // commit 80fbd8f), which stays unchanged. B: the two 221-413 sit one on top of the other in a loose pocket against the -X wall,
 // entries +X into the same post-side wire lane and corner exit; the case is ~20 mm shorter in Y and grows DOWN (top, lid,
 // TF-C clearance unchanged). Receiver is the same design, taller because it follows the case bottom (longer dovetail).
+// B draft 2 (Brian 2026-11-07, picked B): the fan's own leads won't reach the Pi, so they get extended IN the box. CT200 4-pin
+// plugs into a 4-pin PWM extension (cut: 12 V/GND into the Wagos, PWM/TACH on to the Pi); CT200 3-pin ARGB plugs into an uncut
+// 3-pin extension. Both mated pairs lie stacked in one pocket in a front bay (end stops so they can't vibrate apart, lid on
+// top). Fan leads lay in through a lid notch at the -X edge, so the pairs run +X and the extension wires go straight back down
+// the lane to the Wagos and the corner exit (no U-turn). Mated-pair sizes are TYPICAL, not measured (UNKNOWN).
 // Fan junction box DRAFT (2026-11-07): receiver (JBR) on the right rear post + Wago case (JBC) + lid.
 // Viewer-only draft per work/fan-junction-box/Spec.md. Nothing released or printed. No IDs modelled yet (drafts get none).
 // Frame = rack frame of rack_top_fan.scad: X centred, Y 0 front .. 240 rear, Z 0 = bottom of slot 9,
@@ -34,9 +39,16 @@ wall=2; floor_t=2; lid_t=2.5; stack_fit=0.6;                       // B: vertica
 inner_h=2*wago[2]+stack_fit;                                     // 17.2 (A: 12)
 zc_lid=380; zc0=zc_lid-floor_t-inner_h; zc1=zc_lid+lid_t;        // 360.8 / 380 / 382.5: top unchanged, grows down
 cx1=124.0; cy1=223.0;          // +X side (post side wall X 127.12) and case back stay put; growth goes to -X and the front
-cx0=cx1-(2*wall+wago_fit+wago[1]+wire_room);                    // 85.0
-cy0=cy1-(2*wall+wago[0]+wago_fit+2*side_room);                   // 195.9 (B: one Wago wide; A 175.2)
-wago_x1=cx0+wall+wago_fit/2+wago[1];                             // Wago entry faces X 105.8
+// B draft 2: connector bay in front of the Wagos. Mated pair (fan plug + extension plug) L x W x H, TYPICAL 2.54 mm fan/ARGB
+// housings, UNKNOWN until Brian measures (diagram work/fan-junction-box/pair_measure.svg)
+pair=[26,11.5,7.5]; pk_len=pair[0]+2.5; pk_w=pair[1]+1.0; stop_t=1.6; pw_t=1.6;
+drop=7.5;      // lead drop-in room at the -X end under the lid notch
+end_room=5.5;  // extension wires turn from the pocket's +X end back into the lane
+cx0=cx1-(2*wall+drop+2*stop_t+pk_len+end_room);                  // 75.3 (B1 85.0)
+wy0=cy1-(2*wall+wago[0]+wago_fit+2*side_room);                   // 195.9 Wago pocket front partition (B1 case front)
+cy0=wy0-pw_t-pk_w-wall;                                          // 179.8 (A 175.2)
+px0=cx0+wall+drop+stop_t; px1=px0+pk_len; pcy=cy0+wall+pk_w/2;  // pocket X 86.4..114.9, centre Y 188.05
+wago_x1=cx0+wall+wago_fit/2+wago[1];                             // Wago entry faces X 96.1 (lane now ~26 wide)
 exit_x=116; exit_y=[209,216]; exit_d=8;                          // exit hole X 112..120, Y 205..220 (inner walls X 122, Y 221)
 r_bed=3;                                                         // rounded bed corners (Brian, 2026-11-05)
 
@@ -114,14 +126,20 @@ module case_body(){
     // flush zip tie notches (draft 5 style) either side of the lane just in front of the exit: tie the bundle before it drops
     for(x=[exit_x-4,exit_x+4]) translate([x-1,tie_y-2.25,zc0-1]) cube([2,4.5,floor_t+2]);
   }
+  // B draft 2: inner walls. Partition in front of the Wagos; pocket back wall; end stops at both pocket ends (corner tabs,
+  // 7.5 mm open in the middle for the wires, narrower than the housings so the mated pair can't slide apart)
+  hz=[zc0+floor_t-0.01,zc_lid];
+  box([cx0+wall-0.01,wy0,hz[0]],[wago_x1+1.2,wy0+wall,hz[1]]);
+  box([px0-stop_t,wy0-pw_t,hz[0]],[px1+stop_t,wy0+0.01,hz[1]]);
+  for(x=[px0-stop_t,px1]) for(y=[[cy0+wall-0.01,pcy-3.75],[pcy+3.75,wy0-pw_t+0.01]]) box([x,y[0],hz[0]],[x+stop_t,y[1],hz[1]]);
   // low fence so the lower Wago stays at the back (1.2 high, below the wire entries: entry height ASSUMED)
   translate([wago_x1,wago_y0+2,zc0+floor_t-0.01]) cube([1.2,wago[0]-4,1.2]);
   // B: full-height stop ribs on both side walls at the entry face, in the side room (wires enter mid-face): keep the upper Wago back too
-  for(y=[cy0+wall-0.01,cy1-wall-1.5+0.01]) translate([wago_x1,y,zc0+floor_t-0.01]) cube([1.2,1.5,inner_h]);
+  for(y=[wy0+wall-0.01,cy1-wall-1.5+0.01]) translate([wago_x1,y,zc0+floor_t-0.01]) cube([1.2,1.5,inner_h]);
 }
 tie_y=exit_y[0]-exit_d/2-4;                                                                // tie notch centre Y 201
 module tie_bridge(x,y,len){ difference(){ translate([x-len/2,y-3,0]) cube([len,6,3.7]); translate([x-len/2-1,y-2.25,0]) cube([len+2,4.5,2.2]); } }
-wago_y0=cy0+wall+side_room+wago_fit/2;                               // first Wago's low-Y side
+wago_y0=wy0+wall+side_room+wago_fit/2;                               // first Wago's low-Y side
 
 module lid(){
   difference(){
@@ -130,15 +148,18 @@ module lid(){
       ears2d();
     }
     for(p=lid_screws) translate([p[0],p[1],zc_lid-0.01]){ cylinder(d=3.4,h=5); translate([0,0,lid_t-1.8+0.02]) cylinder(d1=3.4,d2=7,h=1.8); }
-    // CT200 leads drop in at the back (notch open to the back edge, closed by nothing: leads lay in)
-    translate([0,0,zc_lid-1]) linear_extrude(lid_t+2) hull(){ translate([113,cy1-6]) circle(d=8); translate([109,cy1+1]) square([8,1]); }
+    // B draft 2: CT200 leads lay in at the -X edge, over the drop room in front of the pocket's -X end (A/B1: back notch)
+    translate([0,0,zc_lid-1]) linear_extrude(lid_t+2) hull(){ translate([cx0+wall+drop/2,pcy]) circle(d=7); translate([cx0-1,pcy-3.5]) square([1,7]); }
   }
   // zip tie anchor on the lid top in front of the notch: tie the CT200 leads down before they drop in (Brian, draft 4)
-  translate([0,0,zc1-0.01]) tie_bridge(113,cy1-16,12);
+  // B draft 2: moved beside the new notch, tie runs along Y: leads drape over the lid edge, get tied, drop into the notch
+  translate([cx0+wall+drop+8,pcy,zc1-0.01]) rotate(90) tie_bridge(0,0,12);
 }
 
 // B: stacked, lower on the floor, upper resting on it, both loose (lid off and lift the upper one out to rewire; lever-open height UNKNOWN)
 module wagos(){ for(i=[0:1]) translate([wago_x1-wago[1],wago_y0,zc0+floor_t+i*wago[2]]) cube([wago[1],wago[0],wago[2]]); }  // entries at +X
+// B draft 2: the two mated pairs (typical size), 4-pin PWM below, 3-pin ARGB on top
+module pairs(){ for(i=[0:1]) translate([px0+1.25,pcy-pair[1]/2,zc0+floor_t+i*pair[2]]) cube(pair); }
 module keepout(){ receiver_keepout(); for(p=lid_screws) translate([p[0],p[1],zc1]) cylinder(d=7+2,h=3); }
 
 if(part=="receiver") receiver();
@@ -146,4 +167,5 @@ if(part=="case") case_body();
 if(part=="lid") lid();
 if(part=="wagos") wagos();
 if(part=="keepout") keepout();
-if(part=="assembly"){ receiver(); case_body(); lid(); color("orange") wagos(); }
+if(part=="pairs") pairs();
+if(part=="assembly"){ receiver(); case_body(); lid(); color("orange") wagos(); color("black") pairs(); }
