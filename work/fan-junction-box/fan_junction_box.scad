@@ -18,14 +18,16 @@ c_dt=0.3;      // dovetail cleat to channel, each flank and at the tip
 c_face=0.3;    // case back to receiver front, lip to receiver bottom
 c_post=0.3;    // receiver to the flange edge
 // ---- Wago 221-413 (datasheet, Brian 2026-11-07: use it): W across levers x D entry to back x H lever closed
-wago=[18.7,18.6,8.3]; wago_fit=0.4; wago_gap=1.6; wire_room=12;
+wago=[18.7,18.6,8.3]; wago_fit=0.4; wago_gap=1.6;
+side_room=2;   // draft 4 (Brian): room between the outer Wagos and the side walls for the outer wires
+wire_room=16;  // draft 4: 12 + 4 for the floor tie anchor behind the slot
 
 // ---- case (Z chosen so the receiver covers the M6 head recess, Z 372.05..383.55, with ~2 mm left each side)
 wall=2; floor_t=2; inner_h=12; lid_t=2.5;
 zc0=366; zc_lid=zc0+floor_t+inner_h; zc1=zc_lid+lid_t;           // 366 / 380 / 382.5
-cx0=80.2; cy0=188;
-cx1=cx0+2*wall+2*wago[0]+wago_gap+2*wago_fit;                   // 124.0 (post side wall X 127.12)
-cy1=cy0+2*wall+wire_room+wago[1]+wago_fit;                      // 223.0 = case back
+cx1=124.0; cy1=223.0;          // +X side (post side wall X 127.12) and case back stay put; growth goes to -X and the front
+cx0=cx1-(2*wall+2*wago[0]+wago_gap+2*wago_fit+2*side_room);     // 76.4
+cy0=cy1-(2*wall+wire_room+wago[1]+wago_fit);                    // 184.0
 r_bed=3;                                                         // rounded bed corners (Brian, 2026-11-05)
 
 // ---- receiver
@@ -100,8 +102,13 @@ module case_body(){
     translate([103,cy0+wall+5,zc0-1]) linear_extrude(floor_t+2) hull(){ for(x=[-6.5,6.5]) translate([x,0]) circle(d=7); }
   }
   // low fences so the Wagos stay at the back (1.2 high, below the wire entries: entry height ASSUMED)
-  for(i=[0:1]) translate([cx0+wall+wago_fit/2+i*(wago[0]+wago_gap)+2,wago_y-1.2,zc0+floor_t-0.01]) cube([wago[0]-4,1.2,1.2]);
+  for(i=[0:1]) translate([cx0+wall+side_room+wago_fit/2+i*(wago[0]+wago_gap)+2,wago_y-1.2,zc0+floor_t-0.01]) cube([wago[0]-4,1.2,1.2]);
+  // zip tie anchor (Brian, draft 4): bridge on the floor between the slot and the Wagos; the tie runs through it along X
+  // and over the wires crossing it, so a pull on the bundle stops here, not at the Wagos. Tie up to 4 wide x 1.5 thick assumed.
+  translate([0,0,zc0+floor_t-0.01]) tie_bridge(103,tie_y,12);
 }
+tie_y=cy1-wall-wago_fit/2-wago[1]-1.2-3.0;                                                 // bridge centre Y, in front of the fences
+module tie_bridge(x,y,len){ difference(){ translate([x-len/2,y-3,0]) cube([len,6,3.7]); translate([x-len/2-1,y-2.25,0]) cube([len+2,4.5,2.2]); } }
 wago_y=cy1-wall-wago_fit/2-wago[1];                                  // Wago fronts (entries) at Y 202.0
 
 module lid(){
@@ -114,9 +121,11 @@ module lid(){
     // CT200 leads drop in at the back (notch open to the back edge, closed by nothing: leads lay in)
     translate([0,0,zc_lid-1]) linear_extrude(lid_t+2) hull(){ translate([113,cy1-6]) circle(d=8); translate([109,cy1+1]) square([8,1]); }
   }
+  // zip tie anchor on the lid top in front of the notch: tie the CT200 leads down before they drop in (Brian, draft 4)
+  translate([0,0,zc1-0.01]) tie_bridge(113,cy1-16,12);
 }
 
-module wagos(){ for(i=[0:1]) translate([cx0+wall+wago_fit/2+i*(wago[0]+wago_gap),wago_y,zc0+floor_t]) cube(wago); }
+module wagos(){ for(i=[0:1]) translate([cx0+wall+side_room+wago_fit/2+i*(wago[0]+wago_gap),wago_y,zc0+floor_t]) cube(wago); }
 module keepout(){ receiver_keepout(); for(p=lid_screws) translate([p[0],p[1],zc1]) cylinder(d=7+2,h=3); }
 
 if(part=="receiver") receiver();
