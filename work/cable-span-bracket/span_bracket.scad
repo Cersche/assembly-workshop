@@ -13,7 +13,7 @@ dropout=true;            // drop-out near each end: cables leave straight up or 
 do_y0=44; do_y1=62; do_x=121; do_r=3; do_lintel=8;  // CSB-B: drop-outs moved 4 away from the ends so the tool window takes a 30 mm key short arm (Brian). Outer wall kept as a bridge across the top of each drop-out
 tag="CSB-C";             // test print ID, engraved 0.6 deep in the outer face of the outer wall, mid-length
 tool_z=6;                // CSB-B: inner wall cut to 6 tall between each pad and its drop-out, so a 4 mm L-key reaches the screw (CSB-A: no driver access, Brian 2026-11-05)
-screw_web=ws_m6_web+2;   // CSB-C: 4.5 under the head (CSB-B 2.5: the M6 x 8 stuck out 2 past the post, Brian)
+screw_web=ws_m6_web+2;   // CSB-C: 4.5 under the head, for M6 x 10 button heads (Brian 2026-11-07: he uses M6 x 10; CSB-B 2.5 suited M6 x 8)
 key_a=0; key_s=30;       // demo_key short arm, tip to outside of bend                 // demo_key swing about the screw axis, degrees
 // CSB-C (Brian 2026-11-07): cable entry notch between each pad and its drop-out, open through the floor so cables from below come up into the channel (tie anchors tried and removed)
 notch_y=26; notch_w=8; notch_x=119; notch_fil=1.5;  // U in plan: 8 wide, from the inner edge to X 119 (round end), mouth corners rounded
