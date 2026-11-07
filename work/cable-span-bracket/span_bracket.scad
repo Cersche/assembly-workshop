@@ -15,10 +15,8 @@ tag="CSB-C";             // test print ID, engraved 0.6 deep in the outer face o
 tool_z=6;                // CSB-B: inner wall cut to 6 tall between each pad and its drop-out, so a 4 mm L-key reaches the screw (CSB-A: no driver access, Brian 2026-11-05)
 screw_web=ws_m6_web+2;   // CSB-C: 4.5 under the head (CSB-B 2.5: the M6 x 8 stuck out 2 past the post, Brian)
 key_a=0; key_s=30;       // demo_key short arm, tip to outside of bend                 // demo_key swing about the screw axis, degrees
-// CSB-C (Brian 2026-11-07, marked picture): zip-tie anchor on the side wall between each pad and its drop-out, and a cable entry notch in the low inner wall
-anc_y=26; anc_slot_w=3; anc_slot_h=6.5; anc_bridge=5;   // two upright slots side by side, 5 apart; the tie runs behind the bridge between them
-anc_proud=2.5; anc_ch=1.8;  // boss on the wall's inner face, 2.5 proud (1.2 clear of the hex key); channel 1.8 for the ~1.3 band, 1.7 of wall left behind it
-notch_y=26; notch_w=8;   // entry notch: low inner wall cut down to the floor, 8 wide
+// CSB-C (Brian 2026-11-07): cable entry notch between each pad and its drop-out, open through the floor so cables from below come up into the channel (tie anchors tried and removed)
+notch_y=26; notch_w=8; notch_x=119; notch_fil=1.5;  // U in plan: 8 wide, from the inner edge to X 119 (round end), mouth corners rounded
 hooks=false;             // catch under each finger tip (option D, not picked)
 y_f=6; y_r=234;          // inner faces of the front and rear post flanges (mesh + 240 rack depth)
 end_gap=0.3;             // gap at each end to the flange
@@ -73,13 +71,9 @@ module screw_end(y0,dir){ // dir=+1 front pad, -1 rear pad. Middle hole takes th
   for(dz=[-ws_hole_dz,ws_hole_dz])translate([ws_hole_x,y0-dir,zm+dz])rotate([a,0,0])cylinder(d=9,h=4+1);
 }
 module endm(m){ if(m) translate([0,y_f+y_r,0])mirror([0,1,0])children(); else children(); }
-x_wi=x_pad-wall;   // inner face of the side wall beside the post
-module anchor_boss(){ y0=anc_y-anc_bridge/2-anc_slot_w-3; translate([x_wi-anc_proud,y0,z0+floor_t-0.01])cube([anc_proud+0.01,2*(anc_y-y0),zm+anc_slot_h/2+3-z0-floor_t]); }
-module anchor_cut(){
-  for(dy=[-1,1]) translate([x_wi-anc_proud-1,anc_y+dy*(anc_bridge+anc_slot_w)/2-anc_slot_w/2,zm-anc_slot_h/2])cube([anc_proud+anc_ch,anc_slot_w,anc_slot_h]);
-  translate([x_wi-1,anc_y-anc_bridge/2-0.01,zm-anc_slot_h/2])cube([anc_ch,anc_bridge+0.02,anc_slot_h]);
-}
-module entry_notch(){ translate([x_in-1,notch_y-notch_w/2,z0+floor_t])cube([wall+2,notch_w,h]); }
+module entry_notch(){ translate([0,0,z0-1])linear_extrude(tool_z+2)offset(r=-notch_fil)offset(delta=notch_fil)union(){
+  hull(){ translate([notch_x-notch_w/2,notch_y])circle(d=notch_w); translate([x_in-notch_fil-1,notch_y-notch_w/2])square([0.01,notch_w]); }
+  translate([x_in-20,notch_y-30])square([20,60]); } }
 module bracket(){
   difference(){
     union(){
@@ -99,9 +93,8 @@ module bracket(){
         translate([0,m?ry(do_y1+8):do_y0,z0])cube([x_in+wall-0.01,do_y1-do_y0+8,h]); }
       // keep the pads whole
       for(y=[y_f+end_gap,y_r-end_gap-pad_t])intersection(){translate([0,0,z0])linear_extrude(h)plan2d();translate([0,y,0])cube([300,pad_t,100]);}
-      for(m=[0,1]) endm(m) anchor_boss();
     }
-    for(m=[0,1]) endm(m){ anchor_cut(); entry_notch(); }
+    for(m=[0,1]) endm(m) entry_notch();
     screw_end(y_f+end_gap,1);
     screw_end(y_r-end_gap,-1);
     if(vented) vents();
