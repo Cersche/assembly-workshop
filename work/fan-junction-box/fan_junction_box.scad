@@ -40,7 +40,9 @@ zr1=z_stop+3;                 // receiver top 385.5
 rx0=92; rx_right=126.5; rx_fil=124.2; ry_leg=239.5;             // outline
 lock=[dt_x,234.5];            // M3 lock screw axis X, Y (vertical)
 ear=[85.5,226.3];             // third lid screw on a back ear, clear of the receiver (X >= 92)
-lid_screws=[[cx0+4.5,cy0+4.5],[cx1-4.5,cy0+4.5],ear];
+// draft 3 (Brian 2026-11-07): front lid screws moved onto outside ears so the Wago wire path to the front is completely clear
+lid_screws=[[cx0+4.5,cy0+wall-4.5],[cx1-4.5,cy0+wall-4.5],ear];
+module ears2d(){ for(p=lid_screws) hull(){ translate(p) circle(d=9); translate([p[0]-4.5,p[1]<cy0+10?cy0+1:cy1-3]) square([9,1]); } }
 
 module box(a,b){translate(a)cube(b-a);}
 module rbox2(a,b,r=r_bed){translate(a)offset(r=r)offset(delta=-r)square(b-a);}
@@ -77,7 +79,7 @@ module case_body(){
     union(){
       translate([0,0,zc0]) linear_extrude(zc_lid-zc0) union(){
         rbox2([cx0,cy0],[cx1,cy1]);
-        hull(){ translate(ear) circle(d=9); translate([ear[0]-4.5,cy1-3]) square([9,1]); }  // back ear for a lid screw
+        ears2d();  // back ear for a lid screw
       }
       // dovetail cleat on the back, case bottom to the top stop
       translate([0,0,zc0]) linear_extrude(z_stop-zc0) dt_cleat2d();
@@ -89,7 +91,6 @@ module case_body(){
     // inside
     translate([0,0,zc0+floor_t]) linear_extrude(20) difference(){
       offset(r=1)offset(delta=-1) translate([cx0+wall,cy0+wall]) square([cx1-cx0-2*wall,cy1-cy0-2*wall]);
-      for(p=lid_screws) if(p!=ear) translate(p) circle(d=9);
     }
     // lid screw inserts
     for(p=lid_screws) translate([p[0],p[1],zc_lid]) mirror([0,0,1]) ws_insert_bore(ws_insert_m3,7);
@@ -107,7 +108,7 @@ module lid(){
   difference(){
     translate([0,0,zc_lid]) linear_extrude(lid_t) union(){
       rbox2([cx0,cy0],[cx1,cy1]);
-      hull(){ translate(ear) circle(d=9); translate([ear[0]-4.5,cy1-3]) square([9,1]); }
+      ears2d();
     }
     for(p=lid_screws) translate([p[0],p[1],zc_lid-0.01]){ cylinder(d=3.4,h=5); translate([0,0,lid_t-1.8+0.02]) cylinder(d1=3.4,d2=7,h=1.8); }
     // CT200 leads drop in at the back (notch open to the back edge, closed by nothing: leads lay in)
