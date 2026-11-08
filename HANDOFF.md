@@ -14,6 +14,9 @@ Brian's MRT-H fit notes are logged in docs/Fit_Findings.md.
 - **Next step:** Brian's MRT-I fit report.
 - **UNKNOWN:** sled creep, boss stiffness, ground screw head (7 x 3 assumed), lock screw length (M3 x 10 likely), fit, strength.
 
+## 2026-11-08 Interactive 3D measurement requests (Claude)
+Brian's idea: when Claude asks for measurements, send an interactive 3D diagram he can spin and type into. `tools/mesh_viewer.py ... --measure spec.json` adds numbered blue arrows that stay on the part as it rotates, a fill-in box per arrow (expected value shown, arrow turns yellow while typing, values kept on reload where storage works) and Copy measurements, which gives text to paste back. Spec format in PROJECT.md; `expected` defaults to the modelled distance. AGENTS.md, the /new-part skill and memory now say measurement requests use it. Tests `tools/test_mesh_viewer.py` (4). Demo: `work/mesh-viewer/MEASURE-demo_power_strip.html` (not committed). Checked in the browser pane: arrows, highlight, copy text (clipboard fallback). Not checked: phone/iPad layout.
+
 ## 2026-11-08 Workshop Bench: Open folder for 3MFs (Claude)
 Brian chose a real button over a copy-path button: each 3MF under "Files and evidence" has **Open folder**, which opens File Explorer with that file selected (`POST /api/open-folder`). It is the app's only program launch (Brian OK'd bending the "never launches a program" rule for this): only 3MF paths Bench itself discovered and that still exist, write token required, Windows only. 189 tests pass on 3 runs (tests swap the opener, so no windows open). Checked on a temp copy: Explorer opened the CSB-C folder. Restart Brian's 8720 copy to get it.
 

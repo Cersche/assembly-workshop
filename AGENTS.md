@@ -84,7 +84,7 @@ Universal standard; full list in Brian's global CLAUDE.md. No self-tapping into 
 
 ## Measurement requests need a diagram — Brian, 2026-11-02
 
-Whenever you ask Brian for a measurement while designing anything, send a diagram showing exactly where and how to measure, with the expected value. Never ask in words alone.
+Whenever you ask Brian for a measurement while designing anything, send a diagram showing exactly where and how to measure, with the expected value. Never ask in words alone. Since 2026-11-08 (Brian) that diagram is an interactive 3D page he can spin and type into: `tools/mesh_viewer.py ... --measure spec.json` (numbered arrows, a box per value, Copy measurements; usage in PROJECT.md), sent with SendUserFile and also published as a private Artifact.
 
 ## OpenSCAD for new parts — Brian, 2026-11-05
 
