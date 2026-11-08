@@ -1,5 +1,10 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-08 Fan power box on the brick: draft 3 (Claude)
+Brian measured the GuanTing brick on the 3D measure page (`work/fan-junction-box/measure_stl/brick_measure_spec.json`, `part="measure"`) and corrected two things in the viewer; the device card `docs/devices/guanting-12v-brick.md` has every value. `work/fan-junction-box/brick_box.scad` is draft 3: grip from the flat faces only (45 width, 30 main back to label face, lips Z 18 to 67), curves get 4 mm extra room. Brian: "hell yes". Viewer https://claude.ai/artifact/BfXa8m5GSqzkvcr2UoPVam, brick alone https://claude.ai/artifact/PR9Z9LTGpAuDhG8fYvxvbw. Added to Workshop Bench as project `brb` (prefixes BRB, JBC, JBR; draft). STLs and viewer pages local only.
+- **Next:** Brian's go to print, then a part ID and release with `tools/release_part.py`.
+- **UNKNOWN:** fit, snap, grip, lid insert fit, heat.
+
 ## 2026-11-08 MoCA rack tray MRT-I RELEASED (Claude)
 Brian's MRT-H fit notes are logged in docs/Fit_Findings.md.
 - **Released:** MRT-I at Brian's direction: [README](outputs/MoCA_Rack_Tray_MRT-I_2026-11-08/README.md). Print file `outputs/Final_3MF/MRT-I_moca_tray_sled_covers_washers.3mf` (5 objects, tags match).

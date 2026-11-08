@@ -1,0 +1,22 @@
+{"intro": "GuanTing 12 V brick + its screw-terminal socket tip (rough stand-ins, the tip is the small part at the right). Prongs point toward you at -Y; the outer (label) face is at +Y; Z up, cord out the bottom. Type what you measure; leave a box empty if you can't get at it, and put shape notes (flat vs rounded, grooves vs raised ribs, both sides?) in the box after the number.",
+"measurements": [
+{"label": "Cord OD", "from": [-2,14,-10], "to": [2,14,-10], "expected": 4, "how": "Calipers across the round cord a few cm below the brick, light squeeze."},
+{"label": "Cord boot OD at the brick", "from": [-3.5,14,-1], "to": [3.5,14,-1], "expected": 7, "how": "The rubber strain-relief where the cord leaves the bottom: widest point. If there is no boot, write 0."},
+{"label": "Cord boot length", "from": [0,17.5,0], "to": [0,17.5,-10], "expected": 10, "how": "From the brick's bottom face down to where the boot ends and the plain cord starts."},
+{"label": "Green screw block length along the tip", "from": [50.5,0,21.3], "to": [50.5,0,37.3], "expected": 16, "how": "On the socket tip: length of the green block measured along the tip's axis (barrel-to-screws direction)."},
+{"label": "Prong block width", "from": [-22.5,-0.5,75], "to": [22.5,-0.5,75], "expected": 45, "how": "Across the raised block the prongs stand on, side to side. If it is narrower than the body, also note how far it sits in from each side."},
+{"label": "Prong block side corner radius", "from": [22.5,0,85], "to": [20.5,0,85], "expected": 0, "how": "Look down at the top: is the prong block's outer corner sharp (0), rounded (radius) or chamfered? Note which."},
+{"label": "Front-view corner radius", "from": [22.5,36.25,85], "to": [19.5,36.25,82], "expected": 3, "how": "Looking straight at the label face: radius of the corners of the 45 x 85 outline. A coin of known size held in the corner helps."},
+{"label": "Top curve: height on the label face", "from": [0,36.25,85], "to": [0,36.25,70], "expected": 15, "how": "Side view. From the top edge down the label face to where it stops curving and goes flat (your T)."},
+{"label": "Top curve: depth along the top", "from": [0,21.25,85], "to": [0,36.25,85], "expected": 15, "how": "Side view. Lay a ruler on the top face; from where the top stops being flat to the label-face plane. Same as the height above = quarter circle; note if it looks more like a chamfer."},
+{"label": "Bottom curve: height on the label face", "from": [0,36.25,0], "to": [0,36.25,15], "expected": 15, "how": "Same as the top, at the bottom end."},
+{"label": "Bottom curve: depth along the bottom", "from": [0,21.25,0], "to": [0,36.25,0], "expected": 15, "how": "Same as the top, along the bottom face."},
+{"label": "Vent ribs: lowest rib from the bottom", "from": [22.5,20,0], "to": [22.5,20,10], "expected": 10, "how": "On the side faces: bottom edge of the brick up to the lowest rib/slot. Note if there are ribs on both sides or also elsewhere."},
+{"label": "Vent ribs: highest rib from the bottom", "from": [22.5,25,0], "to": [22.5,25,50], "expected": 50, "how": "Bottom edge up to the top of the highest rib/slot."},
+{"label": "Vent ribs: depth", "from": [22.5,15,30], "to": [23.5,15,30], "expected": 1, "how": "How deep the grooves go, or how far the ribs stand out from the side. Note grooves or raised."},
+{"label": "Vent ribs: from the main back face", "from": [22.5,6.25,30], "to": [22.5,10,30], "expected": 4, "how": "Along the side, from the main back face (the one below the prong block) to where the ribs start. The snap lips sit right here."},
+{"label": "Prong spacing, centre to centre", "from": [-6.35,-16,66.5], "to": [6.35,-16,66.5], "expected": 12.7, "how": "Between the middles of the two blades."},
+{"label": "Prong length", "from": [6.35,0,66.5], "to": [6.35,-16,66.5], "expected": 16, "how": "From the prong block face out to the blade tip."},
+{"label": "Prong blade height", "from": [6.35,-8,63.5], "to": [6.35,-8,69.5], "expected": 6, "how": "Blade width in the up-down direction. Note if one blade is wider (polarized)."},
+{"label": "Left side to prong pair middle", "from": [-22.5,-8,66.5], "to": [0,-8,66.5], "expected": 22.5, "how": "From the brick's left side (seen from the prong side) to the midpoint between the blades: tells if the prongs are centred."}
+]}

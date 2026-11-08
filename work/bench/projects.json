@@ -182,6 +182,26 @@
       "updated": "2026-11-07"
     },
     {
+      "id": "brb",
+      "title": "Fan power box on the 12 V brick",
+      "prefixes": [
+        "BRB",
+        "JBC",
+        "JBR"
+      ],
+      "status": "draft",
+      "device_cards": [
+        "docs/devices/guanting-12v-brick.md"
+      ],
+      "sources": [
+        "work/fan-junction-box/Spec.md",
+        "work/fan-junction-box/brick_box.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Snap-on box over the GuanTing 12 V brick: 2x Wago 221-413 + screw-terminal socket tip, brick plug through the bottom wall, zip-tie anchor for the cord. Draft 3 (2026-11-08) redrawn to Brian's 3D-measure values; grip from the flat faces only, curves get 4 mm extra room. JBC/JBR = earlier junction-box drafts (history). Viewer-only until Brian prints; fit, snap and grip UNKNOWN.",
+      "updated": "2026-11-08"
+    },
+    {
       "id": "sg8",
       "title": "TL-SG108E switch tray",
       "prefixes": [

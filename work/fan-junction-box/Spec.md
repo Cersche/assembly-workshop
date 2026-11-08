@@ -59,3 +59,6 @@ Everything above (top-corner case, post cleat, options A and B, JBC-A/JBR-A draf
 - **Excess brick cord:** bundled ~25 x 85, held by a zip-tie anchor on the outside of the box.
 - **Needed before drafting:** brick W/H/D, cord exit, prong position; socket tip length, barrel OD, block size; plug body OD/length. Where to measure: `brick_measure.svg`. All UNKNOWN until measured.
 - Fit, strength, clamp grip and heat UNKNOWN. Viewer-only drafts until Brian says he is printing; new part ID at release.
+
+### Draft 3 (2026-11-08)
+Brick measured on the 3D measure page plus two viewer-check fixes (device card has all values): cord 4, boot 10 x 13, prong block 29 wide r 4 starting 10 below the top, front-view corners r 16, top-view label-face edges r 10, top curve 18 x 15, bottom 15 x 15, side ribs cosmetic, socket-tip block 13.55. **Grip from the flats only** (Brian): side walls on the 45 width and lips behind the main back hold the 30 depth; the cavity's curves use radii 4 smaller (`loose`) so the curves never bear. Lips run Z 18 to 67. Cord slot 11 for the boot. No box/brick overlap (manifold intersection empty). Viewer https://claude.ai/artifact/BfXa8m5GSqzkvcr2UoPVam. Fit, snap and grip UNKNOWN; viewer-only.

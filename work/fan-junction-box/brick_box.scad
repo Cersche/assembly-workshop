@@ -1,4 +1,4 @@
-// Fan power box that snaps onto the GuanTing 12 V brick (DRAFT 2, viewer only, 2026-11-08).
+// Fan power box that snaps onto the GuanTing 12 V brick (DRAFT 3, viewer only, 2026-11-08).
 // Holds 2x Wago 221-413 (12 V, GND) and the brick's screw-terminal socket tip; the brick's
 // barrel plug enters through the bottom end wall. Zip-tie anchor outside for the cord bundle.
 // Frame: strip face at Y=0 (prong block face), X across the brick width, Z up (Z=0 brick bottom).
@@ -6,29 +6,37 @@
 // back face, below the prong block. Fit, snap, grip, strength and heat are UNKNOWN.
 include <workshop.scad>
 $fn = 48;
-part = "box"; // box | lid | brick | contents
+part = "box"; // box | lid | brick | contents | measure
 
 // Brick (docs/devices/guanting-12v-brick.md): supplier 45 x 85, Brian's profile 2026-11-08
 bw = 45; bh = 85;
 body_d = 30;          // outer face to main back face
 plinth = 6.25;        // prong block stands out from the main back (P)
 plinth_h = 30;        // top edge to bottom of the prong block (Q)
-round_r = 15;         // outer face curve at top and bottom (T)
+plinth_top = 10;      // prong block starts 10 below the top edge (Brian, viewer check)
+plan_r = 10;          // label-face side edges, seen from above (Brian, viewer check)
+round_r = 15;         // outer face curve at the bottom: 15 up the face x 15 along the bottom
+top_rz = 18; top_ry = 15; // top curve: 18 down the face x 15 along the top (Brian, 3D measure page)
+front_r = 16;         // corner radius seen from the label face
+plinth_w = 29;        // prong block width, centred; its outer corners r 4 seen from above
+plinth_r = 4;
 cord_y = plinth + 7.75; // cord centre from the strip face (S from the main back)
-cord_d = 4;           // UNKNOWN cord OD
+cord_d = 4;           // cord OD (measured)
+boot_d = 10; boot_len = 13; // strain-relief boot at the brick bottom
 prong_top = 15.5;
 dd = plinth + body_d; // 36.25 overall
 // Socket tip and plug
 tip_len = 37.3; tip_barrel = 10; blk_h = 11.75; blk_w = 14.5;
-blk_len = 16;         // UNKNOWN: green block length along the tip
+blk_len = 13.55;      // green block length along the tip (measured)
 plug_len = 35; plug_d = 9;
 wago = [18.7, 18.6, 8.3];
 
-cl = 0.3;             // cradle clearance per side (UNKNOWN fit)
+cl = 0.3;             // cradle clearance per side on the main flats (UNKNOWN fit)
+loose = 4;            // cavity curves use radii 4 smaller, so grip comes from the flats, not the curves
 t = 2.4;              // walls
 lip_t = 2;            // snap lip thickness (Y)
 lip_reach = 1.5;      // how far the lip reaches in behind the back face
-lip_z = [3, bh - plinth_h - 3];
+lip_z = [front_r + 2, bh - front_r - 2]; // straight part of the sides; ribs are cosmetic
 box_h = 14; lid_t = 2.4;
 
 xo = bw/2 + cl + t;
@@ -47,15 +55,34 @@ notch = [10, 6];
 notch_z = (zi0 + tip_len + wago_z0)/2;
 
 // Brick side profile, 2D: u = Y (from the strip), v = Z
-module profile2d() {
+module profile2d(k = 0) {   // body only, no prong block; k shrinks the curve radii
     hull() {
         translate([plinth, 0]) square([1, bh]);
-        translate([dd - round_r, round_r]) circle(r = round_r);
-        translate([dd - round_r, bh - round_r]) circle(r = round_r);
+        translate([dd - round_r + k, round_r - k]) circle(r = round_r - k);
+        translate([dd - top_ry + k, bh - top_rz + k]) scale([top_ry - k, top_rz - k]) circle(r = 1, $fn = 64);
     }
-    translate([0, bh - plinth_h]) square([plinth + 1, plinth_h]);
+}
+// Front view outline (X, Z), r 16 corners
+module front2d(k = 0) {
+    r = front_r - k;
+    hull() for (x = [-bw/2 + r, bw/2 - r], z = [r, bh - r]) translate([x, z]) circle(r = r);
 }
 module along_x(w) rotate([90, 0, 90]) linear_extrude(w, center = true) children();
+module along_y(y0, y1) translate([0, y1, 0]) rotate([90, 0, 0]) linear_extrude(y1 - y0) children();
+// Plan view (X, Y): r 10 where the sides meet the label face, square at the back
+module plan2d(k = 0) {
+    r = plan_r - k;
+    hull() {
+        translate([-bw/2, plinth]) square([bw, 1]);
+        for (x = [-bw/2 + r, bw/2 - r]) translate([x, dd - r]) circle(r = r);
+    }
+}
+// Brick body grown by off: side profile x front outline x plan outline
+module body3d(off, k = 0) intersection() {
+    along_x(bw + 2*off + 2) offset(r = off) profile2d(k);
+    along_y(-30, dd + off + 1) offset(r = off) front2d(k);
+    translate([0, 0, -off - 1]) linear_extrude(bh + 2*off + 2) offset(r = off) union() { plan2d(k); translate([-bw/2, -30]) square([bw, plinth + 31]); }
+}
 
 module rrect(x0, x1, z0, z1, y0, y1, r = 2.5) {
     hull() for (x = [x0 + r, x1 - r], z = [z0 + r, z1 - r]) translate([x, y0, z]) rotate([-90, 0, 0]) cylinder(r = r, h = y1 - y0);
@@ -65,14 +92,14 @@ module box() {
     difference() {
         union() {
             intersection() {
-                along_x(2*xo) offset(r = cl + t) profile2d();
+                body3d(cl + t, loose);
                 translate([-xo - 1, y_lip0, z0 - 1]) cube([2*xo + 2, 100, z1 - z0 + 2]);
             }
-            rrect(-xo, xo, z0, z1, dd - 10, yt);
+            rrect(-xo, xo, z0, z1, dd - 10, yt, 6);
             zip_anchor();
         }
         // brick cavity
-        along_x(bw + 2*cl) offset(r = cl) profile2d();
+        body3d(cl, loose);
         // open back between the lips
         translate([-(bw/2 + cl - lip_reach), -1, z0 - 1]) cube([bw + 2*cl - 2*lip_reach, plinth + 1, z1 - z0 + 2]);
         // no lips outside lip_z (prong block zone, bottom corner)
@@ -81,10 +108,10 @@ module box() {
         for (sx = [-1, 1]) translate([sx*(bw/2 + cl - lip_reach), y_lip0, lip_z[0] - 1]) rotate([0, 0, sx > 0 ? 0 : 90])
             linear_extrude(lip_z[1] - lip_z[0] + 2) polygon([[0, 0], [lip_reach + 0.01, 0], [0, lip_reach]]);
         // cord slot in the bottom cap, open to the back
-        translate([-(cord_d + 1)/2, -1, z0 - 1]) cube([cord_d + 1, cord_y + 1, t + cl + 2]);
-        translate([0, cord_y, z0 - 1]) cylinder(d = cord_d + 1, h = t + cl + 2);
+        translate([-(boot_d + 1)/2, -1, z0 - 1]) cube([boot_d + 1, cord_y + 1, t + cl + 2]);
+        translate([0, cord_y, z0 - 1]) cylinder(d = boot_d + 1, h = t + cl + 2);
         // box interior
-        rrect(-xo + t, xo - t, zi0, zi1, yb, yt + 1, 1);
+        rrect(-xo + t, xo - t, zi0, zi1, yb, yt + 1, 3.6);
         // plug hole through the bottom end wall
         translate([0, yb + tip_barrel/2 + 0.5, z0 - 1]) cylinder(d = plug_d + 0.6, h = -z0 + 2);
         // output cable notch, right wall
@@ -116,7 +143,7 @@ module zip_anchor() {
 
 module lid() {
     difference() {
-        rrect(-xo, xo, z0, z1, yt, yt + lid_t);
+        rrect(-xo, xo, z0, z1, yt, yt + lid_t, 6);
         for (b = boss) translate([b[0], yt - 1, b[1]]) rotate([-90, 0, 0]) {
             cylinder(d = 3.4, h = lid_t + 2);
             translate([0, 0, 1 + lid_t - 1.7]) cylinder(d1 = 3.4, d2 = 6.8, h = 1.7 + 0.01);
@@ -125,9 +152,19 @@ module lid() {
 }
 
 module brick() {
-    along_x(bw) profile2d();
-    for (sx = [-1, 1]) translate([sx*6.35 - 0.75, -16, bh - prong_top - 6]) cube([1.5, 16, 6]);
-    translate([0, cord_y, -20]) cylinder(d = cord_d, h = 20);
+    body3d(0);
+    // prong block: 29 wide, r 4 outer corners seen from above, clipped by the front outline
+    intersection() {
+        hull() for (x = [-plinth_w/2 + plinth_r, plinth_w/2 - plinth_r]) {
+            translate([x, plinth_r, bh - plinth_h]) cylinder(r = plinth_r, h = plinth_h - plinth_top);
+            translate([x - plinth_r, plinth, bh - plinth_h]) cube([2*plinth_r, 1, plinth_h - plinth_top]);
+        }
+        along_y(-1, plinth + 2) front2d();
+    }
+    // US blades (NEMA 1-15, standard): 12.7 apart, 6.35 tall, 1.5 thick, 16 long
+    for (sx = [-1, 1]) translate([sx*6.35 - 0.75, -16, bh - prong_top - 6.35]) cube([1.5, 16, 6.35]);
+    translate([0, cord_y, -boot_len]) cylinder(d1 = 6, d2 = boot_d, h = boot_len);
+    translate([0, cord_y, -boot_len - 20]) cylinder(d = cord_d, h = 20);
 }
 
 module contents() {
@@ -142,3 +179,11 @@ if (part == "box") box();
 if (part == "lid") lid();
 if (part == "brick") brick();
 if (part == "contents") contents();
+// Measuring stand-in: brick plus the socket tip laid beside it (tip axis along Z at X=60)
+if (part == "measure") {
+    brick();
+    translate([60, 0, 0]) {
+        cylinder(d = tip_barrel, h = bar_len);
+        translate([-blk_w/2, -blk_h/2, bar_len]) cube([blk_w, blk_h, blk_len]);
+    }
+}
