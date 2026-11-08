@@ -15,8 +15,8 @@
         "work/cable-span-bracket/span_bracket.scad"
       ],
       "workflow_log": "Cable management bracket (front to rear posts)",
-      "notes": "Seeded by Codex, check: High: CSB-B released 2026-11-05; CSB-A fits but no driver access. Awaiting B report. HANDOFF and workflow log agree.",
-      "updated": "2026-11-06"
+      "notes": "CSB-C released for printing 2026-11-07 (M6 x 10, 4.5 seat, floor entry notches); awaiting CSB-C fit report. CSB-A fits but no driver access; CSB-B screw stuck out 2 past the post. Updated by Claude 2026-11-07.",
+      "updated": "2026-11-07"
     },
     {
       "id": "mrt",
@@ -24,7 +24,7 @@
       "prefixes": [
         "MRT"
       ],
-      "status": "draft",
+      "status": "printing",
       "device_cards": [
         "docs/devices/screenbeam-ecb7250.md",
         "docs/devices/bridgelink-2way-splitter.md"
@@ -33,8 +33,8 @@
         "work/moca-rack-tray/MRT.scad"
       ],
       "workflow_log": "",
-      "notes": "Seeded by Codex, check: High identity, medium status: spec requests draft; newer HANDOFF says MRT-H and T5-T7 released for printing 2026-11-06. 2U rear-splitter concept remains discussion. Rear keystones dropped; f-keystone-coupler card is historical, not a current dependency.",
-      "updated": "2026-11-06"
+      "notes": "MRT-H ramps and T5-T7 jigs released for printing 2026-11-06; awaiting fit reports. 2U rear-splitter concept is still discussion. Rear keystones dropped; f-keystone-coupler card is history. Updated by Claude 2026-11-07.",
+      "updated": "2026-11-07"
     },
     {
       "id": "fan",
@@ -43,9 +43,10 @@
         "TFE",
         "TRE",
         "TSR",
-        "TFG"
+        "TFG",
+        "TF"
       ],
-      "status": "draft",
+      "status": "printing",
       "device_cards": [
         "docs/devices/lab-rax-top.md",
         "docs/devices/fan-200mm.md"
@@ -54,8 +55,8 @@
         "work/rack-top-fan/rack_top_fan.scad"
       ],
       "workflow_log": "",
-      "notes": "Seeded by Codex, check: High: draft 4, TFE-A TRE-A TSR-A TFG-A; coupons TFE-T1 TSR-T1. Task 53 dry runs are not releases. No print or release.",
-      "updated": "2026-11-06"
+      "notes": "TF-D rack top set released for printing 2026-11-07 (outputs/Rack_Top_Fan_TF-D_2026-11-07/); TF-C printed, no fit report logged. Earlier TFE/TRE/TSR/TFG drafts and coupons TFE-T1/TSR-T1. Updated by Claude 2026-11-07.",
+      "updated": "2026-11-07"
     },
     {
       "id": "opx",
@@ -156,12 +157,14 @@
       "prefixes": [
         "CHS"
       ],
-      "status": "idea",
+      "status": "draft",
       "device_cards": [],
-      "sources": [],
+      "sources": [
+        "work/chess-clock-switch/chess_clock_switch.scad"
+      ],
       "workflow_log": "",
-      "notes": "Seeded by Codex, check: Low: explicitly requested by task 54, but no CHS source, release or device card in this checkout. No revision invented.",
-      "updated": "2026-11-06"
+      "notes": "CHS-A two-Cherry-MX rocker, PROPOSED, unprinted; set 3MF in outputs/Final_3MF/CHS-A_chess_clock_switch_set.3mf. Switch stem heights nominal, unmeasured; no device card. Updated by Claude 2026-11-07.",
+      "updated": "2026-11-07"
     },
     {
       "id": "wmb",
@@ -169,12 +172,14 @@
       "prefixes": [
         "WMB"
       ],
-      "status": "idea",
+      "status": "draft",
       "device_cards": [],
-      "sources": [],
+      "sources": [
+        "work/wire-bracket/WMB-A/WMB-A.scad"
+      ],
       "workflow_log": "",
-      "notes": "Seeded by Codex, check: Low: explicitly requested by task 54, but no WMB source, release or card in this checkout. No revision invented.",
-      "updated": "2026-11-06"
+      "notes": "WMB-A flat-printing wire bracket, own geometry after Jeffrey's Lab Rax Cable Management concept (BY-SA); unprinted; 3MF in outputs/Final_3MF/WMB-A_flat_wire_bracket.3mf. Updated by Claude 2026-11-07.",
+      "updated": "2026-11-07"
     },
     {
       "id": "sg8",

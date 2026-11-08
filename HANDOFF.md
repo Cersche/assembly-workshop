@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-07 Workshop Bench live (Claude)
+Codex task 54 reviewed and committed (fe620e7): `tools/bench/`, start with `tools/bench/start.bat`, http://127.0.0.1:8720/. Tidy pass: seed updated (CSB-C, MRT-H, TF-D printing; CHS-A and WMB-A drafts with sources), "Needs attention" now lists only the newest release of each active job with no fit report plus device-card UNKNOWNs (112 -> 14), and error replies read the request body first (fixed flaky HTTP tests on Windows). Not yet checked: the 3D view inside the app in a normal browser (the built-in pane blocks the frame). Codex's open questions: `work/codex-tasks/54-workshop-bench-app-REPORT.md`, "Gaps and decisions".
+
 ## 2026-11-07 Rack top TF-D RELEASED (Claude)
 **TF-D released for printing (Brian: "export it"):** `outputs/Rack_Top_Fan_TF-D_2026-11-07/` (README, release_report: 0 failed, 3 kept WARNs) and `outputs/Final_3MF/TF-D_rack_top_fan_set.3mf`: edge_front TFE-D, edge_rear TRE-D, rail TSR-B (unchanged, print 2), grille TFG-B. Hardware adds 4 x M3 x 35 socket cap + 4 M3 inserts. Viewer `work/mesh-viewer/TF-D.html`. TF-C edges/grille superseded; TF-C fit report still owed by ID.
 

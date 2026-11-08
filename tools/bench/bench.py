@@ -334,9 +334,12 @@ class Bench:
                     r['readmes'] = [f + '/README.md' for f in r['folders'] if f + '/README.md' in self.allowed_text]
                     r['reports'] = [f + '/release_report.md' for f in r['folders'] if f + '/release_report.md' in self.allowed_text]
                     r['released'] = bool(r['folders'])
-                    if r['released'] and not primary:
-                        attention.append({'project': p['id'], 'text': r['id'] + ': released with no direct fit report'})
+                    r['has_fit'] = bool(primary)
                 p['revisions'] = sorted(revisions[p['id']].values(), key=lambda r: (r['date'], natural(r['id'])), reverse=True)
+                # Only the newest release of an active job; older releases and done/parked jobs stay quiet.
+                latest = next((r for r in p['revisions'] if r['released']), None)
+                if p['status'] in ('draft', 'printing', 'report-due') and latest and not latest['has_fit'] and not any(revision_ids_in_order(w, all_prefixes)[:1] == [latest['id']] for w in latest['warnings']):
+                    attention.append({'project': p['id'], 'text': latest['id'] + ': newest release has no fit report yet'})
                 newest = next((r for r in p['revisions'] if r['readmes']), None)
                 if newest:
                     for name in newest['readmes']:
@@ -347,8 +350,9 @@ class Bench:
                     attention.append({'project': p['id'], 'text': p['title'] + ': report due'})
                 if p['status'] == 'printing' and (dt.date.today() - dt.date.fromisoformat(p['updated'])).days > 3:
                     attention.append({'project': p['id'], 'text': p['title'] + ': printing for more than 3 days'})
-                if p['status'] == 'draft' and p['unknowns']:
-                    attention.append({'project': p['id'], 'text': p['title'] + ': linked device/README UNKNOWNs; dependencies need review'})
+                card_unknowns = [u for u in p['unknowns'] if u['source'] in p.get('device_cards', [])]
+                if p['status'] == 'draft' and card_unknowns:
+                    attention.append({'project': p['id'], 'text': p['title'] + f': device card has {len(card_unknowns)} UNKNOWN value(s) this draft depends on'})
             self.cache = {'projects': projects, 'attention': attention, 'errors': errors, 'hashes': self.hashes(), 'statuses': STATUSES, 'token': self.token, 'scan_seconds': round(time.perf_counter() - started, 6)}
             return self.cache
 
@@ -637,7 +641,9 @@ class Handler(BaseHTTPRequestHandler):
             size = int(self.headers.get('Content-Length', '0'))
             if not 0 < size <= 65536:
                 raise Problem('Request must be between 1 and 65536 bytes.', 413)
-            body = json.loads(self.rfile.read(size).decode('utf-8'))
+            data = self.rfile.read(size)
+            self._body_read = True
+            body = json.loads(data.decode('utf-8'))
         except (ValueError, UnicodeError):
             raise Problem('Request is not valid UTF-8 JSON.')
         if not isinstance(body, dict):
@@ -655,10 +661,24 @@ class Handler(BaseHTTPRequestHandler):
             return self.send(200, app.report(body))
         raise Problem('API route not found.', 404)
 
+    def drain(self):
+        # Read an unread request body (up to 1 MB) so Windows doesn't reset the connection before the error reply arrives.
+        if self.command in ('POST', 'PATCH', 'PUT', 'DELETE') and not getattr(self, '_body_read', False):
+            try:
+                size = int(self.headers.get('Content-Length', '0'))
+            except ValueError:
+                size = 0
+            if 0 < size <= 1048576:
+                self.rfile.read(size)
+            else:
+                self.close_connection = True
+
     def handle_request(self):
+        self._body_read = False
         try:
             self.dispatch()
         except Problem as exc:
+            self.drain()
             self.send(exc.status, {'error': str(exc)})
         except (OSError, UnicodeError, ValueError) as exc:
             self.send(500, {'error': 'Could not read or save a Bench file: ' + str(exc)})

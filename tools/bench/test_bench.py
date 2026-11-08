@@ -93,8 +93,8 @@ class DiscoveryTests(Base):
     def test_attention_printing_and_release(self):
         text = str(self.app.snapshot()['attention'])
         self.assertIn('printing for more than 3 days',text)
-        self.assertIn('CSB-B: released',text)
-        self.assertNotIn('CSB-A: released',text)
+        self.assertIn('CSB-B: newest release',text)
+        self.assertNotIn('CSB-A: newest release',text)
 
     def test_attention_report_due(self):
         self.app.update('csb',self.body(status='report-due'))
@@ -102,7 +102,7 @@ class DiscoveryTests(Base):
 
     def test_attention_draft_unknowns(self):
         self.app.update('csb',self.body(status='draft'))
-        self.assertIn('dependencies need review',str(self.app.snapshot()['attention']))
+        self.assertIn('UNKNOWN value(s) this draft depends on',str(self.app.snapshot()['attention']))
 
     def test_fit_matching_whole_id(self):
         p = self.app.snapshot()['projects'][1]
