@@ -335,7 +335,7 @@ class Bench:
                     r['reports'] = [f + '/release_report.md' for f in r['folders'] if f + '/release_report.md' in self.allowed_text]
                     r['released'] = bool(r['folders'])
                     r['has_fit'] = bool(primary)
-                p['revisions'] = sorted(revisions[p['id']].values(), key=lambda r: (r['date'], natural(r['id'])), reverse=True)
+                p['revisions'] = sorted(revisions[p['id']].values(), key=lambda r: (r['date'], bool(r['viewers']), natural(r['id'])), reverse=True)  # same day: a set with a viewer page (TF-D) before its part IDs (TSR-B)
                 # Only the newest release of an active job; older releases and done/parked jobs stay quiet.
                 latest = next((r for r in p['revisions'] if r['released']), None)
                 if p['status'] in ('draft', 'printing', 'report-due') and latest and not latest['has_fit'] and not any(revision_ids_in_order(w, all_prefixes)[:1] == [latest['id']] for w in latest['warnings']):
