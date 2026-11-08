@@ -1,4 +1,4 @@
-// Fan power box on the GuanTing 12 V brick (DRAFT 4, viewer only, 2026-11-08). Two pieces (Brian):
+// Fan power box on the GuanTing 12 V brick (DRAFT 6, viewer only, 2026-11-08). Two pieces (Brian):
 // the SLEEVE snaps onto the brick; the junction BOX (2x Wago 221-413 + the brick's screw-terminal
 // socket tip, wired first) slides down onto a dovetail rail on the sleeve and is locked by one M3
 // countersunk screw into an M3 heat-set insert in the rail. The brick's barrel plug enters through
@@ -44,7 +44,7 @@ box_h = 14; lid_t = 2.4;
 tie_w = 5;            // slot length (fits ties up to ~4.8 wide)
 tie_t = 1.8;          // slot width / tunnel height (ties ~1.2 thick)
 tie_gap = 10;         // slot centre to centre
-tie_pad = 2;          // low pad on the outer face; the tunnel runs inside wall + pad
+tie_groove = 1.4;     // flush slots (Brian, draft 6): the tunnel is a groove in the cavity side, the brick closes it
 
 xo = bw/2 + cl + t;
 y_lip0 = plinth - cl - lip_t;       // shell starts here
@@ -112,7 +112,6 @@ module sleeve() {
                 translate([-xo - 1, y_lip0, z0 - 1]) cube([2*xo + 2, 100, z1 - z0 + 2]);
             }
             rrect(-xo, xo, z0, z1, dd - 10, ys, 6);
-            tie_faces() tie_pad_shape();
             // dovetail rail
             translate([0, 0, rail_z0]) linear_extrude(z1 - rail_z0) rail2d();
         }
@@ -175,14 +174,11 @@ module tie_faces() {
     translate([-xo, y_mid, bh/2]) multmatrix([[0, 0, -1, 0], [1, 0, 0, 0], [0, 1, 0, 0]]) children(); // left
     translate([0, y_mid, z1]) multmatrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0]]) children();     // top
 }
-module tie_pad_shape() {
-    hull() for (u = [-1, 1], v = [-1, 1]) translate([u*(tie_gap/2 + 4), v*(tie_w/2 + 3), -1]) cylinder(r = 3, h = tie_pad + 1);
-}
 module tie_cut() {
-    // two slots from the pad top down into a tunnel; 1.2 of wall stays on the brick side
-    w0 = -t + 1.2; w1 = w0 + tie_t;
-    translate([-tie_gap/2 - tie_t/2, -tie_w/2, w0]) cube([tie_gap + tie_t, tie_w, tie_t]);
-    for (u = [-1, 1]) translate([u*tie_gap/2 - tie_t/2, -tie_w/2, w0]) cube([tie_t, tie_w, tie_pad - w0 + 1]);
+    // two flush slots through the wall into a groove on the cavity side; the tie passes between
+    // the groove roof (t - tie_groove = 1.0 bridge) and the brick (+ cl)
+    translate([-tie_gap/2 - tie_t/2, -tie_w/2, -t - 1]) cube([tie_gap + tie_t, tie_w, tie_groove + 1]);
+    for (u = [-1, 1]) translate([u*tie_gap/2 - tie_t/2, -tie_w/2, -t - 1]) cube([tie_t, tie_w, t + 2]);
 }
 
 module lid() {
