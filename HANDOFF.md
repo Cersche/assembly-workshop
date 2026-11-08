@@ -1,5 +1,10 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-08 Fan power box on the brick: draft 5, two pieces (Claude)
+`work/fan-junction-box/brick_box.scad` is draft 5 (Spec.md "Drafts 4 and 5"). Brian asked for zip-tie slot pairs centred on the left, right and top faces instead of the anchor, then for a split: `part="sleeve"` snaps onto the brick and carries the tie slots, and `part="box"` (Wagos + socket tip, wired first) slides down onto a dovetail rail on the sleeve, locked by one M3 countersunk screw into an insert in the rail. The grip rule (flats only, `loose` 4) is unchanged. No volume overlaps between any parts. Viewer https://claude.ai/artifact/CtVcjkFpzQ51kvt2baD9FX. STLs in `work/fan-junction-box/draft5_stl/` (local only).
+- **Next:** Brian's review of draft 5, then his go to print, a part ID and release with `tools/release_part.py`.
+- **UNKNOWN:** dovetail fit, tie threading, lock screw length (M3 x 8 assumed), fit, snap, grip, heat.
+
 ## 2026-11-08 Fan power box on the brick: draft 3 (Claude)
 Brian measured the GuanTing brick on the 3D measure page (`work/fan-junction-box/measure_stl/brick_measure_spec.json`, `part="measure"`) and corrected two things in the viewer; the device card `docs/devices/guanting-12v-brick.md` has every value. `work/fan-junction-box/brick_box.scad` is draft 3: grip from the flat faces only (45 width, 30 main back to label face, lips Z 18 to 67), curves get 4 mm extra room. Brian: "hell yes". Viewer https://claude.ai/artifact/BfXa8m5GSqzkvcr2UoPVam, brick alone https://claude.ai/artifact/PR9Z9LTGpAuDhG8fYvxvbw. Added to Workshop Bench as project `brb` (prefixes BRB, JBC, JBR; draft). STLs and viewer pages local only.
 - **Next:** Brian's go to print, then a part ID and release with `tools/release_part.py`.

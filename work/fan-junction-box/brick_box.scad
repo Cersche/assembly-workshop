@@ -1,12 +1,14 @@
-// Fan power box that snaps onto the GuanTing 12 V brick (DRAFT 3, viewer only, 2026-11-08).
-// Holds 2x Wago 221-413 (12 V, GND) and the brick's screw-terminal socket tip; the brick's
-// barrel plug enters through the bottom end wall. Zip-tie anchor outside for the cord bundle.
+// Fan power box on the GuanTing 12 V brick (DRAFT 4, viewer only, 2026-11-08). Two pieces (Brian):
+// the SLEEVE snaps onto the brick; the junction BOX (2x Wago 221-413 + the brick's screw-terminal
+// socket tip, wired first) slides down onto a dovetail rail on the sleeve and is locked by one M3
+// countersunk screw into an M3 heat-set insert in the rail. The brick's barrel plug enters through
+// the box's bottom end wall. Zip-tie slot pairs centred on the sleeve's left, right and top faces.
 // Frame: strip face at Y=0 (prong block face), X across the brick width, Z up (Z=0 brick bottom).
 // The brick is pushed into the cradle from the back; two side lips snap in behind its main
 // back face, below the prong block. Fit, snap, grip, strength and heat are UNKNOWN.
 include <workshop.scad>
 $fn = 48;
-part = "box"; // box | lid | brick | contents | measure
+part = "box"; // sleeve | box | lid | brick | contents | measure
 
 // Brick (docs/devices/guanting-12v-brick.md): supplier 45 x 85, Brian's profile 2026-11-08
 bw = 45; bh = 85;
@@ -38,17 +40,29 @@ lip_t = 2;            // snap lip thickness (Y)
 lip_reach = 1.5;      // how far the lip reaches in behind the back face
 lip_z = [front_r + 2, bh - front_r - 2]; // straight part of the sides; ribs are cosmetic
 box_h = 14; lid_t = 2.4;
+// Zip-tie slots (Brian, draft 4): a slot pair in the middle of the left, right and top faces
+tie_w = 5;            // slot length (fits ties up to ~4.8 wide)
+tie_t = 1.8;          // slot width / tunnel height (ties ~1.2 thick)
+tie_gap = 10;         // slot centre to centre
+tie_pad = 2;          // low pad on the outer face; the tunnel runs inside wall + pad
 
 xo = bw/2 + cl + t;
 y_lip0 = plinth - cl - lip_t;       // shell starts here
-yf = dd + cl;                       // inside face of the box floor
-yb = yf + t;                        // inside of the box
+yf = dd + cl;                       // sleeve: inside face of its front plate
+ys = yf + t;                        // sleeve front plate outer face = split face
+// Dovetail rail (on the sleeve, along Z) and the box floor groove; box slides down from the top
+rail_h = 2.5; rail_base = 12; rail_top = 16; // rail narrow at the plate, wide at its face
+dv_cl = 0.25;                       // groove clearance per face (UNKNOWN fit)
+box_floor = 4;                      // box floor; groove 2.75 deep leaves 1.25
+yb = ys + box_floor;                // inside of the box
 yt = yb + box_h;                    // lid seat
 z0 = -cl - t; z1 = bh + cl + t;     // outer Z
 zi0 = 0; zi1 = bh;                  // box inside Z range
 boss_d = 9;
 boss = [for (sx = [-1, 1], z = [zi0 + boss_d/2, zi1 - boss_d/2]) [sx*(xo - t - boss_d/2 + 0.5), z]];
 bar_len = tip_len - blk_len;
+rail_z0 = z0 + 4;                   // rail bottom = box stop (box floor closed below the groove)
+lock_z = zi1 - boss_d/2;            // lock screw between the two top lid bosses, above the Wagos
 wago_z1 = zi1 - boss_d - 0.5;
 wago_z0 = wago_z1 - wago[1];
 notch = [10, 6];
@@ -88,15 +102,19 @@ module rrect(x0, x1, z0, z1, y0, y1, r = 2.5) {
     hull() for (x = [x0 + r, x1 - r], z = [z0 + r, z1 - r]) translate([x, y0, z]) rotate([-90, 0, 0]) cylinder(r = r, h = y1 - y0);
 }
 
-module box() {
+module rail2d(c = 0) offset(delta = c) polygon([[-rail_base/2, ys - 1], [rail_base/2, ys - 1], [rail_base/2, ys], [rail_top/2, ys + rail_h], [-rail_top/2, ys + rail_h], [-rail_base/2, ys]]);
+
+module sleeve() {
     difference() {
         union() {
             intersection() {
                 body3d(cl + t, loose);
                 translate([-xo - 1, y_lip0, z0 - 1]) cube([2*xo + 2, 100, z1 - z0 + 2]);
             }
-            rrect(-xo, xo, z0, z1, dd - 10, yt, 6);
-            zip_anchor();
+            rrect(-xo, xo, z0, z1, dd - 10, ys, 6);
+            tie_faces() tie_pad_shape();
+            // dovetail rail
+            translate([0, 0, rail_z0]) linear_extrude(z1 - rail_z0) rail2d();
         }
         // brick cavity
         body3d(cl, loose);
@@ -110,6 +128,17 @@ module box() {
         // cord slot in the bottom cap, open to the back
         translate([-(boot_d + 1)/2, -1, z0 - 1]) cube([boot_d + 1, cord_y + 1, t + cl + 2]);
         translate([0, cord_y, z0 - 1]) cylinder(d = boot_d + 1, h = t + cl + 2);
+        tie_faces() tie_cut();
+        // lock screw insert in the rail (M3 x 3 x 5: 4.2 x 4) + screw tip clearance
+        translate([0, ys + rail_h + 0.01, lock_z]) rotate([90, 0, 0]) { ws_insert_bore(ws_insert_m3); cylinder(d = 3.2, h = 6.5); }
+    }
+}
+
+module box() {
+    difference() {
+        rrect(-xo, xo, z0, z1, ys, yt, 6);
+        // dovetail groove, open at the top, closed below rail_z0 (stop)
+        translate([0, 0, rail_z0 - dv_cl]) linear_extrude(z1 - rail_z0 + dv_cl + 1) rail2d(dv_cl);
         // box interior
         rrect(-xo + t, xo - t, zi0, zi1, yb, yt + 1, 3.6);
         // plug hole through the bottom end wall
@@ -117,10 +146,16 @@ module box() {
         // output cable notch, right wall
         translate([xo - t - 1, yt - notch[1], notch_z - notch[0]/2]) cube([t + 2, notch[1] + 1, notch[0]]);
     }
-    // insert bosses (M3 x 3 x 5: 4.2 bore x 4 deep)
+    // insert bosses for the lid (M3 x 3 x 5: 4.2 bore x 4 deep)
     for (b = boss) translate([b[0], yb - 0.01, b[1]]) difference() {
         rotate([-90, 0, 0]) cylinder(d = boss_d, h = box_h + 0.01);
         translate([0, box_h - 4 + 0.01, 0]) rotate([-90, 0, 0]) ws_insert_bore(ws_insert_m3);
+    }
+    // lock screw boss: M3 countersunk from inside the box into the rail insert (M3 x 8 assumed)
+    translate([0, yb - 0.01, lock_z]) difference() {
+        rotate([-90, 0, 0]) cylinder(d = boss_d, h = 2.4);
+        translate([0, -box_floor - 1, 0]) rotate([-90, 0, 0]) cylinder(d = 3.4, h = 10);
+        translate([0, 2.4 - 1.7 + 0.02, 0]) rotate([-90, 0, 0]) cylinder(d1 = 3.4, d2 = 6.8, h = 1.7);
     }
     // socket tip pocket: ribs either side of the barrel at the block's ends
     for (sx = [-1, 1]) {
@@ -133,12 +168,21 @@ module box() {
     translate([-0.6, yb - 0.01, wago_z0]) cube([1.2, 5, wago[1]]);
 }
 
-module zip_anchor() {
-    // bridge on the left outer wall of the box; zip tie runs along Z through it
-    difference() {
-        translate([-xo - 4.5, yb + 1, 18]) cube([4.5 + 0.01, 10, 8]);
-        translate([-xo - 2.5, yb + 3, 17]) cube([2, 6, 10]);
-    }
+// Zip-tie slots, local frame: u = along the slot spacing, v = along the slot, w = outward (outer face at w = 0)
+y_mid = (y_lip0 + ys)/2;             // centre of the sleeve's side/top faces
+module tie_faces() {
+    translate([xo, y_mid, bh/2]) multmatrix([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0]]) children();   // right
+    translate([-xo, y_mid, bh/2]) multmatrix([[0, 0, -1, 0], [1, 0, 0, 0], [0, 1, 0, 0]]) children(); // left
+    translate([0, y_mid, z1]) multmatrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0]]) children();     // top
+}
+module tie_pad_shape() {
+    hull() for (u = [-1, 1], v = [-1, 1]) translate([u*(tie_gap/2 + 4), v*(tie_w/2 + 3), -1]) cylinder(r = 3, h = tie_pad + 1);
+}
+module tie_cut() {
+    // two slots from the pad top down into a tunnel; 1.2 of wall stays on the brick side
+    w0 = -t + 1.2; w1 = w0 + tie_t;
+    translate([-tie_gap/2 - tie_t/2, -tie_w/2, w0]) cube([tie_gap + tie_t, tie_w, tie_t]);
+    for (u = [-1, 1]) translate([u*tie_gap/2 - tie_t/2, -tie_w/2, w0]) cube([tie_t, tie_w, tie_pad - w0 + 1]);
 }
 
 module lid() {
@@ -175,6 +219,7 @@ module contents() {
     for (sx = [-1, 1]) translate([sx > 0 ? 0.6 : -0.6 - wago[0], yb, wago_z0]) cube([wago[0], wago[2], wago[1]]);
 }
 
+if (part == "sleeve") sleeve();
 if (part == "box") box();
 if (part == "lid") lid();
 if (part == "brick") brick();
