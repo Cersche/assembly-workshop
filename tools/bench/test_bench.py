@@ -155,6 +155,39 @@ class DiscoveryTests(Base):
         self.assertEqual(r['date_source'],'folder name')
 
 
+class QueueTests(Base):
+    def test_queue_order_status_days_latest_and_overdue(self):
+        data = self.app.data()
+        for p, status, date in zip(data['projects'], ['printing','report-due','printing'],
+                                    ['2026-11-05','2026-11-01','2026-11-04']):
+            p.update(status=status, updated=date)
+        (self.root/b.PROJECTS).write_bytes(b.json_bytes(data))
+        class FixedDate(dt.date):
+            @classmethod
+            def today(cls): return cls(2026, 11, 8)
+        before = tree_hashes(self.root)
+        with patch.object(b.dt, 'date', FixedDate):
+            queue = self.app.refresh()['queue']
+        self.assertEqual([p['id'] for p in queue], ['cm','scr','csb'])
+        self.assertEqual([p['days'] for p in queue], [7,4,3])
+        self.assertEqual([p['overdue'] for p in queue], [False,True,False])
+        self.assertEqual([p['latest'] for p in queue], [None,None,'CSB-B'])
+        self.assertEqual(list(queue[0]), ['id','title','status','latest','days','overdue'])
+        self.assertEqual(before, tree_hashes(self.root))
+
+    def test_queue_only_two_statuses_and_empty(self):
+        for status in b.STATUSES:
+            self.app.update('csb', self.body(status=status))
+            queue = self.app.snapshot()['queue']
+            self.assertEqual([p['id'] for p in queue], ['csb'] if status in ('printing','report-due') else [])
+
+    def test_queue_tie_order_is_stable(self):
+        data = self.app.data()
+        for p in data['projects']: p.update(status='report-due', updated='2026-11-01')
+        (self.root/b.PROJECTS).write_bytes(b.json_bytes(data))
+        self.assertEqual([p['id'] for p in self.app.refresh()['queue']], ['cm','csb','scr'])
+
+
 class WriteTests(Base):
     def test_status_backup_only_expected_files(self):
         before=tree_hashes(self.root);old=(self.root/b.PROJECTS).read_bytes()
@@ -164,6 +197,16 @@ class WriteTests(Base):
         self.assertEqual((self.root/(b.PROJECTS+'.bak')).read_bytes(),old)
         self.assertEqual(self.app.data()['projects'][0]['status'],'done')
         self.assertFalse(list(self.root.rglob('*.tmp')))
+
+    def test_status_only_preserves_all_details_and_notes(self):
+        self.app.update('csb', self.body(notes='Keep these notes', title='Keep title'))
+        before = self.app.data()['projects'][0]
+        for status in b.STATUSES:
+            self.app.update('csb', self.body(status=status))
+            after = self.app.data()['projects'][0]
+            self.assertEqual({k:v for k,v in after.items() if k not in ('status','updated')},
+                             {k:v for k,v in before.items() if k not in ('status','updated')})
+            self.assertEqual(after['status'], status)
 
     def test_notes_unicode(self):
         self.app.update('csb',self.body(notes='Café — 日本\nsecond line'))
@@ -281,6 +324,70 @@ class WriteTests(Base):
         self.assert_problem(lambda:self.app.update('csb',self.body(status='done')),409)
 
 
+class DetailTests(Base):
+    def test_edit_each_field_and_rescan(self):
+        self.app.snapshot()
+        fields = dict(title='New title', prefixes=['NEW'], device_cards=[],
+                      sources=['outputs/Final_3MF/README.md'], workflow_log='Another project')
+        original = (self.root/b.PROJECTS).read_bytes()
+        for key, value in fields.items():
+            self.app.update('csb', self.body(**{key: value}))
+            p = self.app.snapshot()['projects'][0]
+            self.assertEqual(p[key], value)
+            self.assertEqual(p['updated'], dt.date.today().isoformat())
+        self.assertFalse(self.app.snapshot()['projects'][0]['revisions'])
+        self.assertNotEqual((self.root/(b.PROJECTS+'.bak')).read_bytes(), original)
+
+    def test_own_prefixes_allowed(self):
+        self.app.update('csb', self.body(prefixes=['CSB']))
+        self.assertEqual(self.app.snapshot()['projects'][0]['prefixes'], ['CSB'])
+
+    def test_bad_edits_and_create_share_errors(self):
+        (self.root/'docs/devices/not-markdown.txt').write_text('text', encoding='utf-8')
+        cases = [dict(title=''), dict(title='x'*161), dict(prefixes=['CM6']),
+                 dict(prefixes=['CM6A']), dict(prefixes=['CSB','CSB']),
+                 dict(prefixes=['NEW','NEWX']), dict(device_cards=['docs/devices/missing.md']),
+                 dict(device_cards=['work/span.scad']), dict(device_cards=['docs/devices/not-markdown.txt']),
+                 dict(device_cards=['docs/Fit_Findings.md']), dict(sources=['docs/Fit_Findings.md']),
+                 dict(sources=['work/missing.scad']), dict(sources='work/span.scad')]
+        for fields in cases:
+            with self.subTest(fields=fields):
+                self.assert_problem(lambda: self.app.update('csb', self.body(**fields)))
+                create_fields = dict(title='New', prefixes=['NEW']); create_fields.update(fields)
+                with self.assertRaises(b.Problem) as create_error:
+                    self.app.create(self.body(**create_fields))
+                with self.assertRaises(b.Problem) as edit_error:
+                    self.app.update('csb', self.body(**fields))
+                self.assertEqual(str(create_error.exception), str(edit_error.exception))
+
+    def test_id_and_unknown_fields_rejected(self):
+        for fields in [dict(id='changed'), dict(arbitrary='bad'), dict()]:
+            self.assert_problem(lambda: self.app.update('csb', self.body(**fields)))
+
+    def test_workflow_validation_and_continued(self):
+        self.assert_problem(lambda: self.app.update('csb', self.body(workflow_log='missing')))
+        path = self.root/b.WORKFLOW
+        path.write_text('## Only continued (continued)\ntext', encoding='utf-8')
+        self.app.update('csb', self.body(workflow_log='Only continued'))
+        self.assertEqual(self.app.data()['projects'][0]['workflow_log'], 'Only continued')
+        self.app.update('csb', self.body(workflow_log=''))
+        self.assertEqual(self.app.data()['projects'][0]['workflow_log'], '')
+
+    def test_detail_stale_changes_nothing(self):
+        body = self.body(title='Typed title', prefixes=['NEW'])
+        body['hashes'][b.PROJECTS] = 'old'
+        self.assert_problem(lambda: self.app.update('csb', body), 409)
+
+    def test_details_only_projects_and_backup_changed(self):
+        before = tree_hashes(self.root)
+        old = (self.root/b.PROJECTS).read_bytes()
+        self.app.update('csb', self.body(title='Edited'))
+        after = tree_hashes(self.root)
+        self.assertEqual({k for k in after if before.get(k) != after[k]}, {b.PROJECTS,b.PROJECTS+'.bak'})
+        self.assertEqual((self.root/(b.PROJECTS+'.bak')).read_bytes(), old)
+        self.assertFalse(list(self.root.rglob('*.tmp')))
+
+
 class MarkdownTests(Base):
     def test_headings_lists_tables_code(self):
         rendered=b.markdown('# Title\n- One\n- Two\n\n| A | B |\n| --- | --- |\n| `x` | y |')
@@ -335,6 +442,7 @@ class HttpTests(Base):
     def test_state_and_project(self):
         code,raw,_=self.request('/api/state');self.assertEqual(code,200)
         data=json.loads(raw);self.assertEqual(len(data['projects']),3)
+        self.assertEqual([p['id'] for p in data['queue']], ['csb'])
         self.assertEqual(self.request('/api/projects/csb')[0],200)
 
     def test_static_offline(self):
@@ -346,6 +454,34 @@ class HttpTests(Base):
         code,raw,headers=self.request('/viewer/CSB-A.html');self.assertEqual(code,200)
         self.assertIn('sandbox allow-scripts;',headers['Content-Security-Policy'])
         self.assertNotIn('allow-same-origin',headers['Content-Security-Policy'])
+
+    def test_viewer_bridge_response_only(self):
+        path = self.root/'work/mesh-viewer/CSB-A.html'
+        original = b'<body>One</body><BODY>Two</BODY>'
+        path.write_bytes(original)
+        before = tree_hashes(self.root)
+        code, raw, headers = self.request('/viewer/CSB-A.html')
+        bridge = b'<script>' + (b.STATIC/'viewer-bridge.js').read_bytes() + b'</script>'
+        self.assertEqual(code, 200)
+        self.assertEqual(raw.count(bridge), 1)
+        self.assertTrue(raw.endswith(bridge + b'</BODY>'))
+        self.assertEqual(tree_hashes(self.root), before)
+        self.assertEqual(headers['Content-Security-Policy'], "sandbox allow-scripts; default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval'; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'")
+
+    def test_viewer_bridge_without_body(self):
+        original = (self.root/'work/mesh-viewer/CSB-A.html').read_bytes()
+        raw = self.request('/viewer/CSB-A.html')[1]
+        self.assertTrue(raw.startswith(original + b'<script>'))
+        self.assertTrue(raw.endswith(b'</script>'))
+        self.assertEqual(self.request('/static/viewer-bridge.js')[0], 404)
+
+    def test_standalone_viewer_bridge_and_sandbox(self):
+        code, raw, headers = self.request('/viewer/CSB-A.html')  # no Referer
+        self.assertEqual(code, 200)
+        self.assertIn(b"location.hash.startsWith('#solo=')", raw)
+        self.assertIn(b"decodeURIComponent(location.hash.slice(6))", raw)
+        self.assertIn('sandbox allow-scripts;', headers['Content-Security-Policy'])
+        self.assertIn("connect-src 'none'", headers['Content-Security-Policy'])
 
     def test_unknown_project_http(self):
         self.assertEqual(self.request('/api/projects/nope')[0],404)

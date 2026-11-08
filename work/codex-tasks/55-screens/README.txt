@@ -1,0 +1,1 @@
+Final task 55 acceptance: sixteen PNGs, 1280x900 and 375x900, covering solo/new-tab/all-parts/details/stale/fit-report/queue/empty queue. Earlier JPEGs are historical. See ../55-bench-five-features-REPORT.md for confirm-override disclosure and complete evidence.

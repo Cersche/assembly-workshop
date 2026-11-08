@@ -56,4 +56,4 @@ Brian hands Codex one file from here: "Do work/codex-tasks/<task>.md". Claude wr
 | [40-nine-u-faceplates](40-nine-u-faceplates.md) | A and B done by Claude 2026-10-22 ([report](40-nine-u-faceplates-REPORT.md)); A waits on Brian's switch measurements (STEP unreliable); C screen plate and D cooling blocked on measurements/photo |
 | [41-hidden-faceplate-screws](41-hidden-faceplate-screws.md) | implemented 2026-10-22 by Claude (200 Py + JS pass; 4 exact renders closed, joint axes aligned, 19 legacy sources byte-identical; UI toggle not click-tested) |
 | [54-workshop-bench-app](54-workshop-bench-app.md) | done by Codex, reviewed and committed by Claude 2026-11-07 ([report](54-workshop-bench-app-REPORT.md)) |
-| [55-bench-five-features](55-bench-five-features.md) | written by Claude 2026-11-08, waiting for Codex (solo part in 3D, open 3D in new tab, edit job details, quick status buttons, print queue) |
+| [55-bench-five-features](55-bench-five-features.md) | done by Codex, reviewed and committed by Claude 2026-11-08 ([report](55-bench-five-features-REPORT.md); 185 tests pass 3/3; Claude made details save send changed fields only) |

@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Workshop Bench</title><link rel="stylesheet" href="/static/bench.css"><script src="/static/bench.js" defer></script></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Workshop Bench</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%2367a8ff%22/%3E%3C/svg%3E"><link rel="stylesheet" href="/static/bench.css"><script src="/static/bench.js" defer></script></head>
 <body><a class="skip" href="#main">Skip to project</a>
 <header><div><p class="eyebrow">ASSEMBLY WORKSHOP</p><h1>Workshop Bench</h1><p>Measure. Make a draft. Bring back what you learned.</p></div><div class="actions"><button id="refresh">Refresh</button><button id="new-project">New project</button></div></header>
 <div id="message" role="status" aria-live="polite"></div>
 <div class="layout"><aside aria-label="Projects"><details id="attention"><summary>Needs attention <span id="attention-count">0</span></summary><div id="attention-list"></div></details>
+<div class="part-buttons" aria-label="Project view"><button type="button" id="list-view" aria-pressed="true">Projects</button><button type="button" id="queue-view" aria-pressed="false">Print queue</button></div>
 <label for="search">Find a project or revision</label><input id="search" type="search" placeholder="Title, prefix or revision ID">
 <label for="filter">Project status</label><select id="filter"><option value="">All statuses</option></select><p id="project-count" class="muted"></p><nav id="projects" aria-label="Project list"><p>Loading projects…</p></nav></aside>
 <main id="main" tabindex="-1"><p>Select a project to see its revisions and notes.</p></main></div>

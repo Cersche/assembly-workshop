@@ -353,7 +353,16 @@ class Bench:
                 card_unknowns = [u for u in p['unknowns'] if u['source'] in p.get('device_cards', [])]
                 if p['status'] == 'draft' and card_unknowns:
                     attention.append({'project': p['id'], 'text': p['title'] + f': device card has {len(card_unknowns)} UNKNOWN value(s) this draft depends on'})
-            self.cache = {'projects': projects, 'attention': attention, 'errors': errors, 'hashes': self.hashes(), 'statuses': STATUSES, 'token': self.token, 'scan_seconds': round(time.perf_counter() - started, 6)}
+            queue = []
+            for p in sorted(projects, key=lambda p: (p['updated'], p['id'])):
+                if p['status'] not in ('printing', 'report-due'):
+                    continue
+                days = (dt.date.today() - dt.date.fromisoformat(p['updated'])).days
+                latest = next((r['id'] for r in p['revisions'] if r['released']), None)
+                queue.append({'id': p['id'], 'title': p['title'], 'status': p['status'],
+                              'latest': latest, 'days': days,
+                              'overdue': p['status'] == 'printing' and days > 3})
+            self.cache = {'queue': queue, 'projects': projects, 'attention': attention, 'errors': errors, 'hashes': self.hashes(), 'statuses': STATUSES, 'token': self.token, 'scan_seconds': round(time.perf_counter() - started, 6)}
             return self.cache
 
     def snapshot(self):
@@ -438,15 +447,57 @@ class Bench:
                     pass
         self.cache = None
 
+    def details(self, body, data, project_id=None):
+        """The same field rules for creation and partial detail edits."""
+        result = {}
+        if 'title' in body:
+            result['title'] = clean_text(body['title'], 'Title', 160, required=True)
+        if 'prefixes' in body:
+            prefixes = body.get('prefixes')
+            if not isinstance(prefixes, list) or not 1 <= len(prefixes) <= 20 or any(not isinstance(p, str) or not re.fullmatch('[A-Z][A-Z0-9]{1,15}', p) for p in prefixes):
+                raise Problem('Supply 1–20 uppercase revision prefixes, 2–16 letters/digits each.')
+            used = {x for p in data['projects'] if p['id'] != project_id for x in p['prefixes']}
+            if len(set(prefixes)) != len(prefixes) or used.intersection(prefixes):
+                raise Problem('A revision prefix is already in use.')
+            # Compact CM6A-style IDs make overlapping prefixes ambiguous.
+            if any(a != b and (a.startswith(b) or b.startswith(a)) for a in prefixes for b in used | set(prefixes)):
+                raise Problem('Revision prefixes must not overlap existing prefixes.')
+            result['prefixes'] = prefixes
+        for key in ('device_cards', 'sources'):
+            if key not in body:
+                continue
+            values = body[key]
+            if not isinstance(values, list) or len(values) > 30:
+                raise Problem(key + ' must be a list of at most 30 paths.')
+            for name in values:
+                path = safe_path(self.root, name)
+                if not path.is_file():
+                    raise Problem('File does not exist: ' + name)
+                if key == 'device_cards' and (not name.startswith('docs/devices/') or path.suffix != '.md'):
+                    raise Problem('Device cards must be markdown in docs/devices/.')
+                if key == 'sources' and not name.startswith(('work/', 'outputs/')):
+                    raise Problem('Sources must be inside work/ or outputs/.')
+            result[key] = values
+        if 'workflow_log' in body:
+            title = clean_text(body['workflow_log'], 'Workflow log section', 300)
+            sections = {line[3:].strip().removesuffix(' (continued)')
+                        for line in self.read(WORKFLOW).decode('utf-8').splitlines()
+                        if line.startswith('## ')}
+            if title and title not in sections:
+                raise Problem('Workflow log section must match an existing section title, or be empty.')
+            result['workflow_log'] = title
+        return result
+
     def update(self, project_id, body):
         with self.lock:
-            reject_keys(body, {'hashes', 'status', 'notes'})
+            reject_keys(body, {'hashes', 'status', 'notes', 'title', 'prefixes', 'device_cards', 'sources', 'workflow_log'})
             data = self.data()
             p = next((p for p in data['projects'] if p['id'] == project_id), None)
             if p is None:
                 raise Problem('Unknown project.', 404)
-            if not {'status', 'notes'} & body.keys():
-                raise Problem('Supply a status or notes.')
+            if not set(body) - {'hashes'}:
+                raise Problem('Supply at least one project field to change.')
+            p.update(self.details(body, data, project_id))
             if 'status' in body:
                 if body['status'] not in STATUSES:
                     raise Problem('Choose a valid project status.')
@@ -467,29 +518,11 @@ class Bench:
             data = self.data()
             if any(p['id'] == project_id for p in data['projects']):
                 raise Problem('That project ID already exists.')
-            prefixes = body.get('prefixes')
-            if not isinstance(prefixes, list) or not 1 <= len(prefixes) <= 20 or any(not isinstance(p, str) or not re.fullmatch('[A-Z][A-Z0-9]{1,15}', p) for p in prefixes):
-                raise Problem('Supply 1–20 uppercase revision prefixes, 2–16 letters/digits each.')
-            used = {x for p in data['projects'] for x in p['prefixes']}
-            if len(set(prefixes)) != len(prefixes) or used.intersection(prefixes):
-                raise Problem('A revision prefix is already in use.')
-            # Compact CM6A-style IDs make overlapping prefixes ambiguous.
-            if any(a != b and (a.startswith(b) or b.startswith(a)) for a in prefixes for b in used | set(prefixes)):
-                raise Problem('Revision prefixes must not overlap existing prefixes.')
-            p = {'id': project_id, 'title': title, 'prefixes': prefixes, 'status': 'idea', 'notes': '', 'updated': dt.date.today().isoformat(), 'workflow_log': ''}
-            for key in ('device_cards', 'sources'):
-                values = body.get(key, [])
-                if not isinstance(values, list) or len(values) > 30:
-                    raise Problem(key + ' must be a list of at most 30 paths.')
-                for name in values:
-                    path = safe_path(self.root, name)
-                    if not path.is_file():
-                        raise Problem('File does not exist: ' + name)
-                    if key == 'device_cards' and (not name.startswith('docs/devices/') or path.suffix != '.md'):
-                        raise Problem('Device cards must be markdown in docs/devices/.')
-                    if key == 'sources' and not name.startswith(('work/', 'outputs/')):
-                        raise Problem('Sources must be inside work/ or outputs/.')
-                p[key] = values
+            fields = self.details({'title': title, 'prefixes': body.get('prefixes'),
+                                   'device_cards': body.get('device_cards', []),
+                                   'sources': body.get('sources', [])}, data)
+            p = {'id': project_id, **fields, 'status': 'idea', 'notes': '',
+                 'updated': dt.date.today().isoformat(), 'workflow_log': ''}
             data['projects'].append(p)
             self.replace({PROJECTS: json_bytes(data)}, body.get('hashes'))
             return p
@@ -622,7 +655,12 @@ class Handler(BaseHTTPRequestHandler):
                 name = route[len('/viewer/'):]
                 if '/' in name or not name.endswith('.html'):
                     raise Problem('Only viewer HTML pages can be shown.', 403)
-                return self.send(200, app.read('work/mesh-viewer/' + name), 'text/html; charset=utf-8', viewer=True)
+                content = app.read('work/mesh-viewer/' + name)
+                bridge = b'<script>' + (STATIC / 'viewer-bridge.js').read_bytes() + b'</script>'
+                endings = list(re.finditer(br'</body\s*>', content, re.I))
+                position = endings[-1].start() if endings else len(content)
+                content = content[:position] + bridge + content[position:]
+                return self.send(200, content, 'text/html; charset=utf-8', viewer=True)
             name = 'index.html' if route == '/' else route.removeprefix('/static/')
             if route != '/' and not route.startswith('/static/'):
                 raise Problem('Page not found.', 404)
