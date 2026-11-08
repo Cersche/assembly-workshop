@@ -49,3 +49,13 @@ Brian: the CT200's own leads won't reach the Pi, so they are extended **in the b
 - **Path:** fan leads lay in through a lid notch at the -X edge into the drop room at the pocket's -X end; the pairs run +X; the extension wires turn back into the post-side lane to the Wagos and the corner exit (no U-turn). Lid tie bridge moved beside the new notch.
 - **Draft sizes (TYPICAL, UNKNOWN):** mated pair 26 x 11.5 x 7.5 each; pocket 28.5 x 12.5. Extension lengths UNKNOWN (expect ~30 cm route). Where to measure: `pair_measure.svg`.
 - Geometry: `fan_junction_box_B.scad` (draft 2). Option A (`fan_junction_box.scad`) is unchanged.
+
+## RESTART: box at the power brick (Brian, 2026-11-08) — supersedes everything above
+Everything above (top-corner case, post cleat, options A and B, JBC-A/JBR-A drafts) is history; files kept, not deleted.
+- **Location:** a small box clamped onto the GuanTing brick's body (preferred) or onto the power strip itself. No rack-post mount.
+- **Inside:** two Wago 221-413 (12 V, GND) and the brick's screw-terminal socket tip; the brick's barrel plug enters through a hole in the box wall. Socket tip leads go into Wago port 1.
+- **Outputs:** Wago ports 2 and 3 = 12 V/GND pairs to the CT200 and to the Pi's 40 mm fan.
+- **Not in the box:** everything to the Pi (CT200 ARGB, PWM, tach) runs on Brian's own extensions; he has the 4-pin power/signal split at the fan handled.
+- **Excess brick cord:** bundled ~25 x 85, held by a zip-tie anchor on the outside of the box.
+- **Needed before drafting:** brick W/H/D, cord exit, prong position; socket tip length, barrel OD, block size; plug body OD/length. Where to measure: `brick_measure.svg`. All UNKNOWN until measured.
+- Fit, strength, clamp grip and heat UNKNOWN. Viewer-only drafts until Brian says he is printing; new part ID at release.
