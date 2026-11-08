@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+<defs><marker id="a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c62828"/></marker></defs>
+<rect width="900" height="560" fill="#fff"/>
+<text x="20" y="26" font-size="17" font-weight="bold">GuanTing brick: side profile (as read from the supplier picture, not to scale)</text>
+<text x="20" y="46" fill="#555">Hold it like the supplier's side view: prongs pointing right. Calipers, mm. Expected values are guesses read off the picture.</text>
+
+<!-- outline: outer face left (rounded), main back at x=400, plinth to x=460 at top -->
+<path d="M300,90 H460 V190 H400 V430 Q400,470 360,470 H330 Q260,470 260,400 V160 Q260,90 300,90 Z" fill="#eceff1" stroke="#37474f" stroke-width="2"/>
+<rect x="460" y="150" width="45" height="7" fill="#90a4ae"/><rect x="460" y="168" width="45" height="7" fill="#90a4ae"/>
+<text x="512" y="166" fill="#555" font-size="11">prongs</text>
+<path d="M345,470 V520" stroke="#37474f" stroke-width="5"/>
+<text x="352" y="516" fill="#555" font-size="11">cord</text>
+<text x="300" y="300" text-anchor="middle" fill="#555" font-size="11">outer face</text>
+<text x="300" y="314" text-anchor="middle" fill="#555" font-size="11">(rounded)</text>
+<text x="408" y="320" fill="#555" font-size="11">main back face</text>
+
+<!-- C known -->
+<line x1="260" y1="70" x2="460" y2="70" stroke="#2e7d32" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+<text x="360" y="62" text-anchor="middle" fill="#2e7d32">31 (supplier), outer face to plinth</text>
+
+<!-- P -->
+<line x1="400" y1="215" x2="460" y2="215" stroke="#c62828" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
+<text x="470" y="222" fill="#c62828" font-weight="bold">P: how far the plinth stands out from the main back (~10, or 0 if flat)</text>
+<!-- Q -->
+<line x1="560" y1="90" x2="560" y2="190" stroke="#c62828" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
+<text x="568" y="120" fill="#c62828" font-weight="bold">Q: top edge to the bottom</text>
+<text x="568" y="136" fill="#c62828" font-weight="bold">of the plinth (~20)</text>
+<!-- R -->
+<line x1="260" y1="490" x2="400" y2="490" stroke="#c62828" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
+<text x="130" y="545" fill="#c62828" font-weight="bold">R: depth at the very bottom edge, outer face to back (~15 to 21)</text>
+<!-- S -->
+<line x1="260" y1="440" x2="345" y2="440" stroke="#c62828" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+<text x="120" y="445" fill="#c62828" font-weight="bold">S: outer face to</text>
+<text x="120" y="461" fill="#c62828" font-weight="bold">cord centre (~17)</text>
+<!-- T -->
+<line x1="230" y1="90" x2="230" y2="160" stroke="#c62828" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+<text x="40" y="120" fill="#c62828" font-weight="bold">T: how far down the</text>
+<text x="40" y="136" fill="#c62828" font-weight="bold">outer face is curved</text>
+<text x="40" y="152" fill="#c62828" font-weight="bold">before it goes flat (~15)</text>
+
+<text x="620" y="300" font-weight="bold">Also, yes/no:</text>
+<text x="620" y="320">1. Cord leaves the bottom, centred</text>
+<text x="620" y="336">   (supplier front view)?</text>
+<text x="620" y="360">2. Is the front-view width 45</text>
+<text x="620" y="376">   all the way down, or narrower</text>
+<text x="620" y="392">   at the bottom?</text>
+<text x="620" y="416">3. Is the bottom curved the same</text>
+<text x="620" y="432">   way as the top (T at the bottom)?</text>
+</svg>

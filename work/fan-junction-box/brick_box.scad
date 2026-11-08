@@ -8,10 +8,11 @@ include <workshop.scad>
 $fn = 48;
 part = "box"; // box | lid | brick | contents
 
-// Brick, measured by Brian 2026-11-08 (A..K on brick_measure.svg)
-bw = 44; bh = 87; bd = 31;     // A width, B height, C depth
-prong_top = 15.5;               // E top edge to prongs
-cord_d = 4;                     // UNKNOWN (cord OD), D: leaves the left side, centred
+// Brick: supplier drawing 45 x 85 x 31 (Brian trusts it over his 44/87/31, 2026-11-08)
+bw = 45; bh = 85; bd = 31;     // width, height, depth (over the prongs' plinth)
+prong_top = 15.5;               // E top edge to prongs (Brian)
+cord_d = 4;                     // UNKNOWN (cord OD); supplier picture: cord leaves the bottom, centred
+// UNKNOWN: side profile is not a box (prong plinth at the top, rounded outer face); see brick_profile_measure.svg
 // Socket tip and plug
 tip_len = 37.3; tip_barrel = 10; blk_h = 11.75; blk_w = 14.5;  // F, G, H, I
 blk_len = 16;                   // UNKNOWN: green block length along the tip

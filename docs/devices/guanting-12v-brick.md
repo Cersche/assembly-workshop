@@ -4,10 +4,11 @@ Feeds the CT200 and the Pi's 40 mm fan through the fan power box (`work/fan-junc
 
 | Value | Source | Measured | Status |
 | --- | --- | --- | --- |
-| A width | Brian 2026-11-08 | 44 | measured |
-| B height | Brian 2026-11-08 | 87 | measured |
-| C depth (prong face to outer face) | Brian 2026-11-08 | 31 | measured |
-| D cord exit | Brian 2026-11-08 | left side face, centred | measured |
+| A width | **45 supplier drawing** (Brian: use it); Brian measured 44 | | from source |
+| B height | **85 supplier drawing**; Brian measured 87 | | from source |
+| C depth (outer face to prong face) | **31 supplier drawing**; Brian measured 31 | | from source |
+| D cord exit | supplier picture: bottom, centred (Brian first said left side, centred) | | to confirm |
+| Side profile | supplier picture: not a box. Raised prong plinth at the top of the back, rounded outer face, vent ribs on the sides. Plinth size and outer rounding UNKNOWN (`brick_profile_measure.svg`) | | UNKNOWN |
 | E top edge to prongs | Brian 2026-11-08 | 15.5 | measured |
 | Corner radius, ribs, sloped faces | | | UNKNOWN |
 | Cord OD | | | UNKNOWN (draft uses 4) |
