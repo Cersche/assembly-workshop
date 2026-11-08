@@ -31,3 +31,9 @@ Steps: Measure, Draft, Print, Report.
 | 2026-11-07 | CSB-C draft | Tie anchors removed (Brian); entry notch now a rounded U open through the floor (8 wide, to X 119) for cables from below. Section there: up/down 24k, sideways 0.3k (3.7k beside it) | notch weakens the end sideways |
 | 2026-11-07 | CSB-C released | Brian printing; release_part.py 0 failed, 0 warnings, posts gap 0.22, keep-out clear; M6 x 10 screws | none |
 Totals when the part is done: drafts sent ___, revisions released ___, prints ___, prints that failed ___, measurement requests ___.
+
+## Cable management bracket (front to rear posts) (continued)
+
+| Date | Step | What happened | Friction | App idea |
+| --- | --- | --- | --- | --- |
+| 2026-11-07 | Report | 2026-11-07 CSB-C (Brian, via Workshop Bench): Fits. UNKNOWN walls, UNKNOWN infill. Strength UNKNOWN. | | |
