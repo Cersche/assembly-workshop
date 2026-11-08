@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Workshop Bench</title><link rel="stylesheet" href="/static/bench.css"><script src="/static/bench.js" defer></script></head>
+<body><a class="skip" href="#main">Skip to project</a>
+<header><div><p class="eyebrow">ASSEMBLY WORKSHOP</p><h1>Workshop Bench</h1><p>Measure. Make a draft. Bring back what you learned.</p></div><div class="actions"><button id="refresh">Refresh</button><button id="new-project">New project</button></div></header>
+<div id="message" role="status" aria-live="polite"></div>
+<div class="layout"><aside aria-label="Projects"><details id="attention"><summary>Needs attention <span id="attention-count">0</span></summary><div id="attention-list"></div></details>
+<label for="search">Find a project or revision</label><input id="search" type="search" placeholder="Title, prefix or revision ID">
+<label for="filter">Project status</label><select id="filter"><option value="">All statuses</option></select><p id="project-count" class="muted"></p><nav id="projects" aria-label="Project list"><p>Loading projects…</p></nav></aside>
+<main id="main" tabindex="-1"><p>Select a project to see its revisions and notes.</p></main></div>
+<dialog id="new-dialog"><form id="new-form"><div class="heading"><h2>New project</h2><button type="button" id="close-new">Close</button></div>
+<label for="new-title">Title</label><input id="new-title" name="title" required maxlength="160">
+<label for="new-id">Project ID (optional)</label><input id="new-id" name="id" maxlength="80" placeholder="Generated from the title">
+<label for="new-prefixes">Revision prefixes (comma separated)</label><input id="new-prefixes" name="prefixes" required placeholder="ABC, XYZ">
+<label for="new-cards">Device card paths (one per line, optional)</label><textarea id="new-cards" name="device_cards" placeholder="docs/devices/example.md"></textarea>
+<label for="new-sources">Source paths (one per line, optional)</label><textarea id="new-sources" name="sources" placeholder="work/example/part.scad"></textarea>
+<p id="new-error" role="alert"></p><button type="submit" class="primary">Create project</button></form></dialog>
+<footer>Local notebook · Releasing remains a chat step. Printed fit applies to that specimen only. Strength UNKNOWN.</footer></body></html>
