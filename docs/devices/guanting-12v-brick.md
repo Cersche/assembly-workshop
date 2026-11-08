@@ -6,9 +6,16 @@ Feeds the CT200 and the Pi's 40 mm fan through the fan power box (`work/fan-junc
 | --- | --- | --- | --- |
 | A width | **45 supplier drawing** (Brian: use it); Brian measured 44 | | from source |
 | B height | **85 supplier drawing**; Brian measured 87 | | from source |
-| C depth (outer face to prong face) | **31 supplier drawing**; Brian measured 31 | | from source |
-| D cord exit | supplier picture: bottom, centred (Brian first said left side, centred) | | to confirm |
-| Side profile | supplier picture: not a box. Raised prong plinth at the top of the back, rounded outer face, vent ribs on the sides. Plinth size and outer rounding UNKNOWN (`brick_profile_measure.svg`) | | UNKNOWN |
+| C body depth (outer face to main back face) | 30 (Brian: supplier's 3.1 cm is the body without the prong block) | 30 | measured |
+| P prong block stands out from the main back | Brian 2026-11-08 | 6.25 | measured |
+| Overall depth at the prongs | 30 + 6.25 | 36.25 | derived |
+| Q top edge to bottom of the prong block | Brian 2026-11-08 | 30 | measured |
+| R depth at the bottom edge | Brian 2026-11-08 | 30 | measured |
+| S main back face to cord centre | Brian 2026-11-08 | 7.75 | measured |
+| D cord exit | Brian 2026-11-08: bottom, centred across the width | | confirmed |
+| T outer face curve at top and bottom | Brian 2026-11-08: ~15 down, same at both ends | 15 | measured |
+| Width 45 all the way down | Brian 2026-11-08 | yes | confirmed |
+| Prong block width, front corner radii | | | UNKNOWN (draft: full width, sharp) |
 | E top edge to prongs | Brian 2026-11-08 | 15.5 | measured |
 | Corner radius, ribs, sloped faces | | | UNKNOWN |
 | Cord OD | | | UNKNOWN (draft uses 4) |
