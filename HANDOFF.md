@@ -1,5 +1,19 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-08 MoCA rack tray MRT-I RELEASED (Claude)
+Brian's MRT-H fit notes are logged in docs/Fit_Findings.md.
+- **Released:** MRT-I at Brian's direction: [README](outputs/MoCA_Rack_Tray_MRT-I_2026-11-08/README.md). Print file `outputs/Final_3MF/MRT-I_moca_tray_sled_covers_washers.3mf` (5 objects, tags match).
+  - Tray MRT-I; covers MRT-I-C2/C3; new splitter sled MRT-I-S with 2 IW clamp washers.
+  - Plate MRT-E-P, cover MRT-H-C1, shoes MRT-C-L/R and the ramps are reused unchanged.
+- **Changes from MRT-H:**
+  - Splitter moved 4 to the rear on an adjustable sled (±4). Ear bosses 7 taller.
+  - IN channel moved 9 to the rear, OUT2 6.75 to the rear. No lips anywhere.
+  - Zip-tie fallback is on the sled. Ground screw block kept clear. 17 floor vent slots.
+- **Dropped:** a beefier rear-shoe redesign, at Brian's direction (the MRT-H mounts work well).
+- **Checks:** 0 failed, 4 clearance/countersink warnings, posts U2 clear, cuts=24. Viewer https://claude.ai/artifact/CiaQErKUjCbNFYCvect6YK.
+- **Next step:** Brian's MRT-I fit report.
+- **UNKNOWN:** sled creep, boss stiffness, ground screw head (7 x 3 assumed), lock screw length (M3 x 10 likely), fit, strength.
+
 ## 2026-11-08 Workshop Bench: Open folder for 3MFs (Claude)
 Brian chose a real button over a copy-path button: each 3MF under "Files and evidence" has **Open folder**, which opens File Explorer with that file selected (`POST /api/open-folder`). It is the app's only program launch (Brian OK'd bending the "never launches a program" rule for this): only 3MF paths Bench itself discovered and that still exist, write token required, Windows only. 189 tests pass on 3 runs (tests swap the opener, so no windows open). Checked on a temp copy: Explorer opened the CSB-C folder. Restart Brian's 8720 copy to get it.
 
