@@ -686,8 +686,13 @@ class Handler(BaseHTTPRequestHandler):
     do_GET = do_POST = do_PATCH = do_DELETE = do_PUT = handle_request
 
 
+class BenchServer(ThreadingHTTPServer):
+    # On Windows SO_REUSEADDR lets a second Bench bind the same port silently; then an old copy can answer.
+    allow_reuse_address = os.name != 'nt'
+
+
 def make_server(root, port=8720):
-    server = ThreadingHTTPServer(('127.0.0.1', port), Handler)
+    server = BenchServer(('127.0.0.1', port), Handler)
     server.daemon_threads = True
     server.bench = Bench(root)
     return server
@@ -698,7 +703,10 @@ def main():
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument('--port', type=int, default=8720)
     args = parser.parse_args()
-    server = make_server(args.root, args.port)
+    try:
+        server = make_server(args.root, args.port)
+    except OSError as exc:
+        raise SystemExit(f'Workshop Bench is already running on port {args.port} (or the port is in use): open http://127.0.0.1:{args.port}/ or close the other copy first. ({exc})')
     print(f'Workshop Bench: http://127.0.0.1:{server.server_port} (root: {server.bench.root})', flush=True)
     try:
         server.serve_forever()
