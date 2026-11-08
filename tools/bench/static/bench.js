@@ -6,7 +6,7 @@ function message(text, error = false) { $('#message').textContent = text; $('#me
 async function api(path, method = 'GET', body) {
   const response = await fetch(path, {method, headers: method === 'GET' ? {} : {'Content-Type':'application/json','X-Bench-Token':state?.token || ''}, body:body === undefined ? undefined : JSON.stringify(body)});
   const value = await response.json();
-  if (!response.ok) throw new Error(value.error || `Request failed (${response.status}).`);
+  if (!response.ok) {const err = new Error(value.error || `Request failed (${response.status}).`); err.status = response.status; throw err;}
   return value;
 }
 const options = (values, value) => values.map(v => `<option value="${esc(v)}" ${v === value ? 'selected' : ''}>${esc(v)}</option>`).join('');
@@ -51,6 +51,13 @@ function drawViewer() {
   $('#viewer').innerHTML = r?.viewers.length ? `<label for="viewer-choice">Viewer page</label><select id="viewer-choice">${r.viewers.map(v => `<option value="${esc(v)}">${esc(v.split('/').pop())}</option>`).join('')}</select><iframe title="${esc(revision)} 3D preview" sandbox="allow-scripts" loading="lazy" src="/viewer/${encodeURIComponent(r.viewers[0].split('/').pop())}"></iframe>` : `<p class="empty">${revision ? `No viewer page for ${esc(revision)} yet` : 'No revision or viewer page yet'}</p>`;
   $('#viewer-choice')?.addEventListener('change', e => {$('#viewer iframe').src = '/viewer/' + encodeURIComponent(e.target.value.split('/').pop());});
 }
+// A refused save (409) means a file changed on disk: rescan, keep what was typed, and ask for one more Save.
+async function stale(err) {
+  if (err.status !== 409) {message(err.message, true); return false;}
+  try {await load(true, true);} catch (e) {message(e.message, true); return false;}
+  message('A Bench file changed on disk since this page loaded. The page is now up to date and your typed changes are kept: check them and press Save again.', true);
+  return true;
+}
 function mayLeave() { return !dirty || window.confirm('Discard the unsaved changes on this project?'); }
 async function load(rescan = false, preserve = false) {
   const data = await api(rescan ? '/api/refresh' : '/api/state', rescan ? 'POST' : 'GET', rescan ? {} : undefined);
@@ -61,7 +68,7 @@ async function load(rescan = false, preserve = false) {
 async function saveProject(e) {
   e.preventDefault(); const button = e.submitter; button.disabled = true;
   try {await api('/api/projects/'+selected,'PATCH',{status:$('#status').value,notes:$('#notes').value,hashes:state.hashes}); await load(); message('Status and notes saved.');}
-  catch(err){message(err.message,true);} finally{button.disabled=false;}
+  catch(err){await stale(err);} finally{button.disabled=false;}
 }
 async function previewFit(e) {
   e.preventDefault(); const body = Object.fromEntries(new FormData(e.target));
@@ -71,7 +78,7 @@ async function previewFit(e) {
 async function saveFit(e) {
   if(!preview)return; e.target.disabled=true;
   try {await api('/api/fit-report','POST',preview); await load(); message('Fit report saved. Project moved to draft.');}
-  catch(err){message(err.message,true);e.target.disabled=false;}
+  catch(err){if(await stale(err)&&preview)preview.hashes={...state.hashes};e.target.disabled=false;}
 }
 document.addEventListener('click', e => {
   const p = e.target.closest('[data-project]'), r = e.target.closest('[data-revision]');
