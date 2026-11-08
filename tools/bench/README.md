@@ -10,7 +10,7 @@ Double-click `tools/bench/start.bat`, or from the repository root:
 python -B tools/bench/bench.py --port 8720
 ```
 
-Open http://127.0.0.1:8720/ . The server binds only 127.0.0.1; there is no option for a public interface. Close the server console or press Ctrl+C to stop. If the port is occupied, stop the old Bench process rather than running two writers. The batch launcher opens a browser and starts Python; **the application itself never launches a program**.
+Open http://127.0.0.1:8720/ . The server binds only 127.0.0.1; there is no option for a public interface. Close the server console or press Ctrl+C to stop. If the port is occupied, stop the old Bench process rather than running two writers. The batch launcher opens a browser and starts Python; **the application launches no program except File Explorer for Open folder** (below).
 
 For disposable testing:
 
@@ -33,7 +33,7 @@ Quick next-step buttons save status immediately through the existing PATCH. Note
 
 Print queue above the project list shows printing and report-due jobs oldest updated first, with newest release ID, elapsed days and overdue printing after three days. Search/status filtering is disabled while the complete queue is shown. The view choice is remembered when browser storage works.
 
-Select a revision for its local viewer. Missing viewers are reported plainly. File locations for 3MFs are shown as text, not downloaded or copied. Source markdown opens as plain text. Device cards render an escaped subset: headings, paragraphs, lists, pipe tables, inline code, bold and safe links.
+Select a revision for its local viewer. Missing viewers are reported plainly. File locations for 3MFs are shown as text, not downloaded or copied. **Open folder** beside a 3MF opens File Explorer with that file selected (Windows only). Source markdown opens as plain text. Device cards render an escaped subset: headings, paragraphs, lists, pipe tables, inline code, bold and safe links.
 
 Fit report: select a discovered exact revision ID, choose a result, describe the location and optionally record walls/infill and notes. Blank process fields remain UNKNOWN. Preview shows the exact bullet. Save appends it to Fit_Findings, appends a workflow continuation when a matching section exists, and moves the owning project to draft. Project/revision navigation warns before discarding unsaved edits.
 
@@ -68,11 +68,11 @@ GET `/api/health`, `/api/state`, `/api/projects`, `/api/projects/<id>`. State in
 
 PATCH `/api/projects/<id>` accepts one or more of `status`, `notes`, `title`, `prefixes`, `device_cards`, `sources`, `workflow_log`, plus `hashes`. Unknown fields (including `id`) and empty changes are rejected. Own prefixes are allowed; other jobs and overlaps remain protected. Successful writes invalidate the cached scan; the next state request rescans immediately. Only projects.json and its backup change for details/status edits.
 
-POST `/api/refresh` with `{}`; POST `/api/projects`; PATCH `/api/projects/<id>`; POST `/api/fit-report/preview`; POST `/api/fit-report`.
+POST `/api/refresh` with `{}`; POST `/api/open-folder` with `{"path": <3MF path>}`; POST `/api/projects`; PATCH `/api/projects/<id>`; POST `/api/fit-report/preview`; POST `/api/fit-report`.
 
 Mutations require `Content-Type: application/json`, `X-Bench-Token` from state and `hashes` from the loaded page (refresh/preview do not write and need no hashes). Maximum body 64 KiB. Only the exact loopback Host and, if present, same Origin are accepted; no CORS. Fit report checks all three hashes before changing anything. Errors return a clear JSON `error`; stale content returns 409.
 
-Static GETs: `/`, `/static/bench.css`, `/static/bench.js`; viewer GET `/viewer/<filename>.html`; allowlisted text GET `/text?path=<repository-relative-path>`. Arbitrary files, meshes, SCAD, traversal, absolute/drive paths, alternate streams and symlink hops cannot be served. There are no subprocess, git, rendering, release, installation, purchase, publishing or network-client functions.
+Static GETs: `/`, `/static/bench.css`, `/static/bench.js`; viewer GET `/viewer/<filename>.html`; allowlisted text GET `/text?path=<repository-relative-path>`. Arbitrary files, meshes, SCAD, traversal, absolute/drive paths, alternate streams and symlink hops cannot be served. The one program launch is `explorer /select,"<file>"` for Open folder (Brian, 2026-11-08): only for a 3MF path Bench itself discovered and that still exists, only with the write token, and the app never waits on or reads from it. There are no other subprocess calls and no git, rendering, release, installation, purchase, publishing or network-client functions.
 
 Printed fit applies to that specimen only. **Strength UNKNOWN.** No file presence, mesh closure, project status or guessed label establishes physical approval.
 

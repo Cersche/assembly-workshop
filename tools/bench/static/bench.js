@@ -29,6 +29,12 @@ async function quickStatus(status) {
 }
 let listView = 'projects';
 let state, selected, revision, dirty = false, preview = null, newHashes = null;
+document.addEventListener('click', async e => {
+  const button = e.target.closest('.open-folder'); if (!button) return;
+  button.disabled = true;
+  try { await api('/api/open-folder', 'POST', {path: button.dataset.path}); message('Opened the folder in File Explorer.'); }
+  catch (err) { message(err.message, true); } finally { button.disabled = false; }
+});
 function message(text, error = false) { $('#message').textContent = text; $('#message').className = error ? 'error' : ''; }
 async function api(path, method = 'GET', body) {
   const response = await fetch(path, {method, headers: method === 'GET' ? {} : {'Content-Type':'application/json','X-Bench-Token':state?.token || ''}, body:body === undefined ? undefined : JSON.stringify(body)});
@@ -64,7 +70,7 @@ function drawProject() {
     <div class="columns"><div><section aria-label="3D view"><div class="heading"><h3>3D view</h3><span id="view-id" class="muted"></span></div><div id="viewer"></div><p class="small muted">Local preview only. No geometry changes or exports.</p></section>
     <section><h3>Revisions · newest first</h3><p class="small muted">Dates use folder dates, otherwise file times. Statuses are guesses from the matching fit text.</p><p class="small">Printed fit applies to that specimen only. Strength UNKNOWN.</p><div class="revisions">${p.revisions.map(r => `<article class="revision ${r.id === revision ? 'selected' : ''}"><div class="heading"><button data-revision="${esc(r.id)}" aria-pressed="${r.id === revision}">${esc(r.id)}</button><span class="badge ${r.status === 'fit' ? 'fit' : r.status === 'problem' ? 'problem' : ''}">${esc(r.status)} (guess)</span></div><p class="small muted">${esc(r.date || 'Date not recorded')} · ${r.released ? 'Release folder found' : 'No release folder'}</p>
     ${r.readmes.map(f => docLink(f, 'README')).join(' · ')} ${r.reports.map(f => docLink(f, 'Release report')).join(' · ')}
-    <details><summary>Files and evidence</summary><p>3MF: ${r.three_mf.length ? r.three_mf.map(f => `<code>${esc(f)}</code>`).join('<br>') : 'None found'}</p><p>Viewer: ${r.viewers.length ? r.viewers.map(esc).join('<br>') : 'None found'}</p><p class="small muted">File locations only; Bench does not copy or download print files.</p>
+    <details><summary>Files and evidence</summary><p>3MF: ${r.three_mf.length ? r.three_mf.map(f => `<code>${esc(f)}</code> <button type="button" class="open-folder" data-path="${esc(f)}">Open folder</button>`).join('<br>') : 'None found'}</p><p>Viewer: ${r.viewers.length ? r.viewers.map(esc).join('<br>') : 'None found'}</p><p class="small muted">Bench does not copy or download print files; Open folder shows the file in File Explorer.</p>
     <ul>${r.fit_lines.map(l => `<li>${esc(l)}</li>`).join('') || '<li>No fit line names this exact ID.</li>'}</ul></details>
     ${r.warnings.length ? `<details><summary class="warning">Historical warning / supersession mentions (${r.warnings.length})</summary><p class="small">Mentions may describe another revision or a replacement. Read the source wording.</p><ul>${r.warnings.map(l => `<li>${esc(l)}</li>`).join('')}</ul></details>` : ''}</article>`).join('') || '<p>No revisions discovered for these prefixes yet.</p>'}</div></section></div>
     <div><section><div class="heading"><h3>Project notes</h3><button type="button" id="edit-details">Edit details</button></div><form id="details-form" hidden>

@@ -11,6 +11,8 @@ from pathlib import Path
 import re
 import secrets
 import stat
+import subprocess
+import sys
 import tempfile
 import threading
 import time
@@ -447,6 +449,25 @@ class Bench:
                     pass
         self.cache = None
 
+    @staticmethod
+    def show_in_explorer(path):
+        """The app's only program launch (Brian, 2026-11-08): File Explorer with one discovered 3MF selected."""
+        subprocess.Popen(f'explorer /select,"{path}"')
+
+    def open_folder(self, body):
+        reject_keys(body, {'path'})
+        name = body.get('path')
+        if sys.platform != 'win32':
+            raise Problem('Opening folders works on Windows only.')
+        known = {f for p in self.snapshot()['projects'] for r in p['revisions'] for f in r['three_mf']}
+        if not isinstance(name, str) or name not in known:
+            raise Problem('Only 3MF files Bench has found can be shown.', 403)
+        path = safe_path(self.root, name)
+        if not path.is_file() or '"' in str(path):
+            raise Problem('3MF file not found: ' + name, 404)
+        self.show_in_explorer(str(path))
+        return {'opened': name}
+
     def details(self, body, data, project_id=None):
         """The same field rules for creation and partial detail edits."""
         result = {}
@@ -695,6 +716,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.send(200, app.update(route[len('/api/projects/'):], body))
         if self.command == 'POST' and route == '/api/fit-report/preview':
             return self.send(200, app.fit_preview(body))
+        if self.command == 'POST' and route == '/api/open-folder':
+            return self.send(200, app.open_folder(body))
         if self.command == 'POST' and route == '/api/fit-report':
             return self.send(200, app.report(body))
         raise Problem('API route not found.', 404)

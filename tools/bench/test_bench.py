@@ -5,6 +5,7 @@ import hashlib
 import http.client
 import json
 import os
+import sys
 from pathlib import Path
 import tempfile
 import threading
@@ -500,6 +501,15 @@ class HttpTests(Base):
     def test_refresh_http(self):
         self.assertEqual(self.request('/api/refresh','POST',{})[0],200)
 
+    @unittest.skipUnless(sys.platform == 'win32', 'Explorer only on Windows')
+    def test_open_folder_http_and_token(self):
+        opened = []; self.server.bench.show_in_explorer = opened.append
+        body = {'path': 'outputs/Final_3MF/CSB-A_set.3mf'}
+        self.assertEqual(self.request('/api/open-folder', 'POST', body, {'X-Bench-Token': 'wrong'})[0], 403)
+        self.assertEqual(opened, [])
+        self.assertEqual(self.request('/api/open-folder', 'POST', body)[0], 200)
+        self.assertEqual(len(opened), 1)
+
     def test_encoded_document_link(self):
         code,raw,_=self.request('/text?path=docs%2FFit_Findings.md')
         self.assertEqual(code,200);self.assertIn(b'# Fit log',raw)
@@ -622,3 +632,28 @@ for value in ['M6','U5','FP44','SCR5','CM6','NOTCM6A','CSB','2026-11-06']:
 
 if __name__=='__main__':
     unittest.main()
+
+
+class OpenFolderTests(Base):
+    def setUp(self):
+        super().setUp(); self.opened = []
+        self.app.show_in_explorer = self.opened.append
+
+    @unittest.skipUnless(sys.platform == 'win32', 'Explorer only on Windows')
+    def test_opens_discovered_3mf_only(self):
+        self.assertEqual(self.app.open_folder({'path': 'outputs/Final_3MF/CSB-A_set.3mf'}), {'opened': 'outputs/Final_3MF/CSB-A_set.3mf'})
+        self.assertEqual(self.opened, [str(self.root / 'outputs/Final_3MF/CSB-A_set.3mf')])
+
+    @unittest.skipUnless(sys.platform == 'win32', 'Explorer only on Windows')
+    def test_refuses_other_paths(self):
+        for name in ('HANDOFF.md', 'outputs/Final_3MF/README.md', '../x.3mf', 'outputs/Final_3MF/missing.3mf', 'C:/Windows/notepad.exe', None, 5):
+            self.assert_problem(lambda: self.app.open_folder({'path': name}), 403)
+        self.assert_problem(lambda: self.app.open_folder({'path': 'outputs/Final_3MF/CSB-A_set.3mf', 'extra': 1}))
+        self.assertEqual(self.opened, [])
+
+    @unittest.skipUnless(sys.platform == 'win32', 'Explorer only on Windows')
+    def test_deleted_file_is_404(self):
+        self.app.snapshot(); (self.root / 'outputs/Final_3MF/CSB-A_set.3mf').unlink()
+        self.assert_problem(lambda: self.app.open_folder({'path': 'outputs/Final_3MF/CSB-A_set.3mf'}), 404)
+        self.assertEqual(self.opened, [])
+
