@@ -1,7 +1,7 @@
 # Assembly Workshop — current handoff
 
 ## 2026-11-08 Fan power box on the brick: draft 6, two pieces (Claude)
-Draft 6: the tie slots are flush (no pads), joined by a groove on the cavity side (1.0 bridge).
+Draft 6: the tie slots are flush (no pads), joined by a groove on the cavity side (1.0 bridge). Brian reviewed draft 6: "Looks good".
 `work/fan-junction-box/brick_box.scad` is draft 5 (Spec.md "Drafts 4 and 5"). Brian asked for zip-tie slot pairs centred on the left, right and top faces instead of the anchor, then for a split: `part="sleeve"` snaps onto the brick and carries the tie slots, and `part="box"` (Wagos + socket tip, wired first) slides down onto a dovetail rail on the sleeve, locked by one M3 countersunk screw into an insert in the rail. The grip rule (flats only, `loose` 4) is unchanged. No volume overlaps between any parts. Viewer https://claude.ai/artifact/CtVcjkFpzQ51kvt2baD9FX. STLs in `work/fan-junction-box/draft5_stl/` (local only).
 - **Next:** Brian's review of draft 5, then his go to print, a part ID and release with `tools/release_part.py`.
 - **UNKNOWN:** dovetail fit, tie threading, lock screw length (M3 x 8 assumed), fit, snap, grip, heat.
