@@ -45,6 +45,7 @@ csk_d=7.0; csk_h=(csk_d-3.4)/2;               // M3 countersink, 90 deg, room ar
 fan_hole=155/2;          // CT200 hole pattern 155 x 155 centred (Thermaltake drawing; holes "standard", ~4.3, Brian 2026-11-07)
 pad_t=8; pad_d=12;       // TF-D: pad under each fan corner, Z 409.05..417.05, boss 12 OD (>= 9 for M3 x 3 x 5)
 shcs_d=5.5; shcs_h=3; head_hole=shcs_d+2;     // M3 socket cap head (std 5.5 x 3) in a grille hole with 1 mm room all round
+head_cb=1.5;             // DRAFT after TF-D (Brian 2026-11-08): screws go through the grille first; counterbore 7.5 x 1.5 deep, 1.5 floor under the head, head 1.5 proud; M3 x 35 -> 30 fan + 3.5 into the pad
 chan_w=10; chan_y=30;    // TF-D (Brian 2026-11-07): plain cable notch in the rear edge at the LEFT end of the cavity (global X -98..-108), 6 deep from the inner face (global Y 204..210, 1.9 short of the grille insert bore), full height; replaces the DC jack
 jack_x=85; jack_z=407.5; jack_d=8;            // DC panel jack in the rear edge's back face (model UNKNOWN), below the fan ledge
 chamfer=15;              // looks: 45 deg chamfer on the outer top corner of each edge, like the stock edge's slope
@@ -140,7 +141,7 @@ module grille(){
     grille_openings();
     translate([70,26,z_grille-0.01]) linear_extrude(height=0.61)
       text(is_undef(tag)?"TFG-B":tag,size=4,halign="center",valign="center");
-    for(x=[-fan_hole,fan_hole],y=[fan_c[1]-fan_hole,fan_c[1]+fan_hole]) translate([x,y,z_grille-1]) cylinder(d=head_hole,h=grille_t+2);
+    for(x=[-fan_hole,fan_hole],y=[fan_c[1]-fan_hole,fan_c[1]+fan_hole]) translate([x,y,z_grille-1]){ cylinder(d=3.4,h=grille_t+2); translate([0,0,1+grille_t-head_cb]) cylinder(d=head_hole,h=head_cb+1); }
     for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_grille-0.01]){ cylinder(d=3.4,h=grille_t+1); translate([0,0,grille_t-csk_h+0.02]) cylinder(d1=3.4,d2=csk_d,h=csk_h); }
   }
 }
@@ -164,7 +165,7 @@ module blade_2d(steps=14){
 module cuts(){
   grille_openings();
   for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_grille-1]) cylinder(d=3.4,h=grille_t+2);
-  for(x=[-fan_hole,fan_hole],y=[fan_c[1]-fan_hole,fan_c[1]+fan_hole]) translate([x,y,z_grille-1]) cylinder(d=head_hole,h=grille_t+2);
+  for(x=[-fan_hole,fan_hole],y=[fan_c[1]-fan_hole,fan_c[1]+fan_hole]) translate([x,y,z_grille-1]) cylinder(d=3.4,h=grille_t+2);
 }
 module inner_tag(label,x,z,size){
   translate([x,35.01,z]) rotate([90,0,0]) linear_extrude(height=0.61) mirror([1,0,0])
@@ -190,7 +191,7 @@ module keepout(){
   for(x=m3_x,y=[m3_y,240-m3_y]) translate([x,y,z_lid]) rotate([90,0,0])
     ws_head_keepout(0,0,0,csk_d,6);
   // TF-D fan screws: M3 socket cap heads on the fan top, 1 mm room, 6 mm tool room above
-  for(x=[-fan_hole,fan_hole],y=[fan_c[1]-fan_hole,fan_c[1]+fan_hole]) translate([x,y,z_grille]) cylinder(d=head_hole,h=grille_t+6);
+  for(x=[-fan_hole,fan_hole],y=[fan_c[1]-fan_hole,fan_c[1]+fan_hole]) translate([x,y,z_lid-head_cb]) cylinder(d=head_hole,h=head_cb+6);
   // M6 x 8 button heads at the cross joints (head 10.5 + 1 mm room), 6 mm of tool room inward from the inner face
   for(sx=[-1,1], h=[plug_hole,tongue_hole], y=[h[0],240-h[0]]) translate([sx>0?plug_x[0]-6:-plug_x[0],y,h[1]]) rotate([0,90,0]) cylinder(d=12.5,h=6);
 }
@@ -221,5 +222,6 @@ if(part=="keepout_edge_rear_print") edge_print_pose() rear_local() keepout();
 if(part=="keepout_rail_print") rail_print_pose() keepout();
 if(part=="keepout_grille_print") grille_print_pose() keepout();
 if(part=="cuts") cuts();
+if(part=="screws_show") for(x=[-fan_hole,fan_hole],y=[fan_c[1]-fan_hole,fan_c[1]+fan_hole]) translate([x,y,z_lid-head_cb]){ cylinder(d=shcs_d,h=shcs_h); translate([0,0,-35]) cylinder(d=3,h=35); }   // viewer only: M3 x 35 socket caps
 if(part=="chan_show") rear_local() intersection(){ cable_channel(); box([-200,0,z_top],[200,35,500]); }   // viewer marker only
 if(part=="assembly"){ edge(); edge_rear(); rail(); rail_left(); grille(); %fan_dummy(); }
