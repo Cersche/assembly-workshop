@@ -9,7 +9,8 @@ Device card for the rack-top fan. Brian chose the Thermaltake CT200 (ARGB Sync, 
 | Hole pattern | 155 x 155, centred (20 in from each frame edge), standard fan holes (~4.3, Brian 2026-11-07); drawing image re-sent by Brian 2026-11-07. **The fan must be screwed down through these (Brian 2026-11-07); TF-A..C only clamped it under the grille, fixed in TF-D** | | from source |
 | Power | 12 V 0.16 A (4-pin PWM) + 5 V 0.31 A (3-pin ARGB) (Milwaukee PC / Performance-PCs listings) | | from source, not measured |
 | ARGB LED count | | | UNKNOWN (find by test; needed by the WS2812 library) |
-| Cable exit (corner, length) | | | UNKNOWN |
+| Cable exit (corner, length) | leads 900 mm PWM + 900 mm ARGB (retailer listing); exit corner UNKNOWN | | from source |
+| Lead wire gauge / colours | | | UNKNOWN (wire by pin number, not colour) |
 | Weight | | | UNKNOWN |
 
 Power plan (Brian, 2026-11-07; replaces the 2026-11-05 buck-board plan):
@@ -22,3 +23,15 @@ Power plan (Brian, 2026-11-07; replaces the 2026-11-05 buck-board plan):
 - No dual-rail/SATA brick (Brian's HDD supply is separate and not part of this).
 
 Earlier candidates: Noctua NF-A20 PWM 200 x 200 x 30, holes 154 x 154 / 170 x 170 / 110 x 180 (noctua.at); Cooler Master MF200R ARGB 200 x 200 x 25, 259 g.
+
+## Wiring for the brick box BRB-A (Brian, 2026-11-08; RESTART plan)
+Diagram: `work/fan-junction-box/wiring_brick.svg` (artifact https://claude.ai/artifact/SZZQi8ZmPMWf1DFno96FE2). Supersedes the rear-post junction box wiring (`wiring_B.svg`, history). The "Junction box" bullet above is history too.
+- **Power (in the box):** brick 5.5 x 2.1 plug (centre + assumed, check label) → screw-terminal socket tip → tip − into GND Wago port 1, tip + into 12 V Wago port 1 (two WAGO 221-413). Port 2 = CT200 4-pin pin 1 GND / pin 2 +12 V; port 3 = Pi 40 x 10 fan −/+.
+- **CT200 4-pin** (standard PC fan pinout): 1 GND, 2 +12 V, 3 TACH, 4 PWM. Brian's extension is split: pins 1–2 to the Wagos, pins 3–4 to the Pi. Usual colours black/yellow/green/blue; CT200 colours UNKNOWN.
+- **ARGB 3-pin** (5V-D-key-G): +5 V → Pi pin 2; DATA → 330 Ω → 74AHCT125 1Y (pin 3), 1A (pin 2) ← GPIO10 / pin 19 (SPI MOSI); GND → Pi GND (pin 34, via the shifter board).
+- **PWM:** GPIO12 / pin 32 (PWM0, 25 kHz, needs the pwm overlay) → 74AHCT125 2A (pin 5), 2Y (pin 6) → CT200 pin 4.
+- **TACH:** CT200 pin 3 → GPIO6 / pin 31 (Brian 2026-11-08), 10 kΩ pull-up to 3.3 V (pin 1); optional 1 kΩ series. Before connecting, meter TACH→GND with the fan powered: must be ≤ 3.3 V.
+- **74AHCT125:** VCC 14 ← 5 V (pin 4), GND 7 + 1OE 1 + 2OE 4 → GND, unused 3A 9 / 4A 12 → GND, 3OE 10 / 4OE 13 → 5 V, 0.1 µF VCC–GND.
+- **Ground tie (required, Brian chose it 2026-11-08):** PWM, TACH and DATA need brick GND and Pi GND joined. One jumper at the Pi end from the Pi fan's GND wire (= brick GND) to Pi pin 39. Both adapters are isolated, so this is safe. If the CT200 joins ARGB GND to fan GND inside (UNKNOWN), that is a harmless second tie. 12 V never touches the Pi header.
+- **Current:** CT200 0.16 A + Pi fan ≤ 0.20 A (UNKNOWN, budgeted; Brian doesn't know its label or wire count yet, 2-wire assumed) = ≤ 0.36 A of the brick's 2 A (~18 %). ARGB 0.31 A is from the Pi 5 V (headroom UNKNOWN).
+- **Wago 221-413:** 0.14–4 mm² fine-stranded, 0.2–4 mm² solid/stranded (24–12 AWG), strip 11 mm (WAGO datasheet). CT200 lead gauge UNKNOWN: 24 AWG or thicker goes straight in; 26 AWG or thinner: fold the strip back double or crimp a ferrule, then tug-test.

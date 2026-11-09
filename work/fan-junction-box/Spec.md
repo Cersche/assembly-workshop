@@ -71,3 +71,6 @@ Brick measured on the 3D measure page plus two viewer-check fixes (device card h
 
 ### Released as BRB-A (2026-11-08)
 Brian is printing draft 6: outputs/Fan_Power_Box_BRB-A_2026-11-08/. IDs BRB-A-S (sleeve), BRB-A-B (box), BRB-A-L (lid). BRB-A is now immutable; any change becomes BRB-B.
+
+### Wiring settled (2026-11-08)
+Diagram `wiring_brick.svg` (artifact https://claude.ai/artifact/SZZQi8ZmPMWf1DFno96FE2); full pin list on the device card `docs/devices/fan-200mm.md` ("Wiring for the brick box BRB-A"). Brian's choices: ground tie = jumper from the Pi fan's GND to Pi pin 39 at the Pi (no box change, 221-413s stay); tach on GPIO6 / pin 31; Pi fan label/wires UNKNOWN (≤ 0.2 A budgeted). Current ≤ 0.36 A of 2 A. Wago 221-413 takes 24–12 AWG (0.14 mm² fine-stranded min): fold back or ferrule 26 AWG fan leads. `wiring_B.svg` is history.
