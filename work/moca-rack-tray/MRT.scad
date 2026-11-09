@@ -51,7 +51,9 @@ riser=5.5; sp_z=fl_top+riser; xc=114.5; yc=out1_y+sp_out/2+sp_dy; y0=yc-sp_l/2;
 sp_in_y=y0+sp_in_end; sp_o1_y=out1_y+sp_dy; sp_o2_y=out1_y+sp_out+sp_dy;
 in_y=y0-sp_dy+sp_in_end+in_dy; out2_y=out1_y+sp_out+out2_dy;
 axis_z=sp_z+sp_axis; x_in=xc-sp_w/2; x_out=xc+sp_w/2;
-ears=[[xc+sp_ear_s/2,yc+sp_ear_l/2],[xc-sp_ear_s/2,yc-sp_ear_l/2]];
+// Rear (OUT-side) ear boss 3 toward the faceplate (Brian, printed MRT-I-S 2026-11-09, photo). Front ear unchanged.
+ear_rear_dy=-3;
+ears=[[xc+sp_ear_s/2,yc+sp_ear_l/2+ear_rear_dy],[xc-sp_ear_s/2,yc-sp_ear_l/2]];
 ins_d=ws_insert_m3[0]; ins_dp=ws_insert_m3[1]; boss_d=9.5;   // M3 x 3 x 5 insert standard
 
 // ---- Channel centrelines, all bends R30
@@ -108,7 +110,8 @@ sp_gnd=8; gnd_head_d=7; gnd_head_h=3;   // head size ASSUMED
 sl_lock=[[xc+4,y0-sp_gnd-wa_d/2-sl_travel-1],[xc-10.5,yc+28]];   // front (ahead of the ground block), rear-left
 sl_pad=[xc-10.5-sl_pad_r-sl_travel-2,xc+10.5+sl_pad_r+sl_travel+2];   // X span of the floor under the sled
 module sled2d(){round2d(3)union(){rr(x_in-sp_tie_gap-sp_tie_w-3,x_out+sp_tie_gap+sp_tie_w+3,y0-11,y0+sp_l+11,4);
-  for(l=sl_lock)translate(l)circle(r=sl_pad_r);}}
+  for(l=sl_lock)translate(l)circle(r=sl_pad_r);
+  for(e=ears)translate(e)circle(d=boss_d+4);}}   // plate carried out under each boss
 module sled(){difference(){
   union(){translate([0,0,fl_top])linear_extrude(sl_t)sled2d();
     for(e=ears)translate([e[0],e[1],fl_top+sl_t-0.01])cylinder(d=boss_d,h=sp_ear_z+0.01);}
@@ -116,7 +119,7 @@ module sled(){difference(){
   for(l=sl_lock)translate([l[0],l[1],fl_top-1])cylinder(d=sl_hole,h=sl_t+2);
   translate([0,0,fl_top-1])linear_extrude(sl_t+2)sp_tie_slots2d();
   for(y=sp_tie_y)translate([x_in-sp_tie_gap-sp_tie_w-0.9,y-2.6,fl_top-1])cube([x_out-x_in+2*(sp_tie_gap+sp_tie_w+0.9),5.2,1+groove_tie]);
-  translate([xc,yc+6,sp_z-0.6])linear_extrude(1)text("MRT-I-S",size=3.5,font="Liberation Sans:style=Bold",halign="center",valign="center");
+  translate([xc,yc+6,sp_z-0.6])linear_extrude(1)text("MRT-J-S",size=3.5,font="Liberation Sans:style=Bold",halign="center",valign="center");
 }}
 // clamp washer, printed (Brian has metal ones too; a metal one needs >= 16 OD to cover the 11 hole). Prints flat, countersink up.
 module washer(at=[0,0,0]){translate(at)difference(){cylinder(d=wa_d,h=wa_t);
@@ -515,7 +518,9 @@ module screenbeam(){
   translate([coax_p[0]-0.01,coax_p[1],coax_p[2]])rotate([0,90,0])cylinder(d=9.5,h=11);
 }
 module splitter(){
-  translate([x_in,y0,sp_z])cube([sp_w,sp_l,sp_h]);
+  difference(){translate([x_in,y0,sp_z])cube([sp_w,sp_l,sp_h]);   // body
+    // the real body clears the rear boss (Brian, printed MRT-I-S 2026-11-09); body shape at that corner UNKNOWN, mock notched
+    translate([ears[0][0],ears[0][1],sp_z-1])cylinder(d=boss_d+1,h=sp_ear_z+1);}
   translate([xc,y0-sp_gnd,sp_z])cube([x_out-xc,sp_gnd+0.01,sp_h-0.5]);   // ground block
   translate([(xc+x_out)/2,y0-sp_gnd/2,sp_z+sp_h-0.5])cylinder(d=gnd_head_d,h=gnd_head_h);   // ground screw head
   for(y=[sp_o1_y,sp_o2_y])translate([x_out-0.01,y,axis_z])rotate([0,90,0])cylinder(d=sp_port_d,h=sp_port);
