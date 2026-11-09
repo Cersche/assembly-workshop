@@ -1,7 +1,7 @@
 # Assembly Workshop — current handoff
 
 ## 2026-11-08 Fan wiring for the brick box settled (Claude)
-Diagram `work/fan-junction-box/wiring_brick.svg` (artifact https://claude.ai/artifact/SZZQi8ZmPMWf1DFno96FE2); pin list in `docs/devices/fan-200mm.md`, summary in Spec.md RESTART. Brian: ground tie = Pi fan GND jumper to Pi pin 39; tach GPIO6 / pin 31; Pi fan label UNKNOWN (≤ 0.2 A budgeted). Load ≤ 0.36 A of 2 A. UNKNOWN: CT200 lead gauge/colours, Pi 5 V headroom, tach voltage (meter it first).
+Diagram `work/fan-junction-box/wiring_brick.svg` (artifact https://claude.ai/artifact/SZZQi8ZmPMWf1DFno96FE2); pin list in `docs/devices/fan-200mm.md`, summary in Spec.md RESTART. Brian: ground tie = Pi fan GND jumper to Pi pin 39; tach GPIO6 / pin 31; Pi fan label UNKNOWN (≤ 0.2 A budgeted). Load ≤ 0.36 A of 2 A. Then Brian chose **direct wiring**: no level shifter or resistors to start (DATA → GPIO10, PWM → GPIO12, tach → GPIO6 with the built-in pull-up); add the shifter/330 Ω/10 kΩ only if the LEDs flicker or the RPM jumps. UNKNOWN: CT200 lead gauge/colours, Pi 5 V headroom, tach voltage (meter it first), whether 3.3 V data drives the LEDs at this length.
 
 ## 2026-11-08 Fan power box BRB-A RELEASED (Claude)
 Brian is printing draft 6 as **BRB-A**: [README](outputs/Fan_Power_Box_BRB-A_2026-11-08/README.md). Print file `outputs/Final_3MF/BRB-A_fan_power_box_sleeve_box_lid.3mf` (3 objects, tags match). Parts: sleeve BRB-A-S, junction box BRB-A-B, lid BRB-A-L. Release changes from draft 6: engraved IDs, screw-head keep-out, and the Wago back rib split around the lock screw head. Checks: 0 failed, 3 warnings, all benign. Viewer https://claude.ai/artifact/UcAe6KeHAaKNMxodnJ8oe8.
