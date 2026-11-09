@@ -116,13 +116,12 @@ module sled2d(){round2d(3)union(){rr(x_in-sp_tie_gap-sp_tie_w-3,x_out+sp_tie_gap
   for(e=ears)translate(e)circle(d=boss_d+4);}}   // plate carried out under each boss
 module sled(){difference(){
   union(){translate([0,0,fl_top])linear_extrude(sl_t)sled2d();
-    for(e=ears)translate([e[0],e[1],fl_top+sl_t-0.01])intersection(){cylinder(d=boss_d,h=sp_ear_z+0.01);
-      if(e[1]>yc)translate([-20,case_cut_y-e[1],-1])cube([40,20,20]); else translate([-20,-20,-1])cube([40,40,20]);}}
+    for(e=ears)translate([e[0],e[1],fl_top+sl_t-0.01])cylinder(d=boss_d,h=sp_ear_z+0.01);}   // MRT-L-S: rear boss full round again (Brian: the real case leaves room; holes line up on MRT-K-S)
   for(e=ears)translate([e[0],e[1],sp_z+sp_ear_z-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);
   for(l=sl_lock)translate([l[0],l[1],fl_top-1])cylinder(d=sl_hole,h=sl_t+2);
   translate([0,0,fl_top-1])linear_extrude(sl_t+2)sp_tie_slots2d();
   for(y=sp_tie_y)translate([x_in-sp_tie_gap-sp_tie_w-0.9,y-2.6,fl_top-1])cube([x_out-x_in+2*(sp_tie_gap+sp_tie_w+0.9),5.2,1+groove_tie]);
-  translate([xc,yc+6,sp_z-0.6])linear_extrude(1)text("MRT-K-S",size=3.5,font="Liberation Sans:style=Bold",halign="center",valign="center");
+  translate([xc,yc+6,sp_z-0.6])linear_extrude(1)text("MRT-L-S",size=3.5,font="Liberation Sans:style=Bold",halign="center",valign="center");
 }}
 // clamp washer, printed (Brian has metal ones too; a metal one needs >= 16 OD to cover the 11 hole). Prints flat, countersink up.
 module washer(at=[0,0,0]){translate(at)difference(){cylinder(d=wa_d,h=wa_t);
