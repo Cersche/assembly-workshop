@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 540" font-family="Arial, sans-serif" font-size="15">
+<rect width="640" height="540" fill="#fff"/>
+<text x="20" y="30" font-size="19" font-weight="bold">Splitter on its back (the face that sits on the sled)</text>
+<text x="20" y="54" fill="#444">Calipers, mm. Ear holes: measure to the hole CENTRE.</text>
+<rect x="250" y="130" width="110" height="250" fill="#ddd" stroke="#333" stroke-width="2"/>
+<text x="305" y="260" text-anchor="middle" fill="#555">case</text>
+<rect x="360" y="190" width="45" height="28" fill="#eee" stroke="#666"/><rect x="360" y="290" width="45" height="28" fill="#eee" stroke="#666"/>
+<text x="415" y="210" fill="#555">OUT</text><text x="415" y="310" fill="#555">OUT</text>
+<rect x="205" y="235" width="45" height="28" fill="#eee" stroke="#666"/><text x="170" y="255" fill="#555">IN</text>
+<rect x="310" y="96" width="34" height="34" fill="#f3e6c0" stroke="#996"/><text x="352" y="112" font-size="13" fill="#775">ground screw (front)</text>
+<circle cx="275" cy="102" r="22" fill="#cfe3ff" stroke="#2a62c9" stroke-width="2"/><circle cx="275" cy="102" r="9" fill="#fff" stroke="#2a62c9" stroke-width="2"/>
+<text x="150" y="98" fill="#2a62c9">front ear (fits)</text>
+<circle cx="335" cy="408" r="22" fill="#ffd9cf" stroke="#c9452a" stroke-width="2"/><circle cx="335" cy="408" r="9" fill="#fff" stroke="#c9452a" stroke-width="2"/>
+<text x="365" y="425" fill="#c9452a" font-weight="bold">rear ear (the one that was off)</text>
+<!-- C case length -->
+<line x1="250" y1="130" x2="120" y2="130" stroke="#080" stroke-dasharray="4 3"/><line x1="250" y1="380" x2="120" y2="380" stroke="#080" stroke-dasharray="4 3"/>
+<line x1="130" y1="130" x2="130" y2="380" stroke="#080" stroke-width="2"/><text x="100" y="260" fill="#080" font-weight="bold">C</text>
+<!-- D rear ear to rear case end -->
+<line x1="335" y1="408" x2="560" y2="408" stroke="#c00" stroke-dasharray="4 3"/><line x1="360" y1="380" x2="560" y2="380" stroke="#c00" stroke-dasharray="4 3"/>
+<line x1="545" y1="380" x2="545" y2="408" stroke="#c00" stroke-width="2"/><text x="555" y="400" fill="#c00" font-weight="bold">D</text>
+<text x="20" y="480" fill="#080"><tspan font-weight="bold">C</tspan> = case length, front end face to rear end face (not the ears or ports). Model: 38.75.</text>
+<text x="20" y="504" fill="#c00"><tspan font-weight="bold">D</tspan> = rear case end face to the rear ear hole centre. Model: 4.9 (MRT-I-S).</text>
+<text x="20" y="528" fill="#444">Your 3 mm says D is about 1.9, which would put the hole over the case, so one of my numbers is wrong.</text>
+</svg>

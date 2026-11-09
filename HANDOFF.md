@@ -31,8 +31,8 @@ Brian measured the GuanTing brick on the 3D measure page (`work/fan-junction-box
 - **Next:** Brian's go to print, then a part ID and release with `tools/release_part.py`.
 - **UNKNOWN:** fit, snap, grip, lid insert fit, heat.
 
-## 2026-11-09 MoCA splitter sled MRT-J-S RELEASED (Claude)
-Brian printed MRT-I-S: the rear (OUT-side) ear boss sat 3 mm too far rear. MRT-J-S moves it 3 toward the faceplate; tray and other parts stay MRT-I (tray byte-identical). [README](outputs/MoCA_Rack_Tray_MRT-J-S_2026-11-09/README.md), `outputs/Final_3MF/MRT-J-S_moca_splitter_sled.3mf`, 0 failed / 0 warnings. Logged in Fit_Findings and the splitter card. **Next step:** Brian's MRT-J-S / MRT-I fit report.
+## 2026-11-09 MoCA splitter sled MRT-K-S RELEASED (Claude)
+Brian printed MRT-I-S: the rear (OUT-side) ear boss sat 3 mm too far rear; the case room between the bosses was right. MRT-J-S moved the boss 3 into the case room and is **void, do not print** (Claude hid the clash by notching the splitter mock). MRT-K-S: rear boss 2 toward the faceplate (ear hole slop takes the last 1), cut flat 0.125 off the case end as before, case room identical; insert bore fully enclosed, 0.65 wall at the flat. Tray and other parts stay MRT-I (tray byte-identical). [README](outputs/MoCA_Rack_Tray_MRT-K-S_2026-11-09/README.md), `outputs/Final_3MF/MRT-K-S_moca_splitter_sled.3mf`, 0 failed / 0 warnings. Logged in Fit_Findings and the splitter card. **Next step:** Brian's MRT-J-S / MRT-I fit report.
 
 ## 2026-11-08 MoCA rack tray MRT-I RELEASED (Claude)
 Brian's MRT-H fit notes are logged in docs/Fit_Findings.md.

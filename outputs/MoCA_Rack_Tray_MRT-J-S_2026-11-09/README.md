@@ -1,5 +1,7 @@
 # MRT-J-S splitter sled (2026-11-09)
 
+**DO NOT PRINT. Superseded by [MRT-K-S](../MoCA_Rack_Tray_MRT-K-S_2026-11-09/README.md).** Moving the rear boss 3 into the case room shrank the space between the bosses from 39 to 36, so the case doesn't fit (Brian). The "real body clears the moved boss" note below was wrong: the splitter mock was notched to hide the overlap.
+
 PROPOSED, released for printing on Brian's direction. Fit and strength UNKNOWN. Source `work/moca-rack-tray/MRT.scad` (copy in `src/`). Print file `outputs/Final_3MF/MRT-J-S_moca_splitter_sled.3mf` (1 object, tags match). Check: `release_report.md`, 0 failed, 0 warnings; clear of the tray keep-outs, posts at U2, ScreenBeam, splitter mock and cables.
 
 Replaces MRT-I-S only. Everything else stays MRT-I (tray, covers C2/C3, IW washers) and the reused MRT-H parts; tray geometry is byte-identical.
