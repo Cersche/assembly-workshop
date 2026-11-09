@@ -1,4 +1,4 @@
-// Fan power box on the GuanTing 12 V brick (DRAFT 6, viewer only, 2026-11-08). Two pieces (Brian):
+// Fan power box on the GuanTing 12 V brick (BRB-A, released for Brian's print 2026-11-08; was draft 6). Two pieces (Brian):
 // the SLEEVE snaps onto the brick; the junction BOX (2x Wago 221-413 + the brick's screw-terminal
 // socket tip, wired first) slides down onto a dovetail rail on the sleeve and is locked by one M3
 // countersunk screw into an M3 heat-set insert in the rail. The brick's barrel plug enters through
@@ -8,7 +8,7 @@
 // back face, below the prong block. Fit, snap, grip, strength and heat are UNKNOWN.
 include <workshop.scad>
 $fn = 48;
-part = "box"; // sleeve | box | lid | brick | contents | measure
+part = "box"; // sleeve | box | lid | brick | contents | measure | keepout
 
 // Brick (docs/devices/guanting-12v-brick.md): supplier 45 x 85, Brian's profile 2026-11-08
 bw = 45; bh = 85;
@@ -104,6 +104,10 @@ module rrect(x0, x1, z0, z1, y0, y1, r = 2.5) {
 
 module rail2d(c = 0) offset(delta = c) polygon([[-rail_base/2, ys - 1], [rail_base/2, ys - 1], [rail_base/2, ys], [rail_top/2, ys + rail_h], [-rail_top/2, ys + rail_h], [-rail_base/2, ys]]);
 
+// Part IDs engraved 0.6 deep. m = rows of [text x, text y, outward] in the brick frame.
+module id_cut(id, pos, m) translate(pos) multmatrix([[m[0][0], m[0][1], m[0][2], 0], [m[1][0], m[1][1], m[1][2], 0], [m[2][0], m[2][1], m[2][2], 0]])
+    translate([0, 0, -0.6]) linear_extrude(2) text(id, size = 4, halign = "center", valign = "center", font = "Liberation Sans:style=Bold");
+
 module sleeve() {
     difference() {
         union() {
@@ -128,6 +132,7 @@ module sleeve() {
         translate([-(boot_d + 1)/2, -1, z0 - 1]) cube([boot_d + 1, cord_y + 1, t + cl + 2]);
         translate([0, cord_y, z0 - 1]) cylinder(d = boot_d + 1, h = t + cl + 2);
         tie_faces() tie_cut();
+        id_cut("BRB-A-S", [xo, y_mid, 26], [[0, 0, 1], [0, -1, 0], [1, 0, 0]]); // right face, reads along Z
         // lock screw insert in the rail (M3 x 3 x 5: 4.2 x 4) + screw tip clearance
         translate([0, ys + rail_h + 0.01, lock_z]) rotate([90, 0, 0]) { ws_insert_bore(ws_insert_m3); cylinder(d = 3.2, h = 6.5); }
     }
@@ -144,6 +149,7 @@ module box() {
         translate([0, yb + tip_barrel/2 + 0.5, z0 - 1]) cylinder(d = plug_d + 0.6, h = -z0 + 2);
         // output cable notch, right wall
         translate([xo - t - 1, yt - notch[1], notch_z - notch[0]/2]) cube([t + 2, notch[1] + 1, notch[0]]);
+        id_cut("BRB-A-B", [-xo, (ys + yt)/2, bh/2], [[0, 0, -1], [0, 1, 0], [1, 0, 0]]); // left face
     }
     // insert bosses for the lid (M3 x 3 x 5: 4.2 bore x 4 deep)
     for (b = boss) translate([b[0], yb - 0.01, b[1]]) difference() {
@@ -162,8 +168,8 @@ module box() {
             cube([xo - t - tip_barrel/2 - 0.4, 7, 2]);
         translate([sx > 0 ? 3.5 : -blk_w/2 - 1.5, yb - 0.01, zi0 + tip_len + 0.3]) cube([blk_w/2 + 1.5 - 3.5, 8, 2]);
     }
-    // Wago stops: back rib and a centre divider
-    translate([-wago[0] - 1.6, yb - 0.01, wago_z1]) cube([2*wago[0] + 3.2, 5, 1]);
+    // Wago stops: back rib (gap in the middle keeps the lock screw head clear) and a centre divider
+    for (sx = [-1, 1]) translate([sx > 0 ? 5 : -wago[0] - 1.6, yb - 0.01, wago_z1]) cube([wago[0] + 1.6 - 5, 5, 1]);
     translate([-0.6, yb - 0.01, wago_z0]) cube([1.2, 5, wago[1]]);
 }
 
@@ -188,6 +194,7 @@ module lid() {
             cylinder(d = 3.4, h = lid_t + 2);
             translate([0, 0, 1 + lid_t - 1.7]) cylinder(d1 = 3.4, d2 = 6.8, h = 1.7 + 0.01);
         }
+        id_cut("BRB-A-L", [0, yt + lid_t, bh/2], [[-1, 0, 0], [0, 0, 1], [0, 1, 0]]);
     }
 }
 
@@ -216,6 +223,11 @@ module contents() {
 }
 
 if (part == "sleeve") sleeve();
+// Screw head room (check only): lock screw head inside the box, lid screw heads outside the lid
+if (part == "keepout") {
+    ws_head_keepout(0, yb + 2.4, lock_z, 6.8);
+    for (b = boss) ws_head_keepout(b[0], yt + lid_t, b[1], 6.8);
+}
 if (part == "box") box();
 if (part == "lid") lid();
 if (part == "brick") brick();

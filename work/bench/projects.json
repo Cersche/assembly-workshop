@@ -189,7 +189,7 @@
         "JBC",
         "JBR"
       ],
-      "status": "draft",
+      "status": "printing",
       "device_cards": [
         "docs/devices/guanting-12v-brick.md"
       ],
@@ -198,7 +198,7 @@
         "work/fan-junction-box/brick_box.scad"
       ],
       "workflow_log": "",
-      "notes": "Two pieces on the GuanTing 12 V brick (draft 5, 2026-11-08). The sleeve snaps on (grip from the flat faces only, curves get 4 mm extra room) and has zip-tie slot pairs on the left, right and top. The junction box holds 2x Wago 221-413 and the screw-terminal socket tip, the brick plug enters through its bottom wall, and it slides onto a dovetail rail on the sleeve, locked by one M3 screw. JBC/JBR = earlier junction-box drafts (history). Viewer-only until Brian prints; fit, snap, grip and dovetail fit UNKNOWN.",
+      "notes": "BRB-A released 2026-11-08 and printing (outputs/Fan_Power_Box_BRB-A_2026-11-08). Sleeve BRB-A-S snaps onto the GuanTing brick (grip from the flats only) and has flush zip-tie slots on the left, right and top. Junction box BRB-A-B (2x Wago 221-413 + socket tip) slides onto the sleeve's dovetail and is locked by one M3; lid BRB-A-L. JBC/JBR = earlier junction-box drafts (history). Next: Brian's fit report. Fit, snap, grip and dovetail fit UNKNOWN.",
       "updated": "2026-11-08"
     },
     {

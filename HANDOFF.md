@@ -1,5 +1,10 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-08 Fan power box BRB-A RELEASED (Claude)
+Brian is printing draft 6 as **BRB-A**: [README](outputs/Fan_Power_Box_BRB-A_2026-11-08/README.md). Print file `outputs/Final_3MF/BRB-A_fan_power_box_sleeve_box_lid.3mf` (3 objects, tags match). Parts: sleeve BRB-A-S, junction box BRB-A-B, lid BRB-A-L. Release changes from draft 6: engraved IDs, screw-head keep-out, and the Wago back rib split around the lock screw head. Checks: 0 failed, 3 warnings, all benign. Viewer https://claude.ai/artifact/UcAe6KeHAaKNMxodnJ8oe8.
+- **Next:** Brian's BRB-A fit report (log it in docs/Fit_Findings.md).
+- **UNKNOWN:** sleeve fit/snap/grip, dovetail fit, tie threading, insert fit, screw lengths (lock M3 x 8 assumed), heat.
+
 ## 2026-11-08 Fan power box on the brick: draft 6, two pieces (Claude)
 Draft 6: the tie slots are flush (no pads), joined by a groove on the cavity side (1.0 bridge). Brian reviewed draft 6: "Looks good".
 `work/fan-junction-box/brick_box.scad` is draft 5 (Spec.md "Drafts 4 and 5"). Brian asked for zip-tie slot pairs centred on the left, right and top faces instead of the anchor, then for a split: `part="sleeve"` snaps onto the brick and carries the tie slots, and `part="box"` (Wagos + socket tip, wired first) slides down onto a dovetail rail on the sleeve, locked by one M3 countersunk screw into an insert in the rail. The grip rule (flats only, `loose` 4) is unchanged. No volume overlaps between any parts. Viewer https://claude.ai/artifact/CtVcjkFpzQ51kvt2baD9FX. STLs in `work/fan-junction-box/draft5_stl/` (local only).
