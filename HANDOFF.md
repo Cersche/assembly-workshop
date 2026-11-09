@@ -1,5 +1,9 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-09 CT200 fan connection test from the Pi (Claude)
+Brian wired the CT200 (power via the brick box Wagos, TACH → pin 31, PWM → pin 32, ground tie to pin 39). `work/fan-junction-box/pi_tests/fan_test.py` (lgpio, no config change) on the Pi 4 `pihole`: **tach and PWM both connected**; full speed reads ~1855 (2 pulses/rev assumed), PWM low ~1050; the fan doesn't stop at 0 %. The 50 % software-PWM step was invalid (PWM coupled into the tach). Details on docs/devices/fan-200mm.md.
+- **Next:** hardware PWM at 25 kHz (`dtoverlay=pwm` on GPIO12, needs Brian's OK and a reboot) for a real speed curve; ARGB test; Pi 40 mm fan. True RPM UNKNOWN until checked against the rated speed.
+
 ## 2026-11-08 Fan wiring for the brick box settled (Claude)
 Diagram `work/fan-junction-box/wiring_brick.svg` (artifact https://claude.ai/artifact/SZZQi8ZmPMWf1DFno96FE2); pin list in `docs/devices/fan-200mm.md`, summary in Spec.md RESTART. Brian: ground tie = Pi fan GND jumper to Pi pin 39; tach GPIO6 / pin 31; Pi fan label UNKNOWN (≤ 0.2 A budgeted). Load ≤ 0.36 A of 2 A. Then Brian chose **direct wiring**: no level shifter or resistors to start (DATA → GPIO10, PWM → GPIO12, tach → GPIO6 with the built-in pull-up); add the shifter/330 Ω/10 kΩ only if the LEDs flicker or the RPM jumps. UNKNOWN: CT200 lead gauge/colours, Pi 5 V headroom, tach voltage (meter it first), whether 3.3 V data drives the LEDs at this length.
 

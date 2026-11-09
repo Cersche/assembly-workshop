@@ -191,15 +191,16 @@
       ],
       "status": "printing",
       "device_cards": [
-        "docs/devices/guanting-12v-brick.md"
+        "docs/devices/guanting-12v-brick.md",
+        "docs/devices/fan-200mm.md"
       ],
       "sources": [
         "work/fan-junction-box/Spec.md",
         "work/fan-junction-box/brick_box.scad"
       ],
       "workflow_log": "",
-      "notes": "BRB-C released 2026-11-08 (outputs/Fan_Power_Box_BRB-C_2026-11-08): cavity 88 tall (BRB-B-S height good) and 1 deeper, because BRB-B-S snapped on very tight. Sleeve BRB-C-S snaps onto the GuanTing brick (grip from the flats only) and has flush zip-tie slots on the left, right and top. Junction box BRB-C-B (2x Wago 221-413 + socket tip) slides onto the sleeve's dovetail and is locked by one M3; lid BRB-C-L. JBC/JBR = earlier junction-box drafts (history). Next: Brian's fit report. Snap, grip and dovetail fit UNKNOWN.",
-      "updated": "2026-11-08"
+      "notes": "BRB-C released 2026-11-08 (outputs/Fan_Power_Box_BRB-C_2026-11-08): cavity 88 tall (BRB-B-S height good) and 1 deeper, because BRB-B-S snapped on very tight. Sleeve BRB-C-S snaps onto the GuanTing brick (grip from the flats only) and has flush zip-tie slots on the left, right and top. Junction box BRB-C-B (2x Wago 221-413 + socket tip) slides onto the sleeve's dovetail and is locked by one M3; lid BRB-C-L. JBC/JBR = earlier junction-box drafts (history). Next: Brian's fit report. Snap, grip and dovetail fit UNKNOWN. 2026-11-09: CT200 wired through the box; Pi test shows tach and PWM connected (fan doesn't stop at 0 %), results on docs/devices/fan-200mm.md.",
+      "updated": "2026-11-09"
     },
     {
       "id": "sg8",

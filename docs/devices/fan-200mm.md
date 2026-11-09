@@ -36,3 +36,11 @@ Diagram: `work/fan-junction-box/wiring_brick.svg` (artifact https://claude.ai/ar
 - **Ground tie (required, Brian chose it 2026-11-08):** PWM, TACH and DATA need brick GND and Pi GND joined. One jumper at the Pi end from the Pi fan's GND wire (= brick GND) to Pi pin 39. Both adapters are isolated, so this is safe. If the CT200 joins ARGB GND to fan GND inside (UNKNOWN), that is a harmless second tie. 12 V never touches the Pi header.
 - **Current:** CT200 0.16 A + Pi fan ≤ 0.20 A (UNKNOWN, budgeted; Brian doesn't know its label or wire count yet, 2-wire assumed) = ≤ 0.36 A of the brick's 2 A (~18 %). ARGB 0.31 A is from the Pi 5 V (headroom UNKNOWN).
 - **Wago 221-413:** 0.14–4 mm² fine-stranded, 0.2–4 mm² solid/stranded (24–12 AWG), strip 11 mm (WAGO datasheet). CT200 lead gauge UNKNOWN: 24 AWG or thicker goes straight in; 26 AWG or thinner: fold the strip back double or crimp a ferrule, then tug-test.
+
+## Pi connection test, 2026-11-09 (Brian wired the CT200; Claude ran `work/fan-junction-box/pi_tests/fan_test.py` on the Pi 4, `pihole`)
+Only the CT200 is wired (12 V via the brick box Wagos; TACH → GPIO6 pin 31, PWM → GPIO12 pin 32, brick GND → Pi pin 39). ARGB not tested.
+- First runs read noise only (~14,600 RPM): the fan was unplugged. Ground tie added and fan plugged in before the good run.
+- **TACH: connected.** Steady 1854 / 1860 RPM at full speed (counting 2 pulses per rev). The real RPM is UNKNOWN until checked against the CT200's rated speed: the pulses per rev may differ, or edges may be double-counted.
+- **PWM: connected.** Holding PWM low dropped the tach count to 1050 (57 % of full). **The CT200 does not stop at 0 %.**
+- PWM line reads 0 against the Pi's pull-down, so no strong pull-up inside the fan is visible on this wire (the ~5 V pull-up risk to the 3.3 V pin looks lower than assumed; not measured with a meter).
+- The 50 % step (lgpio software PWM, 10 kHz) is invalid: it read 26,538, which is the PWM signal coupling into the tach. A real speed curve needs hardware PWM at 25 kHz (`dtoverlay=pwm` on GPIO12), which is not set up yet.
