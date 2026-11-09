@@ -19,7 +19,7 @@ except ImportError:
 TACH = 6
 PULSES_PER_REV = 2
 PERIOD_NS = 40000          # 25 kHz
-STEPS = (100, 80, 60, 40, 20, 0, 100)
+STEPS = (100, 99, 95, 90, 80, 60, 40, 20, 1, 0, 100)
 SETTLE_S = 8
 MEASURE_S = 5
 
@@ -70,7 +70,7 @@ def main():
 
     h = open_chip()
     lgpio.gpio_claim_alert(h, TACH, lgpio.FALLING_EDGE, lgpio.SET_PULL_UP)
-    lgpio.gpio_set_debounce_micros(h, TACH, 1000)
+    lgpio.gpio_set_debounce_micros(h, TACH, 4000)  # real pulses ~8+ ms at <1000 RPM
     cb = lgpio.callback(h, TACH, lgpio.FALLING_EDGE)
     try:
         for pct in STEPS:
@@ -78,7 +78,10 @@ def main():
             time.sleep(SETTLE_S)
             cb.reset_tally()
             time.sleep(MEASURE_S)
-            r = cb.tally() * 60.0 / PULSES_PER_REV / MEASURE_S
+            # Empirical 2026-11-09: while PWM switches (0 < duty < 100) the count
+            # is exactly doubled (99 % read 2x 100 %, 1 % read 2x 0 %, no audible change).
+            ppr = PULSES_PER_REV * (2 if 0 < pct < 100 else 1)
+            r = cb.tally() * 60.0 / ppr / MEASURE_S
             flag = "  <- NOISE?" if r > 3000 else ""
             print(f"   PWM {pct:3d} %: {r:6.0f} RPM{flag}", flush=True)
     finally:
