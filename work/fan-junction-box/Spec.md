@@ -72,6 +72,9 @@ Brick measured on the 3D measure page plus two viewer-check fixes (device card h
 ### Released as BRB-A (2026-11-08)
 Brian is printing draft 6: outputs/Fan_Power_Box_BRB-A_2026-11-08/. IDs BRB-A-S (sleeve), BRB-A-B (box), BRB-A-L (lid). BRB-A is now immutable; any change becomes BRB-B.
 
+### BRB-B (2026-11-08)
+BRB-A-S printed too short in height to go on; width good. BRB-B uses height 87 (Brian's measurement) and 0.5 per end (`clz`), so the cavity is 88 (Brian). Box and lid grow with it. outputs/Fan_Power_Box_BRB-B_2026-11-08/.
+
 ### Wiring settled (2026-11-08)
 Diagram `wiring_brick.svg` (artifact https://claude.ai/artifact/SZZQi8ZmPMWf1DFno96FE2); full pin list on the device card `docs/devices/fan-200mm.md` ("Wiring for the brick box BRB-A"). Brian's choices: ground tie = jumper from the Pi fan's GND to Pi pin 39 at the Pi (no box change, 221-413s stay); tach on GPIO6 / pin 31; Pi fan label/wires UNKNOWN (≤ 0.2 A budgeted). Current ≤ 0.36 A of 2 A. Wago 221-413 takes 24–12 AWG (0.14 mm² fine-stranded min): fold back or ferrule 26 AWG fan leads. `wiring_B.svg` is history.
 - **Direct wiring (Brian, 2026-11-08, later the same day):** no level shifter, no resistors to start. ARGB DATA straight to GPIO10, PWM straight to GPIO12, tach on GPIO6 with the Pi's built-in pull-up. Shifter, 330 Ω and 10 kΩ are added only if the LEDs flicker or the RPM jumps. The ground tie to pin 39 stays (required).

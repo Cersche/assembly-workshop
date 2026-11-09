@@ -1,4 +1,4 @@
-// Fan power box on the GuanTing 12 V brick (BRB-A, released for Brian's print 2026-11-08; was draft 6). Two pieces (Brian):
+// Fan power box on the GuanTing 12 V brick (BRB-B 2026-11-08: BRB-A + cavity height 88; BRB-A-S printed too short). Two pieces (Brian):
 // the SLEEVE snaps onto the brick; the junction BOX (2x Wago 221-413 + the brick's screw-terminal
 // socket tip, wired first) slides down onto a dovetail rail on the sleeve and is locked by one M3
 // countersunk screw into an M3 heat-set insert in the rail. The brick's barrel plug enters through
@@ -11,7 +11,7 @@ $fn = 48;
 part = "box"; // sleeve | box | lid | brick | contents | measure | keepout
 
 // Brick (docs/devices/guanting-12v-brick.md): supplier 45 x 85, Brian's profile 2026-11-08
-bw = 45; bh = 85;
+bw = 45; bh = 87;       // BRB-B: height = Brian's measured 87 (supplier 85 made BRB-A-S too short)
 body_d = 30;          // outer face to main back face
 plinth = 6.25;        // prong block stands out from the main back (P)
 plinth_h = 30;        // top edge to bottom of the prong block (Q)
@@ -33,7 +33,9 @@ blk_len = 13.55;      // green block length along the tip (measured)
 plug_len = 35; plug_d = 9;
 wago = [18.7, 18.6, 8.3];
 
-cl = 0.3;             // cradle clearance per side on the main flats (UNKNOWN fit)
+cl = 0.3;             // cradle clearance per side on the main flats (width fit good on BRB-A-S)
+clz = 0.5;            // clearance per end in height: cavity = 88 (Brian, after BRB-A-S was too short)
+ez = clz - cl;        // extra height growth of the cradle beyond cl
 loose = 4;            // cavity curves use radii 4 smaller, so grip comes from the flats, not the curves
 t = 2.4;              // walls
 lip_t = 2;            // snap lip thickness (Y)
@@ -56,7 +58,7 @@ dv_cl = 0.25;                       // groove clearance per face (UNKNOWN fit)
 box_floor = 4;                      // box floor; groove 2.75 deep leaves 1.25
 yb = ys + box_floor;                // inside of the box
 yt = yb + box_h;                    // lid seat
-z0 = -cl - t; z1 = bh + cl + t;     // outer Z
+z0 = -clz - t; z1 = bh + clz + t;     // outer Z
 zi0 = 0; zi1 = bh;                  // box inside Z range
 boss_d = 9;
 boss = [for (sx = [-1, 1], z = [zi0 + boss_d/2, zi1 - boss_d/2]) [sx*(xo - t - boss_d/2 + 0.5), z]];
@@ -69,17 +71,17 @@ notch = [10, 6];
 notch_z = (zi0 + tip_len + wago_z0)/2;
 
 // Brick side profile, 2D: u = Y (from the strip), v = Z
-module profile2d(k = 0) {   // body only, no prong block; k shrinks the curve radii
+module profile2d(k = 0, h = bh) {   // body only, no prong block; k shrinks the curve radii
     hull() {
-        translate([plinth, 0]) square([1, bh]);
+        translate([plinth, 0]) square([1, h]);
         translate([dd - round_r + k, round_r - k]) circle(r = round_r - k);
-        translate([dd - top_ry + k, bh - top_rz + k]) scale([top_ry - k, top_rz - k]) circle(r = 1, $fn = 64);
+        translate([dd - top_ry + k, h - top_rz + k]) scale([top_ry - k, top_rz - k]) circle(r = 1, $fn = 64);
     }
 }
 // Front view outline (X, Z), r 16 corners
-module front2d(k = 0) {
+module front2d(k = 0, h = bh) {
     r = front_r - k;
-    hull() for (x = [-bw/2 + r, bw/2 - r], z = [r, bh - r]) translate([x, z]) circle(r = r);
+    hull() for (x = [-bw/2 + r, bw/2 - r], z = [r, h - r]) translate([x, z]) circle(r = r);
 }
 module along_x(w) rotate([90, 0, 90]) linear_extrude(w, center = true) children();
 module along_y(y0, y1) translate([0, y1, 0]) rotate([90, 0, 0]) linear_extrude(y1 - y0) children();
@@ -92,10 +94,10 @@ module plan2d(k = 0) {
     }
 }
 // Brick body grown by off: side profile x front outline x plan outline
-module body3d(off, k = 0) intersection() {
-    along_x(bw + 2*off + 2) offset(r = off) profile2d(k);
-    along_y(-30, dd + off + 1) offset(r = off) front2d(k);
-    translate([0, 0, -off - 1]) linear_extrude(bh + 2*off + 2) offset(r = off) union() { plan2d(k); translate([-bw/2, -30]) square([bw, plinth + 31]); }
+module body3d(off, k = 0, e = 0) translate([0, 0, -e]) intersection() {   // e: grow the height by e at each end
+    along_x(bw + 2*off + 2) offset(r = off) profile2d(k, bh + 2*e);
+    along_y(-30, dd + off + 1) offset(r = off) front2d(k, bh + 2*e);
+    translate([0, 0, -off - 1]) linear_extrude(bh + 2*e + 2*off + 2) offset(r = off) union() { plan2d(k); translate([-bw/2, -30]) square([bw, plinth + 31]); }
 }
 
 module rrect(x0, x1, z0, z1, y0, y1, r = 2.5) {
@@ -112,7 +114,7 @@ module sleeve() {
     difference() {
         union() {
             intersection() {
-                body3d(cl + t, loose);
+                body3d(cl + t, loose, ez);
                 translate([-xo - 1, y_lip0, z0 - 1]) cube([2*xo + 2, 100, z1 - z0 + 2]);
             }
             rrect(-xo, xo, z0, z1, dd - 10, ys, 6);
@@ -120,7 +122,7 @@ module sleeve() {
             translate([0, 0, rail_z0]) linear_extrude(z1 - rail_z0) rail2d();
         }
         // brick cavity
-        body3d(cl, loose);
+        body3d(cl, loose, ez);
         // open back between the lips
         translate([-(bw/2 + cl - lip_reach), -1, z0 - 1]) cube([bw + 2*cl - 2*lip_reach, plinth + 1, z1 - z0 + 2]);
         // no lips outside lip_z (prong block zone, bottom corner)
@@ -132,7 +134,7 @@ module sleeve() {
         translate([-(boot_d + 1)/2, -1, z0 - 1]) cube([boot_d + 1, cord_y + 1, t + cl + 2]);
         translate([0, cord_y, z0 - 1]) cylinder(d = boot_d + 1, h = t + cl + 2);
         tie_faces() tie_cut();
-        id_cut("BRB-A-S", [xo, y_mid, 26], [[0, 0, 1], [0, -1, 0], [1, 0, 0]]); // right face, reads along Z
+        id_cut("BRB-B-S", [xo, y_mid, 26], [[0, 0, 1], [0, -1, 0], [1, 0, 0]]); // right face, reads along Z
         // lock screw insert in the rail (M3 x 3 x 5: 4.2 x 4) + screw tip clearance
         translate([0, ys + rail_h + 0.01, lock_z]) rotate([90, 0, 0]) { ws_insert_bore(ws_insert_m3); cylinder(d = 3.2, h = 6.5); }
     }
@@ -149,7 +151,7 @@ module box() {
         translate([0, yb + tip_barrel/2 + 0.5, z0 - 1]) cylinder(d = plug_d + 0.6, h = -z0 + 2);
         // output cable notch, right wall
         translate([xo - t - 1, yt - notch[1], notch_z - notch[0]/2]) cube([t + 2, notch[1] + 1, notch[0]]);
-        id_cut("BRB-A-B", [-xo, (ys + yt)/2, bh/2], [[0, 0, -1], [0, 1, 0], [1, 0, 0]]); // left face
+        id_cut("BRB-B-B", [-xo, (ys + yt)/2, bh/2], [[0, 0, -1], [0, 1, 0], [1, 0, 0]]); // left face
     }
     // insert bosses for the lid (M3 x 3 x 5: 4.2 bore x 4 deep)
     for (b = boss) translate([b[0], yb - 0.01, b[1]]) difference() {
@@ -194,7 +196,7 @@ module lid() {
             cylinder(d = 3.4, h = lid_t + 2);
             translate([0, 0, 1 + lid_t - 1.7]) cylinder(d1 = 3.4, d2 = 6.8, h = 1.7 + 0.01);
         }
-        id_cut("BRB-A-L", [0, yt + lid_t, bh/2], [[-1, 0, 0], [0, 0, 1], [0, 1, 0]]);
+        id_cut("BRB-B-L", [0, yt + lid_t, bh/2], [[-1, 0, 0], [0, 0, 1], [0, 1, 0]]);
     }
 }
 

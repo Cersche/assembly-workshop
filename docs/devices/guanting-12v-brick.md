@@ -5,7 +5,7 @@ Feeds the CT200 and the Pi's 40 mm fan through the fan power box (`work/fan-junc
 | Value | Source | Measured | Status |
 | --- | --- | --- | --- |
 | A width | **45 supplier drawing** (Brian: use it); Brian measured 44 | | from source |
-| B height | **85 supplier drawing**; Brian measured 87 | | from source |
+| B height | Brian measured 87; supplier 85 made BRB-A-S too short (2026-11-08). BRB-B uses 87 with a 88 cavity | 87 | measured |
 | C body depth (outer face to main back face) | 30 (Brian: supplier's 3.1 cm is the body without the prong block) | 30 | measured |
 | P prong block stands out from the main back | Brian 2026-11-08 | 6.25 | measured |
 | Overall depth at the prongs | 30 + 6.25 | 36.25 | derived |
