@@ -1,5 +1,9 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-09 MoCA receiver base RX5-C: cradle bosses 9 mm left (Claude)
+Brian marked the base in the slicer: move the four ScreenBeam cradle bosses 9 mm left, nothing else on any part. Done in `work/wall-box-wizard/receiver1/rx5.scad` (`base_dx=-9`, base only, ID RX5-C on its underside); [package](outputs/MoCA_Receiver_RX5-C_2026-11-09/README.md), `outputs/Final_3MF/RX5-C_moca_receiver_base.3mf` (1 object, closed). Body, lid, shelf, cradle and washers stay RX5-B. The left plug bay drops 55 -> 46 (power plug about 11 from the wall); cord route not re-checked. Viewer: https://claude.ai/artifact/7G2spgnzY89gidiyiWKaZD. Not printed.
+**Next step:** Brian prints the base and reports by ID in docs/Fit_Findings.md.
+
 ## 2026-11-09 CT200 fan connection test from the Pi (Claude)
 Brian wired the CT200 (power via the brick box Wagos, TACH → pin 31, PWM → pin 32, ground tie to pin 39). `work/fan-junction-box/pi_tests/fan_test.py` (lgpio, no config change) on the Pi 4 `pihole`: **tach and PWM both connected**; full speed reads ~1855 (2 pulses/rev assumed), PWM low ~1050; the fan doesn't stop at 0 %. The 50 % software-PWM step was invalid (PWM coupled into the tach). Details on docs/devices/fan-200mm.md.
 - Hardware PWM is now on (`dtoverlay=pwm,pin=12,func=4`, Pi rebooted, Brian's OK). 25 kHz curve: 0 % and 100 % read clean (~1050 / ~1900), but 20–80 % inflate the tach count (PWM pickup on the tach wire, weak Pi pull-up). Helpers `pi_tests/fan_curve.py` + `run_curve.cmd` (scp kept dropping; the .cmd pipes the file over ssh).
