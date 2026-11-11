@@ -89,6 +89,19 @@ module rail(s,t){scale([s,1,1])intersection(){rail_round();difference(){
 
 // ---- rear channel (drawn for the right side, s=+1; left is mirrored)
 module ledge_plan(){polygon([[win+0.01,ch_y0],[win-ledge,ch_y0],[win-ledge,taper_y0],[win-ledge_rear,taper_y1],[win-ledge_rear,rack_depth],[win+0.01,rack_depth]]);}
+// D (2026-11-11, Brian: more room where the cables meet the bar): window runs back to Y 234 above the rail, both faces
+// rounded over 2 mm, and the gusset gets a matching pocket so cables leave the window straight to the side.
+wD_rear=234; wD_low=15.2; wch=2;
+module windowD2d(){offset(r=win_r)offset(delta=-win_r)polygon([[win_y0,(win_z0+win_z1)/2],[win_y1,win_z0],[win_y2,win_z0],[win_y2+wD_low-win_z0,wD_low],[wD_rear,wD_low],[wD_rear,win_z1],[win_y1,win_z1]]);}
+module xslab(x0,t){rotate([90,0,90])translate([0,0,x0])linear_extrude(t)children();}
+module window_cut(){
+ if(variant=="D"){
+  xslab(win-0.5,wall+1)windowD2d();
+  hull(){xslab(win-0.5,0.51)offset(delta=wch)windowD2d();xslab(win+wch,0.01)windowD2d();}
+  hull(){xslab(win+wall-0.01,0.51)offset(delta=wch)windowD2d();xslab(win+wall-wch,0.01)windowD2d();}
+  translate([win+wall-0.01,win_y2,wD_low-wch])cube([ear_web-win-wall+1,wD_rear+2-win_y2,win_z1-wD_low+2*wch]);   // gusset pocket
+ } else xslab(win-0.5,wall+1)cable_window2d();
+}
 module cable_window2d(){offset(r=win_r)offset(delta=-win_r)polygon([[win_y0,(win_z0+win_z1)/2],[win_y1,win_z0],[win_y2,win_z0],[win_y2,win_z1],[win_y1,win_z1]]);}
 module channel(s){
  scale([s,1,1])difference(){
@@ -105,7 +118,7 @@ module channel(s){
     translate([hole_x,rack_pitch/2])capsule2d();   // middle screw: M6 x 8 into the rear post's middle hole
    }
   }
-  rotate([90,0,90])translate([0,0,win-0.5])linear_extrude(wall+1)cable_window2d();
+  window_cut();
   // lead-in for the PC's rear end: floor, roof and web flare over the first lead_l mm
   rotate([90,0,90])translate([0,0,win-ledge-1])linear_extrude(ledge+1){
    polygon([[ch_y0-1,ledge_top-lead],[ch_y0,ledge_top-lead],[ch_y0+lead_l,ledge_top],[ch_y0-1,ledge_top]]);
@@ -124,7 +137,7 @@ bz=3.6;                       // bar bottom, 0.3 above the floor ledge (3.3)
 by0=214; by1=236;             // trough: 42 behind the PC's rear (171.7) for plugs
 bend=80;                      // body ends / end blocks start
 cb=0.3;                       // sliding clearance
-end_top=19;                   // end blocks stay low: cables from the window pass over them into the trough
+end_top=14.6;                   // end blocks stay low: cables from the window pass over them into the trough
 module along_x(x0,x1){translate([x0,0,0])rotate([90,0,90])linear_extrude(x1-x0)children();}
 module trough2d(){
  translate([by0,bz])square([by1-by0,3]);
@@ -133,27 +146,34 @@ module trough2d(){
  translate([224,bz])square([2,22-bz]);
 }
 module trough(x0,x1){along_x(x0,x1)trough2d();}
+module ramp_wall(y,t,h,xf){translate([0,y+t,0])rotate([90,0,0])linear_extrude(t)polygon([[-bend-0.01,bz],[bend+0.01,bz],[bend+0.01,bz+3],[xf,h],[-xf,h],[-bend-0.01,bz+3]]);}
+module troughD(){
+ along_x(-bend-0.01,bend+0.01){translate([by0,bz])square([by1-by0,3]);translate([by1-3,bz])square([3,13-bz]);}
+ ramp_wall(by0,3,30,52);     // front wall full height inside X +-52, slopes to the floor at the end blocks
+ ramp_wall(224,2,22,58);     // divider
+}
 
 // D: dovetail rail on each web's inner face. The bar slides on from the rear: the rail enters the open front of the
 // bar's groove, the groove's closed rear end stops on the rail's rear end (Y 240), and a spring leaf in the groove's
 // inner wall clicks its nub into a dimple in the rail's tip face. Pull firmly to remove (grip UNKNOWN).
 dt_tip=win-4;                                                   // 87.75: rail tip face, 4 proud of the web
-dt=[[win+0.01,9.5],[dt_tip,8],[dt_tip,17],[win+0.01,15.5]];     // x,z: wider at the tip
+dt=[[win+0.01,7.1],[dt_tip,5.6],[dt_tip,12.6],[win+0.01,11.1]];   // lowered 2026-11-11 so the end block can drop to 14.6     // x,z: wider at the tip
 nub_on=true;   // false: bar without the nub, for the slide-in sweep check
-dt_y0=by0+2; dt_y1=rack_depth;                                  // rail Y 216..240
+dt_y0=219; dt_y1=rack_depth;                                    // rail Y 219..240
 nub_y=dt_y0+3; nub=1.2; dimple=1.4;                             // click position, nub height, dimple depth
-leaf_t=1.5; leaf_gap=2.5; leaf_y1=nub_y+20; leaf_z0=8.6; leaf_z1=16.4;   // cantilever, 20 long, rooted at the rear
+leaf_t=1.5; leaf_gap=2.5; leaf_y1=nub_y+20; leaf_z0=6.2; leaf_z1=11.8;   // cantilever, 20 long, rooted at the rear
 blk_y0=by0-3; blk_y1=dt_y1+cb+3; blk_r=2;                       // end block Y 211..243.3
 module D_mount(){difference(){
   translate([0,dt_y1,0])rotate([90,0,0])linear_extrude(dt_y1-dt_y0)polygon(dt);
-  translate([dt_tip,nub_y,12.5])rotate([0,90,0])cylinder(d=3.2,h=2*dimple,center=true);          // dimple for the nub
+  translate([dt_tip,nub_y,9.1])rotate([0,90,0])cylinder(d=3.2,h=2*dimple,center=true);          // dimple for the nub
   // 1 mm lead-ins on the rail's rear (entry) end: tip face and top/bottom edges
   translate([0,dt_y1+0.01,0])rotate([90,0,0])linear_extrude(1.2,scale=1)difference(){square([200,30]);offset(delta=-1)polygon(dt);}
  }}
 module D_end(){
  x1=win-cb;                                                       // 91.45
  difference(){
-  translate([0,0,bz])linear_extrude(end_top-bz)offset(r=blk_r)offset(delta=-blk_r)translate([bend,blk_y0])square([x1-bend,blk_y1-blk_y0]);
+  hull(){translate([0,0,bz])linear_extrude(end_top-bz-2)offset(r=blk_r)offset(delta=-blk_r)translate([bend,blk_y0])square([x1-bend,blk_y1-blk_y0]);
+        translate([0,0,end_top-0.01])linear_extrude(0.01)offset(r=blk_r)offset(delta=-blk_r-2)translate([bend,blk_y0])square([x1-bend,blk_y1-blk_y0]);}   // top edges chamfered 2
   translate([0,dt_y1+cb,0])rotate([90,0,0])linear_extrude(dt_y1+cb-blk_y0+1)offset(delta=cb)polygon(dt);   // groove: open in front, closed at the rear
   translate([0,blk_y0+1.5,0])rotate([90,0,0])linear_extrude(1.6)offset(delta=1+cb)polygon(dt);  // entry chamfer in front
   // free the spring leaf: slot behind it and slits above and below
@@ -162,7 +182,7 @@ module D_end(){
   for(z=[leaf_z0-0.6,leaf_z1])translate([lx0-0.01,blk_y0-1,z])cube([leaf_t+0.02,leaf_y1-blk_y0+1,0.6]);
  }
  // nub on the leaf's free end, facing the rail
- if(nub_on)translate([dt_tip-cb,nub_y,12.5])scale([nub/1.5,1,1])sphere(d=3,$fn=24);
+ if(nub_on)translate([dt_tip-cb,nub_y,9.1])scale([nub/1.5,1,1])sphere(d=3,$fn=24);
 }
 // E: no joint: trough and both channels are one print (screws as before, 3 per ear).
 module E_mount(){along_x(win-60,win-12)trough2d();
@@ -181,7 +201,7 @@ module F_end(){difference(){
 
 module bar_mount(){if(variant=="D")D_mount();else if(variant=="F")F_mount();else if(variant=="E")E_mount();}
 module bar(){
- if(variant=="D"){trough(-bend-0.01,bend+0.01);D_end();mirror([1,0,0])D_end();}
+ if(variant=="D"){troughD();D_end();mirror([1,0,0])D_end();}
  else if(variant=="F"){trough(-bend-0.01,bend+0.01);F_end();mirror([1,0,0])F_end();}
  else if(variant=="E")trough(-(win-60),win-60);   // the middle of the one-piece frame; each channel carries its outer 60
 }
