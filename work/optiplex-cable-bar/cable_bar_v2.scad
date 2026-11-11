@@ -1,4 +1,4 @@
-// DRAFT (2026-11-11) copied from OPX-G for the rear cable bar: variants D (slide rail), E (one-piece rear frame), F (pegs). The OPX-G part list below is unchanged.
+// DRAFT (2026-11-11) copied from OPX-G for the rear cable bar: variant D (slide rail, chosen by Brian; E and F are in git history). The OPX-G part list below is unchanged.
 // OPX-G: new rear channels only, with a cable pass-through window in each web (Brian, 2026-11-04). Used with the printed OPX-D sleeve and printed OPX-F rails (good fit, Brian), whose modules are unchanged here and keep their IDs. Unprinted; fit and strength UNKNOWN.
 // The stops on the channels catch the case's rear corners.
 // Own geometry; ideas credited to Psychobob (one-piece flush shelf, scooped floor/roof) and scubaroboto (rear C-channel, ear gusset).
@@ -91,8 +91,8 @@ module rail(s,t){scale([s,1,1])intersection(){rail_round();difference(){
 module ledge_plan(){polygon([[win+0.01,ch_y0],[win-ledge,ch_y0],[win-ledge,taper_y0],[win-ledge_rear,taper_y1],[win-ledge_rear,rack_depth],[win+0.01,rack_depth]]);}
 // D (2026-11-11, Brian: more room where the cables meet the bar): window runs back to Y 234 above the rail, both faces
 // rounded over 2 mm, and the gusset gets a matching pocket so cables leave the window straight to the side.
-wD_rear=234; wD_low=15.2; wch=2;
-module windowD2d(){offset(r=win_r)offset(delta=-win_r)polygon([[win_y0,(win_z0+win_z1)/2],[win_y1,win_z0],[win_y2,win_z0],[win_y2+wD_low-win_z0,wD_low],[wD_rear,wD_low],[wD_rear,win_z1],[win_y1,win_z1]]);}
+wD_rear=234; wD_low=15.2; wch=2;   // low part ends at Y 217 so its 2 mm round-over stops where the rail starts (219)
+module windowD2d(){offset(r=win_r)offset(delta=-win_r)polygon([[win_y0,(win_z0+win_z1)/2],[win_y1,win_z0],[dt_y0-wch,win_z0],[dt_y0-wch,wD_low],[wD_rear,wD_low],[wD_rear,win_z1],[win_y1,win_z1]]);}
 module xslab(x0,t){rotate([90,0,90])translate([0,0,x0])linear_extrude(t)children();}
 module window_cut(){
  if(variant=="D"){
@@ -100,6 +100,7 @@ module window_cut(){
   hull(){xslab(win-0.5,0.51)offset(delta=wch)windowD2d();xslab(win+wch,0.01)windowD2d();}
   hull(){xslab(win+wall-0.01,0.51)offset(delta=wch)windowD2d();xslab(win+wall-wch,0.01)windowD2d();}
   translate([win+wall-0.01,win_y2,wD_low-wch])cube([ear_web-win-wall+1,wD_rear+2-win_y2,win_z1-wD_low+2*wch]);   // gusset pocket
+  translate([win+wall-0.01,win_y2-1,z0-1])cube([ear_web-win-wall+1,dt_y0+2-(win_y2-1),wD_low-wch+1.01]);         // gusset starts at Y 221 below it
  } else xslab(win-0.5,wall+1)cable_window2d();
 }
 module cable_window2d(){offset(r=win_r)offset(delta=-win_r)polygon([[win_y0,(win_z0+win_z1)/2],[win_y1,win_z0],[win_y2,win_z0],[win_y2,win_z1],[win_y1,win_z1]]);}
@@ -129,24 +130,15 @@ module channel(s){
 }
 module rear_id(s,t){multmatrix([[-1,0,0,s*106],[0,0,1,rack_depth+plate_t],[0,1,0,22.2]])translate([0,0,-id_d])linear_extrude(id_d+0.1)rotate(90)text(t,size=3.5,font=font,halign="center",valign="center");}
 module rear(s,t){difference(){union(){channel(s);scale([s,1,1])bar_mount();}rear_id(s,t);}}
-variant="G";   // G as printed-design OPX-G, D, E, F
+variant="D";   // D, or G for the OPX-G channels as designed
 
 // ================= rear cable bar, bracket variants (drawn for the right side) =================
-// Same two-lane trough body for every variant, so only the joint differs.
 bz=3.6;                       // bar bottom, 0.3 above the floor ledge (3.3)
 by0=214; by1=236;             // trough: 42 behind the PC's rear (171.7) for plugs
 bend=80;                      // body ends / end blocks start
 cb=0.3;                       // sliding clearance
 end_top=14.6;                   // end blocks stay low: cables from the window pass over them into the trough
 module along_x(x0,x1){translate([x0,0,0])rotate([90,0,90])linear_extrude(x1-x0)children();}
-module trough2d(){
- translate([by0,bz])square([by1-by0,3]);
- translate([by0,bz])square([3,30-bz]);
- translate([by1-3,bz])square([3,13-bz]);
- translate([224,bz])square([2,22-bz]);
-}
-module trough(x0,x1){along_x(x0,x1)trough2d();}
-module ramp_wall(y,t,h,xf){translate([0,y+t,0])rotate([90,0,0])linear_extrude(t)polygon([[-bend-0.01,bz],[bend+0.01,bz],[bend+0.01,bz+3],[xf,h],[-xf,h],[-bend-0.01,bz+3]]);}
 // Zip-tie slots (Brian, 2026-11-11), 5.5 x 2.6 for ties up to about 4.8 wide. At each station a tie can wrap the
 // floor/wall corner of either lane (front wall or back lip slot + floor slot next to the divider), and up the front
 // wall two more slots hold a stacked bundle against it. Ties pass under the bar: 3.6 clear below it.
@@ -181,7 +173,7 @@ dt=[[win+0.01,7.1],[dt_tip,5.6],[dt_tip,12.6],[win+0.01,11.1]];   // lowered 202
 nub_on=true;   // false: bar without the nub, for the slide-in sweep check
 dt_y0=219; dt_y1=rack_depth;                                    // rail Y 219..240
 nub_y=dt_y0+3; nub=1.2; dimple=1.4;                             // click position, nub height, dimple depth
-leaf_t=1.5; leaf_gap=2.5; leaf_y1=nub_y+20; leaf_z0=6.2; leaf_z1=11.8;   // cantilever, 20 long, rooted at the rear
+leaf_t=1.5; leaf_gap=2.5; leaf_y1=238; leaf_z0=6.2; leaf_z1=11.8;   // cantilever rooted at Y 238, 5 mm ahead of the block's rear face
 blk_y0=by0-3; blk_y1=dt_y1+cb+3; blk_r=2;                       // end block Y 211..243.3
 module D_mount(){difference(){
   translate([0,dt_y1,0])rotate([90,0,0])linear_extrude(dt_y1-dt_y0)polygon(dt);
@@ -204,26 +196,10 @@ module D_end(){
  // nub on the leaf's free end, facing the rail
  if(nub_on)translate([dt_tip-cb,nub_y,9.1])scale([nub/1.5,1,1])sphere(d=3,$fn=24);
 }
-// E: no joint: trough and both channels are one print (screws as before, 3 per ear).
-module E_mount(){along_x(win-60,win-12)trough2d();
- along_x(win-12.01,win+0.01){translate([by0,bz])square([by1-by0,3]);translate([by1-3,bz])square([3,13-bz]);translate([224,bz])square([2,22-bz]);}}  // no front wall next to the web: cables from the window drop straight in
-
-// F: two pegs on the web's inner face; the bar's ends have open-front C-clips that snap over them.
-peg_d=7; peg_l=7; peg_z=11; peg_ys=[226];   // one peg per side; the floor ledge under the end block stops it rocking
-module F_mount(){for(y=peg_ys)translate([win+0.01,y,peg_z])rotate([0,0,0])rotate([0,-90,0])linear_extrude(peg_l+0.01)hull(){circle(d=peg_d);translate([0,-peg_d*0.7])square(0.01,center=true);}}
-module F_end(){difference(){
-  translate([bend,by0-3,bz])cube([win-cb-bend,by1+3-(by0-3),end_top-bz]);
-  for(y=peg_ys)translate([0,y,peg_z])rotate([0,90,0])translate([0,0,win-peg_l-cb-0.5])linear_extrude(peg_l+2)circle(d=peg_d+2*cb);
-  // entry slots from the front edge, 1 narrower than the peg (the snap), and flex reliefs behind each hole
-  translate([win-peg_l-cb-0.5,by0-4,peg_z-(peg_d-1)/2])cube([peg_l+2,peg_ys[0]-(by0-4),peg_d-1]);
-  for(dz=[-1,1])translate([win-peg_l-cb-0.5,by0-4,peg_z+dz*(peg_d/2+2.2)-0.6])cube([peg_l+2,peg_ys[0]+peg_d/2+3-(by0-4),1.2]);
- }}
-
-module bar_mount(){if(variant=="D")D_mount();else if(variant=="F")F_mount();else if(variant=="E")E_mount();}
+module bar_mount(){if(variant=="D")D_mount();}
 module bar(){
  if(variant=="D"){troughD();D_end();mirror([1,0,0])D_end();}
- else if(variant=="F"){trough(-bend-0.01,bend+0.01);F_end();mirror([1,0,0])F_end();}
- else if(variant=="E")trough(-(win-60),win-60);   // the middle of the one-piece frame; each channel carries its outer 60
+
 }
 
 // ---- PC dummy (from Brian's measurements; rear add-ons read off his photos, approximate)
@@ -237,7 +213,6 @@ module pc(){
 
 if(part=="bar")bar();
 else if(part=="sweep")for(dy=[0:2:40])translate([0,dy,0])bar();   // bar positions while sliding in from the rear
-else if(part=="frame")union(){rear(-1,"L");rear(1,"R");bar();}
 else if(part=="front")front();
 else if(part=="rear_left")rear(-1,"OPX-G-L");
 else if(part=="rear_right")rear(1,"OPX-G-R");

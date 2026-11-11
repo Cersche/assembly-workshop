@@ -6,6 +6,7 @@ Brian wants a snap-in bar left-right between the OptiPlex rear channels for cabl
 **Zip-tie slots (Brian, same day):** 5.5 x 2.6 slots at X -68, -45, -15, 15, 45, 68: front wall (Z 8.2, plus 15.5 and 23.5 where it is full height), back lip (Z 7.6) and floor beside the divider (Y 221.2 and 226.2). Ties wrap a lane's floor/wall corner and pass under the bar (3.6 clear). Still clear of channels and PC.
 **Band recesses (Brian, same day):** 6 wide x 1.2 deep at each tie station, up the front face to the top slot, across the whole underside and up the back face of the lip, so ties sit flush and nothing hangs below the bar. Walls and floor keep 1.8 there.
 **Rounded edges (Brian, same day):** front wall, divider and back lip have their tops, slopes and slope corners fully rounded (r 1.4 / 0.9 / 1.4, `round_wall`); bed edges stay square.
+**Cleanup (Brian, same day):** window's low part now ends square at Y 217 (the 45 deg step left a knife-edge sliver); gusset cut back to Y 221 below the pocket (thin tip beside the window); spring leaf rooted at Y 238 (it had drifted to 242, 1.3 from the block's rear when the rail moved); E/F code removed (git history). Checks rerun: all clear, click and stop catch, rail front fully backed.
 **Next step:** Brian reviews D; at release it becomes new channels (next OPX letter) plus the bar with its own ID. Unknown: click grip, plug lengths (42 behind the PC), upper groove lip printed upright (4 mm overhang), fit and strength.
 
 ## 2026-11-11 Agent instructions audited and cleaned up (Claude)
