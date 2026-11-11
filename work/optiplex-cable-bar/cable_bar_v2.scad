@@ -147,11 +147,20 @@ module trough2d(){
 }
 module trough(x0,x1){along_x(x0,x1)trough2d();}
 module ramp_wall(y,t,h,xf){translate([0,y+t,0])rotate([90,0,0])linear_extrude(t)polygon([[-bend-0.01,bz],[bend+0.01,bz],[bend+0.01,bz+3],[xf,h],[-xf,h],[-bend-0.01,bz+3]]);}
-module troughD(){
+// Zip-tie slots (Brian, 2026-11-11), 5.5 x 2.6 for ties up to about 4.8 wide. At each station a tie can wrap the
+// floor/wall corner of either lane (front wall or back lip slot + floor slot next to the divider), and up the front
+// wall two more slots hold a stacked bundle against it. Ties pass under the bar: 3.6 clear below it.
+tie_w=5.5; tie_t=2.6; tie_x=[-68,-45,-15,15,45,68];
+module tie_slots(){for(x=tie_x){
+ for(z=abs(x)<=52?[8.2,15.5,23.5]:[8.2])translate([x-tie_w/2,by0-1,z])cube([tie_w,5,tie_t]);      // front wall
+ translate([x-tie_w/2,by1-4,7.6])cube([tie_w,5,tie_t]);                                           // back lip
+ for(y=[221.2,226.2])translate([x-tie_w/2,y,bz-1])cube([tie_w,tie_t,5]);                           // floor, beside the divider
+}}
+module troughD(){difference(){union(){
  along_x(-bend-0.01,bend+0.01){translate([by0,bz])square([by1-by0,3]);translate([by1-3,bz])square([3,13-bz]);}
  ramp_wall(by0,3,30,52);     // front wall full height inside X +-52, slopes to the floor at the end blocks
  ramp_wall(224,2,22,58);     // divider
-}
+ } tie_slots();}}
 
 // D: dovetail rail on each web's inner face. The bar slides on from the rear: the rail enters the open front of the
 // bar's groove, the groove's closed rear end stops on the rail's rear end (Y 240), and a spring leaf in the groove's
