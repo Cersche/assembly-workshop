@@ -97,6 +97,13 @@ wD_rc=8;                                          // radius on the window's insi
 // both faces, and the gusset cut to the same outline 1 mm larger.
 module windowD2d(){offset(r=win_r)offset(delta=-win_r)offset(r=-wD_rc)offset(delta=wD_rc)
  polygon([[win_y0,(win_z0+win_z1)/2],[win_y1,win_z0],[wD_ramp0,win_z0],[dt_y0,wD_low],[wD_rear,wD_low],[wD_rear,win_z1],[win_y1,win_z1]]);}
+// Gusset: D starts it at Y 222 (no thin tip beside the window) with its free front corners rounded r 2 (Brian, 2026-11-11).
+// The polygon runs 3 into the web and the ear so only the free corners round.
+g_y0=222; g_x0=win+wall+(g_y0-(rack_depth-gusset_d))*(ear_web-win-wall)/gusset_d;
+module gusset2d(){
+ if(variant=="D")offset(r=2)offset(delta=-2)polygon([[win+wall-3,g_y0],[g_x0,g_y0],[ear_web,rack_depth],[ear_web,rack_depth+3],[win+wall-3,rack_depth+3]]);
+ else polygon([[win+wall-0.01,rack_depth+0.01],[ear_web,rack_depth+0.01],[win+wall-0.01,rack_depth-gusset_d]]);
+}
 module xslab(x0,t){rotate([90,0,90])translate([0,0,x0])linear_extrude(t)children();}
 module window_cut(){
  if(variant=="D"){
@@ -105,7 +112,6 @@ module window_cut(){
   minkowski(){xslab(win-0.5,0.5)windowD2d();rotate([0,90,0])cylinder(h=wch,r1=wch,r2=0,$fn=12);}
   minkowski(){xslab(win+wall,0.5)windowD2d();rotate([0,-90,0])cylinder(h=wch,r1=wch,r2=0,$fn=12);}
   xslab(win+wall-0.01,ear_web-win-wall+1)offset(r=3)windowD2d();           // gusset cut to the window outline, 3 clear
-  translate([win+wall-0.01,rack_depth-gusset_d-1,z0-1])cube([ear_web-win-wall+1,222-(rack_depth-gusset_d-1),z1-z0+2]);   // blunt gusset start at Y 222, no thin tip
  } else xslab(win-0.5,wall+1)cable_window2d();
 }
 module cable_window2d(){offset(r=win_r)offset(delta=-win_r)polygon([[win_y0,(win_z0+win_z1)/2],[win_y1,win_z0],[win_y2,win_z0],[win_y2,win_z1],[win_y1,win_z1]]);}
@@ -117,7 +123,7 @@ module channel(s){
    translate([0,0,z0])linear_extrude(z1-z0)polygon([[win+0.01,stop_y],[win-stop_w,stop_y],[win-stop_w,stop_y+1],[win+0.01,stop_y+1+stop_w]]);
    translate([0,0,z0])linear_extrude(floor_top-z0-0.2)ledge_plan();
    translate([0,0,roof_low])linear_extrude(z1-roof_low)ledge_plan();
-   translate([0,0,z0])linear_extrude(z1-z0)polygon([[win+wall-0.01,rack_depth+0.01],[ear_web,rack_depth+0.01],[win+wall-0.01,rack_depth-gusset_d]]);
+   translate([0,0,z0])linear_extrude(z1-z0)gusset2d();
    translate([0,rack_depth+plate_t,0])rotate([90,0,0])linear_extrude(plate_t)difference(){
     intersection(){plate_outline();translate([win,-1])square([plate_w/2-win+1,50]);}
     slots2d();

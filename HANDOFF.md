@@ -8,6 +8,7 @@ Brian wants a snap-in bar left-right between the OptiPlex rear channels for cabl
 **Rounded edges (Brian, same day):** front wall, divider and back lip have their tops, slopes and slope corners fully rounded (r 1.4 / 0.9 / 1.4, `round_wall`); bed edges stay square.
 **Cleanup (Brian, same day):** window's low part now ends square at Y 217 (the 45 deg step left a knife-edge sliver); gusset cut back to Y 221 below the pocket (thin tip beside the window); spring leaf rooted at Y 238 (it had drifted to 242, 1.3 from the block's rear when the rail moved); E/F code removed (git history). Checks rerun: all clear, click and stop catch, rail front fully backed.
 **Window redrawn (Brian, same day: "pretty horrid"):** one smooth outline, a ramp from Z 8.2 at Y 204 to 15.2 at Y 219, convex corners r 3 and concave r 8, a 1 mm 45 deg edge break on both faces made with minkowski (hull() had filled the ramp hollow and left flaps), gusset cut 3 clear of the outline and starting blunt at Y 222. Checked by rendering inside and outside views; all fit/slide/click checks pass.
+**Gusset front rounded (Brian, same day):** gusset now starts at Y 222 with its free front corners rounded r 2 (`gusset2d`).
 **Next step:** Brian reviews D; at release it becomes new channels (next OPX letter) plus the bar with its own ID. Unknown: click grip, plug lengths (42 behind the PC), upper groove lip printed upright (4 mm overhang), fit and strength.
 
 ## 2026-11-11 Agent instructions audited and cleaned up (Claude)
