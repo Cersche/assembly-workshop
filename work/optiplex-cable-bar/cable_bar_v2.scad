@@ -160,10 +160,17 @@ module tie_slots(){for(x=tie_x){
  translate([x-band_w/2,by0-1,bz-1])cube([band_w,by1-by0+2,1+tie_d]);                                 // underside, front to back
  translate([x-band_w/2,by1-tie_d,bz-1])cube([band_w,tie_d+1,7.6+tie_t-(bz-1)]);                       // back face of the lip
 }}
+ // Walls with every exposed edge rounded (Brian, 2026-11-11): top, slope and the corners between them. The part below
+// the bed is cut off, so the faces stay flat down to the bed; the wall ends run into the end blocks.
+module round_wall(y,t,h,xf,r){intersection(){
+ minkowski(){translate([0,y+t-r,0])rotate([90,0,0])linear_extrude(t-2*r)offset(delta=-r)
+   polygon([[-82,bz-3],[82,bz-3],[82,bz+3],[xf,h],[-xf,h],[-82,bz+3]]);sphere(r=r,$fn=16);}
+ translate([-200,y-1,bz])cube([400,t+2,50]);}}
 module troughD(){difference(){union(){
- along_x(-bend-0.01,bend+0.01){translate([by0,bz])square([by1-by0,3]);translate([by1-3,bz])square([3,13-bz]);}
- ramp_wall(by0,3,30,52);     // front wall full height inside X +-52, slopes to the floor at the end blocks
- ramp_wall(224,2,22,58);     // divider
+ along_x(-bend-0.01,bend+0.01)translate([by0,bz])square([by1-by0,3]);
+ round_wall(by0,3,30,52,1.4);     // front wall full height inside X +-52, slopes to the floor at the end blocks
+ round_wall(224,2,22,58,0.9);     // divider
+ round_wall(by1-3,3,13,82,1.4);   // back lip
  } tie_slots();}}
 
 // D: dovetail rail on each web's inner face. The bar slides on from the rear: the rail enters the open front of the
