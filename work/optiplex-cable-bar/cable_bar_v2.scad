@@ -153,7 +153,7 @@ module along_x(x0,x1){translate([x0,0,0])rotate([90,0,90])linear_extrude(x1-x0)c
 // Zip-tie slots (Brian, 2026-11-11), 5.5 x 2.6 for ties up to about 4.8 wide. At each station a tie can wrap the
 // floor/wall corner of either lane (front wall or back lip slot + floor slot next to the divider), and up the front
 // wall two more slots hold a stacked bundle against it. Ties pass under the bar: 3.6 clear below it.
-tie_w=5.5; tie_t=2.6; band_w=6; tie_d=1.2; tie_x=[-60,-37,-12,12,37,60];
+tie_w=5.5; tie_t=2.6; band_w=6; tie_d=1.2; tie_x=[-55,-33,-11,11,33,55];
 module tie_slots(){for(x=tie_x){
 if(len(fw_slots(x))>0) for(z=fw_slots(x))translate([x-tie_w/2,by0-1,z])cube([tie_w,5,tie_t]);                            // front wall, as many as fit under the arc
  translate([x-tie_w/2,by1-4,7.6])cube([tie_w,5,tie_t]);                                           // back lip
@@ -170,7 +170,7 @@ if(len(fw_slots(x))>0) for(z=fw_slots(x))translate([x-tie_w/2,by0-1,z])cube([tie
 fw_h=30; fw_xe=66; fw_r=14;      // front wall: X +-66, top corners r 14
 dv_h=22; dv_xe=70; dv_r=10;      // divider
 function rr_h(h,xe,R,x)=abs(x)>xe?bz+3:abs(x)<=xe-R?h:h-R+sqrt(R*R-pow(abs(x)-(xe-R),2));
-function fw_slots(x)=[for(z=[8.2,15.5,23.5])if(z+tie_t+2.5<=rr_h(fw_h,fw_xe,fw_r,x-sign(x)*tie_w/2))z];   // 2.5 of wall above each slot
+function fw_slots(x)=[for(z=[8.2,15.5,23.5])if(z+tie_t+2.5<=rr_h(fw_h,fw_xe,fw_r,abs(x)+tie_w/2+3))z];   // 2.5 of wall above and 3 beside each slot, measured at its outer side
 module rr_wall(y,t,h,xe,R,r){intersection(){
  minkowski(){translate([0,y+t-r,0])rotate([90,0,0])linear_extrude(t-2*r)offset(delta=-r)
    offset(r=R)offset(delta=-R)translate([-xe,bz-20])square([2*xe,h-(bz-20)]);sphere(r=r,$fn=16);}
