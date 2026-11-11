@@ -68,6 +68,16 @@ test('rack BOM requires extensions independently of missing preview assets',()=>
   assert.equal(box.frame(rack.slots,false,rack).parts.filter(p=>p.key==='extension').length,0);
   assert.throws(()=>box.frame(5,false,{slots:5,post_levels:{left:[4]}}),/Invalid post/);
 });
+
+test('support extension poses retain recovered levelSlots rotations and occupy their own U',()=>{
+  const {box}=harness(),rack={slots:9,post_levels:{left:[4,4],right:[4,4]}};
+  const extensions=plain(box.frame(9,false,rack).parts.filter(p=>p.key==='extension'));
+  assert.equal(extensions.length,2);
+  // Original assembler levelSlots: left I3; right RZ180, not RY180 (which flips top/bottom).
+  assert.deepEqual(extensions[0].R,[1,0,0,0,1,0,0,0,1]);
+  assert.deepEqual(extensions[1].R,[-1,0,0,0,-1,0,0,0,1]);
+  assert.deepEqual(extensions.map(p=>p.t),[[-125.98,120,4.5*44.45],[125.98,120,4.5*44.45]]);
+});
 test('rack setup height edits retain chosen saved stacks only at unchanged height, clamp at 14U and do not mutate',()=>{
   const {box,get}=harness(),rack={...plain(examples[1][1]),id:'rack',layout_locked:true};
   const before=JSON.stringify(rack);box.documentState.racks=[rack];box.editingId='rack';

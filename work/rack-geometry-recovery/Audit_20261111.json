@@ -1,0 +1,92 @@
+{
+  "run_time": "2026-11-11T15:04:15.621710+00:00",
+  "sources": [
+    {
+      "source": "C:\\Users\\brian\\Downloads\\index.html",
+      "expected_sha256": "0400d9d26ef322fb193d73cc805e731f23231fb03b175171af88c5109cc1533b",
+      "download": {
+        "exists": true,
+        "sha256": "0400d9d26ef322fb193d73cc805e731f23231fb03b175171af88c5109cc1533b",
+        "matches_manifest": true
+      },
+      "preserved": {
+        "exists": true,
+        "sha256": "0400d9d26ef322fb193d73cc805e731f23231fb03b175171af88c5109cc1533b",
+        "matches_manifest": true
+      }
+    },
+    {
+      "source": "C:\\Users\\brian\\Downloads\\lab-rax-assembler-code-only.html",
+      "expected_sha256": "842f6d8048fc7fdd23db3db52452151c8776969d1ce6066fa9b82555da5ed879",
+      "download": {
+        "exists": true,
+        "sha256": "842f6d8048fc7fdd23db3db52452151c8776969d1ce6066fa9b82555da5ed879",
+        "matches_manifest": true
+      },
+      "preserved": {
+        "exists": true,
+        "sha256": "842f6d8048fc7fdd23db3db52452151c8776969d1ce6066fa9b82555da5ed879",
+        "matches_manifest": true
+      }
+    },
+    {
+      "source": "C:\\Users\\brian\\Downloads\\Lab+Rax+1-5U+Posts+&+Panels.3mf",
+      "expected_sha256": "64e4eb982ce70d426777f55b133988a8d94eccbe9b067f9ceaef9b490afb01aa",
+      "download": {
+        "exists": true,
+        "sha256": "64e4eb982ce70d426777f55b133988a8d94eccbe9b067f9ceaef9b490afb01aa",
+        "matches_manifest": true
+      },
+      "preserved": {
+        "exists": true,
+        "sha256": "64e4eb982ce70d426777f55b133988a8d94eccbe9b067f9ceaef9b490afb01aa",
+        "matches_manifest": true
+      }
+    },
+    {
+      "source": "C:\\Users\\brian\\Downloads\\5U+Lab+Rax+X2D.3mf",
+      "expected_sha256": "0372934444785bd36a6edd3f265fdd8a9c9cb27fd125df8eae49d7840d459ef6",
+      "download": {
+        "exists": true,
+        "sha256": "0372934444785bd36a6edd3f265fdd8a9c9cb27fd125df8eae49d7840d459ef6",
+        "matches_manifest": true
+      },
+      "preserved": {
+        "exists": true,
+        "sha256": "0372934444785bd36a6edd3f265fdd8a9c9cb27fd125df8eae49d7840d459ef6",
+        "matches_manifest": true
+      }
+    },
+    {
+      "source": "C:\\Users\\brian\\Downloads\\1U+Support+Extension.3mf",
+      "expected_sha256": "26a9e3321e951f319c77450b79cfa5fd946abadaaf041fbc9343b37adcc756a8",
+      "download": {
+        "exists": true,
+        "sha256": "26a9e3321e951f319c77450b79cfa5fd946abadaaf041fbc9343b37adcc756a8",
+        "matches_manifest": true
+      },
+      "preserved": {
+        "exists": true,
+        "sha256": "26a9e3321e951f319c77450b79cfa5fd946abadaaf041fbc9343b37adcc756a8",
+        "matches_manifest": true
+      }
+    }
+  ],
+  "right_extension_pose": {
+    "legacy": "RZ180",
+    "current_workspace": "RZ180",
+    "quantized_vertex_sets_equal_at_0_001_mm": false,
+    "vertices_in_each": 3372,
+    "different_vertices": 4152,
+    "status": "Corrected to recovered RZ180; new regression passed; physical mating UNKNOWN.",
+    "current_workspace_before": "RY180"
+  },
+  "manufacturing_exports_run": false,
+  "desktop_session_started": false,
+  "verification": {
+    "python_pass": 239,
+    "javascript_pass_before_pose_fix": 244,
+    "rack_bom_pass_after_pose_fix": 18,
+    "creator_manufacturing_exports": 0
+  }
+}
