@@ -23,6 +23,9 @@ Explore freely until Brian says he's printing it. A draft is one working SCAD fi
 - Leave real room around screw heads, tool paths and other non-fit features; don't design them down to the last fraction of a mm (Brian, 2026-11-05). Minimum 1 mm around a screw head, unprinted as a rule. Keep a head's recess completely open: the proven 11.5 M6 recess stays that size, and nothing may intrude into it. Add a `part=="keepout"` with `ws_m6_head_keepout()` or `ws_head_keepout()` for every screw head and pass `--keepout keepout` to the release script. Tell Brian about any tight spot. This doesn't loosen proven fit clearances, which stay as printed.
 - Use a new unique ID for each revision, and model it on the part where it doesn't affect a tested feature. Test prints and coupons always need one.
 - Never edit an already printed revision. Make a new one.
+- Round every bed-level corner against warping: outside corners r 3 (small blocks r 2), inside corners filleted. Edges that mate stay square.
+- New sleeves use `sleeve_top` 0.8: sleeves have printed about 0.5 mm tight in height twice.
+- When Brian asks to move one feature, everything around it that fit on the print stays as printed. If the move clashes, reshape the moved feature. Never alter the device mock to pass a check.
 
 ## Release
 Only when Brian says he's printing it, or asks for a print file. If he does, the current draft becomes the next revision.

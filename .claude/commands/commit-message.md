@@ -9,4 +9,4 @@ Prepare a git commit for the current changes. $ARGUMENTS
 3. Draft a clear commit message: a short summary line, then a few lines on what and why.
 4. Show me exactly which files you'd include, and wait for my OK.
 
-Never push.
+After I OK the commit, push it to `main` and tell me what was pushed. Never force-push.

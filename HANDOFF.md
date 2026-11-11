@@ -1,5 +1,12 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-11 Agent instructions audited and cleaned up (Claude)
+Audit of AGENTS.md, Brian's global CLAUDE.md, the PC memory notes, the /new-part skill and the slash commands: [report](work/prompt-audit/Report.md), [applied diff](work/prompt-audit/proposed.diff). Brian approved and it is applied.
+- **AGENTS.md rewritten** into Working rules / Settled standards / Showing parts / The app / Third-party meshes / History. Contradictions removed (push rule, "untracked assets", Pi path). Settled decisions that lived only in PC memory are now in the repo: keystone default, OptiPlex orientation, own printed rack in AGENTS.md; rounded floor corners, sleeve_top 0.8 and the device-mock rule in the /new-part skill.
+- **Brian's decisions:** pushing pre-approved everywhere, slash commands included; third-party meshes free inside the private repo and private Artifacts, never public; **M6 x 10 button head is the M6 screw for every new design** (printed revisions keep M6 x 8); settled rules live in the repo.
+- **Outside the repo (PC only):** global CLAUDE.md updated (Gene limit, Artifact link for viewer pages, Codex prompt details, no drilling, M6 x 10); memory trimmed from 51 notes to 24. Old copies: `C:\Users\brian\.claude\backups\prompt-audit-2026-11-11\`.
+- **Not done:** `lib/workshop.scad`'s hidden M6 joint was proven with M6 x 8; the first new part using M6 x 10 must check bore depth and that joint. OptiPlex and CM1000 have no card in docs/devices/. `.claude/launch.json` has two entries named "Mesh viewer pages" (8861, 8890). No behaviour was tested with the model; watch the next few sessions.
+
 ## 2026-11-09 MoCA receiver base RX5-C: cradle bosses 9 mm left (Claude)
 Brian marked the base in the slicer: move the four ScreenBeam cradle bosses 9 mm left, nothing else on any part. Done in `work/wall-box-wizard/receiver1/rx5.scad` (`base_dx=-9`, base only, ID RX5-C on its underside); [package](outputs/MoCA_Receiver_RX5-C_2026-11-09/README.md), `outputs/Final_3MF/RX5-C_moca_receiver_base.3mf` (1 object, closed). Body, lid, shelf, cradle and washers stay RX5-B. The left plug bay drops 55 -> 46 (power plug about 11 from the wall); cord route not re-checked. Viewer: https://claude.ai/artifact/7G2spgnzY89gidiyiWKaZD. Not printed.
 **Next step:** Brian prints the base and reports by ID in docs/Fit_Findings.md.
