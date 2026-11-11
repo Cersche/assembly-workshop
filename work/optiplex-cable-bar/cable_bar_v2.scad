@@ -91,16 +91,21 @@ module rail(s,t){scale([s,1,1])intersection(){rail_round();difference(){
 module ledge_plan(){polygon([[win+0.01,ch_y0],[win-ledge,ch_y0],[win-ledge,taper_y0],[win-ledge_rear,taper_y1],[win-ledge_rear,rack_depth],[win+0.01,rack_depth]]);}
 // D (2026-11-11, Brian: more room where the cables meet the bar): window runs back to Y 234 above the rail, both faces
 // rounded over 2 mm, and the gusset gets a matching pocket so cables leave the window straight to the side.
-wD_rear=234; wD_low=15.2; wch=2;   // low part ends at Y 217 so its 2 mm round-over stops where the rail starts (219)
-module windowD2d(){offset(r=win_r)offset(delta=-win_r)polygon([[win_y0,(win_z0+win_z1)/2],[win_y1,win_z0],[dt_y0-wch,win_z0],[dt_y0-wch,wD_low],[wD_rear,wD_low],[wD_rear,win_z1],[win_y1,win_z1]]);}
+wD_rear=234; wD_low=15.2; wch=1; wD_ramp0=204;   // ramp from Z 8.2 at Y 204 up to Z 15.2 at the rail's front end (219)
+wD_rc=8;                                          // radius on the window's inside (concave) corners
+// One smooth outline (Brian, 2026-11-11: the stepped version looked horrid): every corner rounded, 1 mm edge break on
+// both faces, and the gusset cut to the same outline 1 mm larger.
+module windowD2d(){offset(r=win_r)offset(delta=-win_r)offset(r=-wD_rc)offset(delta=wD_rc)
+ polygon([[win_y0,(win_z0+win_z1)/2],[win_y1,win_z0],[wD_ramp0,win_z0],[dt_y0,wD_low],[wD_rear,wD_low],[wD_rear,win_z1],[win_y1,win_z1]]);}
 module xslab(x0,t){rotate([90,0,90])translate([0,0,x0])linear_extrude(t)children();}
 module window_cut(){
  if(variant=="D"){
   xslab(win-0.5,wall+1)windowD2d();
-  hull(){xslab(win-0.5,0.51)offset(delta=wch)windowD2d();xslab(win+wch,0.01)windowD2d();}
-  hull(){xslab(win+wall-0.01,0.51)offset(delta=wch)windowD2d();xslab(win+wall-wch,0.01)windowD2d();}
-  translate([win+wall-0.01,win_y2,wD_low-wch])cube([ear_web-win-wall+1,wD_rear+2-win_y2,win_z1-wD_low+2*wch]);   // gusset pocket
-  translate([win+wall-0.01,win_y2-1,z0-1])cube([ear_web-win-wall+1,dt_y0+2-(win_y2-1),wD_low-wch+1.01]);         // gusset starts at Y 221 below it
+  // 45 deg edge break that follows the outline (hull() would fill the ramp's hollow and shave the wall under it)
+  minkowski(){xslab(win-0.5,0.5)windowD2d();rotate([0,90,0])cylinder(h=wch,r1=wch,r2=0,$fn=12);}
+  minkowski(){xslab(win+wall,0.5)windowD2d();rotate([0,-90,0])cylinder(h=wch,r1=wch,r2=0,$fn=12);}
+  xslab(win+wall-0.01,ear_web-win-wall+1)offset(r=3)windowD2d();           // gusset cut to the window outline, 3 clear
+  translate([win+wall-0.01,rack_depth-gusset_d-1,z0-1])cube([ear_web-win-wall+1,222-(rack_depth-gusset_d-1),z1-z0+2]);   // blunt gusset start at Y 222, no thin tip
  } else xslab(win-0.5,wall+1)cable_window2d();
 }
 module cable_window2d(){offset(r=win_r)offset(delta=-win_r)polygon([[win_y0,(win_z0+win_z1)/2],[win_y1,win_z0],[win_y2,win_z0],[win_y2,win_z1],[win_y1,win_z1]]);}
