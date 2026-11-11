@@ -155,24 +155,34 @@ module along_x(x0,x1){translate([x0,0,0])rotate([90,0,90])linear_extrude(x1-x0)c
 // wall two more slots hold a stacked bundle against it. Ties pass under the bar: 3.6 clear below it.
 tie_w=5.5; tie_t=2.6; band_w=6; tie_d=1.2; tie_x=[-68,-45,-15,15,45,68];
 module tie_slots(){for(x=tie_x){
- for(z=abs(x)<=52?[8.2,15.5,23.5]:[8.2])translate([x-tie_w/2,by0-1,z])cube([tie_w,5,tie_t]);      // front wall
+ for(z=fw_slots(x))translate([x-tie_w/2,by0-1,z])cube([tie_w,5,tie_t]);                            // front wall, as many as fit under the arc
  translate([x-tie_w/2,by1-4,7.6])cube([tie_w,5,tie_t]);                                           // back lip
  for(y=[221.2,226.2])translate([x-tie_w/2,y,bz-1])cube([tie_w,tie_t,5]);                           // floor, beside the divider
  // band recesses (Brian, 2026-11-11): tie_d deep, so the band sits flush on the front face, under the floor and on the back lip
- translate([x-band_w/2,by0-1,bz-1])cube([band_w,1+tie_d,(abs(x)<=52?23.5:8.2)+tie_t-(bz-1)]);       // front face, up to the top slot
+ translate([x-band_w/2,by0-1,bz-1])cube([band_w,1+tie_d,max(fw_slots(x))+tie_t-(bz-1)]);             // front face, up to the top slot
  translate([x-band_w/2,by0-1,bz-1])cube([band_w,by1-by0+2,1+tie_d]);                                 // underside, front to back
  translate([x-band_w/2,by1-tie_d,bz-1])cube([band_w,tie_d+1,7.6+tie_t-(bz-1)]);                       // back face of the lip
 }}
  // Walls with every exposed edge rounded (Brian, 2026-11-11): top, slope and the corners between them. The part below
 // the bed is cut off, so the faces stay flat down to the bed; the wall ends run into the end blocks.
+// Front wall and divider: one smooth arc, peak at the middle, down to the floor top at the end blocks (Brian, 2026-11-11).
+arc_c=82;                                                     // half-chord: arc meets the floor top at X +-82 (inside the end blocks)
+function arc_R(h)=let(sg=h-(bz+3))(arc_c*arc_c+sg*sg)/(2*sg);
+function arc_z(h,x)=let(sg=h-(bz+3),R=arc_R(h))bz+3+sqrt(R*R-x*x)-(R-sg);
+fw_h=30; dv_h=22;
+function fw_slots(x)=[for(z=[8.2,15.5,23.5])if(z+tie_t+2.5<=arc_z(fw_h,x))z];   // keep 2.5 of wall above each slot
+module arc_wall(y,t,h,r){intersection(){
+ minkowski(){translate([0,y+t-r,0])rotate([90,0,0])linear_extrude(t-2*r)offset(delta=-r)
+   polygon(concat([[-arc_c,bz-3],[arc_c,bz-3]],[for(i=[0:40])let(x=arc_c-i*2*arc_c/40)[x,arc_z(h,x)]]));sphere(r=r,$fn=16);}
+ translate([-200,y-1,bz])cube([400,t+2,50]);}}
 module round_wall(y,t,h,xf,r){intersection(){
  minkowski(){translate([0,y+t-r,0])rotate([90,0,0])linear_extrude(t-2*r)offset(delta=-r)
    polygon([[-82,bz-3],[82,bz-3],[82,bz+3],[xf,h],[-xf,h],[-82,bz+3]]);sphere(r=r,$fn=16);}
  translate([-200,y-1,bz])cube([400,t+2,50]);}}
 module troughD(){difference(){union(){
  along_x(-bend-0.01,bend+0.01)translate([by0,bz])square([by1-by0,3]);
- round_wall(by0,3,30,52,1.4);     // front wall full height inside X +-52, slopes to the floor at the end blocks
- round_wall(224,2,22,58,0.9);     // divider
+ arc_wall(by0,3,fw_h,1.4);        // front wall
+ arc_wall(224,2,dv_h,0.9);        // divider
  round_wall(by1-3,3,13,82,1.4);   // back lip
  } tie_slots();}}
 
