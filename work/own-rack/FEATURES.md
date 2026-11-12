@@ -13,6 +13,16 @@ Status: asked / in progress / drafted (in the viewer, checked by the orchestrato
 | # | Feature | What Brian asked for (his words) | Status | Session | Viewer | Open questions |
 |---|---------|----------------------------------|--------|---------|--------|----------------|
 | 1 | Integrated wire management | "lets add integrated wire management into the rack. im talking cable ties, routes, etc." (2026-11-11) | drafted (draft 5; orchestrator checked 2026-11-11: settled decisions unchanged in the file, pushed as 518ce56; waiting for Brian's markup) | wire-mgmt (2026-11-11) | `work/mesh-viewer/OwnRack_draft5_wire.html`, https://claude.ai/artifact/9uLPpx9xdJ1y3Dbp9zwqz5 | Answered by Brian 2026-11-12: ties are 4.8 mm or narrower; power on the left facing the front (-X), network on the right (+X); tie points stay on both sides for the CT200 lead; the 44 x 12 entry notch is fine; no top crossing. Still UNKNOWN until printed: tie fit, capacity, strength. |
+| 2 | Fine tune the rack shape | "open a new session to fine tune the rack shape. there are some changes i'd like to make" (2026-11-12, relayed by the wire-mgmt session) | asked (session proposed; it asks Brian for the changes first) | shape-tune | | What the changes are: Brian has not said yet. |
+
+### Wire features a later change must keep (draft 5)
+
+- A 45 degree tie tunnel per U at each post's inside rear corner (5.5 x 2.6 slot, moved 8 mm off the U centre beside a lap joint).
+- Two tie tunnels on the inner edge of each bracket side arm.
+- 11 tie stations with underside recesses in the bottom panel (5 across the rear, 3 down each side).
+- The 20 mm cable trough under the lowest U.
+- Entry notches in the rear bottom brackets (X 46..90, 12 deep).
+- Power on the left facing the front (-X), network on the right (+X); no top crossing.
 
 ## Decisions a feature must not change
 
