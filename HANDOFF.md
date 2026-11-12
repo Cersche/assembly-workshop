@@ -326,3 +326,5 @@ Brian picked: look B (15 mm corners, accent strips, shadow lines, screw caps), p
 
 ### Own rack draft 4 (2026-11-11, later)
 Brian: the fan is the Thermaltake CT200 and must NOT stick out of the top; the exhaust grille is flush with the rack top. Draft 4 (`work/own-rack/rack.scad`, viewer `work/mesh-viewer/OwnRack_draft4.html`): shroud dropped; top panel is 6 mm with the grille in it, flush with the bracket tops; the CT200 hangs under it on 4 x M3 x 35 from below into M3 inserts in the panel (new screw length, not yet OKed); top brackets are 38 tall (bottom ones stay 24) so the fan ends 2.3 above the U stack and nothing enters slot 1. Cleat bar moved up onto the taller top brackets (6 x M6) with two ears down to the rear posts top holes (2 x M6); it no longer covers the rear U1 opening. Bracket width arms are 1 mm shallower (fan clears them by 1.5). Nothing printed; fit and strength UNKNOWN.
+
+Brian 2026-11-11: **M3 x 35 approved** for the own-rack fan mount (4 screws, from below through the CT200 into M3 inserts in the top panel).

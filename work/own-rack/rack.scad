@@ -2,7 +2,7 @@
 // Frame as the faceplate parts: X centred, Y=0 front face of the front post flange, Y=240 rear, Z=0 bottom of the lowest U.
 // U standard kept from the Lab Rax posts: 44.45 per U, holes X +/-118.2625 at U centre and +/-15.902,
 // flange Y 0..6 from X 111.12, side wall inner face X 127.12, post 35 deep, outer face X 141.12, depth 240.
-// Hardware: M6 x 10 button head + M6 x 5 x 8 heat-set inserts. Fan: 4 x M3 x 40 countersunk (new length, ask Brian).
+// Hardware: M6 x 10 button head + M6 x 5 x 8 heat-set inserts. Fan: 4 x M3 x 35 from below into M3 inserts (Brian OK 2026-11-11).
 // Brian's picks 2026-11-09: look B, joint 1 (4U + 1U + 4U), fan on top under a rounded shroud, 0.3 bezel gap top and bottom,
 // rack-side cleat only (wall half later).
 include <workshop.scad>
