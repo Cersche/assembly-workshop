@@ -12,7 +12,7 @@ Status: asked / in progress / drafted (in the viewer, checked by the orchestrato
 
 | # | Feature | What Brian asked for (his words) | Status | Session | Viewer | Open questions |
 |---|---------|----------------------------------|--------|---------|--------|----------------|
-| | (none yet: Brian was asked for his list on 2026-11-11) | | | | | |
+| 1 | Integrated wire management | "lets add integrated wire management into the rack. im talking cable ties, routes, etc." (2026-11-11) | in progress | wire-mgmt (started 2026-11-11) | | Where the routes run and where the tie points go: the feature session proposes this in the viewer for Brian to mark up. Should cover the fan cable route (known open item). |
 
 ## Decisions a feature must not change
 
