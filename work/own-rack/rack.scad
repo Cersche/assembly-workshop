@@ -18,12 +18,17 @@ explode=0;
 xoff=0;
 rack_u=9;
 bg=0.3;              // gap between the top/bottom faceplate edge and the corner brackets; U positions do not move
-depth=240; xi=111.12; xw=127.12; xo=141.12; pd=35; ft=6;
-r_out=look=="B"?15:10; r_in=4; H=24; pt=4; TABH=20; jx=134.12;
+// Brian 2026-11-12: wider wire lanes. The post side wall and the whole outer body move out by `grow` each side; the U standard
+// (holes, flange inner edge, faceplate, depth) does not move. grow=0 is the Lab Rax outline (wall inner 127.12, outer 141.12).
+grow=6;
+depth=240; xi=111.12; xw=127.12+grow; xo=141.12+grow; pd=35; ft=6;
+xr=xo-28;            // inside face of the side rails and of the edges' end blocks
+pw=xo-16.12;         // half width of the top and bottom panels
+r_out=look=="B"?15:10; r_in=4; H=24; pt=4; TABH=20; jx=xw+7;
 yf=-ws_plate_t;      // flush bezel: post front steps forward by the plate thickness
 ZT=rack_u*ws_pitch;
 pan_e=[[30,13.6],[108,13.6]];                         // M6 panel screws into each edge, per half
-pan_r=[[119.2,68],[119.2,105]];                       // M6 panel screws into each rail, per end
+pan_r=[[xr+6.08,68],[xr+6.08,105]];                       // M6 panel screws into each rail, per end
 pan_xy=concat(pan_e,pan_r);
 cleat_x=[25,65,105];                                  // M6 inserts in the rear top edge's rear face
 R=r_out;             // rounded cube: the top and bottom edges get the same radius as the upright corners
@@ -71,7 +76,7 @@ module seg(u,top=0,bot=0){h=u*ws_pitch;difference(){
   // pocket for the edge's plug, and the M6 insert its screw goes into (driven from inside the rack)
   if(top==0){translate([xw-1,plug_y,h+bg-plug[2]-jc])cube([plug[0]+1,pd,plug[2]+1]);translate([xw+plug[0],plug_sy,h+bg-plug[2]/2])rotate([0,90,0])ws_insert_bore(ws_insert_m6,6.5);}
   if(bot==0){translate([xw-1,plug_y,-bg-1])cube([plug[0]+1,pd,plug[2]+jc+1]);translate([xw+plug[0],plug_sy,-bg+plug[2]/2])rotate([0,90,0])ws_insert_bore(ws_insert_m6,6.5);}
-  translate([136.92,30.9,-TABH-1])cube([2.4,5,h+2*TABH+2]);       // side panel groove
+  translate([xo-4.2,30.9,-TABH-1])cube([2.4,5,h+2*TABH+2]);       // side panel groove
   // tie tunnel round the inside rear corner, one per U; moved 8 away from a lap-joint notch or a plug pocket
   for(i=[0:u-1])translate([xw+tie_a/2,pd-tie_a/2,i*ws_pitch+ws_pitch/2+(top!=1&&i==u-1?-8:0)+(bot!=1&&i==0?8:0)])rotate([0,0,-45])cube([tie[1],14,tie[0]],center=true);
   if(look=="B"){
@@ -83,7 +88,7 @@ module post_stack(){e=explode;
   if(joint==2){seg(5,top=1);translate([0,0,5*ws_pitch+e])seg(4,bot=-1);}
   else{seg(4,top=-1);translate([0,0,4*ws_pitch+e])seg(1,top=1,bot=1);translate([0,0,5*ws_pitch+2*e])seg(4,bot=-1);}}
 
-module panel2d(){hull()for(sx=[-1,1],y=[9.2+6,depth-9.2-6])translate([sx*(125-6),y])circle(6);}
+module panel2d(){hull()for(sx=[-1,1],y=[9.2+6,depth-9.2-6])translate([sx*(pw-6),y])circle(6);}
 module fan_holes(){for(sx=[-1,1],sy=[-1,1])translate([sx*fan[1]/2,sy*fan[1]/2,0])children();}
 // tie station through the bottom panel: two slots s apart and a band recess underneath so the tie sits flush
 module floor_tie(s=16){for(d=[-s/2,s/2])translate([0,d,0])cube([tie[0],tie[1],20],center=true);
@@ -109,12 +114,12 @@ module xmir(){children();mirror([1,0,0])children();}
 // The beam is 21 deep so the fan clears it; the ends are post-deep and carry the plug and the tongue.
 module edge(h,t,cleat=false,entry=false){difference(){
   union(){
-    intersection(){linear_extrude(h)offset(r=-3)offset(delta=3){translate([-xo,yf])square([2*xo,21-yf]);xmir()translate([113.12,yf])square([xo-113.12,pd-yf]);}rbox(h);}
+    intersection(){linear_extrude(h)offset(r=-3)offset(delta=3){translate([-xo,yf])square([2*xo,21-yf]);xmir()translate([xr,yf])square([xo-xr,pd-yf]);}rbox(h);}
     xmir(){translate([xw,plug_y+jc,-plug[2]])cube([plug[0]-jc,plug[1]-jc,plug[2]+1]);     // plug down into the post
-      translate([113.12,pd-1,0])cube([tng[0],tng[1]+1,tng[2]]);}                           // tongue back into the rail
+      translate([xr,pd-1,0])cube([tng[0],tng[1]+1,tng[2]]);}                           // tongue back into the rail
   }
   translate([0,0,h-t])linear_extrude(t+1)offset(delta=0.2)panel2d();
-  xmir(){translate([xw,plug_sy,-plug[2]/2])tscrew();translate([113.12,pd+tng[1]/2,tng[2]/2])tscrew();
+  xmir(){translate([xw,plug_sy,-plug[2]/2])tscrew();translate([xr,pd+tng[1]/2,tng[2]/2])tscrew();
     for(p=pan_e)translate([p[0],p[1],h-t])mirror([0,0,1])ws_insert_bore(ws_insert_m6,7);
     if(cleat)for(x=cleat_x)translate([x,yf,h/2])rotate([-90,0,0])ws_insert_bore(ws_insert_m6,7);
     // cable entry notch, open towards the U stack so a cord of any plug size can be laid in
@@ -122,18 +127,18 @@ module edge(h,t,cleat=false,entry=false){difference(){
 }}
 // side rail between the front and rear edges, drawn as the top right one. It drops onto the two tongues.
 module rail(h,t){difference(){
-  intersection(){translate([113.12,pd+jc,0])cube([xo-113.12,depth-2*pd-2*jc,h]);rbox(h);}
+  intersection(){translate([xr,pd+jc,0])cube([xo-xr,depth-2*pd-2*jc,h]);rbox(h);}
   translate([0,0,h-t])linear_extrude(t+1)offset(delta=0.2)panel2d();
-  ymir(){translate([113.12-1,pd,-1])cube([tng[0]+jc+1,tng[1]+jc,tng[2]+jc+1]);                       // rebate for the tongue
-    translate([113.12+tng[0]+jc,pd+tng[1]/2,tng[2]/2])rotate([0,90,0])ws_insert_bore(ws_insert_m6,6.5);
+  ymir(){translate([xr-1,pd,-1])cube([tng[0]+jc+1,tng[1]+jc,tng[2]+jc+1]);                       // rebate for the tongue
+    translate([xr+tng[0]+jc,pd+tng[1]/2,tng[2]/2])rotate([0,90,0])ws_insert_bore(ws_insert_m6,6.5);
     for(p=pan_r)translate([p[0],p[1],h-t])mirror([0,0,1])ws_insert_bore(ws_insert_m6,7);
     // tie tunnels round the rail's inner edge on the U-stack side
-    for(y=tie_by)translate([113.12+tie_a/2,y,tie_a/2])rotate([0,-45,0])cube([tie[1],tie[0],14],center=true);}
+    for(y=tie_by)translate([xr+tie_a/2,y,tie_a/2])rotate([0,-45,0])cube([tie[1],tie[0],14],center=true);}
 }}
 // flush side panel half: drops into the post grooves from above before the top brackets go on
 module side_panel(lower){hz=ZT/2+bg;difference(){
-  union(){translate([137.12,35.3,0])cube([4,169.4,hz]);translate([137.12,31.3,0])cube([2,177.4,hz]);}
-  if(lower)for(y=[55:10:185])hull()for(z=[14,76])translate([130,y,z])rotate([0,90,0])cylinder(d=4,h=20,$fn=16);}}
+  union(){translate([xo-4,35.3,0])cube([4,169.4,hz]);translate([xo-4,31.3,0])cube([2,177.4,hz]);}
+  if(lower)for(y=[55:10:185])hull()for(z=[14,76])translate([xo-11,y,z])rotate([0,90,0])cylinder(d=4,h=20,$fn=16);}}
 // rack half of the wall cleat: bolts to the rear top brackets (4 x M6) and the rear posts' top holes (2 x M6).
 // 45 deg hook along the bottom, pointing down at the wall side. The wall half comes later.
 // The bar sits on the taller top brackets only, so it covers none of the rear U1 opening; two ears reach down to the posts.
