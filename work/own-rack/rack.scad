@@ -142,7 +142,8 @@ if(part=="accents"||(part=="all"&&look=="B")){
 }
 // preview only, never printed: where cables are meant to run (fan lead, a trunk, the bottom crossing)
 module run(pts,d=5){for(i=[0:len(pts)-2])hull(){translate(pts[i])sphere(d=d,$fn=16);translate(pts[i+1])sphere(d=d,$fn=16);}}
-if(part=="wire_routes_preview")translate([xoff,0,0]){
-  run([[104,30,ZT+12],[106,200,ZT+10],[120,216,ZT-8],[120,216,6],[104,205,-12],[68,215,-10],[68,250,-7]],4);   // CT200 lead
-  run([[-120,216,300],[-120,216,6],[-104,205,-12],[-68,215,-10],[-68,250,-7]],7);                            // network trunk
+// Brian 2026-11-12: power on the left facing the rack front (-X), network on the right (+X); no top crossing.
+if(part=="wire_routes_preview")translate([xoff,0,0])mirror([1,0,0]){
+  run([[104,30,ZT+12],[106,200,ZT+10],[120,216,ZT-8],[120,216,6],[104,205,-12],[68,215,-10],[68,250,-7]],4);   // CT200 lead, power side
+  run([[-120,216,300],[-120,216,6],[-104,205,-12],[-68,215,-10],[-68,250,-7]],7);                            // network trunk, network side
   run([[-80,205,-15],[80,205,-15]],7);}                                                                      // bottom crossing
