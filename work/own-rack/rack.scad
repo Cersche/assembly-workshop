@@ -12,6 +12,7 @@
 include <workshop.scad>
 part="all";
 look="B";            // B: 15 mm corners, accent strips, shadow lines, screw caps.  A: 10 mm corners, plain
+accent=false;        // Brian 2026-11-12: no accent strips (true brings back the strip and its channel down each post side)
 joint=1;             // 1: 4U + 1U extension + 4U.  2: 5U + 4U with a built-in tab
 explode=0;
 xoff=0;
@@ -74,7 +75,7 @@ module seg(u,top=0,bot=0){h=u*ws_pitch;difference(){
   // tie tunnel round the inside rear corner, one per U; moved 8 away from a lap-joint notch or a plug pocket
   for(i=[0:u-1])translate([xw+tie_a/2,pd-tie_a/2,i*ws_pitch+ws_pitch/2+(top!=1&&i==u-1?-8:0)+(bot!=1&&i==0?8:0)])rotate([0,0,-45])cube([tie[1],14,tie[0]],center=true);
   if(look=="B"){
-    translate([xo-1.2,12,-TABH-1])cube([2,8,h+2*TABH+2]);          // accent strip channel
+    if(accent)translate([xo-1.2,12,-TABH-1])cube([2,8,h+2*TABH+2]);          // accent strip channel
     for(z=[0,h-0.5])translate([0,0,z])linear_extrude(0.5)intersection(){difference(){offset(delta=5)post2d();offset(delta=-1)post2d();}translate([127.5,-10])square([30,60]);}
   }
 }}
@@ -166,7 +167,7 @@ if(on("side_panels"))for(sx=[0,1])mirror([sx,0,0]){translate([0,0,-bg])side_pane
 if(on("fan_CT200_standin"))translate([0,depth/2,ZT+bg+Ht-ptt-30])fan_standin();
 if(on("example_faceplates"))for(k=[0:2])translate([0,0,k*3*ws_pitch]){ws_plate(1);translate([0,0,ws_pitch])ws_plate(2);}
 if(on("cleat_rack_half"))cleat_rack();
-if(part=="accents"||(part=="all"&&look=="B")){
+if(accent&&(part=="accents"||(part=="all"&&look=="B"))){
   four()translate([xo-1,12.2,-bg])cube([1,7.6,ZT+2*bg]);}   // draft 6: no screw caps, the frame screws are inside the rack
 }
 // preview only, never printed: where cables are meant to run (fan lead, a trunk, the bottom crossing)
