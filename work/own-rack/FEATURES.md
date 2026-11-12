@@ -12,7 +12,7 @@ Status: asked / in progress / drafted (in the viewer, checked by the orchestrato
 
 | # | Feature | What Brian asked for (his words) | Status | Session | Viewer | Open questions |
 |---|---------|----------------------------------|--------|---------|--------|----------------|
-| 1 | Integrated wire management | "lets add integrated wire management into the rack. im talking cable ties, routes, etc." (2026-11-11) | drafted (draft 5, not yet checked by the orchestrator) | wire-mgmt (2026-11-11) | `work/mesh-viewer/OwnRack_draft5_wire.html`, https://claude.ai/artifact/9uLPpx9xdJ1y3Dbp9zwqz5 | Tie width (5.5 x 2.6 slots assumed, for ties up to ~4.8 wide). Which rear corner takes power and which network. CT200 lead exit corner. Are 12 x 44 entry notches big enough, and are rear plates fitted on the lowest U. Is a top crossing wanted (none drawn: the fan fills the top). Tie fit, capacity, strength all UNKNOWN. |
+| 1 | Integrated wire management | "lets add integrated wire management into the rack. im talking cable ties, routes, etc." (2026-11-11) | drafted (draft 5; orchestrator checked 2026-11-11: settled decisions unchanged in the file, pushed as 518ce56; waiting for Brian's markup) | wire-mgmt (2026-11-11) | `work/mesh-viewer/OwnRack_draft5_wire.html`, https://claude.ai/artifact/9uLPpx9xdJ1y3Dbp9zwqz5 | Tie width (5.5 x 2.6 slots assumed, for ties up to ~4.8 wide). Which rear corner takes power and which network. CT200 lead exit corner. Are 12 x 44 entry notches big enough, and are rear plates fitted on the lowest U. Is a top crossing wanted (none drawn: the fan fills the top). Tie fit, capacity, strength all UNKNOWN. |
 
 ## Decisions a feature must not change
 
