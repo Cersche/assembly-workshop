@@ -1,4 +1,4 @@
-// Own rack system, DRAFT 3 concept (Brian 2026-11-11). Viewer only, unprinted; fit and strength UNKNOWN.
+// Own rack system, DRAFT 5 concept (Brian 2026-11-11): draft 4 plus integrated wire management. Viewer only, unprinted; fit and strength UNKNOWN.
 // Frame as the faceplate parts: X centred, Y=0 front face of the front post flange, Y=240 rear, Z=0 bottom of the lowest U.
 // U standard kept from the Lab Rax posts: 44.45 per U, holes X +/-118.2625 at U centre and +/-15.902,
 // flange Y 0..6 from X 111.12, side wall inner face X 127.12, post 35 deep, outer face X 141.12, depth 240.
@@ -25,6 +25,12 @@ fan=[195,155,186];   // CT200: frame, hole square, opening (Thermaltake drawing;
 // The top brackets are taller (Ht) so the whole fan sits above the U stack: nothing enters slot 1.
 ptt=6;               // top panel thickness: room for M3 inserts, M3 x 35 from below through the fan
 Ht=ptt+30+2;         // top bracket height: panel + fan + 2 spare
+// Wire management (draft 5). Tie slot 5.5 x 2.6, the size already used on Brian's rear-lane bar: for ties up to
+// about 4.8 wide (ASSUMPTION, unprinted). Every tie point is a tunnel modeled into a rack part: no add-on parts, no screws.
+tie=[5.5,2.6]; tie_a=6.5;   // tie_a: where the 45 deg tunnel meets each face, measured from the edge (3.3 bridge left at the edge)
+tie_by=[40,82];              // tie tunnels along each bracket's side arm (Y from the bracket's own post face)
+ent=[46,90,12];              // cable entry notch in the rear bottom brackets: X from, X to, depth
+floor_x=[-80,-40,0,40,80]; floor_y=[70,120,170];   // tie stations in the bottom panel (rear row, side rows)
 $fn=64;
 
 module mask2d(){hull(){translate([xo-r_out,yf+r_out])circle(r_out);translate([xo-0.6,pd-0.6])circle(0.6);translate([90,yf])square([1,pd-yf]);}}
@@ -52,6 +58,8 @@ module seg(u,top=0,bot=0){h=u*ws_pitch;difference(){
   if(bot==1)jscrew_tab(-TABH/2);
   for(p=end_xy){if(top==0)translate([p[0],p[1],h+bg])mirror([0,0,1])ws_insert_bore(ws_insert_m6,7);if(bot==0)translate([p[0],p[1],-bg])ws_insert_bore(ws_insert_m6,7);}
   translate([136.92,30.9,-TABH-1])cube([2.4,5,h+2*TABH+2]);       // side panel groove
+  // tie tunnel round the inside rear corner, one per U; moved 8 away from a lap-joint notch
+  for(i=[0:u-1])translate([xw+tie_a/2,pd-tie_a/2,i*ws_pitch+ws_pitch/2+(top==-1&&i==u-1?-8:0)+(bot==-1&&i==0?8:0)])rotate([0,0,-45])cube([tie[1],14,tie[0]],center=true);
   if(look=="B"){
     translate([xo-1.2,12,-TABH-1])cube([2,8,h+2*TABH+2]);          // accent strip channel
     for(z=[0,h-0.5])translate([0,0,z])linear_extrude(0.5)intersection(){difference(){offset(delta=5)post2d();offset(delta=-1)post2d();}translate([127.5,-10])square([30,60]);}
@@ -67,7 +75,12 @@ module puck(h,r,n=6){linear_extrude(h-r)children();
 module corner2d(x0,y1){hull(){translate([xo-r_out,yf+r_out])circle(r_out);translate([x0,yf])square([1,y1-yf]);translate([xo-1,y1-1])square(1);}}
 module panel2d(){hull()for(sx=[-1,1],y=[9.2+6,depth-9.2-6])translate([sx*(125-6),y])circle(6);}
 module fan_holes(){for(sx=[-1,1],sy=[-1,1])translate([sx*fan[1]/2,sy*fan[1]/2,0])children();}
-module panel(with_fan=false,t=pt){difference(){linear_extrude(t)panel2d();
+// tie station through the bottom panel: two slots s apart and a band recess underneath so the tie sits flush
+module floor_tie(s=16){for(d=[-s/2,s/2])translate([0,d,0])cube([tie[0],tie[1],20],center=true);
+  translate([0,0,0.6-0.01])cube([6,s+tie[1],1.2],center=true);}
+module panel(with_fan=false,t=pt,ties=false){difference(){linear_extrude(t)panel2d();
+  if(ties){for(x=floor_x)translate([x,205,0])floor_tie();                 // rear crossing, cables run left-right
+    for(sx=[-1,1],y=floor_y)translate([sx*98,y,0])rotate(90)floor_tie();}  // side runs, cables run front-back
   for(sx=[-1,1],p=pan_xy,y=[p[1],depth-p[1]])translate([sx*p[0],y,-1])cylinder(d=ws_m6_clear,h=t+2);
   if(with_fan)translate([0,depth/2,0]){translate([0,0,-1])cylinder(d=fan[2],h=t+2,$fn=128);
     fan_holes()ws_insert_bore(ws_insert_m3,5);}}                     // M3 inserts from below, 1 mm skin on top
@@ -78,7 +91,7 @@ module fan_standin(){difference(){linear_extrude(30)offset(r=12)square(fan[0]-24
   fan_holes()translate([0,0,-1])cylinder(d=4.3,h=32);}}
 // corner bracket, drawn as the top front-right one, Z=0 on the post end. h tall, pocket for a panel t thick.
 // cleat=true adds the rear-face inserts
-module bracket(cleat=false,h=H,t=pt){difference(){
+module bracket(cleat=false,h=H,t=pt,entry=false){difference(){
   union(){
     intersection(){puck(h,r_top)corner2d(113.12,depth/2+10);translate([0,-50,-1])cube([200,50+depth/2,h+2]);}
     intersection(){puck(h,r_top)corner2d(-10,21);translate([0,-50,-1])cube([200,200,h+2]);}
@@ -87,6 +100,10 @@ module bracket(cleat=false,h=H,t=pt){difference(){
   for(p=end_xy)translate([p[0],p[1],0]){translate([0,0,-1])cylinder(d=ws_m6_clear,h=h+2);translate([0,0,4])cylinder(d=ws_m6_head_d,h=h);}   // M6 x 10: 4 web, 6 into the insert
   for(p=pan_xy)translate([p[0],p[1],h-t])mirror([0,0,1])ws_insert_bore(ws_insert_m6,7);
   if(cleat)for(x=cleat_x)translate([x,yf,h/2])rotate([-90,0,0])ws_insert_bore(ws_insert_m6,7);
+  // tie tunnels round the side arm's inner edge on the U-stack side
+  for(y=tie_by)translate([113.12+tie_a/2,y,tie_a/2])rotate([0,-45,0])cube([tie[1],tie[0],14],center=true);
+  // cable entry notch, open towards the U stack so a cord of any plug size can be laid in
+  if(entry)hull(){translate([ent[0],yf-1,-5])cube([ent[1]-ent[0],30,1]);for(x=[ent[0]+4,ent[1]-4])translate([x,yf-1,ent[2]-4])rotate([-90,0,0])cylinder(r=4,h=30);}
 }}
 // flush side panel half: drops into the post grooves from above before the top brackets go on
 module side_panel(lower){hz=ZT/2+bg;difference(){
@@ -112,9 +129,9 @@ function on(p)=part==p||part=="all";
 translate([xoff,0,0]){
 if(on("posts"))four()post_stack();
 if(part=="joint")post_stack();
-if(on("corner_brackets")){translate([0,0,ZT+bg])four()bracket($rear==1,Ht,ptt);mirror([0,0,1])translate([0,0,bg])four()bracket();}
+if(on("corner_brackets")){translate([0,0,ZT+bg])four()bracket($rear==1,Ht,ptt);mirror([0,0,1])translate([0,0,bg])four()bracket(entry=$rear==1);}
 if(on("top_fan_panel"))translate([0,0,ZT+bg+Ht-ptt])panel(true,ptt);
-if(on("bottom_panel"))translate([0,0,-H-bg])panel();
+if(on("bottom_panel"))translate([0,0,-H-bg])panel(ties=true);
 if(on("side_panels"))for(sx=[0,1])mirror([sx,0,0]){translate([0,0,-bg])side_panel(true);translate([0,0,ZT/2])side_panel(false);}
 if(on("fan_CT200_standin"))translate([0,depth/2,ZT+bg+Ht-ptt-30])fan_standin();
 if(on("example_faceplates"))for(k=[0:2])translate([0,0,k*3*ws_pitch]){ws_plate(1);translate([0,0,ws_pitch])ws_plate(2);}
@@ -123,3 +140,9 @@ if(part=="accents"||(part=="all"&&look=="B")){
   four()translate([xo-1,12.2,-bg])cube([1,7.6,ZT+2*bg]);
   for(t=[0,1])mirror([0,0,t])translate([0,0,t?bg:ZT+bg])four()for(p=end_xy)translate([p[0],p[1],(t?H:Ht)-2])cylinder(d=11.2,h=2);}
 }
+// preview only, never printed: where cables are meant to run (fan lead, a trunk, the bottom crossing)
+module run(pts,d=5){for(i=[0:len(pts)-2])hull(){translate(pts[i])sphere(d=d,$fn=16);translate(pts[i+1])sphere(d=d,$fn=16);}}
+if(part=="wire_routes_preview")translate([xoff,0,0]){
+  run([[104,30,ZT+12],[106,200,ZT+10],[120,216,ZT-8],[120,216,6],[104,205,-12],[68,215,-10],[68,250,-7]],4);   // CT200 lead
+  run([[-120,216,300],[-120,216,6],[-104,205,-12],[-68,215,-10],[-68,250,-7]],7);                            // network trunk
+  run([[-80,205,-15],[80,205,-15]],7);}                                                                      // bottom crossing

@@ -3,7 +3,7 @@
 The record for the own-rack orchestrator and the feature sessions. One row per feature Brian asks for. The orchestrator keeps it current; each feature session updates its own row when it finishes.
 
 - Source: `work/own-rack/rack.scad` (one file; one feature session edits it at a time).
-- Current draft: draft 4, viewer `work/mesh-viewer/OwnRack_draft4.html`, private Artifact https://claude.ai/artifact/UHywVEtYcY5PpsBBKk64sQ
+- Current draft: draft 5, viewer `work/mesh-viewer/OwnRack_draft5_wire.html`, private Artifact https://claude.ai/artifact/9uLPpx9xdJ1y3Dbp9zwqz5 (draft 4: `OwnRack_draft4.html`, https://claude.ai/artifact/UHywVEtYcY5PpsBBKk64sQ)
 - Nothing printed. Fit and strength UNKNOWN throughout.
 
 ## Features
@@ -12,7 +12,7 @@ Status: asked / in progress / drafted (in the viewer, checked by the orchestrato
 
 | # | Feature | What Brian asked for (his words) | Status | Session | Viewer | Open questions |
 |---|---------|----------------------------------|--------|---------|--------|----------------|
-| 1 | Integrated wire management | "lets add integrated wire management into the rack. im talking cable ties, routes, etc." (2026-11-11) | in progress | wire-mgmt (started 2026-11-11) | | Where the routes run and where the tie points go: the feature session proposes this in the viewer for Brian to mark up. Should cover the fan cable route (known open item). |
+| 1 | Integrated wire management | "lets add integrated wire management into the rack. im talking cable ties, routes, etc." (2026-11-11) | drafted (draft 5, not yet checked by the orchestrator) | wire-mgmt (2026-11-11) | `work/mesh-viewer/OwnRack_draft5_wire.html`, https://claude.ai/artifact/9uLPpx9xdJ1y3Dbp9zwqz5 | Tie width (5.5 x 2.6 slots assumed, for ties up to ~4.8 wide). Which rear corner takes power and which network. CT200 lead exit corner. Are 12 x 44 entry notches big enough, and are rear plates fitted on the lowest U. Is a top crossing wanted (none drawn: the fan fills the top). Tie fit, capacity, strength all UNKNOWN. |
 
 ## Decisions a feature must not change
 
@@ -30,7 +30,7 @@ Unless Brian says so in chat. Check these in the file after every feature.
 
 ## Known open items (not features yet)
 
-- Fan cable route.
+- Fan cable route: drafted in draft 5 (side lane beside the fan, down a rear post, into the bottom trough); the CT200 lead's exit corner is still UNKNOWN.
 - Cleat wall half.
 - Side-panel and bezel clearances are unprinted guesses.
 - 2.3 mm wall beside the bracket end-screw recess.
