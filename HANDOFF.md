@@ -1,6 +1,7 @@
 # Assembly Workshop — current handoff
 
-## 2026-11-12 Keystone panel KSP-B draft: labels (Claude)
+## 2026-11-12 Keystone panel KSP-B RELEASED (Claude)
+**KSP-B released for printing** (Brian): [README](outputs/Keystone_Panel_1U_8_KSP-B_2026-11-12/README.md), 0 fails/0 warnings, supersedes KSP-A. `tools/release_part.py` fixed for the R: share: it used Path.resolve(), which turns R:\ into a UNC path that OpenSCAD cannot open (exit 3); now abspath, and the snapshot default is R:\Tools, falling back to D:\Tools. Awaiting fit report. Draft notes:
 Brian asked for labels with logos on top: ks1 blank (expansion), ks2 Hue, ks3 MoCA, ks4 Pi Ethernet ("Pi LAN"), ks5 PC/Windows ("Win PC"; full texts did not fit), ks6 OptiPlex, ks7 blank, ks8 Pi USB. Draft `work/keystone-panel/keystone_panel.scad` (KSP-B): keystones moved down 3 mm (top strip 3.7 -> 6.7, bottom 7.2 -> 4.2), simple original icons + 3 mm bold text engraved 0.6 deep in the front face, optional `part="labels"` inlay for a second colour, ID moved to the top frame bar. Unprinted, not released; KSP-A stays released as is.
 
 ## 2026-11-12 Keystone panel KSP-A RELEASED (Claude)

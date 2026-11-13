@@ -29,10 +29,14 @@ import trimesh
 
 import rack_posts
 
-ROOT = Path(__file__).resolve().parents[1]
+# abspath, not resolve(): resolve turns the mapped R:\ share into a UNC path, which OpenSCAD cannot open.
+ROOT = Path(os.path.abspath(__file__)).parents[1]
 LIB = ROOT / "lib"
 # AW_OPENSCAD_SNAPSHOT overrides the path on machines where tools/setup_3d_tools.ps1 used another folder.
-SNAPSHOT = Path(os.environ.get("AW_OPENSCAD_SNAPSHOT", r"D:\Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe"))
+# Default: R:\Tools (rack share, 2026-11-12), else the older D:\Tools.
+_SNAP_REL = r"Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe"
+SNAPSHOT = Path(os.environ.get("AW_OPENSCAD_SNAPSHOT")
+                or next((d + _SNAP_REL for d in ("R:\\", "D:\\") if os.path.exists(d + _SNAP_REL)), "R:\\" + _SNAP_REL))
 # name, design bore, minimum depth (Brian's fastener standard, 2026-10-31)
 INSERTS = [("M6 insert", 7.6, 6.0), ("M3 insert", 4.2, 4.0), ("M2.5 insert", 3.2, 5.0)]
 NEAR = 0.15       # a hole this close to a standard bore, but not on it, gets a warning
@@ -150,8 +154,8 @@ def read_deps(depfile, scad):
     text = depfile.read_text(encoding="utf-8", errors="replace").replace("\\\n", " ").replace("\\\r\n", " ")
     _, _, body = text.partition(": ")
     tokens = re.findall(r"(?:\\ |\S)+", body)
-    found = {Path(t.replace("\\ ", " ")).resolve() for t in tokens}
-    found.add(scad.resolve())
+    found = {Path(os.path.abspath(t.replace("\\ ", " "))) for t in tokens}
+    found.add(Path(os.path.abspath(scad)))
     return sorted(found)
 
 
@@ -302,8 +306,8 @@ def main(argv=None):
     ap.add_argument("--viewer-dir", type=Path, default=ROOT / "work" / "mesh-viewer")
     args = ap.parse_args(argv)
 
-    scad = args.scad.resolve()
-    out = args.out.resolve()
+    scad = Path(os.path.abspath(args.scad))
+    out = Path(os.path.abspath(args.out))
     if out.exists():
         sys.exit(f"Refusing to overwrite {out}: revisions are immutable, use a new folder.")
     if not scad.is_file():
