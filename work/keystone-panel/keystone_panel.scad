@@ -19,7 +19,7 @@ ks_z0=ws_plate_center(u)-15-ks_dz; ks_z1=ws_plate_center(u)+18.5-ks_dz;   // blo
 ch=1;                   // rear edge chamfer
 
 // Labels, keystone 1 = leftmost seen from the front (X -96.25). "" = blank.
-labels=[["",""],["bulb","Hue"],["coax","MoCA"],["berry","Pi LAN"],["panes","Win PC"],["desktop","OptiPlex"],["berry","Pi USB"],["",""]];
+labels=[["",""],["bulb","Hue"],["coax","MoCA"],["berry","Pi LAN"],["panes","Win PC"],["desktop","OptiPlex"],["",""],["berry","Pi USB"]];
 lbl_d=0.6;              // engraving depth in the front face
 lbl_h=4.4;              // icon height
 lbl_txt=3.0;            // text size
