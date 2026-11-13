@@ -1,0 +1,576 @@
+diff --git a/outputs/Mechanical_Design_App/asset-manifest.json b/outputs/Mechanical_Design_App/asset-manifest.json
+index 7117d00..324ee37 100644
+--- a/outputs/Mechanical_Design_App/asset-manifest.json
++++ b/outputs/Mechanical_Design_App/asset-manifest.json
+@@ -65,7 +65,7 @@
+  },
+  {
+   "file": "tray-placement.js",
+-  "sha256": "b8cb3c0a053695d404ee9c3cf8876af3c0d6e7cb218a36b396ae293c3f7601af"
++  "sha256": "b2b5e8fe35ad88def4a64ae3db21c62ca5fd20a8ea3935f7565032431ec9cde0"
+  },
+  {
+   "file": "tray-pair.js",
+diff --git a/outputs/Mechanical_Design_App/equipment.py b/outputs/Mechanical_Design_App/equipment.py
+index 77d0738..69e4bb4 100644
+--- a/outputs/Mechanical_Design_App/equipment.py
++++ b/outputs/Mechanical_Design_App/equipment.py
+@@ -17,6 +17,7 @@ import tempfile
+ import threading
+ import zipfile
+ import print_layout
++import m6_rails
+ 
+ import cable_ports
+ import port_openings
+@@ -63,7 +64,7 @@ def _port_id(port, face, index):
+ # library specs still carry them, and those values stay the defaults when an allocation has none.
+ PLACEMENT_KEYS = ('dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'wall_open', 'standoff', 'insert_pilot', 'board_t',
+                   'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size',
+-                  'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint', 'm6_joint')
++                  'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint', 'm6_joint') + m6_rails.KEYS
+ 
+ 
+ def export_quality(s):
+@@ -88,7 +89,15 @@ def placement_settings(value):
+         if key not in value:
+             continue
+         v = value[key]
+-        if key == 'wall_open':
++        if key in m6_rails.KEYS:
++            if key == 'm6_rails' and type(v) is not bool:
++                raise ValueError('Split rails must be true or false.')
++            if key != 'm6_rails':
++                # Complete value checks happen against the device and plate in clean().
++                if key in ('m6_joint_x','m6_joint_z','m6_pocket_profile') and not isinstance(v,list):
++                    raise ValueError(key+' must be a list of positions.')
++                if key == 'test_id' and not isinstance(v,str):raise ValueError('Test ID must be text.')
++        elif key == 'wall_open':
+             v = wall_open(v)
+         elif key == 'keystones':
+             if not isinstance(v, list) or len(v) > 12 or any(type(x) not in (int, float) or isinstance(x, bool) for x in v):
+@@ -756,6 +765,8 @@ KEYSTONE_Z_REPLACEMENTS = {'for(x=keystones)': 'for(k=keystones)let(x=is_list(k)
+ def template_source(spec):
+     # New builds always use the current slot-bottom template; saved revisions remain immutable.
+     text = TEMPLATE.read_text(encoding='utf-8')
++    if not spec.get('m6_rails'):
++        text = re.sub(r'// @m6-rails-begin\n.*?// @m6-rails-end\n', '', text, flags=re.S)
+     if not (spec.get('device_mount') == 'wall' or (spec.get('second') or {}).get('device_mount') == 'wall'):
+         text = re.sub(r'// @wall-begin\n.*?// @wall-end\n\n', '', text, flags=re.S)
+         text = text.replace('\n wall_add();', '')
+@@ -766,12 +777,17 @@ def template_source(spec):
+         for old,new in KEYSTONE_Z_REPLACEMENTS.items(): text=text.replace(new,old)
+     if not spec.get('hidden_joint'):
+         for old, new in HJ_REPLACEMENTS: text = text.replace(new, old)
+-    if spec.get('m6_joint'):
++    if spec.get('m6_joint') and not spec.get('m6_rails'):
+         for old, new in M6_HOOKS:
+             assert text.count(old) == 1, old
+             text = text.replace(old, new)
+     else:
+         text = re.sub(r'// @m6-begin\n.*?// @m6-end\n', '', text, flags=re.S)
++    if spec.get('m6_rails'):
++        for old,new in [('    plate_joint_add();\n','    mr_stubs();\n'),('   plate_joint_cut();\n','   mr_pilots();\n'),
++                        ('clip_coupon(){\n if(part=="faceplate")','if(false)clip_coupon(){\n if(part=="faceplate")')]:
++            assert text.count(old)==1,old
++            text=text.replace(old,new)
+     if not any(k in spec for k in V2_DEFAULTS):
+         text = text.split('// @sleeve-v2-begin\n')[0]
+         for old, new in V2_REPLACEMENTS.items(): text = text.replace(new, old)
+@@ -812,6 +828,19 @@ def template_source(spec):
+         text = text.replace('   if(ks_style=="v2")ks_cut(); else ks_box_cut();', '   if(ks_style=="v2")ks_cut(); else ks_box_cut();\n   label_cut();') + LABEL_SCAD
+     if spec.get('second'):
+         text = second_device_source(text)
++    if spec.get('m6_rails'):
++        if spec.get('m6_rail_profiles'):
++            text=text.replace('module mr_stubs(){','module mr_old_stubs(){').replace('module mr_rail(side){','module mr_old_rail(side){')
++            text=text.replace('faceplate();mr_id("-F",0,-2);','faceplate();mr_id("-F",0,-2);mf_colours_cut();')
++            text+=m6_rails.m6_fidelity.modules(spec)+'\nmodule mr_stubs(){mf_stubs();}\nmodule mr_rail(s){mf_rail(s);}\n'
++            text+='if(part=="light_pipes")for(i=[0:len(m6_light_pipes)-1])mf_pipe(i);\n'
++            text+='if(part=="pipe"&&!is_undef(colour_index))mf_pipe(colour_index);\nif(part=="vector"&&!is_undef(colour_index))mf_vector(colour_index);\n'
++            for kind,key,func in [('pipe','m6_light_pipes','mf_pipe'),('vector','m6_vectors','mf_vector')]:
++                for i in range(len(spec.get(key,[]))):text+=f'if(part=="{kind}_{i+1}"){func}({i});\n'
++        else:
++            text=text.replace('cube([hi-lo+0.2,34,12]);','cube([hi-lo+0.2,'+str(spec.get('m6_bay_d',34))+','+str(spec.get('m6_bay_h',12))+']);')
++            text=text.replace('y+mr_flange,z-6]','y+mr_flange,z-'+str(spec.get('m6_bay_h',12)/2)+']')
++        text += '\nif(part=="faceplate")mr_faceplate();else if(part=="rail_l")mr_rail(0);else if(part=="rail_r")mr_rail(1);else if(part=="assembly"){mr_faceplate();mr_rail(0);mr_rail(1);}\n'
+     return text
+ 
+ 
+@@ -831,6 +860,10 @@ module bezel_cuts(){for(p=bezel_shapes)let(n=bezel_rounded?8:1)for(i=[0:n-1])hul
+ def clean(spec):
+     if not isinstance(spec, dict):
+         raise ValueError('Equipment spec must be an object.')
++    if 'm6_rails' in spec and type(spec['m6_rails']) is not bool:
++        raise ValueError('Split rails must be true or false.')
++    if spec.get('m6_rails'):
++        return m6_rails.clean(spec, __import__(__name__))
+     if 'drives' in spec and spec['drives'] != []:
+         return clean_drives(spec)
+     if spec.get('faceplate_only') is True:
+@@ -1291,6 +1324,11 @@ def source(s):
+         over.update(drives=s['drives'], drive_mount=s['drive_mount'], ssd_h=s['ssd_h'],
+                     tray_w=s['dev_w']+16, tray_d=s['dev_d']+12+25)
+     if s.get('faceplate_only'): over['part'] = 'faceplate'
++    if s.get('m6_rails'):
++        over.update({k:s[k] for k in m6_rails.KEYS if k in s})
++        over.update(mr_end=round(s['u']*44.45-.025,3),mr_length=round(s.get('m6_rail_len',s['dev_d']+2),3))
++        # The split rail validator replaces the full rectangular tray-width rule only in this opt-in source.
++        over['max_tray'] = 1000
+     lines = ['', '// ---- wizard overrides: ' + re.sub(r'[\r\n]', ' ', s['name'])] + [f'{k}={lit(v)};' for k, v in over.items()]
+     if style in ('reinforced', 'vents'):
+         lines.extend('// '+note for note in dict.fromkeys(geometry.get('notes', [])))
+@@ -1332,9 +1370,8 @@ def template_status(data_dir, item):
+         if not isinstance(report, dict):
+             return unknown
+         parts = report.get('parts')
+-        allowed = {'tray', 'faceplate', 'combined', 'rear_bracket'}
+         if (not isinstance(parts, list) or not parts or
+-                any(not isinstance(p, str) or p not in allowed for p in parts) or len(set(parts)) != len(parts)):
++                any(not mesh_part_name(p) for p in parts) or len(set(parts)) != len(parts)):
+             return unknown
+         hashes = report.get('sha256')
+         if not isinstance(hashes, dict):
+@@ -1466,8 +1503,12 @@ def delete_item(ident, data_dir, in_use):
+     return {'deleted': ident}
+ 
+ 
++def mesh_part_name(part):
++    return isinstance(part,str) and (part in ('tray','faceplate','combined','rear_bracket','rail_l','rail_r') or bool(re.fullmatch(r'(?:pipe|vector)_[1-9][0-9]{0,3}',part)))
++
++
+ def mesh_file(data_dir, identity, part):
+-    if not re.fullmatch('[0-9a-f]{64}', identity or '') or part not in ('tray', 'faceplate', 'combined', 'rear_bracket'):
++    if not re.fullmatch('[0-9a-f]{64}', identity or '') or not mesh_part_name(part):
+         raise ValueError('Invalid equipment mesh request.')
+     return (Path(data_dir) / 'equipment-revisions' / identity / (part + '.stl')).read_bytes()
+ 
+@@ -1561,7 +1602,10 @@ def preview(spec, data_dir):
+ def render(spec, data_dir):
+     s = clean(spec)
+     src = source(s)
+-    parts = ['faceplate'] if s.get('faceplate_only') else ['combined'] if s['joint'] == 'single' else ['tray', 'faceplate'] + (['rear_bracket'] if s['rear_support'] else [])
++    parts = ['faceplate', 'rail_l', 'rail_r'] if s.get('m6_rails') else ['faceplate'] if s.get('faceplate_only') else ['combined'] if s['joint'] == 'single' else ['tray', 'faceplate'] + (['rear_bracket'] if s['rear_support'] else [])
++    if s.get('m6_rails'):
++        parts += [f'pipe_{i+1}' for i in range(len(s.get('m6_light_pipes',[])))]
++        parts += [f'vector_{i+1}' for i in range(len(s.get('m6_vectors',[])))]
+     identity = hashlib.sha256(src.encode('utf-8')).hexdigest()
+     final = Path(data_dir) / 'equipment-revisions' / identity
+     with LOCK:
+@@ -1574,7 +1618,7 @@ def render(spec, data_dir):
+                 for name in parts:
+                     # OpenSCAD 2021 sometimes emits a zero-area sliver; retry with the faceplate's
+                     # pocket/corner sizes nudged by a few hundredths of a mm (recorded in the report).
+-                    for nudge in (0, 0.011, 0.023, 0.037, 0.051):
++                    for nudge in ((0,) if s.get('m6_rails') else (0, 0.011, 0.023, 0.037, 0.051)):
+                         text = src + (f'nudge={nudge};\n' if nudge else '')
+                         (folder / 'equipment.scad').write_text(text, encoding='utf-8', newline='\n')
+                         try:
+@@ -1588,15 +1632,19 @@ def render(spec, data_dir):
+                             break  # test coupon slice doesn't touch this part
+                         if r.returncode or 'ERROR:' in r.stderr:
+                             raise ValueError('OpenSCAD failed for ' + name + ': ' + r.stderr[-1200:])
++                        if s.get('m6_rails') and ('unknown variable' in r.stderr or 'undefined operation' in r.stderr or 'Unable to convert' in r.stderr):
++                            raise ValueError('OpenSCAD reported an undefined split-rail dimension: '+r.stderr[-1200:])
+                         try:
+                             mesh_revision.normalize_collinear_faces(folder / (name + '.stl'))
+                         except ValueError:
+                             pass  # optional tidy-up; read_mesh below still enforces a closed, valid mesh
+                         try:
+-                            mesh_revision.read_mesh(folder / (name + '.stl'), name)
++                            checked = mesh_revision.read_mesh(folder / (name + '.stl'), name)
++                            if s.get('m6_rails'):
++                                m6_rails.check_connected(checked)
+                             break
+                         except ValueError:
+-                            if nudge == 0.051:
++                            if s.get('m6_rails') or nudge == 0.051:
+                                 raise
+                     nudges[name] = nudge
+                     if nudge:
+diff --git a/outputs/Mechanical_Design_App/equipment_tray.scad b/outputs/Mechanical_Design_App/equipment_tray.scad
+index 23bf714..36c4e89 100644
+--- a/outputs/Mechanical_Design_App/equipment_tray.scad
++++ b/outputs/Mechanical_Design_App/equipment_tray.scad
+@@ -1,3 +1,38 @@
++// @m6-rails-begin
++// Opt-in generated split rails; removed byte-for-byte from legacy sources.
++m6_rails=true; m6_rail_t=3.3; m6_joint_x=[-65.8,65.8]; m6_joint_z=[8.6,35.8];
++m6_pocket_profile=[[-60,3.3],[60,3.3],[60,33.3],[-60,33.3]]; test_id="";
++mr_end=44.425; mr_start=0.025; mr_stub=12; mr_flange=4; mr_length=138;
++module mr_profile(y0,d){translate([0,y0+d,0])rotate([90,0,0])linear_extrude(d)polygon(m6_pocket_profile);}
++module mr_yhole(x,z,d,y0,depth){translate([x,y0,z])rotate([-90,0,0])cylinder(d=d,h=depth);}
++module mr_stubs(){difference(){
++ for(x=m6_joint_x)translate([x-5.8,-0.01,mr_start])cube([11.6,mr_stub+0.01,mr_end-mr_start]);
++ mr_profile(-0.1,mr_stub+0.2);
++}}
++module mr_pilots(){for(x=m6_joint_x,z=m6_joint_z)mr_yhole(x,z,7.6,mr_stub-7,7.1);}
++module mr_id(s,x,y,angle=0,sz=3){if(test_id!="")translate([x,y,mr_end-0.5])rotate([0,0,angle])linear_extrude(0.6)
++ text(str(test_id,s),size=sz,font="Liberation Sans:style=Bold",halign="center",valign="center");}
++module mr_faceplate(){difference(){faceplate();mr_id("-F",0,-2);}}
++module mr_rail(side){
++ y=mr_stub+0.05; // Explicit separation: coplanar STL contact otherwise exports a zero-thickness intersection.
++ x=m6_joint_x[side]; outer=side==0?min(x-5.8,min([for(p=m6_pocket_profile)p[0]])-m6_rail_t):max(x+5.8,max([for(p=m6_pocket_profile)p[0]])+m6_rail_t);
++ inner=side==0?min([for(p=m6_pocket_profile)p[0]])+18:max([for(p=m6_pocket_profile)p[0]])-18;
++ lo=min(outer,inner); hi=max(outer,inner);
++ difference(){
++  union(){
++   translate([side==0?outer:outer-m6_rail_t,y,mr_start])cube([m6_rail_t,mr_length,mr_end-mr_start]);
++   for(z=[mr_start,mr_end-m6_rail_t])translate([lo,y,z])cube([hi-lo,mr_length,m6_rail_t]);
++   translate([x-5.8,y,mr_start])cube([11.6,mr_flange,mr_end-mr_start]);
++  }
++  mr_profile(y-0.1,mr_length+0.2);
++  for(z=m6_joint_z){
++   mr_yhole(x,z,6.6,y-0.1,mr_flange+0.2);
++   translate([lo-0.1,y+mr_flange,z-6])cube([hi-lo+0.2,34,12]);
++  }
++  mr_id(side==0?"-L":"-R",x,y+mr_length/2,90,min(3,(mr_length-8)/(1.1*(len(test_id)+2))));
++ }
++}
++// @m6-rails-end
+ // @drives-begin
+ // Task 39: nominal SFF-8301/8201 geometry; PROPOSED — UNVALIDATED.
+ // Coordinates: tray X, Y offset from front_gap; connectors face +Y.
+diff --git a/outputs/Mechanical_Design_App/js-tests/rack-bom.js b/outputs/Mechanical_Design_App/js-tests/rack-bom.js
+index d60f1d4..a5f90fd 100644
+--- a/outputs/Mechanical_Design_App/js-tests/rack-bom.js
++++ b/outputs/Mechanical_Design_App/js-tests/rack-bom.js
+@@ -91,7 +91,7 @@ test('moving a support refreshes a visible editing BOM; locked layout stays unch
+ });
+ test('multi-U plate across a support extension warns (never blocks); 1U and clear spans stay quiet',()=>{
+   const {box}=harness();
+-  vm.runInContext("const uNum=(rack,slot)=>rack.slots-slot+1,uPad=n=>'U'+String(n).padStart(2,'0'),uText=(rack,slot,span=1)=>span>1?uPad(uNum(rack,slot+span-1))+'–'+uPad(uNum(rack,slot)):uPad(uNum(rack,slot));"+section('  // Slots taken by a 1U support extension','  function guideLabel(').replace(/  window\.extensionJointWarning=.*\n/,'')+'\nglobalThis.jw=jointWarning;',box);
++  vm.runInContext("const uNum=(rack,slot)=>rack.slots-slot+1,uPad=n=>'U'+String(n).padStart(2,'0'),uText=(rack,slot,span=1)=>span>1?uPad(uNum(rack,slot+span-1))+'–'+uPad(uNum(rack,slot)):uPad(uNum(rack,slot));"+section('  // Slots taken by a 1U support extension','  function guideLabel(').replace(/  window\.extensionJointWarning=.*\r?\n/,'')+'\nglobalThis.jw=jointWarning;',box);
+   // 10U, posts 5U + extension + 4U on both sides: the extension is slot 5.
+   const rack={slots:10,post_levels:{left:[5,4],right:[5,4]}};
+   assert.match(box.jw(rack,4,2),/crosses the 1U support extension at U06 \(both sides\).*UNKNOWN.*Warning only/);
+diff --git a/outputs/Mechanical_Design_App/print_layout.py b/outputs/Mechanical_Design_App/print_layout.py
+index b498c8b..426fd6e 100644
+--- a/outputs/Mechanical_Design_App/print_layout.py
++++ b/outputs/Mechanical_Design_App/print_layout.py
+@@ -62,12 +62,14 @@ def layout_3mf(parts):
+                 idx[v] = len(verts); verts.append(v)
+             return idx[v]
+         faces = [tuple(vid(v) for v in t) for t in tris]
+-        objs.append(f'<object id="{i}" name="{name}" type="model"><mesh><vertices>'
++        material = ' pid="1000" pindex="1"' if name.startswith(('pipe_','vector_')) else ' pid="1000" pindex="0"' if any(n.startswith('pipe_') for n in parts) else ''
++        objs.append(f'<object id="{i}" name="{name}" type="model"{material}><mesh><vertices>'
+                     + ''.join('<vertex x="%.6f" y="%.6f" z="%.6f"/>' % v for v in verts) + '</vertices><triangles>'
+                     + ''.join(f'<triangle v1="{a}" v2="{b}" v3="{c}"/>' for a, b, c in faces) + '</triangles></mesh></object>')
+         items.append(f'<item objectid="{i}"/>')
+     model = ('<?xml version="1.0" encoding="UTF-8"?><model unit="millimeter" xml:lang="en-US" '
+              'xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02"><resources>'
++             + ('<basematerials id="1000"><base name="Body" displaycolor="#303238FF"/><base name="Inlays and pipes" displaycolor="#EEEEEEFF"/></basematerials>' if any(n.startswith('pipe_') for n in parts) else '')
+              + ''.join(objs) + '</resources><build>' + ''.join(items) + '</build></model>')
+     buf = io.BytesIO()
+     with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as z:
+@@ -82,7 +84,8 @@ def layout_3mf(parts):
+ 
+ def place(parts):
+     placed = []
+-    for name in ('tray', 'combined', 'faceplate', 'rear_bracket'):
++    names = ('faceplate', 'rail_l', 'rail_r') if 'rail_l' in parts or 'rail_r' in parts else ('tray', 'combined', 'faceplate', 'rear_bracket')
++    for name in names:
+         if name not in parts:
+             continue
+         tris = facets(parts[name])
+@@ -94,7 +97,14 @@ def place(parts):
+             dy = (plo[1] - GAP - hi[1]) if name == 'faceplate' else (phi[1] + GAP - lo[1])
+         else:
+             dy = 0
++        if name == 'faceplate':
++            plate_dy, plate_z = dy, lo[2]
+         placed.append((name, move(tris, lambda v, dy=dy, z=lo[2]: (v[0], v[1] + dy, v[2] - z))))
++    for name in parts:
++        if name.startswith(('pipe_','vector_')):
++            if 'faceplate' not in parts:raise ValueError('Colour objects need a faceplate for their shared placement.')
++            tris=facets(parts[name])
++            placed.append((name,move(tris,lambda v:(v[0],-v[2]+plate_dy,v[1]-plate_z))))
+     if not placed:
+         raise ValueError('No parts to lay out.')
+     return placed
+diff --git a/outputs/Mechanical_Design_App/test_allocation_tray.py b/outputs/Mechanical_Design_App/test_allocation_tray.py
+index ba7e3d9..aeb44c2 100644
+--- a/outputs/Mechanical_Design_App/test_allocation_tray.py
++++ b/outputs/Mechanical_Design_App/test_allocation_tray.py
+@@ -29,7 +29,9 @@ class AllocationTray(unittest.TestCase):
+         for key in eq.PLACEMENT_KEYS:
+             self.assertNotIn(key, facts)
+         self.assertEqual(set(eq.PLACEMENT_KEYS), {'dev_off_x', 'dev_off_y', 'dev_rot', 'device_mount', 'wall_open', 'standoff',
+-                                                  'insert_pilot', 'board_t', 'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size', 'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint', 'm6_joint'})
++                                                  'insert_pilot', 'board_t', 'joint', 'keystones', 'rear_support', 'rear_openings', 'rear_style', 'u', 'front_position', 'front_setback', 'bezel', 'bezel_size', 'sleeve_top', 'feet_style', 'rear_floor_opening', 'insert_bosses', 'hidden_joint', 'm6_joint',
++                                                  'm6_rails','m6_rail_t','m6_joint_x','m6_joint_z','m6_pocket_profile','m6_usable_depth','test_id',
++                                                  'm6_rail_len','m6_bay_h','m6_bay_d','m6_rail_profiles','m6_side_windows','m6_stub_sections','m6_edge_radius','m6_retention_slot','m6_light_pipes','m6_vectors','m6_nose_bridge'})
+ 
+     def test_no_tray_settings_gives_identical_source(self):
+         expected = eq.source(eq.clean(OLD_SPEC))
+diff --git a/outputs/Mechanical_Design_App/test_m6_joint.py b/outputs/Mechanical_Design_App/test_m6_joint.py
+index f0d52ff..4bce743 100644
+--- a/outputs/Mechanical_Design_App/test_m6_joint.py
++++ b/outputs/Mechanical_Design_App/test_m6_joint.py
+@@ -1,6 +1,8 @@
+ """M6 bracket hardware (Brian, 2026-10-28; reproduces HDT-M6-A): opt-in m6_joint source and validation tests; no renders."""
+ import json
+ import unittest
++import hashlib
++import subprocess
+ from pathlib import Path
+ import equipment as eq
+ 
+@@ -47,5 +49,130 @@ class M6JointTests(unittest.TestCase):
+         self.assertEqual(eq.placement_settings({'m6_joint': True}), {'m6_joint': True})
+ 
+ 
++class SplitRailsTests(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        cls.root=Path(__file__).resolve().parents[2]
++        cls.spec=json.loads((cls.root/'work/m6-rails-43/cm6b-spec.json').read_text(encoding='utf-8'))
++
++    def test_explicit_cm6a_positions_and_parts(self):
++        s=eq.clean(self.spec)
++        self.assertEqual(s['m6_joint_x'],[-104.4,104.4])
++        self.assertEqual([x+127 for x in s['m6_joint_x']],[22.599999999999994,231.4])
++        self.assertEqual(s['m6_joint_z'],[8.6,35.85])
++        self.assertEqual(eq.clean(s),s)
++        src=eq.source(s)
++        self.assertIn('mr_rail(0);mr_rail(1);',src)
++        self.assertNotIn('// @m6-begin',src)
++
++    def test_validation_messages_and_js_agreement(self):
++        from test_tray_placement import node
++        cases=[({},None),({'m6_joint':False},'Split rails need M6 hardware'),
++               ({'ports':[dict(x=104.4,z=20,w=6,h=6,r=0)]},'front opening or keystone'),
++               ({'keystones':[100]},'front opening or keystone'),
++               ({'dev_w':230},'too wide'),({'m6_joint_x':[-113,113]},'too wide'),
++               ({'m6_usable_depth':100},'longer than the usable depth'),
++               ({'m6_pocket_profile':[[-106.3,3.3],[106.3,3.3],[106.3,41.3],[-106.3,41.3]]},'at least 2 mm'),
++               ({'m6_rail_t':2.4},'Rail thickness'),({'test_id':'bad ID'},'Test ID'),
++               ({'device_mount':'sleeve'},'Sits flat'),({'rear_support':True},'rear bracket'),
++               ({'m6_joint_z':[8.6,36.1]},'at least 2.5 mm'),({'dev_rot':90},'unrotated'),
++               ({'m6_rail_t':2.5},'3 mm of top material'),({'bezel':'chamfer'},'front-edge bezel')]
++        for extra,message in cases:
++            spec=dict(self.spec,**extra)
++            if message:
++                with self.assertRaisesRegex(ValueError,message):eq.clean(spec)
++            else:eq.clean(spec)
++            code='const T=require("./tray-placement.js"),s=JSON.parse(process.argv[1]);console.log(JSON.stringify(T.problems(s,T.values(s))));'
++            p=subprocess.run([node(),'-e',code,json.dumps(spec)],cwd=eq.ROOT,capture_output=True,text=True,check=True)
++            errors=json.loads(p.stdout)
++            self.assertEqual(bool(errors),bool(message),(extra,errors))
++            if message:self.assertIn(message,' '.join(errors))
++
++    def test_legacy_sha256_corpus(self):
++        cases=json.loads((self.root/'work/m6-rails-43/legacy-before.json').read_text(encoding='utf-8'))
++        self.assertEqual(len(cases),14)
++        for case in cases:
++            for spec in (case['spec'],dict(case['spec'],m6_rails=False)):
++                self.assertEqual(hashlib.sha256(eq.source(eq.clean(spec)).encode('utf-8')).hexdigest(),case['sha256'],case['label'])
++
++    def test_split_layout_preserves_three_objects(self):
++        import print_layout
++        import zipfile
++        import io
++        import xml.etree.ElementTree as ET
++        part='solid t\nfacet normal 0 0 1\nouter loop\nvertex 0 0 0\nvertex 1 0 0\nvertex 0 1 0\nendloop\nendfacet\nendsolid t\n'
++        blob=print_layout.layout_3mf(dict(faceplate=part,rail_l=part,rail_r=part))
++        with zipfile.ZipFile(io.BytesIO(blob)) as z:
++            root=ET.fromstring(z.read('3D/3dmodel.model'))
++        ns={'m':'http://schemas.microsoft.com/3dmanufacturing/core/2015/02'}
++        self.assertEqual(len(root.findall('m:resources/m:object',ns)),3)
++        self.assertEqual(len(root.findall('m:build/m:item',ns)),3)
++
++    def test_disconnected_solids_block_a_split_part(self):
++        import m6_rails
++        tetra=[[0,1,2],[0,3,1],[0,2,3],[1,3,2]]
++        m6_rails.check_connected({'triangles':tetra})
++        with self.assertRaisesRegex(ValueError,'one connected closed solid'):
++            m6_rails.check_connected({'triangles':tetra+[[i+4 for i in t] for t in tetra]})
++
++
++class SplitRailFidelityTests(unittest.TestCase):
++    def setUp(self):
++        self.spec=json.loads((Path(__file__).resolve().parents[2]/'work/m6-fidelity-44/revision2/spec.json').read_text(encoding='utf-8'))
++
++    def test_numeric_sections_and_colours_round_trip(self):
++        s=eq.clean(self.spec)
++        self.assertEqual(eq.clean(s),s)
++        self.assertEqual(s['m6_rail_len'],121.62)
++        self.assertEqual(len(s['m6_light_pipes']),5)
++        self.assertEqual(len(s['m6_vectors']),9)
++        self.assertEqual(eq.placement_settings(s)['m6_stub_sections'],s['m6_stub_sections'])
++        code=eq.source(s)
++        self.assertNotIn('import(',code)
++        self.assertIn('mf_loft(m6_stub_sections[s])',code)
++        self.assertIn('if(part=="vector_9")mf_vector(8)',code)
++        for name in ['pipe_1','pipe_5','vector_1','vector_9']:self.assertTrue(eq.mesh_part_name(name))
++        for name in ['../pipe_1','pipe_0','pipe_1.stl','vector_bad',None]:self.assertFalse(eq.mesh_part_name(name))
++
++    def test_each_setting_rejects_malformed_values(self):
++        bad={'m6_rail_len':300,'m6_bay_h':30,'m6_bay_d':0,'m6_edge_radius':-1,
++             'm6_rail_profiles':[[[0,0],[1,1],[2,2]]], 'm6_side_windows':[[[0,0]]],
++             'm6_stub_sections':[[[0,[[0,0],[1,0],[0,1]]]]],
++             'm6_retention_slot':[0,0,-1,4,0], 'm6_light_pipes':[[0,0,-8,8.72]],
++             'm6_vectors':[[2,[[[0,0],[1,0],[0,1]]]]], 'm6_nose_bridge':[[2,1],[[[0,0],[1,0],[0,1]]]]}
++        for key,value in bad.items():
++            with self.subTest(key=key),self.assertRaises(ValueError):eq.clean(dict(self.spec,**{key:value}))
++        s=dict(self.spec);s['m6_stub_sections']=json.loads(json.dumps(s['m6_stub_sections']))
++        s['m6_stub_sections'][0][1][0]=s['m6_stub_sections'][0][0][0]
++        with self.assertRaisesRegex(ValueError,'Loft stations'):eq.clean(s)
++
++    def test_default_length_and_explicit_bay_source(self):
++        spec=json.loads((Path(__file__).resolve().parents[2]/'work/m6-rails-43/cm6b-spec.json').read_text(encoding='utf-8'))
++        self.assertIn('mr_length=138;',eq.source(eq.clean(spec)))
++        code=eq.source(eq.clean(dict(spec,m6_rail_len=121.62,m6_bay_h=14,m6_bay_d=44.69)))
++        self.assertIn('mr_length=121.62;',code)
++        self.assertIn('44.69,14',code)
++
++    def test_profile_group_and_finite_coordinates(self):
++        spec=dict(self.spec);spec.pop('m6_side_windows')
++        with self.assertRaisesRegex(ValueError,'together'):eq.clean(spec)
++        for value in [True,float('nan'),float('inf')]:
++            with self.assertRaises(ValueError):eq.clean(dict(self.spec,m6_light_pipes=[[value,30,8,8.72]]))
++
++    def test_colour_layout_uses_plate_transform(self):
++        import print_layout
++        import io,zipfile,xml.etree.ElementTree as ET
++        tetra='solid a\n'+''.join('facet normal 0 0 1\nouter loop\n'+''.join('vertex %s %s %s\n'%v for v in tri)+'endloop\nendfacet\n' for tri in [[(0,-4,1),(1,-4,1),(0,-3.8,2)]])+'endsolid a\n'
++        parts={'faceplate':tetra,'rail_l':tetra,'rail_r':tetra,'pipe_1':tetra,'vector_1':tetra}
++        placed=dict(print_layout.place(parts))
++        self.assertEqual(placed['faceplate'],placed['pipe_1'])
++        self.assertEqual(placed['faceplate'],placed['vector_1'])
++        with zipfile.ZipFile(io.BytesIO(print_layout.layout_3mf(parts))) as z:
++            root=ET.fromstring(z.read('3D/3dmodel.model'))
++        ns={'m':'http://schemas.microsoft.com/3dmanufacturing/core/2015/02'}
++        self.assertEqual(len(root.findall('m:resources/m:object',ns)),5)
++        self.assertEqual(len(root.findall('m:resources/m:basematerials/m:base',ns)),2)
++
++
+ if __name__ == '__main__':
+     unittest.main()
+diff --git a/outputs/Mechanical_Design_App/tray-placement.js b/outputs/Mechanical_Design_App/tray-placement.js
+index d0cce3f..8322b3d 100644
+--- a/outputs/Mechanical_Design_App/tray-placement.js
++++ b/outputs/Mechanical_Design_App/tray-placement.js
+@@ -5,9 +5,11 @@
+ (function(root){
+   'use strict';
+   // ---- Pure logic (Node-testable). Mirrors equipment.PLACEMENT_KEYS, clean() and equipment_tray.scad asserts.
+-  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','wall_open','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','rear_style','u','front_position','front_setback','bezel','bezel_size','sleeve_top','feet_style','rear_floor_opening','insert_bosses','hidden_joint','m6_joint'];
++  const RAIL_KEYS=['m6_rails','m6_rail_t','m6_joint_x','m6_joint_z','m6_pocket_profile','m6_usable_depth','test_id','m6_rail_len','m6_bay_h','m6_bay_d','m6_rail_profiles','m6_side_windows','m6_stub_sections','m6_edge_radius','m6_retention_slot','m6_light_pipes','m6_vectors','m6_nose_bridge'];
++  const KEYS=['dev_off_x','dev_off_y','dev_rot','device_mount','wall_open','standoff','insert_pilot','board_t','joint','keystones','rear_support','rear_openings','rear_style','u','front_position','front_setback','bezel','bezel_size','sleeve_top','feet_style','rear_floor_opening','insert_bosses','hidden_joint','m6_joint',...RAIL_KEYS];
+   const DEFAULTS={dev_off_x:0,dev_off_y:0,dev_rot:0,device_mount:'inserts',wall_open:['rear'],standoff:6,insert_pilot:3.2,board_t:1.6,joint:'screw',keystones:[],rear_support:false,rear_openings:false,u:1,front_position:'today',front_setback:16,bezel:'none',bezel_size:1,sleeve_top:.3,feet_style:'pockets',rear_floor_opening:false,insert_bosses:false,hidden_joint:false,m6_joint:false};
+   const FRONT_GAP=12,MARGIN=8,RACK_INNER_W=208,SIDE_CLEAR=2,MAX_TRAY=RACK_INNER_W-2*SIDE_CLEAR,RACK_DEPTH=240,PITCH=44.45,PLATE_HALF=126,PLATE_T=4,TRAY_T=3;
++  Object.assign(DEFAULTS,{m6_rails:false,m6_rail_t:3.3,m6_joint_x:[-65.8,65.8],m6_joint_z:[8.6,35.825],m6_pocket_profile:undefined,m6_usable_depth:240,test_id:''});
+   const MOUNTS={inserts:'Screws + inserts',pegs:'Pegs',clips:'Clips',straps:'Strap',wall:'Wall',flat:'Sits flat on the tray (PCs, boxes)',sleeve:'Sleeve: boxed in, front flush (PCs, boxes)'};
+   const REAR_STYLES={solid:['Solid','Plain plate'],open:['Open','Original cable windows'],reinforced:['Reinforced','Wider bands and inner top/end lips; ends shorten to clear rear joints'],slots:['Cable slots','Rounded upper and centre cable slots'],vents:['Vents','Dense round vents, centre cable slot and inner top/end lips; ends shorten to clear rear joints']};
+   const rearStyle=v=>v.rear_style||(v.rear_openings?'open':'solid');
+@@ -36,6 +38,7 @@
+   }
+   // PROPOSED nominal opening and 2 mm clearance per side; never rotates the device.
+   function widthProblem(spec,v=values(spec)){
++    if(v.m6_rails)return railProblems(spec,v).find(p=>p.includes('too wide'))||'';
+     const L=layout(spec,v);if(L.tray_w<=MAX_TRAY)return '';
+     const hint=2*Math.abs(v.dev_off_x)+L.fp_d+2*(v.device_mount==='sleeve'?Math.max(MARGIN,PO().SLEEVE.side+PO().SLEEVE.wall,v.insert_bosses?PO().SLEEVE.side+V2.pilotOffset+V2.bossR:0,v.hidden_joint?PO().SLEEVE.side+PO().SLEEVE.wall+PO().SLEEVE.hiddenGap+2*PO().SLEEVE.hiddenHalf:0):MARGIN)<=MAX_TRAY?' Too wide this way round; it fits if you press Rotate 90°.':'';
+     return `This tray is ${mm(L.tray_w)} mm wide but the rack opening allows ${MAX_TRAY} mm (${RACK_INNER_W} mm minus ${SIDE_CLEAR} mm each side).`+(v.dev_off_x?' Move the device less far sideways.':'')+hint+(v.hidden_joint&&v.device_mount==='sleeve'?' The hidden screw joint adds about 20 mm of tray beside each sleeve wall; turn it off for a wider device.':'');
+@@ -88,9 +91,44 @@
+   // This slot's front openings: moved with the offset and standoff, or as entered when the device is turned.
+   function openings(spec,v){const P=PO();return P?P.frontOpenings(spec,v):{ports:(spec.ports||[]).map(p=>({...p})),dx:0,dz:0,follows:false,rotation:+v.dev_rot||0,message:null};}
+   const mm=x=>Math.round(x*10)/10;
++  // Mirrors m6_rails.py. Joint coordinates and the shaped pocket are explicit saved settings.
++  function railProblems(spec,v){
++    const out=[],top=v.u*44.45-.025,w=+spec.dev_w,d=+spec.dev_d,h=+spec.dev_h,t=v.m6_rail_t,off=v.dev_off_x;
++    if(!v.m6_joint)out.push('Split rails need M6 hardware turned on.');
++    if(v.device_mount!=='flat'||v.joint!=='screw')out.push('Split rails need Sits flat and a screw joint.');
++    if(v.rear_support||spec.second||v.front_position!=='today')out.push('Split rails cannot be combined with a rear bracket, a second device or a moved front position.');
++    if(v.bezel!=='none')out.push('Split rails do not yet support a front-edge bezel.');
++    if(v.dev_off_y||v.dev_rot||(spec.feet||[]).length||(spec.drives||[]).length||(spec.coupon||[]).length||(spec.protrusions||[]).length||(spec.labels||[]).length)out.push('Split rails need an unrotated device without feet, drives, coupons, keep-clear zones or faceplate labels; front/back offset must be zero.');
++    if(!fin(t)||t<2.5||t>8)out.push('Rail thickness must be between 2.5 and 8 mm.');
++    if(!fin(v.m6_usable_depth)||v.m6_usable_depth<40||v.m6_usable_depth>300)out.push('Usable depth must be between 40 and 300 mm.');
++    if((v.m6_rail_len??d+2)>v.m6_usable_depth)out.push('The rails are longer than the usable depth; use a shorter device or more usable depth.');
++    for(const [k,lo,hi] of [['m6_rail_len',38,280],['m6_bay_h',6,30],['m6_bay_d',10,100],['m6_edge_radius',0,3]])if(v[k]!==undefined&&(!fin(v[k])||v[k]<lo||v[k]>hi))out.push(k+' is outside its supported range.');
++    if(2*(v.m6_bay_h??12)+2*2.575+2.5>top-.025)out.push('Access bays need at least 2.5 mm of floor and top.');
++    if(d+2<38)out.push('Split rails need at least 38 mm of rail length for the screw access bays.');
++    const xs=v.m6_joint_x,zs=v.m6_joint_z;
++    for(const [key,a,lo,hi] of [['m6_joint_x',xs,-125,125],['m6_joint_z',zs,0,top]])if(!Array.isArray(a)||a.length!==2||a.some(x=>!fin(x)||x<lo||x>hi)||a[0]>=a[1])out.push(key+' must contain two increasing positions in generator coordinates.');
++    if(out.length)return out;
++    if(xs[1]-xs[0]<24||xs.some(x=>Math.abs(x)+5.8>111.2625)||Math.max(Math.abs(off-w/2),Math.abs(off+w/2))+t>111.2625)out.push('The device is too wide for split-rail stubs and rack slot clearance.');
++    const poly=v.m6_pocket_profile||[[off-w/2,t+.025],[off+w/2,t+.025],[off+w/2,t+h+.025],[off-w/2,t+h+.025]];
++    if(!Array.isArray(poly)||poly.length<4||poly.length>32||poly.some(p=>!Array.isArray(p)||p.length!==2||!p.every(fin)||Math.abs(p[0])>110||p[1]<2.525||p[1]>top-2.5))return out.concat('The split-rail pocket needs 4 to 32 valid X/Z points inside the plate.');
++    const edges=poly.map((a,i)=>[a,poly[(i+1)%poly.length]]),dist=(p,a,b)=>{const dx=b[0]-a[0],dz=b[1]-a[1],den=dx*dx+dz*dz;if(!den)return 0;const q=Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dz)/den));return Math.hypot(p[0]-a[0]-q*dx,p[1]-a[1]-q*dz);};
++    const orient=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
++    if(edges.some(([a,b])=>a[0]===b[0]&&a[1]===b[1]))out.push('Pocket points must be distinct.');
++    for(let i=0;i<edges.length;i++)for(let j=i+2;j<edges.length;j++){if(i===0&&j===edges.length-1)continue;const [a,b]=edges[i],[c,e]=edges[j];if(orient(a,b,c)*orient(a,b,e)<=0&&orient(c,e,a)*orient(c,e,b)<=0&&Math.max(Math.min(a[0],b[0]),Math.min(c[0],e[0]))<=Math.min(Math.max(a[0],b[0]),Math.max(c[0],e[0]))&&Math.max(Math.min(a[1],b[1]),Math.min(c[1],e[1]))<=Math.min(Math.max(a[1],b[1]),Math.max(c[1],e[1])))out.push('Pocket outline must not cross or touch itself.');}
++    if(Math.max(...poly.map(p=>p[0]))-Math.min(...poly.map(p=>p[0]))>w+.001||Math.max(...poly.map(p=>p[1]))-Math.min(...poly.map(p=>p[1]))>h+.001)out.push('Pocket profile exceeds the device envelope.');
++    const inside=p=>{let odd=false;for(const [a,b]of edges)if((a[1]>p[1])!==(b[1]>p[1])&&p[0]<(b[0]-a[0])*(p[1]-a[1])/(b[1]-a[1])+a[0])odd=!odd;return odd;};
++    if(xs.some(x=>zs.some(z=>inside([x,z])||edges.some(([a,b])=>dist([x,z],a,b)-3.8<2-1e-8)||z-3.8<2.025||top-z-3.8<2)))out.push('Each M6 pilot needs at least 2 mm of wall to the pocket and plate edge, and clearance from the rack slots.');
++    if(zs[0]-6<2.525-1e-9||top-zs[1]-6<2.5-1e-9||zs[1]-zs[0]<14)out.push('Screw access bays must keep at least 2.5 mm of floor, top and connecting wall.');
++    if(xs.some(x=>(spec.ports||[]).some(p=>Math.abs(+p.x+off-x)<+p.w/2+7.8)||(v.keystones||[]).some(k=>Math.abs(k-x)<18.3)))out.push('A front opening or keystone sits in front of a split-rail stub; move or remove it.');
++    if(typeof v.test_id!=='string'||v.test_id&&!/^[A-Za-z0-9-]{1,16}$/.test(v.test_id))out.push('Test ID must be at most 16 letters, numbers or hyphens.');
++    if(v.test_id&&(t<3||Math.max(...poly.map(p=>p[1]))>top-3))out.push('Engraved rail IDs need at least 3 mm of top material before engraving.');
++    return out;
++  }
+   // Plain-language versions of the SCAD asserts and the build checks. Any message blocks Apply and export.
+   function problems(spec,v,pair=false){
+     const out=[];
++    if(typeof v.m6_rails!=='boolean')return ['Split rails must be true or false.'];
++    if(v.m6_rails)return railProblems(spec,v).concat(!Number.isInteger(v.u)||v.u<1||v.u>5?['Choose a height from 1U to 5U.']:[]);
+     if(![0,90,180,270].includes(v.dev_rot))return ['Rotation must be 0, 90, 180 or 270 degrees.'];
+     if(!fin(v.dev_off_x)||!fin(v.dev_off_y))return ['Enter numbers for the left/right offset and the front gap.'];
+     if(!Number.isInteger(v.u)||v.u<1||v.u>5)out.push('Faceplate height must be a whole number of rack units from 1 to 5.');
+@@ -228,6 +266,7 @@
+     return v;
+   }
+   function schematic(spec,v){
++    if(v.m6_rails){const top=v.u*PITCH-.025,xs=v.m6_joint_x||[v.dev_off_x-spec.dev_w/2-5.8,v.dev_off_x+spec.dev_w/2+5.8],plate=box(-126,-4,.025,126,0,top);for(const x of xs)plate.push(...box(x-5.8,0,.025,x+5.8,12,top));return [{v:plate,color:[78,117,163],alpha:1},...xs.map((x,i)=>({v:box(x-5.8,12,.025,x+5.8,14+ +spec.dev_d,top),color:i?[90,160,120]:[77,142,110],alpha:1}))];}
+     const L=layout(spec,v),floor=PO().floorZ(v)+TRAY_T,tray=box(-L.tray_w/2,0,PO().floorZ(v),L.tray_w/2,L.tray_d,floor);
+     const posts=[];
+     if(v.device_mount==='inserts'||v.device_mount==='pegs')for(const[x,y]of holes(spec,v))posts.push(...box(x-3,y-3,floor,x+3,y+3,floor+ +v.standoff));
+@@ -263,6 +302,7 @@
+   // flat triangle lists in equipment_tray.scad coordinates, the same frame as the rendered STLs.
+   // Openings are dark blocks where the SCAD cuts keystones (ks_w x ks_h = 14.8 x 16.6, centred) and ports.
+   function rackSketch(spec,tray,second){
++    const railValues=values(spec,tray);if(railValues.m6_rails){const sets=schematic(spec,railValues);return {faceplate:sets[0].v,rail_l:sets[1].v,rail_r:sets[2].v};}
+     if(spec.faceplate_only){const s=PO().faceplateSpec(tray?.faceplate),holes=[];
+       for(const k of s.keystones){const x=Array.isArray(k)?k[0]:k,z=Array.isArray(k)&&k.length>1?k[1]:s.u*PITCH/2;holes.push(...box(x-7.4,-4.2,z-8.3,x+7.4,.2,z+8.3));}
+       for(const p of s.ports)holes.push(...box(p.x-p.w/2,-4.2,p.z-p.h/2,p.x+p.w/2,.2,p.z+p.h/2));
+@@ -349,6 +389,7 @@
+     view.sets=state.exact&&state.exact.key===key?state.exact.sets.concat(sketch.filter(s=>s.device)):sketch;
+     const note=document.getElementById('tpViewNote');
+     if(note)note.textContent=state.exact&&state.exact.key===key?`Exact OpenSCAD render of these settings at export quality ${exportNote()} (not saved). Translucent box = the device, orange = its front.`:'Live sketch: boxes for the tray, faceplate, standoffs and device (translucent; orange = device front). Left-drag turns, right-drag moves, scroll zooms.';
++    if(note&&state.v.m6_rails)note.textContent=state.exact&&state.exact.key===key?`Exact OpenSCAD preview: 3 structural parts and ${(state.v.m6_light_pipes?.length||0)+(state.v.m6_vectors?.length||0)} colour parts. Nothing saved.`:'Live sketch: 3 structural parts — faceplate and two rails. Pocket, holes, access bays and colour parts appear in Render exact preview. Fit and strength UNKNOWN.';
+     if(note&&state.v.rear_support)note.textContent+=' Rear bracket: '+REAR_STYLES[rearStyle(state.v)][0]+'. This box sketch does not show the cutouts or flanges; stiffness/airflow UNKNOWN';
+     P.draw(cv,view);
+   }
+@@ -363,6 +404,7 @@
+       warn.replaceChildren(...ws.map(t=>h('li',{},t)));warn.hidden=!ws.length;}
+     const L=pairLayout(),sum=document.getElementById('tpSummary');
+     if(sum)sum.textContent=`Tray ${mm(L.tray_w)} × ${mm(L.tray_d)} mm · device ${mm(L.fp_w)} × ${mm(L.fp_d)} mm`+(L.second?` and ${mm(L.second.fp_w)} × ${mm(L.second.fp_d)} mm`:'')+` on the tray · ${state.v.u}U faceplate.`;
++    if(sum&&state.v.m6_rails)sum.textContent=`3 structural pieces · rails ${mm(state.v.m6_rail_len??(+state.item.spec.dev_d+2))} mm nominal length · ${state.v.m6_rail_t} mm nominal rail thickness · ${state.v.u}U faceplate. Usable depth is a nominal planning limit; rack fit UNKNOWN.`;
+   }
+   function keystones(){
+     const v=state.v,x=h('input',{type:'number',step:'1',value:String(v.keystones.length?Math.min(100,v.keystones.at(-1)+25):-100),style:'width:70px','aria-label':'Keystone X position (mm)'});
+@@ -395,9 +437,13 @@
+     if(dv.device_mount==='inserts')mountOpts.push(field('Insert pilot hole (mm)',()=>dv.insert_pilot,x=>dv.insert_pilot=x,{step:'0.1'}));
+     if(dv.device_mount==='pegs'||dv.device_mount==='clips')mountOpts.push(field(dv.device_mount==='pegs'?'Board thickness (mm)':'Edge thickness clipped (mm)',()=>dv.board_t,x=>dv.board_t=x,{step:'0.1'}));
+     const rs=h('input',{type:'checkbox'});rs.checked=!!v.rear_support;rs.onchange=()=>{v.rear_support=rs.checked;if(rs.checked&&!v.rear_style)v.rear_style='reinforced';if(!rs.checked)delete v.rear_style;render();};
+-    const toggleV2=(key,label,hint)=>{const c=h('input',{type:'checkbox'});c.checked=v[key];c.onchange=()=>{v[key]=c.checked;update();};return h('label',{class:'ew-chip'},c,' '+label,h('small',{},' '+hint));};
++    const toggleV2=(key,label,hint)=>{const c=h('input',{type:'checkbox'});c.checked=v[key];c.onchange=()=>{v[key]=c.checked;if(key==='m6_joint'&&!c.checked)v.m6_rails=false;if(key==='m6_joint'||key==='m6_rails')render();else update();};return h('label',{class:'ew-chip'},c,' '+label,h('small',{},' '+hint));};
+     // M6 bracket hardware (Brian, 2026-10-28; HDT-M6-A): the live sketch keeps the old joint boxes; Render exact preview shows the M6 tabs.
+     const m6Controls=!['sleeve','wall'].includes(v.device_mount)&&v.joint==='screw'?[toggleV2('m6_joint','M6 hardware','Rack M6 inserts + M6 x 8 button heads, 4 joints, edge walls; device 15.5 mm back; fit/strength UNKNOWN.')]:[];
++    if(v.m6_joint)m6Controls.push(toggleV2('m6_rails','Split rails (3 pieces)','Faceplate and two separate rails; fit, retention and strength UNKNOWN.'));
++    if(v.m6_rails){m6Controls.push(field('Rail wall / floor (mm)',()=>v.m6_rail_t,x=>v.m6_rail_t=x,{min:'2.5',max:'8',step:'.1'}));
++      for(const [key,labels] of [['m6_joint_x',['Left joint X (mm)','Right joint X (mm)']],['m6_joint_z',['Lower joint Z (mm)','Upper joint Z (mm)']]])for(let i=0;i<2;i++)m6Controls.push(field(labels[i],()=>v[key]?.[i]??DEFAULTS[key][i],x=>{v[key]=[...(v[key]||DEFAULTS[key])];v[key][i]=x;},{step:'.1'}));
++    }
+     const sleeveControls=v.device_mount==='sleeve'?[
+       field('Top play (mm)',()=>v.sleeve_top,x=>v.sleeve_top=x,{min:'.3',max:'2',step:'.1'}),
+       h('div',{class:'ew-row'},'Feet:',chips({pockets:'Pockets',grooves:'Grooves'},v.feet_style,k=>v.feet_style=k)),
+@@ -411,7 +457,7 @@
+     exact.onclick=async()=>{exact.disabled=true;setStatus('Rendering with OpenSCAD… this can take a minute. Nothing is saved.');
+       try{if(current().length)throw Error('Fix the problems listed first.');const key=exactKey(),r=await post('/api/equipment-preview',exportRequest()),out=await r.json();if(!r.ok)throw Error(out.error||'Preview failed');
+         const sets=[];for(const p of out.parts){const buf=await (await fetch(`/api/equipment-mesh/${out.id}/${p}.stl`)).arrayBuffer();sets.push({v:window.EquipmentPainter.parseStl(buf),color:p==='tray'?[77,142,110]:[78,117,163],alpha:1});}
+-        state.exact={key,sets};draw3D();window.EquipmentRackView?.refresh();setStatus('Exact preview ready. Change any value to go back to the live sketch.');}
++        state.exact={key,sets};draw3D();window.EquipmentRackView?.refresh();setStatus(`Exact preview ready: ${out.parts.length} parts (${out.parts.join(', ')}). Change any value to go back to the live sketch.`);}
+       catch(e){setStatus('Problem: '+e.message);}finally{exact.disabled=false;}};
+     const exp=h('button',{type:'button',id:'tpExport'},'Generate proposed STL files');
+     exp.onclick=async()=>{if(current().length){update();return;}exp.disabled=true;setStatus('Checking, then rendering with OpenSCAD…');
