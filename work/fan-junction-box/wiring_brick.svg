@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" font-family="Arial, Helvetica, sans-serif" font-size="13">
+<title>Fan wiring: 12 V brick box (BRB-A) to CT200, Pi fan and Pi (direct, no shifter)</title>
+<rect width="1600" height="1000" fill="#ffffff"/>
+<style>
+ .w{fill:none;stroke-width:3;stroke-linejoin:round}
+ .v12{stroke:#d62828}.gnd{stroke:#222}.tach{stroke:#2a9d4b}.pwm{stroke:#1f6fd1}.v5{stroke:#f08c00}.dat{stroke:#8e44ad}.v33{stroke:#d63384}
+ .box{fill:#f6f6f6;stroke:#555;stroke-width:1.5}
+ .lbl{font-size:12px}.sm{font-size:11px}.b{font-weight:bold}
+ .dot{stroke:none}
+</style>
+
+<text x="20" y="32" font-size="22" class="b">Fan wiring — 12 V brick box BRB-A → CT200, Pi 40 mm fan, Pi (direct to the Pi, 2026-11-08)</text>
+<!-- legend -->
+<g class="sm">
+ <line x1="20" y1="58" x2="50" y2="58" class="w v12"/><text x="55" y="62">12 V (brick)</text>
+ <line x1="140" y1="58" x2="170" y2="58" class="w gnd"/><text x="175" y="62">GND</text>
+ <line x1="215" y1="58" x2="245" y2="58" class="w pwm"/><text x="250" y="62">PWM</text>
+ <line x1="295" y1="58" x2="325" y2="58" class="w tach"/><text x="330" y="62">TACH</text>
+ <line x1="380" y1="58" x2="410" y2="58" class="w v5"/><text x="415" y="62">5 V (Pi)</text>
+ <line x1="475" y1="58" x2="505" y2="58" class="w dat"/><text x="510" y="62">ARGB data</text>
+ <circle cx="20" cy="80" r="4"/><text x="30" y="84">dot = joined. Wires that cross without a dot are NOT joined. Wire colours on the diagram are NOT the real lead colours.</text>
+</g>
+
+<!-- brick -->
+<text x="20" y="200" class="b">Power strip</text>
+<rect x="30" y="215" width="170" height="200" rx="16" class="box"/>
+<text x="115" y="300" text-anchor="middle" class="b">GuanTing brick</text>
+<text x="115" y="318" text-anchor="middle">12 V  2 A</text>
+<text x="115" y="336" text-anchor="middle" class="sm">plug 5.5 x 2.1</text>
+<text x="115" y="352" text-anchor="middle" class="sm">centre + (check label)</text>
+<text x="115" y="440" text-anchor="middle" class="sm">excess cord zip-tied</text>
+<text x="115" y="454" text-anchor="middle" class="sm">outside the sleeve</text>
+<line x1="200" y1="320" x2="262" y2="320" stroke="#444" stroke-width="5"/>
+<rect x="258" y="310" width="30" height="20" fill="#333"/>
+
+<!-- box BRB-A -->
+<rect x="240" y="110" width="400" height="450" rx="10" fill="none" stroke="#888" stroke-width="2" stroke-dasharray="8 5"/>
+<text x="250" y="130" class="b">Fan power box BRB-A-B (slides onto the sleeve on the brick)</text>
+<text x="250" y="147" class="sm">only power is joined here; no signals in the box</text>
+
+<!-- socket tip -->
+<text x="290" y="272" class="lbl b">Screw-terminal socket tip</text>
+<rect x="290" y="280" width="130" height="80" rx="6" class="box"/>
+<circle cx="312" cy="320" r="18" fill="#ddd" stroke="#555"/>
+<text x="312" y="324" text-anchor="middle" class="sm">jack</text>
+<rect x="370" y="282" width="50" height="76" fill="#3c9a4a" stroke="#255"/>
+<text x="395" y="300" text-anchor="middle" fill="#fff" class="b">−</text>
+<text x="395" y="350" text-anchor="middle" fill="#fff" class="b">+</text>
+<text x="300" y="378" class="sm">wire 22–18 AWG, strip to fit</text>
+
+<!-- GND wago -->
+<text x="470" y="192" class="lbl b">WAGO 221-413 — GND bus</text>
+<rect x="470" y="200" width="130" height="100" rx="5" fill="#eef1ff" stroke="#556" stroke-width="1.5"/>
+<text x="478" y="254" class="sm">1 tip −</text>
+<text x="594" y="229" text-anchor="end" class="sm">2 CT200 pin 1</text>
+<text x="594" y="279" text-anchor="end" class="sm">3 Pi fan −</text>
+<!-- 12 V wago -->
+<text x="470" y="402" class="lbl b">WAGO 221-413 — 12 V bus</text>
+<rect x="470" y="410" width="130" height="100" rx="5" fill="#fff0f0" stroke="#655" stroke-width="1.5"/>
+<text x="478" y="464" class="sm">1 tip +</text>
+<text x="594" y="439" text-anchor="end" class="sm">2 CT200 pin 2</text>
+<text x="594" y="489" text-anchor="end" class="sm">3 Pi fan +</text>
+<text x="470" y="530" class="sm">strip 11 mm; 0.14–4 mm² fine-stranded</text>
+<text x="470" y="545" class="sm">(24–12 AWG). 26 AWG: fold back double</text>
+
+<!-- tip to wagos -->
+<polyline points="420,295 445,295 445,250 470,250" class="w gnd"/>
+<polyline points="420,345 455,345 455,460 470,460" class="w v12"/>
+
+<!-- CT200 -->
+<rect x="680" y="40" width="505" height="160" rx="10" class="box"/>
+<circle cx="750" cy="120" r="62" fill="#fff" stroke="#555" stroke-width="2"/>
+<circle cx="750" cy="120" r="14" fill="#ccc" stroke="#555"/>
+<text x="830" y="60" class="b">Thermaltake CT200 ARGB (200 mm)</text>
+<text x="830" y="77" class="sm">12 V 0.16 A · 5 V 0.31 A (listed) · leads 900 mm</text>
+<!-- 4-pin -->
+<rect x="850" y="90" width="220" height="60" fill="#fff" stroke="#333"/>
+<line x1="905" y1="90" x2="905" y2="150" stroke="#333"/><line x1="960" y1="90" x2="960" y2="150" stroke="#333"/><line x1="1015" y1="90" x2="1015" y2="150" stroke="#333"/>
+<g text-anchor="middle" class="sm">
+ <text x="877" y="105" class="b">1</text><text x="877" y="120">GND</text><text x="877" y="135">black*</text>
+ <text x="932" y="105" class="b">2</text><text x="932" y="120">+12 V</text><text x="932" y="135">yellow*</text>
+ <text x="987" y="105" class="b">3</text><text x="987" y="120">TACH</text><text x="987" y="135">green*</text>
+ <text x="1042" y="105" class="b">4</text><text x="1042" y="120">PWM</text><text x="1042" y="135">blue*</text>
+</g>
+<text x="1050" y="228" class="sm">4-pin on Brian's extension,</text>
+<text x="1050" y="242" class="sm">split: pins 1–2 → Wagos,</text>
+<text x="1050" y="256" class="sm">pins 3–4 → Pi</text>
+<!-- ARGB 3-pin -->
+<rect x="1100" y="70" width="75" height="120" fill="#fff" stroke="#333"/>
+<g class="sm">
+ <text x="1105" y="92">1 +5 V</text>
+ <text x="1105" y="120">2 DATA</text>
+ <text x="1105" y="148" fill="#888">(key)</text>
+ <text x="1105" y="176">4 GND</text>
+</g>
+<text x="1100" y="65" class="sm">ARGB 3-pin</text>
+
+<!-- CT200 power to wagos -->
+<polyline points="877,150 877,225 600,225" class="w gnd"/>
+<polyline points="932,150 932,435 600,435" class="w v12"/>
+<text x="700" y="219" class="sm">GND</text>
+<text x="700" y="429" class="sm">12 V</text>
+
+<!-- Pi fan -->
+<rect x="700" y="855" width="150" height="90" rx="8" class="box"/>
+<text x="775" y="885" text-anchor="middle" class="b">Pi fan 40 x 10</text>
+<text x="775" y="903" text-anchor="middle" class="sm">12 V, current UNKNOWN</text>
+<text x="775" y="919" text-anchor="middle" class="sm">wires UNKNOWN (2-wire</text>
+<text x="775" y="934" text-anchor="middle" class="sm">assumed: red +, black −)</text>
+<polyline points="600,275 650,275 650,880 700,880" class="w gnd"/>
+<polyline points="600,485 630,485 630,920 700,920" class="w v12"/>
+<text x="604" y="700" class="sm" transform="rotate(-90 604 700)">12 V to Pi fan</text>
+<text x="668" y="700" class="sm" transform="rotate(-90 668 700)">GND to Pi fan</text>
+
+<!-- ground tie -->
+<circle cx="675" cy="880" r="5" class="dot" fill="#222"/>
+<polyline points="675,880 675,845 1460,845" class="w gnd" stroke-width="4"/>
+<rect x="860" y="826" width="430" height="16" fill="#fff8c4"/>
+<text x="865" y="838" class="sm b">GROUND TIE (required): Pi fan GND = brick GND → Pi GND pin 39, at the Pi</text>
+
+<!-- optional fixes -->
+<rect x="1180" y="300" width="240" height="190" rx="8" fill="#fbfbf3" stroke="#999" stroke-dasharray="6 4"/>
+<g class="sm">
+ <text x="1190" y="320" class="b">Direct from the Pi (Brian, 2026-11-08)</text>
+ <text x="1190" y="340">No level shifter, no resistors to start.</text>
+ <text x="1190" y="362" class="b">Add only if needed:</text>
+ <text x="1190" y="380">LEDs flicker / wrong colours →</text>
+ <text x="1190" y="395">  330 Ω in DATA, then 74AHCT125</text>
+ <text x="1190" y="410">  (3.3 → 5 V), heat-shrunk inline</text>
+ <text x="1190" y="428">RPM jumps around →</text>
+ <text x="1190" y="443">  10 kΩ from pin 31 to 3.3 V (pin 1)</text>
+ <text x="1190" y="461">PWM: fan pulls its PWM wire up to</text>
+ <text x="1190" y="476">  ~5 V inside; small risk to the pin</text>
+</g>
+
+<!-- Pi header -->
+<rect x="1460" y="300" width="125" height="570" rx="6" fill="#e9f5ea" stroke="#363" stroke-width="1.5"/>
+<text x="1460" y="292" class="b">Pi 40-pin header</text>
+<g class="sm">
+ <text x="1468" y="334">pin 2 · 5 V</text>
+ <text x="1468" y="514">pin 19 · GPIO10</text>
+ <text x="1468" y="528" fill="#555">SPI MOSI</text>
+ <text x="1468" y="614">pin 32 · GPIO12</text>
+ <text x="1468" y="628" fill="#555">PWM0</text>
+ <text x="1468" y="694">pin 34 · GND</text>
+ <text x="1468" y="794">pin 31 · GPIO6</text>
+ <text x="1468" y="808" fill="#555">pull-up ON</text>
+ <text x="1468" y="849">pin 39 · GND</text>
+ <text x="1468" y="862" fill="#555">(rows not in pin order)</text>
+</g>
+
+<!-- ARGB 5V -->
+<polyline points="1175,88 1440,88 1440,330 1460,330" class="w v5"/>
+<text x="1250" y="82" class="sm">ARGB +5 V → pin 2 (0.31 A from the Pi)</text>
+<!-- ARGB data -->
+<polyline points="1175,116 1215,116 1215,510 1460,510" class="w dat"/>
+<text x="1230" y="504" class="sm">ARGB DATA → GPIO10 (direct)</text>
+<!-- ARGB GND -->
+<polyline points="1175,172 1195,172 1195,690 1460,690" class="w gnd"/>
+<text x="1205" y="684" class="sm">ARGB GND → pin 34</text>
+<!-- PWM -->
+<polyline points="1042,150 1042,610 1460,610" class="w pwm"/>
+<text x="1230" y="604" class="sm">PWM 25 kHz → GPIO12 (direct)</text>
+<!-- TACH -->
+<polyline points="987,150 987,790 1460,790" class="w tach"/>
+<text x="1000" y="784" class="sm">TACH (open collector) → GPIO6, Pi's built-in pull-up ON in software</text>
+
+<!-- notes -->
+<rect x="20" y="585" width="590" height="400" rx="8" fill="#fafafa" stroke="#bbb"/>
+<g class="sm">
+ <text x="32" y="606" class="b" font-size="13">Current check (12 V brick)</text>
+ <text x="32" y="624">CT200 0.16 A (listed) + Pi fan ≤ 0.20 A (UNKNOWN, budgeted) = ≤ 0.36 A</text>
+ <text x="32" y="640">of 2.0 A → about 18 %. OK, with room for spin-up surge.</text>
+ <text x="32" y="656">The ARGB 0.31 A is 5 V from the Pi, not the brick. Pi 5 V headroom UNKNOWN.</text>
+ <text x="32" y="676" class="b" font-size="13">Wago 221-413 vs leads</text>
+ <text x="32" y="694">Takes 0.14–4 mm² fine-stranded / 0.2–4 mm² solid (24–12 AWG), strip 11 mm.</text>
+ <text x="32" y="710">CT200 lead gauge UNKNOWN (fan leads are usually 22–26 AWG).</text>
+ <text x="32" y="726">24 AWG or thicker: straight in. 26 AWG or thinner: fold the strip back double</text>
+ <text x="32" y="742">or crimp a ferrule, then tug-test each wire.</text>
+ <text x="32" y="762" class="b" font-size="13">Rules</text>
+ <text x="32" y="780">• 12 V never touches the Pi header. Only 5 V, GND, PWM, TACH, DATA do.</text>
+ <text x="32" y="796">• Ground tie is required: PWM, TACH and DATA need the brick GND and Pi GND joined.</text>
+ <text x="32" y="812">  Both adapters are isolated, so joining their negatives is safe. One tie is enough;</text>
+ <text x="32" y="828">  if the CT200 joins ARGB GND to fan GND inside (UNKNOWN), that is a harmless 2nd tie.</text>
+ <text x="32" y="844">• Before plugging TACH into the Pi: fan on the brick, TACH loose, meter TACH→GND.</text>
+ <text x="32" y="860">  Must read ≤ 3.3 V (open collector reads ~0 V). Higher: stop, don't connect.</text>
+ <text x="32" y="876">• * Colours are the usual PC-fan colours; the CT200's real colours are UNKNOWN.</text>
+ <text x="32" y="892">  Go by pin number and the connector key, not colour.</text>
+ <text x="32" y="908">• No PWM signal = full speed. Whether the CT200 stops at 0 % is UNKNOWN.</text>
+ <text x="32" y="924">• Tach: 2 pulses per turn (Intel spec; CT200 UNKNOWN). Pi pull-up ~50 kΩ.</text>
+ <text x="32" y="940">• ARGB data on GPIO10 = SPI mode (SPI uses GPIO7–11). PWM0 on GPIO12 needs</text>
+ <text x="32" y="956">  the pwm overlay. ARGB LED count UNKNOWN (find by test).</text>
+ <text x="32" y="976" fill="#555">Fit, heat and strength of BRB-A UNKNOWN. Cable lengths UNKNOWN.</text>
+</g>
+</svg>

@@ -30,3 +30,5 @@ Other source shapes:
 - The bottom of the rack has the same layout (bottom panel and edges), see `work/rack-cooling/Decisions.md`.
 
 2026-11-05 (Brian): use the stock values for the joint (P, T, X) and the panel/handle shapes; everything else on the rack has worked from stock values. They stay UNKNOWN as measurements. Rows C, D, F, G, H, I, K are not needed by the recessed-fan design.
+
+**Cross joints (Brian 2026-11-06):** M6 x 8 button heads, as stock. Source mesh: edge holes Ø6.4 at Z 390.05 (plug) and 412.55 (tongue) with a Ø10.8 x 2 head recess inside; post and rail carry Ø7.6 M6 insert bores X 133.98..139.48 facing the edge; the stock rail is open on the inside around the tongue for screw access.

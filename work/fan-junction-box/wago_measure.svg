@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+  <rect width="900" height="470" fill="#fff"/>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c00"/></marker></defs>
+  <text x="20" y="28" font-size="18" font-weight="bold">Wago 221 lever connector: where to measure (calipers)</text>
+  <text x="20" y="48" fill="#555">Expected values from the Wago datasheet (labels not confirmed). Measure one of each size you have.</text>
+
+  <!-- TOP VIEW -->
+  <text x="40" y="85" font-weight="bold">1. Top view (levers toward you, wires enter from the left)</text>
+  <rect x="120" y="110" width="160" height="180" rx="6" fill="#f2f2f2" stroke="#333"/>
+  <g fill="#ff9a2e" stroke="#a55">
+    <rect x="135" y="122" width="40" height="28" rx="3"/><rect x="135" y="160" width="40" height="28" rx="3"/>
+    <rect x="135" y="198" width="40" height="28" rx="3"/><rect x="135" y="236" width="40" height="28" rx="3"/>
+  </g>
+  <g stroke="#2a6" stroke-width="3"><line x1="60" y1="136" x2="120" y2="136"/><line x1="60" y1="174" x2="120" y2="174"/><line x1="60" y1="212" x2="120" y2="212"/><line x1="60" y1="250" x2="120" y2="250"/></g>
+  <text x="40" y="310" fill="#2a6">wires in</text>
+  <line x1="300" y1="110" x2="300" y2="290" stroke="#c00" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="308" y="190" fill="#c00" font-weight="bold">A = width across</text>
+  <text x="308" y="207" fill="#c00">the row of levers</text>
+  <text x="308" y="224" fill="#c00">412: 13.1  413: 18.7  415: 29.9</text>
+  <line x1="120" y1="300" x2="280" y2="300" stroke="#c00" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="120" y="322" fill="#c00" font-weight="bold">B = depth, wire end to back face</text>
+  <text x="120" y="339" fill="#c00">expected 18.6</text>
+
+  <!-- SIDE VIEW -->
+  <text x="540" y="85" font-weight="bold">2. Side view (lever closed, then open)</text>
+  <rect x="600" y="180" width="160" height="50" rx="5" fill="#f2f2f2" stroke="#333"/>
+  <path d="M615 180 L615 168 L700 168 L700 180" fill="#ff9a2e" stroke="#a55"/>
+  <line x1="545" y1="205" x2="600" y2="205" stroke="#2a6" stroke-width="3"/>
+  <line x1="780" y1="168" x2="780" y2="230" stroke="#c00" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="788" y="195" fill="#c00" font-weight="bold">C = height,</text>
+  <text x="788" y="211" fill="#c00">lever closed</text>
+  <text x="788" y="227" fill="#c00">expected 8.3</text>
+  <line x1="580" y1="205" x2="580" y2="230" stroke="#c00" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="470" y="250" fill="#c00" font-weight="bold">D = wire hole centre</text>
+  <text x="470" y="266" fill="#c00">above the bottom (UNKNOWN)</text>
+
+  <rect x="600" y="340" width="160" height="50" rx="5" fill="#f2f2f2" stroke="#333"/>
+  <path d="M615 340 L640 270 L652 274 L630 340" fill="#ff9a2e" stroke="#a55"/>
+  <line x1="780" y1="270" x2="780" y2="390" stroke="#c00" stroke-width="1.5" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="788" y="320" fill="#c00" font-weight="bold">E = height with</text>
+  <text x="788" y="336" fill="#c00">lever fully open</text>
+  <text x="788" y="352" fill="#c00">(UNKNOWN; sets lid</text>
+  <text x="788" y="368" fill="#c00">clearance to re-wire)</text>
+
+  <text x="20" y="420" font-weight="bold">Send back:</text>
+  <text x="20" y="440">model (printed on the side, e.g. 221-412) + A, B, C, D, E for each size. Wire range per Wago: 0.14-4 mm² flexible (24-12 AWG UL).</text>
+  <text x="20" y="458" fill="#555">If you only have one size now, measure that; the others are scaled from it until measured.</text>
+</svg>

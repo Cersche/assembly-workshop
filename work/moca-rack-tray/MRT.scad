@@ -6,7 +6,7 @@
 // Z = 0 slot bottom. Modules are written in the old x = 0..220 frame and shifted by -x_mid at the end. Tray prints floor down, plate front face down.
 // part: plate, tray, cover_j, cover_o, cover_i, jig, slice, shoe_left, shoe_right, screenbeam, splitter, cables, keepout (check only), cuts (check only)
 part="tray";
-id="MRT-H";   // draft after MRT-T4 (Brian 2026-11-06): stronger channel walls, rear keystones
+id="MRT-I";   // draft after the MRT-H print (Brian 2026-11-06): splitter +4, IN channel +9, OUT2 channel +6.75, no lips
 $fn=64;
 include <workshop.scad>
 
@@ -22,7 +22,7 @@ wall_t0=2; fil=4; gus_t=3; gus_out=9;
 lip_p=3.2; lip_pl=4.5;
 // Coax lips get a 60 deg lead-in on top (Brian, MRT-T1 2026-11-06: the flat top took enough force to nearly damage the coax).
 // Gap 6.8 and the 45 deg underside are kept as printed. The cord lips (lip_pl) are unchanged.
-lip_lead=5.5;
+lip_lead=5.5; lips_on=false;   // MRT-I: lips off (Brian)
 
 // ---- ScreenBeam (Brian): 120 x 65 x 30 incl. feet; feet 2.25 proud, pockets as the receiver cradle. Coax end at the right.
 SB=[120,65,30]; foot_h=2.25; foot_d=16; foot_dp=2.6; pad=2; sb_clr=0.5;
@@ -41,9 +41,21 @@ sp_a=33; sp_b=48;
 // Right-angle F on the ScreenBeam (Brian, 2026-11-06): crimp sleeve ends 44 behind the port centre line (ra_tip), the jumper starts to
 // curve 58 behind it (ra_bend). OUT1 sits on the jumper's straight (bend R30), so the splitter moved back 19 with it (out1_y 118 -> 137).
 ra_bend=58; out1_y=sby0+SB[1]-22+ra_bend+30;
-riser=5.5; sp_z=fl_top+riser; xc=114.5; yc=out1_y+sp_out/2; y0=yc-sp_l/2; in_y=y0+sp_in_end; out2_y=out1_y+sp_out;
+// MRT-I (Brian, MRT-H print 2026-11-06): the ear bosses were a little off the real ears, so the splitter (riser, bosses, inserts)
+// moves 4 to the rear (sp_dy). The IN channel moves 9 and the OUT2 channel 6.75 to the rear, each measured from MRT-H on the print,
+// not from the splitter. The jumper channel stays as printed (out1_y). in_y / out2_y are the channel lines; sp_in_y / sp_o1_y / sp_o2_y the modelled ports.
+sp_dy=4; in_dy=9; out2_dy=6.75;
+// The ears sit 7 above the back face the body rests on (Brian, MRT-H print 2026-11-06; modelled flush before), so the bosses stand 7 above the riser.
+sp_ear_z=7;
+riser=5.5; sp_z=fl_top+riser; xc=114.5; yc=out1_y+sp_out/2+sp_dy; y0=yc-sp_l/2;
+sp_in_y=y0+sp_in_end; sp_o1_y=out1_y+sp_dy; sp_o2_y=out1_y+sp_out+sp_dy;
+in_y=y0-sp_dy+sp_in_end+in_dy; out2_y=out1_y+sp_out+out2_dy;
 axis_z=sp_z+sp_axis; x_in=xc-sp_w/2; x_out=xc+sp_w/2;
-ears=[[xc+sp_ear_s/2,yc+sp_ear_l/2],[xc-sp_ear_s/2,yc-sp_ear_l/2]];
+// Rear (OUT-side) ear boss 3 toward the faceplate (Brian, printed MRT-I-S 2026-11-09, photo). Front ear unchanged.
+ear_rear_dy=-2;   // 2 here + the ear hole's 1 of slop around an M3 = the 3 Brian measured
+// The case room between the bosses stays exactly as MRT-I-S (Brian): the rear boss is cut flat 0.125 off the case end, as before.
+case_cut_y=yc+sp_l/2+0.125;
+ears=[[xc+sp_ear_s/2,yc+sp_ear_l/2+ear_rear_dy],[xc-sp_ear_s/2,yc-sp_ear_l/2]];
 ins_d=ws_insert_m3[0]; ins_dp=ws_insert_m3[1]; boss_d=9.5;   // M3 x 3 x 5 insert standard
 
 // ---- Channel centrelines, all bends R30
@@ -84,6 +96,45 @@ function on_arc(c,a)=[c[0]+R*cos(a),c[1]+R*sin(a)];
 
 groove_tie=1.6; groove_strap=2;
 module tie_groove(p,ang,half){translate([p[0],p[1],fl_z-1])rotate(ang)linear_extrude(1+groove_tie)offset(r=0.9)square([3.4,2*half],center=true);}
+// MRT-I (Brian, 2026-11-06): zip-tie fallback for the splitter, in case the ear holes don't line up. A long slot down each side of the body,
+// 2 wide, so a tie can pass wherever the ports leave room, and three grooves under the floor (body ends and middle) so the tie stays
+// clear of the slot below. The OUT/IN port bosses sit above the slots in places; the body ends are the clear spots.
+sp_tie_w=2; sp_tie_gap=0.5; sp_tie_y=[y0+3.5,yc,y0+sp_l-3.5];
+// ---- MRT-I splitter sled (Brian, 2026-11-06, option A). A 5.5 plate in the riser's place carries the ear bosses (7 above its top) and
+// their M3 inserts, so the splitter screws to the sled. The sled locks to the tray with 2 M3 countersunk screws through printed clamp
+// washers into M3 x 3 x 5 inserts flush in the floor; the sled's lock holes are 11 across, so it moves about +-4 any way (and turns a little).
+// The zip-tie fallback (long side slots, 3 grooves underneath) moved onto the sled. Lock screws sit at the free corners, outside the body,
+// so a driver reaches them with the splitter on. Hold against creep and stiffness of the 12.5 bosses UNKNOWN.
+sl_t=riser; sl_hole=11; sl_travel=4; sl_pad_r=12; wa_d=16; wa_t=2.5;
+// Ground screw block (Brian, 2026-11-06 photo): on the front end, OUT half, next to the front ear; 8 long, as porch16 (sp_gnd).
+// The front lock sits in front of it, clear by washer + travel + 1, so the ground screw and its ring terminal stay free.
+sp_gnd=8; gnd_head_d=7; gnd_head_h=3;   // head size ASSUMED
+sl_lock=[[xc+4,y0-sp_gnd-wa_d/2-sl_travel-1],[xc-10.5,yc+28]];   // front (ahead of the ground block), rear-left
+sl_pad=[xc-10.5-sl_pad_r-sl_travel-2,xc+10.5+sl_pad_r+sl_travel+2];   // X span of the floor under the sled
+module sled2d(){round2d(3)union(){rr(x_in-sp_tie_gap-sp_tie_w-3,x_out+sp_tie_gap+sp_tie_w+3,y0-11,y0+sp_l+11,4);
+  for(l=sl_lock)translate(l)circle(r=sl_pad_r);
+  for(e=ears)translate(e)circle(d=boss_d+4);}}   // plate carried out under each boss
+module sled(){difference(){
+  union(){translate([0,0,fl_top])linear_extrude(sl_t)sled2d();
+    for(e=ears)translate([e[0],e[1],fl_top+sl_t-0.01])cylinder(d=boss_d,h=sp_ear_z+0.01);}   // MRT-L-S: rear boss full round again (Brian: the real case leaves room; holes line up on MRT-K-S)
+  for(e=ears)translate([e[0],e[1],sp_z+sp_ear_z-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);
+  for(l=sl_lock)translate([l[0],l[1],fl_top-1])cylinder(d=sl_hole,h=sl_t+2);
+  translate([0,0,fl_top-1])linear_extrude(sl_t+2)sp_tie_slots2d();
+  for(y=sp_tie_y)translate([x_in-sp_tie_gap-sp_tie_w-0.9,y-2.6,fl_top-1])cube([x_out-x_in+2*(sp_tie_gap+sp_tie_w+0.9),5.2,1+groove_tie]);
+  translate([xc,yc+6,sp_z-0.6])linear_extrude(1)text("MRT-L-S",size=3.5,font="Liberation Sans:style=Bold",halign="center",valign="center");
+}}
+// clamp washer, printed (Brian has metal ones too; a metal one needs >= 16 OD to cover the 11 hole). Prints flat, countersink up.
+module washer(at=[0,0,0]){translate(at)difference(){cylinder(d=wa_d,h=wa_t);
+  translate([0,0,-1])cylinder(d=screw_clear,h=wa_t+2);
+  translate([0,0,wa_t-csk_h])cylinder(d1=screw_clear,d2=csk_d,h=csk_h+0.01);
+  translate([0,5.3,wa_t-0.4])linear_extrude(1)text("IW",size=2.6,font="Liberation Sans:style=Bold",halign="center",valign="center");}}
+module sp_tie_slots2d(){for(x=[x_in-sp_tie_gap-sp_tie_w,x_out+sp_tie_gap])translate([x+sp_tie_w/2,y0+3])hull()for(y=[0,sp_l-6])translate([0,y])circle(d=sp_tie_w,$fn=24);}
+module sp_tie_cut(){translate([0,0,fl_z-1])linear_extrude(fl_top-fl_z+1.5)sp_tie_slots2d();
+  for(y=sp_tie_y)translate([x_in-sp_tie_gap-sp_tie_w-0.9,y-2.6,fl_z-1])cube([x_out-x_in+2*(sp_tie_gap+sp_tie_w+0.9),5.2,1+groove_tie]);}
+// MRT-I (Brian, 2026-11-06): the tray sits low in the rack, so two vent fields in open floor: slots 4 wide on a 7 pitch, running front to
+// back so the 3 webs keep the floor's front-to-rear stiffness. Left field 10 slots (X 26..93, Y 104..130), right field 7 (X 140..186, Y 84..96).
+vent_w=4; vent_p=7; vent_fields=[[26,10,104,130],[140,7,84,96]];
+module vents2d(){for(f=vent_fields,k=[0:f[1]-1])translate([f[0]+k*vent_p+vent_w/2,f[2]+vent_w/2])hull()for(y=[0,f[3]-f[2]-vent_w])translate([0,y])circle(d=vent_w,$fn=24);}
 module strap_slot(x,y){translate([x-9,y,fl_z-1])cube([18,2.5,8.5]);}   // 16 mm Velcro, same as the rear cable lane
 
 // ---- Rear support. The side walls run on to Y 220 and tie across with a low bar the cables pass over. Each wall tip has a 45 deg underside and
@@ -118,6 +169,7 @@ module shoe(tag){difference(){union(){
  for(dz=[-hole_dz,hole_dz])translate([x_mid-hole_x,rack_depth-1,rack_pitch/2+dz])rotate([-90,0,0])hull()for(k=[-1,1])translate([0,k*ear_slot,0])cylinder(d=m6_clear,h=ear_t+2);
  translate([x_mid-hole_x,rack_depth+ear_t-0.6,rack_pitch/2])rotate([90,0,180])rotate([0,0,90])linear_extrude(1)text(tag,size=3,font="Liberation Sans:style=Bold",halign="center",valign="center");
 }}
+
 // ---- Rear rib: a stiff wall across the back. Each run sits in a notch and presses past a 45 deg lip, so the rib takes the cable's push, not a tie.
 rib_y0=bar_y1-4; rib_top=22; lip_u=12.5;   // rib 18 -> 22 tall to fit the coax lead-in
 module rib_lip(f,p,lead=0){translate([0,bar_y1,0])rotate([90,0,0])linear_extrude(bar_y1-rib_y0)polygon(lead>0?
@@ -129,7 +181,7 @@ module rear_rib(){
     for(n=concat([[tx0+side_t,split_wall-wall_t0]],ks_on?[for(x=ks_x)[x-ks_notch/2,x+ks_notch/2]]:[[c_in[0]-R-chan/2,c_in[0]-R+chan/2],[c_out2[0]+R-chan/2,c_out2[0]+R+chan/2]]))
       translate([n[0],rib_y0-1,fl_top])cube([n[1]-n[0],bar_y1-rib_y0+2,rib_top]);
   }
-  rib_lip(tx0+side_t,lip_pl); if(!ks_on){rib_lip(c_in[0]-R-chan/2,lip_p,lip_lead); rib_lip(c_out2[0]+R-chan/2,lip_p,lip_lead);}
+  if(lips_on){rib_lip(tx0+side_t,lip_pl); if(!ks_on){rib_lip(c_in[0]-R-chan/2,lip_p,lip_lead); rib_lip(c_out2[0]+R-chan/2,lip_p,lip_lead);}}
 }
 // ---- Rear keystones (Brian, MRT-T4 2026-11-06): one F keystone coupler at each coax entrance, golden keystone (lib) in a 4 mm panel facing the rear,
 // face flush with the rear of the rack (Y 240, rear posts' rear face). Coupler card: docs/devices/f-keystone-coupler.md. The inside jack tip (~18 behind the face) is 35 from the IN bend's end, 33 from OUT2's,
@@ -182,7 +234,7 @@ module tray_floor2d(){
     translate([tx0,depth-6])square([c_in[0]-R+chan/2+wall_t+fil+1-tx0,bar_y0-depth+6.01]);
     translate([c_out2[0],depth-6])square([tx1-side_t-c_out2[0]+0.01,bar_y0-depth+6.01]);
     for(m=[0,1])mir(m)translate([tx0,ext_y0])square([side_t+flange_w,bar_y1-ext_y0]);
-    translate([xc-14,depth-6])square([28,max([for(e=ears)e[1]])+boss_d/2+3-depth+6]);   // under the splitter's rear ear boss (Brian, 2026-11-06)
+    translate([sl_pad[0],depth-6])square([sl_pad[1]-sl_pad[0],bar_y0-depth+6.01]);   // MRT-I: floor under the sled, carried to the rear bar
     if(rp_on)for(i=[0,1]){w=chan/2+wall_t;translate([rp_x[i]-w,bar_y1-0.01])square([2*w,rp_floor-bar_y1+0.01]);
       translate([rp_cheek_x(i),bar_y1-0.01])square([rp_cw,rp_c1-bar_y1+0.01]);}
   }
@@ -232,17 +284,14 @@ module channels(){
     arc_wall(c_out2,-90,90); arc_gussets(c_out2,[-80,-50,-20]);
     wall_y(c_out2[0]+R-chan/2,-1,c_out2[1]-0.01,ks_on?ks_jog_y:bar_y1);   // side the coax eases toward stops at the jog
     wall_y(c_out2[0]+R+chan/2,1,c_out2[1]-0.01,ks_on?rib_y0+0.01:bar_y1);
-    arc_lip(c_out2,-82,18,true); arc_lip(c_out2,-60,18,false); if(end_lips)arc_lip(c_out2,-26,18,true);
     // coax IN channel
     // outer IN wall, fillet and gussets kept out of the cord channel (x >= split_wall - wall_t0)
     intersection(){union(){arc_wall(c_in,180,90); arc_gussets(c_in,[205,235,262]);}translate([split_wall-wall_t0,0,-1])cube([200,300,60]);}
     wall_y(c_in[0]-R-chan/2,-1,c_in[1]-0.01,bar_y1,wall_t0,0);   // cord side: runs on to the rib
     wall_y(c_in[0]-R+chan/2,1,c_in[1]-0.01,ks_on?ks_jog_y:bar_y1);
-    arc_lip(c_in,244,18,true); arc_lip(c_in,222,18,false); if(end_lips)arc_lip(c_in,188,18,true);
     // power + LAN channel: long inner wall, tray side wall on the other side
     wall_y(split_wall,-1,70,c_in[1],wall_t0,0);
-    lip_y(tx0+side_t,1,lip_pl,82,92); lip_y(split_wall-wall_t0,-1,lip_pl,102,112);
-    lip_y(tx0+side_t,1,lip_pl,122,132); lip_y(split_wall-wall_t0,-1,lip_pl,142,152);
+    // MRT-I: no lips in any channel (Brian, 2026-11-06: the covers hold the cables; clear channels route easier)
 }
 // ---- Hidden M6 joint, dimensions from SG8-M6-B / coupon SG8-C1 (head recess and fit good, Brian 2026-10-28): 7.6 bore 7 deep in an 8 long boss,
 // upright 6 thick with a 0.3 gap to the boss, 6.6 clearance, 11.5 x 3.5 head counterbore, 2.5 under the head: M6 x 8 reaches about 5.2 into the insert.
@@ -288,8 +337,8 @@ module cov_solid(pts,tag,tp,ta){difference(){
   translate([tp[0],tp[1],wall_top+cov_t-0.6])rotate(ta)linear_extrude(1)text(tag,size=4,font="Liberation Sans:style=Bold",halign="center",valign="center");
 }}
 module cover_j(){cov_solid(cov_j,"MRT-H-C1",pol(c_jump,45,R),-45){sector2d(c_jump,0,90,R-cov_w,R+cov_w);translate([jw0,c_jump[1]+R-cov_w])square([c_jump[0]-jw0+0.01,2*cov_w]);}}
-module cover_o(){cov_solid(cov_o,"MRT-H-C2",[c_out2[0]+R,188],90){sector2d(c_out2,-90,90,R-cov_w,R+cov_w);translate([c_out2[0]+R-cov_w,c_out2[1]-0.01])square([2*cov_w,(ks_on?rib_y0:bar_y1)-c_out2[1]]);}}
-module cover_i(){cov_solid(cov_i,"MRT-H-C3",[11,130],90){sector2d(c_in,180,90,R-cov_w,R+cov_w);translate([c_in[0]-R-cov_w,c_in[1]-0.01])square([2*cov_w,(ks_on?rib_y0:bar_y1)-c_in[1]]);translate([tx0,70])square([split_wall-tx0,bar_y1-70]);}}
+module cover_o(){cov_solid(cov_o,"MRT-I-C2",[c_out2[0]+R,188],90){sector2d(c_out2,-90,90,R-cov_w,R+cov_w);translate([c_out2[0]+R-cov_w,c_out2[1]-0.01])square([2*cov_w,(ks_on?rib_y0:bar_y1)-c_out2[1]]);}}
+module cover_i(){cov_solid(cov_i,"MRT-I-C3",[11,130],90){sector2d(c_in,180,90,R-cov_w,R+cov_w);translate([c_in[0]-R-cov_w,c_in[1]-0.01])square([2*cov_w,(ks_on?rib_y0:bar_y1)-c_in[1]]);translate([tx0,70])square([split_wall-tx0,bar_y1-70]);}}
 module cov_pillars(z0){for(p=cov_all)translate([p[0],p[1],z0])cylinder(d=pil_d,h=wall_top-z0);}
 module cov_bores(){for(p=cov_all)translate([p[0],p[1],0]){translate([0,0,wall_top-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);translate([0,0,wall_top-ins_dp-relief])cylinder(d=screw_clear,h=relief+0.01);}}
 // ---- Break-away supports under the two strap grooves (Brian, 2026-11-06). Ribs along the groove, 0.8 wide on a 3 pitch, 0.2 below the
@@ -330,9 +379,7 @@ module tray_body(){difference(){
     // ScreenBeam: foot pads and long-side fences
     for(f=sb_feet)translate([f[0],f[1],fl_top-0.01])cylinder(d=22,h=pad+0.01);
     for(y=[sby0-sb_clr/2-2,sby0+SB[1]+sb_clr/2])translate([sbx0+15,y,fl_top-0.01])cube([SB[0]-30,2,pad+6]);
-    // splitter riser and ear bosses
-    translate([xc-sp_w/2+2,y0+2,fl_top-0.01])cube([sp_w-4,sp_l-4,riser+0.01]);
-    for(e=ears)translate([e[0],e[1],fl_top-0.01])cylinder(d=boss_d,h=riser+0.01);
+    // splitter: riser and ear bosses now on the sled (MRT-I)
     intersection(){channels();translate([tx0,-1,-1])cube([tx1-tx0,300,100]);}
     cov_pillars(fl_z);
   }
@@ -347,8 +394,8 @@ module tray_body(){difference(){
   for(f=sb_feet)translate([f[0],f[1],case_z-foot_dp])cylinder(d=foot_d,h=foot_dp+pad);
   // Velcro strap slots around the ScreenBeam
   for(x=[sbx0+30,sbx0+90]){translate([x-9,-1,fl_z-1])cube([18,4.3,11]);strap_slot(x,sby0+SB[1]+sb_clr/2+2.3);}
-  // insert bores in the splitter bosses
-  for(e=ears)translate([e[0],e[1],sp_z-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);
+  // sled lock inserts, flush in the floor top; the bore runs through the 4 floor
+  for(l=sl_lock)translate([l[0],l[1],fl_top-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);
   // cable-tie slots
   tie(on_arc(c_jump,28),28+90,3.5); tie(on_arc(c_out2,-38),-38+90,3.5); tie(on_arc(c_in,206),206+90,3.5);
   tie([(tx0+side_t+split_wall-wall_t0)/2,100],90,5.5); tie([(tx0+side_t+split_wall-wall_t0)/2,138],90,5.5);
@@ -359,6 +406,7 @@ module tray_body(){difference(){
     rr(sbx0+30,sbx0+90,sby0+13,sby0+52,6);
     rr(32,sbx0+60,78,99,6);
     rr(134,166,104,128,6);
+    vents2d();
   }
   // Grooves under the floor: ties and straps pass under without reaching the slot below
   tie_groove(on_arc(c_jump,28),28+90,3.5); tie_groove(on_arc(c_out2,-38),-38+90,3.5); tie_groove(on_arc(c_in,206),206+90,3.5);
@@ -403,10 +451,10 @@ module jig(){translate([0,0,-(fl_top-jf)])difference(){
     for(f=sb_feet)translate([f[0],f[1],fl_top-0.01])cylinder(d=22,h=pad+0.01);
     for(y=[sby0-sb_clr/2-2,sby0+SB[1]+sb_clr/2])translate([sbx0+15,y,fl_top-0.01])cube([SB[0]-30,2,pad+6]);
     translate([xc-sp_w/2+2,y0+2,fl_top-0.01])cube([sp_w-4,sp_l-4,riser+0.01]);
-    for(e=ears)translate([e[0],e[1],fl_top-0.01])cylinder(d=boss_d,h=riser+0.01);
+    for(e=ears)translate([e[0],e[1],fl_top-0.01])cylinder(d=boss_d,h=riser+sp_ear_z+0.01);
   }
   for(f=sb_feet)translate([f[0],f[1],case_z-foot_dp])cylinder(d=foot_d,h=foot_dp+pad);
-  for(e=ears)translate([e[0],e[1],sp_z-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);
+  for(e=ears)translate([e[0],e[1],sp_z+sp_ear_z-ins_dp])ws_insert_bore(ws_insert_m3,ins_dp+1);
   cov_bores();
   translate([xc,jig_tie+5,fl_top-0.6])linear_extrude(1)text(jig_id,size=6,font="Liberation Sans:style=Bold",halign="center",valign="center");
 }}
@@ -473,9 +521,11 @@ module screenbeam(){
 }
 module splitter(){
   translate([x_in,y0,sp_z])cube([sp_w,sp_l,sp_h]);
-  for(y=[out1_y,out2_y])translate([x_out-0.01,y,axis_z])rotate([0,90,0])cylinder(d=sp_port_d,h=sp_port);
-  translate([x_in+0.01,in_y,axis_z])rotate([0,-90,0])cylinder(d=sp_port_d,h=sp_port);
-  for(e=ears)translate([e[0],e[1],sp_z])difference(){
+  translate([xc,y0-sp_gnd,sp_z])cube([x_out-xc,sp_gnd+0.01,sp_h-0.5]);   // ground block
+  translate([(xc+x_out)/2,y0-sp_gnd/2,sp_z+sp_h-0.5])cylinder(d=gnd_head_d,h=gnd_head_h);   // ground screw head
+  for(y=[sp_o1_y,sp_o2_y])translate([x_out-0.01,y,axis_z])rotate([0,90,0])cylinder(d=sp_port_d,h=sp_port);
+  translate([x_in+0.01,sp_in_y,axis_z])rotate([0,-90,0])cylinder(d=sp_port_d,h=sp_port);
+  for(e=ears)translate([e[0],e[1],sp_z+sp_ear_z])difference(){
     union(){cylinder(d=sp_ear_d,h=sp_ear_t);hull(){cylinder(d=sp_ear_d,h=sp_ear_t);translate([xc-e[0],yc-e[1],0])cylinder(d=sp_ear_d,h=sp_ear_t);}}
     translate([0,0,-1])cylinder(d=sp_ear_hole,h=sp_ear_t+2);
   }
@@ -488,7 +538,7 @@ module cables(){
   // right-angle F on the ScreenBeam. Span from port face to outer face 24.6 confirmed by Brian 2026-11-04; barrel tip 38.2 from porch16, not confirmed here
   rod(coax_p,[ra_x,coax_p[1],coax_p[2]],12); rod([ra_x,coax_p[1],coax_p[2]],[ra_x,ra_tip_y,coax_p[2]],12);
   // jumper: right-angle F, bend, straight into OUT1
-  run(concat([[ra_x,ra_tip_y,coax_p[2]]],arc_pts(c_jump,0,90,coax_p[2]-3,rest+3),[[x_out+sp_port,out1_y,axis_z]]),coax_d);
+  run(concat([[ra_x,ra_tip_y,coax_p[2]]],arc_pts(c_jump,0,90,coax_p[2]-3,rest+3),[[x_out+sp_a,sp_o1_y,axis_z],[x_out+sp_port,sp_o1_y,axis_z]]),coax_d);
   // modem coax out of OUT2, IN coax into IN, each with an F connector at the port
   if(ks_on){ty=ks_face-ks_tip; cy=ty-20;
     run(concat([[x_out+sp_port,out2_y,axis_z]],arc_pts(c_out2,-90,-40,rest+4,rest),arc_pts(c_out2,-40,0,rest,ks_jack_z-2,4),[[c_out2[0]+R,ks_jog_y,ks_jack_z],[ks_x[1],cy,ks_jack_z]]),coax_d);
@@ -497,10 +547,10 @@ module cables(){
       translate([x,ks_face+1,ks_jack_z])rotate([-90,0,0])cylinder(d=11.5,h=12+20);    // outside plug on the 12 rear jack, connector ASSUMED 20 past its tip
       rod([x,ks_face+33,ks_jack_z],[x,ks_face+50,ks_jack_z],coax_d);}
   } else {
-  run(concat([[x_out+sp_port,out2_y,axis_z]],arc_pts(c_out2,-90,0,rest+4,rest),[[c_out2[0]+R,rp_on?190:245,rest]]),coax_d);
-  run(concat([[x_in-sp_port,in_y,axis_z]],arc_pts(c_in,270,180,rest+4,rest),[[c_in[0]-R,rp_on?190:245,rest]]),coax_d);}
-  for(p=[[x_out+sp_port-1,out1_y],[x_out+sp_port-1,out2_y]])translate([p[0],p[1],axis_z])rotate([0,90,0])cylinder(d=11.5,h=sp_a-sp_port+1);
-  translate([x_in-sp_port+1,in_y,axis_z])rotate([0,-90,0])cylinder(d=11.5,h=sp_a-sp_port+1);
+  run(concat([[x_out+sp_port,sp_o2_y,axis_z],[x_out+sp_a,sp_o2_y,axis_z]],arc_pts(c_out2,-90,0,rest+4,rest),[[c_out2[0]+R,rp_on?190:245,rest]]),coax_d);
+  run(concat([[x_in-sp_port,sp_in_y,axis_z],[x_in-sp_a,sp_in_y,axis_z]],arc_pts(c_in,270,180,rest+4,rest),[[c_in[0]-R,rp_on?190:245,rest]]),coax_d);}
+  for(p=[[x_out+sp_port-1,sp_o1_y],[x_out+sp_port-1,sp_o2_y]])translate([p[0],p[1],axis_z])rotate([0,90,0])cylinder(d=11.5,h=sp_a-sp_port+1);
+  translate([x_in-sp_port+1,sp_in_y,axis_z])rotate([0,-90,0])cylinder(d=11.5,h=sp_a-sp_port+1);
   // power plug and cord (ASSUMED 45 long, 5 cord), LAN plug and cord (ASSUMED 38 long, 6 cord)
   translate([pwr_end,pwr_y-6,port_z-6])cube([sbx0-pwr_end,12,12]);
   translate([lan_end,lan_y-8,port_z-7])cube([sbx0-lan_end,16,14]);
@@ -516,10 +566,12 @@ module keepout(){
     ws_m6_head_keepout(j_x[0],yu,z,hs_t);
     ws_head_keepout(j_x[0],yu+hs_t,z,drive_d,drive_l);}
   for(s=[0,1])mir(s)for(dz=[-hole_dz,hole_dz])ws_head_keepout(x_mid-hole_x,rack_depth+ear_t,rack_pitch/2+dz,ws_m6_head_d,6);
+  for(l=sl_lock)translate([l[0],l[1],sp_z+wa_t])cylinder(d=csk_d+2*ws_head_gap,h=6);   // sled lock heads, driver from above
+  translate([(xc+x_out)/2,y0-sp_gnd/2,sp_z+sp_h-0.5])cylinder(d=gnd_head_d+2*ws_head_gap,h=12);   // ground screw, ring terminal and driver
 }
 // cuts: the tray's three floor windows and four Velcro strap slots as solids; they must stay separate openings.
 module cuts(){
-  translate([0,0,fl_z-1])linear_extrude(fl_top-fl_z+1.01){rr(sbx0+30,sbx0+90,sby0+13,sby0+52,6);rr(32,sbx0+60,78,99,6);rr(134,166,104,128,6);}
+  translate([0,0,fl_z-1])linear_extrude(fl_top-fl_z+1.01){rr(sbx0+30,sbx0+90,sby0+13,sby0+52,6);rr(32,sbx0+60,78,99,6);rr(134,166,104,128,6);vents2d();}
   for(x=[sbx0+30,sbx0+90]){translate([x-9,-1,fl_z-1])cube([18,4.3,11]);strap_slot(x,sby0+SB[1]+sb_clr/2+2.3);}
 }
 translate([-x_mid,0,0]){
@@ -534,6 +586,9 @@ translate([-x_mid,0,0]){
   if(part=="shoe_right")mir(1)shoe("MRT-C-R");
   if(part=="screenbeam")screenbeam();
   if(part=="splitter")splitter();
+  if(part=="sled")sled();
+  if(part=="washers")for(l=sl_lock)washer([l[0],l[1],sp_z]);
+  if(part=="washer")washer();
   if(part=="cables")cables();
   if(part=="ramp_in_up")ramp(0,true,"MRT-H-RIU");
   if(part=="ramp_in_down")ramp(0,false,"MRT-H-RID");

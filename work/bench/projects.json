@@ -1,0 +1,362 @@
+{
+  "version": 1,
+  "projects": [
+    {
+      "id": "csb",
+      "title": "Cable span bracket",
+      "prefixes": [
+        "CSB"
+      ],
+      "status": "done",
+      "device_cards": [
+        "docs/devices/lab-rax-4u-post.md"
+      ],
+      "sources": [
+        "work/cable-span-bracket/span_bracket.scad"
+      ],
+      "workflow_log": "Cable management bracket (front to rear posts)",
+      "notes": "CSB-C released for printing 2026-11-07 (M6 x 10, 4.5 seat, floor entry notches); awaiting CSB-C fit report. CSB-A fits but no driver access; CSB-B screw stuck out 2 past the post. Updated by Claude 2026-11-07.",
+      "updated": "2026-11-08"
+    },
+    {
+      "id": "mrt",
+      "title": "MoCA rack tray",
+      "prefixes": [
+        "MRT"
+      ],
+      "status": "printing",
+      "device_cards": [
+        "docs/devices/screenbeam-ecb7250.md",
+        "docs/devices/bridgelink-2way-splitter.md"
+      ],
+      "sources": [
+        "work/moca-rack-tray/MRT.scad"
+      ],
+      "workflow_log": "",
+      "notes": "MRT-H ramps and T5-T7 jigs released for printing 2026-11-06; awaiting fit reports. 2U rear-splitter concept is still discussion. Rear keystones dropped; f-keystone-coupler card is history. Updated by Claude 2026-11-07.",
+      "updated": "2026-11-07"
+    },
+    {
+      "id": "fan",
+      "title": "Rack top for a 200 mm fan",
+      "prefixes": [
+        "TFE",
+        "TRE",
+        "TSR",
+        "TFG",
+        "TF"
+      ],
+      "status": "printing",
+      "device_cards": [
+        "docs/devices/lab-rax-top.md",
+        "docs/devices/fan-200mm.md"
+      ],
+      "sources": [
+        "work/rack-top-fan/rack_top_fan.scad"
+      ],
+      "workflow_log": "",
+      "notes": "TF-D rack top set released for printing 2026-11-07 (outputs/Rack_Top_Fan_TF-D_2026-11-07/); TF-C printed, no fit report logged. Earlier TFE/TRE/TSR/TFG drafts and coupons TFE-T1/TSR-T1. Updated by Claude 2026-11-07.",
+      "updated": "2026-11-07"
+    },
+    {
+      "id": "opx",
+      "title": "OptiPlex rear channels",
+      "prefixes": [
+        "OPX",
+        "SLV"
+      ],
+      "status": "draft",
+      "device_cards": [],
+      "sources": [
+        "outputs/OptiPlex_Sleeve_Channels_OPX-G_2026-11-04/src/OPX-G.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High: OPX-G channels unprinted, reuses printed OPX-D sleeve and OPX-F rails (good fit). No dedicated device card found.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "scr5",
+      "title": "Screen, Pi and Hue",
+      "prefixes": [
+        "SCR5"
+      ],
+      "status": "draft",
+      "device_cards": [],
+      "sources": [
+        "outputs/Screen_Pi_Hue_SCR5-J5_2026-11-05/src/SCR5-J5.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High: SCR5-J5 tray loosens J4 Hue cradle; J5 unprinted. Other J4/H8 parts retained. Missing dedicated device card; screen dimensions live in work/screen-5in/Dimensions.md.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "er6",
+      "title": "ER605 router bracket",
+      "prefixes": [
+        "ER6"
+      ],
+      "status": "draft",
+      "device_cards": [],
+      "sources": [
+        "outputs/ER605_Bracket_ER6-H_2026-11-04/src/ER6-H.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High: ER6-H three floor slots, unprinted. Measurements in Fit_Findings; no device card.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "cm1000",
+      "title": "CM1000 modem bracket and lights",
+      "prefixes": [
+        "CM1P",
+        "CM6"
+      ],
+      "status": "draft",
+      "device_cards": [],
+      "sources": [],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High: CM1P-Q white liners current and unprinted; O fit report is specimen-specific. CM6A/C do not print; T8 diffuser scratched. No dedicated device card. Referenced source absent: outputs/CM1000_OnePiece_CM1P-Q_2026-11-03/src/CM1P-Q.scad.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "psb",
+      "title": "Power strip bracket",
+      "prefixes": [
+        "PSB"
+      ],
+      "status": "draft",
+      "device_cards": [],
+      "sources": [
+        "outputs/Power_Strip_Bracket_PSB-A_2026-11-03/src/psb_a.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High: PSB-A first unprinted draft; keyhole lip/foot dimensions and wall details unresolved. No device card.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "rx5",
+      "title": "MoCA receiver box",
+      "prefixes": [
+        "RX4",
+        "RX5"
+      ],
+      "status": "draft",
+      "device_cards": [
+        "docs/devices/screenbeam-ecb7250.md"
+      ],
+      "sources": [
+        "work/wall-box-wizard/receiver1/rx5.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High: RX5-B rear ports, replaces blocked RX5-A. Unprinted; separate from rack and wall box. TL-SG105 card missing.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "chs",
+      "title": "Chess clock switch",
+      "prefixes": [
+        "CHS"
+      ],
+      "status": "draft",
+      "device_cards": [],
+      "sources": [
+        "work/chess-clock-switch/chess_clock_switch.scad"
+      ],
+      "workflow_log": "",
+      "notes": "CHS-A two-Cherry-MX rocker, PROPOSED, unprinted; set 3MF in outputs/Final_3MF/CHS-A_chess_clock_switch_set.3mf. Switch stem heights nominal, unmeasured; no device card. Updated by Claude 2026-11-07.",
+      "updated": "2026-11-07"
+    },
+    {
+      "id": "wmb",
+      "title": "Flat wire bracket",
+      "prefixes": [
+        "WMB"
+      ],
+      "status": "draft",
+      "device_cards": [],
+      "sources": [
+        "work/wire-bracket/WMB-A/WMB-A.scad"
+      ],
+      "workflow_log": "",
+      "notes": "WMB-A flat-printing wire bracket, own geometry after Jeffrey's Lab Rax Cable Management concept (BY-SA); unprinted; 3MF in outputs/Final_3MF/WMB-A_flat_wire_bracket.3mf. Updated by Claude 2026-11-07.",
+      "updated": "2026-11-07"
+    },
+    {
+      "id": "brb",
+      "title": "Fan power box on the 12 V brick",
+      "prefixes": [
+        "BRB",
+        "JBC",
+        "JBR"
+      ],
+      "status": "printing",
+      "device_cards": [
+        "docs/devices/guanting-12v-brick.md",
+        "docs/devices/fan-200mm.md"
+      ],
+      "sources": [
+        "work/fan-junction-box/Spec.md",
+        "work/fan-junction-box/brick_box.scad"
+      ],
+      "workflow_log": "",
+      "notes": "BRB-C released 2026-11-08 (outputs/Fan_Power_Box_BRB-C_2026-11-08): cavity 88 tall (BRB-B-S height good) and 1 deeper, because BRB-B-S snapped on very tight. Sleeve BRB-C-S snaps onto the GuanTing brick (grip from the flats only) and has flush zip-tie slots on the left, right and top. Junction box BRB-C-B (2x Wago 221-413 + socket tip) slides onto the sleeve's dovetail and is locked by one M3; lid BRB-C-L. JBC/JBR = earlier junction-box drafts (history). Next: Brian's fit report. Snap, grip and dovetail fit UNKNOWN. 2026-11-09: CT200 wired through the box; Pi test shows tach and PWM connected (fan doesn't stop at 0 %), results on docs/devices/fan-200mm.md.",
+      "updated": "2026-11-09"
+    },
+    {
+      "id": "sg8",
+      "title": "TL-SG108E switch tray",
+      "prefixes": [
+        "SG8",
+        "KD"
+      ],
+      "status": "done",
+      "device_cards": [
+        "docs/devices/lab-rax-4u-post.md"
+      ],
+      "sources": [
+        "outputs/Chunky_Revisions/TL-SG108E_post_rails_2026-10-30/src/SG8-M6-F.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High identity; done per requested seed. SG8-M6-F tray and M6 screws fit per Brian 2026-11-05; other properties remain UNKNOWN. KD keyhole coupons grouped here from Fit_Findings.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "hdt",
+      "title": "Drive tray",
+      "prefixes": [
+        "HDT"
+      ],
+      "status": "done",
+      "device_cards": [],
+      "sources": [
+        "outputs/Hard_Drive_Tray_M6_2026-10-28/HDT-M6-A.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High identity, low physical completion: done is the requested organizational status; HDT-M6-A README/HANDOFF say approved but not printed. Historical 2026-10-25 tray fit does not prove M6 revision.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "phx",
+      "title": "Post hex anti-warp concept",
+      "prefixes": [
+        "PHX"
+      ],
+      "status": "parked",
+      "device_cards": [],
+      "sources": [],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: Medium: HANDOFF identifies PHX-C latest concept, someday rebuild only. work/rack-post-hex is missing in this checkout; no source path invented. Warp benefit UNKNOWN.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "rw",
+      "title": "Rack wall mount",
+      "prefixes": [
+        "RW"
+      ],
+      "status": "draft",
+      "device_cards": [
+        "docs/devices/lab-rax-4u-post.md"
+      ],
+      "sources": [
+        "work/rack-wall-mount/rwm1.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High identity, medium activity: RW-WP-A / RW-RC-A / RW-SO-A cleat and standoffs chosen, not printed; HANDOFF 2026-10-30. U1 conflicts with CBL-B.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "moca-wall",
+      "title": "MoCA wall box and cleat",
+      "prefixes": [
+        "MOCA"
+      ],
+      "status": "draft",
+      "device_cards": [
+        "docs/devices/screenbeam-ecb7250.md",
+        "docs/devices/bridgelink-2way-splitter.md"
+      ],
+      "sources": [
+        "work/wall-box-wizard/concept15/cleat16.scad",
+        "work/wall-box-wizard/concept15/body15.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High identity, medium current status: MOCA-BC-A and MOCA-WP-A cleat accepted, unprinted. Earlier sleeve/cradle/porch prints have names rather than revision IDs; not silently numbered. Separate job from RX5.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "cbl",
+      "title": "Rear cable management lanes",
+      "prefixes": [
+        "CBL"
+      ],
+      "status": "draft",
+      "device_cards": [
+        "docs/devices/lab-rax-4u-post.md"
+      ],
+      "sources": [
+        "outputs/Chunky_Revisions/Rear_Cable_Lane_2026-10-31/src/CBL-A.scad",
+        "outputs/Chunky_Revisions/Rear_Cable_Lane_2026-10-31/src/CBL-BCDE.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High identity, medium activity: CBL-A through E, unprinted; source README records wall-mount and post-hole conflicts. Separate from front-to-rear CSB.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "hp4",
+      "title": "Hue and Pi tray (reference)",
+      "prefixes": [
+        "HP4"
+      ],
+      "status": "parked",
+      "device_cards": [],
+      "sources": [
+        "outputs/Hue_Pi4_M6-B_2026-10-28/src/HP4-M6-B.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High history, medium parked classification: HP4-M6-B default was superseded by combined SCR5 unit; Final_3MF keeps A/B references. Frozen source confirmed in its output folder.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "crn",
+      "title": "Rack LED matrix crown",
+      "prefixes": [
+        "CRN"
+      ],
+      "status": "idea",
+      "device_cards": [],
+      "sources": [
+        "work/rgb-crown/crn_e.scad"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: Medium: CRN-E concept header dated 2026-10-30, MAX7219 carrier in stock top beam, unprinted. Confirm whether still wanted alongside the redesigned fan top.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "frame",
+      "title": "Extrusion rack frame",
+      "prefixes": [],
+      "status": "idea",
+      "device_cards": [],
+      "sources": [
+        "work/rack-frame/BOM.md"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: Medium: work/rack-frame/BOM.md records option A chosen 2026-10-31; no reliable revision prefix, so none invented. Alternative metal-corner concept also listed. Confirm activity.",
+      "updated": "2026-11-06"
+    },
+    {
+      "id": "bottom",
+      "title": "Matching bottom intake grille",
+      "prefixes": [],
+      "status": "parked",
+      "device_cards": [],
+      "sources": [
+        "work/rack-cooling/Decisions.md"
+      ],
+      "workflow_log": "",
+      "notes": "Seeded by Codex, check: High intent, medium status: Brian requested matching bottom after the top prints, 2026-11-06. No modeled revision or prefix yet; parked until then.",
+      "updated": "2026-11-06"
+    }
+  ]
+}

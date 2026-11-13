@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Segoe UI,Arial" font-size="13">
+<defs><marker id="a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#06c"/></marker></defs>
+<rect width="960" height="560" fill="#fff"/>
+<text x="20" y="26" font-size="17" font-weight="bold">TF-D fan mount, option B: M3 SOCKET CAP screws down through the fan into M3 inserts</text>
+<text x="20" y="46">Is this what you mean? 4 screws, one per fan corner (155 x 155 pattern). Sizes in mm; Z = height in the rack.</text>
+
+<!-- TOP VIEW -->
+<g transform="translate(20,70)">
+<text x="0" y="0" font-weight="bold">TOP VIEW (looking down on the rack top)</text>
+<rect x="0" y="15" width="380" height="24" fill="#cde" stroke="#333"/><text x="130" y="32">front edge TFE-D</text>
+<rect x="0" y="361" width="380" height="24" fill="#cde" stroke="#333"/><text x="130" y="378">rear edge TRE-D</text>
+<rect x="45" y="22" width="290" height="356" fill="#eee" stroke="#333" opacity=".85"/>
+<circle cx="190" cy="200" r="140" fill="#fff" stroke="#999"/><text x="150" y="205">fan blades</text>
+<g fill="#cde" stroke="#333">
+<rect x="58" y="39" width="38" height="34"/><rect x="284" y="39" width="38" height="34"/>
+<rect x="58" y="327" width="38" height="34"/><rect x="284" y="327" width="38" height="34"/></g>
+<g fill="#c00"><circle cx="77" cy="56" r="6"/><circle cx="303" cy="56" r="6"/><circle cx="77" cy="344" r="6"/><circle cx="303" cy="344" r="6"/></g>
+<line x1="77" y1="105" x2="303" y2="105" stroke="#06c" marker-start="url(#a)" marker-end="url(#a)"/><text x="160" y="100" fill="#06c">155</text>
+<line x1="350" y1="56" x2="350" y2="344" stroke="#06c" marker-start="url(#a)" marker-end="url(#a)"/><text x="356" y="200" fill="#06c">155</text>
+<text x="0" y="410">blue squares = NEW pads growing in from each edge under</text>
+<text x="0" y="426">the fan corners (edges stop 7.5 short of the holes today)</text>
+<text x="0" y="442" fill="#c00">red = the 4 socket cap screws (grille has a hole over each)</text>
+</g>
+
+<!-- SECTION -->
+<g transform="translate(470,70)">
+<text x="0" y="0" font-weight="bold">SECTION through one corner screw</text>
+<!-- grille -->
+<rect x="20" y="40" width="160" height="24" fill="#9c9" stroke="#333"/><rect x="220" y="40" width="160" height="24" fill="#9c9" stroke="#333"/>
+<text x="30" y="57">grille TFG-B, 3 thick</text>
+<!-- head -->
+<rect x="178" y="40" width="44" height="24" fill="none" stroke="#333" stroke-dasharray="3"/>
+<rect x="183" y="40" width="34" height="24" fill="#c00"/>
+<text x="232" y="30" fill="#c00">M3 socket cap head 5.5 x 3</text>
+<text x="232" y="16">grille hole ~6.5: head sits in it, top flush, hex key from above</text>
+<!-- fan -->
+<rect x="20" y="64" width="360" height="240" fill="#eee" stroke="#333"/>
+<text x="250" y="190">CT200 frame corner, 30</text>
+<rect x="190" y="64" width="20" height="240" fill="#fff" stroke="#999" stroke-dasharray="2"/>
+<!-- shank -->
+<rect x="194" y="64" width="12" height="276" fill="#c00" opacity=".7"/>
+<!-- pad -->
+<rect x="120" y="304" width="160" height="72" fill="#cde" stroke="#333"/>
+<text x="290" y="330">new pad on the edge,</text><text x="290" y="346">~8 thick, hangs into the</text><text x="290" y="362">15 air gap above the modem</text>
+<rect x="183" y="304" width="34" height="32" fill="#fc6" stroke="#963"/>
+<text x="20" y="325">M3 x 3 x 5 insert</text><text x="20" y="341">bore 4.2 x 4 deep</text>
+<rect x="194" y="336" width="12" height="40" fill="#fff" stroke="#333" stroke-dasharray="2"/>
+<text x="20" y="372">3.4 hole below for screw tip</text>
+<line x1="400" y1="64" x2="400" y2="304" stroke="#06c" marker-start="url(#a)" marker-end="url(#a)"/><text x="406" y="190" fill="#06c">30</text>
+<text x="0" y="410" font-weight="bold">Screw: M3 x 35 socket cap (30 through the fan + ~3 in the insert + room below)</text>
+<text x="0" y="428">Fan Z 417.05..447.05 sits on the pads; grille Z 447.05..450.05 unchanged height.</text>
+<text x="0" y="446">The 4 grille M3 countersunk screws at the edge corners stay as they are.</text>
+</g>
+<text x="20" y="530">UNKNOWN until printed: that the CT200 holes run the full 30 (drawing side view suggests corner posts), pad strength, insert fit. M3 socket cap is a new screw type on the list.</text>
+</svg>

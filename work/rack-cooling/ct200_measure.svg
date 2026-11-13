@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" font-family="Segoe UI, Arial" font-size="14">
+<rect width="1000" height="680" fill="#1d1f24"/>
+<text x="20" y="30" fill="#fff" font-size="19" font-weight="bold">Thermaltake CT200: please measure these (calipers or a ruler). Expected values from the listing in brackets.</text>
+<text x="20" y="52" fill="#9ab" font-size="13">The fan drops into a 201 x 201 cavity and rests on 2 mm ledges near its corners; the grille clamps the top. A, B and C decide whether the grille sits flush.</text>
+<!-- TOP VIEW -->
+<text x="40" y="88" fill="#9ab">TOP VIEW (look at the side the air comes OUT of)</text>
+<g transform="translate(80,110)">
+  <rect x="0" y="0" width="360" height="360" rx="22" fill="#333" stroke="#ccc" stroke-width="2"/>
+  <circle cx="180" cy="180" r="172" fill="#262a30" stroke="#5bd" stroke-width="2"/>
+  <circle cx="180" cy="180" r="45" fill="#444" stroke="#888"/>
+  <path d="M180 135 Q240 120 300 180 M180 225 Q120 240 60 180 M135 180 Q120 120 180 60 M225 180 Q240 240 180 300" stroke="#777" stroke-width="3" fill="none"/>
+  <circle cx="40" cy="40" r="6" fill="#1d1f24" stroke="#fc4"/><circle cx="320" cy="40" r="6" fill="#1d1f24" stroke="#fc4"/>
+  <circle cx="40" cy="320" r="6" fill="#1d1f24" stroke="#fc4"/><circle cx="320" cy="320" r="6" fill="#1d1f24" stroke="#fc4"/>
+  <!-- A -->
+  <line x1="0" y1="-14" x2="360" y2="-14" stroke="#7f7" stroke-width="2"/><text x="120" y="-20" fill="#7f7" font-weight="bold">A width (200)</text>
+  <!-- B -->
+  <line x1="378" y1="0" x2="378" y2="360" stroke="#7f7" stroke-width="2"/><text x="386" y="185" fill="#7f7" font-weight="bold">B (200)</text>
+  <!-- D -->
+  <path d="M0 22 A22 22 0 0 1 22 0" stroke="#f9c" stroke-width="3" fill="none"/><text x="-70" y="12" fill="#f9c" font-weight="bold">D corner</text>
+  <!-- E -->
+  <line x1="8" y1="180" x2="352" y2="180" stroke="#5bd" stroke-dasharray="6 4"/><text x="200" y="172" fill="#5bd" font-weight="bold">E blade ring Ø (~190)</text>
+  <!-- H -->
+  <line x1="40" y1="345" x2="320" y2="345" stroke="#fc4"/><text x="130" y="340" fill="#fc4" font-weight="bold">H hole spacing (154 or 170?)</text>
+  <!-- F -->
+  <path d="M360 300 L410 330" stroke="#f77" stroke-width="4"/><text x="300" y="395" fill="#f77" font-weight="bold">F: where the cables leave: which side, distance from the nearest corner</text>
+  <text x="0" y="420" fill="#ccc">Corners: solid plastic down to the bottom, or open with only screw tabs? (photo is fine)</text>
+</g>
+<!-- SIDE VIEW -->
+<text x="560" y="88" fill="#9ab">SIDE VIEW</text>
+<g transform="translate(580,140)">
+  <rect x="0" y="0" width="360" height="54" fill="#333" stroke="#ccc" stroke-width="2"/>
+  <line x1="-14" y1="0" x2="-14" y2="54" stroke="#7f7" stroke-width="2"/><text x="-70" y="32" fill="#7f7" font-weight="bold">C (30)</text>
+  <text x="70" y="32" fill="#aaa">measure at a corner, outer frame</text>
+  <path d="M180 -10 L180 -50" stroke="#7f7" stroke-width="3" marker-end="url(#a)"/><text x="190" y="-30" fill="#7f7">air out = UP (exhaust)</text>
+  <text x="0" y="80" fill="#ccc">Is anything raised above the frame (hub, LED ring, rubber pads)?</text>
+  <text x="0" y="100" fill="#ccc">If yes, how much does it stick up past the frame face? (G)</text>
+</g>
+<text x="560" y="300" fill="#fff" font-weight="bold" font-size="15">Also tell me:</text>
+<text x="560" y="325" fill="#ddd">I  Cable lengths: fan (4-pin PWM) and ARGB (3-pin) leads.</text>
+<text x="560" y="347" fill="#ddd">J  Does it come with a hub/controller or adapter cable?</text>
+<text x="560" y="369" fill="#ddd">K  Which way does the air blow? There's an arrow</text>
+<text x="560" y="389" fill="#ddd">   on the side of the frame; the label side is usually OUT.</text>
+<text x="560" y="420" fill="#fc4" font-size="13">Measure A, B and C at the corners of the frame, not over a sticker</text>
+<text x="560" y="438" fill="#fc4" font-size="13">or rubber pad. Write A x B x C to 0.1 mm if you can.</text>
+<text x="560" y="470" fill="#9ab" font-size="13">What the print expects: frame up to 200 x 200 x 30 (cavity 201 x 201, 30 deep).</text>
+<text x="560" y="488" fill="#9ab" font-size="13">More than 200.5 or 30 = it won't drop in or the grille won't sit flush.</text>
+<text x="560" y="506" fill="#9ab" font-size="13">The ledges hold the frame only within ~15 mm of the front and rear</text>
+<text x="560" y="524" fill="#9ab" font-size="13">sides, mostly at the corners, so the corner shape (D, solid/open) matters.</text>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="#7f7"/></marker></defs>
+<text x="20" y="650" fill="#9ab" font-size="12">TF-A already released assumes the listing values; if yours differ, I'll make TF-B before you print the edges.</text>
+</svg>

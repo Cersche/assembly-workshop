@@ -57,7 +57,10 @@ ears=[for(x=[sbx0-11,sbx1+11],y=[sby0+10,sby1-10])[x,y]];   // cradle ears / bas
 
 // Test print ID (Brian's rule: every test print carries its ID), engraved 0.6 on hidden faces
 print_id="RX5-B";
-module id_text(){text(print_id,size=6,font="Liberation Sans:style=Bold",halign="center",valign="center");}
+// RX5-C (Brian, 2026-11-09): base only, its four cradle bosses moved 9 mm left (-X). Every other part stays RX5-B.
+base_dx=-9; base_id="RX5-C";
+base_ears=[for(e=ears)[e[0]+base_dx,e[1]]];
+module id_text(s=print_id){text(s,size=6,font="Liberation Sans:style=Bold",halign="center",valign="center");}
 module rrect(x0,x1,y0,y1,r){hull()for(x=[x0+r,x1-r],y=[y0+r,y1-r])translate([x,y])circle(r=r);}
 // wall frames as in body15.scad: u to the right seen from outside, y inward, v up
 module on_front(x,z){multmatrix([[1,0,0,x],[0,1,0,0],[0,0,1,z],[0,0,0,1]])children();}
@@ -176,11 +179,11 @@ module base(){
     rrect(t+1.9,WO-t-1.9,t+1.9,DO-t-1.9,cr-t);
     for(p=lid_posts())translate(p)circle(d=11);
     for(x=[ks_eth1,ks_coax])translate([x-12,DO-t-3])square([24,3]);}
-   for(e=ears)translate([e[0],e[1],t-0.01])cylinder(d=10,h=boss_h+0.01);
+   for(e=base_ears)translate([e[0],e[1],t-0.01])cylinder(d=10,h=boss_h+0.01);
   }
-  for(e=ears)translate([e[0],e[1],t+boss_h-insert_d])cylinder(d=insert_pilot,h=insert_d+0.1);
+  for(e=base_ears)translate([e[0],e[1],t+boss_h-insert_d])cylinder(d=insert_pilot,h=insert_d+0.1);
   for(p=lid_posts())translate([p[0],p[1],-1]){cylinder(d=m3,h=t+2);translate([0,0,1-0.01])cylinder(d1=6.6,d2=m3,h=1.71);}
-  translate([WO/2,DO/2,-0.01])mirror([1,0,0])linear_extrude(0.61)id_text();   // ID on the underside
+  translate([WO/2,DO/2,-0.01])mirror([1,0,0])linear_extrude(0.61)id_text(base_id);   // ID on the underside
  }
 }
 

@@ -9,6 +9,8 @@ Each 3MF object becomes its own part, placed by its build-item transform.
 Several STL files are laid side by side on the bed unless --as-is is given.
 --see-through NAME draws matching parts glassy, with their edges and a slider.
 --wireframe NAME draws matching parts as their sharp edges only.
+--measure SPEC.json adds numbered measurement arrows with a fill-in box for
+each, plus "Copy measurements" (see load_measure for the format).
 Vertex positions are quantized to 16 bits per axis over each part's bounding
 box (about 0.003 mm on a 200 mm part).
 """
@@ -183,6 +185,29 @@ def load_parts(paths, as_is):
     return parts
 
 
+def load_measure(path):
+    """Read a measurement request: {"intro": str?, "measurements": [{"label": str,
+    "from": [x,y,z], "to": [x,y,z], "expected": number?, "how": str?}]}, in the
+    parts' own mm. Expected defaults to the modelled from-to distance."""
+    spec = json.loads(Path(path).read_text(encoding="utf-8"))
+    items = spec.get("measurements") if isinstance(spec, dict) else None
+    if not isinstance(items, list) or not items:
+        raise ValueError(f"{path}: needs a non-empty 'measurements' list")
+    out = []
+    for i, m in enumerate(items, 1):
+        pts = [m.get(k) for k in ("from", "to")] if isinstance(m, dict) else []
+        if (not isinstance(m, dict) or not isinstance(m.get("label"), str) or not m["label"].strip()
+                or any(not (isinstance(q, list) and len(q) == 3 and all(isinstance(v, (int, float)) for v in q)) for q in pts)):
+            raise ValueError(f"{path}: measurement {i} needs a label and 'from'/'to' as [x, y, z]")
+        length = sum((a - b) ** 2 for a, b in zip(*pts)) ** 0.5
+        exp = m.get("expected", round(length, 1))
+        if not isinstance(exp, (int, float)):
+            raise ValueError(f"{path}: measurement {i} 'expected' must be a number")
+        out.append({"id": i, "label": m["label"].strip(), "from": pts[0], "to": pts[1],
+                    "expected": exp, "how": str(m.get("how", "")).strip()})
+    return {"intro": str(spec.get("intro", "")).strip(), "measurements": out}
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("files", nargs="+", help="STL or 3MF files")
@@ -193,8 +218,10 @@ def main(argv=None):
                     help="draw parts whose name contains NAME see-through (repeatable)")
     ap.add_argument("--wireframe", action="append", default=[], metavar="NAME",
                     help="draw parts whose name contains NAME as sharp edges only (repeatable)")
+    ap.add_argument("--measure", metavar="SPEC.json", help="measurement request: numbered arrows with fill-in boxes")
     a = ap.parse_args(argv)
     parts = load_parts(a.files, a.as_is)
+    measure = load_measure(a.measure) if a.measure else None
     for p in parts:
         if any(s.lower() in p["name"].lower() for s in a.see_through):
             p["opacity"] = SEE_THROUGH
@@ -203,6 +230,7 @@ def main(argv=None):
     title = a.title or Path(a.files[0]).stem
     template = (Path(__file__).with_name("mesh_viewer_template.html")).read_text(encoding="utf-8")
     page = (template.replace("__TITLE__", html.escape(title))
+            .replace("__MEASURE__", json.dumps(measure).replace("</", "<\\/"))
             .replace("__DATA__", json.dumps(parts, separators=(",", ":")).replace("</", "<\\/")))
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)

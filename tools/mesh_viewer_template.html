@@ -35,6 +35,13 @@
   button { background:#333; color:var(--text); border:1px solid var(--line); border-radius:5px; padding:4px 10px; font:inherit; cursor:pointer; }
   button:hover { border-color:var(--accent); }
   .hint { color:var(--muted); font-size:11px; margin-top:8px; }
+  #measureBox { margin:6px 0 10px; padding:8px; border:1px solid var(--line); border-radius:8px; }
+  #measureBox h2 { font-size:13px; margin:0 0 4px; }
+  .mrow { display:grid; grid-template-columns:22px 1fr; gap:2px 6px; align-items:center; margin-top:8px; }
+  .mnum { grid-row:1 / span 4; align-self:start; width:20px; height:20px; border-radius:50%; background:#4db8ff; color:#000; font-weight:bold; font-size:12px; display:grid; place-items:center; }
+  .mrow:focus-within .mnum { background:#ffd84d; }
+  .mexp, .mhow, #mIntro, #mMsg { color:var(--muted); font-size:11px; }
+  .mrow input, #mNote { background:#222; color:var(--text); border:1px solid var(--line); border-radius:5px; font:inherit; padding:4px 6px; width:100%; box-sizing:border-box; }
   #seeRow { display:grid; grid-template-columns:auto 1fr; gap:8px; align-items:center; margin-top:8px; }
   #seeRow[hidden] { display:none; }
   #err { position:absolute; inset:0; display:none; place-items:center; color:var(--muted); padding:16px; text-align:center; }
@@ -45,6 +52,14 @@
 <canvas id="ov"></canvas>
 <details id="panel" open>
   <summary><h1>__TITLE__</h1></summary>
+  <div id="measureBox" hidden>
+    <h2>Measure these</h2>
+    <div id="mIntro"></div>
+    <div id="mlist"></div>
+    <textarea id="mNote" rows="2" placeholder="Anything else Claude should know (optional)" style="margin-top:8px"></textarea>
+    <div class="row"><button id="copyMeasure">Copy measurements</button></div>
+    <div id="mMsg"></div>
+  </div>
   <div id="parts"></div>
   <label id="seeRow">See-through <input id="see" type="range" min="0" max="96"></label>
   <div class="row">
@@ -72,10 +87,12 @@
   <textarea id="out" hidden readonly></textarea>
 </details>
 <div id="err"></div>
+<script id="measure" type="application/json">__MEASURE__</script>
 <script id="data" type="application/json">__DATA__</script>
 <script>
 "use strict";
 const PARTS = JSON.parse(document.getElementById("data").textContent);
+const MEASURE = JSON.parse(document.getElementById("measure").textContent); let activeM = null; // measurement request (--measure) or null
 const COLORS = ["#d97757", "#6aa6e8", "#8fc46a", "#e2c25b", "#b58ae0", "#5fc9c0", "#e07a9f", "#a8a8a8"];
 const canvas = document.getElementById("c");
 const gl = canvas.getContext("webgl", { antialias: true, preserveDrawingBuffer: true });
@@ -313,6 +330,18 @@ function drawOverlay() {
   ctx.lineWidth = 2.5; ctx.strokeStyle = "#ff4d4d"; ctx.font = "bold 12px system-ui, sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
   const path = s => { ctx.beginPath(); s.forEach((q, i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.stroke(); };
   const key = viewKey();
+  for (const m of MEASURE ? MEASURE.measurements : []) { // measurement arrows: drawn on top so they never hide behind the part
+    const a = project(m.from), b = project(m.to); if (!a || !b) continue;
+    const col = m.id === activeM ? "#ffd84d" : "#4db8ff", ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
+    ctx.save(); ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = m.id === activeM ? 3.5 : 2.5;
+    ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+    for (const [q, d] of [[a, ang + Math.PI], [b, ang]]) {
+      ctx.beginPath(); ctx.moveTo(q[0], q[1]);
+      ctx.lineTo(q[0] - 11 * Math.cos(d - 0.4), q[1] - 11 * Math.sin(d - 0.4)); ctx.lineTo(q[0] - 11 * Math.cos(d + 0.4), q[1] - 11 * Math.sin(d + 0.4)); ctx.fill();
+    }
+    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+    ctx.beginPath(); ctx.arc(mx, my, 10, 0, 7); ctx.fill(); ctx.fillStyle = "#000"; ctx.fillText(m.id, mx, my + 0.5); ctx.restore();
+  }
   for (const m of marks) {
     const s = project(m.p); if (!s) continue;
     let lx = s[0], ly = s[1];
@@ -410,7 +439,37 @@ canvas.addEventListener("pointermove", e => {
 });
 canvas.addEventListener("wheel", e => { e.preventDefault(); cam.dist *= Math.exp(e.deltaY * 0.0012); draw(); }, { passive: false });
 window.addEventListener("resize", draw);
-if (window.innerWidth < 500) document.getElementById("panel").open = false;
+if (MEASURE) {
+  document.getElementById("measureBox").hidden = false;
+  document.getElementById("mIntro").textContent = MEASURE.intro || "Measure each numbered arrow on the real part and type the value in mm. Spin the view to see where each one goes; the arrow turns yellow while you type its value.";
+  const store = { s: {}, save() {} }; // typed values survive a reload where browser storage works
+  try { const k = "measure:" + document.title; store.s = JSON.parse(localStorage.getItem(k) || "{}"); store.save = () => { try { localStorage.setItem(k, JSON.stringify(store.s)); } catch {} }; } catch {}
+  const mlist = document.getElementById("mlist"), mMsg = t => { document.getElementById("mMsg").textContent = t; };
+  MEASURE.measurements.forEach(m => {
+    const row = document.createElement("div"); row.className = "mrow";
+    const n = document.createElement("span"); n.className = "mnum"; n.textContent = m.id;
+    const lab = document.createElement("span"); lab.textContent = m.label;
+    const exp = document.createElement("span"); exp.className = "mexp"; exp.textContent = "expected about " + m.expected + " mm";
+    const inp = document.createElement("input"); inp.inputMode = "decimal"; inp.placeholder = "your value, mm";
+    inp.setAttribute("aria-label", "Measurement " + m.id + ": " + m.label); inp.value = store.s[m.id] || "";
+    inp.oninput = () => { store.s[m.id] = inp.value; store.save(); };
+    inp.onfocus = () => { activeM = m.id; draw(); }; inp.onblur = () => { activeM = null; draw(); };
+    m.input = inp; row.append(n, lab, exp, inp);
+    if (m.how) { const h = document.createElement("span"); h.className = "mhow"; h.textContent = m.how; row.append(h); }
+    mlist.append(row);
+  });
+  const extra = document.getElementById("mNote"); extra.value = store.s.note || "";
+  extra.oninput = () => { store.s.note = extra.value; store.save(); };
+  document.getElementById("copyMeasure").onclick = async () => {
+    const lines = ["3D measurements: " + document.title];
+    for (const m of MEASURE.measurements) lines.push("#" + m.id + " " + m.label + " (arrow " + fmt(m.from) + " to " + fmt(m.to) + ", expected about " + m.expected + " mm): " + (m.input.value.trim() || "not measured"));
+    if (extra.value.trim()) lines.push("Notes: " + extra.value.trim());
+    const t = lines.join("\n");
+    try { await navigator.clipboard.writeText(t); mMsg("Measurements copied. Paste them into the chat."); }
+    catch { fallbackText(t); mMsg("Clipboard blocked here: the text is selected at the bottom of this panel, press Ctrl+C."); }
+  };
+}
+if (window.innerWidth < 500 && !MEASURE) document.getElementById("panel").open = false;
 frame(-Math.PI / 3, 0.55);
 </script>
 </body>

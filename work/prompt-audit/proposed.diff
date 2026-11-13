@@ -1,0 +1,1285 @@
+diff -ruN a/global/CLAUDE.md b/global/CLAUDE.md
+--- a/global/CLAUDE.md	2026-11-11 00:22:19.987343200 -0800
++++ b/global/CLAUDE.md	2026-11-11 06:28:10.944601800 -0800
+@@ -8,43 +8,45 @@
+ New projects get the next free 50-port block (8950–8999, …); add it here.
+ 
+ ## Gene Simmons celebration
+-After every git commit and every finished task or undertaking (in any project, even with no commit), send Brian the Gene Simmons photo once with SendUserFile: `D:\Projects\assembly-workshop\work\gene-success\gene.png`. Never stage or commit that image.
++After every git commit and every finished task or undertaking (in any project, even with no commit), send Brian the Gene Simmons photo once with SendUserFile: `D:\Projects\assembly-workshop\work\gene-success\gene.png`. One Gene per real accomplishment: none for a push, a retry or a no-op step. Never stage or commit that image.
+ 
+ ## Show every 3D part in the viewer (all projects, Brian 2026-10-27)
+-Whenever work produces, changes or examines STL or 3MF files (any project), build the 3D viewer and pop it up without being asked:
+-`python D:\Projects\assembly-workshop\tools\mesh_viewer.py <files...> -o <out>.html -t "<title>"` (in cloud or other checkouts: `tools/mesh_viewer.py` in the assembly-workshop repo; run `git pull` there first if the tool is missing), then SendUserFile with display "render". Put all parts of one job in one page. Write the HTML to the project's `work/mesh-viewer/` (assembly-workshop) or the session scratchpad elsewhere; don't commit generated viewer pages unless asked, and never commit ones with third-party/licensed meshes.
++Whenever work produces, changes or examines STL or 3MF files (any project), build the 3D viewer and show it without being asked:
++`python D:\Projects\assembly-workshop\tools\mesh_viewer.py <files...> -o <out>.html -t "<title>"` (in cloud or other checkouts: `tools/mesh_viewer.py` in the assembly-workshop repo; run `git pull` there first if the tool is missing). Send it with SendUserFile (display "render") and also publish it as a private Artifact, giving the link first: on Brian's remote devices the file card shows as code. Put all parts of one job in one page; use `--as-is` when he wants to see parts assembled. Write the HTML to the project's `work/mesh-viewer/` (assembly-workshop) or the session scratchpad elsewhere; don't commit generated viewer pages unless asked.
+ Brian marks things in it (Pin, Circle, notes) and pastes back "3D viewer notes" text or a marked picture: coordinates are in the file's own mm, and the part names match the 3MF/STL names. Use them to locate what he means.
+ 
+-## Measurements from Brian: ALWAYS the interactive 3D page (all projects, Brian 2026-11-08)
+-ANY time you need a measurement from Brian, in any project, send an interactive 3D measurement page, never a question in words or a flat diagram: `python D:\Projects\assembly-workshop\tools\mesh_viewer.py <part or rough stand-in STL> -o <out>.html -t "<title>" --measure spec.json` (spec format: assembly-workshop PROJECT.md). Numbered arrows on the part, expected value and how-to per arrow; he types values and pastes back "3D measurements" text. Send it with SendUserFile (render) and also publish it as a private Artifact. If no model exists, model a rough stand-in block first.
++## Measurements from Brian: the interactive 3D page (all projects, Brian 2026-11-08)
++Whenever you need a measurement from Brian, send an interactive 3D measurement page instead of a question in words or a flat diagram: `python D:\Projects\assembly-workshop\tools\mesh_viewer.py <part or rough stand-in STL> -o <out>.html -t "<title>" --measure spec.json` (spec format: assembly-workshop PROJECT.md). Numbered arrows on the part, expected value and a one-line how-to per arrow; he types values and pastes back "3D measurements" text. Send it with SendUserFile (render) and also publish it as a private Artifact. If no model exists, model a rough stand-in block first.
+ 
+ ## How Brian likes to work (all projects)
++- **Owner, not an engineer:** explain plainly and give a recommendation, not a survey. Disagree plainly and kindly; no flattery.
+ - **Memes welcome, now and then:** not every message. Edgier, adult humour is fine during banter; when getting work done, stay straight and friendly, and always state facts and status plainly.
+ - **Same message twice:** reply "YOU SURE ABOUT THAT?" 🤨 first, then ask what he meant.
+ - **Keep turns efficient:** Brian is often low on usage. Avoid unnecessary tool calls, long outputs and repeated screenshots.
+ - **Check before deleting, overwriting or restarting anything,** and confirm outward actions (upload, publish, print).
+-- **Pushing is pre-approved (Brian, 2026-10-22):** push commits to the repo's normal branch without asking first, then say what was pushed. Never force-push.
++- **Pushing is pre-approved (Brian, 2026-10-22):** push commits to the repo's normal branch without asking first, then say what was pushed. Never force-push; if a push is rejected, pull and merge first.
+ - **Never put credentials or secrets** in instructions, docs or version control.
+-- **Repos stay private** unless Brian says otherwise: never make one public, fork publicly or add collaborators. Never force-push; if a push is rejected, pull and merge first.
++- **Repos stay private** unless Brian says otherwise: never make one public, fork publicly or add collaborators.
+ - **End of each session in a git project:** update the handoff notes (HANDOFF.md or similar), commit and push, so another account or device can pick up. Never leave work only on one machine.
+ - **One editing session at a time:** don't run two sessions that edit the same files at once.
+ 
+ ## Offload heavy lifting to Codex (all projects)
+ When a task is big (many files, long mechanical edits, bulk refactors, repetitive generation), proactively suggest splitting it: Claude plans and reviews, Codex executes.
+-- Claude writes task specs in `work/codex-tasks/` (create it if missing): goal, files, exact acceptance checks, what not to touch.
+-- Codex executes each task and writes `<task>-REPORT.md` next to the spec.
++- Claude writes task specs in `work/codex-tasks/` (create it if missing): goal, files, exact acceptance checks, what not to touch. Never call an existing feature "optional" in a spec.
++- Codex executes each task on a `codex/<name>` branch and writes `<task>-REPORT.md` next to the spec.
+ - "review codex tasks" means: read the reports, verify the changes (git diff, changed files, hashes), rerun the checks, update the task table, commit, then write the next batch.
+ - Design-heavy work, judgement calls, user data and live servers stay with Claude.
+ - **Applies everywhere Brian works with Claude:** every project, session, subagent and session brief. When starting or briefing another session or agent, tell it to offload heavy work to Codex too.
+-- **ALWAYS give Brian the ready-to-paste Codex prompt.** Whenever a Codex task is written or suggested, end the reply with the exact prompt to send to Codex, in its own fenced code block, so he can copy it in one go. No exceptions.
++- **ALWAYS give Brian the ready-to-paste Codex prompt.** Whenever a Codex task is written or suggested, end the final message of the turn with the exact prompt to send to Codex, in its own fenced code block, so he can copy it in one go. A file path alone is not enough. No exceptions.
++- **One combined prompt per batch:** all queued tasks in order, with stop and skip conditions built in. Also save it in `docs/prompts/codex/YYYY-MM-DD_<topic>.md` where the project has that folder.
+ - **Amending a Codex prompt means resending the whole prompt.** Any addition or correction comes as the complete prompt with the change merged in, never just the changed part.
+ 
+ ## Fasteners and heat-set inserts (all projects, Brian 2026-10-31)
+-- Never use self-tapping screws into printed parts; every screw joint in a print gets a heat-set insert.
++- Never use self-tapping screws into printed parts, and never plan on drilling one: every screw joint in a print gets a heat-set insert, with its bore modeled in before printing.
+ - **M3** is the default screw. **M6** is for weight-bearing joints. **M2/M2.5** only where a device forces it (board/screen holes). If unsure, ask.
+ - Standard inserts on hand (thread x length x OD), with design bores:
+   - M6 x 5 x 8: 7.6 mm bore, >= 6 mm deep.
+   - M3 x 3 x 5: 4.2 mm bore, 4 mm deep, boss >= 9 mm OD.
+   - M2.5 x 4 x 3.5: 3.2 mm bore, 5 mm deep.
+-- Screws on hand: M3 countersunk, M2.5 socket head, M6 x 8 button head. Design for these; ask before adding a new screw type.
++- Screws: M3 countersunk, M2.5 socket head, and M6 x 10 button head for every new design (Brian, 2026-11-11; it replaces M6 x 8, which stays on already printed revisions). Make each M6 bore deep enough for the 10 mm screw. Design for these; ask before adding a new screw type.
+ - Insert fit and strength stay UNKNOWN until a printed part proves them.
+diff -ruN a/memory/MEMORY.md b/memory/MEMORY.md
+--- a/memory/MEMORY.md	2026-11-11 00:22:20.271360600 -0800
++++ b/memory/MEMORY.md	2026-11-11 00:23:33.798649500 -0800
+@@ -1,51 +1,24 @@
+-- [Memes welcome](memes-welcome.md) — user likes occasional memes/funny gif references
+-- [Duplicate prompt gif](duplicate-prompt-gif.md) — repeat message twice in a row → "YOU SURE ABOUT THAT?" meme
+-- [Multi-device setup](multi-device-setup.md) — PC is the single home; laptop/phone via Remote Control
+-- [No phases](no-phases.md) — phase plan retired; use ROADMAP.md Now/Next/Later
+-- [Single-prompt batching](single-prompt-batching.md) — give Brian one combined handoff prompt, not one per task
+-- [Backup locations](backup-locations.md) — D:\Backups and private OneDrive\Backups for Assembly Workshop
+-- [Brian's working style](brian-working-style.md) — plain language, combined prompts, Claude+Codex workflow
+-- [Setup facts](setup-facts.md) — data/normal-use, start.bat, checks, backups, git path
+-- [Pi is history](pi-is-sample-equipment.md) — Pi 4 deep clean ordered; Pi only as one library example
+-- [Third-party models in-house](third-party-models-in-house.md) — all imported models: local/personal use, credited, never redistributed
++- [Setup facts](setup-facts.md) — project path, data/normal-use, start.bat, checks, backup folders
++- [Show and ask](show-and-ask.md) — why the 3D viewer, Artifact link and shop-talk rules exist; browser pane; what flat diagrams are still for
++- [Answer just the question](answer-just-the-question.md) — plain question → plain answer, no unrequested proposals
++- [Honest, not harsh](honest-not-harsh.md) — disagree plainly and kindly; no flattery
+ - [Fresh session per step](fresh-session-per-step.md) — start every step of multi-step work in a new fresh session
+-- [Codex prompt delivery](codex-prompt-delivery.md) — Codex prompts go in the final message and in docs/prompts/codex/
++- [Beta heavy work to Codex](beta-heavy-work-to-codex.md) — big/grunt fixes go to Codex; review in its own fresh session; paste a prompt once
+ - [v1 focus](v1-focus.md) — v1 done goal; function over polish; park ideas in IDEAS.md
+-- [Keystone settled](keystone-settled.md) — golden ks_tight=0.2 is the permanent keystone default
+-- [Test print IDs](test-print-ids.md) — every test print/coupon gets a unique ID on the part
+-- [Cloud move plan](cloud-move-plan.md) — private GitHub repo with ALL data; both accounts push
+-- [Honest, not harsh](honest-not-harsh.md) — disagree plainly and kindly; no flattery
+-- [Push pre-approved](push-asks-first.md) — Brian 2026-10-22: push without asking; never force-push
+-- [Beta heavy work to Codex](beta-heavy-work-to-codex.md) — beta tests: big/grunt fixes go to Codex; Claude diagnoses, specs, reviews
+-- [44.4 faceplate standard](faceplate-44-standard.md) — FP44 coupons fit; 44.4 mm/U replaces 42; Codex tasks 25-27
+-- [OptiPlex orientation SETTLED](optiplex-sleeve-settled.md) — power button at faceplate (X up + Rotate once); push back on changes; front sleeve + rear channels replaced the full tray 2026-11-01 (OPX-D sleeve + OPX-F rails fit; OPX-G channels with cable window next); 178 deep
+-- [Gene on success](gene-simmons-on-commit.md) — after every commit or finished task, send work/gene-success/gene.png
+-- [STL delivery: combined](stl-delivery-combined.md) — send one 3MF, parts as separate objects side by side (tools/plate_layout_stl.py), descriptive names
+-- [Sleeve height tight](sleeve-height-tight.md) — sleeves ~0.5 mm tight in height twice; use sleeve_top 0.8; log fits in docs/Fit_Findings.md
+-- [CM1000 bracket](cm1000-bracket.md) — U9 modem = Netgear CM1000, 3-piece bracket (faceplate + rails v2); license OK
++- [Third-party models in-house](third-party-models-in-house.md) — personal use, credited, never redistributed; no licence worries inside the private repo
++- [New part workflow](new-part-workflow.md) — any part work: /new-part skill; why drafts, the release script, the shared library and margins exist
+ - [Keep requested features](keep-requested-features.md) — rebuilds keep every earlier-requested feature (hidden screws!); ask before dropping one
+-- [Mesh viewer always](mesh-viewer-always.md) — any STL/3MF work: auto-send tools/mesh_viewer.py page; Brian pastes pin/circle notes back
+-- [M6 bracket hardware](m6-bracket-hardware.md) — 2026-10-28 overhaul: all brackets use rack M6 inserts + M6x8 button heads; one bracket per session
+-- [Viewer as artifact](viewer-as-artifact.md) — remote shows HTML as code: always also publish viewer as private Artifact, don't ask
+-- [Check 3MF loads](check-3mf-loads.md) — count plain vertex/triangle tags in every 3MF before delivery; viewer doesn't catch it
+ - [Keep proven fit dims](keep-proven-fit-dims.md) — redesigns copy the printed-fitting version's clearances; check Fit_Findings first
++- [Never fudge device mock](never-fudge-device-mock.md) — a requested move keeps proven clearances; never notch the mock to pass a clash or re-ask for proven sizes
++- [Sleeve height tight](sleeve-height-tight.md) — sleeves ~0.5 mm tight in height twice; use sleeve_top 0.8; log fits in docs/Fit_Findings.md
++- [Rounded floor corners](rounded-floor-corners.md) — round all bed-level corners (r 3, fillet inside corners) against warping
++- [No drilling prints](no-drilling-prints.md) — never drill printed parts; holes and insert bores are modeled in before printing
+ - [Use rear posts](use-rear-posts.md) — rear posts are mounting points too; always consider them in bracket designs/fixes
+ - [Post rails pattern](post-cheek-pattern.md) — SG8-M6-F post rails = default bracket pattern, outputs/Chunky_Revisions/; rack has 4U posts, no side holes
+-- [No drilling prints](no-drilling-prints.md) — never drill printed parts; holes and insert bores are modeled in before printing
+-- [No self-tapping](no-self-tapping.md) — never self-tap into prints; every screw joint gets a heat-set insert
+-- [Own 9U extrusion rack (history)](m5-extrusion-frame.md) — replaced 2026-11-09 by the own printed rack
++- [Check 3MF loads](check-3mf-loads.md) — count plain vertex/triangle tags in every 3MF before delivery; viewer doesn't catch it
++- [STL delivery: combined](stl-delivery-combined.md) — app tray + faceplate exports: one 3MF, parts side by side (tools/plate_layout_stl.py), descriptive names
++- [Keystone settled](keystone-settled.md) — why golden ks_tight=0.2 won (rule is in AGENTS.md)
++- [OptiPlex](optiplex-sleeve-settled.md) — orientation SETTLED, push back on changes; measured case and feet; sleeve + rear channels
++- [CM1000 bracket](cm1000-bracket.md) — U9 modem = Netgear CM1000; one-piece bracket is current; measured modem; things not to raise again
+ - [Own printed rack](own-printed-rack.md) — rounded posts + corner brackets, flush bezel, M6 x 10; replaces Lab Rax frame and 2020 plan
+-- [Fastener sizes](fastener-sizes.md) — M3 default, M6 weight-bearing, M2/M2.5 only when the device forces it; ask if unsure
+-- [Assembled viewer = --as-is](viewer-assembled-as-is.md) — "show assembled" → mesh_viewer.py --as-is, not side-by-side
+-- [Always diagrams](always-diagrams.md) — dimensions/fit questions get a dimensioned diagram; every measurement request comes with a where-to-measure diagram
+-- [Answer just the question](answer-just-the-question.md) — plain question → plain answer, no unrequested proposals
+-- [Shop talk](shop-talk.md) — show and ask as if in the shop with the part in hand; real-part renders, physical steps
+-- [OpenSCAD snapshot for new parts](openscad-snapshot-new-parts.md) — new parts: pinned 2026.11.01 + --backend=manifold; old revisions and the app stay on 2021.01
+-- [Release part tool](release-part-tool.md) — new parts: tools/release_part.py renders, checks, packs the 3MF and viewer in one command
+-- [Shared parts library](shared-parts-library.md) — new parts: lib/workshop.scad + pinned BOSL2; /new-part skill has the checklist
+-- [Leave design margin](leave-design-margin.md) — real room around screw heads and non-fit features; proven fit clearances stay as printed
+ - [Rack fan on top](rack-fan-top.md) — 2026-11-05: 200 mm fan exhausting up via our own redesigned top; filtered bottom intake; low side vents
+-- [Draft until printing](draft-until-printing.md) — viewer-only drafts until Brian says he is printing; device card before first print; fit report by ID
+-- [Rounded floor corners](rounded-floor-corners.md) — round all bed-level corners (r 3, fillet inside corners) against warping
+-- [Show in 3D](show-in-3d.md) — design-intent checks: build the draft + marker part in the 3D viewer, not flat SVG schematics
+-- [Never fudge device mock](never-fudge-device-mock.md) — a requested move keeps proven clearances; never notch the mock to pass a clash or re-ask for proven sizes
+diff -ruN a/memory/always-diagrams.md b/memory/always-diagrams.md
+--- a/memory/always-diagrams.md	2026-11-11 00:22:20.289323300 -0800
++++ b/memory/always-diagrams.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,16 +0,0 @@
+----
+-name: always-diagrams
+-description: "Brian wants dimensions/geometry explained with diagrams, never tables or prose alone"
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: 250058ee-cf25-480f-9f3a-d16e0091d0e5
+-  modified: 2026-11-03T00:27:00.552Z
+----
+-
+-Whenever Brian asks about dimensions, positions, measurements or how parts fit, answer with a diagram (show_widget SVG), not just a table or text.
+-
+-**Why:** 2026-11-01, RX4 review: after a dimensions table he said "diagrams buddy, diagrams" and then "always diagrams".
+-**Permanent rule (Brian, 2026-11-02):** every time I ask Brian for a measurement, on brackets, faceplates or anything else being designed, send a diagram showing exactly where and how to measure, with the expected value. No measurement request in words alone. Pick a measurement he can actually make with a ruler or calipers.
+-**Interactive 3D form (Brian, 2026-11-08, "PERFECT, use this ANYTIME you need measurements from me"):** EVERY measurement request, no exceptions, is an interactive 3D page he can spin and type into: `tools/mesh_viewer.py <part or stand-in> -o work/mesh-viewer/<name>.html --measure spec.json` (numbered arrows, box per value, Copy measurements); send it and publish it as a private Artifact. Flat SVG still fine for explaining answers.
+-**How to apply:** Draw dimensioned views (top/front/rear/section) with source notes (measured vs assumed) in the diagram; keep text to a few lines. Related: [[brian-working-style]], [[mesh-viewer-always]].
+diff -ruN a/memory/answer-just-the-question.md b/memory/answer-just-the-question.md
+--- a/memory/answer-just-the-question.md	2026-11-11 00:22:20.306860600 -0800
++++ b/memory/answer-just-the-question.md	2026-11-11 00:22:21.424262700 -0800
+@@ -8,7 +8,7 @@
+   modified: 2026-11-01T22:28:02.567Z
+ ---
+ 
+-When Brian asks a plain question ("do we have screw holes here?"), answer it directly (with a diagram if it's about geometry, see [[always-diagrams]]) and stop. Don't attach unrequested proposals, options or follow-up designs.
++When Brian asks a plain question ("do we have screw holes here?"), answer it directly (with a diagram if it's about geometry, see [[show-and-ask]]) and stop. Don't attach unrequested proposals, options or follow-up designs.
+ 
+ **Why:** 2026-11-01, RX4 shelf: I answered "no screws" and then proposed corbels; he said "you don't need to add anything, just answer my questions".
+ **How to apply:** Proposals only when he asks for a change or asks what we could do.
+diff -ruN a/memory/backup-locations.md b/memory/backup-locations.md
+--- a/memory/backup-locations.md	2026-11-11 00:22:20.323933400 -0800
++++ b/memory/backup-locations.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,15 +0,0 @@
+----
+-name: backup-locations
+-description: "Where Assembly Workshop backups go (local D: drive + private OneDrive), created 2026-10-18"
+-metadata:
+-  node_type: memory
+-  type: reference
+-  originSessionId: 8ee4d491-3105-4361-9530-bb50005cb124
+-  modified: 2026-10-21T13:17:07.472Z
+----
+-
+-Assembly Workshop backup destinations (created 2026-10-18 at Brian's request):
+-- Local: `D:\Backups\Assembly Workshop` (primary; D: had ~640 GB free)
+-- Online: `C:\Users\brian\OneDrive\Backups\Assembly Workshop` (private OneDrive sync; Brian explicitly chose online + local)
+-
+-Each backup goes in its own timestamped subfolder, never overwritten. Project was ~133 MB. Keep the OneDrive copy private/unshared: creator rack parts are BY-NC-SA personal-use and Pi/supplier assets have unresolved rights, so no share links. The project itself (D:\Projects\assembly-workshop since 2026-10-21) is NOT under OneDrive sync. Official data folder is data/normal-use; see [[assembly-workshop-data-location]].
+diff -ruN a/memory/beta-heavy-work-to-codex.md b/memory/beta-heavy-work-to-codex.md
+--- a/memory/beta-heavy-work-to-codex.md	2026-11-11 00:22:20.343255500 -0800
++++ b/memory/beta-heavy-work-to-codex.md	2026-11-11 00:22:21.433615000 -0800
+@@ -10,6 +10,6 @@
+ 
+ Rule from Brian (2026-10-20), for the equipment-wizard beta and all later beta test sessions: any heavy lifting or dummy/grunt work that would take a good amount of Claude resources gets handed off to Codex. Claude keeps diagnosis (confirming the cause in browser/console/logs), tiny fixes, writing the Codex task spec, and reviewing/verifying Codex's result before commit.
+ 
+-**Why:** Claude usage runs low; Codex is the cheaper executor (see [[brian-working-style]]).
++**Why:** Claude usage runs low; Codex is the cheaper executor (see global CLAUDE.md).
+ 
+-**How to apply:** Instead of starting a Claude fix session for a big issue, write a spec in work/codex-tasks/ and a paste-ready prompt per [[codex-prompt-delivery]] and [[single-prompt-batching]]; Brian runs it in Codex. Then review the REPORT, rerun run_checks.ps1, check in the browser on disposable data, commit and push. The review of a Codex task happens in its own fresh Claude session (Brian, 2026-10-20: "shouldn't this be in a new session?"), not in the coordinator session; see [[fresh-session-per-step]]. Tell Brian to paste a Codex prompt only once (two parallel runs clashed on task 22).
++**How to apply:** Instead of starting a Claude fix session for a big issue, write a spec in work/codex-tasks/ and a paste-ready prompt per global CLAUDE.md and global CLAUDE.md; Brian runs it in Codex. Then review the REPORT, rerun run_checks.ps1, check in the browser on disposable data, commit and push. The review of a Codex task happens in its own fresh Claude session (Brian, 2026-10-20: "shouldn't this be in a new session?"), not in the coordinator session; see [[fresh-session-per-step]]. Tell Brian to paste a Codex prompt only once (two parallel runs clashed on task 22).
+diff -ruN a/memory/brian-working-style.md b/memory/brian-working-style.md
+--- a/memory/brian-working-style.md	2026-11-11 00:22:20.360877200 -0800
++++ b/memory/brian-working-style.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,13 +0,0 @@
+----
+-name: brian-working-style
+-description: How Brian likes to work (from docs/CLAUDE_HANDOFF.md, 2026-10-19)
+-metadata:
+-  type: user
+----
+-- Owner, not an engineer: explain plainly, keep turns efficient (usage runs low), give recommendations not surveys.
+-- One paste-ready combined prompt per Codex batch, tasks in order with stop/skip conditions. See [[single-prompt-batching]].
+-- Occasional memes (text/ASCII); light shade at Codex ("Sam's demon child") welcome. See [[memes-welcome]].
+-- Same message twice → "YOU SURE ABOUT THAT?" 🤨 first, then ask. See [[duplicate-prompt-gif]].
+-- No phase language; plans in ROADMAP.md. See [[no-phases]].
+-- Check before deleting/overwriting/restarting; confirm outward actions (push, upload, print).
+-- Workflow: Claude writes specs in work/codex-tasks/ and reviews; Codex executes and writes <task>-REPORT.md. "review codex tasks" = read reports, verify hashes/git diff/changed files, rerun checks, update table, commit, write next batch. Design-heavy work (per-instance editing, wizard heuristics, user data/live server) stays with Claude.
+diff -ruN a/memory/cloud-move-plan.md b/memory/cloud-move-plan.md
+--- a/memory/cloud-move-plan.md	2026-11-11 00:22:20.399604700 -0800
++++ b/memory/cloud-move-plan.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,14 +0,0 @@
+----
+-name: cloud-move-plan
+-description: "Brian's 2026-10-19 decision to put ALL project data in a private GitHub repo for cloud work across 2 Claude accounts and 4 devices"
+-metadata:
+-  node_type: memory
+-  type: project
+-  originSessionId: 0e4e5023-5488-4965-b921-1fbcb6d252db
+-  modified: 2026-10-20T06:53:13.384Z
+----
+-
+-2026-10-19: Brian wants the project in a **private** GitHub repo with ALL data (outputs, data/normal-use, licensed creator parts included) so either of his two Claude accounts can work from any of his 4 devices (PC, laptop, iPad, iPhone), one account at a time. Both accounts may push. Brian is new to GitHub and signs in with Google. Licensed works go up for convenience only; before any public release he'll contact the Lab Rax creator (MakerWorld) and remove conflicting licensed files.
+-
+-**Why:** seamless handoff between accounts/devices without the PC having to be on.
+-**How to apply:** repo must stay private; never make it public or share it. No remote existed and gh CLI wasn't installed as of 2026-10-19; project was ~110 MB, no file >50 MB. Each push still needs Brian's go-ahead unless he grants a standing OK. Updates [[multi-device-setup]].
+diff -ruN a/memory/cm1000-bracket.md b/memory/cm1000-bracket.md
+--- a/memory/cm1000-bracket.md	2026-11-11 00:22:20.417518200 -0800
++++ b/memory/cm1000-bracket.md	2026-11-11 00:24:00.548433300 -0800
+@@ -1,50 +1,22 @@
+ ---
+ name: cm1000-bracket
+-description: "Brian's modem is a Netgear CM1000 in a 3-piece bracket (faceplate + rails v2); files in outputs/STL_Deliveries/2026-10-16_CM1000_bracket"
++description: "Brian's rack modem is a Netgear CM1000; the one-piece CM1P bracket is current; measured modem sizes and things not to raise again"
+ metadata:
+   node_type: memory
+   type: project
+-  originSessionId: 313c82c7-9ab3-4155-af38-faaad47cd592
+-  modified: 2026-11-02T07:14:48.668Z
+ ---
+ 
+-The rack modem (U9) is a **Netgear CM1000**, not the ECB7250 (that one is for the wall box). Its bracket is 3 pieces: faceplate + left rail + right rail; rails v2 (2026-10-16) added screw clearance/access bays so Brian can reach the screws. Files: outputs/STL_Deliveries/2026-10-16_CM1000_bracket/ (originals in Downloads); envelope model work/equipment-models/netgear_cm1000/.
++The rack modem (U9) is a **Netgear CM1000**, not the ECB7250 (that one is for the wall box). Claude once put a generic ECB7250 placeholder at U9.
+ 
+-**Why:** Claude once put a generic ECB7250 placeholder at U9 and didn't know the bracket existed.
+-**How to apply:** Brian (2026-10-23): the source remix's license permits this use, so don't raise license concerns about it. Related: [[stl-delivery-combined]].
++**Current bracket:** the one-piece CM1P series (faceplate and rails in one print). CM1P-K printed a perfect fit (2026-11-02). Which revision is current, and every fit report, is in HANDOFF.md and docs/Fit_Findings.md; check there, not here. The earlier 3-piece bracket, CM6A and CM6C are superseded; CM6C, CM1P-B/C/D, G and T4 were never printed and must not be.
+ 
+-2026-10-28: M6 revision CM6A in outputs/CM1000_M6_2026-10-28/ (unprinted). Its faceplate must be rebuilt with FreeCAD (src/faceplate_freecad.py): OpenSCAD 2021 CGAL chokes on the baseline mesh's sliver triangles. Related: [[m6-bracket-hardware]].
++**Measured modem (Brian, 2026-11-02):** 212 end to end (211.69 by calipers on a slice), 44.4 tall, end wedge 15, flat strip 3 wide on each end. There is no device card yet; these belong in docs/devices/ when one is made.
+ 
+-2026-11-01 (Brian, marked on diagram): modem is 44.5 tall (not ~40/38) with a 12 mm end wedge; rail cavity's 14.2 wedge may stay if it gives more clearance. Tip-to-tip width still unmeasured. Symptom: slides in from the rear, jams near the faceplate. With the modem forced in, CM6A rail rear ends measure 228 outer (design 220.46): 3.8 per side, matching the wedge-slope overlap calculated from 12/44.5. Cause: rail channel slope, not rail spacing. Brian approved reshaping the channel: CM6C in outputs/CM1000_CM6C_2026-11-01/ is now the current bracket (unprinted), replacing CM6A; the "identical to original" rule below gave way for this fit fix only. Later 2026-11-01: Brian rejected CM6C's truss rails; going with plain solid rails printed in ONE PIECE with the faceplate, and a quick test print comes first (full prints take too long). CM6C was never printed: do not print it. Corrected modem numbers: 212 x 44.4, 14 end wedge, flat gray strip on each end (width unmeasured), not the 44.5/12 above. T1 too tight; T2 (1.5 per side, unprinted) awaits his fit report. Don't add frame stiffness until it fits (Brian).
++**Don't raise again (Brian, 2026-11-02):** the modem does not taper toward the rear, its height in the rails is fine and it does not touch the switch below. Offsets in close-up photos were camera angle.
+ 
+-2026-10-28 (Brian): CM6A is THE CM1000 bracket (baseline + M6 only, in outputs/Final_3MF). Generator rebuild CM6B was dropped after losing pocket shape, icons and angled pipe ends. Remixed brackets must stay identical to the original except the M6 hardware; never regenerate them from measurements. Related: [[keep-requested-features]].
+-
+-2026-11-02: CM1P-T2 printed: went on very easily, total play about 3.31 (design 3.0), modem front touches the end-block walls. Modem about 211.69 across if nothing flexed. Full one-piece bracket is next.
+-
+-2026-11-02: Brian asked for one more test first: CM1P-T3 (outputs/CM1000_OnePiece_Test_CM1P-T3_2026-11-02, 0.75 per side, real faceplate pocket and pipes), unprinted. In FreeCAD, avoid coplanar mesh faces and use removeSplitter, or the STL export cracks.
+-
+-2026-11-02: CM1P-T3 printed: on the modem, side play 1.5 = design, so 0.75 per side and modem width 211.69 hold on a 30 mm slice. Hand effort and pencil-line seating still to report at time of writing; see HANDOFF.
+-
+-2026-11-02: T3 went on by hand, seated like T2 by photo. Full part CM1P-A built (outputs/CM1000_OnePiece_CM1P-A_2026-11-02), unprinted; modem hole distance back unmeasured. Coplanar mesh faces in FreeCAD can silently lose the plate: always check bbox and volume.
+-
+-2026-11-02: CM1P-A side slot is on the LEFT rail only (Brian), 1 mm longer at each end, screw range 61.4 to 73 behind modem front.
+-
+-2026-11-02: CM1P-B = CM1P-A with rail windows, current fitment draft (Brian wants quicker prints; final may go back to solid).
+-
+-2026-11-02: CM1P-C = CM1P-B with plain front, no pipes/logo/icons, current fitment and mounting draft. Final part needs those features back (Brian only dropped them for the test).
+-
+-2026-11-02: CM1P-D = solid rails + plain front, current fitment and mounting draft. Rail windows (B, C) dropped: Brian found they took just as long to print.
+-
+-2026-11-02: Brian is printing CM1P-A (latest: 4 mm ears, left-rail slot, plate 254 x 44.45, colour parts). B, C, D dropped, never printed; they saved about no time. Awaiting his fit report.
+-
+-2026-11-02 (Brian): the modem does NOT shrink toward the rear, its height in the rails is fine, and it does not touch the switch below. Do not raise taper, sag or switch contact again; apparent offsets in close-up photos were camera angle. Remaining looseness questions: clearance and rail flex only.
+-
+-2026-11-02 (Brian measured): modem 212 end to end, end flat strip 3 wide (not the 8 assumed since T2). E empty at rail tips: outside 221.5, V floor to floor 214, side play 3. Next idea CM1P-G: matched channel with rail tips pulled in; not built until Brian says.
+-
+-2026-11-02: CM1P-T4 slice built, unprinted (T3 + 4 floor, matched slopes, 0.25 per side). F on hold. If T4 fits: CM1P-G = F + T4 channel + tips pulled in about 0.5 per side.
+-
+-2026-11-02: CM1P-G built (Brian asked for it without printing T4), unprinted, in Final_3MF. F + T4 channel + 0.52 per side lean at tips. Awaiting his report.
+-
+-2026-11-02 (Brian): modem end wedge is 15, not 14. CM1P-H replaces G and T4 (both 14, never print): G + 15 wedge, unprinted, in Final_3MF.
+-
+-2026-11-02: one-piece bracket CM1P-K printed: perfect fit (Brian). CM1P-M (slot centred on 80 from faceplate front, unprinted) is current; supersedes the 3-piece approach.
++**Rules that came out of it:**
++- Remixed brackets keep their original mesh except the requested change; never regenerate one from measurements (CM6B lost the pocket shape, icons and angled pipe ends). Related: [[keep-requested-features]].
++- Features Brian dropped only for a quick test print (pipes, logo, icons) come back in the final part.
++- Don't add frame stiffness until it fits. A quick test slice comes before a full print.
++- The source remix's licence permits this use (Brian, 2026-10-23).
++- FreeCAD (src/faceplate_freecad.py; OpenSCAD 2021 CGAL chokes on the baseline mesh's sliver triangles): avoid coplanar mesh faces and use removeSplitter, or the STL export cracks or silently loses the plate. Always check bbox and volume.
+diff -ruN a/memory/codex-prompt-delivery.md b/memory/codex-prompt-delivery.md
+--- a/memory/codex-prompt-delivery.md	2026-11-11 00:22:20.435668100 -0800
++++ b/memory/codex-prompt-delivery.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,17 +0,0 @@
+----
+-name: codex-prompt-delivery
+-description: Every Codex prompt goes in the final message of the turn AND gets saved to docs/prompts/codex/
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: b151aa18-e722-416c-b95e-443eaf2c05d2
+-  modified: 2026-10-21T04:18:04.862Z
+----
+-
+-Whenever there's a prompt for Brian to paste into Codex: put it in a fenced block in the **final** message of the turn (never only mid-turn), and save it as a file in `docs/prompts/codex/` named `YYYY-MM-DD_<topic>.md` (prompt in a code block plus one line on what it does). Universal rule until Brian says otherwise.
+-
+-**Why:** On 2026-10-19 the Step 4 Codex prompt was posted between tool calls and Brian couldn't find it ("where's the prompt?").
+-
+-On 2026-10-20 (task 34 review) Claude only gave the file path, and Brian repeated: "always always always provide the actual prompt in the chat". A file path alone is NEVER enough. This includes side sessions, whose reports get relayed: paste the full prompt text there too.
+-
+-**How to apply:** Any time work is split to Codex (work/codex-tasks/). Still one combined prompt per [[single-prompt-batching]].
+diff -ruN a/memory/draft-until-printing.md b/memory/draft-until-printing.md
+--- a/memory/draft-until-printing.md	2026-11-11 00:22:20.452762500 -0800
++++ b/memory/draft-until-printing.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,12 +0,0 @@
+----
+-name: draft-until-printing
+-description: Part designs stay drafts (viewer page only) until Brian says he's printing; measure devices first; fit reports by ID
+-metadata:
+-  type: feedback
+----
+-
+-Part work stays a draft until Brian says he's printing it: one working SCAD and a viewer page, with small changes batched. The new ID, 3MF, README, handoff entry and release come only then. A new device gets a measured card in `docs/devices/` before its first print. Each delivery ends with a short fit report for him to send back.
+-
+-**Why:** Brian chose this on 2026-11-05. The CM1000 took 6 prints before the modem was measured, and revisions like ER6-A to H each got a full release without a print logged.
+-
+-**How to apply:** follow the /new-part skill, which holds the steps. Related: [[always-diagrams]], [[keep-proven-fit-dims]], [[test-print-ids]].
+diff -ruN a/memory/duplicate-prompt-gif.md b/memory/duplicate-prompt-gif.md
+--- a/memory/duplicate-prompt-gif.md	2026-11-11 00:22:20.470293600 -0800
++++ b/memory/duplicate-prompt-gif.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,14 +0,0 @@
+----
+-name: duplicate-prompt-gif
+-description: "If Brian sends the same prompt/data twice in a row, reply with the \"You sure about that?\" meme"
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: bb5648b4-c629-47fe-9805-5d0e99189280
+-  modified: 2026-10-19T18:03:18.715Z
+----
+-
+-If Brian ever sends a duplicate prompt or piece of data twice in a row (in any chat), respond with the "YOU SURE ABOUT THAT?" meme (Tim Robinson, I Think You Should Leave): reply with **"YOU SURE ABOUT THAT?"** 🤨 (no ability to attach the gif itself, so use the caption).
+-
+-**Why:** Brian's explicit request, 2026-10-19; fits [[memes-welcome]].
+-**How to apply:** On an exact/near-exact repeat of the previous message, lead with the meme line, then ask whether the resend was intentional before redoing work.
+diff -ruN a/memory/faceplate-44-standard.md b/memory/faceplate-44-standard.md
+--- a/memory/faceplate-44-standard.md	2026-11-11 00:22:20.489343800 -0800
++++ b/memory/faceplate-44-standard.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,17 +0,0 @@
+----
+-name: faceplate-44-standard
+-description: "44.4 mm-per-U faceplate is the standard (coupons FP44 fit perfectly, Brian 2026-10-20); plate centred in slot, Z=0 = slot bottom"
+-metadata:
+-  node_type: memory
+-  type: project
+-  originSessionId: b3a43b59-34b5-427c-9ee2-5a9ea23e995d
+-  modified: 2026-10-20T16:25:12.369Z
+----
+-
+-Brian printed FP44-A..D coupons on 2026-10-20 and said they're a perfect fit; 44.4 mm per 1U replaces the 42 mm gold-standard plate (width/thickness/corners/slots unchanged). Recorded in AGENTS.md; implementation = Codex task 25, followed by 26 (204 mm tray width hard limit) and 27 (sleeve mount + flush front, OptiPlex on rear support).
+-
+-**Why:** the third-party OptiPlex bracket uses a full 44.4 panel and a flush window needs a top bar; 42 mm couldn't keep one.
+-
+-**How to apply:** new faceplate geometry assumes 44.4; old revisions stay immutable. The app had a 1.225 mm slot-offset bug (plate drawn/checked as if its bottom were the slot bottom) — task 25 fixes it. Related: [[test-print-ids]], [[keystone-settled]].
+-
+-2026-10-20 later: tasks 25-27 done and reviewed. Feet grooves found in the bracket via the new outputs/Mechanical_Design_App/mesh_study.py (per-body ray casting; overlapping bodies fool even/odd counting). Brian: finding and working around things like this is "the whole point of our app" — keep reference-mesh analysis as a core capability. Task 28 = foot detection + floor pockets.
+diff -ruN a/memory/fastener-sizes.md b/memory/fastener-sizes.md
+--- a/memory/fastener-sizes.md	2026-11-11 00:22:20.507243400 -0800
++++ b/memory/fastener-sizes.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,24 +0,0 @@
+----
+-name: fastener-sizes
+-description: "Screw size policy - M3 default, M6 for weight bearing, M2/M2.5 only when the device forces it; ask if unsure"
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: c269cee7-37ab-4d1f-8503-07f42e5384ac
+-  modified: 2026-10-31T17:21:47.637Z
+----
+-
+-Fastener sizes (Brian, 2026-10-31):
+-- **M3** is the default for ordinary joints (frames, decks, covers, part-to-part).
+-- **M6** for weight-bearing joints (rack, brackets, shelves; see [[m6-bracket-hardware]]).
+-- **M2 / M2.5** only where the device forces it (e.g. the screen's own standoffs, Pi 4 mounting holes).
+-- Brian has M3 countersunk and M2.5 socket-head screws on hand.
+-- Always heat-set inserts, never self-tapping ([[no-self-tapping]]).
+-
+-**Why:** small screws are fragile and add BOM types. SCR5-H used M2.5 frame and deck screws where M3 fits.
+-**How to apply:** pick M3 unless the part is weight-bearing (M6) or the hole is fixed by the device. If unsure which, ask Brian.
+-
+-Heat-set inserts on hand (Brian, 2026-10-31; read as thread x length x OD):
+-- M6 x 5 x 8: the 7.6 mm bore matches the rack posts (proven).
+-- M3 x 3 x 5: 4.2 mm bore, 4 mm deep.
+-- M2.5 x 4 x 3.5: 3.2 mm bore, 5 mm deep.
+diff -ruN a/memory/fresh-session-per-step.md b/memory/fresh-session-per-step.md
+--- a/memory/fresh-session-per-step.md	2026-11-11 00:22:20.525653300 -0800
++++ b/memory/fresh-session-per-step.md	2026-11-11 00:22:21.457553000 -0800
+@@ -11,4 +11,4 @@
+ Start each step of a multi-step plan (e.g. cable management Steps 1–5) in its own fresh session, with a self-contained brief, rather than continuing in a long session.
+ 
+ **Why:** Brian (2026-10-19): "I'd like to have fresh sessions at the start of every step, for your own sanity" — long sessions drift (stale context led to wrong status claims earlier that day).
+-**How to apply:** when a step finishes, offer/start the next step as a new "fresh" session whose brief points at the step's docs/reports; check files on disk for current state instead of relying on memory. Related: [[single-prompt-batching]], [[brian-working-style]].
++**How to apply:** when a step finishes, offer/start the next step as a new "fresh" session whose brief points at the step's docs/reports; check files on disk for current state instead of relying on memory. Related: global CLAUDE.md, global CLAUDE.md.
+diff -ruN a/memory/gene-simmons-on-commit.md b/memory/gene-simmons-on-commit.md
+--- a/memory/gene-simmons-on-commit.md	2026-11-11 00:22:20.543059900 -0800
++++ b/memory/gene-simmons-on-commit.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,17 +0,0 @@
+----
+-name: gene-simmons-on-commit
+-description: "After every commit AND every finished task/undertaking (even with no commit in that session), send Brian the Gene Simmons photo (work/gene-success/gene.png)"
+-metadata:
+-  type: feedback
+----
+-
+-Send Brian the Gene Simmons photo with SendUserFile, `work/gene-success/gene.png` (repo root), every time:
+-- a git commit is made, and
+-- a task or undertaking is finished, including wrap-ups where the work was committed in another session.
+-
+-Brian set the commit rule on 2026-10-20 and widened it on 2026-10-20: "you should still hit me with gene every time we accomplish an undertaking or task". He said this after I closed a session without Gene because nothing was committed there.
+-
+-**Why:** a fun celebration ritual; Brian likes memes ([[memes-welcome]]).
+-**How to apply:** after each successful commit, and in the closing message of any completed task, send the photo once. Never stage or commit work/gene-success/ itself.
+-
+-**Limit (2026-10-22):** one Gene per real accomplishment. Don't send extra ones for pushes, retries or because Brian asks "where's Gene" after a no-op step; he said "don't give me Gene when I haven't earned it."
+diff -ruN a/memory/honest-not-harsh.md b/memory/honest-not-harsh.md
+--- a/memory/honest-not-harsh.md	2026-11-11 00:22:20.562224600 -0800
++++ b/memory/honest-not-harsh.md	2026-11-11 00:22:21.466753000 -0800
+@@ -11,4 +11,4 @@
+ Brian (2026-10-20): "you can disagree without being disagreeable." He dislikes AI sycophancy but doesn't want a harsh/blunt default either.
+ 
+ **Why:** reflexive validation is useless to him; he wants real pushback he can trust.
+-**How to apply:** when he's wrong or a plan has holes, say so plainly and early, with reasons, in a friendly tone. Skip empty praise and reassurance-first framing. See [[brian-working-style]].
++**How to apply:** when he's wrong or a plan has holes, say so plainly and early, with reasons, in a friendly tone. Skip empty praise and reassurance-first framing. See global CLAUDE.md.
+diff -ruN a/memory/keystone-settled.md b/memory/keystone-settled.md
+--- a/memory/keystone-settled.md	2026-11-11 00:22:20.614414200 -0800
++++ b/memory/keystone-settled.md	2026-11-11 00:24:23.956589300 -0800
+@@ -7,4 +7,4 @@
+ Brian (2026-10-19): the v5 "golden tight02" keystone (ks_style="golden", ks_tight=0.2, opening 14.8 x 16.4) printed a perfect fit; "use this from now on."
+ 
+ **Why:** v2 was loose, v3 had up/down play, v4 (0.4) was too tight; v5 is the one he chose.
+-**How to apply:** Don't tweak keystone geometry or propose new keystone coupons unless Brian asks. The fit is specimen-specific; retention over time is still UNKNOWN. See [[pi-is-sample-equipment]].
++**How to apply:** Don't tweak keystone geometry or propose new keystone coupons unless Brian asks. The fit is specimen-specific; retention over time is still UNKNOWN. The rule itself is in AGENTS.md.
+diff -ruN a/memory/leave-design-margin.md b/memory/leave-design-margin.md
+--- a/memory/leave-design-margin.md	2026-11-11 00:22:20.632049600 -0800
++++ b/memory/leave-design-margin.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,12 +0,0 @@
+----
+-name: leave-design-margin
+-description: Leave real room around screw heads and other non-fit features; do not design down to the last fraction of a mm
+-metadata:
+-  type: feedback
+----
+-
+-Leave real room around screw heads, tool paths and other non-fit features, and tell Brian about any tight spot. Minimum 1 mm around a screw head (Brian, 2026-11-05), with its recess completely open; the proven 11.5 M6 recess keeps its size. Check it with `--keepout` in tools/release_part.py.
+-
+-**Why:** Brian, 2026-11-05, on the SG8-M6-F M6 heads next to the sleeve lip: they fit, "but we should strive to not be so close every time."
+-
+-**How to apply:** check the room around hardware during design. Proven fit clearances still stay as printed: [[keep-proven-fit-dims]]. Also in the /new-part skill.
+diff -ruN a/memory/m5-extrusion-frame.md b/memory/m5-extrusion-frame.md
+--- a/memory/m5-extrusion-frame.md	2026-11-11 00:22:20.650658800 -0800
++++ b/memory/m5-extrusion-frame.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,14 +0,0 @@
+----
+-name: m5-extrusion-frame
+-description: "Own 9U rack = 2020 extrusion + printed rounded 3-way corner nodes, option A (faceplates proud); M5 frame hardware approved 2026-10-31"
+-metadata:
+-  node_type: memory
+-  type: project
+-  originSessionId: 5c779ae8-89b6-40a6-95e1-9766be51175f
+-  modified: 2026-11-01T03:06:32.797Z
+----
+-
+-Brian 2026-10-31: building our own 9U rack. 2020 aluminium, off-the-shelf lengths only, never custom cuts (posts 4 x 400, width members + depth rails 8 x 200) joined by printed rounded 3-way socket corner nodes (his reference: classic 3-way connector, "a little more rounded"). He chose **option A**: frame is a clean rounded box, faceplates/strips stand ~12 mm proud (not the flush bezel option B). One side brace per side, middle 3U only ("we don't need braces friggin everything"). Soft corners wanted. M5 approved for frame hardware only; printed parts keep [[fastener-sizes]] rules. Depth 240 mm (OptiPlex sleeve). Hole spacing (EIA 15.875 vs Lab Rax 15.902) still open.
+-
+-**Why:** an original rack frees the project from Lab Rax licensing for sharing.
+-**How to apply:** BOM work/rack-frame/BOM.md. Brian caught several misaligned concept models: render and check every model view yourself before sending.
+diff -ruN a/memory/m6-bracket-hardware.md b/memory/m6-bracket-hardware.md
+--- a/memory/m6-bracket-hardware.md	2026-11-11 00:22:20.669079800 -0800
++++ b/memory/m6-bracket-hardware.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,17 +0,0 @@
+----
+-name: m6-bracket-hardware
+-description: "Brian 2026-10-28 — all bracket/faceplate designs switch from M3 inserts to the rack's M6 heat-set inserts + M6x8 button-head screws"
+-metadata:
+-  node_type: memory
+-  type: project
+-  originSessionId: d2524a8b-1021-4c64-a5d0-cdae362239cb
+-  modified: 2026-10-28T20:52:13.419Z
+----
+-
+-Brian (2026-10-28) started a faceplate/bracket overhaul: every bracket redesign replaces all M3 heat-set inserts with the same M6 heat-set inserts used in the Lab Rax rack posts, and uses the same M6 x 8 button-head screws as the shelf. One-item BOM; M3 was not rigid enough for heavy items. Claude is the orchestrator: one bracket per fresh session (HDD/SSD tray first, 2026-10-28). Printed baseline list is at the top of HANDOFF.md.
+-
+-**Why:** rigidity for heavy equipment and a simple BOM.
+-**How to apply:** new bracket geometry uses M6 insert bores and M6x8 button heads; insert is M6 x 5 long x 8 OD (Brian 2026-10-31), bore 7.6 as the rack posts; see [[fastener-sizes]]. Old printed revisions stay immutable. Related: [[keep-requested-features]], [[fresh-session-per-step]], [[beta-heavy-work-to-codex]].
+-Also (Brian 2026-10-28): every revision should consider tying trays into the unused rack-post holes (middle hole per U, unconfirmed) for rigidity; notes + photo in work/bracket-overhaul/README.md.
+-
+-**Faceplates: only ever the 4 corner rack holes (Brian, 2026-10-28).** Never add middle slots to a faceplate for the posts' empty middle holes; those could only be used by a tie-in from behind.
+diff -ruN a/memory/memes-welcome.md b/memory/memes-welcome.md
+--- a/memory/memes-welcome.md	2026-11-11 00:22:20.688669600 -0800
++++ b/memory/memes-welcome.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,15 +0,0 @@
+----
+-name: memes-welcome
+-description: User enjoys memes/funny gifs sprinkled into conversation to keep it fun
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: 8ba295d7-37a1-43a4-b01e-faffa53b83b5
+-  modified: 2026-10-21T04:46:41.602Z
+----
+-
+-The user said they are very receptive to memes and funny gifs; throw some in from time to time.
+-
+-**Why:** keeps the long build sessions fun for a non-engineer owner.
+-**How to apply:** occasional short text memes / ASCII gags or well-known gif references (no external downloads), not every turn; keep turns efficient (user is low on usage). Brian (2026-10-20) wants edgier, adult-level humor, not tame Disney-style gags: crude/irreverent is fine, sarcasm welcome. But only during play/banter: when getting work done, keep it straight and friendly, edge off (his words: "too old to be edgy when trying to get something done").
+-Brian (2026-10-20, later): "you can use memes to speak to me": memes are an allowed way to talk to him in replies, but "not all the time" (now and then, not every message) (meme formats, captions, references), as long as the actual facts/status stay clear and plain alongside. See also [[gene-simmons-on-commit]].
+diff -ruN a/memory/mesh-viewer-always.md b/memory/mesh-viewer-always.md
+--- a/memory/mesh-viewer-always.md	2026-11-11 00:22:20.708537700 -0800
++++ b/memory/mesh-viewer-always.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,21 +0,0 @@
+----
+-name: mesh-viewer-always
+-description: Any STL/3MF work → auto-build tools/mesh_viewer.py page and SendUserFile render; Brian marks pins/circles and pastes notes back
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: 5503bcc1-18e3-4890-93c4-7d9aef62cbc1
+-  modified: 2026-10-28T22:44:59.026Z
+----
+-
+-Whenever work produces, changes or examines STL/3MF files, build the viewer (`tools/mesh_viewer.py`) and send it with SendUserFile display "render", unasked. Brian replies with pasted "3D viewer notes" (Pin/Circle marks with mm coordinates and part names) or a marked picture.
+-
+-**Why:** the Claude app panel can't show STL/3MF; Brian wants to see every part and point at problems (2026-10-27).
+-**How to apply:** one page per job with all its parts; read pasted coordinates in the file's own frame. Also in global CLAUDE.md and AGENTS.md. Related: [[stl-delivery-combined]].
+-**Also publish it as an Artifact link (2026-10-28):** Brian often works over Remote Control where file cards don't show; he got angry when a mockup was only sent as a file. Publish the viewer HTML with the Artifact tool (private; only our own meshes, never third-party ones) and put the clickable URL in the message, plus SendUserFile. Re-publish the same file path to keep the URL.
+-
+-**Artifact link is the DEFAULT, every time (Brian, 2026-10-28, repeated after it was missed again):** "I work best when you show me what you've done." I can't reliably tell when he's on Remote Control (laptop/phone), so always publish the viewer as an Artifact and give the URL first, without being asked; the browser pane and file card are only extras for the PC.
+-
+-**Show it in the browser pane (Brian, 2026-10-28):** SendUserFile with display "render" shows the HTML as code for him. Also open it: preview_start {name: "Mesh viewer pages"} (.claude/launch.json, http.server on 8861 serving work/mesh-viewer/), then navigate to http://localhost:8861/<page>.html.
+-
+-**Assembled views need `--as-is`** (2026-10-30): without it the viewer lays parts side by side. Use `--as-is` whenever Brian asks for an assembled look.
+diff -ruN a/memory/multi-device-setup.md b/memory/multi-device-setup.md
+--- a/memory/multi-device-setup.md	2026-11-11 00:22:20.726492300 -0800
++++ b/memory/multi-device-setup.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,14 +0,0 @@
+----
+-name: multi-device-setup
+-description: "Brian uses laptop + phone via Remote Control; this desktop PC is the single home for project, data and app (chosen 2026-10-19)"
+-metadata:
+-  node_type: memory
+-  type: project
+-  originSessionId: 95f3b774-0b27-449f-9cfe-7674789c8c9d
+-  modified: 2026-10-19T13:30:46.314Z
+----
+-
+-Brian chose (2026-10-19) "option 1": this desktop PC is the only live home for Assembly Workshop files, data/normal-use and the running app. Laptop and phone only steer Claude sessions here via Remote Control (claude.ai/code or the mobile app). No synced working copies elsewhere.
+-
+-**Why:** two live copies of the SQLite/rack data could overwrite or corrupt each other; creator/supplier assets must stay local.
+-**How to apply:** don't propose syncing/copying the project to other devices or exposing the app on the LAN; the 3D app view is PC-only. Send files to the user with SendUserFile so they reach the phone. See [[backup-locations]].
+diff -ruN a/memory/new-part-workflow.md b/memory/new-part-workflow.md
+--- a/memory/new-part-workflow.md	1969-12-31 16:00:00.000000000 -0800
++++ b/memory/new-part-workflow.md	2026-11-11 00:23:47.512084900 -0800
+@@ -0,0 +1,16 @@
++---
++name: new-part-workflow
++description: Any part design work follows the /new-part skill; this keeps the reasons behind its rules
++metadata:
++  type: project
++---
++
++Any part work follows `.claude/skills/new-part/SKILL.md`, which holds the steps. Why its rules exist (all Brian, 2026-11-05):
++
++- **Draft until printing, measure first, fit report by ID:** the CM1000 took 6 prints before the modem was measured, and ER6-A to H each got a full release with no print logged.
++- **`tools/release_part.py`** replaces the per-part build scripts and the by-hand 3MF and viewer steps. Its ID check reads only the source and its hole scan is a heuristic, so still confirm IDs and bores in the viewer. Its MRT-F test 3MF opened with both parts in Bambu Studio.
++- **`lib/workshop.scad` + pinned BOSL2:** proven shapes drifted when copied between parts. Move a shape into the library when a second part needs it and check it in `tools/test_workshop_lib.py`. Post rails are not in the library yet.
++- **Design margin:** SG8-M6-F's M6 heads sat right beside the sleeve lip: they fit, "but we should strive to not be so close every time."
++- **OpenSCAD snapshot:** 26–276x faster on three real parts with near-identical meshes. Old per-part build scripts hardcode 2021.01, so check the path when copying one. `manifold3d` is installed for exact clearance checks.
++
++Related: [[keep-proven-fit-dims]], [[keep-requested-features]], [[check-3mf-loads]].
+diff -ruN a/memory/no-drilling-prints.md b/memory/no-drilling-prints.md
+--- a/memory/no-drilling-prints.md	2026-11-11 00:22:20.761338700 -0800
++++ b/memory/no-drilling-prints.md	2026-11-11 00:22:21.494357300 -0800
+@@ -11,4 +11,4 @@
+ Never plan on or suggest drilling a printed part. Any hole, insert bore or later add-on point has to be modeled into the part before it prints.
+ 
+ **Why:** Brian, 2026-11-02, when I suggested CM1P-I's rail tips could take inserts after printing: "i'm not drilling any printed parts".
+-**How to apply:** If an add-on might be wanted later, raise it before the print and put its bores in that revision. Related: [[no-self-tapping]], [[fastener-sizes]].
++**How to apply:** If an add-on might be wanted later, raise it before the print and put its bores in that revision. Related: global CLAUDE.md, global CLAUDE.md.
+diff -ruN a/memory/no-phases.md b/memory/no-phases.md
+--- a/memory/no-phases.md	2026-11-11 00:22:20.778150900 -0800
++++ b/memory/no-phases.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,15 +0,0 @@
+----
+-name: no-phases
+-description: Brian retired the numbered-phase plan; use ROADMAP.md Now/Next/Later instead
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: 67e8430c-0367-4a07-8eb3-818535da929f
+-  modified: 2026-10-19T15:39:18.907Z
+----
+-
+-Don't talk about "Phase 6/7", milestones or "closed with limitations" for Assembly Workshop. Plans live in ROADMAP.md (Now / Next / Later, no dates or gates).
+-
+-**Why:** Brian (2026-10-19) called the phase era "the dark days", saying it "was just awful".
+-
+-**How to apply:** Write new docs/reports/handoffs without phase language. Old phase-named folders and files (outputs/Phase7_*, catalog-packs/phase6-*) stay as preserved history; don't rename or delete them.
+diff -ruN a/memory/no-self-tapping.md b/memory/no-self-tapping.md
+--- a/memory/no-self-tapping.md	2026-11-11 00:22:20.795058500 -0800
++++ b/memory/no-self-tapping.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,14 +0,0 @@
+----
+-name: no-self-tapping
+-description: Never design for self-tapping screws into printed plastic; always heat-set inserts
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: c269cee7-37ab-4d1f-8503-07f42e5384ac
+-  modified: 2026-10-31T17:14:57.238Z
+----
+-
+-Never use self-tapping screws into printed pilot holes. Every screw joint in a printed part gets a heat-set insert (M6 for brackets per [[m6-bracket-hardware]], M2.5/M3 inserts for small device joints).
+-
+-**Why:** Brian, 2026-10-31, after SCR5-H's frame-to-plate joint used M2.5 self-tappers in 2.1 mm pilots: "i wish i would've told you to never use self tapping screws".
+-**How to apply:** check new and revised designs for printed pilots meant for screws and replace them with insert bores. If the insert OD isn't measured, reuse the project's existing insert_pilot value and flag it UNKNOWN.
+diff -ruN a/memory/openscad-snapshot-new-parts.md b/memory/openscad-snapshot-new-parts.md
+--- a/memory/openscad-snapshot-new-parts.md	2026-11-11 00:22:20.812530800 -0800
++++ b/memory/openscad-snapshot-new-parts.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,12 +0,0 @@
+----
+-name: openscad-snapshot-new-parts
+-description: New parts render with pinned OpenSCAD 2026.11.01 snapshot + --backend=manifold; old revisions and the app stay on 2021.01
+-metadata:
+-  type: project
+----
+-
+-Brian, 2026-11-05: new parts use `D:\Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe --backend=manifold`. Reproducing existing revisions, the app and its existing scripts stay on `C:\Program Files\OpenSCAD\openscad.exe` (2021.01).
+-
+-**Why:** tested on three real parts, 26–276x faster with near-identical meshes, but text outlines differ slightly, so old revisions wouldn't reproduce exactly.
+-
+-**How to apply:** don't auto-update the snapshot. Old per-part build scripts hardcode 2021.01, so check the path when copying one for a new part. `manifold3d` is installed for exact clearance checks; related: [[keep-proven-fit-dims]].
+diff -ruN a/memory/optiplex-sleeve-settled.md b/memory/optiplex-sleeve-settled.md
+--- a/memory/optiplex-sleeve-settled.md	2026-11-11 00:22:20.829471500 -0800
++++ b/memory/optiplex-sleeve-settled.md	2026-11-11 00:24:23.954496200 -0800
+@@ -1,6 +1,6 @@
+ ---
+ name: optiplex-sleeve-settled
+-description: OptiPlex orientation is SETTLED (push back on changes); Brian replaced the full-tray mounting with front sleeve + rear channels on 2026-11-01 (OPX-A, concept)
++description: OptiPlex orientation is SETTLED (push back on changes); front sleeve + rear channels replaced the full tray on 2026-11-01; measured case and feet
+ metadata:
+   node_type: memory
+   type: project
+@@ -13,9 +13,9 @@
+ Still settled:
+ - OptiPlex Micro imported from Dell's STEP with **X is up + Rotate 90° ONCE**: the power button is at the faceplate, and the back ports face the rear posts. The old "Rotate ×3" was backwards.
+ 
+-Changed by Brian on 2026-11-01, after he was reminded of the note above: the full 240 mm tray and one-piece rear bracket are replaced by a one-piece front sleeve plus two rear C-channels (OPX-C, outputs/OptiPlex_Sleeve_Channels_OPX-C_2026-11-01/: rear stops, no front lips (Brian declined them), case front flush with the plate face and raised bezel 2.3 proud). OPX-A and OPX-B are superseded. OPX-D (outputs/OptiPlex_Sleeve_Channels_OPX-D_2026-11-01/) adds 2 front post rails, sleeve runners and a middle screw in each rear ear; it replaced OPX-C as the print file 2026-11-01. Brian printed OPX-D; OPX-E rails (+0.5 per side) printed, improved but still tight; OPX-F (+1.0 per side) printed: good fit (Brian 2026-11-04). OPX-G (2026-11-04) = channels with a cable window, unprinted. Rear stops and feet line up fine. Printed baseline stays SLV-F until he reports a fit.
++Changed by Brian on 2026-11-01, after he was reminded of the note above: the full 240 mm tray and one-piece rear bracket are replaced by a one-piece front sleeve plus two rear C-channels (OPX-C, outputs/OptiPlex_Sleeve_Channels_OPX-C_2026-11-01/: rear stops, no front lips (Brian declined them), case front flush with the plate face and raised bezel 2.3 proud). OPX-A and OPX-B are superseded. OPX-D (outputs/OptiPlex_Sleeve_Channels_OPX-D_2026-11-01/) adds 2 front post rails, sleeve runners and a middle screw in each rear ear; it replaced OPX-C as the print file 2026-11-01. Brian printed OPX-D; OPX-E rails (+0.5 per side) printed, improved but still tight; OPX-F (+1.0 per side) printed: good fit (Brian 2026-11-04). OPX-G (2026-11-04) = channels with a cable window, unprinted. Rear stops and feet line up fine. Current revision and fit reports: HANDOFF.md and docs/Fit_Findings.md.
+ 
+ Measured by Brian 2026-11-01: 178 deep including the bezel (not 194.5), 182.5 wide, 36 tall. Bezel starts at the left, 122.5 x 23 from the bottom, 2.3 proud. Feet: 5 x 20 (long front to back), 15 from each side, front pair 15 from the case front, rear pair 10 from the rear, 2.8 tall. These replace the STEP-derived feet (15 long) in older specs.
+ 
+ **Why:** Brian works on many things at once and gets turned around about front/back. He explicitly asked to be stopped.
+-**How to apply:** if Brian (or a task) proposes flipping the PC or changing its rotation, say "ARE YOU SURE ABOUT THAT?" and point to this. Change it only if he insists after being reminded. Related: [[duplicate-prompt-gif]], [[faceplate-44-standard]], [[test-print-ids]].
++**How to apply:** if Brian (or a task) proposes flipping the PC or changing its rotation, say "ARE YOU SURE ABOUT THAT?" and point to this. Change it only if he insists after being reminded. Related: global CLAUDE.md, AGENTS.md, AGENTS.md.
+diff -ruN a/memory/own-printed-rack.md b/memory/own-printed-rack.md
+--- a/memory/own-printed-rack.md	2026-11-11 00:22:20.849336600 -0800
++++ b/memory/own-printed-rack.md	2026-11-11 00:24:23.955535600 -0800
+@@ -8,7 +8,7 @@
+   modified: 2026-11-09T20:28:47.652Z
+ ---
+ 
+-Brian (2026-11-09): design our own rack system, Lab Rax U standards (44.45/U, same holes, depth 240) but better looking: tasteful rounding, flush bezel (faceplates sit flush in the post fronts), rear matches front. It **replaces both** the Lab Rax frame and the 2020 extrusion plan ([[m5-extrusion-frame]] is history). Bed 256 x 256. Standard screw for this rack: **M6 x 10** button head + M6 inserts. CT200 200 mm fan on top ([[rack-fan-top]]), plain bottom panel, flush drop-in side panels (low vents), wall cleat. "Stay true to the U standard" even with flush plates.
++Brian (2026-11-09): design our own rack system, Lab Rax U standards (44.45/U, same holes, depth 240) but better looking: tasteful rounding, flush bezel (faceplates sit flush in the post fronts), rear matches front. It **replaces both** the Lab Rax frame and the 2020 extrusion plan. Bed 256 x 256. Standard screw for this rack: **M6 x 10** button head + M6 inserts. CT200 200 mm fan on top ([[rack-fan-top]]), plain bottom panel, flush drop-in side panels (low vents), wall cleat. "Stay true to the U standard" even with flush plates.
+ 
+ **Why:** the Lab Rax is ugly; an own design also frees sharing from its licence.
+-**How to apply:** draft in `work/own-rack/rack.scad` (look A/B and joint 1/2 switches); viewer-only until he says print ([[draft-until-printing]]). Check HANDOFF.md for which look and post joint he picked.
++**How to apply:** draft in `work/own-rack/rack.scad` (look A/B and joint 1/2 switches); viewer-only until he says print ([[new-part-workflow]]). Check HANDOFF.md for which look and post joint he picked. On the earlier 2020-extrusion concept Brian caught several misaligned models: render and check every view yourself before sending.
+diff -ruN a/memory/pi-is-sample-equipment.md b/memory/pi-is-sample-equipment.md
+--- a/memory/pi-is-sample-equipment.md	2026-11-11 00:22:20.866464700 -0800
++++ b/memory/pi-is-sample-equipment.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,14 +0,0 @@
+----
+-name: pi-is-sample-equipment
+-description: "Raspberry Pi 4 is history in Assembly Workshop; deep clean ordered, Pi only as one library example"
+-metadata:
+-  node_type: memory
+-  type: project
+-  originSessionId: 187f975b-d529-48dc-975c-9be138a20de6
+-  modified: 2026-10-20T06:18:03.216Z
+----
+-
+-Brian (2026-10-19): the Pi 4 was only an early fit test; later parts fit fine too, so nothing depends on it. Pi references "everywhere" bugged him; he ordered a deep clean of all levels (UI wording/defaults, Pi-specific code/data with migration, retire the separate Pi build path into docs/archive/pi4-retired-20261019/, keep the Pi as one saved wizard example).
+-
+-**Why:** an earlier attempt left Pi references everywhere.
+-**How to apply:** never add Pi defaults/wording/fields; build generically. Specimen evidence (outputs/Lab_Rax_Pi4_*) stays as history. Done via Codex task 21 (2026-10-19); Print in color still gated for generic faceplates. See [[no-phases]], [[codex-prompt-delivery]].
+diff -ruN a/memory/post-cheek-pattern.md b/memory/post-cheek-pattern.md
+--- a/memory/post-cheek-pattern.md	2026-11-11 00:22:20.883533700 -0800
++++ b/memory/post-cheek-pattern.md	2026-11-11 00:22:21.526157200 -0800
+@@ -15,4 +15,4 @@
+ Brian's rack uses the creator's **4U posts** (object_190 in the Lab Rax posts 3MF), not the 1U post: mid-post the side wall is solid 14 mm, inner face X +/-127.12, **no side holes** (only near post ends). Inner-corner fillet to X 127.1 up to Y ~11.3. Middle front holes have **no insert** yet. Clash-check against the 4U post: `translate([s*126.12,17.5,0]) scale([-s,1,1])` puts its third U in the slot.
+ 
+ **Why:** posts carry the load; one screw per rail plus the plate joint is what the real posts allow. I first modelled the 1U post and got it wrong.
+-**How to apply:** reuse `outputs/Chunky_Revisions/TL-SG108E_post_rails_2026-10-30/src/` (build, clash_check, pack_3mf). Check which post segment/U the bracket lands on. Related: [[use-rear-posts]], [[m6-bracket-hardware]], [[keep-proven-fit-dims]], [[mesh-viewer-always]].
++**How to apply:** reuse `outputs/Chunky_Revisions/TL-SG108E_post_rails_2026-10-30/src/` (build, clash_check, pack_3mf). Check which post segment/U the bracket lands on. Related: [[use-rear-posts]], AGENTS.md, [[keep-proven-fit-dims]], [[show-and-ask]].
+diff -ruN a/memory/push-asks-first.md b/memory/push-asks-first.md
+--- a/memory/push-asks-first.md	2026-11-11 00:22:20.901158600 -0800
++++ b/memory/push-asks-first.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,11 +0,0 @@
+----
+-name: push-asks-first
+-description: "Pushing is pre-approved (2026-10-22): push without asking, never force-push; replaces the old ask-every-time rule"
+-metadata:
+-  type: feedback
+----
+-
+-Brian, 2026-10-22: "new global rule, you have my permission to push." This replaces his 2026-10-20 rule of asking before every push. Codex still works on codex/<name> branches; Claude reviews before merging to main.
+-
+-**Why:** asking each time slowed sessions down. The auto-mode classifier also blocked pushes, and a broken ~/.claude/settings.json (two JSON objects) had kept the allow rule from loading. It's fixed now.
+-**How to apply:** after committing, push to the normal branch (`main`) and report what was pushed. Never force-push; if a push is rejected, pull and merge first. Related: [[cloud-move-plan]].
+diff -ruN a/memory/rack-fan-top.md b/memory/rack-fan-top.md
+--- a/memory/rack-fan-top.md	2026-11-11 00:22:20.917344700 -0800
++++ b/memory/rack-fan-top.md	2026-11-11 00:22:21.537153500 -0800
+@@ -11,4 +11,4 @@
+ Brian (2026-11-05): chimney cooling. A 200 mm fan at the top blows up and out. The stock Lab Rax top (panel 228 x 171.5) is too shallow, so we redesign the top pieces our own way. Intake is a filtered bottom plate (the rack is wall-mounted). Side panels are fitted, with vents low only (slots 8-9). The CM1000 is in slot 1, right under the fan. A 12 V adapter mounts near the fan and may also feed the Pi fan. Fan model, headroom and wall gap are still open. Full notes: work/rack-cooling/Decisions.md.
+ 
+ **Why:** hot air rises; the fan works with convection; there is no spare U, so both ends of the rack frame are used.
+-**How to apply:** the top redesign follows the /new-part workflow ([[release-part-tool]], [[shared-parts-library]], [[draft-until-printing]]); creator meshes are for reference only ([[third-party-models-in-house]]).
++**How to apply:** the top redesign follows the /new-part workflow ([[new-part-workflow]], [[new-part-workflow]], [[new-part-workflow]]); creator meshes are for reference only ([[third-party-models-in-house]]).
+diff -ruN a/memory/release-part-tool.md b/memory/release-part-tool.md
+--- a/memory/release-part-tool.md	2026-11-11 00:22:20.934091500 -0800
++++ b/memory/release-part-tool.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,12 +0,0 @@
+----
+-name: release-part-tool
+-description: New parts go through tools/release_part.py (render, checks, 3MF, frozen src, viewer) instead of per-part build scripts
+-metadata:
+-  type: project
+----
+-
+-Since 2026-11-05, build new parts with `tools/release_part.py`; usage is in PROJECT.md. Then send the viewer page it prints with SendUserFile and publish it as an Artifact.
+-
+-**Why:** Brian wants the 3D workflow faster, and this does by one command what [[check-3mf-loads]], [[stl-delivery-combined]] and [[mesh-viewer-always]] did by hand.
+-
+-**How to apply:** its ID check reads only the source, and its hole scan is a heuristic, so still confirm IDs and bores in the viewer. Uses [[openscad-snapshot-new-parts]]. Brian confirmed its MRT-F test 3MF opens with both parts in Bambu Studio (2026-11-05).
+diff -ruN a/memory/rounded-floor-corners.md b/memory/rounded-floor-corners.md
+--- a/memory/rounded-floor-corners.md	2026-11-11 00:22:20.950256800 -0800
++++ b/memory/rounded-floor-corners.md	2026-11-11 00:22:21.547499200 -0800
+@@ -12,4 +12,4 @@
+ 
+ **Why:** Brian, 2026-11-06: sharp corners on the first layer warp/lift.
+ 
+-**How to apply:** in every new part, build the bed footprint as one 2D shape and round it (`round2d()` in work/moca-rack-tray/MRT.scad is an example); also make sure the floor fully carries any wall-base fillets so nothing overhangs just above the bed. Related: [[leave-design-margin]], [[shared-parts-library]].
++**How to apply:** in every new part, build the bed footprint as one 2D shape and round it (`round2d()` in work/moca-rack-tray/MRT.scad is an example); also make sure the floor fully carries any wall-base fillets so nothing overhangs just above the bed. Related: [[new-part-workflow]], [[new-part-workflow]].
+diff -ruN a/memory/setup-facts.md b/memory/setup-facts.md
+--- a/memory/setup-facts.md	2026-11-11 00:22:20.967761000 -0800
++++ b/memory/setup-facts.md	2026-11-11 00:23:52.483336100 -0800
+@@ -1,16 +1,13 @@
+ ---
+ name: setup-facts
+-description: "Assembly Workshop setup facts — data location, startup, checks, backups, git path"
++description: "Assembly Workshop setup facts — project path, data location, startup, checks, backup folders"
+ metadata:
+   node_type: memory
+   type: reference
+-  originSessionId: 57252ea3-522b-428b-af1e-db58b08d4dd5
+-  modified: 2026-10-21T13:17:09.089Z
+ ---
+ 
+-- Project folder: D:\Projects\assembly-workshop (moved 2026-10-21 from C:\Users\brian\Documents\Codex\2026-10-17\Assembly Workshop; old C: copy left untouched until Brian decides ~2026-10-28).
+-- PC is the only home; laptop/phone via Remote Control; no LAN exposure. [[multi-device-setup]]
+-- Official data: data/normal-use. Start only via outputs/Mechanical_Design_App/start.bat; check no app.py running first; never bare `python app.py`.
+-- Checks: `powershell -NoProfile -ExecutionPolicy Bypass -File outputs\Mechanical_Design_App\run_checks.ps1` (52 Py + 47 JS passed 2026-10-19).
+-- Backups: D:\Backups\Assembly Workshop and private OneDrive\Backups\Assembly Workshop; timestamped, never overwrite, never share-link. Run `"C:\Program Files\Python310\python.exe" -B docs\housekeeping\make_backup.py`. [[backup-locations]]
+-- git not on PATH: C:\Users\brian\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\git\cmd\git.exe (or Git Bash). Commit locally only with Brian's OK; never push.
++- Project folder: D:\Projects\assembly-workshop (since 2026-10-21; not under OneDrive sync). The private GitHub repo is the shared home for both accounts and all devices: AGENTS.md.
++- Official data: data/normal-use. Start only via outputs/Mechanical_Design_App/start.bat; check no app.py is running first. Don't expose the app on the LAN.
++- Checks: `powershell -NoProfile -ExecutionPolicy Bypass -File outputs\Mechanical_Design_App\run_checks.ps1`.
++- Backups (Brian chose local + online, 2026-10-18): `D:\Backups\Assembly Workshop` and `C:\Users\brian\OneDrive\Backups\Assembly Workshop`. Each backup in its own timestamped subfolder, never overwritten, never share-linked. Run `"C:\Program Files\Python310\python.exe" -B docs\housekeeping\make_backup.py`.
++- git is on PATH (C:\Program Files\Git).
+diff -ruN a/memory/shared-parts-library.md b/memory/shared-parts-library.md
+--- a/memory/shared-parts-library.md	2026-11-11 00:22:20.985080800 -0800
++++ b/memory/shared-parts-library.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,12 +0,0 @@
+----
+-name: shared-parts-library
+-description: New parts include lib/workshop.scad and pinned BOSL2; /new-part skill holds the design checklist
+-metadata:
+-  type: project
+----
+-
+-Since 2026-11-05, new parts use `lib/workshop.scad` and `lib/BOSL2`, and design work follows `.claude/skills/new-part/SKILL.md`. Post rails are not in the library yet.
+-
+-**Why:** Brian wants the 3D workflow faster, and proven shapes drift when copied between parts.
+-
+-**How to apply:** move a shape into the library when a second part needs it, and check it against a built part in `tools/test_workshop_lib.py`. Related: [[release-part-tool]], [[keep-proven-fit-dims]].
+diff -ruN a/memory/shop-talk.md b/memory/shop-talk.md
+--- a/memory/shop-talk.md	2026-11-11 00:22:21.000291500 -0800
++++ b/memory/shop-talk.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,13 +0,0 @@
+----
+-name: shop-talk
+-description: Asking or showing Brian something: talk as if standing in the shop with the part in hand; physical steps and the real part, not abstract labels
+-metadata:
+-  type: feedback
+----
+-
+-When asking Brian to measure or look at something, or showing him a part, act as if we're in the shop and I'm holding it: how to hold the part, where the tool goes, what he'll see. Pictures show the real part (render from its mesh), not boxes and lines. No labels like "measurement A".
+-
+-**Why:** Brian, 2026-11-02, after a schematic diagram and lettered measurement lists missed the mark: "pretend like it's in your hand and you have to show it to me."
+-**How to apply:** Every measurement request or fit question. Goes with [[always-diagrams]].
+-
+-Refined by Brian, same day: don't write out measuring steps. Just show a 3D render of the real part with the measurement marked on it (like measure_A2: real mesh, red arrow, expected numbers). The picture is the ask; keep words to a line.
+diff -ruN a/memory/show-and-ask.md b/memory/show-and-ask.md
+--- a/memory/show-and-ask.md	1969-12-31 16:00:00.000000000 -0800
++++ b/memory/show-and-ask.md	2026-11-11 00:23:41.410016900 -0800
+@@ -0,0 +1,17 @@
++---
++name: show-and-ask
++description: Why the 3D viewer, Artifact link and shop-talk rules exist; browser pane; what flat diagrams are still for
++metadata:
++  type: feedback
++---
++
++The rules themselves are in global CLAUDE.md and AGENTS.md (3D viewer for every STL/3MF, interactive 3D page for every measurement request, both also published as a private Artifact). This note keeps what those leave out.
++
++- **Shop talk (Brian, 2026-11-02):** show and ask as if standing in the shop holding the part: "pretend like it's in your hand and you have to show it to me." Show the real part from its mesh, not boxes and lines; no labels like "measurement A". The picture is the ask; keep the words to a line. Ask only for measurements he can make with a ruler or calipers.
++- **Design intent in 3D (2026-11-07):** to confirm what he's asking for, build a viewer-only draft with the new feature as its own highlighted marker part (e.g. NEW_cable_channel.stl). He called flat hand-drawn SVG schematics "awful".
++- **Flat diagrams** are still fine for explaining an answer about dimensions or positions ("diagrams buddy, diagrams", 2026-11-01): dimensioned views with measured vs assumed marked, a few lines of text. Not for measurement requests and not for design intent.
++- **Artifact link first (2026-10-28, repeated):** I can't tell when he's on Remote Control, where the file card shows as code. He got angry twice when a page came only as a file. Republish the same file path to keep the URL.
++- **Browser pane on the PC:** preview_start {name: "Mesh viewer pages"} from .claude/launch.json, then http://localhost:8861/<page>.html. An extra, not a replacement for the link.
++- **Assembled (2026-11-01):** "all assembled" means `--as-is` on parts rendered in their assembled positions, not stills plus a side-by-side page.
++
++Related: [[answer-just-the-question]], [[new-part-workflow]].
+diff -ruN a/memory/show-in-3d.md b/memory/show-in-3d.md
+--- a/memory/show-in-3d.md	2026-11-11 00:22:21.018273500 -0800
++++ b/memory/show-in-3d.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,14 +0,0 @@
+----
+-name: show-in-3d
+-description: "To check Brian's design intent, show it in the 3D mesh viewer (draft geometry + a marker part), not flat SVG schematics"
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: 1b1da7f5-eb83-4166-b81d-2c2b96a13ccb
+-  modified: 2026-11-07T23:47:08.616Z
+----
+-
+-When confirming what Brian is asking for on a part, model it as a viewer-only draft and send the 3D viewer, with the new feature as its own highlighted marker part (e.g. NEW_cable_channel.stl). Flat hand-drawn SVG schematics are "awful" (Brian, 2026-11-07, TF-D cable channel).
+-
+-**Why:** he thinks in the real part (see [[shop-talk]]); 2D boxes misled both of us once already.
+-**How to apply:** still draw a diagram for *measurement* requests ([[always-diagrams]]), but make it a real-part render where possible; for design-intent checks, just build the draft and show it in [[mesh-viewer-always]].
+diff -ruN a/memory/single-prompt-batching.md b/memory/single-prompt-batching.md
+--- a/memory/single-prompt-batching.md	2026-11-11 00:22:21.034233800 -0800
++++ b/memory/single-prompt-batching.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,15 +0,0 @@
+----
+-name: single-prompt-batching
+-description: "Brian wants one combined prompt for multi-step handoffs (e.g. to Codex), not one prompt per step"
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: 7d0a9e46-f344-4690-b9d4-fd9453c13354
+-  modified: 2026-10-19T17:45:34.336Z
+----
+-
+-When giving Brian prompts to hand to another tool/agent (Codex), combine the whole batch into ONE prompt that runs the tasks in order, with stop/skip conditions built in, instead of separate per-task prompts.
+-
+-**Why:** Brian (2026-10-19) found per-task prompts meant tedious back-and-forth; the single batched prompt was "much better."
+-
+-**How to apply:** Default to one paste-ready prompt covering every queued task (e.g. "do 01, 02, 03 in order; finish each report first; skip X if Y"). Codex task specs live in work/codex-tasks/; see [[backup-locations]].
+diff -ruN a/memory/sleeve-height-tight.md b/memory/sleeve-height-tight.md
+--- a/memory/sleeve-height-tight.md	2026-11-11 00:22:21.050520300 -0800
++++ b/memory/sleeve-height-tight.md	2026-11-11 00:22:21.568917700 -0800
+@@ -11,4 +11,4 @@
+ Two sleeves printed ~0.5 mm too tight top to bottom (OptiPlex SLV-A 2026-10-21; TL-SG108E first tray 2026-10-22), sides fine. App default `sleeve_top` is 0.3 mm; Brian asked for +0.5 on the switch (0.8). Raising the app default is not decided.
+ 
+ **Why:** prints are slow, so fit evidence is scattered across parts and days (Brian, 2026-10-22).
+-**How to apply:** for new sleeves use `sleeve_top` 0.8 and say so; add every printed-fit result to docs/Fit_Findings.md. Related: [[optiplex-sleeve-settled]], [[test-print-ids]].
++**How to apply:** for new sleeves use `sleeve_top` 0.8 and say so; add every printed-fit result to docs/Fit_Findings.md. Related: [[optiplex-sleeve-settled]], AGENTS.md.
+diff -ruN a/memory/stl-delivery-combined.md b/memory/stl-delivery-combined.md
+--- a/memory/stl-delivery-combined.md	2026-11-11 00:22:21.068057700 -0800
++++ b/memory/stl-delivery-combined.md	2026-11-11 00:24:23.955535600 -0800
+@@ -1,18 +1,18 @@
+----
+-name: stl-delivery-combined
+-description: "When sending Brian STLs, one 3MF with tray + faceplate as separate objects side by side, descriptive file name"
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: 670ff7ef-7768-4a59-8310-301723e8de73
+-  modified: 2026-10-23T01:24:10.623Z
+----
+-
+-When Brian asks for STLs, send ONE 3MF holding each part as its own object: tray and faceplate laid out side by side for printing (faceplate front-face down, 10 mm gap), built with `tools/plate_layout_stl.py tray.stl faceplate.stl out.3mf`; name it `..._2-parts-print-layout.3mf`. A fused one-piece file only on request; send the split tray/faceplate only if he asks or combined can't be made. Give files descriptive names, never bare tray.stl/combined.stl: `<Item>_<contents>_<U>U_<mount>_2-parts-print-layout.3mf` (e.g. `Drive-Tray_HDD-3.5_SSD-2.5_1U_bottom-screws_2-parts-print-layout.3mf`), copied into `outputs/STL_Deliveries/<date>_<Item>/`.
+-
+-**Why:** Brian, 2026-10-22: "combined is great, we'll probably use those for most cases, do that more often and label them better."
+-
+-**How to apply:** any STL hand-off. Test prints still need a modeled ID ([[test-print-ids]]) in the name too.
+-
+-Brian, 2026-10-22 (follow-up): "when you make combined STLs, always export them as 1 file but 2 parts" — chose side-by-side print layout over assembled-position bodies.
+-Then: a multi-body STL loads as ONE object in Bambu Studio, so Brian said "export as 3mf". The app's equipment export adds the same 3MF automatically.
++---
++name: stl-delivery-combined
++description: "When sending Brian STLs, one 3MF with tray + faceplate as separate objects side by side, descriptive file name"
++metadata:
++  node_type: memory
++  type: feedback
++  originSessionId: 670ff7ef-7768-4a59-8310-301723e8de73
++  modified: 2026-10-23T01:24:10.623Z
++---
++
++When Brian asks for STLs, send ONE 3MF holding each part as its own object: tray and faceplate laid out side by side for printing (faceplate front-face down, 10 mm gap), built with `tools/plate_layout_stl.py tray.stl faceplate.stl out.3mf`; name it `..._2-parts-print-layout.3mf`. A fused one-piece file only on request; send the split tray/faceplate only if he asks or combined can't be made. Give files descriptive names, never bare tray.stl/combined.stl: `<Item>_<contents>_<U>U_<mount>_2-parts-print-layout.3mf` (e.g. `Drive-Tray_HDD-3.5_SSD-2.5_1U_bottom-screws_2-parts-print-layout.3mf`), copied into `outputs/STL_Deliveries/<date>_<Item>/`.
++
++**Why:** Brian, 2026-10-22: "combined is great, we'll probably use those for most cases, do that more often and label them better."
++
++**How to apply:** tray + faceplate exports from the app. New parts get their 3MF from `tools/release_part.py` instead ([[new-part-workflow]]). Test prints still need a modeled ID (AGENTS.md) in the name too.
++
++Brian, 2026-10-22 (follow-up): "when you make combined STLs, always export them as 1 file but 2 parts" — chose side-by-side print layout over assembled-position bodies.
++Then: a multi-body STL loads as ONE object in Bambu Studio, so Brian said "export as 3mf". The app's equipment export adds the same 3MF automatically.
+diff -ruN a/memory/test-print-ids.md b/memory/test-print-ids.md
+--- a/memory/test-print-ids.md	2026-11-11 00:22:21.089164700 -0800
++++ b/memory/test-print-ids.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,10 +0,0 @@
+----
+-name: test-print-ids
+-description: Every test print/coupon must have a unique ID modeled onto the part
+-metadata:
+-  type: feedback
+----
+-Brian (2026-10-19): every test print or coupon gets a unique identifier on the piece itself, so printed parts are never confused.
+-
+-**Why:** many near-identical keystone coupons (v1–v5) were printed; telling them apart was error-prone. See [[keystone-settled]].
+-**How to apply:** emboss/engrave an ID (e.g. KS-v6) away from the feature under test; use the same ID in the folder, file names and README. Rule is also in AGENTS.md.
+diff -ruN a/memory/third-party-models-in-house.md b/memory/third-party-models-in-house.md
+--- a/memory/third-party-models-in-house.md	2026-11-11 00:22:21.106579700 -0800
++++ b/memory/third-party-models-in-house.md	2026-11-11 00:24:23.956589300 -0800
+@@ -15,4 +15,4 @@
+ 
+ **Brian, 2026-11-03:** "stop worrying about licenses. all permissions have been granted and this is all for personal use only." Don't raise license concerns, leave parts out of designs, viewers or private artifacts, or keep files out of the private repo because of them. Public release would still be Brian's call.
+ 
+-**Brian, 2026-11-06 (repeated, after I kept a full-rack viewer local-only):** "stop worrying about licenses. this is all for personal use." Publish viewers with creator meshes as private Artifacts like any other, use the meshes freely locally, no "LOCAL-ONLY" caveats. Older AGENTS.md/session-prompt lines about keeping them uncommitted/unpublished are superseded for private use.
++**Brian, 2026-11-06 (repeated, after I kept a full-rack viewer local-only):** "stop worrying about licenses. this is all for personal use." Publish viewers with creator meshes as private Artifacts like any other, use the meshes freely locally, no "LOCAL-ONLY" caveats.
+diff -ruN a/memory/use-rear-posts.md b/memory/use-rear-posts.md
+--- a/memory/use-rear-posts.md	2026-11-11 00:22:21.124827200 -0800
++++ b/memory/use-rear-posts.md	2026-11-11 00:22:21.593364300 -0800
+@@ -12,4 +12,4 @@
+ 
+ **Why:** heavy or awkward fixes (e.g. SG8-M6-D tray/plate clash) can often be solved with a part that mounts on the rear posts instead of reprinting the faceplate or tray.
+ 
+-**How to apply:** when designing or fixing any bracket, list the rear-post option (rack_depth=240, rear_bracket mirrors the faceplate slots) alongside faceplate-only options. Look at the actual post mesh first. Related: [[m6-bracket-hardware]], [[keep-proven-fit-dims]].
++**How to apply:** when designing or fixing any bracket, list the rear-post option (rack_depth=240, rear_bracket mirrors the faceplate slots) alongside faceplate-only options. Look at the actual post mesh first. Related: AGENTS.md, [[keep-proven-fit-dims]].
+diff -ruN a/memory/v1-focus.md b/memory/v1-focus.md
+--- a/memory/v1-focus.md	2026-11-11 00:22:21.141325700 -0800
++++ b/memory/v1-focus.md	2026-11-11 00:22:21.604169600 -0800
+@@ -11,4 +11,4 @@
+ Brian set the v1 goal (ROADMAP.md top): configure a rack, add any equipment via wizard, export trusted STLs, plan cabling (for predictable build and parts ordering), rack built. Then pause and use it; brainstorm uses afterward.
+ 
+ **Why:** Brian noticed drift into making it pretty; wants focus.
+-**How to apply:** Gently flag cosmetic work that doesn't serve v1. When Brian says "park this idea", add a dated line to IDEAS.md Inbox and continue current work. See [[no-phases]].
++**How to apply:** Gently flag cosmetic work that doesn't serve v1. When Brian says "park this idea", add a dated line to IDEAS.md Inbox and continue current work. See AGENTS.md.
+diff -ruN a/memory/viewer-as-artifact.md b/memory/viewer-as-artifact.md
+--- a/memory/viewer-as-artifact.md	2026-11-11 00:22:21.159042600 -0800
++++ b/memory/viewer-as-artifact.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,14 +0,0 @@
+----
+-name: viewer-as-artifact
+-description: "Mesh viewer pages show as raw code on Brian's remote devices; publish them as a private Artifact without asking"
+-metadata:
+-  node_type: memory
+-  type: feedback
+-  originSessionId: a38e80c1-190e-42e6-92a6-c3c80598004a
+-  modified: 2026-10-29T02:22:13.448Z
+----
+-
+-When sending a tools/mesh_viewer.py page, also publish it as a private Artifact (Artifact tool, same file path) and give Brian the link. Don't ask first, even when it embeds licensed meshes (private only, never shared).
+-
+-**Why:** Brian often works over Remote Control (phone/iPad); SendUserFile shows HTML as code there. He was tired of being asked every time (2026-10-28).
+-**How to apply:** every viewer build → SendUserFile (render) + Artifact publish. Never share/publicize the artifact. Related: [[mesh-viewer-always]].
+diff -ruN a/memory/viewer-assembled-as-is.md b/memory/viewer-assembled-as-is.md
+--- a/memory/viewer-assembled-as-is.md	2026-11-11 00:22:21.174638200 -0800
++++ b/memory/viewer-assembled-as-is.md	1969-12-31 16:00:00.000000000 -0800
+@@ -1,11 +0,0 @@
+----
+-name: viewer-assembled-as-is
+-description: "Assembled" viewer pages need mesh_viewer.py --as-is; default lays parts side by side
+-metadata:
+-  type: feedback
+----
+-
+-When Brian asks to see something assembled, build the viewer with `python tools/mesh_viewer.py --as-is ...` from parts rendered in their assembled positions (e.g. lid_on). Without `--as-is` the tool lays parts side by side.
+-
+-**Why:** 2026-11-01 RX4: he asked for "all assembled", got still images plus a side-by-side viewer, and said it didn't look assembled.
+-**How to apply:** For assembly reviews, republish the viewer with --as-is instead of sending OpenSCAD screenshots. Related: [[mesh-viewer-always]], [[viewer-as-artifact]].
+diff -ruN a/repo/.claude/commands/add-feature.md b/repo/.claude/commands/add-feature.md
+--- a/repo/.claude/commands/add-feature.md	2026-11-11 00:22:20.109086700 -0800
++++ b/repo/.claude/commands/add-feature.md	2026-11-11 00:24:23.958290800 -0800
+@@ -8,6 +8,6 @@
+ - Keep the change as small as it can be while still doing the job well. No extra features I didn't ask for.
+ - If something about what I want is unclear and it changes the result, ask me before guessing.
+ - Test it: run the relevant existing checks and, if it shows up in the app, check it in the browser preview with disposable data.
+-- Don't run exports, builds, prints, pushes or uploads unless I say so.
++- Don't run exports, builds, prints or uploads unless I say so.
+ 
+ When done, tell me: what changed (with file links), how you checked it, and what's still unverified or UNKNOWN.
+diff -ruN a/repo/.claude/commands/commit-message.md b/repo/.claude/commands/commit-message.md
+--- a/repo/.claude/commands/commit-message.md	2026-11-11 00:22:20.126312500 -0800
++++ b/repo/.claude/commands/commit-message.md	2026-11-11 00:24:23.958290800 -0800
+@@ -9,4 +9,4 @@
+ 3. Draft a clear commit message: a short summary line, then a few lines on what and why.
+ 4. Show me exactly which files you'd include, and wait for my OK.
+ 
+-Never push.
++After I OK the commit, push it to `main` and tell me what was pushed. Never force-push.
+diff -ruN a/repo/.claude/commands/resume-work.md b/repo/.claude/commands/resume-work.md
+--- a/repo/.claude/commands/resume-work.md	2026-11-11 00:22:20.174892800 -0800
++++ b/repo/.claude/commands/resume-work.md	2026-11-11 00:24:23.959348600 -0800
+@@ -4,7 +4,7 @@
+ ---
+ I'm starting a new session. Catch up before doing anything:
+ 
+-1. Read AGENTS.md, PROJECT.md and HANDOFF.md.
++1. Run `git pull`, then read AGENTS.md, HANDOFF.md and ROADMAP.md.
+ 2. Check `git status` and the latest commits.
+ 3. Give me a short summary: where the project stands, what was last worked on, and any open items or UNKNOWNs that matter.
+ 
+diff -ruN a/repo/.claude/commands/wrap-session.md b/repo/.claude/commands/wrap-session.md
+--- a/repo/.claude/commands/wrap-session.md	2026-11-11 00:22:20.200172900 -0800
++++ b/repo/.claude/commands/wrap-session.md	2026-11-11 00:24:23.959348600 -0800
+@@ -7,6 +7,6 @@
+ 1. List every file changed this session and what changed, in a sentence each.
+ 2. Say what was verified and how, and what is still unverified or UNKNOWN.
+ 3. List open items or next steps.
+-4. Propose a short update for HANDOFF.md (or the relevant work/<task>/Report.md) and show it to me. Only write it after I say OK.
+-5. If there are uncommitted changes, propose a commit message. Don't commit unless I say so.
++4. Update HANDOFF.md (or the relevant work/<task>/Report.md) with a short entry and show me what you wrote.
++5. Commit this session's files and push to `main`; tell me what was pushed. Never force-push.
+ 6. Remind me to back up to D:\Backups if anything important changed.
+diff -ruN a/repo/.claude/skills/new-part/SKILL.md b/repo/.claude/skills/new-part/SKILL.md
+--- a/repo/.claude/skills/new-part/SKILL.md	2026-11-11 00:22:20.211043900 -0800
++++ b/repo/.claude/skills/new-part/SKILL.md	2026-11-11 00:24:23.957641100 -0800
+@@ -1,40 +1,43 @@
+----
+-name: new-part
+-description: Design, draft and release a new or revised 3D printed part for the rack (bracket, tray, faceplate, test coupon). Use for any work on a part design, including drafts that aren't ready to print.
+----
+-
+-# New part
+-
+-Prints are slow and real, so a dropped feature or a tightened clearance costs Brian a print. Show and ask as if the part were in hand.
+-
+-## Before modelling
+-1. If an earlier version exists, read its README and `docs/Fit_Findings.md`. List every feature Brian asked for and keep them all. If one can't stay, ask in chat first.
+-2. Keep every clearance from the version that printed well. Never tighten one without Brian's OK. A fit report about one feature applies to that feature only.
+-3. Measure first. Each device gets one card, `docs/devices/<device>.md`, holding overall size, corners, end and edge shapes, slopes, feet, screw heads, ports and anything else the part touches. Mark each value measured by Brian, from a source file or UNKNOWN. Before a new device's first print, send one interactive 3D measurement page (`tools/mesh_viewer.py --measure`, see PROJECT.md) showing where and how to measure, with the expected values, and ask for everything the fit depends on in one go. If Brian prints with a value still UNKNOWN, name it in chat first. Source models and STEP files are not measurements.
+-4. Look at the actual post mesh, and consider the rear posts as mounting points. Default pattern: post rails (`outputs/Chunky_Revisions/README.md`). Brian's rack has 4U posts with no side holes mid-post.
+-
+-## Draft
+-Explore freely until Brian says he's printing it. A draft is one working SCAD file and a viewer page: no new ID, 3MF, outputs folder, README, handoff entry or per-change commit. Put several small changes into one viewer update instead of one each. Render with the pinned snapshot (`--backend=manifold`), then send and publish the page with `tools/mesh_viewer.py`. Commit working files once at the end of the session so nothing stays on one machine.
+-
+-## Modelling
+-- `include <workshop.scad>` for the plate, slots, golden keystone, insert bores and hidden M6 joint. Don't redraw these. Use `include <BOSL2/std.scad>` for fillets and rounded shapes. See `lib/README.md`.
+-- Name parts with a SCAD variable: `part="tray";` and `if(part=="tray")...`.
+-- Every screw joint in a print gets a heat-set insert, with bores modeled in: M3 by default, M6 for weight-bearing joints and brackets, M2/M2.5 only where a device forces it. No self-tapping and no drilling. Ask before adding a new screw type.
+-- Leave real room around screw heads, tool paths and other non-fit features; don't design them down to the last fraction of a mm (Brian, 2026-11-05). Minimum 1 mm around a screw head, unprinted as a rule. Keep a head's recess completely open: the proven 11.5 M6 recess stays that size, and nothing may intrude into it. Add a `part=="keepout"` with `ws_m6_head_keepout()` or `ws_head_keepout()` for every screw head and pass `--keepout keepout` to the release script. Tell Brian about any tight spot. This doesn't loosen proven fit clearances, which stay as printed.
+-- Use a new unique ID for each revision, and model it on the part where it doesn't affect a tested feature. Test prints and coupons always need one.
+-- Never edit an already printed revision. Make a new one.
+-
+-## Release
+-Only when Brian says he's printing it, or asks for a print file. If he does, the current draft becomes the next revision.
+-1. Run this, adding `--against device.stl` whenever a device mesh exists, `--posts <U>:<right|left|both>` for anything near the rack posts (places the real posts by U; never place them by hand), and `--cuts cuts=<N>` when the part has several windows, vents or slots (a check-only `part=="cuts"` holding each opening as a solid; merged openings fail):
+-   `python tools/release_part.py <part>.scad --id <ID> --part <name>[:<ID on part>] -o outputs/<Name>_<ID>_<YYYY-MM-DD>`
+-2. Fix every FAIL. Read every WARN and tell Brian about any you keep. Don't work around a failed check.
+-3. Confirm bores in the viewer: the hole scan can miss bores open on one side. The script checks the ID is on the mesh, but not that it is legible.
+-4. Send the viewer page with SendUserFile (display "render") and publish the same file as an Artifact. Send the 3MF too.
+-5. Write the folder's README: what changed, which fit values were kept or changed and why, and what's UNKNOWN.
+-6. End the delivery message with the fit report to send back: ID on the part; fits or not; where tight or loose, and by how much if measured; walls and infill. Add any part-specific items, such as a screw or lights.
+-
+-## After
+-- If the part has a section in `work/workbench/Workflow_Log.md`, add a short row whenever a step starts or ends or something gets in the way.
+-- Add Brian's printed results to `docs/Fit_Findings.md`, and new device measurements to the device's card. If a report leaves out the ID, ask once before logging it. Printing needs his direction, and fit and strength stay UNKNOWN until a print shows otherwise, for that specimen only.
+-- Update `HANDOFF.md`, commit only this part's files, push, then send the Gene photo.
++---
++name: new-part
++description: Design, draft and release a new or revised 3D printed part for the rack (bracket, tray, faceplate, test coupon). Use for any work on a part design, including drafts that aren't ready to print.
++---
++
++# New part
++
++Prints are slow and real, so a dropped feature or a tightened clearance costs Brian a print. Show and ask as if the part were in hand.
++
++## Before modelling
++1. If an earlier version exists, read its README and `docs/Fit_Findings.md`. List every feature Brian asked for and keep them all. If one can't stay, ask in chat first.
++2. Keep every clearance from the version that printed well. Never tighten one without Brian's OK. A fit report about one feature applies to that feature only.
++3. Measure first. Each device gets one card, `docs/devices/<device>.md`, holding overall size, corners, end and edge shapes, slopes, feet, screw heads, ports and anything else the part touches. Mark each value measured by Brian, from a source file or UNKNOWN. Before a new device's first print, send one interactive 3D measurement page (`tools/mesh_viewer.py --measure`, see PROJECT.md) showing where and how to measure, with the expected values, and ask for everything the fit depends on in one go. If Brian prints with a value still UNKNOWN, name it in chat first. Source models and STEP files are not measurements.
++4. Look at the actual post mesh, and consider the rear posts as mounting points. Default pattern: post rails (`outputs/Chunky_Revisions/README.md`). Brian's rack has 4U posts with no side holes mid-post.
++
++## Draft
++Explore freely until Brian says he's printing it. A draft is one working SCAD file and a viewer page: no new ID, 3MF, outputs folder, README, handoff entry or per-change commit. Put several small changes into one viewer update instead of one each. Render with the pinned snapshot (`--backend=manifold`), then send and publish the page with `tools/mesh_viewer.py`. Commit working files once at the end of the session so nothing stays on one machine.
++
++## Modelling
++- `include <workshop.scad>` for the plate, slots, golden keystone, insert bores and hidden M6 joint. Don't redraw these. Use `include <BOSL2/std.scad>` for fillets and rounded shapes. See `lib/README.md`.
++- Name parts with a SCAD variable: `part="tray";` and `if(part=="tray")...`.
++- Every screw joint in a print gets a heat-set insert, with bores modeled in: M3 by default, M6 for weight-bearing joints and brackets, M2/M2.5 only where a device forces it. No self-tapping and no drilling. Ask before adding a new screw type.
++- Leave real room around screw heads, tool paths and other non-fit features; don't design them down to the last fraction of a mm (Brian, 2026-11-05). Minimum 1 mm around a screw head, unprinted as a rule. Keep a head's recess completely open: the proven 11.5 M6 recess stays that size, and nothing may intrude into it. Add a `part=="keepout"` with `ws_m6_head_keepout()` or `ws_head_keepout()` for every screw head and pass `--keepout keepout` to the release script. Tell Brian about any tight spot. This doesn't loosen proven fit clearances, which stay as printed.
++- Use a new unique ID for each revision, and model it on the part where it doesn't affect a tested feature. Test prints and coupons always need one.
++- Never edit an already printed revision. Make a new one.
++- Round every bed-level corner against warping: outside corners r 3 (small blocks r 2), inside corners filleted. Edges that mate stay square.
++- New sleeves use `sleeve_top` 0.8: sleeves have printed about 0.5 mm tight in height twice.
++- When Brian asks to move one feature, everything around it that fit on the print stays as printed. If the move clashes, reshape the moved feature. Never alter the device mock to pass a check.
++
++## Release
++Only when Brian says he's printing it, or asks for a print file. If he does, the current draft becomes the next revision.
++1. Run this, adding `--against device.stl` whenever a device mesh exists, `--posts <U>:<right|left|both>` for anything near the rack posts (places the real posts by U; never place them by hand), and `--cuts cuts=<N>` when the part has several windows, vents or slots (a check-only `part=="cuts"` holding each opening as a solid; merged openings fail):
++   `python tools/release_part.py <part>.scad --id <ID> --part <name>[:<ID on part>] -o outputs/<Name>_<ID>_<YYYY-MM-DD>`
++2. Fix every FAIL. Read every WARN and tell Brian about any you keep. Don't work around a failed check.
++3. Confirm bores in the viewer: the hole scan can miss bores open on one side. The script checks the ID is on the mesh, but not that it is legible.
++4. Send the viewer page with SendUserFile (display "render") and publish the same file as an Artifact. Send the 3MF too.
++5. Write the folder's README: what changed, which fit values were kept or changed and why, and what's UNKNOWN.
++6. End the delivery message with the fit report to send back: ID on the part; fits or not; where tight or loose, and by how much if measured; walls and infill. Add any part-specific items, such as a screw or lights.
++
++## After
++- If the part has a section in `work/workbench/Workflow_Log.md`, add a short row whenever a step starts or ends or something gets in the way.
++- Add Brian's printed results to `docs/Fit_Findings.md`, and new device measurements to the device's card. If a report leaves out the ID, ask once before logging it. Printing needs his direction, and fit and strength stay UNKNOWN until a print shows otherwise, for that specimen only.
++- Update `HANDOFF.md`, commit only this part's files, push, then send the Gene photo.
+diff -ruN a/repo/AGENTS.md b/repo/AGENTS.md
+--- a/repo/AGENTS.md	2026-11-11 00:22:20.047818900 -0800
++++ b/repo/AGENTS.md	2026-11-11 06:28:10.965606600 -0800
+@@ -1,91 +1,61 @@
+-# Assembly Workshop — persistent development guidance
+-
+-Read AGENTS.md, PROJECT.md, HANDOFF.md and ROADMAP.md first. HANDOFF.md has current status; ROADMAP.md (Now / Next / Later) is the only plan. The old numbered-phase plan is retired (Brian, 2026-10-19): do not use phase numbers or "closed with limitations" milestone language in new docs, reports or handoffs. Folders and files with old phase names (e.g. outputs/Phase7_*, docs/phase7-readiness, catalog-packs/phase6-*) are preserved history only; their milestone claims are not current status. Inspect only relevant referenced files; do not scan the whole repository by default.
+-
+-- Preserve all outputs/, work/, user data, immutable hardware revisions, build caches, project pins and the historical mechanical baseline. Most assets are untracked: a Git clone/commit alone is not a backup. Never git clean, reset or replace these assets as routine setup.
+-- Four-corner mounting is SETTLED by Brian (2026-10-18): every faceplate U gets four rack holes, two per side; corner radius is limited to 2.5 mm as a consequence. Fit/strength of the four-hole design remains UNKNOWN; no physical testing without Brian's direction.
+-- Digital checks pass and Brian confirms qualitative fit of the earlier supplied specimen. Physical test fitting is a ROADMAP "Next" item and requires Brian's direction. No printing, purchases, uploads, release packaging, publishing, deployments or pushes without explicit authorization. This organization task authorizes none of those.
+-- Ask before a fresh desktop-control session; read applicable computer-use instructions first. No subagents unless authorized.
+-- Keep unsupported dimensions, usable depth, generic wall guidance, process settings, loads, fit and strength UNKNOWN. Digital screening, mesh closure and supplier metadata do not establish physical approval.
+-- Preserve M3 x 0.5 adapter limits and mechanical baseline. Catalog breadth is not geometry support. Conditional manufacturer guidance is not generic FDM wall guidance. Nominal after-knurl OD is not a certified maximum.
+-- Draft does not save; explicit import does not repin. Preserve immutable old revisions. Failed checks block proposed export; UNKNOWNs remain visible. Source disagreement and project source policy remain distinct.
+-- Use new disposable data for acceptance, never active user data. Do not regenerate historical evidence or run old geometry scripts blindly. No automatic builds. Supplier/Pi assets with unresolved rights stay local and are not redistributed.
+-- Python 3.10 standard library; use UTF-8 explicitly. Existing checks and commands are in PROJECT.md/HANDOFF.md. OpenSCAD.exe is the documented renderer; the .com launcher was reported broken.
+-- Continue authorized reversible work without repeated confirmation. Ask for missing decisions only when they are needed. Report what was actually verified, keep progress and handoffs concise, and distinguish observations from assumptions.
+-- Do not add credentials or secrets to instructions, documentation or version control.
+-
+-## STL delivery scope — Brian, 2026-10-18
+-
+-The app delivers STL files. Do not require or build integration for the end user's printer, slicer, filament profiles or machine setup. Printer/material identification is not an app-readiness or software-completion gate. Prioritize supported geometry, exact source/mesh matching, traceable hardware, export integrity and explicit validation limits. Any later optional physical validation applies only to its documented specimens/material/process; it does not certify arbitrary printers or materials. Do not ask for printer details to continue software development. Unsupported printed fit and strength remain UNKNOWN. Physical fitting requires Brian's direction; printing is not authorized.
+-
+-## Confirmed specimen and parked research — 2026-10-18
+-
+-Brian confirms positive physical fit of the earlier supplied tray/faceplate specimen (Clearance v2: two-hole, 3 mm, square-corner plate; it does not transfer to the current four-hole/4 mm design); preserve that report/photos/provenance without repeatedly asking him to identify already recovered files. This is specimen-specific qualitative evidence, not general strength/installation approval or a physical test of the later digital build. Remaining niche insert research is parked at Brian's direction; do not resume by default. Do not silently mark any physical UNKNOWN passed. Further printing/testing remains separately authorized.
+-
+-
+-## Recovered rack-first purpose and GUI — 2026-10-18
+-
+-Assembly Workshop is intended to design equipment assemblies in a Lab Rax rack context. Brian confirmed configure rack → select slot → create the assembly. Preserve the recovered dark three-panel GUI direction and decisions at work/gui-restoration/Recovered_GUI_Decisions.json. Later scope restrictions still supersede historical specifications. Brian subsequently requested the main rack look like the supplied enclosure: the viewport now instances actual source meshes using recovered visual placements. Do not substitute generic box posts for that mesh preview. Each saved slot allocation now has independent assembly hardware pins/inputs/revisions; the legacy project is preserved and copied once for new assemblies. Appearance colors and local image assets are previews; the only artwork-to-STL path is the opt-in Print in color export below. Preserve rack-history/ and artwork/ with the rack document. See work/gui-restoration/Restoration_Report.md and work/rack-scene/Report.md for implemented versus missing capabilities; do not confuse historical planning, recreated GUI and recovered implementation. Rack layout data/history and unsaved user drafts must be preserved alongside library.sqlite3 and revisions/.
+-
+-## Raspberry Pi 4 is history — Brian, 2026-10-19
+-
+-The Pi 4 was only an early fit-test item; later fit tests of other parts also went fine, so nothing in the design depends on it. Brian directed a deep clean (all levels): no Pi wording, defaults or Pi-specific code/data fields in the app; the Pi survives only as one saved example in the equipment library, built by the generic wizard / equipment_tray.scad path; legacy saved Pi slots are migrated on load (old document kept in rack-history/). Retired Pi-only build files are archived in docs/archive/pi4-retired-20261019/ (moved, not deleted). The printed specimen evidence (outputs/Lab_Rax_Pi4_*) and pi_reference.json stay untouched as history. Done by Codex task 21 and reviewed by Claude 2026-10-19 (work/codex-tasks/21-pi4-deep-clean-REPORT.md). Print in color was later extended to wizard-made faceplates (2026-10-21, see the Print in color section). Older sections below/above that mention the Pi4 path or Pi4-only Print in color describe the pre-cleanup state.
+-
+-## Confirmed scope expansion — Brian, 2026-10-18
+-
+-These supersede the earlier "Pi4 only adapter" and "no rack-frame STL adapter" restrictions. Physical fit, strength and retention of everything below remain UNKNOWN.
+-
+-- **Support extension rule:** each 1U support extension occupies its own 1U between stacked posts (post U + extension U = rack height); joints are movable.
+-- **Equipment wizard:** generic `equipment_tray.scad` plus the dimensions/STL/SCAD/STEP (local FreeCAD) import wizard is a second manufacturing adapter beside Pi4. Leave the Pi4 path untouched. Snap tabs, clips, pegs, straps, keystones, single-piece joints, rear support and multi-U spacing are unprinted.
+-- **Rack-frame STL export:** "PRINT THE RACK" / `/api/rack-stl` is in scope. Creator parts stay local (BY-NC-SA, personal use) and are never redistributed. Do not run exports during housekeeping.
+-- **Data location (C4) SETTLED by Brian:** `data/normal-use/` is the official user data. Always start the app via `outputs/Mechanical_Design_App/start.bat` (or the same `--existing-library --data …\data\normal-use` arguments); never run bare `python app.py`, which falls back to the app-local folder. `outputs/Mechanical_Design_App/data/` is a preserved historical copy (older 1-allocation rack, 8:59 PM wizard cache); do not delete or merge it. See docs/housekeeping/Data_Locations.md.
+-
+-## Cable management — Brian, 2026-10-19
+-
+-A cabling planner is in scope: front/rear views, selectable ports/keystones, cable guides, cables entering/leaving the cabinet, suggestions, wiring diagram ([proposal](work/cable-management/Proposal.html)). The default guide (Lab Rax Cable Guide, mklements, MakerWorld Exclusive License) is a local preview mesh only: never redistributed, never in PRINT THE RACK / rack STLs. Ports come from a Pi 4 preset plus a wizard Ports step, then mesh-click fine-tuning. Guide/cable fit, capacity and strength remain UNKNOWN; cable lengths are planning estimates. Step 1 status: work/cable-management/Report.md.
+-
+-## Selected hybrid GUI — Brian, 2026-10-18
+-
+-Brian chose1C/2C/3A/4A/5A/6A/7A/8A: hybrid with collapsible inspector; collapsible Racks & slots, Equipment and Hardware library on the left (2C confirmed FINAL by Brian 2026-10-19); click selects, ellipsis/right-click actions; Setup/Hardware/Appearance tabs; one explicit atomic Save; color presets plus custom picker; local artwork fit/center, size/position/remove; navigation first. These choices supersede the earlier unchosen concepts. Implemented pass and acceptance: work/gui-refinement/Report.md. Drafts remain unsaved until Save; checks/exports do not silently save them. Artwork in the viewers is preview-only (see "Faceplate artwork and Print in color" below). Brian reviewed the left grouping on 2026-10-19 and made it final (see work/equipment-list/Report.md and work/hardware-section/Report.md); do not rearrange it without his direction.
+-
+-## Faceplate artwork and Print in color — Brian, 2026-10-19; extended 2026-10-21
+-
+-The opt-in "Print in color" export (`faceplate_color.py`, `/api/faceplate-colors/preview|export`) is in scope. Since 2026-10-21 (Brian's direction) it works on **wizard-made faceplates** (`equipment_tray.scad`, 4 mm, front face Y=-4, 44.4 mm per U, four-corner slots), 1U–5U, including a one-piece "combined" part: it rebuilds the slot's own faceplate from its saved library item + tray settings and turns the saved image into one STL per filament color (inlay 0.6 mm by default, or raised). The image lands exactly where the rack view draws it (same window and opening-avoidance; `faceplate_color.clear_window` ports `rack-studio.js clearWindow`, and `faceplate_color.openings` matches `equipment-wizard.js openings`); keep them in step. Color stays 2 mm clear of ports, windows, keystone blocks and rack slots and 1 mm inside the plate outline. Export uses the saved rack document only; preview may use draft settings and writes nothing. PROPOSED — UNVALIDATED: printed color result, fit and strength UNKNOWN; STL only, no printer/slicer integration. Everything else stays preview-only: the normal tray/faceplate STLs, rack STLs and wizard equipment STLs never contain color or artwork. Faceplate images may be PNG, JPEG, WebP, GIF, BMP, AVIF or SVG (vector), converted locally to one PNG of at most 1024 px / 1.4 MB. Relief/engraving in the normal STL still needs Brian's explicit direction. History: work/faceplate-refinement/Report.md (Pi-era version).
+-## Test print IDs — Brian, 2026-10-19
+-
+-Every new test print or test coupon gets a unique identifier modeled into the part itself (embossed or engraved text, placed where it doesn't affect the feature under test). Use the same ID in its folder, file names and README so a printed piece can always be matched to its files. Existing coupons keep their files unchanged.
+-
+-## Cloud repo and account switching — Brian, 2026-10-20
+-
+-The whole project, including outputs/, data/normal-use/, archives and licensed third-party parts, is in the PRIVATE GitHub repo https://github.com/Cersche/assembly-workshop (branch `main`). This replaces the earlier "assets stay local" rule for this private repo only. Brian uses two Claude accounts on four devices (PC, laptop, iPad, iPhone), one session at a time. Both accounts may push.
+-
+-- **Start of every session:** `git pull` (cloud sessions start from GitHub automatically). Read HANDOFF.md.
+-- **End of every session:** update HANDOFF.md, commit and push to `main` so the next account or device picks up from there. Never leave work only on one machine.
+-- **One at a time:** don't run two sessions that edit at once. If a push is rejected, pull and merge first; never force-push.
+-- **Keep the repo private.** Never make it public, fork it publicly or add collaborators without Brian's direction. Before any public release, Brian will contact the Lab Rax creator (MakerWorld) and licensed files that conflict will be removed. Redistribution limits still apply to everything outside this repo.
+-- **Cloud limits:** cloud sessions run Linux without the PC's OpenSCAD/FreeCAD and can't show the rack GUI. Renders, STL exports and GUI checks still happen on the PC. Never test on data/normal-use in any environment.
+-- No secrets or credentials in the repo. Python caches are ignored by .gitignore.
+-
+-## 44.4 mm faceplate standard — Brian, 2026-10-20
+-
+-Brian printed plate-height coupons FP44-A..D (outputs/Physical_Test_Coupons_2026-10-20_FP44_plate_height/) and reports a perfect fit: the 44.4 mm-per-1U plate is the new standard, replacing 42 mm. Width 252, thickness 4, 2.5 mm corners and the four-corner slots (±118.2625, ±15.902 about each U centre) are unchanged. The plate is centred in its slot; Z=0 is the slot bottom. Implementation is Codex task 25 (work/codex-tasks/25-faceplate-44-standard.md). Fit applies to those specimens on Brian's rack only; strength stays UNKNOWN. Old saved revisions stay immutable.
+-
+-## 3D viewer for every part — Brian, 2026-10-27
+-
+-Whenever work produces, changes or examines STL/3MF files, run `python tools/mesh_viewer.py <files...> -o work/mesh-viewer/<name>.html -t "<title>"` and send the page with SendUserFile (display "render") without being asked. Brian can Pin and Circle things and paste back "3D viewer notes" (mm coordinates in the file's own frame, part names as in the file) or a marked picture. The viewer is preview-only and changes no geometry. Don't commit generated viewer pages unless asked, and never commit ones that embed third-party/licensed meshes. Usage: PROJECT.md.
+-
+-## M6 bracket hardware — Brian, 2026-10-28
+-
+-Faceplate/bracket overhaul: every bracket redesign replaces all M3 heat-set inserts with the same M6 heat-set inserts used in the rack posts, fastened with the same M6 x 8 button-head screws as the shelf (one-item BOM; M3 lacked rigidity for heavy items). Redesigns go one bracket per fresh session; printed baseline is listed in HANDOFF.md. Insert bore/OD/length come from Brian or a measured part; until then they are UNKNOWN. Already-printed revisions stay immutable. This supersedes the M3 x 0.5 limit for new bracket designs only; fit and strength stay UNKNOWN.
+-
+-## Fasteners and heat-set inserts — Brian, 2026-10-31
+-
+-Universal standard; full list in Brian's global CLAUDE.md. No self-tapping into prints. M3 is the default, M6 for weight-bearing joints, M2/M2.5 only where a device forces it. Inserts: M6x5x8 → 7.6 bore; M3x3x5 → 4.2 bore x 4 deep; M2.5x4x3.5 → 3.2 bore x 5 deep. Screws on hand: M3 countersunk, M2.5 socket head, M6x8 button head. Already printed revisions stay immutable.
+-
+-## Measurement requests need a diagram — Brian, 2026-11-02
+-
+-Whenever you ask Brian for a measurement while designing anything, send a diagram showing exactly where and how to measure, with the expected value. Never ask in words alone. Since 2026-11-08 (Brian) that diagram is an interactive 3D page he can spin and type into: `tools/mesh_viewer.py ... --measure spec.json` (numbered arrows, a box per value, Copy measurements; usage in PROJECT.md), sent with SendUserFile and also published as a private Artifact.
+-
+-## OpenSCAD for new parts — Brian, 2026-11-05
+-
+-New parts render with the pinned snapshot: `D:\Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe --backend=manifold -o <out>.stl <part>.scad`. Do not auto-update it. Reproducing an existing revision, and the app and its existing scripts, stay on `C:\Program Files\OpenSCAD\openscad.exe` (2021.01), because text outlines differ slightly between versions. The snapshot lives only on the PC, outside the repo. Printed fit and strength stay UNKNOWN. Evidence: HANDOFF.md, 2026-11-05.
++# Assembly Workshop — agent guidance
++
++Read HANDOFF.md (current status) and ROADMAP.md (Now / Next / Later, the only plan) first. PROJECT.md has the commands, checks and tool usage. Read other files only as the task needs them; don't scan the whole repository. For any part design work, use the /new-part skill (`.claude/skills/new-part/SKILL.md`).
++
++Cloud sessions and other machines can't see Brian's global CLAUDE.md or the PC's memory folder, so every rule this project depends on is stated or pointed to here.
++
++## Working rules
++
++- **Sessions:** start with `git pull` and HANDOFF.md. End by updating HANDOFF.md, committing and pushing to `main`, so the next account or device can pick up. Pushing is pre-approved (Brian, 2026-10-22). Never force-push; if a push is rejected, pull and merge first. One editing session at a time.
++- **Brian decides:** printing, physical testing, purchases, uploads, publishing, release packaging and deployments need his direction. Brian does the printing; a part becomes a print file only when he says he is printing it. Ask before a fresh desktop-control session. No subagents unless he asks.
++- **Repo stays private:** https://github.com/Cersche/assembly-workshop holds the whole project, including outputs/, data/normal-use/, archives and licensed third-party parts. Never make it public, fork it publicly or add collaborators without Brian's direction.
++- **Preserve:** outputs/, work/, user data (data/normal-use/ with library.sqlite3, revisions/, rack-history/, artwork/ and unsaved drafts), build caches, project pins and the historical mechanical baseline. Never git clean, reset or replace them as routine setup. Printed or saved revisions are immutable: make a new revision instead. Don't regenerate historical evidence or run old geometry scripts blindly. No automatic builds.
++- **Data:** `data/normal-use/` is the official user data. Start the app only via `outputs/Mechanical_Design_App/start.bat` (or the same `--existing-library --data …\data\normal-use` arguments); bare `python app.py` falls back to the app-local folder. `outputs/Mechanical_Design_App/data/` is a preserved historical copy: don't delete or merge it (docs/housekeeping/Data_Locations.md). Use new disposable data for acceptance; never test on data/normal-use in any environment.
++- **UNKNOWN stays UNKNOWN:** unsupported dimensions, usable depth, generic wall guidance, process settings, loads, fit and strength. Digital checks, mesh closure and supplier metadata are not physical approval. A fit report covers the reported specimen and feature only (docs/Fit_Findings.md); never mark a physical UNKNOWN passed on your own.
++- **Reporting:** say what was actually verified and separate observations from assumptions. Continue authorized reversible work without repeated confirmation; ask only for decisions you need.
++- **No phase language:** the numbered-phase plan is retired (Brian, 2026-10-19). No phase numbers or "closed with limitations" wording in new docs. Old phase-named folders and files are preserved history; don't rename or delete them, and don't read their milestone claims as status.
++- **Environment:** Python 3.10 standard library, UTF-8 stated explicitly. Cloud sessions run Linux without OpenSCAD/FreeCAD and can't show the rack GUI: renders, STL exports and GUI checks happen on the PC.
++- No credentials or secrets in instructions, docs or version control.
++
++## Settled standards (Brian)
++
++Fit results apply to the printed specimens on Brian's rack; strength is UNKNOWN throughout.
++
++- **Four-corner mounting (2026-10-18):** every faceplate U gets four rack holes, two per side, so the corner radius is limited to 2.5 mm. Faceplates only ever get those corner holes; the posts' empty middle holes may only be used by a tie-in from behind (2026-10-28).
++- **44.4 mm faceplate (2026-10-20, coupons FP44-A..D):** 44.4 mm per 1U, width 252, thickness 4, 2.5 mm corners, slots at ±118.2625, ±15.902 about each U centre. The plate is centred in its slot; Z=0 is the slot bottom.
++- **Fasteners (2026-10-31; same table as global CLAUDE.md, keep the two in step):** no self-tapping screws into prints and no drilling printed parts: every screw joint gets a heat-set insert with its bore modeled in. M3 is the default, M6 for weight-bearing joints, M2/M2.5 only where a device forces it. Inserts (thread x length x OD): M6 x 5 x 8 → 7.6 bore, ≥ 6 deep; M3 x 3 x 5 → 4.2 bore, 4 deep, boss ≥ 9 OD; M2.5 x 4 x 3.5 → 3.2 bore, 5 deep. Screws: M3 countersunk, M2.5 socket head, and M6 x 10 button head for every new design (Brian, 2026-11-11; it replaces M6 x 8, which stays on already printed revisions). Make each M6 bore deep enough for the 10 mm screw. Ask before adding a screw type.
++- **M6 bracket hardware (2026-10-28):** bracket redesigns use the rack posts' M6 inserts and M6 button heads (M6 x 10 for new designs) instead of M3 (one-item BOM; M3 lacked rigidity). One bracket per fresh session; the printed baseline is listed in HANDOFF.md. The app's M3 x 0.5 adapter limits still apply to everything else.
++- **Keystone (2026-10-19):** the golden keystone, `ks_style="golden"`, `ks_tight=0.2`, opening 14.8 x 16.4, is the permanent default. Don't change it or propose new keystone coupons unless Brian asks. Retention over time is UNKNOWN.
++- **OptiPlex orientation (2026-10-20):** imported with X up and rotated 90° once, so the power button is at the faceplate and the ports face the rear posts. Brian asked to be stopped if he tries to change this: remind him first.
++- **Own printed rack (2026-11-09):** Brian's own rounded printed rack (posts plus corner brackets, flush bezel, Lab Rax U standards, depth 240, M6 x 10 button heads) replaces both the Lab Rax frame plan and the 2020 extrusion plan. Draft, unprinted: see HANDOFF.md.
++- **Test print IDs (2026-10-19):** every test print or coupon carries a unique ID modeled into the part, away from the feature under test, and the same ID in its folder, file names and README.
++- **OpenSCAD (2026-11-05):** new parts render with the pinned snapshot `D:\Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe --backend=manifold` (PC only; don't auto-update it). Existing revisions, the app and its scripts stay on `C:\Program Files\OpenSCAD\openscad.exe` (2021.01), because text outlines differ between versions; use OpenSCAD.exe, not the broken .com launcher.
++
++## Showing parts and asking for measurements
++
++- **3D viewer (2026-10-27):** whenever work produces, changes or examines STL/3MF files, build one page for the job with `python tools/mesh_viewer.py <files...> -o work/mesh-viewer/<name>.html -t "<title>"`, send it with SendUserFile (display "render") and publish it as a private Artifact, without being asked. Brian pastes back "3D viewer notes" (mm in the file's own frame, part names as in the file). Preview only. Don't commit generated pages unless asked.
++- **Measurements (2026-11-08):** every measurement request is an interactive page: `tools/mesh_viewer.py ... --measure spec.json`, sent the same way. Never ask in words alone. Usage: PROJECT.md.
++
++## The app
++
++- **Purpose:** design equipment assemblies in a rack: configure rack → select slot → create the assembly. It delivers STL files only. Don't build or require printer, slicer, filament or machine integration, and don't ask for printer details; printer or material identification is not a readiness gate. Priorities: supported geometry, exact source/mesh matching, traceable hardware, export integrity and explicit validation limits.
++- **Rack view:** the viewport instances the actual source meshes at the recovered placements; don't substitute generic box posts. Each saved slot has its own hardware pins, inputs and revisions.
++- **GUI (final, Brian 2026-10-19):** dark three-panel hybrid with a collapsible inspector; collapsible Racks & slots, Equipment and Hardware library on the left; click selects, ellipsis/right-click for actions; Setup/Hardware/Appearance tabs; one explicit atomic Save. Don't rearrange the left grouping without his direction. Decisions: work/gui-restoration/Recovered_GUI_Decisions.json, work/gui-refinement/Report.md.
++- **Saving:** a draft does not save and an explicit import does not repin. Checks and exports never silently save drafts. Failed checks block a proposed export, and UNKNOWNs stay visible. Source disagreement and project source policy are separate things.
++- **Hardware catalog:** catalog breadth is not geometry support. Conditional manufacturer guidance is not generic FDM wall guidance. Nominal after-knurl OD is not a certified maximum. Niche insert research is parked; don't resume it by default.
++- **Equipment wizard:** generic `equipment_tray.scad` plus the dimensions/STL/SCAD/STEP (local FreeCAD) import wizard is the manufacturing path. Snap tabs, clips, pegs, straps, keystones, single-piece joints, rear support and multi-U spacing are unprinted. No Pi wording, defaults or Pi-specific fields: the Pi 4 is one saved library example only.
++- **Support extensions:** each 1U support extension occupies its own 1U between stacked posts (post U + extension U = rack height); joints are movable.
++- **PRINT THE RACK** (`/api/rack-stl`) is in scope.
++- **Cable planner (2026-10-19):** front/rear views, selectable ports and keystones, cable guides, cables entering and leaving, suggestions, wiring diagram (work/cable-management/Proposal.html, Report.md). Guide and cable fit, capacity and strength are UNKNOWN; cable lengths are planning estimates.
++- **Print in color (2026-10-19, extended 2026-10-21):** the opt-in export (`faceplate_color.py`, `/api/faceplate-colors/preview|export`) is the only artwork-to-STL path. It rebuilds a wizard-made faceplate (`equipment_tray.scad`, 4 mm, front face Y=-4, 44.4 mm per U, four-corner slots, 1U–5U, including a one-piece "combined" part) from the slot's saved library item and tray settings, and turns the saved image into one STL per filament color (inlay 0.6 mm by default, or raised). The image lands where the rack view draws it: `faceplate_color.clear_window` ports `rack-studio.js clearWindow` and `faceplate_color.openings` matches `equipment-wizard.js openings`; keep them in step. Color stays 2 mm clear of ports, windows, keystone blocks and rack slots and 1 mm inside the plate outline. Export uses the saved rack document only; preview may use draft settings and writes nothing. PROPOSED — UNVALIDATED: printed color result, fit and strength UNKNOWN. Normal tray, faceplate, rack and wizard STLs never contain color or artwork; relief or engraving there needs Brian's explicit direction. Images may be PNG, JPEG, WebP, GIF, BMP, AVIF or SVG, converted locally to one PNG of at most 1024 px / 1.4 MB.
++
++## Third-party meshes and licences
++
++Lab Rax creator parts (BY-NC-SA), the golden keystone source (BY-NC-SA), the Lab Rax Cable Guide (mklements, MakerWorld Exclusive License) and supplier assets are for Brian's personal use: credited, never redistributed, never in anything shared or public. Inside the private repo and private Artifacts they may be used freely (Brian, 2026-11-03 and 2026-11-06: "stop worrying about licenses"). The cable guide is a preview mesh only and never goes into PRINT THE RACK or rack STLs. Before any public release Brian will contact the creators, and conflicting licensed files will be removed.
++
++## History (not current rules)
++
++- Earlier specimen: Brian confirmed qualitative fit of the Clearance v2 tray/faceplate (two-hole, 3 mm, square corners). It does not transfer to the four-hole 4 mm design. Keep its report, photos and provenance; don't ask him to re-identify recovered files.
++- Raspberry Pi 4: an early fit-test item, deep-cleaned out of the app on 2026-10-19 (work/codex-tasks/21-pi4-deep-clean-REPORT.md). Retired build files are in docs/archive/pi4-retired-20261019/; outputs/Lab_Rax_Pi4_* and pi_reference.json stay untouched.
++- 42 mm plates, M3 bracket joints, the Lab Rax frame plan and the 2020 extrusion rack plan are superseded by the standards above.
++- GUI recovery reports: work/gui-restoration/Restoration_Report.md, work/rack-scene/Report.md, work/equipment-list/Report.md, work/hardware-section/Report.md, work/faceplate-refinement/Report.md.

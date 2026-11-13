@@ -1,0 +1,212 @@
+[
+  {
+    "label": "1280 solo",
+    "value": {
+      "width": 1280,
+      "documentWidth": 1280
+    }
+  },
+  {
+    "label": "1280 all-parts",
+    "value": {
+      "width": 1280,
+      "documentWidth": 1280
+    }
+  },
+  {
+    "label": "1280 details",
+    "value": {
+      "width": 1280,
+      "documentWidth": 1280
+    }
+  },
+  {
+    "label": "1280 confirm Cancel/Discard",
+    "value": {
+      "calls": 2,
+      "method": "window.confirm override; no native click"
+    }
+  },
+  {
+    "label": "1280 stale-details",
+    "value": {
+      "width": 1280,
+      "documentWidth": 1280
+    }
+  },
+  {
+    "label": "1280 quick idea",
+    "value": "draft"
+  },
+  {
+    "label": "1280 quick measuring",
+    "value": "draft"
+  },
+  {
+    "label": "1280 quick draft",
+    "value": "printing"
+  },
+  {
+    "label": "1280 quick printing",
+    "value": "report-due"
+  },
+  {
+    "label": "1280 fit-report",
+    "value": {
+      "width": 1280,
+      "documentWidth": 1280
+    }
+  },
+  {
+    "label": "1280 quick report-due",
+    "value": "done"
+  },
+  {
+    "label": "1280 quick done",
+    "value": "draft"
+  },
+  {
+    "label": "1280 quick parked",
+    "value": "draft"
+  },
+  {
+    "label": "1280 queue",
+    "value": {
+      "width": 1280,
+      "documentWidth": 1280
+    }
+  },
+  {
+    "label": "1280 queue remembers view",
+    "value": true
+  },
+  {
+    "label": "1280 empty-queue",
+    "value": {
+      "width": 1280,
+      "documentWidth": 1280
+    }
+  },
+  {
+    "label": "1280 deliberately expected HTTP 409 logs",
+    "value": [
+      "Failed to load resource: the server responded with a status of 409 (Conflict)",
+      "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    ]
+  },
+  {
+    "label": "1280 browser errors",
+    "value": []
+  },
+  {
+    "label": "1280 native fallback dialogs",
+    "value": []
+  },
+  {
+    "label": "375 solo",
+    "value": {
+      "width": 375,
+      "documentWidth": 375
+    }
+  },
+  {
+    "label": "375 all-parts",
+    "value": {
+      "width": 375,
+      "documentWidth": 375
+    }
+  },
+  {
+    "label": "375 details",
+    "value": {
+      "width": 375,
+      "documentWidth": 375
+    }
+  },
+  {
+    "label": "375 confirm Cancel/Discard",
+    "value": {
+      "calls": 2,
+      "method": "window.confirm override; no native click"
+    }
+  },
+  {
+    "label": "375 stale-details",
+    "value": {
+      "width": 375,
+      "documentWidth": 375
+    }
+  },
+  {
+    "label": "375 quick idea",
+    "value": "draft"
+  },
+  {
+    "label": "375 quick measuring",
+    "value": "draft"
+  },
+  {
+    "label": "375 quick draft",
+    "value": "printing"
+  },
+  {
+    "label": "375 quick printing",
+    "value": "report-due"
+  },
+  {
+    "label": "375 fit-report",
+    "value": {
+      "width": 375,
+      "documentWidth": 375
+    }
+  },
+  {
+    "label": "375 quick report-due",
+    "value": "done"
+  },
+  {
+    "label": "375 quick done",
+    "value": "draft"
+  },
+  {
+    "label": "375 quick parked",
+    "value": "draft"
+  },
+  {
+    "label": "375 queue",
+    "value": {
+      "width": 375,
+      "documentWidth": 375
+    }
+  },
+  {
+    "label": "375 queue remembers view",
+    "value": true
+  },
+  {
+    "label": "375 empty-queue",
+    "value": {
+      "width": 375,
+      "documentWidth": 375
+    }
+  },
+  {
+    "label": "375 deliberately expected HTTP 409 logs",
+    "value": [
+      "Failed to load resource: the server responded with a status of 409 (Conflict)",
+      "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    ]
+  },
+  {
+    "label": "375 browser errors",
+    "value": []
+  },
+  {
+    "label": "375 native fallback dialogs",
+    "value": []
+  },
+  {
+    "label": "RESULT",
+    "value": "PASS"
+  }
+]

@@ -376,6 +376,13 @@
         "work/mesh-viewer"
       ],
       "port": 8890
+    },
+    {
+      "name": "Workshop Bench",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["tools/bench/bench.py", "--port", "8720"],
+      "port": 8720,
+      "autoPort": false
     }
   ]
 }
