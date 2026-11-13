@@ -6,6 +6,7 @@ Print status (Brian, 2026-10-30): "accepted" means accepted to print, not proven
 
 | File | Bracket | Source folder |
 |---|---|---|
+| KSP-B_keystone_panel_8_labels_two-colour.3mf | **KSP-B, two colours.** Same panel; one object with two parts (panel + label inlay), set the labels part to a second filament. **Unprinted.** Fit UNKNOWN | Keystone_Panel_1U_8_KSP-B_2026-11-12 |
 | KSP-B_keystone_panel_8_labels.3mf | **1U keystone panel, current (2026-11-12).** KSP-A + engraved labels: blank, Hue, MoCA, Pi LAN, Win PC, OptiPlex, blank, Pi USB; keystones 3 mm lower. Optional colour inlay STL in the source folder. 1 object, 10768 tags. **Unprinted.** Fit UNKNOWN | Keystone_Panel_1U_8_KSP-B_2026-11-12 |
 | KSP-A_keystone_panel_8.3mf | **Superseded by KSP-B (no labels).** 1U keystone panel, 8 keystones, stiffened (2026-11-12).** Replaces the printed 10-keystone panel (too flimsy): 27.5 pitch (webs 6.5), 12 mm rear frame between the posts, golden keystones unchanged, no screws. 1 object, 7454 tags. **Unprinted.** Fit UNKNOWN | Keystone_Panel_1U_8_KSP-A_2026-11-12 |
 | CM1P-F_CM1000_one_piece_bracket.3mf | **CM1000, one-piece, test print.** CM1P-E (printed, still too loose) with 0.25 clearance per side, 0.5 total side play, front edges squared. 16 objects, 16336/32668 tags. **Unprinted.** Fit UNKNOWN | CM1000_OnePiece_CM1P-F_2026-11-02 |

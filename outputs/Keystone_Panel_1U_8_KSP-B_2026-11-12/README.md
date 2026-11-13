@@ -5,7 +5,7 @@ KSP-A plus engraved labels (Brian, 2026-11-12). ID **KSP-B** is engraved on the 
 ## Labels (keystone 1 = far left, seen from the front)
 blank · Hue · MoCA · Pi LAN · Win PC · OptiPlex · blank · Pi USB
 
-Simple original icons (bulb, coax end, raspberry, four panes, monitor) plus 3 mm bold text, engraved 0.6 mm into the front face. "Pi Ethernet" and "PC/Windows" were shortened to "Pi LAN" and "Win PC" to fit over one jack. `KSP-B_labels_inlay_optional.stl` fills the engraving exactly, in the same coordinates, for a second filament colour; it isn't in the 3MF.
+Simple original icons (bulb, coax end, raspberry, four panes, monitor) plus 3 mm bold text, engraved 0.6 mm into the front face. "Pi Ethernet" and "PC/Windows" were shortened to "Pi LAN" and "Win PC" to fit over one jack. **Two colours:** `KSP-B_two-colour_labels.3mf` is one object with two parts, panel and label inlay, face down and in place (made by `work/keystone-panel/make_color_3mf.py` from the released STLs; no overlap, the inlay fills the 0.6 mm engraving exactly). In the slicer, give the "labels (second colour)" part its own filament. `KSP-B_1-parts-print-layout.3mf` stays the one-colour version.
 
 ## Changed from KSP-A
 - Keystones moved down 3 mm: the label strip above them is 6.7 mm (was 3.7), and the strip below is 4.2 mm (was 7.2).
