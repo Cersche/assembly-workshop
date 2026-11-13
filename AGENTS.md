@@ -29,7 +29,7 @@ Fit results apply to the printed specimens on Brian's rack; strength is UNKNOWN 
 - **OptiPlex orientation (2026-10-20):** imported with X up and rotated 90° once, so the power button is at the faceplate and the ports face the rear posts. Brian asked to be stopped if he tries to change this: remind him first.
 - **Own printed rack (2026-11-09):** Brian's own rounded printed rack (posts plus corner brackets, flush bezel, Lab Rax U standards, depth 240, M6 x 10 button heads) replaces both the Lab Rax frame plan and the 2020 extrusion plan. Draft, unprinted: see HANDOFF.md.
 - **Test print IDs (2026-10-19):** every test print or coupon carries a unique ID modeled into the part, away from the feature under test, and the same ID in its folder, file names and README.
-- **OpenSCAD (2026-11-05):** new parts render with the pinned snapshot `D:\Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe --backend=manifold` (PC only; don't auto-update it). Existing revisions, the app and its scripts stay on `C:\Program Files\OpenSCAD\openscad.exe` (2021.01), because text outlines differ between versions; use OpenSCAD.exe, not the broken .com launcher.
+- **OpenSCAD (2026-11-05):** new parts render with the pinned snapshot `R:\Tools\OpenSCAD-snapshot\OpenSCAD-2026.11.01-x86-64\openscad.exe --backend=manifold` (moved from D:\Tools, Brian 2026-11-12; PC only; don't auto-update it). Existing revisions, the app and its scripts stay on `C:\Program Files\OpenSCAD\openscad.exe` (2021.01), because text outlines differ between versions; use OpenSCAD.exe, not the broken .com launcher.
 
 ## Showing parts and asking for measurements
 

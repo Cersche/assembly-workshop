@@ -1,5 +1,9 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-12 Wall cable channel, draft 2 (Claude)
+
+Brian wants a sturdy, wall-mountable cable channel and cover set with tie points: 1 Cat5 + a thin power lead, plus coax from the wall outlet to the MoCA box at the TV stand; the run goes left to right, then turns up the wall for about 10 ft. Draft `work/cable-channel/cable_channel.scad` (viewer: https://claude.ai/artifact/JFgAirWiuT1tg8jcfJ9Jh6): 27 x 15 base (22 x 11 inside), 200 mm straights, flat 90° elbow (R 20) with square stubs, snap covers whose legs flex (not the base walls), 3 tie stations per straight (strap goes through two floor slots under a bridge in the back), 2 countersunk #6 wall holes per straight. Unprinted, no ID. Open: wall type and screw (a new screw type, needs Brian's OK), cable diameters, run lengths, end pieces. Fit, snap retention, capacity and strength UNKNOWN. The pinned OpenSCAD snapshot is at `R:\Tools\...` (AGENTS.md updated).
+
 ## 2026-11-12 Keystone panel KSP-B RELEASED (Claude)
 **KSP-B released for printing** (Brian): [README](outputs/Keystone_Panel_1U_8_KSP-B_2026-11-12/README.md), 0 fails/0 warnings, supersedes KSP-A. `tools/release_part.py` fixed for the R: share: it used Path.resolve(), which turns R:\ into a UNC path that OpenSCAD cannot open (exit 3); now abspath, and the snapshot default is R:\Tools, falling back to D:\Tools. Awaiting fit report. Draft notes:
 Brian asked for labels with logos on top: ks1 blank (expansion), ks2 Hue, ks3 MoCA, ks4 Pi Ethernet ("Pi LAN"), ks5 PC/Windows ("Win PC"; full texts did not fit), ks6 OptiPlex, ks7 blank, ks8 Pi USB. Draft `work/keystone-panel/keystone_panel.scad` (KSP-B): keystones moved down 3 mm (top strip 3.7 -> 6.7, bottom 7.2 -> 4.2), simple original icons + 3 mm bold text engraved 0.6 deep in the front face, optional `part="labels"` inlay for a second colour, ID moved to the top frame bar. Unprinted, not released; KSP-A stays released as is.
