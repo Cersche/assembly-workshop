@@ -1,0 +1,388 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Normal use (Brian's data)",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8851",
+        "--data",
+        "D:\\Projects\\assembly-workshop\\data\\normal-use"
+      ],
+      "port": 8851,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – general",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8767",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\1d487df7-04ab-4eaa-8646-d4e4d4ecfd2f\\scratchpad\\disposable-data"
+      ],
+      "port": 8767
+    },
+    {
+      "name": "Test data – wizard artwork",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8769",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\57e99b58-600a-44c2-85e9-50bcd0a91fc6\\scratchpad\\wizard-art-data"
+      ],
+      "port": 8769,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – cable planner 1",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8771",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\a17ed06a-c694-4e03-8d22-3785175fac06\\scratchpad\\cable-data"
+      ],
+      "port": 8771,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – ports",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8773",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\eb61c524-8692-4e2f-a56b-ecaaab72a445\\scratchpad\\ports-data"
+      ],
+      "port": 8773,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – cable planner 3",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8775",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\996348ac-eb7a-4d13-b473-e3d1d6d99c1d\\scratchpad\\cables3-data"
+      ],
+      "port": 8775,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – cable planner 4",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8777",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\b151aa18-e722-416c-b95e-443eaf2c05d2\\scratchpad\\cables4-data"
+      ],
+      "port": 8777,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – cable planner 5",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8779",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\3857553a-3de2-46e3-9c55-90dad768a8da\\scratchpad\\cables5-data"
+      ],
+      "port": 8779,
+      "autoPort": false
+    },
+    {
+      "name": "Preview – cable sheet",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8780",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\3857553a-3de2-46e3-9c55-90dad768a8da\\scratchpad\\sheet"
+      ],
+      "port": 8780,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – final check",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8781",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\33067ca4-ec80-4594-91b6-bca88c6f6b82\\scratchpad\\final-check-data"
+      ],
+      "port": 8781,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – tray window",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8783",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\5e59be40-9643-4f23-b829-7f53da07678b\\scratchpad\\tray-window-data"
+      ],
+      "port": 8783,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – power consumers",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8785",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\b1f8c656-2468-410e-a530-ab3af102879b\\scratchpad\\consumers-data"
+      ],
+      "port": 8785,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – parts list",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8787",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\9ba8c102-590d-42bc-9e50-802045b9e1fc\\scratchpad\\parts-data"
+      ],
+      "port": 8787,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – rack view",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8789",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\2a2bba7d-8e14-4379-9b38-4a75e89970b8\\scratchpad\\rackview-data"
+      ],
+      "port": 8789,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – end-to-end",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8791",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\7bd8a78d-f464-4c05-b8c3-9a569b8b9d88\\scratchpad\\e2e-data"
+      ],
+      "port": 8791,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – port picking",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8793",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\05dfb2fe-a898-4b53-b922-04dd4a5b5595\\scratchpad\\picks-data"
+      ],
+      "port": 8793,
+      "autoPort": false
+    },
+    {
+      "name": "Beta test data (A)",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8798",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\aw-beta-data"
+      ],
+      "port": 8798,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – Pi cleanup",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8795",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\187f975b-d529-48dc-975c-9be138a20de6\\scratchpad\\piclean-data"
+      ],
+      "port": 8795,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – ports list",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8811",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\d547d061-2303-4cb5-adac-a097054e7383\\scratchpad\\data"
+      ],
+      "port": 8811,
+      "autoPort": false
+    },
+    {
+      "name": "Beta test data (B)",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--port",
+        "8799",
+        "--existing-library",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\aw-beta-data"
+      ],
+      "port": 8799,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – print in color",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--existing-library",
+        "--port",
+        "8813",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\C--Users-brian-Documents-Codex-2026-10-17-Assembly-Workshop\\e6bf173f-3a58-4360-98ce-2217e21adcff\\scratchpad\\color-data"
+      ],
+      "port": 8813,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – faceplate only",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--port",
+        "8845",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\D--Projects-assembly-workshop\\630cfaae-8f64-425e-bcc3-ad343478c893\\scratchpad\\faceplate-data"
+      ],
+      "port": 8845,
+      "autoPort": false
+    },
+    {
+      "name": "Test data – drive tray",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "outputs/Mechanical_Design_App/app.py",
+        "--port",
+        "8847",
+        "--data",
+        "C:\\Users\\brian\\AppData\\Local\\Temp\\claude\\D--Projects-assembly-workshop\\670ff7ef-7768-4a59-8310-301723e8de73\\scratchpad\\drive-tray-data"
+      ],
+      "port": 8847,
+      "autoPort": false
+    },
+    {
+      "name": "Mesh viewer pages",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8861",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "work/mesh-viewer"
+      ],
+      "port": 8861
+    },
+    {
+      "name": "Rack finish pages",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8863",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "work/rack-finish"
+      ],
+      "port": 8863
+    },
+    {
+      "name": "Rack moonshot pages",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8865",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "work/rack-moonshot"
+      ],
+      "port": 8865
+    },
+    {
+      "name": "Mesh viewer pages",
+      "runtimeExecutable": "C:\\Program Files\\Python310\\python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8890",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "work/mesh-viewer"
+      ],
+      "port": 8890
+    },
+    {
+      "name": "Workshop Bench",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["tools/bench/bench.py", "--port", "8720"],
+      "port": 8720,
+      "autoPort": false
+    }
+  ]
+}
