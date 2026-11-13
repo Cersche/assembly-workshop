@@ -798,7 +798,7 @@
         if(panels)scene.parts.push({key:'panel'+u,R:R90,t:[side==='left'?-138.48:138.48,120,middle],kind:'side'});
         z+=u*U;
         // The extension fills the next 1U; its end tabs reach into the pockets of the posts either side.
-        if(i<levels.length-1){if(sourceMeshes?.extension)scene.parts.push({key:'extension',R:side==='left'?I:RY,t:[x,120,z+U/2],kind:'frame',source:[2,'1']});z+=U;}
+        if(i<levels.length-1){if(sourceMeshes?.extension)scene.parts.push({key:'extension',R:side==='left'?I:RZ,t:[x,120,z+U/2],kind:'frame',source:[2,'1']});z+=U;}
       });
     }
     // Cable guides are preview parts only (kind 'guide'); RACK_PART_SOURCES has no entry for them, so the STL export skips them.

@@ -11,6 +11,8 @@ with tempfile.TemporaryDirectory(prefix='checks-',dir=Path(__file__).parent) as 
         if module=='test_studio_save': suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(loaded.StudioSaveTests))
         else:suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(loaded))
     # Faceplate color placement/reduction/cache tests; the OpenSCAD renders (FaceplateColorRenderTests) are excluded (no builds here).
+    import test_rack_stl
+    suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(test_rack_stl))
     import test_faceplate_color
     suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(test_faceplate_color.FaceplateColorTests))
     import test_app
