@@ -1,6 +1,7 @@
 # Assembly Workshop — current handoff
 
-## 2026-11-12 Keystone panel: stiffened 8-keystone draft (Claude)
+## 2026-11-12 Keystone panel KSP-A RELEASED (Claude)
+**KSP-A released for printing** (Brian, 2026-11-12): [README](outputs/Keystone_Panel_1U_8_KSP-A_2026-11-12/README.md), 0 fails/0 warnings, posts checked at U7 both sides, 8 pockets separate. Released with `AW_OPENSCAD_SNAPSHOT` pointing at the R: snapshot. Awaiting Brian's fit report. Draft notes:
 Brian: the printed 10-keystone 1U panel (`outputs/Faceplate_1U_10_Keystones_2026-10-22`) is too flimsy; only 8 keystones are needed; a 12 mm frame is OK. Draft `work/keystone-panel/keystone_panel.scad` (+ `KSP8_draft.stl`): same 44.4 plate and golden blocks (ks_tight 0.2 untouched), 8 keystones at 27.5 pitch (webs 0.5 -> 6.5 mm), plus a 12 mm deep rear frame X ±110.1 (1 mm clear of the post flange edge at 111.12) with a pocket around each block so the keystone and the space behind it stay as before. Unprinted, no ID; jack tilt-in clearance, post fit and strength UNKNOWN; release must run `--posts 7:both`. The pinned OpenSCAD snapshot now lives at `R:\Tools\OpenSCAD-snapshot\...` (D:\Tools is gone); `tools/release_part.py` still defaults to D: (override with `AW_OPENSCAD_SNAPSHOT`).
 
 ## 2026-11-11 Scheduled Lab Rax recovery audit (Codex)
