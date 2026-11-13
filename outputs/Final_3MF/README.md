@@ -6,6 +6,7 @@ Print status (Brian, 2026-10-30): "accepted" means accepted to print, not proven
 
 | File | Bracket | Source folder |
 |---|---|---|
+| KSP-A_keystone_panel_8.3mf | **1U keystone panel, 8 keystones, stiffened (2026-11-12).** Replaces the printed 10-keystone panel (too flimsy): 27.5 pitch (webs 6.5), 12 mm rear frame between the posts, golden keystones unchanged, no screws. 1 object, 7454 tags. **Unprinted.** Fit UNKNOWN | Keystone_Panel_1U_8_KSP-A_2026-11-12 |
 | CM1P-F_CM1000_one_piece_bracket.3mf | **CM1000, one-piece, test print.** CM1P-E (printed, still too loose) with 0.25 clearance per side, 0.5 total side play, front edges squared. 16 objects, 16336/32668 tags. **Unprinted.** Fit UNKNOWN | CM1000_OnePiece_CM1P-F_2026-11-02 |
 | CM1P-E_CM1000_one_piece_bracket.3mf | **Printed, superseded by CM1P-F:** too loose, barely holds the modem. 0.50 clearance per side | CM1000_OnePiece_CM1P-E_2026-11-02 |
 | OPX-G_OptiPlex_rear_channels.3mf | **OptiPlex, 2 new rear channels only (2026-11-04).** Same as OPX-D-L/R plus a cable window in each web, about 31 x 28. Use with the printed OPX-D sleeve and OPX-F rails. 2 objects, 2422/4868 tags. **Unprinted.** Fit UNKNOWN | OptiPlex_Sleeve_Channels_OPX-G_2026-11-04 |
