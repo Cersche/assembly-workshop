@@ -5,7 +5,7 @@
 // Frame: X centred, plate back Y=0 (front Y=-4), Z=0 slot bottom. Switch goes in from the front through the window.
 include <workshop.scad>
 part="bracket";   // bracket | inlay | switch  (no screws except the 4 rack screws)
-id="";            // drafts carry no ID; set at release
+id="SG8-G";       // test-print ID, engraved on the collar top (released 2026-11-17)
 // ---- Switch fit: the SG8-M6-D/F pocket, printed and fits well (Brian 2026-10-31). Kept exactly.
 dev_w=158; dev_d=100; dev_h=25;         // TL-SG108E (SG8-M6-F wizard values)
 side_play=0.5; sleeve_top=1.35;          // proven; not the 0.8 library default
@@ -79,3 +79,5 @@ module switch(){translate([dev_cx-dev_w/2,-ws_plate_t,pk_lo])cube([dev_w,pk_end+
 if(part=="bracket")bracket();
 if(part=="inlay")inlay();
 if(part=="switch")switch();
+// Check-only: each floor opening as a solid (3 slots + 2 detent slots); release_part.py --cuts cuts=5
+if(part=="cuts"){floor_slots();arm_slot(-1);arm_slot(1);}
