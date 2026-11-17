@@ -72,8 +72,10 @@ module bracket(){union(){detent(-1);detent(1);difference(){
 }
 for(x=keystones)ws_keystone(x);
 }}
-// Switch mock: nominal box seated on the floor, front set back 1.3
-module switch(){translate([dev_cx-dev_w/2,dev_y0,pk_lo])cube([dev_w,dev_d,dev_h]);}
+// Switch mock: face flush with the plate front, rear at the stop. That is how the real switch sits with this stop:
+// 2026-10-23 print (stop 1.3 further forward) left the face 1.3 proud; SG8-M6-B/F moved it back and printed flush.
+// So the switch sits as if 101.3 deep from face to the stop; only the mock changed, not the pocket (Brian 2026-11-17).
+module switch(){translate([dev_cx-dev_w/2,-ws_plate_t,pk_lo])cube([dev_w,pk_end+ws_plate_t,dev_h]);}
 if(part=="bracket")bracket();
 if(part=="inlay")inlay();
 if(part=="switch")switch();
