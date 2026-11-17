@@ -4,7 +4,8 @@ RELEASED FOR PRINTING, UNPRINTED. Replaces [SG8-M6-F](../Chunky_Revisions/TL-SG1
 
 | File | What |
 |---|---|
-| `SG8-G_2-parts-print-layout.3mf` | Bracket + label inlay, both turned front face down on the bed. Also in `outputs/Final_3MF/` |
+| `SG8-G_bracket+labels.3mf` | **Print this.** One object, two parts: bracket + UPLINK/WLAN inlay seated in its engraving (assign the inlay a second colour), front face on the bed. Built by `src/pack_3mf.py`; checked: inlay inside the recess, no overlap, face level with the plate front. Also in `outputs/Final_3MF/` as `SG8-G_TL-SG108E_basket.3mf` |
+| `SG8-G_2-parts-print-layout.3mf` | Release script layout: the two parts side by side, inlay NOT in its recess. Don't use for two-colour printing |
 | `SG8-G_bracket.stl`, `SG8-G_inlay.stl` | In rack position (X centred, plate back Y 0, Z 0 slot bottom) |
 | `release_report.md` | `tools/release_part.py` report: 0 fails, 0 warnings |
 | `src/` | `sg108e_basket.scad` + frozen `lib/workshop.scad`; re-render with OPENSCADPATH=src/lib, `part="bracket"`/`"inlay"` |
