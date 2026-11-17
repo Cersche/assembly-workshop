@@ -14,7 +14,7 @@ dev_cx=-21.5;                            // was -15 on SG8-M6-F: 6.5 left so two
 pk_w=dev_w+2*side_play; pk_h=dev_h+sleeve_top; dev_y0=-ws_plate_t+set_back; pk_end=dev_y0+dev_d;   // rear stop at 100 deep, as proven
 // ---- Keystones: golden block (settled), two on the right. Blocks 21 wide, touching at X 88.5; outer edge 109.5 (post flange from 111.1).
 keystones=[78,99];
-labels=[["UPLINK",78,3.8,4.5],["WLAN",99,3.8,4.5]];   // SG8-M6-F label and inlay size; WLAN = upstairs WLAN (Brian 2026-11-17)
+labels=[["UPLINK",78,3.8,3.5],["WLAN",99,3.8,3.5]];   // WLAN = upstairs WLAN (Brian 2026-11-17). 3.5 (was 4.5): at 4.5 the two labels were ~1 mm apart
 label_depth=0.6;
 // ---- Basket body: ER6-H values
 wall=4; collar_y=12; side_rear=10; stop_in=5; root=4.5; corner_r=2; foot=0.4;
