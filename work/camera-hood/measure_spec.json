@@ -1,0 +1,15 @@
+{
+  "intro": "Tapo C211 hood, draft 1 (clip-on, two halves). The white camera, glass, frame and bracket are rough stand-ins; the dark hood halves are the draft. Measure each arrow in mm (calipers or a ruler) and type it in; leave a box empty if you can't reach it. Also tell me, in the notes or in chat: (a) does the camera turn or nod by itself when it powers up? (b) how it attaches to the bracket now: screw, twist-lock plate or adhesive, and the hole spacing if it's screws; (c) does the base have a lip, groove or step a clip could grab, or is its side smooth? (d) your foam tape thickness, width and whether it's sticky on both sides.",
+  "measurements": [
+    {"label": "Base diameter", "from": [-43.3, 0, -6], "to": [43.3, 0, -6], "how": "Calipers across the round base that stays still (the part against the bracket)."},
+    {"label": "Base height", "from": [46, 0, 0], "to": [46, 0, -12], "how": "From the bracket face down to where the base ends and the turning body starts."},
+    {"label": "Widest turning part", "from": [-40, 0, -50], "to": [40, 0, -50], "how": "Widest point of the body/ball below the base, any direction."},
+    {"label": "Total height", "from": [0, -46, 0], "to": [0, -46, -117.7], "how": "Bracket face down to the lowest point of the ball."},
+    {"label": "Lens centre height", "from": [0, 44, 0], "to": [0, 44, -77.7], "how": "Bracket face down to the centre of the lens, with the camera aimed where you want it."},
+    {"label": "Lens to glass", "from": [0, 42, -77.7], "to": [0, 57, -77.7], "how": "Front of the lens straight out to the glass."},
+    {"label": "Visible glass width", "from": [-70, 56, -160], "to": [70, 56, -160], "how": "Glass edge to glass edge, at the camera's height."},
+    {"label": "Camera to right glass edge", "from": [0, 55, -140], "to": [70, 55, -140], "how": "From straight under the camera's centre sideways to where the glass meets the right frame."},
+    {"label": "Frame face out from glass", "from": [75, 37, -170], "to": [75, 57, -170], "how": "How far the right frame strip's face stands out from the glass."},
+    {"label": "Cable plug height", "from": [0, -43.3, 0], "to": [0, -43.3, -6], "how": "Bracket face down to the centre of the cable plug; also note which way it points (glass, room, left, right)."}
+  ]
+}
