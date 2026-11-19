@@ -1,5 +1,8 @@
 # Assembly Workshop — current handoff
 
+## 2026-11-19 SG8-H RELEASED (Claude)
+**SG8-H released for printing** (Brian): [README](outputs/TL-SG108E_Basket_SG8-H_2026-11-19/README.md), release_part 0 fails / 0 warnings. Print `outputs/Final_3MF/SG8-H_TL-SG108E_basket.3mf` (bracket + seated label inlay, one object). Awaiting Brian's fit report. Draft notes:
+
 ## 2026-11-19 SG8-G printed: ~3 mm rear play; SG8-H draft (Claude)
 Brian printed SG8-G: switch pushed back too easily, shifts ~3 mm (logged in Fit_Findings). Cause (likely): ER6-H-style 45° corner wedges as the only rear stop; the switch's rounded corners ride up them. Draft SG8-H in `work/sg108e-basket/sg108e_basket.scad`: full-width flat rear lip, 3 tall, Y 97.3..102.3 (the proven stop), wedges kept, nothing else changed. Viewer https://claude.ai/artifact/2yv3YnbqMwgTLVEGjdhPfS. Checks: seated flush and path over the bumps clear; 0.3 further back hits the lip. Not released. ER6-H has the same wedge stop: fix it the same way before printing it.
 
