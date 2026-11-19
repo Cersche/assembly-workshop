@@ -5,7 +5,11 @@
 // Frame: X centred, plate back Y=0 (front Y=-4), Z=0 slot bottom. Switch goes in from the front through the window.
 include <workshop.scad>
 part="bracket";   // bracket | inlay | switch  (no screws except the 4 rack screws)
-id="SG8-G";       // test-print ID, engraved on the collar top (released 2026-11-17)
+id="SG8-H";       // test-print ID, engraved on the collar top. SG8-G (released 2026-11-17) printed with ~3 mm rear play
+// ---- SG8-H rear stop lip (Brian 2026-11-19: SG8-G switch pushed back ~3 mm; the 45 deg corner wedges let the rounded
+// corners ride up). Full-width flat lip at the proven stop, like SG8-M6-F's rear bar but 3 tall: prints as a small overhang
+// with the part front-face down, and still catches the switch's bottom rear edge. Corner wedges kept.
+lip_h=3;
 // ---- Switch fit: the SG8-M6-D/F pocket, printed and fits well (Brian 2026-10-31). Kept exactly.
 dev_w=158; dev_d=100; dev_h=25;         // TL-SG108E (SG8-M6-F wizard values)
 side_play=0.5; sleeve_top=1.35;          // proven; not the 0.8 library default
@@ -56,8 +60,10 @@ module inlay(){for(l=labels)translate([0,-ws_plate_t+label_depth,0])rotate([90,0
 module id_cut(){if(id!="")translate([dev_cx,8,top-0.6])linear_extrude(height=1)
   text(id,size=5,font="Liberation Sans:style=Bold",halign="center",valign="center");}
 
+module rear_lip(){translate([dev_cx-pk_w/2-0.01,pk_end,pk_lo-0.01])cube([pk_w+0.02,rear-pk_end,lip_h+0.01]);}
 module bracket(){union(){detent(-1);detent(1);difference(){
   union(){
+    rear_lip();
     rotate([90,0,0])linear_extrude(height=ws_plate_t)ws_plate2d();   // window and keystone boxes cut below, keystones added after
     root_chamfer();
     difference(){union(){along(0,pk_end)outer2d(0);ears();}top_cut();}
